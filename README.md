@@ -1,2 +1,2 @@
-# TFLibrary
-TF Library implementation in R
+# TFL Library
+TFL Library implementation in R
