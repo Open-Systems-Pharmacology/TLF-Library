@@ -1,0 +1,26 @@
+Package: tlf
+Type: Package
+Title: TLF Library
+Version: 0.1.0
+Authors@R: c(
+    person("Open-Systems-Pharmacology Community", role = "cph"),
+    person("Michael", "Sevestre", email = "michael@design2code.ca", role = c("aut", "cre"))
+    )
+Description: An implementation of the Table, Listing and Figure concepts in R. This library provides
+    a standardized approach to creating tables and graphs based on conventions over configurations.
+License: GPL (>= 2)
+URL: https://github.com/open-systems-pharmacology/tlf-library
+BugReports: https://github.com/open-systems-pharmacology/tlf-library/issues
+Imports: 
+    ggplot2 (>= 3.2.0)
+Depends: 
+    R (>= 3.5.2)
+Encoding: UTF-8
+RoxygenNote: 6.1.1
+Roxygen: list(markdown = TRUE)
+LazyData: true    
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 2.1.0)
+VignetteBuilder: knitr
