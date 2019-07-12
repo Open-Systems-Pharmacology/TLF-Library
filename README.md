@@ -22,7 +22,7 @@ devtools::dev_mode(path="C:/Rpackages")
 ## Reload the package
 
 ```R
-devtools::load_all
+devtools::load_all()
 ```
 
 or `Ctrl + Shift + L`
