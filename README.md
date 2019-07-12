@@ -1,6 +1,9 @@
 # TLF Library
 TLF Library implementation in R
 
+<!-- badges: start -->
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/Open-Systems-Pharmacology/TLF-Library?branch=develop&svg=true)](https://ci.appveyor.com/project/Open-Systems-Pharmacology/TLF-Library)
+<!-- badges: end -->
 
 ## Code of conduct
 Everyone interacting in the Open Systems Pharmacology community (codebases, issue trackers, chat rooms, mailing lists etc...) is expected to follow the Open Systems Pharmacology [code of conduct](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODE_OF_CONDUCT.md).
