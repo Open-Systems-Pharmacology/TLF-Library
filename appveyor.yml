@@ -1,5 +1,10 @@
 # DO NOT CHANGE the "init" and "install" sections below
 
+environment:
+  app_version: '0.1.1'
+
+version: '$(app_version).{build}'
+
 # Download script file from GitHub
 init:
   ps: |
@@ -13,6 +18,26 @@ install:
 cache:
   - C:\RLibrary
 
+platform: x64
+
+environment:
+  R_ARCH: x64
+
+skip_commits:
+  files:
+    - '*.md'
+
+skip_branch_with_pr: true
+
+skip_tags: true
+
+branches:
+  only:
+    - develop
+
+pull_requests: 
+  do_not_increment_build_number: true     
+  
 environment:
   NOT_CRAN: true
   # env vars that may need to be set, at least temporarily, from time to time
