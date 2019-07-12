@@ -1,7 +1,7 @@
 # DO NOT CHANGE the "init" and "install" sections below
 
 environment:
-  app_version: '0.1.1'
+  app_version: '0.1.0'
 
 version: '$(app_version).{build}'
 
@@ -20,9 +20,6 @@ cache:
 
 platform: x64
 
-environment:
-  R_ARCH: x64
-
 skip_commits:
   files:
     - '*.md'
@@ -39,6 +36,7 @@ pull_requests:
   do_not_increment_build_number: true     
   
 environment:
+  R_ARCH: x64
   NOT_CRAN: true
   # env vars that may need to be set, at least temporarily, from time to time
   # see https://github.com/krlmlr/r-appveyor#readme for details
