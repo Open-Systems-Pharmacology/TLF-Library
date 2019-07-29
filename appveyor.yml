@@ -1,13 +1,12 @@
 # DO NOT CHANGE the "init" and "install" sections below
 
 environment:
+  USE_RTOOLS: true
   app_version: "0.1.0"
   R_ARCH: x64
   NOT_CRAN: true
-  # env vars that may need to be set, at least temporarily, from time to time
-  # see https://github.com/krlmlr/r-appveyor#readme for details
-  # USE_RTOOLS: true
-  # R_REMOTES_STANDALONE: true
+  COVERALLS_TOKEN:
+    secure: QItC20vr6rKHkiDVvsE+kHFL4GTS3bcsPw5KcWe+qipEIj1+ncKngsCoCNelNdtg
 
 version: "$(app_version).{build}"
 
@@ -45,9 +44,14 @@ pull_requests:
 
 build_script:
   - travis-tool.sh install_deps
+  - travis-tool.sh r_binary_install curl
+  - Rscript -e "install.packages('covr', repos = 'http://cran.us.r-project.org')"
 
 test_script:
   - travis-tool.sh run_tests
+
+on_success:
+  - Rscript -e "covr::codecov()"
 
 on_failure:
   - 7z a failure.zip *.Rcheck\*

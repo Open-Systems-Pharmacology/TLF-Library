@@ -2,3 +2,6 @@
 ^\.Rproj\.user$
 ^appveyor\.yml$
 ^tests/dev/*\.R$
+^README\.md$
+^tests/dev
+^\.covrignore$
