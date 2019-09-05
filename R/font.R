@@ -7,10 +7,10 @@
 Font <- R6::R6Class(
   "Font",
   public = list(
-    "size" = 12,
-    "color" = "black",
-    "fontfamily" = "",
-    "fontface" = "plain",
+    size = NULL,
+    color = NULL,
+    fontfamily = NULL,
+    fontface = NULL,
 
     initialize = function(size = 12,
                               color = "black",
