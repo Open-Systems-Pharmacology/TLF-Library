@@ -1,10 +1,10 @@
 #' @title setFontProperties
 #' @param plotHandle ggplot object
-#' @param TitleFont Font Class for title
-#' @param SubtitleFont Font Class for subtitle
-#' @param XAxisFont Font Class for xaxis and ticks
-#' @param YAxisFont Font Class for yaxis and ticks
-#' @param LegendFont Font Class for legend
+#' @param titleFont Font Class for title
+#' @param subtitleFont Font Class for subtitle
+#' @param xAxisFont Font Class for xaxis and ticks
+#' @param yAxisFont Font Class for yaxis and ticks
+#' @param legendFont Font Class for legend
 #' @return plotHandle ggplot object with updated fonts
 #' @description 
 #' setFontProperties set Font Properties on a ggplot object
@@ -13,19 +13,19 @@
 #' 
 #' p <- ggplot()+labs(title='Title', )
 #' NewFont <- FontClass$new(color="blue", size=20)
-#' p <- setFontProperties(plotHandle=p, TitleFont=NewFont)
+#' p <- setFontProperties(plotHandle=p, titleFont=NewFont)
 setFontProperties <- function(plotHandle, 
-                              TitleFont=NULL, 
-                              SubtitleFont=NULL, 
-                              XAxisFont=NULL, 
-                              YAxisFont=NULL, 
-                              LegendFont=NULL){
+                              titleFont=NULL, 
+                              subtitleFont=NULL, 
+                              xAxisFont=NULL, 
+                              yAxisFont=NULL, 
+                              legendFont=NULL){
 
-      if(!is.null(TitleFont)) { plotHandle <- plotHandle + theme(plot.title = TitleFont$setFont())} 
-      if(!is.null(SubtitleFont)) { plotHandle <- plotHandle + theme(plot.subtitle = SubtitleFont$setFont())}
-      if(!is.null(XAxisFont)){ plotHandle <- plotHandle+ theme(axis.title.x = XAxisFont$setFont(), axis.text.x=XAxisFont$setFont())} 
-      if(!is.null(YAxisFont)){ plotHandle <- plotHandle + theme(axis.title.y = YAxisFont$setFont(), axis.text.y=YAxisFont$setFont())}
-      if(!is.null(LegendFont)){plotHandle <- plotHandle + theme(legend.text = LegendFont$setFont())} 
+      if(!is.null(titleFont)) { plotHandle <- plotHandle + theme(plot.title = titleFont$setFont())} 
+      if(!is.null(subtitleFont)) { plotHandle <- plotHandle + theme(plot.subtitle = subtitleFont$setFont())}
+      if(!is.null(xAxisFont)){ plotHandle <- plotHandle+ theme(axis.title.x = xAxisFont$setFont(), axis.text.x=xAxisFont$setFont())} 
+      if(!is.null(yAxisFont)){ plotHandle <- plotHandle + theme(axis.title.y = yAxisFont$setFont(), axis.text.y=yAxisFont$setFont())}
+      if(!is.null(legendFont)){plotHandle <- plotHandle + theme(legend.text = legendFont$setFont())} 
   
   return(plotHandle)  
     

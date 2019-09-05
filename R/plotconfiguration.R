@@ -65,11 +65,11 @@ PlotConfiguration <- R6::R6Class(
 
       plotHandle <- setFontProperties(
         plotHandle,
-        TitleFont = self$title$font,
-        SubtitleFont = self$subtitle$font,
-        XAxisFont = self$xlabel$font,
-        YAxisFont = self$ylabel$font,
-        LegendFont = self$legend$font
+        titleFont = self$title$font,
+        subtitleFont = self$subtitle$font,
+        xAxisFont = self$xlabel$font,
+        yAxisFont = self$ylabel$font,
+        legendFont = self$legend$font
       )
 
       # Legend labels
