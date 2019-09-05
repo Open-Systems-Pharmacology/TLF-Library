@@ -1,9 +1,10 @@
-#' @title Font Class
+#' @title Font
 #' @docType class
 #' @description
 #' Font class defining properties of a text (size, color, font)
+#' @include utils.R
 #' @export
-FontClass <- R6::R6Class(
+Font <- R6::R6Class(
   "Font",
   public = list(
     "size" = 12,
@@ -12,9 +13,9 @@ FontClass <- R6::R6Class(
     "fontface" = "plain",
 
     initialize = function(size = 12,
-                          color = "black",
-                          fontfamily = "",
-                          fontface = "plain") {
+                              color = "black",
+                              fontfamily = "",
+                              fontface = "plain") {
       self$size <- size
       self$color <- color
       self$fontfamily <- fontfamily
@@ -32,25 +33,25 @@ FontClass <- R6::R6Class(
   )
 )
 
-LabelClass <- R6::R6Class(
+Label <- R6::R6Class(
   "Label",
   public = list(
     "text" = "",
     "font" = NULL,
 
     initialize = function(text = "",
-                          font = NULL) {
+                              font = NULL) {
       self$text <- text
-      font <- font %||% FontClass$new()
+      font <- font %||% Font$new()
 
       stopifnot("Font" %in% class(font))
       self$font <- font
     },
 
-    setFontProperties = function(color=self$font$color, 
-                                 size=self$font$size, 
-                                 fontfamily=self$font$fontfamily, 
-                                 fontface=self$font$fontface) {
+    setFontProperties = function(color = self$font$color,
+                                     size = self$font$size,
+                                     fontfamily = self$font$fontfamily,
+                                     fontface = self$font$fontface) {
       self$font$color <- color
       self$font$size <- size
       self$font$fontfamily <- fontfamily
@@ -74,6 +75,6 @@ LabelClass <- R6::R6Class(
 #' title <- "Title of Plot"
 #' title <- asLabel(title)
 asLabel <- function(text) {
-  Label <- LabelClass$new(text)
+  Label <- Label$new(text)
   return(Label)
 }

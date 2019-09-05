@@ -8,9 +8,9 @@ PKRatioDataMapping <- R6::R6Class("PKRatioDataMapping",
     colorGrouping = NULL,
     sizeGrouping = NULL,
     shapeGrouping = NULL,
-      
+
     # Example of how to do some other stuff
-    initialize = function(x = "Age", y="Ratio", colorGrouping=NULL, sizeGrouping = NULL, shapeGrouping = NULL) {
+    initialize = function(x = "Age", y = "Ratio", colorGrouping = NULL, sizeGrouping = NULL, shapeGrouping = NULL) {
       self$colorGrouping <- colorGrouping
       self$sizeGrouping <- sizeGrouping
       self$shapeGrouping <- shapeGrouping
@@ -20,11 +20,11 @@ PKRatioDataMapping <- R6::R6Class("PKRatioDataMapping",
 )
 
 
-if (FALSE){
+if (FALSE) {
   # Example of definition of Data Mapping
   CmaxRatio.DataMapping <- list(
-    "Axes" = list("X"="Age", "Y"=c("Ratio")),
-    "Unit" = list("X"="yrs", "Y"=c(NULL)),
-    "Grouping" = list("Color"= "Gender", "Symbol"=c("Compound", "Dose"))
+    "Axes" = list("X" = "Age", "Y" = c("Ratio")),
+    "Unit" = list("X" = "yrs", "Y" = c(NULL)),
+    "Grouping" = list("Color" = "Gender", "Symbol" = c("Compound", "Dose"))
   )
 }

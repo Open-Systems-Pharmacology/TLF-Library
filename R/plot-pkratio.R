@@ -8,7 +8,6 @@
 #' @return a ggplot graphical object
 #' @export
 #'
-#' @examples
 plotPKRatio <- function(data, metaData, dataMapping = NULL, plotConfiguration = NULL) {
   # If no data mapping or plot configuration is input, use default
   configuration <- plotConfiguration %||% PKRatioPlotConfiguration$new()

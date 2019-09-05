@@ -2,32 +2,11 @@
 # Similar to clear from Matlab
 rm(list = ls())
 
+library(ggplot2)
+library(tlf)
+
 # Set your folder to test folder:
-setwd("C:/Design2Code/TLF-Playground/TLF-Playground/R/")
-
-# Load library ggplot2
-library("ggplot2")
-# library(tlf)
-# Later on tlf library will be loaded, so far, only loading
-# methods by sourcing R scritps within the folder
-
-source("font-class.R")
-source("getGrouping.R")
-source("getLabelWithUnit.R")
-source("setFontProperties.R")
-source("setLegend.R")
-source("setLegendPosition.R")
-source("setWatermark.R")
-source("utils.R")
-
-source("xy-datamapping.R")
-source("pkratio-datamapping.R")
-
-source("plotconfiguration.R")
-source("pkratio-plotconfiguration.R")
-
-
-source("plot-pkratio.R")
+# setwd("C:/Design2Code/TLF-Playground/TLF-Playground/R/")
 
 
 # -------------------------------------------------
@@ -73,7 +52,7 @@ CmaxRatio.MetaData <- list(
   # "Ratio" = list("Unit"=NULL, "Dimension"="Fraction", "VariableType"="numeric")
 )
 # Create GMFE as a MetaData for Ratio
-CmaxRatio.MetaData$Ratio$GMFE <- 10 ^ (mean(abs(log10(CmaxRatio.Data$Ratio))))
+CmaxRatio.MetaData$Ratio$GMFE <- 10^(mean(abs(log10(CmaxRatio.Data$Ratio))))
 
 # Save/Load MetaData to/from a json
 # cat(jsonlite::toJSON(CmaxRatio.MetaData, pretty = TRUE, auto_unbox = TRUE), file = "CmaxRatio_MetaData.json")

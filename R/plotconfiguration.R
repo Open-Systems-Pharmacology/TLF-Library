@@ -21,14 +21,14 @@ PlotConfiguration <- R6::R6Class(
     ## ----------------------------------------------
     ## Initializing function to be called with $new()
     initialize = function(title = asLabel(""),
-                          subtitle = asLabel(paste("Date:", format(Sys.Date(), "%y-%m-%d"))),
-                          xlabel = asLabel(""),
-                          ylabel = asLabel(""),
-                          xlim = c(-Inf, Inf),
-                          ylim = c(-Inf, Inf),
-                          watermark = asLabel("TLF-Watermark"),
-                          legend = list("Location" = "outside", "X.Location" = "right", "Y.Location" = NULL),
-                          theme = NULL) {
+                              subtitle = asLabel(paste("Date:", format(Sys.Date(), "%y-%m-%d"))),
+                              xlabel = asLabel(""),
+                              ylabel = asLabel(""),
+                              xlim = c(-Inf, Inf),
+                              ylim = c(-Inf, Inf),
+                              watermark = asLabel("TLF-Watermark"),
+                              legend = list("Location" = "outside", "X.Location" = "right", "Y.Location" = NULL),
+                              theme = NULL) {
       self$title <- title
       self$subtitle <- subtitle
       self$xlabel <- xlabel
