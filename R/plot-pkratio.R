@@ -1,10 +1,16 @@
 #' Create a PK-Ratio plot
 #'
-#' @param data TODO
-#' @param metaData TODO
-#' @param dataMapping TODO
-#' @param plotConfiguration TODO
-#'
+#' @title plotPKRatio
+#' @param data data.frame (or list of data.frames? TO BE DISCUSSED)
+#' containing the data to be used for the plot
+#' @param metaData list of lists (structure TO BE DISCUSSED)
+#' containing complementary information to data (e.g. unit)
+#' @param dataMapping R6 class PKRatioDataMapping
+#' mapping of x, y axes + mapping of colorGrouping, sizeGrouping, shapeGrouping
+#' @param plotConfiguration R6 class PKRatioPlotConfiguration
+#' Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend
+#' @description
+#' plotPKRatio(data, metaData, dataMapping, plotConfiguration)
 #' @return a ggplot graphical object
 #' @export
 #'
@@ -19,17 +25,24 @@ plotPKRatio <- function(data, metaData, dataMapping = NULL, plotConfiguration = 
   x <- dataMapping$x
   y <- dataMapping$y
 
-  colorGrouping <- getGrouping(data, dataMapping$colorGrouping)
-  sizeGrouping <- getGrouping(data, dataMapping$sizeGrouping)
-  shapeGrouping <- getGrouping(data, dataMapping$shapeGrouping)
+  # Add level columns named colorGrouping, sizeGrouping, shapeGrouping to data
+  data <- dataMapping$getGrouping(data, metaData)
 
-  plotObject <- ggplot()
+  plotObject <- ggplot2::ggplot()
 
   # Add Plot Configuration layers and PK Ratios
   plotObject <- plotConfiguration$setWatermark(plotObject)
   plotObject <- plotConfiguration$defineLabels(plotObject, dataMapping)
   plotObject <- plotConfiguration$addRatioLines(plotObject)
-  plotObject <- plotObject + geom_point(data = data[, c(dataMapping$x, dataMapping$y, dataMapping$colorGrouping, dataMapping$sizeGrouping, dataMapping$shapeGrouping)], mapping = aes(x = data[, x], y = data[, y], color = colorGrouping, size = sizeGrouping, shape = shapeGrouping))
+  plotObject <- plotObject + ggplot2::geom_point(
+    data = data[, c(x, y, "colorGrouping", "sizeGrouping", "shapeGrouping")],
+    mapping = aes(
+      x = data[, x], y = data[, y],
+      color = data[, "colorGrouping"],
+      size = data[, "sizeGrouping"],
+      shape = data[, "shapeGrouping"]
+    )
+  )
 
   return(plotObject)
 }

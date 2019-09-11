@@ -21,10 +21,14 @@ testMetaData <- getMetaData(testData)
 
 # -------------------------------------------------
 # Define Default plot Configuration & Mapping from R6 class for PK Ratio
-testConfiguration <- PKRatioPlotConfiguration$new()
 
-testDataMapping <- PKRatioDataMapping$new()
-# colorGrouping = "Gender", shapeGrouping = c("Dose", "Compound")
+# Renaming of Label from initialize
+testConfiguration <- PKRatioPlotConfiguration$new(title = "New title for PK Ratio")
+
+# Or directly update features of configuration
+testConfiguration$watermark$font$color <- "lightgreen"
+
+testDataMapping <- PKRatioDataMapping$new(colorGrouping = "Gender", shapeGrouping = c("Dose", "Compound"))
 
 # -------------------------------------------------
 # Plot PK Ratio using the previously defined variables
@@ -33,5 +37,14 @@ pkrp <- plotPKRatio(
   dataMapping = testDataMapping, plotConfiguration = testConfiguration
 )
 
-# Save plot as a specific format
-# testConfiguration$savePlot(pkrp)
+# -------------------------------------------------
+# possibility to change theme (need to reupdate plot):
+testConfiguration$setTheme("BW")
+pkrp <- plotPKRatio(
+  data = testData, metaData = testMetaData,
+  dataMapping = testDataMapping, plotConfiguration = testConfiguration
+)
+
+
+# Saving of plot
+testConfiguration$savePlot(pkrp)
