@@ -7,36 +7,39 @@ PlotConfiguration <- R6::R6Class(
   ## ----------------------------------
   ## List of plotConfiguration Variables
   public = list(
-    title = asLabel(""),
-    subtitle = asLabel(""),
-    xlabel = asLabel(""),
-    ylabel = asLabel(""),
+    title = NULL,
+    subtitle = NULL,
+    xlabel = NULL,
+    ylabel = NULL,
     xlim = c(-Inf, Inf),
     ylim = c(-Inf, Inf),
-    watermark = asLabel(""),
-    legend = list("Location" = "outside", "X.Location" = "right", "Y.Location" = "top", "font" = NULL),
-    theme = NULL,
-
+    watermark = NULL,
+    legendCaption = NULL,
+    legendPosition = NULL,
+    filename = NULL,
 
     ## ----------------------------------------------
     ## Initializing function to be called with $new()
-    initialize = function(title = asLabel(""),
-                              subtitle = asLabel(paste("Date:", format(Sys.Date(), "%y-%m-%d"))),
-                              xlabel = asLabel(""),
-                              ylabel = asLabel(""),
-                              xlim = c(-Inf, Inf),
-                              ylim = c(-Inf, Inf),
-                              watermark = asLabel("TLF-Watermark"),
-                              legend = list("Location" = "outside", "X.Location" = "right", "Y.Location" = NULL),
-                              theme = NULL) {
-      self$title <- title
-      self$subtitle <- subtitle
-      self$xlabel <- xlabel
-      self$ylabel <- ylabel
+    initialize = function(title = asTitle(""),
+                          subtitle = asLabel(paste("Date:", format(Sys.Date(), "%y-%m-%d"))),
+                          xlabel = asLabel(""),
+                          ylabel = asLabel(""),
+                          xlim = c(-Inf, Inf),
+                          ylim = c(-Inf, Inf),
+                          watermark = asLabel("TLF-Watermark"),
+                          filename = "TestPlot.png",
+                          legendCaption = asLabel(""),
+                          legendPosition = list("Location" = "outside", "X.Location" = "right", "Y.Location" = NULL)) {
+      self$title <- asTitle(title)
+      self$subtitle <- asLabel(subtitle)
+      self$xlabel <- asLabel(xlabel)
+      self$ylabel <- asLabel(ylabel)
 
-      self$watermark <- watermark
+      self$watermark <- asLabel(watermark)
+      self$filename <- filename
 
-      self$legend <- legend
+      self$legendCaption <- asLabel(legendCaption)
+      self$legendPosition <- legendPosition
     },
 
     ## ---------------------------------------------------------------
@@ -56,7 +59,7 @@ PlotConfiguration <- R6::R6Class(
     defineLabels = function(plotHandle, dataMapping) {
 
       # Titles and axes labels
-      plotHandle <- plotHandle + labs(
+      plotHandle <- plotHandle + ggplot2::labs(
         title = self$title$text,
         subtitle = self$subtitle$text,
         x = self$xlabel$text,
@@ -69,36 +72,54 @@ PlotConfiguration <- R6::R6Class(
         subtitleFont = self$subtitle$font,
         xAxisFont = self$xlabel$font,
         yAxisFont = self$ylabel$font,
-        legendFont = self$legend$font
+        legendFont = self$legendCaption$font
       )
 
       # Legend labels
       plotHandle <- setLegendPosition(
         plotHandle,
-        Location = self$legend$Location,
-        X.Location = self$legend$X.Location,
-        Y.Location = self$legend$Y.Location
+        Location = self$legendPosition$Location,
+        X.Location = self$legendPosition$X.Location,
+        Y.Location = self$legendPosition$Y.Location
       )
 
       # Redefine label of groups in legend
       if (is.null(dataMapping$colorGrouping)) {
-        plotHandle <- plotHandle + guides(color = "none")
+        plotHandle <- plotHandle + ggplot2::guides(color = "none")
       } else {
-        plotHandle <- plotHandle + guides(color = guide_legend(dataMapping$colorGrouping))
+        plotHandle <- plotHandle +
+          ggplot2::guides(color = guide_legend(paste(dataMapping$colorGrouping, collapse = "-")))
       }
       if (is.null(dataMapping$sizeGrouping)) {
-        plotHandle <- plotHandle + guides(size = "none")
+        plotHandle <- plotHandle + ggplot2::guides(size = "none")
       } else {
-        plotHandle <- plotHandle + guides(size = guide_legend(dataMapping$sizeGrouping))
+        plotHandle <- plotHandle +
+          ggplot2::guides(size = guide_legend(paste(dataMapping$sizeGrouping, collapse = "-")))
       }
       if (is.null(dataMapping$shapeGrouping)) {
-        plotHandle <- plotHandle + guides(shape = "none")
+        plotHandle <- plotHandle + ggplot2::guides(shape = "none")
       } else {
-        plotHandle <- plotHandle + guides(shape = guide_legend(dataMapping$shapeGrouping))
+        plotHandle <- plotHandle +
+          ggplot2::guides(shape = guide_legend(paste(dataMapping$shapeGrouping, collapse = "-")))
       }
-
       return(plotHandle)
     },
+
+    ## ----------------------------------------------------------
+    ## Legend Captions: plotConfiguration function to relabel and re-order legendcaption
+    relabelGrouping = function(data, legendType, which, newCaption) {
+      if ("color" %in% legendType) {
+        levels(data$colorGrouping)[which] <- newCaption
+      }
+      if ("size" %in% legendType) {
+        levels(data$sizeGrouping)[which] <- newCaption
+      }
+      if ("shape" %in% legendType) {
+        levels(data$shapeGrouping)[which] <- newCaption
+      }
+    },
+
+
     ## ----------------------------------------------------------
     ## Define Labels: plotConfiguration function to first define Watermark
 
@@ -106,24 +127,30 @@ PlotConfiguration <- R6::R6Class(
       plotHandle <- setWatermark(plotHandle = plotHandle, label = self$watermark)
       return(plotHandle)
     },
-    ## ----------------------------------------------------------
-    ## Define Some Themes using enum ?
 
-    setTLFTheme = function() {
-      self$title$setFontProperties(color = "firebrick4", size = 30, fontface = "bold")
-      self$subtitle$setFontProperties(color = "darkslateblue", size = 26, fontface = "italic")
-      self$xlabel$setFontProperties(color = "deepskyblue4", size = 20)
-      self$ylabel$setFontProperties(color = "deepskyblue4", size = 20)
-
-      self$watermark$setFontProperties(color = "goldenrod3", size = 14)
+    savePlot = function(plotHandle) {
+      ggplot2::ggsave(filename = self$filename, plotHandle, width = 20, height = 12, units = "cm")
     },
+    ## ----------------------------------------------------------
+    ## Define Some Default Themes using enum ?
+    # TO BE DISCUSSED
 
-    setBWFont = function() {
-      self$title$setFontProperties(color = "gray10")
-      self$subtitle$setFontProperties(color = "gray20")
-      self$xlabel$setFontProperties(color = "gray30")
-      self$ylabel$setFontProperties(color = "gray30")
-      self$watermark$setFontProperties(color = "gray40")
+    setTheme = function(theme = "default") {
+      if (theme %in% "default") {
+        self$title$setFontProperties(color = "firebrick4", size = 30, fontFace = "bold")
+        self$subtitle$setFontProperties(color = "darkslateblue", size = 26, fontFace = "italic")
+        self$xlabel$setFontProperties(color = "deepskyblue4", size = 20)
+        self$ylabel$setFontProperties(color = "deepskyblue4", size = 20)
+        self$watermark$setFontProperties(color = "goldenrod3", size = 14)
+      }
+
+      if (theme %in% "BW") {
+        self$title$setFontProperties(color = "gray10")
+        self$subtitle$setFontProperties(color = "gray20")
+        self$xlabel$setFontProperties(color = "gray30")
+        self$ylabel$setFontProperties(color = "gray30")
+        self$watermark$setFontProperties(color = "gray40")
+      }
     }
   )
 )
