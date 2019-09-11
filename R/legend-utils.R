@@ -1,42 +1,42 @@
 #' @title SetLegendPosition
-#' @param PlotHandle Graphical object created from ggplot
+#' @param plotHandle Graphical object created from ggplot
 #' @param plotConfiguration plot Configuration for legend
 #' @param dataMapping mapping (might be overwritten to use plotConfiguration instead)
 #' @return Current plot with Legend Layer
 #' @description
 #' SetLegend set a Legend Position and labels in a plot
 #' @export
-setLegend <- function(PlotHandle, plotConfiguration, dataMapping) {
+setLegend <- function(plotHandle, plotConfiguration, dataMapping) {
 
   # Check Inputs
-  stopifnot(class(PlotHandle) %in% c("gg", "ggplot"))
+  stopifnot(class(plotHandle) %in% c("gg", "ggplot"))
 
   # Set Legend Position according to plotConfiguration
   # plotConfiguration will be added when implemented
-  PlotHandle <- setLegendPosition(PlotHandle)
+  plotHandle <- setLegendPosition(plotHandle)
 
   # Redefine label of groups in legend
   if (is.null(dataMapping$colorGrouping)) {
-    PlotHandle <- PlotHandle + guides(color = "none")
+    plotHandle <- plotHandle + guides(color = "none")
   } else {
-    PlotHandle <- PlotHandle + guides(color = guide_legend(dataMapping$colorGrouping))
+    plotHandle <- plotHandle + guides(color = guide_legend(data$colorGrouping))
   }
   if (is.null(dataMapping$sizeGrouping)) {
-    PlotHandle <- PlotHandle + guides(size = "none")
+    plotHandle <- plotHandle + guides(size = "none")
   } else {
-    PlotHandle <- PlotHandle + guides(size = guide_legend(dataMapping$sizeGrouping))
+    plotHandle <- plotHandle + guides(size = guide_legend(data$sizeGrouping))
   }
   if (is.null(dataMapping$shapeGrouping)) {
-    PlotHandle <- PlotHandle + guides(shape = "none")
+    plotHandle <- plotHandle + guides(shape = "none")
   } else {
-    PlotHandle <- PlotHandle + guides(shape = guide_legend(dataMapping$shapeGrouping))
+    plotHandle <- plotHandle + guides(shape = guide_legend(data$shapeGrouping))
   }
 
-  return(PlotHandle)
+  return(plotHandle)
 }
 
 #' @title SetLegendPosition
-#' @param PlotHandle Graphical object created from ggplot
+#' @param plotHandle Graphical object created from ggplot
 #' @param Location Inside/Oustide/None
 #' @param X.Location NA/Left/Center/Right
 #' @param Y.Location NA/Top/Center/Bottom
@@ -46,17 +46,17 @@ setLegend <- function(PlotHandle, plotConfiguration, dataMapping) {
 #' SetLegendPosition set a Legend Position in a plot (case insensitive)
 #' Default legend setting is within plot on the top right corner
 #' @export
-setLegendPosition <- function(PlotHandle,
+setLegendPosition <- function(plotHandle,
                               Location = "inside",
                               X.Location = NA,
                               Y.Location = NA,
                               Subplot.Index = NA) {
   # Check Plot Handle
-  stopifnot(class(PlotHandle) %in% c("gg", "ggplot"))
+  stopifnot(class(plotHandle) %in% c("gg", "ggplot"))
 
   # Check Location, if NULL will hide legend
   if (is.null(Location) || tolower(Location) %in% "none") {
-    PlotHandle <- PlotHandle + theme(legend.position = "none")
+    plotHandle <- plotHandle + theme(legend.position = "none")
   }
   else {
     # If legend XY locations are set as null, place them on the top right side of the plot
@@ -100,7 +100,7 @@ setLegendPosition <- function(PlotHandle,
         Y.Justification <- 0
       }
 
-      PlotHandle <- PlotHandle + theme(
+      plotHandle <- plotHandle + theme(
         legend.position = c(X.Location, Y.Location),
         legend.justification = c(X.Justification, Y.Justification)
       )
@@ -108,13 +108,13 @@ setLegendPosition <- function(PlotHandle,
     if (tolower(Location) %in% "outside") {
       # As outside reference, choose to add legend on top of plot centered
       if (is.na(X.Location) && is.na(Y.Location)) {
-        PlotHandle <- PlotHandle + theme(legend.position = "top")
+        plotHandle <- plotHandle + theme(legend.position = "top")
       }
       if (tolower(X.Location) %in% c(NA, "center", "middle") && !tolower(Y.Location) %in% c(NA, "center", "middle")) {
-        PlotHandle <- PlotHandle + theme(legend.position = tolower(Y.Location))
+        plotHandle <- plotHandle + theme(legend.position = tolower(Y.Location))
       }
       if (tolower(Y.Location) %in% c(NA, "center", "middle") && !tolower(X.Location) %in% c(NA, "center", "middle")) {
-        PlotHandle <- PlotHandle + theme(legend.position = tolower(X.Location))
+        plotHandle <- plotHandle + theme(legend.position = tolower(X.Location))
       }
       if (!tolower(X.Location) %in% c(NA, "center", "middle") && !tolower(Y.Location) %in% c(NA, "center", "middle")) {
         # Prioritize Y.Location (top/bottom) and justified through X.Location
@@ -124,12 +124,12 @@ setLegendPosition <- function(PlotHandle,
         if (tolower(X.Location) %in% "right") {
           X.Location <- 1
         }
-        PlotHandle <- PlotHandle + theme(
+        plotHandle <- plotHandle + theme(
           legend.position = tolower(Y.Location),
           legend.justification = c(X.Location, 0.5)
         )
       }
     }
   }
-  return(PlotHandle)
+  return(plotHandle)
 }

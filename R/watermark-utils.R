@@ -8,7 +8,7 @@
 #' @import  ggplot2
 #' @export
 setWatermark <- function(plotHandle, label, angle = 30) {
-  stopifnot("Label" %in% class(label))
+  label <- asLabel(label)
 
   watermark <- createWatermarkGrob(label, angle)
 
@@ -26,12 +26,12 @@ setWatermark <- function(plotHandle, label, angle = 30) {
 #' @export
 createWatermarkGrob <- function(label, angle = 30) {
   watermark <- ggplot2::ggplot() + ggplot2::theme_void() +
-    annotate(
+    ggplot2::annotate(
       geom = "text",
       x = 0,
       y = 0,
       label = label$text,
-      color = label$font$color, fontface = label$font$fontface, size = label$font$size,
+      color = label$font$color, fontface = label$font$fontFace, size = label$font$size,
       angle = angle
     )
   watermark <- ggplot2::ggplotGrob(watermark)
