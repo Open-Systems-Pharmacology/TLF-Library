@@ -9,30 +9,36 @@ Font <- R6::R6Class(
   public = list(
     size = NULL,
     color = NULL,
-    fontfamily = NULL,
-    fontface = NULL,
+    fontFamily = NULL,
+    fontFace = NULL,
 
     initialize = function(size = 12,
-                              color = "black",
-                              fontfamily = "",
-                              fontface = "plain") {
+                          color = "black",
+                          fontFamily = "",
+                          fontFace = "plain") {
       self$size <- size
       self$color <- color
-      self$fontfamily <- fontfamily
-      self$fontface <- fontface
+      self$fontFamily <- fontFamily
+      self$fontFace <- fontFace
     },
 
     setFont = function() {
       element_text(
         colour = self$color,
         size = self$size,
-        face = self$fontface,
-        family = self$fontfamily
+        face = self$fontFace,
+        family = self$fontFamily
       )
     }
   )
 )
 
+#' @title Label
+#' @docType class
+#' @description
+#' Label class associate font to a text
+#' @include utils.R
+#' @export
 Label <- R6::R6Class(
   "Label",
   public = list(
@@ -40,7 +46,7 @@ Label <- R6::R6Class(
     "font" = NULL,
 
     initialize = function(text = "",
-                              font = NULL) {
+                          font = NULL) {
       self$text <- text
       font <- font %||% Font$new()
 
@@ -49,13 +55,13 @@ Label <- R6::R6Class(
     },
 
     setFontProperties = function(color = self$font$color,
-                                     size = self$font$size,
-                                     fontfamily = self$font$fontfamily,
-                                     fontface = self$font$fontface) {
+                                 size = self$font$size,
+                                 fontFamily = self$font$fontFamily,
+                                 fontFace = self$font$fontFace) {
       self$font$color <- color
       self$font$size <- size
-      self$font$fontfamily <- fontfamily
-      self$font$fontface <- fontface
+      self$font$fontFamily <- fontFamily
+      self$font$fontFace <- fontFace
     },
 
     print = function() {
@@ -64,17 +70,3 @@ Label <- R6::R6Class(
     }
   )
 )
-
-#' @title asLabel
-#' @param text text to set as label class
-#' @return Label
-#' @description
-#' set a character type into a Label class
-#' @export
-#' @examples
-#' title <- "Title of Plot"
-#' title <- asLabel(title)
-asLabel <- function(text) {
-  Label <- Label$new(text)
-  return(Label)
-}
