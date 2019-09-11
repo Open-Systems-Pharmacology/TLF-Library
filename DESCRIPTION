@@ -26,14 +26,15 @@ Suggests:
     testthat (>= 2.1.0)
 VignetteBuilder: knitr
 Collate: 
+    'font-utils.R'
     'utils.R'
     'font.R'
-    'getGrouping.R'
+    'legend-utils.R'
     'pkratio-datamapping.R'
     'pkratio-plotconfiguration.R'
     'plot-pkratio.R'
     'plotconfiguration.R'
+    'random-pkratio-data.R'
     'setFontProperties.R'
-    'setLegend.R'
-    'setWatermark.R'
+    'watermark-utils.R'
     'xy-datamapping.R'
