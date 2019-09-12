@@ -33,5 +33,7 @@ pkrp <- plotPKRatio(
   dataMapping = testDataMapping, plotConfiguration = testConfiguration
 )
 
-# Save plot as a specific format
-# testConfiguration$savePlot(pkrp)
+# Test of getPKRatioMeasure
+PKRatioMeasure <- getPKRatioMeasure(data = testData, dataMapping = testDataMapping)
+
+print(PKRatioMeasure)
