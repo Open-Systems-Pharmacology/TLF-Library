@@ -2,7 +2,8 @@
 #' @docType class
 #' @description  Abstract class for X Y Mapping
 #' @export
-XYDataMapping <- R6::R6Class("XYDataMapping",
+XYDataMapping <- R6::R6Class(
+  "XYDataMapping",
   public = list(
     x = NULL,
     y = NULL,

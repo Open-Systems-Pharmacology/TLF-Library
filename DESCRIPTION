@@ -13,7 +13,6 @@ URL: https://github.com/open-systems-pharmacology/tlf-library
 BugReports: https://github.com/open-systems-pharmacology/tlf-library/issues
 Imports: 
     ggplot2 (>= 3.2.0),
-    rlang (>= 0.3.0),
     R6
 Depends: 
     R (>= 3.5)
@@ -26,3 +25,18 @@ Suggests:
     rmarkdown,
     testthat (>= 2.1.0)
 VignetteBuilder: knitr
+Collate: 
+    'font-utils.R'
+    'utils.R'
+    'font.R'
+    'getPKRatioMeasure.R'
+    'legend-utils.R'
+    'pkratio-datamapping.R'
+    'pkratio-plotconfiguration.R'
+    'plot-pkratio.R'
+    'plotconfiguration.R'
+    'random-pkratio-data.R'
+    'setFontProperties.R'
+    'themes.R'
+    'watermark-utils.R'
+    'xy-datamapping.R'
