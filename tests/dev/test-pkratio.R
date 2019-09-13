@@ -7,7 +7,7 @@ library(tlf)
 
 # Set your folder to test folder:
 # setwd("C:/Design2Code/TLF-Playground/TLF-Playground/R/")
-# useTheme()
+useTheme(defaultTheme)
 
 # -------------------------------------------------
 # Get the data and metadata for PK Ratio plot
@@ -23,8 +23,9 @@ testMetaData <- getMetaData(testData)
 # Define Default plot Configuration & Mapping from R6 class for PK Ratio
 testDataMapping <- PKRatioDataMapping$new(colorGrouping = "Gender", shapeGrouping = c("Dose", "Compound"))
 
+# Renaming of Label from initialize
 testConfiguration <- PKRatioPlotConfiguration$new(
-  ylabel = "Sim/Obs Ratio", data = testData,
+  data = testData,
   metaData = testMetaData,
   dataMapping = testDataMapping
 )
@@ -36,5 +37,11 @@ pkrp <- plotPKRatio(
   dataMapping = testDataMapping, plotConfiguration = testConfiguration
 )
 
-# Save plot as a specific format
+# -------------------------------------------------
+# Test of getPKRatioMeasure
+PKRatioMeasure <- getPKRatioMeasure(data = testData, dataMapping = testDataMapping)
+
+print(PKRatioMeasure)
+
+# Saving of plot
 # testConfiguration$savePlot(pkrp)

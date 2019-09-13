@@ -39,12 +39,6 @@ pkrp <- plotPKRatio(
 
 # -------------------------------------------------
 # possibility to change theme (need to reupdate plot):
-testConfiguration$setTheme("BW")
-pkrp <- plotPKRatio(
-  data = testData, metaData = testMetaData,
-  dataMapping = testDataMapping, plotConfiguration = testConfiguration
-)
-
 
 # Saving of plot
-testConfiguration$savePlot(pkrp)
+# testConfiguration$savePlot(pkrp)
