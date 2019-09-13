@@ -37,12 +37,13 @@ PKRatioDataMapping <- R6::R6Class(
 #' @param data input data.frame with variables to group by
 #' @param metaData input data.frame with variables to group by
 #' @param variableList groups as factor levels
+#' @param sep characters separating variables in caption
 #' @description
-#' createGroupingVariable create a new column that groups the grouping variable
+#' getDefaultCaptions create a new column that groups the grouping variable
 #' @return groupingVariable
 #' @export
 #'
-getDefaultCaptions <- function(data, metaData, variableList = colnames(data)) {
+getDefaultCaptions <- function(data, metaData, variableList = colnames(data), sep = "-") {
 
   # Check that the grouping is in the list of data variables
   stopifnot(variableList %in% colnames(data))
@@ -59,7 +60,7 @@ getDefaultCaptions <- function(data, metaData, variableList = colnames(data)) {
       asLegendCaptionSubset(
         data[, variable],
         metaData[[variable]]
-      ), sep = "-"
+      ), sep = sep
     )
   }
 
