@@ -8,9 +8,7 @@ PKRatioPlotConfiguration <- R6::R6Class(
   public = list(
     RatioLinesProperties = NULL,
 
-    initialize = function(title = asLabel("PK Ratio Plot"),
-                          xlabel = asLabel("Age [yrs]"),
-                          ylabel = asLabel("Simulated/Observed Ratio"),
+    initialize = function(title = "PK Ratio Plot",
                           RatioLinesProperties = data.frame(
                             ratio = c(1, 1.5, 1 / 1.5, 2, 1 / 2),
                             linetype = c("solid", "dashed", "dashed", "dashed", "dashed"),
@@ -20,8 +18,6 @@ PKRatioPlotConfiguration <- R6::R6Class(
                           ...) {
       super$initialize(
         title = title,
-        xlabel = xlabel,
-        ylabel = ylabel,
         ...
       )
 
