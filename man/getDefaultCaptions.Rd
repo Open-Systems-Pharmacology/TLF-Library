@@ -4,7 +4,7 @@
 \alias{getDefaultCaptions}
 \title{getDefaultCaptions}
 \usage{
-getDefaultCaptions(data, metaData, variableList = colnames(data))
+getDefaultCaptions(data, metaData, variableList = colnames(data), sep = "-")
 }
 \arguments{
 \item{data}{input data.frame with variables to group by}
@@ -12,10 +12,12 @@ getDefaultCaptions(data, metaData, variableList = colnames(data))
 \item{metaData}{input data.frame with variables to group by}
 
 \item{variableList}{groups as factor levels}
+
+\item{sep}{characters separating variables in caption}
 }
 \value{
 groupingVariable
 }
 \description{
-createGroupingVariable create a new column that groups the grouping variable
+getDefaultCaptions create a new column that groups the grouping variable
 }
