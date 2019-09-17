@@ -168,7 +168,7 @@ PlotConfiguration <- R6::R6Class(
 #' @export
 dataMappingLabel <- function(mapping = NULL, metaData = NULL) {
   label <- NULL
-  ifnotnull(mapping, label <- getLabelWithUnit(mapping, metaData[[mapping]]$Unit))
+  ifnotnull(mapping, label <- getLabelWithUnit(metaData[[mapping]]$dimension, metaData[[mapping]]$unit))
 
   return(label)
 }
@@ -181,6 +181,9 @@ dataMappingLabel <- function(mapping = NULL, metaData = NULL) {
 #' getLabelWithUnit paste unit to label when available
 #' @export
 getLabelWithUnit <- function(label, unit = NULL) {
+  if (isTRUE(unit %in% "")) {
+    unit <- NULL
+  }
   ifnotnull(unit, label <- paste(label, " [", unit, "]", sep = ""))
   return(label)
 }

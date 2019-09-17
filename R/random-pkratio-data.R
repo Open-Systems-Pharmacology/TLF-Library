@@ -20,16 +20,22 @@ getData <- function(size) {
 getMetaData <- function(data) {
   metaData <- as.list(data)
   for (variable in colnames(data)) {
-    metaData[[variable]] <- list("Unit" = NULL, "Dimension" = NULL, "VariableType" = NULL)
+    metaData[[variable]] <- list("unit" = NULL, "dimension" = NULL, "variableType" = NULL)
 
     if (variable %in% "Age") {
-      metaData[[variable]] <- list("Unit" = "yrs", "Dimension" = "Age", "VariableType" = "numeric")
+      metaData[[variable]] <- list("unit" = "yrs", "dimension" = "Age", "variableType" = "numeric")
+    }
+    if (variable %in% "Time") {
+      metaData[[variable]] <- list("unit" = "h", "dimension" = "Time", "variableType" = "numeric")
     }
     if (variable %in% "Dose") {
-      metaData[[variable]] <- list("Unit" = "mg", "Dimension" = "Amount", "VariableType" = "numeric")
+      metaData[[variable]] <- list("unit" = "mg", "dimension" = "Amount", "variableType" = "numeric")
     }
-    if (variable %in% c("Observed", "Simulated")) {
-      metaData[[variable]] <- list("Unit" = "mg/L", "Dimension" = "Concentration", "VariableType" = "numeric")
+    if (variable %in% c("Observed", "Simulated", "Value")) {
+      metaData[[variable]] <- list("unit" = "mg/L", "dimension" = "Concentration", "variableType" = "numeric")
+    }
+    if (variable %in% c("Ratio")) {
+      metaData[[variable]] <- list("unit" = "", "dimension" = "Ratio", "variableType" = "numeric")
     }
   }
   return(metaData)
