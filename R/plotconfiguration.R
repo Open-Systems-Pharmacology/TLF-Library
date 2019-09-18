@@ -17,7 +17,7 @@ PlotConfiguration <- R6::R6Class(
     legendCaption = NULL,
     legendPosition = NULL,
     filename = NULL,
-
+    
     ## ----------------------------------------------
     ## Initializing function to be called with $new()
     initialize = function(title = asTitle(""),
@@ -34,17 +34,17 @@ PlotConfiguration <- R6::R6Class(
       self$subtitle <- asLabel(subtitle)
       self$xlabel <- asLabel(xlabel)
       self$ylabel <- asLabel(ylabel)
-
+      
       self$watermark <- asLabel(watermark)
       self$filename <- filename
-
+      
       self$legendCaption <- asLabel(legendCaption)
       self$legendPosition <- legendPosition
     },
-
+    
     ## ---------------------------------------------------------------
     ## Printing function, only show main elements of plotConfiguration
-
+    
     print = function() {
       cat("  Title: ", self$title$text, "\n", sep = "\t")
       cat("  Subtitle: ", self$subtitle$text, "\n", sep = "\t")
@@ -52,12 +52,12 @@ PlotConfiguration <- R6::R6Class(
       cat("  Ylabel:  ", self$ylabel$text, "\n", sep = "\t")
       invisible(self)
     },
-
+    
     ## ---------------------------------------------------------------
     ## Define Labels: plotConfiguration function that uses data mapping
     ## to set labels and legends
     defineLabels = function(plotHandle, dataMapping) {
-
+      
       # Titles and axes labels
       plotHandle <- plotHandle + ggplot2::labs(
         title = self$title$text,
@@ -65,7 +65,7 @@ PlotConfiguration <- R6::R6Class(
         x = self$xlabel$text,
         y = self$ylabel$text
       )
-
+      
       plotHandle <- setFontProperties(
         plotHandle,
         titleFont = self$title$font,
@@ -74,7 +74,7 @@ PlotConfiguration <- R6::R6Class(
         yAxisFont = self$ylabel$font,
         legendFont = self$legendCaption$font
       )
-
+      
       # Legend labels
       plotHandle <- setLegendPosition(
         plotHandle,
@@ -82,29 +82,32 @@ PlotConfiguration <- R6::R6Class(
         X.Location = self$legendPosition$X.Location,
         Y.Location = self$legendPosition$Y.Location
       )
-
+      
       # Redefine label of groups in legend
       if (is.null(dataMapping$colorGrouping)) {
         plotHandle <- plotHandle + ggplot2::guides(color = "none")
       } else {
+        colorLegendTitle = dataMapping$colorLegendTitle  %||% paste(dataMapping$colorGrouping, collapse = "-")
         plotHandle <- plotHandle +
-          ggplot2::guides(color = guide_legend(paste(dataMapping$colorGrouping, collapse = "-")))
+          ggplot2::guides(color = guide_legend(colorLegendTitle))
       }
       if (is.null(dataMapping$sizeGrouping)) {
         plotHandle <- plotHandle + ggplot2::guides(size = "none")
       } else {
+        sizeLegendTitle = dataMapping$sizeLegendTitle  %||% paste(dataMapping$sizeGrouping, collapse = "-")
         plotHandle <- plotHandle +
-          ggplot2::guides(size = guide_legend(paste(dataMapping$sizeGrouping, collapse = "-")))
+          ggplot2::guides(size = guide_legend(sizeLegendTitle))
       }
       if (is.null(dataMapping$shapeGrouping)) {
         plotHandle <- plotHandle + ggplot2::guides(shape = "none")
       } else {
+        shapeLegendTitle = dataMapping$shapeLegendTitle  %||% paste(dataMapping$shapeGrouping, collapse = "-")
         plotHandle <- plotHandle +
-          ggplot2::guides(shape = guide_legend(paste(dataMapping$shapeGrouping, collapse = "-")))
+          ggplot2::guides(shape = guide_legend(shapeLegendTitle))
       }
       return(plotHandle)
     },
-
+    
     ## ----------------------------------------------------------
     ## Legend Captions: plotConfiguration function to relabel and re-order legendcaption
     relabelGrouping = function(data, legendType, which, newCaption) {
@@ -118,23 +121,23 @@ PlotConfiguration <- R6::R6Class(
         levels(data$shapeGrouping)[which] <- newCaption
       }
     },
-
-
+    
+    
     ## ----------------------------------------------------------
     ## Define Labels: plotConfiguration function to first define Watermark
-
+    
     setWatermark = function(plotHandle) {
       plotHandle <- setWatermark(plotHandle = plotHandle, label = self$watermark)
       return(plotHandle)
     },
-
+    
     savePlot = function(plotHandle) {
       ggplot2::ggsave(filename = self$filename, plotHandle, width = 20, height = 12, units = "cm")
     },
     ## ----------------------------------------------------------
     ## Define Some Default Themes using enum ?
     # TO BE DISCUSSED
-
+    
     setTheme = function(theme = "default") {
       if (theme %in% "default") {
         self$title$setFontProperties(color = "firebrick4", size = 30, fontFace = "bold")
@@ -143,7 +146,7 @@ PlotConfiguration <- R6::R6Class(
         self$ylabel$setFontProperties(color = "deepskyblue4", size = 20)
         self$watermark$setFontProperties(color = "goldenrod3", size = 14)
       }
-
+      
       if (theme %in% "BW") {
         self$title$setFontProperties(color = "gray10")
         self$subtitle$setFontProperties(color = "gray20")
