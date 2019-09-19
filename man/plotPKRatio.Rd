@@ -4,7 +4,8 @@
 \alias{plotPKRatio}
 \title{plotPKRatio}
 \usage{
-plotPKRatio(data, metaData, dataMapping = NULL, plotConfiguration = NULL)
+plotPKRatio(data, metaData, dataMapping = NULL,
+  plotConfiguration = NULL)
 }
 \arguments{
 \item{data}{data.frame (or list of data.frames? TO BE DISCUSSED)
