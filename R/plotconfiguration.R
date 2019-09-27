@@ -14,31 +14,55 @@ PlotConfiguration <- R6::R6Class(
     xlim = c(-Inf, Inf),
     ylim = c(-Inf, Inf),
     watermark = NULL,
-    legendCaption = NULL,
+    colorLegendCaption = NULL,
+    sizeLegendCaption = NULL,
+    shapeLegendCaption = NULL,
     legendPosition = NULL,
     filename = NULL,
 
     ## ----------------------------------------------
     ## Initializing function to be called with $new()
-    initialize = function(title = asTitle(""),
+    initialize = function(title = NULL,
                           subtitle = asLabel(paste("Date:", format(Sys.Date(), "%y-%m-%d"))),
-                          xlabel = asLabel(""),
-                          ylabel = asLabel(""),
+                          xlabel = NULL,
+                          ylabel = NULL,
                           xlim = c(-Inf, Inf),
                           ylim = c(-Inf, Inf),
-                          watermark = asLabel("TLF-Watermark"),
+                          watermark = "TLF-Watermark",
                           filename = "TestPlot.png",
-                          legendCaption = asLabel(""),
-                          legendPosition = list("Location" = "outside", "X.Location" = "right", "Y.Location" = NULL)) {
-      self$title <- asTitle(title)
-      self$subtitle <- asLabel(subtitle)
-      self$xlabel <- asLabel(xlabel)
-      self$ylabel <- asLabel(ylabel)
+                          colorLegendCaption = "",
+                          sizeLegendCaption = "",
+                          shapeLegendCaption = "",
+                          legendPosition = "outsideRight",
+                          data = NULL,
+                          metaData = NULL,
+                          dataMapping = NULL,
+                          theme = tlfEnv$currentTheme) {
+      self$title <- asLabel(title %||% "")
+      self$title$font <- theme$title
+      self$subtitle <- asLabel(subtitle %||% "")
+      self$subtitle$font <- theme$subtitle
 
-      self$watermark <- asLabel(watermark)
+      # If xlabel and ylabel are not defined, use dataMapping of x, y to label axes
+      xMapping <- NULL
+      yMapping <- NULL
+      if (!is.null(dataMapping)) {
+        xMapping <- dataMapping$x
+        yMapping <- dataMapping$y
+      }
+      self$xlabel <- asLabel(xlabel %||% (dataMappingLabel(xMapping, metaData) %||% ""))
+      self$ylabel <- asLabel(ylabel %||% (dataMappingLabel(yMapping, metaData) %||% ""))
+
+      self$xlabel$font <- theme$xlabel
+      self$ylabel$font <- theme$ylabel
+
+      self$watermark <- asLabel(watermark %||% "")
+      self$watermark$font <- theme$watermark
+
       self$filename <- filename
-
-      self$legendCaption <- asLabel(legendCaption)
+      self$colorLegendCaption <- colorLegendCaption
+      self$sizeLegendCaption <- sizeLegendCaption
+      self$shapeLegendCaption <- shapeLegendCaption
       self$legendPosition <- legendPosition
     },
 
@@ -56,7 +80,7 @@ PlotConfiguration <- R6::R6Class(
     ## ---------------------------------------------------------------
     ## Define Labels: plotConfiguration function that uses data mapping
     ## to set labels and legends
-    defineLabels = function(plotHandle, dataMapping) {
+    setPlotLabels = function(plotHandle, dataMapping) {
 
       # Titles and axes labels
       plotHandle <- plotHandle + ggplot2::labs(
@@ -76,49 +100,46 @@ PlotConfiguration <- R6::R6Class(
       )
 
       # Legend labels
-      plotHandle <- setLegendPosition(
-        plotHandle,
-        Location = self$legendPosition$Location,
-        X.Location = self$legendPosition$X.Location,
-        Y.Location = self$legendPosition$Y.Location
-      )
+      plotHandle <- setLegendPosition(plotHandle, legendPosition = self$legendPosition)
 
       # Redefine label of groups in legend
-      if (is.null(dataMapping$colorGrouping)) {
-        plotHandle <- plotHandle + ggplot2::guides(color = "none")
-      } else {
-        plotHandle <- plotHandle +
-          ggplot2::guides(color = guide_legend(paste(dataMapping$colorGrouping, collapse = "-")))
-      }
-      if (is.null(dataMapping$sizeGrouping)) {
-        plotHandle <- plotHandle + ggplot2::guides(size = "none")
-      } else {
-        plotHandle <- plotHandle +
-          ggplot2::guides(size = guide_legend(paste(dataMapping$sizeGrouping, collapse = "-")))
-      }
-      if (is.null(dataMapping$shapeGrouping)) {
-        plotHandle <- plotHandle + ggplot2::guides(shape = "none")
-      } else {
-        plotHandle <- plotHandle +
-          ggplot2::guides(shape = guide_legend(paste(dataMapping$shapeGrouping, collapse = "-")))
-      }
+      plotHandle <- plotHandle + ifnotnull(
+        dataMapping$colorGrouping,
+        ggplot2::guides(color = guide_legend(paste(dataMapping$colorGrouping, collapse = "-"))),
+        ggplot2::guides(color = "none")
+      )
+
+      plotHandle <- plotHandle + ifnotnull(
+        dataMapping$sizeGrouping,
+        ggplot2::guides(size = guide_legend(paste(dataMapping$sizeGrouping, collapse = "-"))),
+        ggplot2::guides(size = "none")
+      )
+
+      plotHandle <- plotHandle + ifnotnull(
+        dataMapping$shapeGrouping,
+        ggplot2::guides(shape = guide_legend(paste(dataMapping$shapeGrouping, collapse = "-"))),
+        ggplot2::guides(shape = "none")
+      )
+
       return(plotHandle)
     },
 
     ## ----------------------------------------------------------
     ## Legend Captions: plotConfiguration function to relabel and re-order legendcaption
-    relabelGrouping = function(data, legendType, which, newCaption) {
-      if ("color" %in% legendType) {
-        levels(data$colorGrouping)[which] <- newCaption
-      }
-      if ("size" %in% legendType) {
-        levels(data$sizeGrouping)[which] <- newCaption
-      }
-      if ("shape" %in% legendType) {
-        levels(data$shapeGrouping)[which] <- newCaption
-      }
+    relabelColorCaption = function(data) {
+      data$colorGrouping <- updateLegendCaption(captionData = data$colorGrouping, newCaption = colorLegendCaption)
+      return(data)
     },
 
+    relabelSizeCaption = function(data) {
+      data$sizeGrouping <- updateLegendCaption(captionData = data$sizeGrouping, newCaption = sizeLegendCaption)
+      return(data)
+    },
+
+    relabelShapeCaption = function(data) {
+      data$shapeGrouping <- updateLegendCaption(captionData = data$shapeGrouping, newCaption = shapeLegendCaption)
+      return(data)
+    },
 
     ## ----------------------------------------------------------
     ## Define Labels: plotConfiguration function to first define Watermark
@@ -130,27 +151,63 @@ PlotConfiguration <- R6::R6Class(
 
     savePlot = function(plotHandle) {
       ggplot2::ggsave(filename = self$filename, plotHandle, width = 20, height = 12, units = "cm")
-    },
-    ## ----------------------------------------------------------
-    ## Define Some Default Themes using enum ?
-    # TO BE DISCUSSED
-
-    setTheme = function(theme = "default") {
-      if (theme %in% "default") {
-        self$title$setFontProperties(color = "firebrick4", size = 30, fontFace = "bold")
-        self$subtitle$setFontProperties(color = "darkslateblue", size = 26, fontFace = "italic")
-        self$xlabel$setFontProperties(color = "deepskyblue4", size = 20)
-        self$ylabel$setFontProperties(color = "deepskyblue4", size = 20)
-        self$watermark$setFontProperties(color = "goldenrod3", size = 14)
-      }
-
-      if (theme %in% "BW") {
-        self$title$setFontProperties(color = "gray10")
-        self$subtitle$setFontProperties(color = "gray20")
-        self$xlabel$setFontProperties(color = "gray30")
-        self$ylabel$setFontProperties(color = "gray30")
-        self$watermark$setFontProperties(color = "gray40")
-      }
     }
   )
 )
+
+
+## -------------------------------------------------------------------
+# List of auxiliary functions used by plotConfiguration
+
+#' @title dataMappingLabel
+#' @param mapping mapping variable on label
+#' @param metaData metaData containing unit of variable
+#' @return label character of variable with its unit
+#' @description
+#' dataMappingLabel create an axis label with unit if available
+#' @export
+dataMappingLabel <- function(mapping = NULL, metaData = NULL) {
+  label <- NULL
+  ifnotnull(mapping, label <- getLabelWithUnit(metaData[[mapping]]$dimension, metaData[[mapping]]$unit))
+
+  return(label)
+}
+
+#' @title getLabelWithUnit
+#' @param label text of axis label
+#' @param unit metaData containing unit of variable
+#' @return label character of variable with its unit when available
+#' @description
+#' getLabelWithUnit paste unit to label when available
+#' @export
+getLabelWithUnit <- function(label, unit = NULL) {
+  if (isTRUE(unit %in% "")) {
+    unit <- NULL
+  }
+  ifnotnull(unit, label <- paste(label, " [", unit, "]", sep = ""))
+  return(label)
+}
+
+#' @title getLegendCaption
+#' @param captionData data used for legend caption
+#' @param which caption position in the legend
+#' @return legend captions
+#' @description
+#' getLegendCaption return the legend captions or a subset using which
+#' @export
+getLegendCaption <- function(captionData, which = seq(1, length(levels(captionData)))) {
+  return(levels(captionData)[which])
+}
+
+#' @title updateLegendCaption
+#' @param captionData data used for legend caption
+#' @param newCaption new legend caption
+#' @param which caption position in the legend
+#' @return updated caption data
+#' @description
+#' updateLegendCaption return the updated data used for legend caption
+#' @export
+updateLegendCaption <- function(captionData, newCaption = NULL, which = NULL) {
+  ifnotnull(which, levels(captionData)[which] <- newCaption %||% levels(captionData)[which])
+  return(captionData)
+}

@@ -1,9 +1,7 @@
 context("asLabel")
 
-test_that("asLabel works", {
+test_that("asLabel gives always a Label class object", {
   x <- asLabel("a")
-  # Check for class of output
   expect_is(x, "Label")
-  # Check that asLabel of Label is still Label class
   expect_is(asLabel(x), "Label")
 })

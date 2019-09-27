@@ -8,11 +8,9 @@ PKRatioPlotConfiguration <- R6::R6Class(
   public = list(
     RatioLinesProperties = NULL,
 
-    initialize = function(title = asLabel("PK Ratio Plot"),
-                          xlabel = asLabel("Age [yrs]"),
-                          ylabel = asLabel("Simulated/Observed Ratio"),
+    initialize = function(title = "PK Ratio Plot",
                           RatioLinesProperties = data.frame(
-                            ratio = c(1, 1.5, 1 / 1.5, 2, 1 / 2),
+                            value = c(1, 1.5, 1 / 1.5, 2, 1 / 2),
                             linetype = c("solid", "dashed", "dashed", "dashed", "dashed"),
                             color = c("black", "blue", "blue", "red", "red"),
                             size = c(2, 1, 1, 1, 1)
@@ -20,8 +18,6 @@ PKRatioPlotConfiguration <- R6::R6Class(
                           ...) {
       super$initialize(
         title = title,
-        xlabel = xlabel,
-        ylabel = ylabel,
         ...
       )
 
@@ -33,10 +29,10 @@ PKRatioPlotConfiguration <- R6::R6Class(
     },
 
     addRatioLines = function(plotHandle) {
-      for (RatioIndex in seq(1, length(self$RatioLinesProperties$ratio))) {
+      for (RatioIndex in seq(1, length(self$RatioLinesProperties$value))) {
         plotHandle <- plotHandle +
           ggplot2::geom_hline(
-            yintercept = self$RatioLinesProperties$ratio[RatioIndex],
+            yintercept = self$RatioLinesProperties$value[RatioIndex],
             linetype = self$RatioLinesProperties$linetype[RatioIndex],
             color = self$RatioLinesProperties$color[RatioIndex],
             size = self$RatioLinesProperties$size[RatioIndex]

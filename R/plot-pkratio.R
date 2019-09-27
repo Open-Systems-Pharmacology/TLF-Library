@@ -32,7 +32,7 @@ plotPKRatio <- function(data, metaData, dataMapping = NULL, plotConfiguration = 
 
   # Add Plot Configuration layers and PK Ratios
   plotObject <- plotConfiguration$setWatermark(plotObject)
-  plotObject <- plotConfiguration$defineLabels(plotObject, dataMapping)
+  plotObject <- plotConfiguration$setPlotLabels(plotObject, dataMapping)
   plotObject <- plotConfiguration$addRatioLines(plotObject)
   plotObject <- plotObject + ggplot2::geom_point(
     data = data[, c(x, y, "colorGrouping", "sizeGrouping", "shapeGrouping")],
