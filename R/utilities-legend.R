@@ -36,16 +36,17 @@ setLegend <- function(plotHandle,
 #' Default legend setting is within plot on the top right corner
 #' @export
 setLegendPosition <- function(plotHandle,
-                              legendPosition = "outsideRight",
+                              legendPosition = legendPositions$outsideRight,
                               Subplot.Index = NA) {
   # Check Plot Handle
   stopifnot(class(plotHandle) %in% c("gg", "ggplot"))
 
   # Check Legend Position is correct
   legendPosition <- legendPosition %||% "none"
-  stopifnot(legendPosition %in% names(legendPositions))
-
-  legendPosition <- legendPositions[[legendPosition]]
+  if ("character" %in% class(legendPosition)) {
+    stopifnot(legendPosition %in% names(legendPositions))
+    legendPosition <- legendPositions[[legendPosition]]
+  }
 
   plotHandle <- plotHandle + theme(
     legend.position = c(legendPosition$xPosition, legendPosition$yPosition),

@@ -13,10 +13,10 @@ TimeProfileDataMapping <- R6::R6Class(
 
     # Example of how to do some other stuff
     initialize = function(simulationSets = 1,
-                          observationSets = NULL,
-                          simulationMapping = NULL,
-                          observationMapping = NULL,
-                          LLOQ = NULL) {
+                              observationSets = NULL,
+                              simulationMapping = NULL,
+                              observationMapping = NULL,
+                              LLOQ = NULL) {
       self$simulationSets <- simulationSets
       self$simulationMapping <- simulationMapping %||% XYDataMapping$new(x = "Time", y = "Value")
       self$observationSets <- observationSets
