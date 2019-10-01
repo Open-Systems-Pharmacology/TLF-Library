@@ -3,9 +3,11 @@
 library(ggplot2)
 library(tlf)
 
-config <- PlotConfiguration$new(title = "Title",
-                                xlabel = "X-label", 
-                                ylabel = "Y-label")
+config <- PlotConfiguration$new(
+  title = "Title",
+  xlabel = "X-label",
+  ylabel = "Y-label"
+)
 
 # Create empty plot object
 plotObject <- ggplot2::ggplot()

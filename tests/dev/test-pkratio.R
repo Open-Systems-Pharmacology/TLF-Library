@@ -21,7 +21,7 @@ testMetaData <- getMetaData(testData)
 
 # -------------------------------------------------
 # Define Default plot Configuration & Mapping from R6 class for PK Ratio
-testDataMapping <- PKRatioDataMapping$new(colorGrouping = "Gender", shapeGrouping = c("Dose", "Compound"))
+testDataMapping <- PKRatioDataMapping$new(color = "Gender", shape = c("Dose", "Compound"))
 
 # Renaming of Label from initialize
 testConfiguration <- PKRatioPlotConfiguration$new(
