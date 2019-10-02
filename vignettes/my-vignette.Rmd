@@ -48,12 +48,6 @@ dataMapping$size
 # Plot Configuration
 All the properties of the plot to define can be defined in an `R6Class` object `PlotConfiguration`. The plot configuration  manages the plot labels (title, subtitle, xlabel, ylabel and watermark), the axis properties (limits, log scale) and the legend properties (color, size, shape, linetype, labels). 
 
-```{r}
-# Create a plot configuration
-#plotConfiguration <- PlotConfiguration$new()
-#plotConfiguration
-```
-
 For a PK Ratio plot, the configuartion is made easier with the `PKRatioPlotConfiguration`.
 
 Besides, the plot configuration can be associated to `data`, `metaData` and their `dataMapping` to facilitate in the definition of plot configuration.
@@ -104,7 +98,7 @@ If no `dataMapping` and `plotConfiguration` is provided, `plotPKRatio` uses a de
 pkRatioDataMapping <- PKRatioDataMapping$new(color = c("Gender"), 
                                       shape = c("Dose", "Compound"))
 
-  pkRatioPlotConfiguration <- PKRatioPlotConfiguration$new(
+pkRatioPlotConfiguration <- PKRatioPlotConfiguration$new(
   ylabel = "Simulated/Observed Cmax Ratio",
   data = pkRatioData,
   metaData = pkRatioMetaData,
