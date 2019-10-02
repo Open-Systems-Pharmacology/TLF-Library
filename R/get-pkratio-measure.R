@@ -25,7 +25,7 @@ getPKRatioMeasure <- function(data, dataMapping = NULL, ratioLimits = c(1.5, 2))
 
   PointsTotal <- length(PKratios)
 
-  PKRatioMeasure <- data.frame("Number" = PointsTotal, "Ratio" = NA, row.names = "PointsTotal")
+  PKRatioMeasure <- data.frame("Number" = PointsTotal, "Ratio" = NA, row.names = "Points Total")
 
   for (limit in ratioLimits) {
     PointsWithin <- sum(PKratios <= limit & PKratios >= 1 / limit)
