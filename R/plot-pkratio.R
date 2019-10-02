@@ -28,17 +28,10 @@ plotPKRatio <- function(data, metaData, dataMapping = NULL, plotConfiguration = 
 
   # Add Plot Configuration layers and PK Ratios
   plotObject <- plotConfiguration$setWatermark(plotObject)
-  plotObject <- plotConfiguration$addRatioLines(plotObject)
+  plotObject <- plotConfiguration$addPKRatioLines(dataMapping$pkRatioLines, plotObject)
 
-  plotObject <- plotObject + geom_point(aes(
-    x = mapData$x, y = mapData$y,
-    color = mapData$color,
-    shape = mapData$shape,
-    size = mapData$size
-  ),
-  show.legend = TRUE
-  )
-
+  plotObject <- plotConfiguration$addPKRatios(mapData, plotObject)
+  
   plotObject <- plotConfiguration$setPlotLabels(plotObject)
   plotObject <- plotConfiguration$setPlotProperties(plotObject)
 

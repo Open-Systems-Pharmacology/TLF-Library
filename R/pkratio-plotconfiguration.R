@@ -16,21 +16,36 @@ PKRatioPlotConfiguration <- R6::R6Class(
         title = title,
         ...
       )
-
+      
       self$pkRatioLinesProperties <- pkRatioLinesProperties
+      
     },
 
-    addRatioLines = function(plotHandle) {
-      for (RatioIndex in seq(1, length(self$pkRatioLinesProperties$value))) {
-        plotHandle <- plotHandle +
+    addPKRatioLines = function(pkRatioLines, plotObject) {
+      for (RatioIndex in seq(1, length(pkRatioLines))) {
+        plotObject <- plotObject +
           ggplot2::geom_hline(
-            yintercept = self$pkRatioLinesProperties$value[RatioIndex],
+            yintercept = pkRatioLines[RatioIndex],
             linetype = self$pkRatioLinesProperties$linetype[RatioIndex],
             color = self$pkRatioLinesProperties$color[RatioIndex],
             size = self$pkRatioLinesProperties$size[RatioIndex]
           )
       }
-      return(plotHandle)
+      return(plotObject)
+    },
+    
+    addPKRatios = function(mapData, plotObject){
+      plotObject <- plotObject + geom_point(mapping=aes(
+        x = x, y = y,
+        color = color,
+        shape = shape,
+        size = size
+      ),
+      data = mapData,
+      show.legend = TRUE
+      )
+      return(plotObject)
+      
     }
   )
 )
