@@ -26,6 +26,7 @@ Suggests:
     testthat (>= 2.1.0)
 VignetteBuilder: knitr
 Collate: 
+    'data-description.R'
     'enum.R'
     'utils.R'
     'font.R'
