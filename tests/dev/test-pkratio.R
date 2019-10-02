@@ -6,7 +6,7 @@ library(ggplot2)
 library(tlf)
 
 # Set your folder to test folder:
-useTheme(defaultTheme)
+useTheme(tlfTheme)
 
 # -------------------------------------------------
 # Data is saved in R/sysdata.rda
@@ -14,8 +14,10 @@ useTheme(defaultTheme)
 
 # -------------------------------------------------
 # Define Default plot Configuration & Mapping from R6 class for PK Ratio
-pkRatioDataMapping <- PKRatioDataMapping$new(color = c("Gender"), 
-                                             shape = c("Dose", "Compound"))
+pkRatioDataMapping <- PKRatioDataMapping$new(
+  color = c("Gender"),
+  shape = c("Dose", "Compound")
+)
 
 # Renaming of Label from initialize
 pkRatioConfiguration <- PKRatioPlotConfiguration$new(

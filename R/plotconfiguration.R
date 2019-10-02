@@ -16,7 +16,7 @@ LabelConfiguration <- R6::R6Class(
                               subtitle = NULL,
                               xlabel = NULL,
                               ylabel = NULL,
-                              watermark = NULL,
+                              watermark = tlfEnv$currentTheme$watermarkText,
                               legendTitles = NULL,
                               theme = tlfEnv$currentTheme) {
       self$title <- asLabel(title %||% "")
@@ -81,10 +81,10 @@ LegendConfiguration <- R6::R6Class(
     values = NULL,
 
     initialize = function(position = NULL,
-                              aesProperties = "color",
+                              aesProperties = c("color"),
                               titles = NULL,
                               captions = NULL,
-                              values = NULL,
+                              values = tlfEnv$currentTheme$aesProperties,
                               dataMapping = NULL,
                               data = NULL,
                               metaData = NULL,
@@ -95,10 +95,10 @@ LegendConfiguration <- R6::R6Class(
         self$position <- legendPositions$outsideRight
       )
 
+      mapTitles <- list()
+      mapCaptions <- list()
       if (!is.null(dataMapping)) {
         mapData <- dataMapping$getMapData(data, metaData)
-        mapTitles <- list()
-        mapCaptions <- list()
         for (aesProperty in aesProperties) {
           mapTitles[[aesProperty]] <- dataMapping[[aesProperty]]
           mapCaptions[[aesProperty]] <- mapData[[aesProperty]]
@@ -240,7 +240,7 @@ PlotConfiguration <- R6::R6Class(
                               subtitle = NULL,
                               xlabel = NULL,
                               ylabel = NULL,
-                              watermark = NULL,
+                              watermark = tlfEnv$currentTheme$watermarkText,
                               legendTitles = NULL,
                               filename = "TestPlot.png",
                               legend = NULL, # R6 class
@@ -250,7 +250,11 @@ PlotConfiguration <- R6::R6Class(
                               metaData = NULL,
                               dataMapping = NULL,
                               theme = tlfEnv$currentTheme, ...) {
-      super$initialize(...)
+      super$initialize(title = title,
+                       subtitle = subtitle,
+                       xlabel = xlabel,
+                       ylabel = ylabel,
+                       watermark = watermark)
 
       # If xlabel and ylabel are not defined, use dataMapping of x, y to label axes
       xMapping <- NULL

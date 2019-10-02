@@ -14,11 +14,11 @@ PKRatioPlotConfiguration <- R6::R6Class(
                               ...) {
       super$initialize(
         title = title,
+        subtitle = subtitle,
         ...
       )
-      
+
       self$pkRatioLinesProperties <- pkRatioLinesProperties
-      
     },
 
     addPKRatioLines = function(pkRatioLines, plotObject) {
@@ -33,19 +33,19 @@ PKRatioPlotConfiguration <- R6::R6Class(
       }
       return(plotObject)
     },
-    
-    addPKRatios = function(mapData, plotObject){
-      plotObject <- plotObject + geom_point(mapping=aes(
-        x = x, y = y,
-        color = color,
-        shape = shape,
-        size = size
-      ),
-      data = mapData,
-      show.legend = TRUE
+
+    addPKRatios = function(mapData, plotObject) {
+      plotObject <- plotObject + geom_point(
+        mapping = aes(
+          x = x, y = y,
+          color = color,
+          shape = shape,
+          size = size
+        ),
+        data = mapData,
+        show.legend = TRUE
       )
       return(plotObject)
-      
     }
   )
 )

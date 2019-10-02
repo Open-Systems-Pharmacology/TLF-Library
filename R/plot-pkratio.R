@@ -31,7 +31,7 @@ plotPKRatio <- function(data, metaData, dataMapping = NULL, plotConfiguration = 
   plotObject <- plotConfiguration$addPKRatioLines(dataMapping$pkRatioLines, plotObject)
 
   plotObject <- plotConfiguration$addPKRatios(mapData, plotObject)
-  
+
   plotObject <- plotConfiguration$setPlotLabels(plotObject)
   plotObject <- plotConfiguration$setPlotProperties(plotObject)
 
