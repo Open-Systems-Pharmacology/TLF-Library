@@ -22,27 +22,18 @@ plotPKRatio <- function(data, metaData, dataMapping = NULL, plotConfiguration = 
   stopifnot("PKRatioDataMapping" %in% class(dataMapping))
   stopifnot("PKRatioPlotConfiguration" %in% class(configuration))
 
-  x <- dataMapping$x
-  y <- dataMapping$y
-
-  # Add level columns named colorGrouping, sizeGrouping, shapeGrouping to data
-  data <- dataMapping$getGrouping(data, metaData)
+  mapData <- dataMapping$getMapData(data, metaData)
 
   plotObject <- ggplot2::ggplot()
 
   # Add Plot Configuration layers and PK Ratios
   plotObject <- plotConfiguration$setWatermark(plotObject)
-  plotObject <- plotConfiguration$setPlotLabels(plotObject, dataMapping)
-  plotObject <- plotConfiguration$addRatioLines(plotObject)
-  plotObject <- plotObject + ggplot2::geom_point(
-    data = data[, c(x, y, "colorGrouping", "sizeGrouping", "shapeGrouping")],
-    mapping = aes(
-      x = data[, x], y = data[, y],
-      color = data[, "colorGrouping"],
-      size = data[, "sizeGrouping"],
-      shape = data[, "shapeGrouping"]
-    )
-  )
+  plotObject <- plotConfiguration$addPKRatioLines(dataMapping$pkRatioLines, plotObject)
+
+  plotObject <- plotConfiguration$addPKRatios(mapData, plotObject)
+
+  plotObject <- plotConfiguration$setPlotLabels(plotObject)
+  plotObject <- plotConfiguration$setPlotProperties(plotObject)
 
   return(plotObject)
 }

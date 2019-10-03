@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="OSPSuiteR 2019" />
+
+<meta name="date" content="2019-10-02" />
+
+<title>pk-ratio-vignette</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">pk-ratio-vignette</h1>
+<h4 class="author">OSPSuiteR 2019</h4>
+<h4 class="date">2019-10-02</h4>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(tlf)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(ggplot2)</span></code></pre></div>
+<div id="data" class="section level1">
+<h1>Data</h1>
+<p>The first lines of the PK Ratio Dataset used as an example is presented below:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># pkRatioData</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>pander<span class="op">::</span><span class="kw">pandoc.table</span>(<span class="kw">head</span>(pkRatioData))</span></code></pre></div>
+<table>
+<caption>Table continues below</caption>
+<colgroup>
+<col width="19%"></col>
+<col width="16%"></col>
+<col width="11%"></col>
+<col width="7%"></col>
+<col width="16%"></col>
+<col width="9%"></col>
+<col width="18%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">IndividualID</th>
+<th align="center">Population</th>
+<th align="center">Gender</th>
+<th align="center">Age</th>
+<th align="center">Compound</th>
+<th align="center">Dose</th>
+<th align="center">Organ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">Caucasian</td>
+<td align="center">F</td>
+<td align="center">28</td>
+<td align="center">Aspirin</td>
+<td align="center">50</td>
+<td align="center">VenousBlood</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">African</td>
+<td align="center">M</td>
+<td align="center">2</td>
+<td align="center">Vancomycin</td>
+<td align="center">100</td>
+<td align="center">VenousBlood</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">Caucasian</td>
+<td align="center">F</td>
+<td align="center">5</td>
+<td align="center">Aspirin</td>
+<td align="center">50</td>
+<td align="center">VenousBlood</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">Caucasian</td>
+<td align="center">F</td>
+<td align="center">21</td>
+<td align="center">Vancomycin</td>
+<td align="center">100</td>
+<td align="center">VenousBlood</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">African</td>
+<td align="center">M</td>
+<td align="center">12</td>
+<td align="center">Aspirin</td>
+<td align="center">100</td>
+<td align="center">VenousBlood</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="center">Asian</td>
+<td align="center">M</td>
+<td align="center">19</td>
+<td align="center">Aspirin</td>
+<td align="center">100</td>
+<td align="center">VenousBlood</td>
+</tr>
+</tbody>
+</table>
+<table style="width:67%;">
+<colgroup>
+<col width="19%"></col>
+<col width="16%"></col>
+<col width="15%"></col>
+<col width="15%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Compartment</th>
+<th align="center">Simulated</th>
+<th align="center">Observed</th>
+<th align="center">Ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Plasma</td>
+<td align="center">14.6</td>
+<td align="center">14.5</td>
+<td align="center">1.007</td>
+</tr>
+<tr class="even">
+<td align="center">Plasma</td>
+<td align="center">5.8</td>
+<td align="center">13.2</td>
+<td align="center">0.4394</td>
+</tr>
+<tr class="odd">
+<td align="center">Plasma</td>
+<td align="center">16.5</td>
+<td align="center">6.8</td>
+<td align="center">2.426</td>
+</tr>
+<tr class="even">
+<td align="center">Plasma</td>
+<td align="center">9.5</td>
+<td align="center">4.4</td>
+<td align="center">2.159</td>
+</tr>
+<tr class="odd">
+<td align="center">Plasma</td>
+<td align="center">12.5</td>
+<td align="center">5.8</td>
+<td align="center">2.155</td>
+</tr>
+<tr class="even">
+<td align="center">Plasma</td>
+<td align="center">19.3</td>
+<td align="center">7.6</td>
+<td align="center">2.539</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="data-mapping" class="section level1">
+<h1>Data Mapping</h1>
+<p>To map which data to plot, an <code>R6Class</code> object <code>DataMapping</code> can be called, which allows to map the <code>x</code> and <code>y</code> variables as well as optional <code>color</code>, <code>shape</code> and <code>size</code> to the plot. For a PK Ratio plot, this mapping is made easier with the <code>PKRatioDataMapping</code>. In <code>PKRatioDataMapping</code> default <code>x = Age</code> and <code>y = Ratio</code> are provided but can be overridden.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Create a PK Ratio dataMapping</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>dataMapping &lt;-<span class="st"> </span>PKRatioDataMapping<span class="op">$</span><span class="kw">new</span>(<span class="dt">color =</span> <span class="kw">c</span>(<span class="st">&quot;Gender&quot;</span>), </span>
+<span id="cb3-3"><a href="#cb3-3"></a>                                      <span class="dt">shape =</span> <span class="kw">c</span>(<span class="st">&quot;Dose&quot;</span>, <span class="st">&quot;Compound&quot;</span>))</span>
+<span id="cb3-4"><a href="#cb3-4"></a>dataMapping<span class="op">$</span>x</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co">#&gt; [1] &quot;Age&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>dataMapping<span class="op">$</span>y</span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co">#&gt; [1] &quot;Ratio&quot;</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>dataMapping<span class="op">$</span>color</span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co">#&gt; [1] &quot;Gender&quot;</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>dataMapping<span class="op">$</span>shape</span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co">#&gt; [1] &quot;Dose&quot;     &quot;Compound&quot;</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>dataMapping<span class="op">$</span>size</span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co">#&gt; NULL</span></span></code></pre></div>
+</div>
+<div id="plot-configuration" class="section level1">
+<h1>Plot Configuration</h1>
+<p>All the properties of the plot to define can be defined in an <code>R6Class</code> object <code>PlotConfiguration</code>. The plot configuration manages the plot labels (title, subtitle, xlabel, ylabel and watermark), the axis properties (limits, log scale) and the legend properties (color, size, shape, linetype, labels).</p>
+<p>For a PK Ratio plot, the configuartion is made easier with the <code>PKRatioPlotConfiguration</code>.</p>
+<p>Besides, the plot configuration can be associated to <code>data</code>, <code>metaData</code> and their <code>dataMapping</code> to facilitate in the definition of plot configuration.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>plotConfiguration &lt;-<span class="st"> </span>PKRatioPlotConfiguration<span class="op">$</span><span class="kw">new</span>(</span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="dt">data =</span> pkRatioData,</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="dt">metaData =</span> pkRatioMetaData,</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="dt">dataMapping =</span> dataMapping</span>
+<span id="cb4-5"><a href="#cb4-5"></a>)</span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a>plotConfiguration</span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt;   Title:         </span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt;   Subtitle:      </span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt;   Xlabel:    Age [yrs]   </span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt;   Ylabel:    Ratio   </span></span></code></pre></div>
+<p>Plot configuration can be tuned during its creation or modified later on. For instance, if you want to update the text of the <code>ylabel</code> (labels include a font property), you can either:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>plotConfiguration &lt;-<span class="st"> </span>PKRatioPlotConfiguration<span class="op">$</span><span class="kw">new</span>(</span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="dt">ylabel =</span> <span class="st">&quot;Simulated/Observed Cmax Ratio&quot;</span>,</span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="dt">data =</span> pkRatioData,</span>
+<span id="cb5-4"><a href="#cb5-4"></a>  <span class="dt">metaData =</span> pkRatioMetaData,</span>
+<span id="cb5-5"><a href="#cb5-5"></a>  <span class="dt">dataMapping =</span> dataMapping</span>
+<span id="cb5-6"><a href="#cb5-6"></a>)</span>
+<span id="cb5-7"><a href="#cb5-7"></a></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#plotConfiguration$ylabel$text</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a>plotConfiguration<span class="op">$</span>ylabel<span class="op">$</span>text</span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; [1] &quot;Simulated/Observed Cmax Ratio&quot;</span></span></code></pre></div>
+<p>or</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>plotConfiguration &lt;-<span class="st"> </span>PKRatioPlotConfiguration<span class="op">$</span><span class="kw">new</span>(</span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="dt">data =</span> pkRatioData,</span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="dt">metaData =</span> pkRatioMetaData,</span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="dt">dataMapping =</span> dataMapping</span>
+<span id="cb6-5"><a href="#cb6-5"></a>)</span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a>plotConfiguration<span class="op">$</span>ylabel<span class="op">$</span>text</span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt; [1] &quot;Ratio&quot;</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>plotConfiguration<span class="op">$</span>ylabel<span class="op">$</span>text &lt;-<span class="st"> &quot;Simulated/Observed Cmax Ratio&quot;</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>plotConfiguration<span class="op">$</span>ylabel<span class="op">$</span>text</span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt; [1] &quot;Simulated/Observed Cmax Ratio&quot;</span></span></code></pre></div>
+</div>
+<div id="plot-pk-ratios" class="section level1">
+<h1>Plot PK Ratios</h1>
+<p>The function <code>plotPKRatio</code> allows for an easy way of plotting PK Ratios with specific PK Ratio limits. - Input arguments of <code>plotPKRatio</code> are the <code>data</code>, <code>metaData</code>, their <code>dataMapping</code> and <code>plotConfiguration - Output argument of</code>plotPKRatio<code>is the</code>plotObject<code>corresponding to a</code>ggplot<code>object. If no</code>dataMapping<code>and</code>plotConfiguration<code>is provided,</code>plotPKRatio` uses a default mapping and configuration.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>pkRatioDataMapping &lt;-<span class="st"> </span>PKRatioDataMapping<span class="op">$</span><span class="kw">new</span>(<span class="dt">color =</span> <span class="kw">c</span>(<span class="st">&quot;Gender&quot;</span>), </span>
+<span id="cb7-2"><a href="#cb7-2"></a>                                      <span class="dt">shape =</span> <span class="kw">c</span>(<span class="st">&quot;Dose&quot;</span>, <span class="st">&quot;Compound&quot;</span>))</span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a>pkRatioPlotConfiguration &lt;-<span class="st"> </span>PKRatioPlotConfiguration<span class="op">$</span><span class="kw">new</span>(</span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="dt">ylabel =</span> <span class="st">&quot;Simulated/Observed Cmax Ratio&quot;</span>,</span>
+<span id="cb7-6"><a href="#cb7-6"></a>  <span class="dt">data =</span> pkRatioData,</span>
+<span id="cb7-7"><a href="#cb7-7"></a>  <span class="dt">metaData =</span> pkRatioMetaData,</span>
+<span id="cb7-8"><a href="#cb7-8"></a>  <span class="dt">dataMapping =</span> dataMapping</span>
+<span id="cb7-9"><a href="#cb7-9"></a>)</span>
+<span id="cb7-10"><a href="#cb7-10"></a></span>
+<span id="cb7-11"><a href="#cb7-11"></a>plotObject &lt;-<span class="st"> </span><span class="kw">plotPKRatio</span>(</span>
+<span id="cb7-12"><a href="#cb7-12"></a>  <span class="dt">data =</span> pkRatioData, </span>
+<span id="cb7-13"><a href="#cb7-13"></a>  <span class="dt">metaData =</span> pkRatioMetaData,</span>
+<span id="cb7-14"><a href="#cb7-14"></a>  <span class="dt">dataMapping =</span> pkRatioDataMapping, </span>
+<span id="cb7-15"><a href="#cb7-15"></a>  <span class="dt">plotConfiguration =</span> pkRatioPlotConfiguration</span>
+<span id="cb7-16"><a href="#cb7-16"></a>)</span>
+<span id="cb7-17"><a href="#cb7-17"></a></span>
+<span id="cb7-18"><a href="#cb7-18"></a>plotObject</span>
+<span id="cb7-19"><a href="#cb7-19"></a><span class="co">#&gt; Warning: Using size for a discrete variable is not advised.</span></span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="qualification-of-pk-ratios" class="section level1">
+<h1>Qualification of PK Ratios</h1>
+<p>The qualification of the PK Ratios can be performed using <code>getPKRatioMeasure</code>. This function return a <code>data.frame</code> with the PK ratios within specific ranges. As a default, these ranges are within 1.5 and 2 folds. However, they can be updated using the option <code>ratioLimits =</code> when running the function.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># Test of getPKRatioMeasure</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>PKRatioMeasure &lt;-<span class="st"> </span><span class="kw">getPKRatioMeasure</span>(<span class="dt">data =</span> pkRatioData, </span>
+<span id="cb8-3"><a href="#cb8-3"></a>                                    <span class="dt">dataMapping =</span> dataMapping)</span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a>pander<span class="op">::</span><span class="kw">pandoc.table</span>(<span class="dt">t =</span> PKRatioMeasure,</span>
+<span id="cb8-6"><a href="#cb8-6"></a>                     <span class="dt">caption =</span> <span class="st">&quot;Qualification of PK Ratios&quot;</span>)</span></code></pre></div>
+<table style="width:65%;">
+<caption>Qualification of PK Ratios</caption>
+<colgroup>
+<col width="40%"></col>
+<col width="12%"></col>
+<col width="12%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Number</th>
+<th align="center">Ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>PointsTotal</strong></td>
+<td align="center">40</td>
+<td align="center">NA</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Points within 1.5-fold</strong></td>
+<td align="center">16</td>
+<td align="center">0.4</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Points within 2-fold</strong></td>
+<td align="center">26</td>
+<td align="center">0.65</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -4,7 +4,8 @@
 \alias{getLegendCaption}
 \title{getLegendCaption}
 \usage{
-getLegendCaption(captionData, which = seq(1, length(levels(captionData))))
+getLegendCaption(captionData, which = seq(1,
+  length(levels(captionData))))
 }
 \arguments{
 \item{captionData}{data used for legend caption}

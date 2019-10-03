@@ -13,9 +13,9 @@ Font <- R6::R6Class(
     fontFace = NULL,
 
     initialize = function(size = 12,
-                          color = "black",
-                          fontFamily = "",
-                          fontFace = "plain") {
+                              color = "black",
+                              fontFamily = "",
+                              fontFace = "plain") {
       self$size <- size
       self$color <- color
       self$fontFamily <- fontFamily
@@ -46,7 +46,7 @@ Label <- R6::R6Class(
     "font" = NULL,
 
     initialize = function(text = "",
-                          font = NULL) {
+                              font = NULL) {
       self$text <- text
       font <- font %||% Font$new()
 
@@ -55,9 +55,9 @@ Label <- R6::R6Class(
     },
 
     setFontProperties = function(color = self$font$color,
-                                 size = self$font$size,
-                                 fontFamily = self$font$fontFamily,
-                                 fontFace = self$font$fontFace) {
+                                     size = self$font$size,
+                                     fontFamily = self$font$fontFamily,
+                                     fontFace = self$font$fontFace) {
       self$font$color <- color
       self$font$size <- size
       self$font$fontFamily <- fontFamily

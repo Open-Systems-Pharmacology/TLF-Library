@@ -6,39 +6,46 @@ PKRatioPlotConfiguration <- R6::R6Class(
   "PKRatioPlotConfiguration",
   inherit = PlotConfiguration,
   public = list(
-    RatioLinesProperties = NULL,
+    pkRatioLinesProperties = NULL,
 
     initialize = function(title = "PK Ratio Plot",
-                          RatioLinesProperties = data.frame(
-                            value = c(1, 1.5, 1 / 1.5, 2, 1 / 2),
-                            linetype = c("solid", "dashed", "dashed", "dashed", "dashed"),
-                            color = c("black", "blue", "blue", "red", "red"),
-                            size = c(2, 1, 1, 1, 1)
-                          ),
-                          ...) {
+                              subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
+                              pkRatioLinesProperties = tlfEnv$currentTheme$pkRatioLinesProperties,
+                              ...) {
       super$initialize(
         title = title,
+        subtitle = subtitle,
         ...
       )
 
-      self$RatioLinesProperties <- RatioLinesProperties
-      # colors and linetype are assumed as levels by default
-      # they need to be reassessed as character
-      self$RatioLinesProperties$color <- as.character(self$RatioLinesProperties$color)
-      self$RatioLinesProperties$linetype <- as.character(self$RatioLinesProperties$linetype)
+      self$pkRatioLinesProperties <- pkRatioLinesProperties
     },
 
-    addRatioLines = function(plotHandle) {
-      for (RatioIndex in seq(1, length(self$RatioLinesProperties$value))) {
-        plotHandle <- plotHandle +
+    addPKRatioLines = function(pkRatioLines, plotObject) {
+      for (RatioIndex in seq(1, length(pkRatioLines))) {
+        plotObject <- plotObject +
           ggplot2::geom_hline(
-            yintercept = self$RatioLinesProperties$value[RatioIndex],
-            linetype = self$RatioLinesProperties$linetype[RatioIndex],
-            color = self$RatioLinesProperties$color[RatioIndex],
-            size = self$RatioLinesProperties$size[RatioIndex]
+            yintercept = pkRatioLines[RatioIndex],
+            linetype = self$pkRatioLinesProperties$linetype[RatioIndex],
+            color = self$pkRatioLinesProperties$color[RatioIndex],
+            size = self$pkRatioLinesProperties$size[RatioIndex]
           )
       }
-      return(plotHandle)
+      return(plotObject)
+    },
+
+    addPKRatios = function(mapData, plotObject) {
+      plotObject <- plotObject + geom_point(
+        mapping = aes(
+          x = x, y = y,
+          color = color,
+          shape = shape,
+          size = size
+        ),
+        data = mapData,
+        show.legend = TRUE
+      )
+      return(plotObject)
     }
   )
 )

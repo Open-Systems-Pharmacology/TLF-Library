@@ -9,10 +9,10 @@ TimeProfilePlotConfiguration <- R6::R6Class(
     LLOQLineProperties = NULL,
 
     initialize = function(title = "Time Profile Plot",
-                          LLOQLineProperties = NULL,
-                          dataMapping = NULL,
-                          metaData = NULL,
-                          ...) {
+                              LLOQLineProperties = NULL,
+                              dataMapping = NULL,
+                              metaData = NULL,
+                              ...) {
       timeProfileDataMapping <- NULL
       timeProfileMetaData <- NULL
       if (!is.null(dataMapping)) {

@@ -4,8 +4,8 @@
 \alias{setLegendPosition}
 \title{SetLegendPosition}
 \usage{
-setLegendPosition(plotHandle, legendPosition = "outsideRight",
-  Subplot.Index = NA)
+setLegendPosition(plotHandle,
+  legendPosition = legendPositions$outsideRight, Subplot.Index = NA)
 }
 \arguments{
 \item{plotHandle}{Graphical object created from ggplot}
