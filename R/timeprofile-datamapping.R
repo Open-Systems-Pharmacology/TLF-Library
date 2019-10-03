@@ -15,9 +15,6 @@ TimeProfileDataMapping <- R6::R6Class(
     data = NULL,
     yFunctionsVector = NULL,
     yFunctionNames = NULL,
-    errorFunctionsVector = NULL,
-    errorMinFunctionsVector = NULL,
-    errorMaxFunctionsVector = NULL,
 
     initialize = function(x, y,
                           ###
@@ -41,13 +38,7 @@ TimeProfileDataMapping <- R6::R6Class(
                           linetypeLegendTitle = NULL,
                           ###
                           data     = NULL,
-                          metaData = NULL,
-                          ###
-                          aggregationFunctionsVector = NULL,
-                          aggregationFunctionNames   = NULL,
-                          errorFunctionsVector       = NULL,
-                          errorMinFunctionsVector    = NULL,
-                          errorMaxFunctionsVector    = NULL){
+                          metaData = NULL){
 
       super$initialize(x=x,
                        y=y,
