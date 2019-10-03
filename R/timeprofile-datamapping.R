@@ -4,27 +4,72 @@
 #' @export
 TimeProfileDataMapping <- R6::R6Class(
   "TimeProfileDataMapping",
+  inherit = XYDataMapping,
   public = list(
-    simulationSets = NULL,
-    observationSets = NULL,
-    simulationMapping = NULL,
-    observationMapping = NULL,
-    LLOQ = NULL,
+    x = NULL,
+    y = NULL,
+    color = NULL,
+    size = NULL,
+    shape = NULL,
+    linetype = NULL,
+    data = NULL,
+    yFunctionsVector = NULL,
+    yFunctionNames = NULL,
+    errorFunctionsVector = NULL,
+    errorMinFunctionsVector = NULL,
+    errorMaxFunctionsVector = NULL,
 
-    # Example of how to do some other stuff
-    initialize = function(simulationSets = 1,
-                              observationSets = NULL,
-                              simulationMapping = NULL,
-                              observationMapping = NULL,
-                              LLOQ = NULL) {
-      self$simulationSets <- simulationSets
-      self$simulationMapping <- simulationMapping %||% XYDataMapping$new(x = "Time", y = "Value")
-      self$observationSets <- observationSets
-      self$observationMapping <- ifnotnull(
-        observationSets,
-        observationMapping %||% XYDataMapping$new(x = "Time", y = "Value"),
-        observationMapping
-      )
+    initialize = function(x, y,
+                          ###
+                          error = NULL,
+                          errorMin = NULL,
+                          errorMax = NULL,
+                          ###
+                          color    = NULL, #string or vector of strings that are dataframe colnames to group by color
+                          size     = NULL, #string or vector of strings that are dataframe colnames to group by size
+                          shape    = NULL, #string or vector of strings that are dataframe colnames to group by shape
+                          linetype = NULL, #string or vector of strings that are dataframe colnames to group by linetype
+                          ###
+                          colorGroupingDataFrame = NULL,
+                          sizeGroupingDataFrame = NULL,
+                          shapeGroupingDataFrame = NULL,
+                          linetypeGroupingDataFrame = NULL,
+                          ###
+                          colorLegendTitle    = NULL,
+                          sizeLegendTitle     = NULL,
+                          shapeLegendTitle    = NULL,
+                          linetypeLegendTitle = NULL,
+                          ###
+                          data     = NULL,
+                          metaData = NULL,
+                          ###
+                          aggregationFunctionsVector = NULL,
+                          aggregationFunctionNames   = NULL,
+                          errorFunctionsVector       = NULL,
+                          errorMinFunctionsVector    = NULL,
+                          errorMaxFunctionsVector    = NULL){
+
+      super$initialize(x=x,
+                       y=y,
+                       error = error,
+                       errorMin = errorMin,
+                       errorMax = errorMax,
+                       color=color,
+                       size=size,
+                       shape=shape,
+                       linetype=linetype,
+                       colorGroupingDataFrame=colorGroupingDataFrame,
+                       sizeGroupingDataFrame=sizeGroupingDataFrame,
+                       shapeGroupingDataFrame=shapeGroupingDataFrame,
+                       linetypeGroupingDataFrame=linetypeGroupingDataFrame,
+                       colorLegendTitle=colorLegendTitle,
+                       sizeLegendTitle=sizeLegendTitle,
+                       shapeLegendTitle=shapeLegendTitle,
+                       linetypeLegendTitle=linetypeLegendTitle,
+                       data=data,
+                       metaData=metaData)
+
     }
   )
 )
+

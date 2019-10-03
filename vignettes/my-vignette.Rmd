@@ -1,10 +1,10 @@
 ---
-title: "PK Ratio Example"
+title: "pk-ratio-vignette"
 author: "OSPSuiteR 2019"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{PK Ratio Example}
+  %\VignetteIndexEntry{pk-ratio-vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -36,13 +36,13 @@ In `PKRatioDataMapping` default `x = Age` and `y = Ratio` are provided but can b
 
 ```{r}
 # Create a PK Ratio dataMapping
-dataMapping <- PKRatioDataMapping$new(groupings = list(color = "Gender",
-                                                              shape = c("Dose", "Compound"))
-)
-
+dataMapping <- PKRatioDataMapping$new(color = c("Gender"), 
+                                      shape = c("Dose", "Compound"))
 dataMapping$x
 dataMapping$y
-dataMapping$groupings
+dataMapping$color
+dataMapping$shape
+dataMapping$size
 ```
 
 # Plot Configuration
@@ -95,8 +95,8 @@ The function `plotPKRatio` allows for an easy way of plotting PK Ratios with spe
 If no `dataMapping` and `plotConfiguration` is provided, `plotPKRatio` uses a default mapping and configuration.
 
 ```{r, fig.height=6, fig.width=8}
-pkRatioDataMapping <- PKRatioDataMapping$new(grouping = list(color = c("Gender"), 
-                                      shape = c("Dose", "Compound")))
+pkRatioDataMapping <- PKRatioDataMapping$new(color = c("Gender"), 
+                                      shape = c("Dose", "Compound"))
 
 pkRatioPlotConfiguration <- PKRatioPlotConfiguration$new(
   ylabel = "Simulated/Observed Cmax Ratio",

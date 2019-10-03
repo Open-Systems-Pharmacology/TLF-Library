@@ -11,7 +11,7 @@ test_that("default works", {
   expectedDefaultResult <- data.frame(
     "Number" = c(50, 8, 16),
     "Ratio" = c(NA, 8 / 50, 16 / 50),
-    row.names = c("Points Total", "Points within 1.5-fold", "Points within 2-fold")
+    row.names = c("PointsTotal", "Points within 1.5-fold", "Points within 2-fold")
   )
   expect_equal(getPKRatioMeasure(data), expectedDefaultResult)
 })
@@ -20,7 +20,7 @@ test_that("works when ratio limits are changed", {
   expectedResultLimit <- data.frame(
     "Number" = c(50, 26),
     "Ratio" = c(NA, 0.52),
-    row.names = c("Points Total", "Points within 3-fold")
+    row.names = c("PointsTotal", "Points within 3-fold")
   )
   expect_equal(getPKRatioMeasure(data, dataMapping = NULL, ratioLimits = 3), expectedResultLimit)
 })
@@ -29,7 +29,7 @@ test_that("dataMapping input works", {
   expectedResultMapping <- data.frame(
     "Number" = c(49, 4, 8),
     "Ratio" = c(NA, 4 / 49, 8 / 49),
-    row.names = c("Points Total", "Points within 1.5-fold", "Points within 2-fold")
+    row.names = c("PointsTotal", "Points within 1.5-fold", "Points within 2-fold")
   )
   expect_equal(getPKRatioMeasure(data, dataMapping = testMapping), expectedResultMapping)
 })

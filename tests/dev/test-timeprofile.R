@@ -7,7 +7,7 @@ library(tlf)
 
 # Set your folder to test folder:
 # setwd("C:/Design2Code/TLF-Playground/TLF-Playground/R/")
-useTheme(tlfTheme)
+useTheme(bigTheme)
 
 # -------------------------------------------------
 # Get the data and metadata for PK Ratio plot
