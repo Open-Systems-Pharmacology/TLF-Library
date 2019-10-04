@@ -30,7 +30,7 @@ plotPKRatio <- function(data, metaData, dataMapping = NULL, plotConfiguration = 
   plotObject <- plotConfiguration$setWatermark(plotObject)
   plotObject <- plotConfiguration$addPKRatioLines(dataMapping$pkRatioLines, plotObject)
 
-  plotObject <- plotConfiguration$addPKRatios(mapData, plotObject)
+  plotObject <- plotConfiguration$addPKRatios(plotObject, data, metaData, dataMapping)
 
   plotObject <- plotConfiguration$setPlotLabels(plotObject)
   plotObject <- plotConfiguration$setPlotProperties(plotObject)

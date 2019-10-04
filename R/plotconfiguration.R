@@ -97,23 +97,13 @@ LegendConfiguration <- R6::R6Class(
 
       mapTitles <- list()
       mapCaptions <- list()
-      if (!is.null(dataMapping)) {
+      if (!is.null(dataMapping$groupings)) {
         mapData <- dataMapping$getMapData(data, metaData)
-        for (aesProperty in aesProperties) {
-          mapTitles[[aesProperty]] <- dataMapping[[aesProperty]]
-          mapCaptions[[aesProperty]] <- mapData[[aesProperty]]
+        for (group in dataMapping$groupings) {
+          mapTitles[[group$groupName]] <- group$groupName
+          mapCaptions[[group$groupName]] <- mapData[, group$groupName]
         }
       }
-      self$titles <- ifnotnull(
-        titles,
-        setAesPropertiesToLegend(titles, aesProperties),
-        mapTitles
-      )
-      self$captions <- ifnotnull(
-        captions,
-        setAesPropertiesToLegend(captions, aesProperties),
-        mapCaptions
-      )
 
       self$aesProperties <- aesProperties
 
@@ -250,11 +240,13 @@ PlotConfiguration <- R6::R6Class(
                               metaData = NULL,
                               dataMapping = NULL,
                               theme = tlfEnv$currentTheme, ...) {
-      super$initialize(title = title,
-                       subtitle = subtitle,
-                       xlabel = xlabel,
-                       ylabel = ylabel,
-                       watermark = watermark)
+      super$initialize(
+        title = title,
+        subtitle = subtitle,
+        xlabel = xlabel,
+        ylabel = ylabel,
+        watermark = watermark
+      )
 
       # If xlabel and ylabel are not defined, use dataMapping of x, y to label axes
       xMapping <- NULL
@@ -273,7 +265,7 @@ PlotConfiguration <- R6::R6Class(
 
       self$filename <- filename
 
-      self$legend <- legend %||% ifnotnull(
+       self$legend <- legend %||% ifnotnull(
         dataMapping,
         LegendConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping),
         LegendConfiguration$new()
@@ -298,7 +290,7 @@ PlotConfiguration <- R6::R6Class(
     ## Define Labels: plotConfiguration function to first define Watermark
 
     setPlotProperties = function(plotObject) {
-      plotObject <- self$legend$setPlotLegend(plotObject)
+      # plotObject <- self$legend$setPlotLegend(plotObject)
 
       plotObject <- self$xAxis$setPlotAxis(plotObject)
       plotObject <- self$yAxis$setPlotAxis(plotObject)

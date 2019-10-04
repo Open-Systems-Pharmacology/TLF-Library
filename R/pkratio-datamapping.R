@@ -4,7 +4,7 @@
 #' @export
 PKRatioDataMapping <- R6::R6Class(
   "PKRatioDataMapping",
-  inherit = XYDataMapping,
+  inherit = XYGDataMapping,
   public = list(
     pkRatioLines = NULL,
     # Example of how to do some other stuff
