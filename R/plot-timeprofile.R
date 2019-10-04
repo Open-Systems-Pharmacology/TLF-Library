@@ -15,71 +15,74 @@
 #' @return a ggplot graphical object
 #' @export
 #'
-plotTimeProfile <- function(data, metaData, dataMapping = NULL, plotConfiguration = NULL) {
+#'
+
+
+getData <-function(data, metaData, timeCol , yCol , color = NULL , shape = NULL , size = NULL , linetype = NULL, yAggCol = NULL,  errorCol = NULL , errorMinCol = NULL, errorMaxCol = NULL, yAggFun = NULL, errorAggFun = NULL, errorMinAggFun = NULL, errorMaxAggFun = NULL){
+
+
+  aggregationFunctionsVector = c(yAggFun,errorAggFun,errorMinAggFun,errorMaxAggFun)
+  aggregationFunctionNames   = c(yAggCol,errorCol,errorMinCol,errorMaxCol)
+
+
+
+  helperObj <- TimeProfileHelper$new(data = data,
+                                     timeColumnName = timeCol,
+                                     groupingColumnNames = c(color , shape , size, linetype),
+                                     valuesColumnNames = yCol,
+                                     aggregationFunctionsVector = aggregationFunctionsVector,
+                                     aggregationFunctionNames = aggregationFunctionNames)
+
+
+  return( helperObj$dfHelper )
+
+}
+
+
+
+
+plotTimeProfile <- function(data, metaData = NULL, dataMapping = NULL, plotConfiguration = NULL, timeCol = NULL, yCol = NULL, color = NULL , shape = NULL , size = NULL , linetype = NULL, yAggCol = NULL, errorCol = NULL, errorMinCol = NULL, errorMaxCol = NULL, yAggFun = NULL,  errorAggFun = NULL , errorMinAggFun = NULL, errorMaxAggFun = NULL) {
   # If no data mapping or plot configuration is input, use default
-  configuration <- plotConfiguration %||% TimeProfilePlotConfiguration$new()
-  dataMapping <- dataMapping %||% TimeProfileDataMapping$new()
+  #configuration <- plotConfiguration %||% TimeProfilePlotConfiguration$new()
 
-  stopifnot("TimeProfileDataMapping" %in% class(dataMapping))
-  stopifnot("TimeProfilePlotConfiguration" %in% class(configuration))
+  # dataMapping <- getDataAndDataMapping(data, metaData, timeCol  , yCol , color = NULL , shape = NULL , size = NULL , linetype = NULL, errorCol = NULL, errorMinCol = NULL, errorMaxCol = NULL, yAggFun = NULL, errorMinAggFun = NULL, errorMaxAggFun = NULL)
 
-  # data expected as list of data.frame
-  if ("data.frame" %in% class(data)) {
-    data <- list(data)
-  }
+  if ( is.null(dataMapping) ){
 
-  observationSets <- ifnotnull(
-    dataMapping$observationSets,
-    data[[dataMapping$observationSets]], NULL
-  )
-  simulationSets <- ifnotnull(
-    dataMapping$simulationSets,
-    data[[dataMapping$simulationSets]], NULL
-  )
+    if(!is.null(yAggFun)){
 
-  simulationMapping <- dataMapping$simulationMapping
-  observationMapping <- dataMapping$observationMapping
 
-  xSim <- simulationSets[, simulationMapping$x]
-  ySim <- simulationSets[, simulationMapping$y]
+      errorCol = NULL
+      errorMinCol = NULL
+      errorMaxCol = NULL
 
-  xObs <- observationSets[, observationMapping$x]
-  yObs <- observationSets[, observationMapping$y]
-  errorPlot <- FALSE
+      if ( (!is.null(errorMinAggFun)) & (!is.null(errorMaxAggFun)) ){
 
-  if ("XYEDataMapping" %in% class(observationMapping)) {
-    errorPlot <- TRUE
-    yObsMin <- observationSets[, observationMapping$y] - observationSets[, observationMapping$errorMin]
-    yObsMax <- observationSets[, observationMapping$y] + observationSets[, observationMapping$errorMax]
-  }
+        errorMinCol = c("errorMin")
+        errorMaxCol = c("errorMax")
+        errorAggFun = NULL
 
-  # Initialize plot
-  plotObject <- ggplot2::ggplot()
-  plotObject <- plotConfiguration$setWatermark(plotObject)
-  plotObject <- plotConfiguration$setPlotLabels(plotObject, dataMapping$simulationMapping)
+      } else if (!is.null(errorAggFun)) {
 
-  # Add simulations
-  plotObject <- plotObject + ggplot2::geom_line(
-    data = simulationSets,
-    mapping = aes(x = xSim, y = ySim, linetype = factor("Simulated Results")), show.legend = TRUE
-  )
-  # Add observations
-  plotObject <- plotObject +
-    ifnotnull(
-      observationSets,
-      if (errorPlot) {
-        ggplot2::geom_pointrange(
-          data = observationSets,
-          mapping = aes(x = xObs, y = yObs, ymin = yObsMin, ymax = yObsMax, shape = factor("Observed Data")), show.legend = TRUE
-        )
-      } else {
-        ggplot2::geom_point(
-          data = observationSets,
-          mapping = aes(x = xObs, y = yObs, shape = factor("Observed Data")), show.legend = TRUE
-        )
+        errorCol = c("error")
+        errorMaxAggFun = NULL
+        errorMinAggFun = NULL
+
       }
-    )
 
-  # Add Plot Configuration layers and PK Ratios
+      data<-getData(data=data, metaData=metaData, timeCol=timeCol , yCol=yCol , color=color , shape=shape , size=size , linetype=linetype , yAggCol=yAggCol, errorCol=errorCol , errorMinCol=errorMinCol , errorMaxCol=errorMaxCol , yAggFun=yAggFun , errorAggFun=errorAggFun , errorMinAggFun=errorMinAggFun , errorMaxAggFun=errorMaxAggFun )
+      yCol = yAggCol
+
+    }
+
+    dataMapping <- TimeProfileDataMapping$new(x = timeCol , y = yCol , error = errorCol , errorMin = errorMinCol , errorMax = errorMaxCol , color = color , shape = shape , size = size , linetype = linetype , data = data , metaData = metaData )
+
+  }
+
+
+
+  plotObject <- ggplot(dataMapping$data,aes(x=x,y=y, color = color, linetype = linetype)) + geom_line() + geom_errorbar(aes(ymin = errorMin, ymax = errorMax), width = 0.2)
+
+
   return(plotObject)
 }

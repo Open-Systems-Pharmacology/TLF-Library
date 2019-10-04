@@ -4,39 +4,6 @@
 #' @export
 #'
 
-Grouping <- R6::R6Class(
-  "Grouping",
-  public = list(
-    groupingName = NULL,
-    groupingDataFrame = NULL,
-    groupingLegendTitle = NULL,
-    initialize = function(groupingName = NULL, groupingDataFrame = NULL, groupingLegendTitle = NULL){
-
-      self$groupingLegendTitle <- groupingLegendTitle
-      groupingList <- self$getGroupingList(groupingName,groupingDataFrame)
-      self$groupingName <- groupingList$selfGrouping
-      self$groupingDataFrame <- groupingList$selfGroupingDataFrame
-
-    },
-
-    getGroupingList = function(grouping,groupingDataFrame){  #move out of public?
-      if (!is.null(groupingDataFrame)){
-        selfGroupingDataFrame <- groupingDataFrame
-        selfGrouping<- head(colnames(groupingDataFrame),-1) #the last column heading of the grouping dataframe will be a default legend title if no groupingLegendTitle is provided
-      } else {
-        selfGroupingDataFrame <- NULL
-        selfGrouping <- grouping
-      }
-      groupingList <-list(selfGroupingDataFrame = selfGroupingDataFrame , selfGrouping = selfGrouping)
-      return(groupingList)
-    }
-
-  )
-)
-
-
-
-
 XYDataMapping <- R6::R6Class(
   "XYDataMapping",
   public = list(
@@ -222,94 +189,6 @@ getCustomCaptions <- function(dataDf,groupingDf,newColName = NULL){
 }
 
 
-#' @title XYEDataMapping
-#' @docType class
-#' @description Abstract class for X Y Error Mapping
-#' @export
-XYEDataMapping <- R6::R6Class(
-  "XYEDataMapping",
-  inherit = XYDataMapping,
-  public = list(
-    error = NULL,
-    errorMin = NULL,
-    errorMax = NULL,
-
-    # Example of how to do some other stuff
-    initialize = function(x, y,
-                              error = NULL,
-                              errorMin = NULL,
-                              errorMax = NULL, ...) {
-      super$initialize(x, y, ...)
-      self$error <- error
-      self$errorMin <- error %||% errorMin
-      self$errorMax <- error %||% errorMax
-    },
-
-    getMapData = function(data, metaData) {
-      x <- data[, self$x]
-      y <- data[, self$y]
-      errorMin <- data[, self$errorMin]
-      errorMax <- data[, self$errorMax]
-
-      color <- getDefaultCaptions(
-        data = data,
-        metaData = metaData,
-        variableList = self$color
-      )
-
-      shape <- getDefaultCaptions(
-        data = data,
-        metaData = metaData,
-        variableList = self$shape
-      )
-
-      size <- getDefaultCaptions(
-        data = data,
-        metaData = metaData,
-        variableList = self$size
-      )
-
-      return(list(
-        "x" = x, "y" = y, "ymin" = y - errorMin, "ymax" = y + errorMax,
-        "color" = color, "shape" = shape, "size" = size
-      ))
-    }
-  )
-)
-
-#' @title XRangeDataMapping
-#' @docType class
-#' @description Abstract class for X Range Mapping
-#' @export
-XRangeDataMapping <- R6::R6Class(
-  "XRangeDataMapping",
-  inherit = XYDataMapping,
-  public = list(
-    yMin = NULL,
-    yMax = NULL,
-
-    # Example of how to do some other stuff
-    initialize = function(x, yMin, yMax) {
-      super$initialize(x, y = NULL, ...)
-      self$yMin <- yMin
-      self$yMax <- yMax
-    },
-
-    getMappedData = function(data, metaData) {
-      x <- data[, self$x]
-      yMin <- data[, self$yMin]
-      yMin <- data[, self$yMin]
-
-      color <- getDefaultCaptions(
-        data = data,
-        metaData = metaData,
-        variableList = self$color
-      )
-
-      return(list("x" = x, "yMin" = yMin, "yMax" = yMax, "color" = color))
-    }
-  )
-)
 
 
 #' @title getDefaultCaptions

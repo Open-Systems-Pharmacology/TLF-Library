@@ -8,13 +8,14 @@ TimeProfileDataMapping <- R6::R6Class(
   public = list(
     x = NULL,
     y = NULL,
+    error = NULL,
+    errorMin = NULL,
+    errorMax = NULL,
     color = NULL,
     size = NULL,
     shape = NULL,
     linetype = NULL,
     data = NULL,
-    yFunctionsVector = NULL,
-    yFunctionNames = NULL,
 
     initialize = function(x, y,
                           ###
