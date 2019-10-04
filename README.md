@@ -7,7 +7,6 @@ TLF Library implementation in R
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/Open-Systems-Pharmacology/TLF-Library?branch=develop&svg=true)](https://ci.appveyor.com/project/Open-Systems-Pharmacology/TLF-Library)
 [![codecov](https://codecov.io/gh/Open-Systems-Pharmacology/TLF-Library/branch/develop/graph/badge.svg)](https://codecov.io/gh/Open-Systems-Pharmacology/TLF-Library)
 
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/pchelle/TLF-Library?branch=master&svg=true)](https://ci.appveyor.com/project/pchelle/TLF-Library)
 <!-- badges: end -->
 
 # Development tasks
