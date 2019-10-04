@@ -1,0 +1,131 @@
+---
+title: "PK Ratio Example"
+author: "OSPSuiteR 2019"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{PK Ratio Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+load("pkRatioDataExample.RData")
+```
+
+```{r setup}
+library(tlf)
+library(ggplot2)
+```
+
+# Data
+The first lines of the PK Ratio Dataset used as an example is presented below:
+```{r, results='asis'}
+# pkRatioData
+pander::pandoc.table(head(pkRatioData))
+```
+
+# Data Mapping
+To map which data to plot, an `R6Class` object `DataMapping` can be called, which allows to map the `x` and `y` variables as well as optional `color`, `shape` and `size` to the plot.
+For a PK Ratio plot, this mapping is made easier with the `PKRatioDataMapping`.
+In `PKRatioDataMapping` default `x = Age` and `y = Ratio` are provided but can be overridden.
+
+```{r}
+# Create a PK Ratio dataMapping
+dataMapping <- PKRatioDataMapping$new(groupings = list(color = "Gender",
+                                                              shape = c("Dose", "Compound"))
+)
+
+dataMapping$x
+dataMapping$y
+dataMapping$groupings
+```
+
+# Plot Configuration
+All the properties of the plot to define can be defined in an `R6Class` object `PlotConfiguration`. The plot configuration  manages the plot labels (title, subtitle, xlabel, ylabel and watermark), the axis properties (limits, log scale) and the legend properties (color, size, shape, linetype, labels). 
+
+For a PK Ratio plot, the configuartion is made easier with the `PKRatioPlotConfiguration`.
+
+Besides, the plot configuration can be associated to `data`, `metaData` and their `dataMapping` to facilitate in the definition of plot configuration.
+
+```{r}
+plotConfiguration <- PKRatioPlotConfiguration$new(
+  data = pkRatioData,
+  metaData = pkRatioMetaData,
+  dataMapping = dataMapping
+)
+
+plotConfiguration
+```
+
+Plot configuration can be tuned during its creation or modified later on.
+For instance, if you want to update the text of the `ylabel` (labels include a font property), you can either:
+```{r}
+plotConfiguration <- PKRatioPlotConfiguration$new(
+  ylabel = "Simulated/Observed Cmax Ratio",
+  data = pkRatioData,
+  metaData = pkRatioMetaData,
+  dataMapping = dataMapping
+)
+
+#plotConfiguration$ylabel$text
+plotConfiguration$ylabel$text
+```
+or
+```{r}
+plotConfiguration <- PKRatioPlotConfiguration$new(
+  data = pkRatioData,
+  metaData = pkRatioMetaData,
+  dataMapping = dataMapping
+)
+
+plotConfiguration$ylabel$text
+plotConfiguration$ylabel$text <- "Simulated/Observed Cmax Ratio"
+plotConfiguration$ylabel$text
+```
+
+# Plot PK Ratios
+The function `plotPKRatio` allows for an easy way of plotting PK Ratios with specific PK Ratio limits.
+- Input arguments of `plotPKRatio` are the `data`, `metaData`, their `dataMapping` and  `plotConfiguration
+- Output argument of `plotPKRatio` is the `plotObject` corresponding to a `ggplot` object.
+If no `dataMapping` and `plotConfiguration` is provided, `plotPKRatio` uses a default mapping and configuration.
+
+```{r, fig.height=6, fig.width=8}
+pkRatioDataMapping <- PKRatioDataMapping$new(grouping = list(color = c("Gender"), 
+                                      shape = c("Dose", "Compound")))
+
+pkRatioPlotConfiguration <- PKRatioPlotConfiguration$new(
+  ylabel = "Simulated/Observed Cmax Ratio",
+  data = pkRatioData,
+  metaData = pkRatioMetaData,
+  dataMapping = dataMapping
+)
+
+plotObject <- plotPKRatio(
+  data = pkRatioData, 
+  metaData = pkRatioMetaData,
+  dataMapping = pkRatioDataMapping, 
+  plotConfiguration = pkRatioPlotConfiguration
+)
+
+plotObject
+
+```
+
+# Qualification of PK Ratios
+The qualification of the PK Ratios can be performed using `getPKRatioMeasure`.
+This function return a `data.frame` with the PK ratios within specific ranges.
+As a default, these ranges are within 1.5 and 2 folds. However, they can be updated using the option `ratioLimits =` when running the function.
+
+```{r, results='asis'}
+# Test of getPKRatioMeasure
+PKRatioMeasure <- getPKRatioMeasure(data = pkRatioData, 
+                                    dataMapping = dataMapping)
+
+pander::pandoc.table(t = PKRatioMeasure,
+                     caption = "Qualification of PK Ratios")
+```

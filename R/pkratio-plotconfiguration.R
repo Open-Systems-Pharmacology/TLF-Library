@@ -6,39 +6,93 @@ PKRatioPlotConfiguration <- R6::R6Class(
   "PKRatioPlotConfiguration",
   inherit = PlotConfiguration,
   public = list(
-    RatioLinesProperties = NULL,
+    pkRatioLinesProperties = NULL,
+    colorGrouping = NULL,
+    shapeGrouping = NULL,
 
-    initialize = function(title = "PK Ratio Plot",
-                          RatioLinesProperties = data.frame(
-                            value = c(1, 1.5, 1 / 1.5, 2, 1 / 2),
-                            linetype = c("solid", "dashed", "dashed", "dashed", "dashed"),
-                            color = c("black", "blue", "blue", "red", "red"),
-                            size = c(2, 1, 1, 1, 1)
-                          ),
-                          ...) {
+    initialize = function(pkRatioLinesProperties = tlfEnv$currentTheme$pkRatioLinesProperties,
+                              colorGrouping = NULL,
+                              shapeGrouping = NULL,
+                              title = "PK Ratio Plot",
+                              subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
+                              xlabel = NULL,
+                              ylabel = NULL,
+                              watermark = tlfEnv$currentTheme$watermarkText,
+                              data = NULL,
+                              metaData = NULL,
+                              dataMapping = NULL,
+                              ...) {
       super$initialize(
         title = title,
-        ...
+        subtitle = subtitle,
+        xlabel = xlabel,
+        ylabel = ylabel,
+        watermark = watermark,
+        data = data,
+        metaData = metaData,
+        dataMapping = dataMapping
       )
 
-      self$RatioLinesProperties <- RatioLinesProperties
-      # colors and linetype are assumed as levels by default
-      # they need to be reassessed as character
-      self$RatioLinesProperties$color <- as.character(self$RatioLinesProperties$color)
-      self$RatioLinesProperties$linetype <- as.character(self$RatioLinesProperties$linetype)
+      self$pkRatioLinesProperties <- pkRatioLinesProperties
+
+      self$colorGrouping <- NULL
+      self$shapeGrouping <- NULL
+
+      if (!is.null(dataMapping$groupings)) {
+        self$colorGrouping <- dataMapping$groupings[["color"]]$groupName
+        self$shapeGrouping <- dataMapping$groupings[["shape"]]$groupName
+      }
+
+      if (is.null(self$shapeGrouping)) {
+        # self$legend$captions$color <- NULL
+        self$colorGrouping <- "color"
+      }
+      if (is.null(self$shapeGrouping)) {
+        # self$legend$captions$shape <- NULL
+        self$shapeGrouping <- "shape"
+      }
     },
 
-    addRatioLines = function(plotHandle) {
-      for (RatioIndex in seq(1, length(self$RatioLinesProperties$value))) {
-        plotHandle <- plotHandle +
+    addPKRatioLines = function(pkRatioLines, plotObject) {
+      for (RatioIndex in seq(1, length(pkRatioLines))) {
+        plotObject <- plotObject +
           ggplot2::geom_hline(
-            yintercept = self$RatioLinesProperties$value[RatioIndex],
-            linetype = self$RatioLinesProperties$linetype[RatioIndex],
-            color = self$RatioLinesProperties$color[RatioIndex],
-            size = self$RatioLinesProperties$size[RatioIndex]
+            yintercept = pkRatioLines[RatioIndex],
+            linetype = self$pkRatioLinesProperties$linetype[RatioIndex],
+            color = self$pkRatioLinesProperties$color[RatioIndex],
+            size = self$pkRatioLinesProperties$size[RatioIndex]
           )
       }
-      return(plotHandle)
+      return(plotObject)
+    },
+
+    addPKRatios = function(plotObject, data, metaData, dataMapping) {
+      mapData <- dataMapping$getMapData(data, metaData)
+
+      if (isTRUE(self$colorGrouping == self$shapeGrouping)) {
+        plotObject <- plotObject + geom_point(
+          mapping = aes(
+            x = x, y = y,
+            color = self$colorGrouping,
+            shape = self$colorGrouping
+          ),
+          data = mapData,
+          size = 1, # To be updated with current Theme
+          show.legend = TRUE
+        )
+      } else {
+        plotObject <- plotObject + geom_point(
+          mapping = aes(
+            x = x, y = y,
+            color = self$colorGrouping,
+            shape = self$shapeGrouping
+          ),
+          data = mapData,
+          size = 1, # To be updated with current Theme
+          show.legend = TRUE
+        )
+      }
+      return(plotObject)
     }
   )
 )

@@ -6,40 +6,36 @@ library(ggplot2)
 library(tlf)
 
 # Set your folder to test folder:
-# setwd("C:/Design2Code/TLF-Playground/TLF-Playground/R/")
-useTheme(defaultTheme)
+useTheme(tlfTheme)
 
 # -------------------------------------------------
-# Get the data and metadata for PK Ratio plot
-
-nPopulation <- 20
-
-# -------------------------------------------------
-
-testData <- getData(nPopulation)
-testMetaData <- getMetaData(testData)
+# Data is saved in R/sysdata.rda
+# pkRatioData and pkRatioMetaData already exist
 
 # -------------------------------------------------
 # Define Default plot Configuration & Mapping from R6 class for PK Ratio
-testDataMapping <- PKRatioDataMapping$new(colorGrouping = "Gender", shapeGrouping = c("Dose", "Compound"))
+pkRatioDataMapping <- PKRatioDataMapping$new(
+  groupings = list(color = "Gender",
+    shape = c("Dose", "Compound"))
+)
 
 # Renaming of Label from initialize
-testConfiguration <- PKRatioPlotConfiguration$new(
-  data = testData,
-  metaData = testMetaData,
-  dataMapping = testDataMapping
+pkRatioConfiguration <- PKRatioPlotConfiguration$new(
+  data = pkRatioData,
+  metaData = pkRatioMetaData,
+  dataMapping = pkRatioDataMapping
 )
 
 # -------------------------------------------------
 # Plot PK Ratio using the previously defined variables
 pkrp <- plotPKRatio(
-  data = testData, metaData = testMetaData,
-  dataMapping = testDataMapping, plotConfiguration = testConfiguration
+  data = pkRatioData, metaData = pkRatioMetaData,
+  dataMapping = pkRatioDataMapping, plotConfiguration = pkRatioConfiguration
 )
 
 # -------------------------------------------------
 # Test of getPKRatioMeasure
-PKRatioMeasure <- getPKRatioMeasure(data = testData, dataMapping = testDataMapping)
+PKRatioMeasure <- getPKRatioMeasure(data = pkRatioData, dataMapping = pkRatioDataMapping)
 
 print(PKRatioMeasure)
 
