@@ -7,33 +7,28 @@ XYDataMapping <- R6::R6Class(
   public = list(
     x = NULL,
     y = NULL,
-    plotPropertiesNames = NULL,
-    color = NULL,
-    size = NULL,
-    shape = NULL,
-    linetype = NULL,
     data = NULL,
 
-    initialize = function(x, y,
-                              color = NULL,
-                              size = NULL,
-                              shape = NULL,
-                              linetype = NULL,
+    initialize = function(x = NULL,
+                              y = NULL,
                               data = NULL,
                               metaData = NULL) {
-      self$x <- x
-      self$y <- y
-
-      self$plotPropertiesNames <- c("color", "size", "shape", "linetype")
-
-      self$color <- color
-      self$size <- size
-      self$shape <- shape
-      self$linetype <- linetype
-
+      self$x <- NULL
+      self$y <- NULL
 
       if (!is.null(data)) {
-        self$data <- self$getMappedData(data, metaData)
+        self$x <- names(data)[1]
+        self$y <- names(data)[2]
+      }
+      if (!is.null(x)) {
+        self$x <- x
+      }
+      if (!is.null(y)) {
+        self$y <- y
+      }
+
+      if (is.null(self$x) || is.null(self$y)) {
+        stop("Undefined mapping for x or y")
       }
     },
 
@@ -41,23 +36,113 @@ XYDataMapping <- R6::R6Class(
       x <- data[, self$x]
       y <- data[, self$y]
 
-      plotProperties <- list()
+      self$data <- data.frame("x" = x, "y" = y)
+      return(self$data)
+    }
+  )
+)
 
-      for (propertyName in self$plotPropertiesNames) {
-        plotProperties[[propertyName]] <- getDefaultCaptions(
-          data = data,
-          metaData = metaData,
-          variableList = self[[propertyName]]
-        )
+#' @title Grouping
+#' @docType class
+#' @description  Abstract Grouping class for Mapping colors, shape to groups
+#' @export
+Grouping <- R6::R6Class(
+  "Grouping",
+  public = list(
+    group = NULL,
+    groupName = NULL,
+
+    initialize = function(group = NULL,
+                              groupName = NULL,
+                              data = NULL,
+                              metaData = metaData) {
+      if (!is.null(data)) {
+        self$group <- names(data)
+      }
+      self$group <- group
+      self$groupName <- groupName %||% paste(self$group, collapse = "-")
+    },
+
+    getGrouping = function(data, metaData = NULL) {
+      grouping <- getDefaultCaptions(
+        data = data,
+        metaData = metaData,
+        variableList = self$group
+      )
+      return(grouping)
+    },
+
+    addGroupingToData = function(data, metaData = NULL) {
+      grouping <- self$getGrouping(data, metaData)
+      groupingName <- paste(self$group, collapse = "-")
+
+      data[, goupingName] <- grouping
+
+      return(data)
+    }
+  )
+)
+
+#' @title XYGDataMapping
+#' @docType class
+#' @description  Abstract class for X Y Group Mapping
+#' @export
+XYGDataMapping <- R6::R6Class(
+  "XYGDataMapping",
+  inherit = XYDataMapping,
+  public = list(
+    groupings = NULL, # List of Groupings that are R6 Classes as defined by Abdullah
+    groupingNames = NULL,
+
+    initialize = function(x = NULL,
+                              y = NULL,
+                              groupings = NULL,
+                              data = NULL,
+                              metaData = NULL) {
+      super$initialize(
+        x = x,
+        y = y,
+        data = data,
+        metaData = metaData
+      )
+
+      self$groupings <- NULL
+
+      if (is.character(groupings)) {
+        groupings <- list(groupings)
       }
 
-      self$data <- data.frame(
-        "x" = x, "y" = y,
-        "color" = plotProperties$color,
-        "shape" = plotProperties$shape,
-        "size" = plotProperties$size,
-        "linetype" = plotProperties$linetype
-      )
+      self$groupingNames <- names(groupings)
+
+      if (!is.null(groupings)) {
+        for (groupingsIndex in seq(1, length(groupings))) {
+          if (is.null(self$groupingNames[groupingsIndex]) || is.na(self$groupingNames[groupingsIndex])) {
+            self$groupingNames[groupingsIndex] <- paste(groupings[[groupingsIndex]], collapse = "-")
+          }
+
+          self$groupings[[groupingsIndex]] <- Grouping$new(
+            group = groupings[[groupingsIndex]],
+            groupName = self$groupingNames[groupingsIndex],
+            data = data,
+            metaData = metaData
+          )
+        }
+        names(self$groupings) <- self$groupingNames
+      }
+    },
+
+    getMapData = function(data, metaData = NULL) {
+      x <- data[, self$x]
+      y <- data[, self$y]
+
+      self$data <- cbind.data.frame(x, y)
+
+      if (!is.null(self$groupings)) {
+        for (groupingsIndex in seq(1, length(self$groupings))) {
+          self$data[, self$groupingNames[[groupingsIndex]]] <- self$groupings[[groupingsIndex]]$getGrouping(data, metaData)
+        }
+      }
+
       return(self$data)
     }
   )
@@ -174,7 +259,8 @@ getDefaultCaptions <- function(data, metaData, variableList = colnames(data), se
     metaData[[variableList[1]]]
   )
 
-  # Paste the consecutively the variable names
+  # Loop on the variableList except first one
+  # pasting as a single data.frame column the association of names in all selected variables
   for (variable in tail(variableList, -1)) {
     groupingVariable <- paste(
       groupingVariable,
@@ -195,12 +281,12 @@ getDefaultCaptions <- function(data, metaData, variableList = colnames(data), se
 
 
 asLegendCaptionSubset <- function(data, metaData) {
-  CaptionSubset <- as.character(data)
+  captionSubset <- as.character(data)
 
   # If numeric create a character as rounded numeric + unit from metadata
   if ("numeric" %in% class(data)) {
-    CaptionSubset <- paste(as.character(round(data)), metaData$unit, sep = "")
+    captionSubset <- paste(as.character(round(data)), metaData$unit, sep = "")
   }
 
-  return(CaptionSubset)
+  return(captionSubset)
 }
