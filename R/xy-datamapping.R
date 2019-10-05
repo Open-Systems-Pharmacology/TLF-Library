@@ -16,9 +16,10 @@ XYDataMapping <- R6::R6Class(
     shape = NULL,
     linetype = NULL,
     data = NULL,
+    metaData = NULL,
 
-
-    initialize = function(x, y,
+    initialize = function(x,
+                          y,
                           ###
                           errorMin = NULL,
                           errorMax = NULL,
@@ -115,7 +116,150 @@ XYDataMapping <- R6::R6Class(
   )
 )
 
+#' @title XYGDataMapping
+#' @docType class
+#' @description  Abstract class for X Y Group Mapping
+#' @export
+XYGDataMapping <- R6::R6Class(
+  "XYGDataMapping",
+  inherit = XYDataMapping,
+  public = list(
+    groupings = NULL, # List of Groupings that are R6 Classes as defined by Abdullah
+    groupingNames = NULL,
+    initialize = function(x, y, groupings = NULL, ...) {
+      super$initialize(x, y, ...)
+      self$groupings <- groupings
 
+      if (is.character(groupings)) {
+        groupings <- list(groupings)
+      }
+
+      self$groupingNames <- names(groupings)
+
+      if (!is.null(groupings)) {
+        for (groupingsIndex in seq(1, length(groupings))) {
+          if (is.null(self$groupingNames[groupingsIndex]) || is.na(self$groupingNames[groupingsIndex])) {
+            self$groupingNames[groupingsIndex] <- paste(groupings[[groupingsIndex]], collapse = "-")
+          }
+
+
+          # TODO Make sure it works with New grouping class
+          # self$groupings[[groupingsIndex]] <- Grouping$new(
+          #   group = groupings[[groupingsIndex]],
+          #   groupName = self$groupingNames[groupingsIndex],
+          #   data = self$data,
+          #   metaData = self$metaData
+          # )
+        }
+        names(self$groupings) <- self$groupingNames
+      }
+    },
+
+    getMapData = function(data, metaData = NULL) {
+      x <- data[, self$x]
+      y <- data[, self$y]
+
+      self$data <- cbind.data.frame(x, y)
+
+      if (!is.null(self$groupings)) {
+        for (groupingsIndex in seq(1, length(self$groupings))) {
+          self$data[, self$groupingNames[[groupingsIndex]]] <- self$groupings[[groupingsIndex]]$getGrouping(data, metaData)
+        }
+      }
+
+      return(self$data)
+    }
+  )
+)
+
+#' @title XYEDataMapping
+#' @docType class
+#' @description Abstract class for X Y Error Mapping
+#' @export
+XYEDataMapping <- R6::R6Class(
+  "XYEDataMapping",
+  inherit = XYDataMapping,
+  public = list(
+    error = NULL,
+    errorMin = NULL,
+    errorMax = NULL,
+
+    # Example of how to do some other stuff
+    initialize = function(x, y,
+                          error = NULL,
+                          errorMin = NULL,
+                          errorMax = NULL, ...) {
+      super$initialize(x, y, ...)
+      self$error <- error
+      self$errorMin <- error %||% errorMin
+      self$errorMax <- error %||% errorMax
+    },
+
+    getMapData = function(data, metaData) {
+      x <- data[, self$x]
+      y <- data[, self$y]
+      errorMin <- data[, self$errorMin]
+      errorMax <- data[, self$errorMax]
+
+      color <- getDefaultCaptions(
+        data = data,
+        metaData = metaData,
+        variableList = self$color
+      )
+
+      shape <- getDefaultCaptions(
+        data = data,
+        metaData = metaData,
+        variableList = self$shape
+      )
+
+      size <- getDefaultCaptions(
+        data = data,
+        metaData = metaData,
+        variableList = self$size
+      )
+
+      return(list(
+        "x" = x, "y" = y, "ymin" = y - errorMin, "ymax" = y + errorMax,
+        "color" = color, "shape" = shape, "size" = size
+      ))
+    }
+  )
+)
+
+#' @title XRangeDataMapping
+#' @docType class
+#' @description Abstract class for X Range Mapping
+#' @export
+XRangeDataMapping <- R6::R6Class(
+  "XRangeDataMapping",
+  inherit = XYDataMapping,
+  public = list(
+    yMin = NULL,
+    yMax = NULL,
+
+    # Example of how to do some other stuff
+    initialize = function(x, yMin, yMax) {
+      super$initialize(x, y = NULL, ...)
+      self$yMin <- yMin
+      self$yMax <- yMax
+    },
+
+    getMappedData = function(data, metaData) {
+      x <- data[, self$x]
+      yMin <- data[, self$yMin]
+      yMin <- data[, self$yMin]
+
+      color <- getDefaultCaptions(
+        data = data,
+        metaData = metaData,
+        variableList = self$color
+      )
+
+      return(list("x" = x, "yMin" = yMin, "yMax" = yMax, "color" = color))
+    }
+  )
+)
 
 checkIfNotNumeric <- function(vec,msg="Input must be numeric."){
   if (!is.numeric(vec)){
@@ -202,7 +346,8 @@ getDefaultCaptions <- function(data, metaData, variableList = colnames(data), se
     metaData[[variableList[1]]]
   )
 
-  # Paste the consecutively the variable names
+  # Loop on the variableList except first one
+  # pasting as a single data.frame column the association of names in all selected variables
   for (variable in tail(variableList, -1)) {
     groupingVariable <- paste(
       groupingVariable,
@@ -223,12 +368,12 @@ getDefaultCaptions <- function(data, metaData, variableList = colnames(data), se
 
 
 asLegendCaptionSubset <- function(data, metaData) {
-  CaptionSubset <- as.character(data)
+  captionSubset <- as.character(data)
 
   # If numeric create a character as rounded numeric + unit from metadata
   if ("numeric" %in% class(data)) {
-    CaptionSubset <- paste(as.character(round(data)), metaData$unit, sep = "")
+    captionSubset <- paste(as.character(round(data)), metaData$unit, sep = "")
   }
 
-  return(CaptionSubset)
+  return(captionSubset)
 }

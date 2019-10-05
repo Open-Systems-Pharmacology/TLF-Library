@@ -1,10 +1,10 @@
 ---
-title: "pk-ratio-vignette"
+title: "PK Ratio Example"
 author: "OSPSuiteR 2019"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{pk-ratio-vignette}
+  %\VignetteIndexEntry{PK Ratio Example}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -36,13 +36,11 @@ In `PKRatioDataMapping` default `x = Age` and `y = Ratio` are provided but can b
 
 ```{r}
 # Create a PK Ratio dataMapping
-dataMapping <- PKRatioDataMapping$new(color = c("Gender"), 
-                                      shape = c("Dose", "Compound"))
+dataMapping <- PKRatioDataMapping$new(groupings = list(color = "Gender"), shape = c("Dose", "Compound"))
+
 dataMapping$x
 dataMapping$y
-dataMapping$color
-dataMapping$shape
-dataMapping$size
+dataMapping$groupings
 ```
 
 # Plot Configuration
@@ -53,39 +51,41 @@ For a PK Ratio plot, the configuartion is made easier with the `PKRatioPlotConfi
 Besides, the plot configuration can be associated to `data`, `metaData` and their `dataMapping` to facilitate in the definition of plot configuration.
 
 ```{r}
-plotConfiguration <- PKRatioPlotConfiguration$new(
-  data = pkRatioData,
-  metaData = pkRatioMetaData,
-  dataMapping = dataMapping
-)
+# TODO Update to make it work again => Make sure PlotConfiguration.R is updated.
+#plotConfiguration <- PKRatioPlotConfiguration$new(
+#  data = pkRatioData,
+#  metaData = pkRatioMetaData,
+#  dataMapping = dataMapping
+#)
 
-plotConfiguration
+#plotConfiguration
 ```
 
 Plot configuration can be tuned during its creation or modified later on.
 For instance, if you want to update the text of the `ylabel` (labels include a font property), you can either:
 ```{r}
-plotConfiguration <- PKRatioPlotConfiguration$new(
-  ylabel = "Simulated/Observed Cmax Ratio",
-  data = pkRatioData,
-  metaData = pkRatioMetaData,
-  dataMapping = dataMapping
-)
+# TODO Update to make it work again => Make sure PlotConfiguration.R is updated.
+# plotConfiguration <- PKRatioPlotConfiguration$new(
+#   ylabel = "Simulated/Observed Cmax Ratio",
+#   data = pkRatioData,
+#   metaData = pkRatioMetaData,
+#   dataMapping = dataMapping
+# )
 
 #plotConfiguration$ylabel$text
-plotConfiguration$ylabel$text
+# plotConfiguration$ylabel$text
 ```
 or
 ```{r}
-plotConfiguration <- PKRatioPlotConfiguration$new(
-  data = pkRatioData,
-  metaData = pkRatioMetaData,
-  dataMapping = dataMapping
-)
+# plotConfiguration <- PKRatioPlotConfiguration$new(
+#   data = pkRatioData,
+#   metaData = pkRatioMetaData,
+#   dataMapping = dataMapping
+# )
 
-plotConfiguration$ylabel$text
-plotConfiguration$ylabel$text <- "Simulated/Observed Cmax Ratio"
-plotConfiguration$ylabel$text
+# plotConfiguration$ylabel$text
+# plotConfiguration$ylabel$text <- "Simulated/Observed Cmax Ratio"
+# plotConfiguration$ylabel$text
 ```
 
 # Plot PK Ratios
@@ -94,25 +94,26 @@ The function `plotPKRatio` allows for an easy way of plotting PK Ratios with spe
 - Output argument of `plotPKRatio` is the `plotObject` corresponding to a `ggplot` object.
 If no `dataMapping` and `plotConfiguration` is provided, `plotPKRatio` uses a default mapping and configuration.
 
+# TODO Update to make it work again => Make sure PlotConfiguration.R is updated.
 ```{r, fig.height=6, fig.width=8}
-pkRatioDataMapping <- PKRatioDataMapping$new(color = c("Gender"), 
-                                      shape = c("Dose", "Compound"))
+#pkRatioDataMapping <- PKRatioDataMapping$new(grouping = list(color = c("Gender"), 
+#                                      shape = c("Dose", "Compound")))
 
-pkRatioPlotConfiguration <- PKRatioPlotConfiguration$new(
-  ylabel = "Simulated/Observed Cmax Ratio",
-  data = pkRatioData,
-  metaData = pkRatioMetaData,
-  dataMapping = dataMapping
-)
+#pkRatioPlotConfiguration <- PKRatioPlotConfiguration$new(
+#  ylabel = "Simulated/Observed Cmax Ratio",
+#  data = pkRatioData,
+#  metaData = pkRatioMetaData,
+#  dataMapping = dataMapping
+#)
 
-plotObject <- plotPKRatio(
-  data = pkRatioData, 
-  metaData = pkRatioMetaData,
-  dataMapping = pkRatioDataMapping, 
-  plotConfiguration = pkRatioPlotConfiguration
-)
+#plotObject <- plotPKRatio(
+#  data = pkRatioData, 
+#  metaData = pkRatioMetaData,
+#  dataMapping = pkRatioDataMapping, 
+#  plotConfiguration = pkRatioPlotConfiguration
+#)
 
-plotObject
+#plotObject
 
 ```
 

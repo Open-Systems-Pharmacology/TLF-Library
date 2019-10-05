@@ -15,7 +15,7 @@
 #' @export
 #'
 plotPKRatio <- function(data, metaData, dataMapping = NULL, plotConfiguration = NULL) {
-  # If no data mapping or plot configuration is input, use default
+  # If no data mapping or plot configuration is input, use default``
   configuration <- plotConfiguration %||% PKRatioPlotConfiguration$new()
   dataMapping <- dataMapping %||% PKRatioDataMapping$new()
 
@@ -30,7 +30,7 @@ plotPKRatio <- function(data, metaData, dataMapping = NULL, plotConfiguration = 
   plotObject <- plotConfiguration$setWatermark(plotObject)
   plotObject <- plotConfiguration$addPKRatioLines(dataMapping$pkRatioLines, plotObject)
 
-  plotObject <- plotConfiguration$addPKRatios(plotObject, data, metaData, dataMapping)
+  plotObject <- plotConfiguration$addPKRatios(mapData, plotObject)
 
   plotObject <- plotConfiguration$setPlotLabels(plotObject)
   plotObject <- plotConfiguration$setPlotProperties(plotObject)
