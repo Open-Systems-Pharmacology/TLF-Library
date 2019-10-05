@@ -9,7 +9,6 @@ XYDataMapping <- R6::R6Class(
   public = list(
     x = NULL,
     y = NULL,
-    error = NULL,
     errorMin = NULL,
     errorMax = NULL,
     color = NULL,
@@ -21,7 +20,6 @@ XYDataMapping <- R6::R6Class(
 
     initialize = function(x, y,
                           ###
-                          error = NULL,
                           errorMin = NULL,
                           errorMax = NULL,
                           ###
@@ -46,7 +44,6 @@ XYDataMapping <- R6::R6Class(
       self$x <-x
       self$y <-y
 
-      self$error <- error
       self$errorMin <- errorMin
       self$errorMax <- errorMax
 
@@ -74,12 +71,6 @@ XYDataMapping <- R6::R6Class(
 
         errorMin <- data[, self$errorMin]
         errorMax <- data[, self$errorMax]
-
-      } else if (!is.null(self$error)){
-
-        error <- data[, self$error]
-        errorMin <- y - error
-        errorMax <- y + error
 
       } else {
 

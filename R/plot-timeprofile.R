@@ -18,30 +18,25 @@
 #'
 
 
-getData <-function(data, metaData, timeCol , yCol , color = NULL , shape = NULL , size = NULL , linetype = NULL, yAggCol = NULL,  errorCol = NULL , errorMinCol = NULL, errorMaxCol = NULL, yAggFun = NULL, errorAggFun = NULL, errorMinAggFun = NULL, errorMaxAggFun = NULL){
-
-
-  aggregationFunctionsVector = c(yAggFun,errorAggFun,errorMinAggFun,errorMaxAggFun)
-  aggregationFunctionNames   = c(yAggCol,errorCol,errorMinCol,errorMaxCol)
-
-
-
-  helperObj <- TimeProfileHelper$new(data = data,
-                                     timeColumnName = timeCol,
-                                     groupingColumnNames = c(color , shape , size, linetype),
-                                     valuesColumnNames = yCol,
-                                     aggregationFunctionsVector = aggregationFunctionsVector,
-                                     aggregationFunctionNames = aggregationFunctionNames)
-
-
-  return( helperObj$dfHelper )
-
-}
 
 
 
 
-plotTimeProfile <- function(data, metaData = NULL, dataMapping = NULL, plotConfiguration = NULL, timeCol = NULL, yCol = NULL, color = NULL , shape = NULL , size = NULL , linetype = NULL, yAggCol = NULL, errorCol = NULL, errorMinCol = NULL, errorMaxCol = NULL, yAggFun = NULL,  errorAggFun = NULL , errorMinAggFun = NULL, errorMaxAggFun = NULL) {
+plotTimeProfile <- function(data,
+                            metaData = NULL,
+                            dataMapping = NULL,
+                            plotConfiguration = NULL,
+                            timeCol = NULL,
+                            yCol = NULL,
+                            color = NULL ,
+                            shape = NULL ,
+                            size = NULL ,
+                            linetype = NULL,
+                            yAggCol = NULL,
+                            errorMinCol = NULL, errorMaxCol = NULL,
+                            yAggFun = NULL,
+                            errorMinAggFun = NULL,
+                            errorMaxAggFun = NULL) {
   # If no data mapping or plot configuration is input, use default
   #configuration <- plotConfiguration %||% TimeProfilePlotConfiguration$new()
 
@@ -52,7 +47,6 @@ plotTimeProfile <- function(data, metaData = NULL, dataMapping = NULL, plotConfi
     if(!is.null(yAggFun)){
 
 
-      errorCol = NULL
       errorMinCol = NULL
       errorMaxCol = NULL
 
@@ -60,29 +54,46 @@ plotTimeProfile <- function(data, metaData = NULL, dataMapping = NULL, plotConfi
 
         errorMinCol = c("errorMin")
         errorMaxCol = c("errorMax")
-        errorAggFun = NULL
-
-      } else if (!is.null(errorAggFun)) {
-
-        errorCol = c("error")
-        errorMaxAggFun = NULL
-        errorMinAggFun = NULL
 
       }
 
-      data<-getData(data=data, metaData=metaData, timeCol=timeCol , yCol=yCol , color=color , shape=shape , size=size , linetype=linetype , yAggCol=yAggCol, errorCol=errorCol , errorMinCol=errorMinCol , errorMaxCol=errorMaxCol , yAggFun=yAggFun , errorAggFun=errorAggFun , errorMinAggFun=errorMinAggFun , errorMaxAggFun=errorMaxAggFun )
+      data<-getData(data=data, metaData=metaData, timeCol=timeCol , yCol=yCol , color=color , shape=shape , size=size , linetype=linetype , yAggCol=yAggCol,  errorMinCol=errorMinCol , errorMaxCol=errorMaxCol , yAggFun=yAggFun ,   errorMinAggFun=errorMinAggFun , errorMaxAggFun=errorMaxAggFun )
       yCol = yAggCol
-
+      print(data)
     }
 
-    dataMapping <- TimeProfileDataMapping$new(x = timeCol , y = yCol , error = errorCol , errorMin = errorMinCol , errorMax = errorMaxCol , color = color , shape = shape , size = size , linetype = linetype , data = data , metaData = metaData )
+    dataMapping <- TimeProfileDataMapping$new(x = timeCol , y = yCol , errorMin = errorMinCol , errorMax = errorMaxCol , color = color , shape = shape , size = size , linetype = linetype , data = data , metaData = metaData )
+
+  }
+
+  plotObject <- ggplot(dataMapping$data,aes(x=x,y=y, color = color, linetype = linetype)) + geom_line()
+
+
+  if ( (!is.null(errorMinAggFun)) & (!is.null(errorMaxAggFun)) ){
+
+    plotObject <-  plotObject + geom_errorbar(aes(ymin = errorMin, ymax = errorMax), width = 0.2)
 
   }
 
 
-
-  plotObject <- ggplot(dataMapping$data,aes(x=x,y=y, color = color, linetype = linetype)) + geom_line() + geom_errorbar(aes(ymin = errorMin, ymax = errorMax), width = 0.2)
-
-
   return(plotObject)
 }
+
+
+
+getData <-function(data, metaData, timeCol , yCol , color = NULL , shape = NULL , size = NULL , linetype = NULL, yAggCol = NULL, errorMinCol = NULL, errorMaxCol = NULL, yAggFun = NULL, errorMinAggFun = NULL, errorMaxAggFun = NULL){
+
+  aggregationFunctionsVector = c(yAggFun,errorMinAggFun,errorMaxAggFun)
+  aggregationFunctionNames   = c(yAggCol,errorMinCol,errorMaxCol)
+
+  helperObj <- TimeProfileHelper$new(data = data,
+                                     timeColumnName = timeCol,
+                                     groupingColumnNames = c(color , shape , size, linetype),
+                                     valuesColumnNames = yCol,
+                                     aggregationFunctionsVector = aggregationFunctionsVector,
+                                     aggregationFunctionNames = aggregationFunctionNames)
+
+  return( helperObj$dfHelper )
+
+}
+
