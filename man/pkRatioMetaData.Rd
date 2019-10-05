@@ -7,8 +7,8 @@
 \format{A list of lists for the 11 variables of pkRatioData
 Each variable includes:
 \describe{
-\item{unit}
-\item{dimension}
+\item{unit}{}
+\item{dimension}{}
 }}
 \usage{
 pkRatioMetaData
