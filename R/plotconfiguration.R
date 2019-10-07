@@ -95,13 +95,15 @@ LegendConfiguration <- R6::R6Class(
         self$position <- legendPositions$outsideRight
       )
 
+
+
       mapTitles <- list()
       mapCaptions <- list()
-      if (!is.null(dataMapping$groupings)) {
+      if (!is.null(dataMapping)) {
         mapData <- dataMapping$getMapData(data, metaData)
-        for (group in dataMapping$groupings) {
-          mapTitles[[group$groupName]] <- group$groupName
-          mapCaptions[[group$groupName]] <- mapData[, group$groupName]
+        for (aesProperty in aesProperties) {
+          mapTitles[[aesProperty]] <- dataMapping[[aesProperty]]$groupingLegendTitle %||% paste(dataMapping[[aesProperty]]$groupingName,collapse="-")
+          mapCaptions[[aesProperty]] <- mapData[[aesProperty]]
         }
       }
 
