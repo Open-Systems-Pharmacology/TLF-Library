@@ -22,7 +22,7 @@ plotPKRatio <- function(data, metaData, dataMapping = NULL, plotConfiguration = 
   stopifnot("PKRatioDataMapping" %in% class(dataMapping))
   stopifnot("PKRatioPlotConfiguration" %in% class(configuration))
 
-  mapData <- dataMapping$getMapData(data, metaData)
+  # mapData <- dataMapping$getMapData(data, metaData)
 
   plotObject <- ggplot2::ggplot()
 
@@ -30,10 +30,11 @@ plotPKRatio <- function(data, metaData, dataMapping = NULL, plotConfiguration = 
   plotObject <- plotConfiguration$setWatermark(plotObject)
   plotObject <- plotConfiguration$addPKRatioLines(dataMapping$pkRatioLines, plotObject)
 
-  plotObject <- plotConfiguration$addPKRatios(mapData, plotObject)
+  plotObject <- plotConfiguration$addPKRatios(plotObject, data, metaData, dataMapping)
 
   plotObject <- plotConfiguration$setPlotLabels(plotObject)
   plotObject <- plotConfiguration$setPlotProperties(plotObject)
+  plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)
 
   return(plotObject)
 }
