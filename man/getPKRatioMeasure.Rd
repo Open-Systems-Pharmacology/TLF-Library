@@ -11,16 +11,18 @@ getPKRatioMeasure(data, dataMapping = NULL, ratioLimits = c(1.5, 2))
 containing the data to be used for the plot}
 
 \item{dataMapping}{R6 class PKRatioDataMapping
-mapping of x, y axes + mapping of colorGrouping, sizeGrouping, shapeGrouping}
+mapping of x, y and groupings}
 
-\item{metaData}{list of lists (structure TO BE DISCUSSED)
-containing complementary information to data (e.g. unit)}
+\item{ratioLimits}{vector of numeric
+containing the fold limits of PK ratios
+As default limits are 1.5 and 2 folds}
 }
 \value{
 a data.frame reporting the PK Ratio Qualification Measure
 }
 \description{
-getPKRatioMeasure(data, metaData, dataMapping)
+getPKRatioMeasure(data, dataMapping, ratioLimits) get the number of PK ratios
+that are within specific limits
 }
 \details{
 get PK-Ratio qualification measure
