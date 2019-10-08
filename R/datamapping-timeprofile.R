@@ -6,9 +6,8 @@ TimeProfileDataMapping <- R6::R6Class(
   "TimeProfileDataMapping",
   inherit = XYDataMapping,
   public = list(
-    initialize = function(...){
+    initialize = function(...) {
       super$initialize(...)
     }
   )
 )
-
