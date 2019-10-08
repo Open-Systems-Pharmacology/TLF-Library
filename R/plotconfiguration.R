@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #' @title LabelConfiguration
 #' @docType class
 #' @description  Generic Label Configuration
@@ -206,6 +207,8 @@ YAxisConfiguration <- R6::R6Class(
   )
 )
 
+=======
+>>>>>>> 54c79d9... Fixes #68 + relabelling files
 #' @title PlotConfiguration
 #' @docType class
 #' @description  Generic Plot Configuration

@@ -3,18 +3,20 @@
 #' @title getPKRatioMeasure
 #' @param data data.frame (or list of data.frames? TO BE DISCUSSED)
 #' containing the data to be used for the plot
-#' @param metaData list of lists (structure TO BE DISCUSSED)
-#' containing complementary information to data (e.g. unit)
 #' @param dataMapping R6 class PKRatioDataMapping
-#' mapping of x, y axes + mapping of colorGrouping, sizeGrouping, shapeGrouping
+#' mapping of x, y and groupings
+#' @param ratioLimits vector of numeric
+#' containing the fold limits of PK ratios
+#' As default limits are 1.5 and 2 folds
 #' @description
-#' getPKRatioMeasure(data, metaData, dataMapping)
+#' getPKRatioMeasure(data, dataMapping, ratioLimits) get the number of PK ratios
+#' that are within specific limits
 #' @return a data.frame reporting the PK Ratio Qualification Measure
 #' @export
 #'
 getPKRatioMeasure <- function(data, dataMapping = NULL, ratioLimits = c(1.5, 2)) {
   # If no data mapping is input, use default
-  dataMapping <- dataMapping %||% PKRatioDataMapping$new()
+  dataMapping <- dataMapping %||% PKRatioDataMapping$new(data)
 
   stopifnot("PKRatioDataMapping" %in% class(dataMapping))
 
