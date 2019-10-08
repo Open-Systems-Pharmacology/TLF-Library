@@ -10,53 +10,54 @@ LegendConfiguration <- R6::R6Class(
     titles = NULL,
     captions = NULL,
     values = NULL,
-    
+
     initialize = function(position = NULL,
-                          aesProperties = c("color"),
-                          titles = NULL,
-                          captions = NULL,
-                          values = tlfEnv$currentTheme$aesProperties,
-                          dataMapping = NULL,
-                          data = NULL,
-                          metaData = NULL,
-                          theme = tlfEnv$currentTheme) {
+                              aesProperties = NULL,
+                              titles = NULL,
+                              captions = NULL,
+                              values = tlfEnv$currentTheme$aesProperties,
+                              dataMapping = NULL,
+                              data = NULL,
+                              metaData = NULL,
+                              theme = tlfEnv$currentTheme) {
       ifnotnull(
         position,
         self$position <- position,
         self$position <- legendPositions$outsideRight
       )
-      
+
       mapTitles <- list()
       mapCaptions <- list()
       if (!is.null(dataMapping$groupings)) {
         mapData <- dataMapping$getMapData(data, metaData)
-        for (group in dataMapping$groupings) {
-          mapTitles[[group$groupName]] <- group$groupName
-          mapCaptions[[group$groupName]] <- mapData[, group$groupName]
+        for (group in dataMapping$groupingNames) {
+          mapTitles[[group]] <- dataMapping$groupings[[group]]$groupingLegendTitle %||% paste(dataMapping$groupings[[group]]$groupingName[[1]], collapse = "-")
+          mapCaptions[[group]] <- mapData[, group]
         }
       }
-      
-      self$aesProperties <- aesProperties
-      
-      newValues <- values %||% theme$aesProperties
-      self$values <- setAesPropertiesToLegend(newValues, aesProperties)
+      self$titles <- titles %||% mapTitles
+      self$captions <- captions %||% mapCaptions
+
+      self$aesProperties <- aesProperties %||% dataMapping$groupingNames
+
+      self$values <- values
     },
-    
+
     setPlotLegend = function(plotObject) {
       plotObject <- setLegendPosition(plotObject, legendPosition = self$position)
-      
+
       for (aesProperty in self$aesProperties) {
         plotObject <- plotObject +
           ifnotnull(
             self$captions[[aesProperty]],
-            
+
             scale_discrete_manual(
               aesthetics = aesProperty,
               name = self$titles[[aesProperty]],
               values = self$values[[aesProperty]],
               labels = self$captions[[aesProperty]]
             ),
-            
+
             scale_discrete_manual(
               aesthetics = aesProperty,
               name = self$titles[[aesProperty]],

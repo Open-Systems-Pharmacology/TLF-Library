@@ -11,36 +11,36 @@ LabelConfiguration <- R6::R6Class(
     ylabel = NULL,
     watermark = NULL,
     legendTitles = NULL,
-    
+
     initialize = function(title = NULL,
-                          subtitle = NULL,
-                          xlabel = NULL,
-                          ylabel = NULL,
-                          watermark = tlfEnv$currentTheme$watermarkText,
-                          legendTitles = NULL,
-                          theme = tlfEnv$currentTheme) {
+                              subtitle = NULL,
+                              xlabel = NULL,
+                              ylabel = NULL,
+                              watermark = tlfEnv$currentTheme$watermarkText,
+                              legendTitles = NULL,
+                              theme = tlfEnv$currentTheme) {
       self$title <- asLabel(title %||% "")
       self$title$font <- theme$titleFont
       self$subtitle <- asLabel(subtitle %||% "")
       self$subtitle$font <- theme$subtitleFont
-      
+
       self$xlabel <- asLabel(xlabel %||% "")
       self$xlabel$font <- theme$xlabelFont
       self$ylabel <- asLabel(ylabel %||% "")
       self$ylabel$font <- theme$ylabelFont
-      
+
       self$watermark <- asLabel(watermark %||% "")
       self$watermark$font <- theme$watermarkFont
-      
+
       self$legendTitles <- asLabel(legendTitles %||% "")
       self$legendTitles$font <- theme$legendTitles
     },
-    
+
     ## ---------------------------------------------------------------
     ## Define Labels: plotConfiguration function that uses data mapping
     ## to set labels and legends
     setPlotLabels = function(plotObject) {
-      
+
       # Titles and axes labels
       plotObject <- plotObject + ggplot2::labs(
         title = self$title$text,
@@ -48,7 +48,7 @@ LabelConfiguration <- R6::R6Class(
         x = self$xlabel$text,
         y = self$ylabel$text
       )
-      
+
       plotObject <- setFontProperties(
         plotObject,
         titleFont = self$title$font,
@@ -59,7 +59,7 @@ LabelConfiguration <- R6::R6Class(
       )
       return(plotObject)
     },
-    
+
     setWatermark = function(plotObject) {
       plotObject <- setWatermark(plotHandle = plotObject, label = self$watermark)
       return(plotObject)

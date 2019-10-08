@@ -11,17 +11,17 @@ PKRatioPlotConfiguration <- R6::R6Class(
     shapeGrouping = NULL,
 
     initialize = function(pkRatioLinesProperties = tlfEnv$currentTheme$pkRatioLinesProperties,
-                          colorGrouping = NULL,
-                          shapeGrouping = NULL,
-                          title = "PK Ratio Plot",
-                          subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
-                          xlabel = NULL,
-                          ylabel = NULL,
-                          watermark = tlfEnv$currentTheme$watermarkText,
-                          data = NULL,
-                          metaData = NULL,
-                          dataMapping = NULL,
-                          ...) {
+                              colorGrouping = NULL,
+                              shapeGrouping = NULL,
+                              title = "PK Ratio Plot",
+                              subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
+                              xlabel = NULL,
+                              ylabel = NULL,
+                              watermark = tlfEnv$currentTheme$watermarkText,
+                              data = NULL,
+                              metaData = NULL,
+                              dataMapping = NULL,
+                              ...) {
       super$initialize(
         title = title,
         subtitle = subtitle,
@@ -35,13 +35,15 @@ PKRatioPlotConfiguration <- R6::R6Class(
 
       self$pkRatioLinesProperties <- pkRatioLinesProperties
 
-      self$colorGrouping <- NULL
-      self$shapeGrouping <- NULL
-
       if (!is.null(dataMapping$groupings)) {
-        self$colorGrouping <- dataMapping$groupings[["color"]]$groupName
-        self$shapeGrouping <- dataMapping$groupings[["shape"]]$groupName
+        self$colorGrouping <- dataMapping$groupings[["color"]]$groupingName[[1]]
+        self$shapeGrouping <- dataMapping$groupings[["shape"]]$groupingName[[1]]
       }
+
+      # Overwrite grouping if config is different from Mapping
+      self$colorGrouping <- colorGrouping %||% self$colorGrouping
+      self$shapeGrouping <- shapeGrouping %||% self$shapeGrouping
+
 
       if (is.null(self$shapeGrouping)) {
         # self$legend$captions$color <- NULL
@@ -73,8 +75,8 @@ PKRatioPlotConfiguration <- R6::R6Class(
         plotObject <- plotObject + geom_point(
           mapping = aes(
             x = x, y = y,
-            color = self$colorGrouping,
-            shape = self$colorGrouping
+            color = color,
+            shape = color
           ),
           data = mapData,
           size = 1, # To be updated with current Theme
@@ -84,8 +86,8 @@ PKRatioPlotConfiguration <- R6::R6Class(
         plotObject <- plotObject + geom_point(
           mapping = aes(
             x = x, y = y,
-            color = self$colorGrouping,
-            shape = self$shapeGrouping
+            color = color,
+            shape = shape
           ),
           data = mapData,
           size = 1, # To be updated with current Theme

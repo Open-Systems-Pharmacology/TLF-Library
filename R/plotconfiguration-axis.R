@@ -9,17 +9,17 @@ AxisConfiguration <- R6::R6Class(
     scale = NULL,
     ticks = NULL,
     ticklabels = NULL,
-    
+
     initialize = function(limits = NULL,
-                          scale = "lin",
-                          ticks = "default",
-                          ticklabels = "default") {
+                              scale = "lin",
+                              ticks = "default",
+                              ticklabels = "default") {
       self$limits <- limits
       self$scale <- scale
       if (self$scale %in% "lin") {
         self$scale <- "identity"
       }
-      
+
       self$ticks <- ticks
       if (ticks %in% "default") {
         self$ticks <- waiver()
