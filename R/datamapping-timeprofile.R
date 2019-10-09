@@ -4,7 +4,7 @@
 #' @export
 TimeProfileDataMapping <- R6::R6Class(
   "TimeProfileDataMapping",
-  inherit = XYDataMapping,
+  inherit = XYGDataMapping,
   public = list(
     initialize = function(...) {
       super$initialize(...)
