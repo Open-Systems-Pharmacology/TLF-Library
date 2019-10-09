@@ -49,7 +49,7 @@ XYGDataMapping <- R6::R6Class(
       # Defined by grouping data frame if available or by grouping Name
       if (!is.null(self$groupings)) {
         for (groupingsIndex in seq(1, length(self$groupings))) {
-          self$data[, self$groupingNames[[groupingsIndex]]] <- self$groupings[[groupingsIndex]]$groupingDataFrame %||% getDefaultCaptions(data, metaData, variableList = self$groupings[[groupingsIndex]]$groupingName[[1]])
+          self$data[, self$groupingNames[[groupingsIndex]]] <-  getCustomCaptions(data, self$groupings[[groupingsIndex]]$groupingDataFrame) %||% getDefaultCaptions(data, metaData, variableList = self$groupings[[groupingsIndex]]$groupingName[[1]])
         }
       }
 
