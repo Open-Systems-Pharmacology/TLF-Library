@@ -36,8 +36,8 @@ findColumnEntriesInGroups <- function(dataDf, groupingDfRow) {
 }
 
 
-
-getCustomCaptions <- function(dataDf, groupingDf, newColName = NULL) {
+getCustomCaptions <- function(dataDf, groupingDf) {
+#getCustomCaptions <- function(dataDf, groupingDf, newColName = NULL) {
   # dataDf is the original dataframe
   # groupingDf is a dataframe used to group dataDf
   # newColName is a default legend title for this grouping
@@ -52,10 +52,10 @@ getCustomCaptions <- function(dataDf, groupingDf, newColName = NULL) {
       }
     }
   }
-  if (is.null(newColName)) # rename new grouping column if a name newColName is supplied
-  {
-    newColName <- colnames(groupingDf[ncol(groupingDf)])
-  }
+  # if (is.null(newColName)) # rename new grouping column if a name newColName is supplied
+  # {
+  #   newColName <- colnames(groupingDf[ncol(groupingDf)])
+  # }
   newCol <- as.factor(rep(NA, nrow(dataDf))) # add a factor column of NA to the dataframe dataDF.  For rows falling within the grouping, the NA will be modified to that grouping's caption.
   levels(newCol) <- groupingDf[[ncol(groupingDf)]] # Set factor levels of new column to be the captions of the grouping dataframe
   newCol[ groupingFactorColumn != 0 ] <- groupingDf[[ncol(groupingDf)]][ groupingFactorColumn[groupingFactorColumn != 0 ] ] # Add the appropriate caption to each column entry that correspondinds to a dataDf row that falls within groupings in groupingDf
