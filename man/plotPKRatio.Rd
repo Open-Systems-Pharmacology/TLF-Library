@@ -4,7 +4,7 @@
 \alias{plotPKRatio}
 \title{plotPKRatio}
 \usage{
-plotPKRatio(data, metaData, dataMapping = NULL,
+plotPKRatio(data, metaData = NULL, dataMapping = NULL,
   plotConfiguration = NULL)
 }
 \arguments{
