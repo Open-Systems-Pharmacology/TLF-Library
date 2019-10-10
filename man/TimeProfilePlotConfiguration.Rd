@@ -9,6 +9,6 @@
 TimeProfilePlotConfiguration
 }
 \description{
-Plot Configuration for PKRatio
+Plot Configuration for Time Profile Plots
 }
 \keyword{datasets}
