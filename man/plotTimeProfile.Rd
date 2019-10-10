@@ -5,10 +5,7 @@
 \title{plotTimeProfile}
 \usage{
 plotTimeProfile(data, metaData = NULL, dataMapping = NULL,
-  plotConfiguration = NULL, timeCol = NULL, yCol = NULL,
-  color = NULL, shape = NULL, size = NULL, linetype = NULL,
-  yAggCol = NULL, errorMinCol = NULL, errorMaxCol = NULL,
-  yAggFun = NULL, errorMinAggFun = NULL, errorMaxAggFun = NULL)
+  plotConfiguration = NULL)
 }
 \arguments{
 \item{data}{list of data.frames (or list of data.frames? TO BE DISCUSSED)
