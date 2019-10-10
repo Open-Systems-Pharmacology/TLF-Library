@@ -153,7 +153,7 @@ tlfTheme <- Theme$new(
 )
 
 bwTheme <- Theme$new(
-  labelColors = themeLabelColors$default,
+  labelColors = themeLabelColors$bw,
   watermarkText = "black & white",
   aesProperties = themeAesProperties$bw,
   pkRatioLinesProperties = themePKRatioLinesPropertiesBW
