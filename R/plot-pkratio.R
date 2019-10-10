@@ -14,13 +14,21 @@
 #' @return a ggplot graphical object
 #' @export
 #'
-plotPKRatio <- function(data, metaData, dataMapping = NULL, plotConfiguration = NULL) {
-  # If no data mapping or plot configuration is input, use default``
-  configuration <- plotConfiguration %||% PKRatioPlotConfiguration$new()
+plotPKRatio <- function(data,
+                        metaData = NULL,
+                        dataMapping = NULL,
+                        plotConfiguration = NULL) {
+  # If no data mapping or plot configuration is input, use default
+  metaData <- metaData %||% metaDataHelper(data)
   dataMapping <- dataMapping %||% PKRatioDataMapping$new()
+  plotConfiguration <- plotConfiguration %||% PKRatioPlotConfiguration$new(
+    data = data,
+    metaData = metaData,
+    dataMapping = dataMapping
+  )
 
   stopifnot("PKRatioDataMapping" %in% class(dataMapping))
-  stopifnot("PKRatioPlotConfiguration" %in% class(configuration))
+  stopifnot("PKRatioPlotConfiguration" %in% class(plotConfiguration))
 
   # mapData <- dataMapping$getMapData(data, metaData)
 

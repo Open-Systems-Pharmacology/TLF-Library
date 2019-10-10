@@ -22,11 +22,19 @@ plotTimeProfile <- function(data,
                             plotConfiguration = NULL) {
 
   # If no data mapping or plot configuration is input, use default
+  metaData <- metaData %||% metaDataHelper(data)
   dataMapping <- dataMapping %||% TimeProfileDataMapping$new()
-  configuration <- plotConfiguration %||% TimeProfilePlotConfiguration$new()
+  plotConfiguration <- plotConfiguration %||% TimeProfilePlotConfiguration$new(
+    data = data,
+    metaData = metaData,
+    dataMapping = dataMapping
+  )
+
+  stopifnot("TimeProfileDataMapping" %in% class(dataMapping))
+  stopifnot("TimeProfilePlotConfiguration" %in% class(plotConfiguration))
 
 
-  plotObject <- ggplot2::ggplot() # ggplot(dataMapping$data, aes(x = x, y = y, color = color, linetype = linetype)) + geom_line()
+  plotObject <- ggplot2::ggplot()
 
   plotObject <- plotConfiguration$setWatermark(plotObject)
 
@@ -36,7 +44,7 @@ plotTimeProfile <- function(data,
 
   plotObject <- plotConfiguration$setPlotLabels(plotObject)
   plotObject <- plotConfiguration$setPlotProperties(plotObject)
-  # plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)
+  plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)
 
   return(plotObject)
 }
