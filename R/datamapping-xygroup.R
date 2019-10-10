@@ -17,23 +17,23 @@ XYGDataMapping <- R6::R6Class(
         groupings <- list(groupings)
       }
 
+
+
+
       self$groupingNames <- groupingNames %||% names(groupings)
+
 
       if (!is.null(groupings)) {
         for (groupingsIndex in seq(1, length(groupings))) {
-          if (is.null(self$groupingNames[groupingsIndex]) || is.na(self$groupingNames[groupingsIndex])) {
-            self$groupingNames[groupingsIndex] <- paste(groupings[[groupingsIndex]], collapse = "-")
+
+          if( is(self$groupings[[groupingsIndex]],"Grouping") ){#Case where current groupings element is already a Grouping object
+            self$groupingNames[groupingsIndex] <- self$groupings[[groupingsIndex]]$groupingName
+          } else {
+            if (is.null(self$groupingNames[groupingsIndex]) || is.na(self$groupingNames[groupingsIndex])) {
+              self$groupingNames[groupingsIndex] <- paste(groupings[[groupingsIndex]], collapse = "-")
+            }
+            self$groupings[[groupingsIndex]] <- Grouping$new(groupings[groupingsIndex])
           }
-
-          self$groupings[[groupingsIndex]] <- Grouping$new(groupings[groupingsIndex])
-
-          # TODO Make sure it works with New grouping class
-          # self$groupings[[groupingsIndex]] <- Grouping$new(
-          #   group = groupings[[groupingsIndex]],
-          #   groupName = self$groupingNames[groupingsIndex],
-          #   data = self$data,
-          #   metaData = self$metaData
-          # )
         }
         names(self$groupings) <- self$groupingNames
       }
