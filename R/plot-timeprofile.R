@@ -16,19 +16,27 @@
 #' @export
 #'
 #'
-
-
-
-
-
-
 plotTimeProfile <- function(data,
                             metaData = NULL,
                             dataMapping = NULL,
                             plotConfiguration = NULL) {
 
+  # If no data mapping or plot configuration is input, use default
+  dataMapping <- dataMapping %||% TimeProfileDataMapping$new()
+  configuration <- plotConfiguration %||% TimeProfilePlotConfiguration$new()
 
-  plotObject <- ggplot2::ggplot() #ggplot(dataMapping$data, aes(x = x, y = y, color = color, linetype = linetype)) + geom_line()
+
+  plotObject <- ggplot2::ggplot() # ggplot(dataMapping$data, aes(x = x, y = y, color = color, linetype = linetype)) + geom_line()
+
+  plotObject <- plotConfiguration$setWatermark(plotObject)
+
+  plotObject <- plotConfiguration$addLLOQLines(dataMapping$LLOQ, plotObject)
+
+  plotObject <- plotConfiguration$addTimeProfiles(plotObject, data, metaData, dataMapping)
+
+  plotObject <- plotConfiguration$setPlotLabels(plotObject)
+  plotObject <- plotConfiguration$setPlotProperties(plotObject)
+  # plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)
 
   return(plotObject)
 }
