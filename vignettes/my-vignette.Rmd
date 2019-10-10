@@ -133,6 +133,62 @@ plotObject
 
 ```
 
+# Use of Themes to set standardized plots
+
+Default values of plot configuration are set according to a `Theme` class defining the color and font of the every label, as well as the default properties of a plot (color palette and linetypes).
+It is possible to create one's own `Theme` using `Theme$new()` and setting the properties as the default or the tlf environment using the funtion `useTheme()`.
+Currently, 4 themes are defined in the library: `defaultTheme`, `tlfTheme`, `bwTheme` and `bigTheme`.
+
+## The follwing example show the output of PK Ratio set from `defaultTheme`
+```{r, fig.height=5, fig.width=7.5}
+useTheme(defaultTheme)
+# Create PK Ratio data Mapping
+pkRatioDataMapping <- PKRatioDataMapping$new(groupings = list(color = "Gender", shape = c("Dose", "Compound")))
+
+# Create associated PK Ratio plot Configuration
+pkRatioPlotConfiguration <- PKRatioPlotConfiguration$new(
+  data = pkRatioData,
+  metaData = pkRatioMetaData,
+  dataMapping = pkRatioDataMapping
+)
+
+# Define the printable ggplot object
+plotObject <- plotPKRatio(
+  data = pkRatioData, 
+  metaData = pkRatioMetaData,
+  dataMapping = pkRatioDataMapping, 
+  plotConfiguration = pkRatioPlotConfiguration
+)
+
+plotObject
+
+```
+
+## The follwing example shows the output of PK Ratio set from balck and white `bwTheme`
+```{r, fig.height=5, fig.width=7.5}
+useTheme(bwTheme)
+# Create PK Ratio data Mapping
+pkRatioDataMapping <- PKRatioDataMapping$new(groupings = list(color = "Gender", shape = c("Dose", "Compound")))
+
+# Create associated PK Ratio plot Configuration
+pkRatioPlotConfiguration <- PKRatioPlotConfiguration$new(
+  data = pkRatioData,
+  metaData = pkRatioMetaData,
+  dataMapping = pkRatioDataMapping
+)
+
+# Define the printable ggplot object
+plotObject <- plotPKRatio(
+  data = pkRatioData, 
+  metaData = pkRatioMetaData,
+  dataMapping = pkRatioDataMapping, 
+  plotConfiguration = pkRatioPlotConfiguration
+)
+
+plotObject
+
+```
+
 # Qualification of PK Ratios
 The qualification of the PK Ratios can be performed using `getPKRatioMeasure`.
 This function return a `data.frame` with the PK ratios within specific ranges.
