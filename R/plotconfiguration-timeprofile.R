@@ -77,7 +77,7 @@ TimeProfilePlotConfiguration <- R6::R6Class(
         if (!is.null(dataMapping$yMin) && !is.null(dataMapping$yMax)) {
           plotObject <- plotObject + ggplot2::geom_errorbar(
             data = mapData,
-            mapping = aes(x = x, ymin = yMin, yMax = yMax, color = color, linetype = linetype),
+            mapping = aes(x = x, ymin = yMin, ymax = yMax, color = color, linetype = linetype),
             size = 1,
             show.legend = TRUE
           )
@@ -91,7 +91,7 @@ TimeProfilePlotConfiguration <- R6::R6Class(
       } else {
         plotObject <- plotObject + ggplot2::geom_ribbon(
           data = mapData,
-          mapping = aes(x = x, ymin = yMin, yMax = yMax, fill = color),
+          mapping = aes(x = x, ymin = yMin, ymax = yMax, fill = color),
           show.legend = TRUE
         )
       }
