@@ -5,9 +5,6 @@
 #' @description
 #' Create a metaData object with information about units and dimensions of data
 #' @export
-#' @examples
-#' df <- pkRatioData
-#' pkRatioMetaData <- metaDataHelper(data = df)
 metaDataHelper <- function(data) {
   metaData <- enum(names(data))
   for (variable in colnames(data)) {

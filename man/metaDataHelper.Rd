@@ -15,7 +15,3 @@ metaData with default OSP Suite units
 \description{
 Create a metaData object with information about units and dimensions of data
 }
-\examples{
-df <- pkRatioData
-pkRatioMetaData <- metaDataHelper(data = df)
-}
