@@ -71,6 +71,10 @@ themePKRatioLinesPropertiesBW$linetype <- as.character(c("solid", "dashed", "das
 # Big theme properties
 themePKRatioLinesPropertiesBig <- themePKRatioLinesProperties
 themePKRatioLinesPropertiesBig$size <- themePKRatioLinesProperties$size * 1.5
+
+## -------------------------------------------------
+# Define LLOQ Lines Properties
+themeLLOQLinesProperties <- list(linetype = "dashed", color = "black", size = 1)
 ## -------------------------------------------------
 
 #' @title ThemeFont
@@ -116,12 +120,14 @@ Theme <- R6::R6Class(
     aesProperties = NULL,
 
     pkRatioLinesProperties = NULL,
+    LLOQLinesProperties = NULL,
 
     initialize = function(labelColors = themeLabelColors$default,
                               labelBaseSize = 14,
                               watermarkText = "",
                               aesProperties = themeAesProperties$default,
-                              pkRatioLinesProperties = themePKRatioLinesProperties) {
+                              pkRatioLinesProperties = themePKRatioLinesProperties,
+                              LLOQLinesProperties = themeLLOQLinesProperties) {
       super$initialize(labelColors, labelBaseSize)
       self$watermarkText <- watermarkText
 
@@ -130,6 +136,7 @@ Theme <- R6::R6Class(
 
       # Set the properties of specific plots
       self$pkRatioLinesProperties <- pkRatioLinesProperties
+      self$LLOQLinesProperties <- LLOQLinesProperties
     }
   )
 )
@@ -146,7 +153,7 @@ tlfTheme <- Theme$new(
 )
 
 bwTheme <- Theme$new(
-  labelColors = themeLabelColors$default,
+  labelColors = themeLabelColors$bw,
   watermarkText = "black & white",
   aesProperties = themeAesProperties$bw,
   pkRatioLinesProperties = themePKRatioLinesPropertiesBW

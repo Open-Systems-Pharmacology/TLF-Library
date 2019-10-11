@@ -37,7 +37,7 @@ findColumnEntriesInGroups <- function(dataDf, groupingDfRow) {
 
 
 getCustomCaptions <- function(dataDf, groupingDf) {
-#getCustomCaptions <- function(dataDf, groupingDf, newColName = NULL) {
+  # getCustomCaptions <- function(dataDf, groupingDf, newColName = NULL) {
   # dataDf is the original dataframe
   # groupingDf is a dataframe used to group dataDf
   # newColName is a default legend title for this grouping

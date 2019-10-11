@@ -18,7 +18,7 @@ Grouping <- R6::R6Class(
     getGroupingList = function(groupingName, groupingDataFrame) { # move out of public?
       if (!is.null(groupingDataFrame)) {
         selfGroupingDataFrame <- groupingDataFrame
-        selfGrouping <- groupingName %||% paste(head(colnames(groupingDataFrame), -1),collapse = "-") # the last column heading of the grouping dataframe will be a default legend title if no groupingLegendTitle is provided
+        selfGrouping <- groupingName %||% paste(head(colnames(groupingDataFrame), -1), collapse = "-") # the last column heading of the grouping dataframe will be a default legend title if no groupingLegendTitle is provided
       } else {
         selfGroupingDataFrame <- NULL
         selfGrouping <- groupingName

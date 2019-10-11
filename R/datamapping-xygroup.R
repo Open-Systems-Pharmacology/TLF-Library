@@ -25,8 +25,7 @@ XYGDataMapping <- R6::R6Class(
 
       if (!is.null(groupings)) {
         for (groupingsIndex in seq(1, length(groupings))) {
-
-          if( is(self$groupings[[groupingsIndex]],"Grouping") ){#Case where current groupings element is already a Grouping object
+          if (is(self$groupings[[groupingsIndex]], "Grouping")) { # Case where current groupings element is already a Grouping object
             self$groupingNames[groupingsIndex] <- self$groupings[[groupingsIndex]]$groupingName
           } else {
             if (is.null(self$groupingNames[groupingsIndex]) || is.na(self$groupingNames[groupingsIndex])) {
@@ -49,7 +48,7 @@ XYGDataMapping <- R6::R6Class(
       # Defined by grouping data frame if available or by grouping Name
       if (!is.null(self$groupings)) {
         for (groupingsIndex in seq(1, length(self$groupings))) {
-          self$data[, self$groupingNames[[groupingsIndex]]] <- ifnotnull(self$groupings[[groupingsIndex]]$groupingDataFrame ,  getCustomCaptions(data, self$groupings[[groupingsIndex]]$groupingDataFrame)  , getDefaultCaptions(data, metaData, variableList = self$groupings[[groupingsIndex]]$groupingName[[1]]))
+          self$data[, self$groupingNames[[groupingsIndex]]] <- ifnotnull(self$groupings[[groupingsIndex]]$groupingDataFrame, getCustomCaptions(data, self$groupings[[groupingsIndex]]$groupingDataFrame), getDefaultCaptions(data, metaData, variableList = self$groupings[[groupingsIndex]]$groupingName[[1]]))
         }
       }
 

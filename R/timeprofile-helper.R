@@ -32,7 +32,6 @@ TimeProfileHelper <- R6::R6Class(
     },
 
     generateAggregatedValues = function() {
-
       xGroupingColNames <- c(self$timeColumnName, self$groupingColumnNames) # Get names of grouping columns and groups then into a vector xGroupingColNames
       xGroupingCols <- lapply(xGroupingColNames, function(x) {
         self$data[[x]]

@@ -43,16 +43,6 @@ PKRatioPlotConfiguration <- R6::R6Class(
       # Overwrite grouping if config is different from Mapping
       self$colorGrouping <- colorGrouping %||% self$colorGrouping
       self$shapeGrouping <- shapeGrouping %||% self$shapeGrouping
-
-
-      if (is.null(self$shapeGrouping)) {
-        # self$legend$captions$color <- NULL
-        self$colorGrouping <- "color"
-      }
-      if (is.null(self$shapeGrouping)) {
-        # self$legend$captions$shape <- NULL
-        self$shapeGrouping <- "shape"
-      }
     },
 
     addPKRatioLines = function(pkRatioLines, plotObject) {
@@ -70,6 +60,15 @@ PKRatioPlotConfiguration <- R6::R6Class(
 
     addPKRatios = function(plotObject, data, metaData, dataMapping) {
       mapData <- dataMapping$getMapData(data, metaData)
+
+      # If no grouping is defined, the aesthetic variables still need to be included
+      # with a dummy name to be removed, otherwise it is impossible to modify them later on.
+      if (is.null(self$shapeGrouping)) {
+        linetype <- "shape"
+      }
+      if (is.null(self$colorGrouping)) {
+        color <- "color"
+      }
 
       if (isTRUE(self$colorGrouping == self$shapeGrouping)) {
         plotObject <- plotObject + geom_point(
@@ -94,6 +93,15 @@ PKRatioPlotConfiguration <- R6::R6Class(
           show.legend = TRUE
         )
       }
+
+      # If no grouping is defined, remove the dummy aesthtic name from the legend
+      if (is.null(self$shapeGrouping)) {
+        plotObject <- plotObject + guides(shape = "none")
+      }
+      if (is.null(self$colorGrouping)) {
+        plotObject <- plotObject + guides(color = "none")
+      }
+
       return(plotObject)
     }
   )

@@ -1,0 +1,53 @@
+---
+title: "Time Profile Plot Vignette"
+author: "OSPSuiteR 2019"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{time-profile-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+load("timeProfileDataExample.RData")
+```
+
+# Introduction
+The following vignette aims at showing an example workflow for performing PK Ratios plots and qualifications using the tlf-Library.
+The very first step of the workflow is to load the ``tlf` library and associated packages (so far `ggplot2`).
+The 2 following steps are the definition of the `dataMapping` and `plotConfiguration`.
+
+* `dataMapping` aims at linking which variable from the `data`, `metaData` should be plotted.
+* `plotConfiguration` aims at defining how this map data should be plotted.
+
+
+```{r setup}
+# The update of the tlf library with document needs to be called in the vignette
+# Otherwise, the library is not up to date to be knitted
+devtools::document()
+library(tlf)
+library(ggplot2)
+```
+```{r}
+useTheme(tlfTheme)
+```
+
+# Workflow
+```{r, width=7, include=TRUE, fig.align="center", fig.cap=c("your caption"), echo=FALSE}
+knitr::include_graphics("AbdullahSlide.png")
+```
+
+# Data
+## Dataset
+```{r, results='asis'}
+# simulatedTimeProfiles
+pander::pandoc.table(head(simulatedResults))
+```
+
+# Data Mapping
+## Example of Definition of PK Ratio Data Mapping
