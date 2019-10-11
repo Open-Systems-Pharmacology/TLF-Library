@@ -30,8 +30,8 @@ plotTimeProfile <- function(data,
     dataMapping = dataMapping
   )
 
-  stopifnot("TimeProfileDataMapping" %in% class(dataMapping))
-  stopifnot("TimeProfilePlotConfiguration" %in% class(plotConfiguration))
+  validateIsOfType(dataMapping, TimeProfileDataMapping)
+  validateIsOfType(plotConfiguration, TimeProfilePlotConfiguration)
 
 
   plotObject <- ggplot2::ggplot()

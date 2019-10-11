@@ -8,6 +8,7 @@ Grouping <- R6::R6Class(
     groupingName = NULL,
     groupingDataFrame = NULL,
     groupingLegendTitle = NULL,
+
     initialize = function(groupingName = NULL, groupingDataFrame = NULL, groupingLegendTitle = NULL) {
       self$groupingLegendTitle <- groupingLegendTitle
       groupingList <- self$getGroupingList(groupingName, groupingDataFrame)

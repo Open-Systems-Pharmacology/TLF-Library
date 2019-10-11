@@ -1,3 +1,4 @@
+
 #' Create an enumeration to be used instead of arbitraty values in code.
 #'
 #' @param enumValues Values to use for the enum
