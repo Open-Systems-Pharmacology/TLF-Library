@@ -40,7 +40,6 @@ Collate:
     'font.R'
     'get-pkratio-measure.R'
     'label.R'
-    'legend-utils.R'
     'messages.R'
     'metadata-helper.R'
     'pkratio-datamapping.R'
