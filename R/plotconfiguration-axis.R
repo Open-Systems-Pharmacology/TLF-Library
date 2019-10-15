@@ -1,3 +1,13 @@
+#' How should comparison of entities be performed
+#'
+#' @include enum.R
+#' @export
+Scaling <- enum(c(
+  "log",
+  "lin"
+))
+
+
 #' @title AxisConfiguration
 #' @docType class
 #' @description  Generic axis Configuration
@@ -11,7 +21,7 @@ AxisConfiguration <- R6::R6Class(
     ticklabels = NULL,
 
     initialize = function(limits = NULL,
-                              scale = "lin",
+                              scale = Scaling$lin,
                               ticks = "default",
                               ticklabels = "default") {
       self$limits <- limits

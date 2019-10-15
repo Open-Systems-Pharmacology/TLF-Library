@@ -39,7 +39,7 @@ setLegendPosition <- function(plotHandle,
                               legendPosition = legendPositions$outsideRight,
                               Subplot.Index = NA) {
   # Check Plot Handle
-  stopifnot(class(plotHandle) %in% c("gg", "ggplot"))
+  validateIsOfType(plotHandle, c("gg", "ggplot"))
 
   # Check Legend Position is correct
   legendPosition <- legendPosition %||% "none"

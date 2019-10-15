@@ -27,8 +27,8 @@ plotPKRatio <- function(data,
     dataMapping = dataMapping
   )
 
-  stopifnot("PKRatioDataMapping" %in% class(dataMapping))
-  stopifnot("PKRatioPlotConfiguration" %in% class(plotConfiguration))
+  validateIsOfType(dataMapping, PKRatioDataMapping)
+  validateIsOfType(plotConfiguration, PKRatioPlotConfiguration)
 
   # mapData <- dataMapping$getMapData(data, metaData)
 

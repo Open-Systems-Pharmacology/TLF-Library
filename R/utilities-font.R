@@ -13,7 +13,8 @@
 #' title <- asLabel(title)
 asLabel <- function(text = "", font = NULL) {
   # Check input
-  stopifnot("Label" %in% class(text) || "character" %in% class(text))
+  validateIsOfType(text, c("Label", "character"))
+  validateIsOfType(font, Font, nullAllowed = TRUE)
 
   # If text is already a Label class
   if (("character" %in% class(text))) {
@@ -22,7 +23,6 @@ asLabel <- function(text = "", font = NULL) {
 
   # If font is not null, set font properties of Label
   if (!is.null(font)) {
-    stopifnot("Font" %in% class(font))
     text$font <- font
   }
 

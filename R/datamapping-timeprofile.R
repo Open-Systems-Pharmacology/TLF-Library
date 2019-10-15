@@ -11,7 +11,10 @@ TimeProfileDataMapping <- R6::R6Class(
     yMax = NULL,
     LLOQ = NULL,
 
-    initialize = function(x, y = NULL, groupings = NULL, groupingNames = NULL,
+    initialize = function(x,
+                              y = NULL,
+                              groupings = NULL,
+                              groupingNames = NULL,
                               dataFrame = NULL,
                               yMin = NULL,
                               yMax = NULL,
