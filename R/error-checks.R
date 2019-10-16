@@ -19,9 +19,9 @@ isOfType <- function(object, type) {
 
   type <- typeNamesFrom(type)
 
-  inheritType <-  function(x) inherits(x, type);
+  inheritType <- function(x) inherits(x, type)
 
-  if(inheritType(object)){
+  if (inheritType(object)) {
     return(TRUE)
   }
   object <- c(object)

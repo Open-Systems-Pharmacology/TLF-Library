@@ -17,9 +17,9 @@ Label <- R6::R6Class(
     },
 
     setFontProperties = function(color = self$font$color,
-                                 size = self$font$size,
-                                 fontFamily = self$font$fontFamily,
-                                 fontFace = self$font$fontFace) {
+                                     size = self$font$size,
+                                     fontFamily = self$font$fontFamily,
+                                     fontFace = self$font$fontFace) {
       self$font$color <- color
       self$font$size <- size
       self$font$fontFamily <- fontFamily

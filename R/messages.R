@@ -26,6 +26,6 @@ messages <- list(
   errorEnumNotAllNames = "The enumValues has some but not all names assigned. They must be all assigned or none assigned",
 
   errorValueNotInEnum = function(enum, value) {
-    paste0("Value '", value, "' is not in defined enumeration values: '", paste0(enum, collapse = ", "), "'.")
+    paste0("Value '", value, "' is not in defined enumeration values: '", paste0(names(enum), collapse = ", "), "'.")
   }
 )
