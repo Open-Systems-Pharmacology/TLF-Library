@@ -14,12 +14,13 @@ useTheme(tlfTheme)
 
 # -------------------------------------------------
 # Define Default plot Configuration & Mapping from R6 class for PK Ratio
-pkRatioDataMapping <- PKRatioDataMapping$new(
-  groupings = list(
-    color = c("Gender"),
-    shape = c("Dose", "Compound")
-  )
+
+groupings <- Groupings$new(
+  color = c("Gender"),
+  shape = c("Dose", "Compound")
 )
+
+pkRatioDataMapping <- PKRatioDataMapping$new(groupings = groupings)
 
 # Renaming of Label from initialize
 pkRatioConfiguration <- PKRatioPlotConfiguration$new(
