@@ -27,7 +27,8 @@ Suggests:
 VignetteBuilder: knitr
 Collate: 
     'data-description.R'
-    'datamapping-grouping.R'
+    'datamapping-groupings.R'
+    'datamapping-groupmapping.R'
     'datamapping-pkratio.R'
     'datamapping-timeprofile.R'
     'datamapping-xrange.R'
@@ -42,7 +43,6 @@ Collate:
     'label.R'
     'messages.R'
     'metadata-helper.R'
-    'pkratio-datamapping.R'
     'plot-pkratio.R'
     'plot-timeprofile.R'
     'plotconfiguration-axis.R'

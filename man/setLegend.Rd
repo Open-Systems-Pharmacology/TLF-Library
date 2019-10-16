@@ -4,15 +4,17 @@
 \alias{setLegend}
 \title{SetLegend}
 \usage{
-setLegend(plotHandle, legendPosition, legendColorCaptions = NULL,
-  legendSizeCaptions = NULL, legendShapeCaptions = NULL)
+setLegend(plotObject, legendPosition, legendTitles = NULL,
+  legendCaptions = NULL, legendValues = NULL)
 }
 \arguments{
-\item{plotHandle}{Graphical object created from ggplot}
+\item{plotObject}{Graphical object created from ggplot}
 
 \item{legendPosition}{element of legendPositions list}
 
-\item{legendColorCaptions}{captions of the legend}
+\item{legendCaptions}{captions of the legend (as a list with LegendTypes attribute)}
+
+\item{legendValues}{values of the legend aesthetic attributes}
 }
 \value{
 Current plot with Legend Layer

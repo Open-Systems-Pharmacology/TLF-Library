@@ -4,15 +4,15 @@
 \alias{setLegendPosition}
 \title{SetLegendPosition}
 \usage{
-setLegendPosition(plotHandle,
-  legendPosition = legendPositions$outsideRight, Subplot.Index = NA)
+setLegendPosition(plotObject,
+  legendPosition = LegendPositions$outsideRight, Subplot.Index = NA)
 }
 \arguments{
-\item{plotHandle}{Graphical object created from ggplot}
-
 \item{legendPosition}{element of legendPositions list}
 
 \item{Subplot.Index}{(optional) OPTION NOT IMPLEMENTED YET}
+
+\item{plotHandle}{Graphical object created from ggplot}
 }
 \value{
 Current plot with Legend Layer
