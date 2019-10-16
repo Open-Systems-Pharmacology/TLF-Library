@@ -6,36 +6,12 @@ XYGDataMapping <- R6::R6Class(
   "XYGDataMapping",
   inherit = XYDataMapping,
   public = list(
-    groupings = NULL, # List of Groupings that are R6 Classes as defined by Abdullah
-    groupingNames = NULL,
+    groupings = NULL, # R6 Class of GroupMappings
 
-    initialize = function(x, y, groupings = NULL, groupingNames = NULL) {
+    initialize = function(x, y, groupings = NULL) {
       super$initialize(x, y)
-      self$groupings <- groupings
 
-      if (is.character(groupings)) {
-        groupings <- list(groupings)
-      }
-
-
-
-
-      self$groupingNames <- groupingNames %||% names(groupings)
-
-
-      if (!is.null(groupings)) {
-        for (groupingsIndex in seq(1, length(groupings))) {
-          if (is(self$groupings[[groupingsIndex]], "Grouping")) { # Case where current groupings element is already a Grouping object
-            self$groupingNames[groupingsIndex] <- self$groupings[[groupingsIndex]]$groupingName
-          } else {
-            if (is.null(self$groupingNames[groupingsIndex]) || is.na(self$groupingNames[groupingsIndex])) {
-              self$groupingNames[groupingsIndex] <- paste(groupings[[groupingsIndex]], collapse = "-")
-            }
-            self$groupings[[groupingsIndex]] <- Grouping$new(groupings[groupingsIndex])
-          }
-        }
-        names(self$groupings) <- self$groupingNames
-      }
+      self$groupings <- groupings %||% Groupings$new()
     },
 
     getMapData = function(data, metaData = NULL) {
@@ -44,14 +20,13 @@ XYGDataMapping <- R6::R6Class(
 
       self$data <- cbind.data.frame(x, y)
 
-      # For each mapped grouping, get the corresponding data frame
-      # Defined by grouping data frame if available or by grouping Name
-      if (!is.null(self$groupings)) {
-        for (groupingsIndex in seq(1, length(self$groupings))) {
-          self$data[, self$groupingNames[[groupingsIndex]]] <- ifnotnull(self$groupings[[groupingsIndex]]$groupingDataFrame, getCustomCaptions(data, self$groupings[[groupingsIndex]]$groupingDataFrame), getDefaultCaptions(data, metaData, variableList = self$groupings[[groupingsIndex]]$groupingName[[1]]))
+      # All possible Groupings are listed in the enum LegendTypes
+      for (groupType in LegendTypes) {
+        if (!is.null(self$groupings[[groupType]]$group)) {
+          grouping <- self$groupings[[groupType]]
+          self$data[, grouping$label] <- grouping$getCaptions(data, metaData)
         }
       }
-
       return(self$data)
     }
   )

@@ -14,7 +14,6 @@ TimeProfileDataMapping <- R6::R6Class(
     initialize = function(x,
                               y = NULL,
                               groupings = NULL,
-                              groupingNames = NULL,
                               dataFrame = NULL,
                               yMin = NULL,
                               yMax = NULL,
@@ -25,7 +24,7 @@ TimeProfileDataMapping <- R6::R6Class(
         }
       }
 
-      super$initialize(x, y, groupings, groupingNames)
+      super$initialize(x, y, groupings)
 
       self$LLOQ <- LLOQ
       self$yMin <- yMin
@@ -40,11 +39,11 @@ TimeProfileDataMapping <- R6::R6Class(
 
       self$data <- as.data.frame(cbind(x, y, yMin, yMax))
 
-      # For each mapped grouping, get the corresponding data frame
-      # Defined by grouping data frame if available or by grouping Name
-      if (!is.null(self$groupings)) {
-        for (groupingsIndex in seq(1, length(self$groupings))) {
-          self$data[, self$groupingNames[[groupingsIndex]]] <- ifnotnull(self$groupings[[groupingsIndex]]$groupingDataFrame, getCustomCaptions(data, self$groupings[[groupingsIndex]]$groupingDataFrame), getDefaultCaptions(data, metaData, variableList = self$groupings[[groupingsIndex]]$groupingName[[1]]))
+      # All possible Groupings are listed in the enum LegendTypes
+      for (groupType in LegendTypes) {
+        if (!is.null(self$groupings[[groupType]])) {
+          grouping <- self$groupings[[groupType]]
+          self$data[, grouping$label] <- grouping$getCaptions(data, metaData)
         }
       }
 
