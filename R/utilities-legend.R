@@ -35,7 +35,7 @@ setLegend <- function(plotObject,
         aesthetics = legendType,
         name = legendTitles[[legendType]],
         values = legendValues[[legendType]],
-        labels = legendCaptions[[legendType]]
+        labels = levels(as.factor(legendCaptions[[legendType]]))
       ),
       scale_discrete_manual(
         aesthetics = legendType,
@@ -218,11 +218,11 @@ LegendValues <- R6::R6Class(
   inherit = Groupings,
   public = list(
     initialize = function(color = tlfEnv$currentTheme$aesProperties$color,
-                              # fill = tlfEnv$currentTheme$aesProperties$fill, Fill values to be defined in Theme
+                              fill = tlfEnv$currentTheme$aesProperties$fill, 
                               linetype = tlfEnv$currentTheme$aesProperties$linetype,
                               shape = tlfEnv$currentTheme$aesProperties$shape) {
       self$color <- color
-      # self$fill <- fill
+       self$fill <- fill
       self$linetype <- linetype
       self$shape <- shape
     }
