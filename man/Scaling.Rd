@@ -4,11 +4,14 @@
 \name{Scaling}
 \alias{Scaling}
 \title{How should comparison of entities be performed}
-\format{An object of class \code{list} of length 2.}
+\format{An object of class \code{list} of length 21.}
 \usage{
 Scaling
 }
 \description{
-How should comparison of entities be performed
+Built-in transformations include
+"asn", "atanh", "boxcox", "date", "exp", "hms", "identity",
+"log", "log10", "log1p", "log2", "logit", "modulus", "probability",
+"probit", "pseudo_log", "reciprocal", "reverse", "sqrt" and "time"
 }
 \keyword{datasets}
