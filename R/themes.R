@@ -32,7 +32,8 @@ themeAesProperties$default <- list(
   color = seq(1, 10),
   size = seq(1, 10),
   shape = seq(1, 10),
-  linetype = seq(1, 10)
+  linetype = seq(1, 10),
+  fill = seq(1,10)
 )
 
 themeAesProperties$tlf <- list(
@@ -41,6 +42,7 @@ themeAesProperties$tlf <- list(
   shape = c("circle", "square", "diamond", "triangle"),
   linetype = c("solid", "dashed", "dotted")
 )
+themeAesProperties$tlf$fill <- themeAesProperties$tlf$color
 
 themeAesProperties$bw <- list(
   color = c("#000000", "#999999", "#555555"),
@@ -48,7 +50,7 @@ themeAesProperties$bw <- list(
   shape = c("circle", "square", "diamond", "triangle"),
   linetype = c("solid", "dashed", "dotted")
 )
-
+themeAesProperties$bw$fill <- themeAesProperties$bw$color
 themeAesProperties$big <- themeAesProperties$tlf
 themeAesProperties$big$size <- seq(4, 20, 2)
 
