@@ -25,11 +25,12 @@ setLegend <- function(plotObject,
   validateIsOfType(legendCaptions, "LegendCaptions")
   validateIsOfType(legendValues, "LegendValues")
 
-  plotHandle <- setLegendPosition(plotObject = plotObject, legendPosition = legendPosition)
+  plotObject <- setLegendPosition(plotObject = plotObject, legendPosition = legendPosition)
 
   # Redefine label of groups in legend
   for (legendType in LegendTypes) {
-    plotHandle <- plotHandle + ifnotnull(legendCaptions[[legendType]],
+    plotObject <- plotObject + ifnotnull(
+      legendCaptions[[legendType]],
       scale_discrete_manual(
         aesthetics = legendType,
         name = legendTitles[[legendType]],

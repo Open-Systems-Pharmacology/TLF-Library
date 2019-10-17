@@ -6,7 +6,7 @@ LegendConfiguration <- R6::R6Class(
   "LegendConfiguration",
   public = list(
     position = NULL,
-    # next variables are lists with aesthetic propoerties as names
+    # next variables are R6 classes with aesthetic propoerties as names
     titles = NULL,
     captions = NULL,
     values = NULL,
@@ -24,8 +24,6 @@ LegendConfiguration <- R6::R6Class(
         self$position <- position,
         self$position <- LegendPositions$outsideRight
       )
-
-
 
       if (!is.null(dataMapping) && !is.null(data)) {
         if ("XYGDataMapping" %in% class(dataMapping)) {
@@ -50,8 +48,6 @@ LegendConfiguration <- R6::R6Class(
         legendCaptions = self$captions,
         legendValues = self$values
       )
-
-      plotObject <- setLegendPosition(plotObject, legendPosition = self$position)
 
       return(plotObject)
     }

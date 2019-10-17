@@ -60,26 +60,25 @@ PKRatioPlotConfiguration <- R6::R6Class(
 
     addPKRatios = function(plotObject, data, metaData, dataMapping) {
       mapData <- dataMapping$getMapData(data, metaData)
-      
+
       color <- self$legend$titles$color %||% "none"
       shape <- self$legend$titles$shape %||% "none"
 
       plotObject <- plotObject + geom_point(
-          mapping = aes(
-            x = x, y = y,
-            color = color,
-            shape = shape
-          ),
-          data = mapData,
-          size = 1, # To be updated with current Theme
-          show.legend = TRUE
-        )
-      
+        mapping = aes(
+          x = mapData$x, y = mapData$y,
+          color = mapData[, color],
+          shape = mapData[, shape]
+        ),
+        size = 1, # To be updated with current Theme
+        show.legend = TRUE
+      )
+
       # If no grouping is defined, remove the dummy aesthtic name from the legend
       if ("none" %in% shape) {
         plotObject <- plotObject + guides(shape = "none")
       }
-      if("none" %in% color) {
+      if ("none" %in% color) {
         plotObject <- plotObject + guides(color = "none")
       }
 
