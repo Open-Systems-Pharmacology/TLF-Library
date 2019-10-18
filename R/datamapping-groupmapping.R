@@ -9,8 +9,8 @@ GroupMapping <- R6::R6Class(
     label = NULL,
 
     initialize = function(group, label = NULL) {
-      validateIsOfType(group, c("data.frame", "character"))
-      
+      validateIsOfType(group, c("data.frame", "character"), nullAllowed = TRUE)
+
       self$group <- group
 
       if (is.data.frame(group)) {
@@ -25,7 +25,7 @@ GroupMapping <- R6::R6Class(
     },
 
     getCaptions = function(data, metaData = NULL) {
-      validateIsOfType(self$group, c("data.frame", "character"))
+      validateIsOfType(self$group, c("data.frame", "character"), nullAllowed = TRUE)
       if (is.data.frame(self$group)) {
         captions <- getCustomCaptions(data, self$group)
       }
