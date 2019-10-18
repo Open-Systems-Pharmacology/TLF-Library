@@ -14,16 +14,16 @@ Groupings <- R6::R6Class(
                               fill = NULL,
                               linetype = NULL,
                               shape = NULL) {
-      if (isOfType(color, "GroupMapping")) {
+      if (!isOfType(color, "GroupMapping")) {
         color <- GroupMapping$new(group = color)
       }
-      if (isOfType(fill, "GroupMapping")) {
+      if (!isOfType(fill, "GroupMapping")) {
         fill <- GroupMapping$new(group = fill)
       }
-      if (isOfType(linetype, "GroupMapping")) {
+      if (!isOfType(linetype, "GroupMapping")) {
         linetype <- GroupMapping$new(group = linetype)
       }
-      if (isOfType(shape, "GroupMapping")){
+      if (!isOfType(shape, "GroupMapping")) {
         shape <- GroupMapping$new(group = shape)
       }
 
