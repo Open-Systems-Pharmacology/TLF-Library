@@ -218,11 +218,11 @@ LegendValues <- R6::R6Class(
   inherit = Groupings,
   public = list(
     initialize = function(color = tlfEnv$currentTheme$aesProperties$color,
-                              fill = tlfEnv$currentTheme$aesProperties$fill, 
+                              fill = tlfEnv$currentTheme$aesProperties$fill,
                               linetype = tlfEnv$currentTheme$aesProperties$linetype,
                               shape = tlfEnv$currentTheme$aesProperties$shape) {
       self$color <- color
-       self$fill <- fill
+      self$fill <- fill
       self$linetype <- linetype
       self$shape <- shape
     }

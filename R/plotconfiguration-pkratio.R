@@ -7,7 +7,7 @@ PKRatioPlotConfiguration <- R6::R6Class(
   inherit = PlotConfiguration,
   public = list(
     pkRatioLinesProperties = NULL,
-    
+
     initialize = function(pkRatioLinesProperties = tlfEnv$currentTheme$pkRatioLinesProperties,
                               title = "PK Ratio Plot",
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
@@ -50,11 +50,15 @@ PKRatioPlotConfiguration <- R6::R6Class(
 
       color <- self$legend$titles$color %||% "none"
       shape <- self$legend$titles$shape %||% "none"
-      
+
       # Define dummy unique value for grouping
       # Allows further modification of the aesthtic property
-      if (is.null(self$legend$titles$color)){mapData[, color] <- as.factor(1)}
-      if (is.null(self$legend$titles$shape)){mapData[, shape] <- as.factor(1)}
+      if (is.null(self$legend$titles$color)) {
+        mapData[, color] <- as.factor(1)
+      }
+      if (is.null(self$legend$titles$shape)) {
+        mapData[, shape] <- as.factor(1)
+      }
 
       plotObject <- plotObject + geom_point(
         mapping = aes(
@@ -62,7 +66,7 @@ PKRatioPlotConfiguration <- R6::R6Class(
           color = mapData[, color],
           shape = mapData[, shape]
         ),
-        size = 1, # To be updated with current Theme
+        size = 1, # TO DO: discuss if this is a set entry of current Theme or part of size palette
         show.legend = TRUE
       )
 

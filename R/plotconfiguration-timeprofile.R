@@ -8,7 +8,7 @@ TimeProfilePlotConfiguration <- R6::R6Class(
 
   public = list(
     LLOQLinesProperties = NULL,
-    
+
     initialize = function(LLOQLinesProperties = tlfEnv$currentTheme$LLOQLinesProperties,
                               title = "Time Profile Plot",
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
@@ -31,7 +31,6 @@ TimeProfilePlotConfiguration <- R6::R6Class(
       )
 
       self$LLOQLinesProperties <- LLOQLinesProperties
-      
     },
 
     addLLOQLines = function(LLOQLines, plotObject) {
@@ -56,43 +55,65 @@ TimeProfilePlotConfiguration <- R6::R6Class(
       shape <- self$legend$titles$shape %||% "none"
       linetype <- self$legend$titles$linetype %||% "none"
       fill <- self$legend$titles$fill %||% "none"
-      
+
       # Define dummy unique value for grouping
       # Allows further modification of the aesthtic property
-      if (is.null(self$legend$titles$color)){mapData[, color] <- as.factor(1)}
-      if (is.null(self$legend$titles$shape)){mapData[, shape] <- as.factor(1)}
-      if (is.null(self$legend$titles$linetype)){mapData[, linetype] <- as.factor(1)}
-      if (is.null(self$legend$titles$fill)){mapData[, fill] <- as.factor(1)}
-      
+      if (is.null(self$legend$titles$color)) {
+        mapData[, color] <- as.factor(1)
+      }
+      if (is.null(self$legend$titles$shape)) {
+        mapData[, shape] <- as.factor(1)
+      }
+      if (is.null(self$legend$titles$linetype)) {
+        mapData[, linetype] <- as.factor(1)
+      }
+      if (is.null(self$legend$titles$fill)) {
+        mapData[, fill] <- as.factor(1)
+      }
+
       if (!is.null(dataMapping$y)) {
         if (!is.null(dataMapping$yMin) && !is.null(dataMapping$yMax)) {
           plotObject <- plotObject + ggplot2::geom_errorbar(
-            mapping = aes(x = mapData$x, ymin = mapData$yMin, ymax = mapData$yMax, 
-                          color = mapData[,color], linetype = mapData[,linetype]),
+            mapping = aes(
+              x = mapData$x, ymin = mapData$yMin, ymax = mapData$yMax,
+              color = mapData[, color], linetype = mapData[, linetype]
+            ),
             size = 1,
             show.legend = TRUE
           )
         }
         plotObject <- plotObject + ggplot2::geom_line(
-          mapping = aes(x = mapData$x, y = mapData$y, 
-                        color = mapData[,color], linetype = mapData[,linetype]),
+          mapping = aes(
+            x = mapData$x, y = mapData$y,
+            color = mapData[, color], linetype = mapData[, linetype]
+          ),
           size = 1,
           show.legend = TRUE
         )
       } else {
         plotObject <- plotObject + ggplot2::geom_ribbon(
-          mapping = aes(x = mapData$x, ymin = mapData$yMin, ymax = mapData$yMax, 
-                        fill = mapData[,fill]),
+          mapping = aes(
+            x = mapData$x, ymin = mapData$yMin, ymax = mapData$yMax,
+            fill = mapData[, fill]
+          ),
           show.legend = TRUE
         )
       }
-      
+
       # If no grouping is defined, remove the dummy aesthtic name from the legend
-      if ("none" %in% linetype) {plotObject <- plotObject + guides(linetype = "none")}
-      if ("none" %in% color) {plotObject <- plotObject + guides(color = "none")}
-      if ("none" %in% fill) {plotObject <- plotObject + guides(fill = "none")}
-      if ("none" %in% shape) {plotObject <- plotObject + guides(shape = "none")}
-      
+      if ("none" %in% linetype) {
+        plotObject <- plotObject + guides(linetype = "none")
+      }
+      if ("none" %in% color) {
+        plotObject <- plotObject + guides(color = "none")
+      }
+      if ("none" %in% fill) {
+        plotObject <- plotObject + guides(fill = "none")
+      }
+      if ("none" %in% shape) {
+        plotObject <- plotObject + guides(shape = "none")
+      }
+
       return(plotObject)
     }
   )
