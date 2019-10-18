@@ -40,7 +40,6 @@ TimeProfileDataMapping <- R6::R6Class(
       self$data <- as.data.frame(cbind(x, y, yMin, yMax))
 
       # All possible Groupings are listed in the enum LegendTypes
-      # All possible Groupings are listed in the enum LegendTypes
       for (groupType in LegendTypes) {
         if (!is.null(self$groupings[[groupType]]$group)) {
           grouping <- self$groupings[[groupType]]

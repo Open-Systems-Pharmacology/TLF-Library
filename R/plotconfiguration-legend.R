@@ -49,6 +49,8 @@ LegendConfiguration <- R6::R6Class(
         legendValues = self$values
       )
 
+      plotObject <- setLegendPosition(plotObject, legendPosition = self$position)
+
       return(plotObject)
     }
   )

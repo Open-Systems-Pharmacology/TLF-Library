@@ -26,6 +26,7 @@ GroupMapping <- R6::R6Class(
 
     getCaptions = function(data, metaData = NULL) {
       validateIsOfType(self$group, c("data.frame", "character"), nullAllowed = TRUE)
+
       if (is.data.frame(self$group)) {
         captions <- getCustomCaptions(data, self$group)
       }

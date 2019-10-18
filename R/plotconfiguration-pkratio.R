@@ -47,7 +47,7 @@ PKRatioPlotConfiguration <- R6::R6Class(
 
     addPKRatios = function(plotObject, data, metaData, dataMapping) {
       mapData <- dataMapping$getMapData(data, metaData)
-
+      
       color <- self$legend$titles$color %||% "none"
       shape <- self$legend$titles$shape %||% "none"
 
