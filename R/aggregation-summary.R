@@ -1,6 +1,6 @@
 #' @title AggregationSummary
 #' @docType class
-#' @description  #Splits the dataframe data into subsets defined by unique combinations of elements in the columns xColumnNames  and groupingColumnNames.
+#' @description  #Splits the dataframe data into subsets defined by unique combinations of elements in the columns xColumnNames and groupingColumnNames.
 #Applies functions defined in aggregationFunctionsVector to column yColumnName.
 #Returns a list of dataframes, one dataframe for each function listed in aggregationFunctionsVector.
 #Each dataframe in list element is named after the function's corresponding string in aggregationFunctionNames.
