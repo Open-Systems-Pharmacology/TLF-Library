@@ -17,11 +17,11 @@ knitr::opts_chunk$set(
 ```
 
 # Introduction
-The following vignette aims at illustrating the workflow for performing Time Profile plots using the `tlf`-Library.
+The aim of this vignette is to illustrate the workflow for producing time profile plots using the `tlf`-Library.
 
 ## Libraries
 
-The main purpose of the `tlf`-library is to help in plotting standardized `ggplot` objects out of the `OSPSuiteR`. As such, `ggplot2` package needs to be installed.
+The main purpose of the `tlf`-library is to standardized the production of `ggplot` objects from data output by `OSPSuiteR`. As such, `tlf`-library requires that the `ggplot2` package be installed.
 
 ```{r setup}
 # The update of the tlf library with document needs to be called in the vignette
@@ -31,14 +31,17 @@ library(tlf)
 library(ggplot2)
 ```
 
-The usual workflow suggested for performing any kind of plot with the `tlf`-library is specified and illustrated below. 
-Please note that steps 2, 3 and 4 are not mandatory and will use default values if they are not defined. Besides, steps 3 and 4 can be independant.
+The suggested workflow for performing any kind of plot with the `tlf`-library is illustrated in the figure below and is as follows:
 
-1. Get the data to plot
-2. Pre-process the data using `TimeProfileHelper` and `Groupings` classes and their built-in functions
+1. Gather the data to be plotted in the form of a [*tidy*](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) dataframe.
+2. Pre-process the data using `AggregationSummary` and `Groupings` classes and their built-in functions
 3. Set the `dataMapping` which will define what you would like to plot
 4. Set the `plotConfiguration` which will define how you would like to plot the data previously mapped
 5. Plot the data using the dedicated function
+
+Please note that steps 2, 3 and 4 are not mandatory and will use default values if they are not defined. Besides, steps 3 and 4 can be independant.
+
+### A minimal example
 
 ## `tlf` workflow
 ```{r, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
