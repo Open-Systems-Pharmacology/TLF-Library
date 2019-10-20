@@ -1,5 +1,15 @@
-aggregationSummary <- R6::R6Class(
-  "aggregationSummary",
+#' @title AggregationSummary
+#' @docType class
+#' @description  #Splits the dataframe data into subsets defined by uniqe combinations of elements in the columns xColumnNames  and groupingColumnNames.
+#Applies functions defined in aggregationFunctionsVector to column yColumnName.
+#Returns a list of dataframes, one dataframe for each function listed in aggregationFunctionsVector.
+#Each dataframe in list element is named after the function's corresponding string in aggregationFunctionNames.
+#The summary statistic column name in each dataframe is the same as the name of the dataframe in the returned list.
+#' @export
+
+
+AggregationSummary <- R6::R6Class(
+  "AggregationSummary",
   public = list(
     data = NULL,
     xColumnNames = NULL,
@@ -53,11 +63,6 @@ aggregationSummary <- R6::R6Class(
         self$dfHelper[[self$aggregationFunctionNames[n]]]<-dF
       }
 
-      #Splits the dataframe data into subsets defined by uniqe combinations of elements in the columns xColumnNames  and groupingColumnNames.
-      #Applies functions defined in aggregationFunctionsVector to column yColumnName.
-      #Returns a list of dataframes, one dataframe for each function listed in aggregationFunctionsVector.
-      #Each dataframe in list element is named after the function's corresponding string in aggregationFunctionNames.
-      #The summary statistic column name in each dataframe is the same as the name of the dataframe in the returned list.
 
     }
   )
