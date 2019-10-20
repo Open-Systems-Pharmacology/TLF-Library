@@ -59,14 +59,6 @@ aggregationSummary <- R6::R6Class(
       #Each dataframe in list element is named after the function's corresponding string in aggregationFunctionNames.
       #The summary statistic column name in each dataframe is the same as the name of the dataframe in the returned list.
 
-      self$groupingColumnNames <- groupingColumnNames
-      self$yColumnName <- yColumnName
-      self$aggregationFunctionsVector <- c(aggregationFunctionsVector)
-
-      # For each unique combination of entries in the rows of the grouping columns xGroupingCols, get corresponding values from yValuesCol and group these values into a vector.
-      # Then for each such vector apply the functions in the vector aggregationFunctionsVector.  Output over all rows in xGroupingCols and functions in aggregationFunctionsVector forms a matrix
-      # xGroupingCols and the output matrix are combined to form one dataframe called dfHelper.
-
     }
   )
 )
