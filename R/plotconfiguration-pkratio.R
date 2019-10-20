@@ -7,12 +7,8 @@ PKRatioPlotConfiguration <- R6::R6Class(
   inherit = PlotConfiguration,
   public = list(
     pkRatioLinesProperties = NULL,
-    colorGrouping = NULL,
-    shapeGrouping = NULL,
 
     initialize = function(pkRatioLinesProperties = tlfEnv$currentTheme$pkRatioLinesProperties,
-                              colorGrouping = NULL,
-                              shapeGrouping = NULL,
                               title = "PK Ratio Plot",
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
                               xlabel = NULL,
@@ -34,15 +30,6 @@ PKRatioPlotConfiguration <- R6::R6Class(
       )
 
       self$pkRatioLinesProperties <- pkRatioLinesProperties
-
-      if (!is.null(dataMapping$groupings)) {
-        self$colorGrouping <- dataMapping$groupings[["color"]]$group
-        self$shapeGrouping <- dataMapping$groupings[["shape"]]$group
-      }
-
-      # Overwrite grouping if config is different from Mapping
-      self$colorGrouping <- colorGrouping %||% self$colorGrouping
-      self$shapeGrouping <- shapeGrouping %||% self$shapeGrouping
     },
 
     addPKRatioLines = function(pkRatioLines, plotObject) {
@@ -64,22 +51,30 @@ PKRatioPlotConfiguration <- R6::R6Class(
       color <- self$legend$titles$color %||% "none"
       shape <- self$legend$titles$shape %||% "none"
 
+      # Define dummy unique value for grouping
+      # Allows further modification of the aesthtic property
+      if (is.null(self$legend$titles$color)) {
+        mapData[, color] <- as.factor(1)
+      }
+      if (is.null(self$legend$titles$shape)) {
+        mapData[, shape] <- as.factor(1)
+      }
+
       plotObject <- plotObject + geom_point(
-          mapping = aes(
-            x = x, y = y,
-            color = color,
-            shape = shape
-          ),
-          data = mapData,
-          size = 1, # To be updated with current Theme
-          show.legend = TRUE
-        )
-      
+        mapping = aes(
+          x = mapData$x, y = mapData$y,
+          color = mapData[, color],
+          shape = mapData[, shape]
+        ),
+        size = 1, # TO DO: discuss if this is a set entry of current Theme or part of size palette
+        show.legend = TRUE
+      )
+
       # If no grouping is defined, remove the dummy aesthtic name from the legend
       if ("none" %in% shape) {
         plotObject <- plotObject + guides(shape = "none")
       }
-      if("none" %in% color) {
+      if ("none" %in% color) {
         plotObject <- plotObject + guides(color = "none")
       }
 

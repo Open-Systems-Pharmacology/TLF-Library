@@ -25,16 +25,17 @@ setLegend <- function(plotObject,
   validateIsOfType(legendCaptions, "LegendCaptions")
   validateIsOfType(legendValues, "LegendValues")
 
-  plotHandle <- setLegendPosition(plotObject = plotObject, legendPosition = legendPosition)
+  plotObject <- setLegendPosition(plotObject = plotObject, legendPosition = legendPosition)
 
   # Redefine label of groups in legend
   for (legendType in LegendTypes) {
-    plotHandle <- plotHandle + ifnotnull(legendCaptions[[legendType]],
+    plotObject <- plotObject + ifnotnull(
+      legendCaptions[[legendType]],
       scale_discrete_manual(
         aesthetics = legendType,
         name = legendTitles[[legendType]],
         values = legendValues[[legendType]],
-        labels = legendCaptions[[legendType]]
+        labels = levels(as.factor(legendCaptions[[legendType]]))
       ),
       scale_discrete_manual(
         aesthetics = legendType,
@@ -217,11 +218,11 @@ LegendValues <- R6::R6Class(
   inherit = Groupings,
   public = list(
     initialize = function(color = tlfEnv$currentTheme$aesProperties$color,
-                              # fill = tlfEnv$currentTheme$aesProperties$fill, Fill values to be defined in Theme
+                              fill = tlfEnv$currentTheme$aesProperties$fill,
                               linetype = tlfEnv$currentTheme$aesProperties$linetype,
                               shape = tlfEnv$currentTheme$aesProperties$shape) {
       self$color <- color
-      # self$fill <- fill
+      self$fill <- fill
       self$linetype <- linetype
       self$shape <- shape
     }

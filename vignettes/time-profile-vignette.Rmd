@@ -35,7 +35,7 @@ The usual workflow suggested for performing any kind of plot with the `tlf`-libr
 Please note that steps 2, 3 and 4 are not mandatory and will use default values if they are not defined. Besides, steps 3 and 4 can be independant.
 
 1. Get the data to plot
-2. Pre-process the data using `helper` and `grouping` classes and functions
+2. Pre-process the data using `TimeProfileHelper` and `Groupings` classes and their built-in functions
 3. Set the `dataMapping` which will define what you would like to plot
 4. Set the `plotConfiguration` which will define how you would like to plot the data previously mapped
 5. Plot the data using the dedicated function
@@ -66,27 +66,56 @@ timeProfileMetaData <- list(Time = list(unit = "min", dimension = "time"),
 
 # 2. Pre-processing of the data
 
-## Grouping
-The `R6` class `Grouping` can help you process some of the data and define grouping variables which are often used by `ggplot` to split the data and create subsequent legend and captions.
-Using this class, it is possible to create and add new columns to the data with captions as its values.
+## Groupings
+The `R6` class `Groupings` can help you process some of the data and define grouping variables which are often used by `ggplot` to split the data and create subsequent legend and captions.
+This class defines `GroupMapping` for any aesthetic parameter of `ggplot`.
+Two types of input can be submitted to `GroupMapping` a `character` type indicating the name of the variables to be used for grouping; and a `data.frame` type directly linking the grouping variables to the grouping variable at the last column of the data.frame.
+The optional input `label` indicates the name of the grouping variable resulting from the mapping.
 
-For instance, the following code map the `individualID` to specific `PatientName` whose variable can be added to `timeProfileDataFrame`.
+Below are use cases of the `GroupMapping`:
+
 ```{r, results='asis'}
-groupingIndividualsDf <- data.frame(IndividualID = c(1,2,3,4) , 
+# Grouping by variable names:
+grouping1 <- GroupMapping$new(c("Compound", "Dose"))
+
+# Grouping by variable names and overwriting the default label:
+grouping2 <- GroupMapping$new(c("Compound", "Dose"), label = "Compound & Dose")
+
+# Grouping using a data.frame:
+mappingDataFrame <- data.frame(IndividualID = c(1,2,3,4) , 
                                     PatientName = c("Paul", "John", "George", "Ringo"))
 
-pander::pandoc.table(groupingIndividualsDf)
+grouping3 <- GroupMapping$new(mappingDataFrame)
+
+# Aplly the mapping to get the grouping captions:
+groupingsDataFrame <- data.frame(
+  timeProfileDataFrame$IndividualID,
+  timeProfileDataFrame$Dose,
+  timeProfileDataFrame$Compound,
+  grouping1$getCaptions(timeProfileDataFrame),
+  grouping2$getCaptions(timeProfileDataFrame),
+  grouping3$getCaptions(timeProfileDataFrame))
+
+names(groupingsDataFrame) <- c("IndividualID", "Dose", "Compound",
+                               grouping1$label, grouping2$label, grouping3$label)
+
+# Show results for all groupings:
+pander::pandoc.table(groupingsDataFrame)
 ```
 
-Then, this association is re-used in `dataMapping` to create a grouping variable (named `Group` below)
-```{r, results='asis'}
-individualGrouping <- Grouping$new(groupingName = "Group" , 
-                                  groupingDataFrame = groupingIndividualsDf)
+Then, this association can be used in `dataMapping` of type `XYGDataMapping` through the class `Groupings` which will map any `GroupMapping` to an aesthetic parameter such as `color` or `linetype`. `Groupings` can use directly the input of `GroupMapping` to improve efficiency.
 
-groups <- list(individualGrouping)
-tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated", groupings = groups)
-pander::pandoc.table(tpMapping$getMapData(data = timeProfileDataFrame,
-                     metaData = timeProfileMetaData))
+```{r, results='asis'}
+# Map groups to aesthtic properties
+groups <- Groupings$new(color = c("Compound", "Dose"),
+                        shape = mappingDataFrame)
+
+# Aplly the mapping to get the grouping captions:
+dataMapping <- XYGDataMapping$new(x="Time", y="Simulated", groupings = groups)
+
+# Show results for all groupings:
+pander::pandoc.table(dataMapping$getMapData(data = timeProfileDataFrame,
+                                            metaData = timeProfileMetaData))
 ```
 
 ## Helper
@@ -110,27 +139,23 @@ pander::pandoc.table(hlp$dfHelper, round=2)
 # 3. dataMapping
 
 The `R6` class `TimeProfileDataMapping` is dedicated to map `x`, `y` and `groupings` for time profile plots.
-Its inner function `getMapData` creates an output `data.frame` mapping the `x`, `y` and `groupings` of a input `data`.
+Its inner function `getMapData` creates an output `data.frame` mapping the `x`, `y` and `groupings` of any input `data`.
 
 The basic example is to map only `x` and `y`:
 ```{r, results='asis'}
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated")
 pander::pandoc.table(tpMapping$getMapData(data = timeProfileDataFrame,
-                     metaData = timeProfileMetaData))
+                                          metaData = timeProfileMetaData))
 ```
 
 A more complex example is to add `groupings` to `x` and `y`:
 ```{r, results='asis'}
-# Grouping using data.frame
-groupingIndividualsDf <- data.frame(IndividualID = c(1,2,3,4) , PatientName = c("Paul", "John", "George", "Ringo"))
+# Re-use the variable groups previously defined
+tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated", 
+                                        groupings = groups)
 
-# Groupings using data.frame for individualID and variable names for Gender and Population
-groups <- list(individualGrouping = Grouping$new(groupingName = "Beatles" , groupingDataFrame = groupingIndividualsDf), 
-               populationGrouping = c("Gender", "Population"))
-
-tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated", groupings = groups)
 pander::pandoc.table(tpMapping$getMapData(data = timeProfileDataFrame,
-                     metaData = timeProfileMetaData))
+                                          metaData = timeProfileMetaData))
 ```
 
 Specific to time profiles, `TimeProfileDataMapping` allows the mapping of `yMin` and `yMax`.
@@ -148,29 +173,30 @@ hlp <- TimeProfileHelper$new(data = timeProfileDataFrame,
                              aggregationFunctionsVector = c(mean, min, max),
                              aggregationFunctionNames =  c("SimulatedMean", "SimulatedMin", "SimulatedMax"))
 
-tpMapping <- TimeProfileDataMapping$new(x="Time", y="SimulatedMean", yMin = "SimulatedMin", yMax = "SimulatedMax")
+# Define Mapping with yMin and yMax
+tpMapping <- TimeProfileDataMapping$new(x="Time", y="SimulatedMean", 
+                                        yMin = "SimulatedMin", yMax = "SimulatedMax")
 
 pander::pandoc.table(tpMapping$getMapData(data = hlp$dfHelper,
-                     metaData = hlp$metaDataHelper))
+                                          metaData = hlp$metaDataHelper))
 ```
 
 
 # 4. plotConfiguration
 
-The `R6` class `TimeProfilePlotConfiguration` is dedicated to set the configuration of time profile plots.
-It is split into 4 subclasses:
+## Theme
+
+A `Theme` class can be used to standardize plot configurations. So far, 4 predefined themes are available: `defaultTheme`, `tlfTheme`, `bwTheme` and `bigTheme`. The function `useTheme` set a theme as the current theme of the environment. As for instance: `useTheme(tlfTheme)`.
+
+## Plot Configuration for time profiles
+
+The `R6` class `TimeProfilePlotConfiguration` is dedicated to set the configuration of time profile plots. It inherits from the `R6` class `PlotConfiguration` and as such it is split into 4 subclasses:
 
 - `LabelConfiguration` from which any `PlotConfiguration` inherits and that defines the size and fonts of the labels (title, xlabel, ...)
 - `XAxisConfiguration` that defines the limits, scale and ticks of the x-axis
 - `YAxisConfiguration` that defines the limits, scale and ticks of the y-axis
-- `LegendConfiguration`
+- `LegendConfiguration` that defines the titles, captions and values for any aesthetic parameter (`color`, `linetype`,...)
 
-A `Theme` class can be used to standardize such a configuration. So far, 4 predefined themes are available: `defaultTheme`, `tlfTheme`, `bwTheme` and `bigTheme`. The function `useTheme` set a theme as the current theme of the environment.
-
-For example:
-```{r}
-useTheme(tlfTheme)
-```
 
 The definition of the configuration can be performed as follows:
 ```{r}
@@ -199,12 +225,16 @@ tpConfig <- TimeProfilePlotConfiguration$new()
 tpConfig
 ```
 
-Since the plot configuration is not a necessary input, it can use default values using data, metaData and dataMapping as input.
-Example for a time profile configuration using data, metaData and dataMapping:
+Since the plot configuration is not a necessary input for the plot functions, it can use default values if not overwritten. Called within plot functions its default values use data, metaData and dataMapping as input to get a smarter configuration.
+
+Below is an example for a time profile configuration using data, metaData and dataMapping:
 
 ```{r}
+# Define the time profile mapping
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated")
 
+# Define the time profile configuration using
+# data, metaData and dataMapping
 tpConfig <- TimeProfilePlotConfiguration$new(data = timeProfileDataFrame,
                                              metaData = timeProfileMetaData,
                                              dataMapping = tpMapping)
@@ -232,6 +262,8 @@ plotObject
 
 ```
 
+You can notice that the plot presents almost error bars, this is due to the fact that the plot has more than 1 value per time point.
+
 ## 5.2. Workflow example of time profile plot using `TimeProfilePlotConfiguration`
 
 ```{r, fig.height=5, fig.width=7.5}
@@ -242,7 +274,7 @@ useTheme(tlfTheme)
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated")
 
 # Overwrite plot configuration 
-tpConfig <- TimeProfilePlotConfiguration$new(title = "Example with different configuration",
+tpConfig <- TimeProfilePlotConfiguration$new(title = "New Plot",
                                              ylabel = "Simulated Results",
                                              data = timeProfileDataFrame,
                                              metaData = timeProfileMetaData,
@@ -258,12 +290,13 @@ plotObject
 
 ```
 
-## 5.3. Workflow example of time profile plot using `TimeProfileDataMapping` with `Grouping`
+## 5.3. Workflow example of time profile plot using `TimeProfileDataMapping` with `Groupings`
 
 ```{r, fig.height=5, fig.width=7.5}
 # Map x, y and groups of the plot
-groups <- list(color = "IndividualID", 
-               linetype = "Population")
+groups <- Groupings$new(color = "IndividualID", 
+                        linetype = "Population")
+
 tpMapping <- TimeProfileDataMapping$new(x = "Time", 
                                         y = "Simulated", 
                                         groupings = groups)
@@ -278,18 +311,14 @@ plotObject
 
 ```
 
-## 5.4. Workflow example of time profile plot using `TimeProfileDataMapping` with `Grouping` as data.frame
+## 5.4. Workflow example of time profile plot using `TimeProfileDataMapping` with `Groupings` as data.frame
 
 ```{r, fig.height=5, fig.width=7.5}
 # data.frame associating grouping to Individual ID with their captions
 groupingIndividualsDf <- data.frame(IndividualID = c(1,2,3,4) , 
-                                    PatientName = c("Paul", "John", "George", "Ringo"))
+                                    "Name of Beatle" = c("Paul", "John", "George", "Ringo"))
 # Define the grouping variable
-individualGrouping = Grouping$new(groupingName = "color" , 
-                                  groupingDataFrame = groupingIndividualsDf, 
-                                  groupingLegendTitle = "Name of Beatle")
-
-groups <- list(color = individualGrouping)
+groups = Groupings$new(color = groupingIndividualsDf)
 
 # Map x, y and groups
 tpMapping <- TimeProfileDataMapping$new(x = "Time",
@@ -308,6 +337,7 @@ plotObject
 
 ## 5.5. Workflow example of time profile plot using `TimeProfileDataMapping` with `Helper`
 
+### 5.5.1. Plot aggregated mean value
 ```{r, fig.height=5, fig.width=7.5}
 # Define aggregated values through helper
 hlp <- TimeProfileHelper$new(data = timeProfileDataFrame,
@@ -320,7 +350,7 @@ hlp <- TimeProfileHelper$new(data = timeProfileDataFrame,
 # Map x and y
 tpMappingMean <- TimeProfileDataMapping$new(x = "Time", 
                                             y = "SimulatedMean")
-
+# Overwrite the plot configuration
 tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
                                               xlabel = "Time")
 
@@ -330,12 +360,66 @@ meanPlot <- plotTimeProfile(data=hlp$dfHelper,
                             plotConfiguration = tpConfig)
 # Show plot
 meanPlot
+```
 
+### 5.5.2. Plot aggregated mean value by population
 
+```{r, fig.height=5, fig.width=7.5}
+# Map x, y and groupings
+tpMappingMean <- TimeProfileDataMapping$new(x = "Time", 
+                                            y = "SimulatedMean",
+                                            groupings = Groupings$new(color = "Population"))
+
+# Overwrite the plot configuration
+tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
+                                              xlabel = "Time",
+                                              data=hlp$dfHelper,
+                                              dataMapping = tpMappingMean)
+
+# Define the ggplot object
+meanPlot <- plotTimeProfile(data=hlp$dfHelper,
+                            dataMapping = tpMappingMean,
+                            plotConfiguration = tpConfig)
+# Show plot
+meanPlot
+```
+
+### 5.5.3. Plot aggregated min and max values
+
+```{r, fig.height=5, fig.width=7.5}
 # Map x, yMin and yMax
 tpMappingRange <- TimeProfileDataMapping$new(x = "Time", 
                                              yMin = "SimulatedMin", 
                                              yMax = "SimulatedMax")
+
+# Overwrite the plot configuration
+tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
+                                              xlabel = "Time",
+                                              data=hlp$dfHelper,
+                                              dataMapping = tpMappingRange)
+
+# Define the ggplot object
+rangePlot <- plotTimeProfile(data=hlp$dfHelper,
+                            dataMapping = tpMappingRange)
+
+# Show plot
+rangePlot
+```
+
+### 5.5.4. Plot aggregated min and max values by population
+
+```{r, fig.height=5, fig.width=7.5}
+# Map x, yMin and yMax
+tpMappingRange <- TimeProfileDataMapping$new(x = "Time", 
+                                             yMin = "SimulatedMin", 
+                                             yMax = "SimulatedMax",
+                                             groupings = Groupings$new(fill = "Population"))
+
+# Overwrite the plot configuration
+tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
+                                              xlabel = "Time",
+                                              data=hlp$dfHelper,
+                                              dataMapping = tpMappingRange)
 
 # Define the ggplot object
 rangePlot <- plotTimeProfile(data=hlp$dfHelper,
@@ -344,12 +428,22 @@ rangePlot <- plotTimeProfile(data=hlp$dfHelper,
 
 # Show plot
 rangePlot
+```
 
+### 5.5.5. Plot aggregated mean, min, max values by population
+```{r, fig.height=5, fig.width=7.5}
 # Map x, y, yMin and yMax
 tpMappingErrorBar <- TimeProfileDataMapping$new(x = "Time", 
                                                 y = "SimulatedMean",
                                                 yMin = "SimulatedMin", 
-                                                yMax = "SimulatedMax")
+                                                yMax = "SimulatedMax",
+                                                groupings = Groupings$new(color = "Population"))
+
+# Overwrite the plot configuration
+tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
+                                              xlabel = "Time",
+                                              data=hlp$dfHelper,
+                                              dataMapping = tpMappingErrorBar)
 
 # Define the ggplot object
 errorBarPlot <- plotTimeProfile(data=hlp$dfHelper,

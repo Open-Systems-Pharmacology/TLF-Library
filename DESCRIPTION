@@ -26,14 +26,13 @@ Suggests:
     testthat (>= 2.1.0)
 VignetteBuilder: knitr
 Collate: 
+    'aggregation-summary.R'
     'data-description.R'
     'datamapping-groupings.R'
     'datamapping-groupmapping.R'
     'datamapping-pkratio.R'
     'datamapping-timeprofile.R'
-    'datamapping-xrange.R'
     'datamapping-xy.R'
-    'datamapping-xyerror.R'
     'datamapping-xygroup.R'
     'enum.R'
     'error-checks.R'

@@ -9,7 +9,9 @@ GroupMapping <- R6::R6Class(
     label = NULL,
 
     initialize = function(group, label = NULL) {
-      self$group <- group # Dummy value for NULL ?
+      validateIsOfType(group, c("data.frame", "character"), nullAllowed = TRUE)
+
+      self$group <- group
 
       if (is.data.frame(group)) {
         # For data.frame, label is last column as default
@@ -23,6 +25,8 @@ GroupMapping <- R6::R6Class(
     },
 
     getCaptions = function(data, metaData = NULL) {
+      validateIsOfType(self$group, c("data.frame", "character"), nullAllowed = TRUE)
+
       if (is.data.frame(self$group)) {
         captions <- getCustomCaptions(data, self$group)
       }

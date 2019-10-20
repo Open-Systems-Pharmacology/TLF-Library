@@ -2,51 +2,79 @@
 #
 ## -------------------------------------------------
 # Define color palettes for plot labels
-themeLabelColors <- enum(c("default", "tlf", "bw"))
-themeLabelColors$default <- list(
-  title = "darkblue",
-  subtitle = "black",
-  xlabel = "black",
-  ylabel = "black",
-  watermark = "blue"
+
+ThemeEnum <- enum(c("default", "tlf", "bw"))
+ThemeLabelColors <- enum(c("title", "subtitle", "xlabel", "ylabel", "watermark"))
+ThemeAesProperties <- enum(c("color", "size", "shape", "linetype", "fill"))
+
+asThemeLabelColors <- function(x) {
+  x <- ThemeLabelColors
+}
+asThemeAesProperties <- function(x) {
+  x <- ThemeAesProperties
+}
+
+# To associate easily colors to each label and palettes for each aes property
+addValuesToList <- function(listInput, values) {
+  validateIsOfType(listInput, "list")
+  validateIsOfType(values, c("list", "numeric", "character"))
+
+  if (isTRUE(class(values) %in% c("numeric", "character"))) {
+    for (valueIndex in seq(1, length(values))) {
+      listInput[[valueIndex]] <- values[valueIndex]
+    }
+  }
+  if (isTRUE(class(values) %in% "list")) {
+    for (valueName in names(values)) {
+      listInput[[valueName]] <- values[[valueName]]
+    }
+  }
+  return(listInput)
+}
+
+themeLabelColors <- ThemeEnum
+themeAesProperties <- ThemeEnum
+
+themeLabelColors <- lapply(themeLabelColors, asThemeLabelColors)
+themeAesProperties <- lapply(themeAesProperties, asThemeAesProperties)
+
+themeLabelColors$default <- addValuesToList(
+  themeLabelColors$default,
+  c("darkblue", "black", "black", "black", "blue")
 )
-themeLabelColors$tlf <- list(
-  title = "darkblue",
-  subtitle = "black",
-  xlabel = "black",
-  ylabel = "black",
-  watermark = "green"
+
+themeLabelColors$tlf <- addValuesToList(
+  themeLabelColors$default,
+  c("darkblue", "black", "black", "black", "green")
 )
-themeLabelColors$bw <- list(
-  title = "black",
-  subtitle = "black",
-  xlabel = "black",
-  ylabel = "black",
-  watermark = "grey50"
+
+themeLabelColors$bw <- addValuesToList(
+  themeLabelColors$default,
+  c("black", "black", "black", "black", "grey50")
 )
 
 ## -------------------------------------------------
-# Define palettes for colors, size for plots
-themeAesProperties <- enum(c("default", "tlf", "bw"))
-themeAesProperties$default <- list(
-  color = seq(1, 10),
-  size = seq(1, 10),
-  shape = seq(1, 10),
-  linetype = seq(1, 10)
+
+themeAesProperties$default <- lapply(themeAesProperties$default, function(x) {
+  seq(1, 10)
+})
+
+themeAesProperties$tlf <- addValuesToList(
+  themeAesProperties$default,
+  list(
+    color = c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7"),
+    shape = c("circle", "square", "diamond", "triangle"),
+    linetype = c("solid", "dashed", "dotted"),
+    fill = c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+  )
 )
 
-themeAesProperties$tlf <- list(
-  color = c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7"),
-  size = seq(1, 10),
-  shape = c("circle", "square", "diamond", "triangle"),
-  linetype = c("solid", "dashed", "dotted")
-)
-
-themeAesProperties$bw <- list(
-  color = c("#000000", "#999999", "#555555"),
-  size = seq(1, 10),
-  shape = c("circle", "square", "diamond", "triangle"),
-  linetype = c("solid", "dashed", "dotted")
+themeAesProperties$bw <- addValuesToList(
+  themeAesProperties$tlf,
+  list(
+    color = c("#000000", "#999999", "#555555", "#222222", "#888888"),
+    fill = c("#000000", "#999999", "#555555", "#222222", "#888888")
+  )
 )
 
 themeAesProperties$big <- themeAesProperties$tlf
