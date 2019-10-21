@@ -31,15 +31,16 @@ library(tlf)
 library(ggplot2)
 ```
 
-The suggested workflow for performing any kind of plot with the `tlf`-library is illustrated in the figure below and is as follows:
+The suggested workflow for performing any kind of plot with the `tlf`-library is illustrated in the figure below.  The workflow assumes that the data to be plotted has been gathered in the form of a [*tidy*](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) dataframe.  The standard workflow then proceeds as follows:
 
-1. Gather the data to be plotted in the form of a [*tidy*](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) dataframe.
-2. Pre-process the data using `AggregationSummary` and `Groupings` classes and their built-in functions
-3. Set the `dataMapping` which will define what you would like to plot
-4. Set the `plotConfiguration` which will define how you would like to plot the data previously mapped
-5. Plot the data using the dedicated function
 
-Please note that steps 2, 3 and 4 are not mandatory and will use default values if they are not defined. Besides, steps 3 and 4 can be independant.
+1. Pre-process the data using `AggregationSummary` class.
+2. Use the `Groupings` class to specify groupings according to which the data will be captioned in figure legends.
+3. Use the `DataMapping` class to select the independent and dependent variables of the processed data as well as the aesthetics that will be used to differentiate between the groupings of the data that were specified in step 2.
+4. Set the `PlotConfiguration` object which will define settings of the plot such as axis labeling, font sizes and watermarks.
+5. Create a `ggplot` object from the above classes using the dedicated plotting function.
+
+Steps 2, 3 and 4 are not mandatory.  If not implemented, `tlf`-libray uses default settings in lieu of the objects that are otherwise created in these optional steps. In addition, the `PlotConfiguration` object and the `DataMapping` object can be created independently. 
 
 ### A minimal example
 
