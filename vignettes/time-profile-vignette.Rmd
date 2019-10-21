@@ -31,23 +31,67 @@ library(tlf)
 library(ggplot2)
 ```
 
-The suggested workflow for performing any kind of plot with the `tlf`-library is illustrated in the figure below.  The workflow assumes that the data to be plotted has been gathered in the form of a [*tidy*](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) dataframe.  The standard workflow then proceeds as follows:
+The suggested workflow for performing any kind of plot with the `tlf`-library is illustrated in the figure below. 
 
-
-1. Pre-process the data using `AggregationSummary` class.
-2. Use the `Groupings` class to specify groupings according to which the data will be captioned in figure legends.
-3. Use the `DataMapping` class to select the independent and dependent variables of the processed data as well as the aesthetics that will be used to differentiate between the groupings of the data that were specified in step 2.
-4. Set the `PlotConfiguration` object which will define settings of the plot such as axis labeling, font sizes and watermarks.
-5. Create a `ggplot` object from the above classes using the dedicated plotting function.
-
-Steps 2, 3 and 4 are not mandatory.  If not implemented, `tlf`-libray uses default settings in lieu of the objects that are otherwise created in these optional steps. In addition, the `PlotConfiguration` object and the `DataMapping` object can be created independently. 
-
-### A minimal example
 
 ## `tlf` workflow
 ```{r, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
 knitr::include_graphics("workflowSlide.png")
 ```
+
+The workflow assumes that the data to be plotted has been gathered in the form of a [*tidy*](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) dataframe.  The standard workflow then proceeds as follows:
+
+
+**Step 1.** Pre-process the data using `AggregationSummary` class.
+
+**Step 2.** Use the `Groupings` class to specify groupings according to which the data will be captioned in figure legends.
+
+**Step 3.** Use the `DataMapping` class to select the independent and dependent variables of the processed data as well as the aesthetics that will be used to differentiate between the groupings of the data that were specified in step 2.
+
+**Step 4.** Set the `PlotConfiguration` object which will define settings of the plot such as axis labeling, font sizes and watermarks.
+
+**Step 5.** Create a `ggplot` object from the above classes using the dedicated plotting function.
+
+Steps 1, 2, 3 and 4 are not mandatory.  If not implemented, `tlf`-libray uses default settings in lieu of the objects that are otherwise created in these optional steps. In addition, the `PlotConfiguration` object and the `DataMapping` object can be created independently. 
+
+### A minimal example
+Before presentation of the full functionality of `tlf` classes, the following minimal example of a time profile plot will demonstrate the workflow for producing a `ggplot` image using Steps 2, 3 and 5.
+
+**Data gathering**
+The data to be plotted in `tlf` is assumed to be a dataframe in tidy format.  An example such dataframe is the following, which contains time profile concentration data for two individuals.  Each individual is allocated a unqiue indentifier in the column "IndividualID".
+```{r, results='asis'}
+minimalDataFrame <- data.frame("Time"=c(0,1,2,0,1,2),
+                               "IndividualID"=as.factor(c(1,1,1,2,2,2)),
+                               "Concentration"=c(3,4,5,4,5,6))
+pander::pandoc.table(minimalDataFrame)
+```
+In a tidy format dataframe, each *measurement*, such as a simulation result or experimental observation, is described entirely in one row.  The columns of the tidy dataframe are limited to no more than the *independent variable* columns of the measurement (in this example, *Time* and *IndividualID*) and the *dependent variable* columns (in this case *Concentration*), which hold the value of the measurement.  Since no additional columns are allowed, two dependent variables that have differing sets of independent variables should each have their own tidy dataframes.
+
+**Step 2**
+In this step, groupings of the data are specified.  In this simple example, each individual's measurements are to be plotted using different linetypes.  A `Grouping` object is therefore created that specifies that a graph with a different *linetype* is to be used to plot the points for each unique value of the *IndividualID* column. 
+```{r, results='asis'}
+minimalGrouping <- Groupings$new( linetype = "IndividualID" )
+```
+The construction of more detailed groupings is discussed in the Groupings section below.
+
+**Step 3**
+Here, the independent and dependent variables of the plot and the plot groupings are specified using a `TimeProfileDataMapping` object, which is a subclass of the DataMapping class specifically aimed at producing time profile plots.  The constructor of this class identifies the *Time* column of the dataframe as the time axis, the *Concentration* column of the dataframe as the vertical axis, and `minimalGrouping`, which was defined in the earlier step, as the grouping object to use.  
+```{r, results='asis'}
+minimalDataMapping <-TimeProfileDataMapping$new(x = "Time",
+                                                y = "Concentration",
+                                                groupings = minimalGrouping)
+```
+
+**Step 5**
+In the final step of this example, a `ggplot` object called `timeProfilePlot` is created using the `plotTimeProfile` function:  
+```{r, fig.height=5, fig.width=7.5}
+timeProfilePlot<-plotTimeProfile(data = minimalDataFrame , dataMapping = minimalDataMapping)
+show(timeProfilePlot)
+```
+
+
+
+
 
 
 # 1. Data
@@ -69,8 +113,8 @@ timeProfileMetaData <- list(Time = list(unit = "min", dimension = "time"),
 
 
 # 2. Pre-processing of the data
-
 ## Groupings
+
 The `R6` class `Groupings` can help you process some of the data and define grouping variables which are often used by `ggplot` to split the data and create subsequent legend and captions.
 This class defines `GroupMapping` for any aesthetic parameter of `ggplot`.
 Two types of input can be submitted to `GroupMapping` a `character` type indicating the name of the variables to be used for grouping; and a `data.frame` type directly linking the grouping variables to the grouping variable at the last column of the data.frame.
