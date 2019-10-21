@@ -45,7 +45,7 @@ Please note that steps 2, 3 and 4 are not mandatory and will use default values 
 
 ## `tlf` workflow
 ```{r, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
-knitr::include_graphics("AbdullahSlide.png")
+knitr::include_graphics("workflowSlide.png")
 ```
 
 
