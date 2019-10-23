@@ -98,7 +98,7 @@ In the sequel, the data that will be used for the time profile plot is the follo
 
 ```{r, results='asis'}
 # Data frame printed in a nice markdown table:
-pander::pandoc.table(timeProfileDataFrame[,c("IndividualID", "Time", "Gender", "Age", "Simulated")], justify='right', round=2)
+pander::pandoc.table(timeProfileDataFrame[,c("IndividualID", "Time", "Population" ,  "Gender", "Age", "Compound" , "Dose"  , "Simulated")], justify='center', round=2)
 ```
 
 The workflow assumes that the data to be plotted has been gathered in the form of a [*tidy*](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) dataframe.  In a tidy format dataframe, each *measurement*, such as a simulation result or experimental observation, is described entirely in one row.  The columns of the dataframe are limited to no more than the *independent variable* columns of the measurement (in this example, *Time* and *IndividualID*) and the *dependent variable* columns (in this case *Simulated*), which hold the value of the measurement.  Since no additional columns are allowed, two dependent variables that have differing sets of independent variables should each have their own tidy dataframes.
@@ -157,14 +157,14 @@ aggSummary <- AggregationSummary$new(data = timeProfileDataFrame ,
 The dataframes that hold the summary statistics of the aggregated rows are stored in a list named `dfHelper`, which is a property of the resulting `aggSummary` object.  Since two functions (`min` and `mean`) were specified in `aggregationFunctionsVector`, the list `aggSummary$dfHelper` holds two dataframes, `aggSummary$dfHelper$SimulatedMin` and `aggSummary$dfHelper$SimulatedMean`.
 
 ```{r, results='asis'}
-pander::pandoc.table(aggSummary$dfHelper$SimulatedMin)
+pander::pandoc.table(aggSummary$dfHelper$SimulatedMin, round=2)
 ```
 
 ```{r, results='asis'}
-pander::pandoc.table(aggSummary$dfHelper$SimulatedMean)
+pander::pandoc.table(aggSummary$dfHelper$SimulatedMean, round=2)
 ```
 
-The `metaData` of the columns of the resulting dataframes are each lists that are stored together in a list named `aggSummary$metaDataHelper`.  The two `metaData` lists in `aggSummary$metaDataHelper` are  `aggSummary$metaDataHelper$SimulatedMin` and `aggSummary$dfHelper$SimulatedMean`.  The contents of the list `aggSummary$metaDataHelper$SimulatedMean` are:
+The `metaData` corresponding to the columns of the resulting dataframes are lists that are stored together in a list named `aggSummary$metaDataHelper`.  For this example, the two `metaData` lists in `aggSummary$metaDataHelper` are  `aggSummary$metaDataHelper$SimulatedMin` and `aggSummary$dfHelper$SimulatedMean`.  The contents of the list `aggSummary$metaDataHelper$SimulatedMean` are:
 
 ``` 
   * **Time**:
@@ -187,29 +187,45 @@ The `metaData` of the columns of the resulting dataframes are each lists that ar
 
 ## Groupings
 
+An `R6` class called `GroupMapping` can be used to group the data into subsets that, in the final plots, are to be distinguished both aesthetically and in legend captions.  In addition, these subsets can be listed under descriptive legend titles.  
 
-The `R6` class `Groupings` can help process some of the data and define grouping variables which are often used by `ggplot` to split the data and create subsequent legend and captions.
 
-This class defines `GroupMapping` for any aesthetic parameter of `ggplot`.
-Two types of input can be submitted to `GroupMapping` a `character` type indicating the name of the variables to be used for grouping; and a `data.frame` type directly linking the grouping variables to the grouping variable at the last column of the data.frame.
-The optional input `label` indicates the name of the grouping variable resulting from the mapping.
 
-Below are use cases of the `GroupMapping`:
 
+  As an example, a `GroupMapping` object called `grouping1` can be used to specify that the data in a *tidy* dataframe such as `timeProfileDataFrame` should be grouped by both "Compound" and "Dose":
 ```{r, results='asis'}
 # Grouping by variable names:
-grouping1 <- GroupMapping$new(c("Compound", "Dose"))
-
+grouping1 <- GroupMapping$new(c("Compound","Dose"))
+```
+With this minimal input, a legend associated with this grouping will have the default title "Compound-Dose".  On the other hand, a custom title for this grouping and its legend can be supplied by the user with the optional `label` input:
+```{r, results='asis'}
 # Grouping by variable names and overwriting the default label:
-grouping2 <- GroupMapping$new(c("Compound", "Dose"), label = "Compound & Dose")
+grouping2 <- GroupMapping$new(c("Compound","Dose"), label = "Compound & Dose")
+```
 
+In the above two examples, default captions are constructed by hyphenating the compound type and the dose amount for each row.  The captions can be customized by the user by supplying a dataframe with the custom captions to the `group` input of the `GroupMapping` object constructor.  The legend title can also be set, as before, using the `label` input of the object constructor:
+
+```{r, results='asis'}
 # Grouping using a data.frame:
-mappingDataFrame <- data.frame(IndividualID = c(1,2,3,4) , 
-                                    PatientName = c("Paul", "John", "George", "Ringo"))
+mappingDataFrame <- data.frame(Compound    = c("Aspirin","Aspirin","Sugar","Sugar"),
+                               Dose        = c(6,3,6,3),  
+                               "CompDose" = c("6mg of Aspirin",
+                                               "3mg of Aspirin",
+                                               "6mg of Sugar",
+                                               "3mg of Sugar"))
+grouping3 <- GroupMapping$new(group = mappingDataFrame , label = "Compound & Dose")
+```
 
-grouping3 <- GroupMapping$new(mappingDataFrame)
+In this example, the dataframe supplied as the `group` input has the following structure
+```{r, results='asis'}
+# Show results for all groupings:
+pander::pandoc.table(mappingDataFrame)
+```
 
-# Aplly the mapping to get the grouping captions:
+
+The three `GroupMapping` objects, `grouping1`, `grouping2` and `grouping3` respectively yield the last three columns of the following dataframe:
+```{r, results='asis'}
+# Apply the mapping to get the grouping captions:
 groupingsDataFrame <- data.frame(
   timeProfileDataFrame$IndividualID,
   timeProfileDataFrame$Dose,
@@ -225,21 +241,39 @@ names(groupingsDataFrame) <- c("IndividualID", "Dose", "Compound",
 pander::pandoc.table(groupingsDataFrame)
 ```
 
-Then, this association can be used in `dataMapping` of type `XYGDataMapping` through the class `Groupings` which will map any `GroupMapping` to an aesthetic parameter such as `color` or `linetype`. `Groupings` can use directly the input of `GroupMapping` to improve efficiency.
+  
+An additional `R6` class called `Groupings` maps a `GroupMapping` object to an aesthetic parameter such as `color` or `linetype`.  To distinguish between "Compound" and "Dose" groups by color and to use the captions and legend title specified in `grouping2`, the following groupings object `groups1` is constructed:
 
 ```{r, results='asis'}
 # Map groups to aesthtic properties
-groups <- Groupings$new(color = c("Compound", "Dose"),
-                        shape = mappingDataFrame)
+groups1 <- Groupings$new(color =  grouping2 )
+```
 
+A `Groupings` object `groups2` can also be constructed more quickly by directly associating an aesthetic, such as `color`, to a vector of dataframe column names:
+```{r, results='asis'}
+# Map groups to aesthtic properties
+groups2 <- Groupings$new(color = c("Compound", "Dose"))
+```
+
+or to a `GroupMapping` object directly:
+```{r, results='asis'}
+# Map groups to aesthtic properties
+groups3 <- Groupings$new(color = GroupMapping$new(group = c("Compound", "Dose"),
+                                                  label = c("Compound & Dose")))
+```
+
+```{r, results='asis'}
 # Aplly the mapping to get the grouping captions:
-dataMapping <- XYGDataMapping$new(x="Time", y="Simulated", groupings = groups)
+dataMapping <- XYGDataMapping$new(x="Time", y="Simulated", groupings = groups1)
 
 # Show results for all groupings:
 pander::pandoc.table(dataMapping$getMapData(data = timeProfileDataFrame,
                                             metaData = timeProfileMetaData))
 ```
 
+The following section discusses how `Groupings` objects can be used in 
+  
+Then, this association can be used in `dataMapping` of type `XYGDataMapping` through the class 
 
 
 # 3. dataMapping
@@ -258,7 +292,7 @@ A more complex example is to add `groupings` to `x` and `y`:
 ```{r, results='asis'}
 # Re-use the variable groups previously defined
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated", 
-                                        groupings = groups)
+                                        groupings = groups1)
 
 pander::pandoc.table(tpMapping$getMapData(data = timeProfileDataFrame,
                                           metaData = timeProfileMetaData))
