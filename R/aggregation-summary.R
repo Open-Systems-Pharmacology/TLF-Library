@@ -65,18 +65,22 @@ AggregationSummary <- R6::R6Class(
 
       summaryMatrix<-matrix(aggSummaries[[ self$yColumnNames ]],ncol=length(self$aggregationFunctionsVector))
 
-      self$dfHelper <- list()
-      self$metaDataHelper <- list()
+
+
+      self$dfHelper <- aggSummaries[ xGroupingColNames ]
+      self$metaDataHelper <- self$metaData[xGroupingColNames]
 
       for (n in seq(1,length(self$aggregationFunctionNames))){
-        dF<-aggSummaries[ xGroupingColNames ]
-        meta<-self$metaData[xGroupingColNames]
 
-        dF[self$aggregationFunctionNames[n]]<- summaryMatrix[,n]
-        meta[[self$aggregationFunctionNames[n]]]<-list(unit = self$aggregationUnitsVector[n] , dimension = self$aggregationDimensionsVector[n] )
 
-        self$dfHelper[[self$aggregationFunctionNames[n]]]<-dF
-        self$metaDataHelper[[self$aggregationFunctionNames[n]]]<-meta
+        dF<-data.frame(summaryMatrix[,n])
+        colnames(dF)[1]<-self$aggregationFunctionNames[n]
+        self$dfHelper <-cbind(self$dfHelper,dF)
+
+        self$metaDataHelper [[self$aggregationFunctionNames[n]]]<-list(unit = self$aggregationUnitsVector[n] , dimension = self$aggregationDimensionsVector[n] )
+
+
+
       }
 
 
