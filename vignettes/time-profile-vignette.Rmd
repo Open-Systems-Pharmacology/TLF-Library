@@ -39,42 +39,43 @@ The suggested workflow for performing any kind of plot with the `tlf`-library is
 knitr::include_graphics("workflowSlide.png")
 ```
 
-The workflow assumes that the data to be plotted has been gathered in the form of a [*tidy*](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) dataframe.  The standard workflow then proceeds as follows:
+The standard workflow then proceeds as follows:
 
+**Step 0 - Data gathering.** Gather the data into tidy dataframe format.
 
-**Step 1.** Pre-process the data using `AggregationSummary` class.
+**Step 1 - Data pre-processing** Pre-process the data using `AggregationSummary` class.
 
-**Step 2.** Use the `Groupings` class to specify groupings according to which the data will be captioned in figure legends.
+**Step 2 - Data grouping** Use the `Groupings` class to specify groupings according to which the data will be captioned in figure legends.
 
-**Step 3.** Use the `DataMapping` class to select the independent and dependent variables of the processed data as well as the aesthetics that will be used to differentiate between the groupings of the data that were specified in step 2.
+**Step 3 - Data mapping.** Use the `DataMapping` class to select the independent and dependent variables of the processed data as well as the aesthetics that will be used to differentiate between the groupings of the data that were specified in step 2.
 
-**Step 4.** Set the `PlotConfiguration` object which will define settings of the plot such as axis labeling, font sizes and watermarks.
+**Step 4 - Plot configuration** Set the `PlotConfiguration` object which will define settings of the plot such as axis labeling, font sizes and watermarks.
 
-**Step 5.** Create a `ggplot` object from the above classes using the dedicated plotting function.
+**Step 5  - Plot generation** Create a `ggplot` object from the above classes using the dedicated plotting function.
 
 Steps 1, 2, 3 and 4 are not mandatory.  If not implemented, `tlf`-libray uses default settings in lieu of the objects that are otherwise created in these optional steps. In addition, the `PlotConfiguration` object and the `DataMapping` object can be created independently. 
 
 ### A minimal example
-Before presentation of the full functionality of `tlf` classes, the following minimal example of a time profile plot will demonstrate the workflow for producing a `ggplot` image using Steps 2, 3 and 5.
+Before presentation of the full functionality of `tlf` classes, the following minimal example of a time profile plot will demonstrate the workflow for producing a `ggplot` image using Steps 0, 2, 3 and 5.
 
-**Data gathering**
-The data to be plotted in `tlf` is assumed to be a dataframe in tidy format.  An example such dataframe is the following, which contains time profile concentration data for two individuals.  Each individual is allocated a unqiue indentifier in the column "IndividualID".
+**Example Step 0:**
+The data to be plotted in `tlf` is assumed to be in R dataframe format.  An example such dataframe is the following, which contains time profile concentration data for two individuals.  Each individual is allocated a unqiue indentifier in the column *IndividualID*.
 ```{r, results='asis'}
 minimalDataFrame <- data.frame("Time"=c(0,1,2,0,1,2),
                                "IndividualID"=as.factor(c(1,1,1,2,2,2)),
                                "Concentration"=c(3,4,5,4,5,6))
 pander::pandoc.table(minimalDataFrame)
 ```
-In a tidy format dataframe, each *measurement*, such as a simulation result or experimental observation, is described entirely in one row.  The columns of the tidy dataframe are limited to no more than the *independent variable* columns of the measurement (in this example, *Time* and *IndividualID*) and the *dependent variable* columns (in this case *Concentration*), which hold the value of the measurement.  Since no additional columns are allowed, two dependent variables that have differing sets of independent variables should each have their own tidy dataframes.
 
-**Step 2**
+
+**Example Step 2:**
 In this step, groupings of the data are specified.  In this simple example, each individual's measurements are to be plotted using different linetypes.  A `Grouping` object is therefore created that specifies that a graph with a different *linetype* is to be used to plot the points for each unique value of the *IndividualID* column. 
 ```{r, results='asis'}
 minimalGrouping <- Groupings$new( linetype = "IndividualID" )
 ```
 The construction of more detailed groupings is discussed in the Groupings section below.
 
-**Step 3**
+**Example Step 3:**
 Here, the independent and dependent variables of the plot and the plot groupings are specified using a `TimeProfileDataMapping` object, which is a subclass of the DataMapping class specifically aimed at producing time profile plots.  The constructor of this class identifies the *Time* column of the dataframe as the time axis, the *Concentration* column of the dataframe as the vertical axis, and `minimalGrouping`, which was defined in the earlier step, as the grouping object to use.  
 ```{r, results='asis'}
 minimalDataMapping <-TimeProfileDataMapping$new(x = "Time",
@@ -82,40 +83,124 @@ minimalDataMapping <-TimeProfileDataMapping$new(x = "Time",
                                                 groupings = minimalGrouping)
 ```
 
-**Step 5**
+**Example Step 5:**
 In the final step of this example, a `ggplot` object called `timeProfilePlot` is created using the `plotTimeProfile` function:  
 ```{r, fig.height=5, fig.width=7.5}
 timeProfilePlot<-plotTimeProfile(data = minimalDataFrame , dataMapping = minimalDataMapping)
 show(timeProfilePlot)
 ```
 
+# 0. Data gathering
 
+## The dataset
 
+In the sequel, the data that will be used for the time profile plot is the following `data.frame` variable named `timeProfileDataFrame`:
 
-
-
-# 1. Data
-
-In the sequel, the data used for the time profile plot is a `data.frame` variable named `timeProfileDataFrame`.
-A `metaData` variable can be used in association to the data. Its main purpose is to define additional information on the data such as the `dimension` and `units` of each of its variables. The lower limit of quantitiation of time profile data can be stored in such metaData.
-
-## Dataset
 ```{r, results='asis'}
 # Data frame printed in a nice markdown table:
 pander::pandoc.table(timeProfileDataFrame[,c("IndividualID", "Time", "Gender", "Age", "Simulated")], justify='right', round=2)
 ```
 
+The workflow assumes that the data to be plotted has been gathered in the form of a [*tidy*](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) dataframe.  In a tidy format dataframe, each *measurement*, such as a simulation result or experimental observation, is described entirely in one row.  The columns of the dataframe are limited to no more than the *independent variable* columns of the measurement (in this example, *Time* and *IndividualID*) and the *dependent variable* columns (in this case *Simulated*), which hold the value of the measurement.  Since no additional columns are allowed, two dependent variables that have differing sets of independent variables should each have their own tidy dataframes.
+
 ## MetaData
+
+A `metaData` variable associated with the data can be used to define additional information such as the `dimension` and `units` of each column in the `data.frame`. The lower limit of quantitiation of time profile data can also be stored in the `metaData`. 
+
+
+
+
 ```{r, results='asis'}
-timeProfileMetaData <- list(Time = list(unit = "min", dimension = "time"), 
-                            Simulated = list(unit = "ug/mL", dimension = "concentration"))
+timeProfileMetaData <- list(Time = list(unit = "min", dimension = "Time"), 
+                            Simulated = list(unit = "ug/mL", dimension = "Concentration"))
 ```
 
 
-# 2. Pre-processing of the data
+# 1. Data pre-processing
+
+The `R6` class `AggregationSummary` automates the computation of multiple summary statistics of the raw data that is output by **Step 0**.  The output of this optional data pre-processing step is a list of tidy dataframes, one for each summary statistic.  Each dataframe in the list is of the same format as that output by **Step 0**.  These dataframes can be input into the subsequent steps of the workflow.  The user also has the option of generating `metaData` for each of these dataframes.
+
+To illustrate the function of this class for the example of the dataframe `timeProfileDataFrame`, suppose that for each timepoint in the *Time* column, the *minimum* and the *mean* value of the *Simulated* column is to be computed for each gender in the *Gender* column.  The `AggregationSummary` class works in three steps:
+
+1. Three sets of columns are selected from the input dataframe `data`: an *independent variable* set called `xColumnNames` (in this case, the *Time* column in `timeProfileDataFrame`),  a *grouping variables* set called `groupingColumnNames` (the *Gender* column in `timeProfileDataFrame`) and a *dependent variables* set called `yColumnNames` (the *Simulated* column in `timeProfileDataFrame`).
+
+2. For each value of the independent variable `xColumnNames`, the rows of the dataframe are aggregated into groups defined by unique combinations of the elements in the grouping variable columns `groupingColumnNames`.
+
+3. Summary statistics (in this case, the minimum and the mean) for the `yColumnNames` variables in each group are evaluated.  The functions for computing the the summary statistics are specified when initializing an `AggregationSummary`, via `aggregationFunctionsVector`.  User-specified descriptive names of these functions are supplied via the vector of strings named `aggregationFunctionNames`.  The units and dimensions of the outputs of these functions are supplied via the vectors of strings named `aggregationUnitsVector` and `aggregationDimensionsVector`, respectively. 
+
+For this example, the `AggregationSummary` object `aggSummary` is instatiated as follows:
+
+```{r, results='asis'}
+aggSummary <- AggregationSummary$new(data = timeProfileDataFrame , 
+                                     metaData = timeProfileMetaData,
+                                     xColumnNames = "Time",
+                                     groupingColumnNames = "Gender",
+                                     yColumnNames = "Simulated",
+                                     aggregationFunctionsVector = c(min,mean),
+                                     aggregationFunctionNames =c("SimulatedMin",
+                                                                 "SimulatedMean"),
+                                     aggregationUnitsVector = c("mg/L","mg/L"),
+                                     aggregationDimensionsVector = c("Concentration",
+                                                                     "Concentration"))
+
+
+```
+
+The dataframes that hold the summary statistics of the aggregated rows are stored in a list named `dfHelper`, which is a property of the resulting `aggSummary` object.  Since two functions (`min` and `mean`) were specified in `aggregationFunctionsVector`, the list `aggSummary$dfHelper` holds two dataframes, `aggSummary$dfHelper$SimulatedMin` and `aggSummary$dfHelper$SimulatedMean`.
+
+```{r, results='asis'}
+pander::pandoc.table(aggSummary$dfHelper$SimulatedMin)
+```
+
+```{r, results='asis'}
+pander::pandoc.table(aggSummary$dfHelper$SimulatedMean)
+```
+
+The `metaData` of the columns of the resulting dataframes are each lists that are stored together in a list named `aggSummary$metaDataHelper`.  The two `metaData` lists in `aggSummary$metaDataHelper` are  `aggSummary$metaDataHelper$SimulatedMin` and `aggSummary$dfHelper$SimulatedMean`.  The contents of the list `aggSummary$metaDataHelper$SimulatedMean` are:
+
+``` 
+  * **Time**:
+
+      * **unit**: min
+      * **dimension**: Time
+
+  * **Gender**:
+
+      * **unit**:
+      * **dimension**:
+
+  * **SimulatedMean**:
+
+      * **unit**: mg/L
+      * **dimension**: Concentration 
+``` 
+ 
+When initializing an `AggregationSummary`, the `yColumnNames` is the name of the variable to be aggregated, `groupingColumnNames` are the variables that will group the data for the aggragtion , `aggregationFunctionsVector` is a vector of functions to be used during the aggregation and `aggregationFunctionNames` the name of the associated variables within the output `data.frame` of the helper.
+
+ 
+
+, 2) thIn an aggregation summary` class are: 1) a dataframe `data`, 2) th
+
+
+The following example illustrates the outcome of the helper:
+```{r, results='asis'}
+hlp <- TimeProfileHelper$new(data = timeProfileDataFrame,
+                             timeColumnName = "Time",
+                             groupingColumnNames = c("Population"),
+                             valuesColumnNames = "Simulated",
+                             aggregationFunctionsVector = c(mean, min, max),
+                             aggregationFunctionNames =  c("SimulatedMean", "SimulatedMin", "SimulatedMax"))
+
+
+pander::pandoc.table(hlp$dfHelper, round=2)
+```
+ 
+
 ## Groupings
 
+
 The `R6` class `Groupings` can help you process some of the data and define grouping variables which are often used by `ggplot` to split the data and create subsequent legend and captions.
+
 This class defines `GroupMapping` for any aesthetic parameter of `ggplot`.
 Two types of input can be submitted to `GroupMapping` a `character` type indicating the name of the variables to be used for grouping; and a `data.frame` type directly linking the grouping variables to the grouping variable at the last column of the data.frame.
 The optional input `label` indicates the name of the grouping variable resulting from the mapping.
@@ -166,23 +251,7 @@ pander::pandoc.table(dataMapping$getMapData(data = timeProfileDataFrame,
                                             metaData = timeProfileMetaData))
 ```
 
-## Helper
 
-The `R6` class `TimeProfileHelper` can help you process some of the time profile data and obtain new aggregated data to plot. 
-When initializing this helper, `valuesColumnNames` are the variables to be aggregated, `groupingColumnNames` are the variables that will group the data for the aggragtion , `aggregationFunctionsVector` is a vector of functions to be used during the aggregation and `aggregationFunctionNames` the name of the associated variables within the output `data.frame` of the helper.
-
-The following example illustrates the outcome of the helper:
-```{r, results='asis'}
-hlp <- TimeProfileHelper$new(data = timeProfileDataFrame,
-                             timeColumnName = "Time",
-                             groupingColumnNames = c("Population"),
-                             valuesColumnNames = "Simulated",
-                             aggregationFunctionsVector = c(mean, min, max),
-                             aggregationFunctionNames =  c("SimulatedMean", "SimulatedMin", "SimulatedMax"))
-
-
-pander::pandoc.table(hlp$dfHelper, round=2)
-```
 
 # 3. dataMapping
 
