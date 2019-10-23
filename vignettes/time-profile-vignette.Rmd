@@ -126,7 +126,7 @@ timeProfileMetaData<-list("Time"        =list(unit = "min",  dimension = "Time" 
 
 # 1. Data pre-processing
 
-The `R6` class `AggregationSummary` automates the computation of multiple summary statistics of the raw data that is output by **Step 0**.  The output of this optional data pre-processing step is a list of tidy dataframes, one for each summary statistic.  Each dataframe in the list is of the same format as that output by **Step 0**.  These dataframes can be input into the subsequent steps of the workflow.  The user also has the option of generating `metaData` for each of these dataframes.
+The `R6` class `AggregationSummary` automates the computation of multiple summary statistics of the raw data that is output by **Step 0**.  The output of this optional data pre-processing step is a dataframe with a column for each summary statistic.  This dataframe can be input into the subsequent steps of the workflow.  The user also has the option of generating `metaData` for each of the summary statistics evaluated.
 
 To illustrate the function of this class for the example of the dataframe `timeProfileDataFrame`, suppose that for each timepoint in the *Time* column, the *minimum* and the *mean* value of the *Simulated* column is to be computed for each gender in the *Gender* column.  The `AggregationSummary` class works in three steps:
 
@@ -154,20 +154,18 @@ aggSummary <- AggregationSummary$new(data = timeProfileDataFrame ,
 
 ```
 
-The dataframes that hold the summary statistics of the aggregated rows are stored in a list named `dfHelper`, which is a property of the resulting `aggSummary` object.  Since two functions (`min` and `mean`) were specified in `aggregationFunctionsVector`, the list `aggSummary$dfHelper` holds two dataframes, `aggSummary$dfHelper$SimulatedMin` and `aggSummary$dfHelper$SimulatedMean`.
+The dataframe that holds the summary statistics of the aggregated rows is stored in the `dfHelper` property of the resulting `aggSummary` object.  Since two functions (`min` and `mean`) were specified in `aggregationFunctionsVector`, the dataframe `aggSummary$dfHelper` has, in addition to the `xColumnNames`and `groupingColumnNames` columns, two additional columns named `SimulatedMin` and `SimulatedMean`, which were the names specified in `aggregationFunctionNames`.
 
 ```{r, results='asis'}
-pander::pandoc.table(aggSummary$dfHelper$SimulatedMin, round=2)
+pander::pandoc.table(aggSummary$dfHelper, round=2)
 ```
 
-```{r, results='asis'}
-pander::pandoc.table(aggSummary$dfHelper$SimulatedMean, round=2)
-```
 
-The `metaData` corresponding to the columns of the resulting dataframes are lists that are stored together in a list named `aggSummary$metaDataHelper`.  For this example, the two `metaData` lists in `aggSummary$metaDataHelper` are  `aggSummary$metaDataHelper$SimulatedMin` and `aggSummary$dfHelper$SimulatedMean`.  The contents of the list `aggSummary$metaDataHelper$SimulatedMean` are:
+
+The `metaData` corresponding to the columns of the resulting dataframes are lists that are stored together in a list with the `metaData` of the `xColumnNames`and `groupingColumnNames` columns.  The `metaData` for the new `aggSummary$dfHelper` dataframe is stored as the `metaDataHelper` property of the `aggSummary` object. For this example, the two `metaData` lists corresponding to the `SimulatedMin` and `SimulatedMean` columns are also are labeled `SimulatedMin` and `SimulatedMean`. The contents of the list `aggSummary$metaDataHelper` are:
 
 ``` 
-  * **Time**:
+    * **Time**:
 
       * **unit**: min
       * **dimension**: Time
@@ -177,10 +175,15 @@ The `metaData` corresponding to the columns of the resulting dataframes are list
       * **unit**:
       * **dimension**:
 
+  * **SimulatedMin**:
+
+      * **unit**: mg/L
+      * **dimension**: Concentration
+
   * **SimulatedMean**:
 
       * **unit**: mg/L
-      * **dimension**: Concentration 
+      * **dimension**: Concentration
 ``` 
   
  
@@ -262,33 +265,36 @@ groups3 <- Groupings$new(color = GroupMapping$new(group = c("Compound", "Dose"),
                                                   label = c("Compound & Dose")))
 ```
 
-```{r, results='asis'}
-# Aplly the mapping to get the grouping captions:
-dataMapping <- XYGDataMapping$new(x="Time", y="Simulated", groupings = groups1)
 
-# Show results for all groupings:
-pander::pandoc.table(dataMapping$getMapData(data = timeProfileDataFrame,
-                                            metaData = timeProfileMetaData))
-```
-
-The following section discusses how `Groupings` objects can be used in 
+The following section discusses the use of `Groupings` objects to group the data to be plotted with into subsets associated with specific aesthetics.     
   
-Then, this association can be used in `dataMapping` of type `XYGDataMapping` through the class 
+<!-- Then, this association can be used in `dataMapping` of type `XYGDataMapping` through the class  -->
+
+
+
+<!-- ```{r, results='asis'} -->
+<!-- # Apply the mapping to get the grouping captions: -->
+<!-- dataMapping <- XYGDataMapping$new(x="Time", y="Simulated", groupings = groups1) -->
+
+<!-- # Show results for all groupings: -->
+<!-- pander::pandoc.table(dataMapping$getMapData(data = timeProfileDataFrame, -->
+<!--                                             metaData = timeProfileMetaData)) -->
+<!-- ``` -->
+
 
 
 # 3. dataMapping
 
-The `R6` class `TimeProfileDataMapping` is dedicated to map `x`, `y` and `groupings` for time profile plots.
-Its inner function `getMapData` creates an output `data.frame` mapping the `x`, `y` and `groupings` of any input `data`.
-
-The basic example is to map only `x` and `y`:
+The `R6` class `TimeProfileDataMapping` extracts the time profile plot data from an input dataframe and groups it according to the aesthetics specified in an input `Grouping` object.  This mapping is carried out by an internal function of this class named `getMapData`, which returns a dataframe with an `x` column, for the time axis, a `y` column for the verticle axis, and grouping columns named using the `label` properties of the input `Grouping` objects. 
+ 
+When no `Grouping` object is supplied upon construction of a `TimeProfileDataMapping` object, the function `getMapData` returns a dataframe with only an `x` and a `y` column:
 ```{r, results='asis'}
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated")
 pander::pandoc.table(tpMapping$getMapData(data = timeProfileDataFrame,
                                           metaData = timeProfileMetaData))
 ```
 
-A more complex example is to add `groupings` to `x` and `y`:
+When a `Groupings` object is supplied upon construction of the `TimeProfileDataMapping` object, each `x`,`y` pair is associated with a group that can be used to distinguish the pair aesthetically in the final plot:
 ```{r, results='asis'}
 # Re-use the variable groups previously defined
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated", 
@@ -298,9 +304,7 @@ pander::pandoc.table(tpMapping$getMapData(data = timeProfileDataFrame,
                                           metaData = timeProfileMetaData))
 ```
 
-Specific to time profiles, `TimeProfileDataMapping` allows the mapping of `yMin` and `yMax`.
-These parameters are expected in case error bars are needed or in case a time range profile is needed.
-If only `yMin` and `yMax` are input in the mapping `y` being undefined or `NULL`, the expected profile is a range.
+A feature of `TimeProfileDataMapping` class is that, in addition to specifying a `y` column, the user may also supply `yMin` and `yMax` columns that can represent the boundaries of error bars. If only `yMin` and `yMax` are input in the mapping `y` being undefined or `NULL`, the expected profile is a range.
 If `y`, `yMin` and `yMax` are input in the mapping, the expected profile is an error bar.
 
 ```{r, results='asis'}
