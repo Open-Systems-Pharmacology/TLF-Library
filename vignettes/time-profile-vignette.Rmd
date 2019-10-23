@@ -111,8 +111,16 @@ A `metaData` variable associated with the data can be used to define additional 
 
 
 ```{r, results='asis'}
-timeProfileMetaData <- list(Time = list(unit = "min", dimension = "Time"), 
-                            Simulated = list(unit = "ug/mL", dimension = "Concentration"))
+timeProfileMetaData<-list("Time"        =list(unit = "min",  dimension = "Time"         ),
+                          "IndividualID"=list(unit = NULL,   dimension = NULL           ),
+                          "Population"  =list(unit = NULL,   dimension = NULL           ),
+                          "Gender"      =list(unit = NULL,   dimension = NULL           ),
+                          "Age"         =list(unit = "yrs",  dimension = "Time"         ),
+                          "Compound"    =list(unit = NULL,   dimension = NULL           ),
+                          "Dose"        =list(unit = "mg",   dimension = "Amount"       ),
+                          "Organ"       =list(unit = NULL,   dimension = NULL           ),
+                          "Compartment" =list(unit = NULL,   dimension = NULL           ),
+                          "Simulated"   =list(unit = "mg/L", dimension = "Concentration")) 
 ```
 
 
@@ -174,32 +182,13 @@ The `metaData` of the columns of the resulting dataframes are each lists that ar
       * **unit**: mg/L
       * **dimension**: Concentration 
 ``` 
- 
-When initializing an `AggregationSummary`, the `yColumnNames` is the name of the variable to be aggregated, `groupingColumnNames` are the variables that will group the data for the aggragtion , `aggregationFunctionsVector` is a vector of functions to be used during the aggregation and `aggregationFunctionNames` the name of the associated variables within the output `data.frame` of the helper.
-
- 
-
-, 2) thIn an aggregation summary` class are: 1) a dataframe `data`, 2) th
-
-
-The following example illustrates the outcome of the helper:
-```{r, results='asis'}
-hlp <- TimeProfileHelper$new(data = timeProfileDataFrame,
-                             timeColumnName = "Time",
-                             groupingColumnNames = c("Population"),
-                             valuesColumnNames = "Simulated",
-                             aggregationFunctionsVector = c(mean, min, max),
-                             aggregationFunctionNames =  c("SimulatedMean", "SimulatedMin", "SimulatedMax"))
-
-
-pander::pandoc.table(hlp$dfHelper, round=2)
-```
+  
  
 
 ## Groupings
 
 
-The `R6` class `Groupings` can help you process some of the data and define grouping variables which are often used by `ggplot` to split the data and create subsequent legend and captions.
+The `R6` class `Groupings` can help process some of the data and define grouping variables which are often used by `ggplot` to split the data and create subsequent legend and captions.
 
 This class defines `GroupMapping` for any aesthetic parameter of `ggplot`.
 Two types of input can be submitted to `GroupMapping` a `character` type indicating the name of the variables to be used for grouping; and a `data.frame` type directly linking the grouping variables to the grouping variable at the last column of the data.frame.
