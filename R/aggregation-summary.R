@@ -1,7 +1,7 @@
 #' @title AggregationSummary
 #' @docType class
 #' @description  #Splits the dataframe data into subsets defined by unique combinations of elements in the columns xColumnNames and groupingColumnNames.
-#Applies functions defined in aggregationFunctionsVector to column yColumnName.
+#Applies functions defined in aggregationFunctionsVector to column yColumnNames.
 #Returns a list of dataframes, one dataframe for each function listed in aggregationFunctionsVector.
 #Each dataframe in list element is named after the function's corresponding string in aggregationFunctionNames.
 #The summary statistic column name in each dataframe is the same as the name of the dataframe in the returned list.
@@ -12,24 +12,34 @@ AggregationSummary <- R6::R6Class(
   "AggregationSummary",
   public = list(
     data = NULL,
+    metaData = NULL,
     xColumnNames = NULL,
     groupingColumnNames = NULL,
-    yColumnName = NULL,
+    yColumnNames = NULL,
     aggregationFunctionsVector = NULL,
     aggregationFunctionNames = NULL,
+    aggregationUnitsVector = NULL,
+    aggregationDimensionsVector = NULL,
     dfHelper = NULL,
+    metaDataHelper = NULL,
     initialize = function(data,
-                          xColumnNames ,
+                          metaData = NULL,
+                          xColumnNames,
                           groupingColumnNames = NULL,
-                          yColumnName = NULL,
+                          yColumnNames = NULL,
                           aggregationFunctionsVector = NULL,
-                          aggregationFunctionNames = NULL) {
+                          aggregationFunctionNames = NULL,
+                          aggregationUnitsVector = NULL,
+                          aggregationDimensionsVector = NULL) {
       self$data <- data
+      self$metaData <- metaData
       self$xColumnNames <- xColumnNames
       self$groupingColumnNames <- groupingColumnNames
-      self$yColumnName <- yColumnName
+      self$yColumnNames <- yColumnNames
       self$aggregationFunctionsVector <- c(aggregationFunctionsVector)
       self$aggregationFunctionNames <- aggregationFunctionNames
+      self$aggregationUnitsVector = aggregationUnitsVector
+      self$aggregationDimensionsVector = aggregationDimensionsVector
       self$generateAggregatedValues()
     },
 
@@ -47,20 +57,26 @@ AggregationSummary <- R6::R6Class(
 
       xGroupingCols <- self$data[xGroupingColNames] # Extract grouping columns from dataframe and group them into a list called xGroupingCols
 
-      yValuesCol <- self$data[ self$yColumnName ] # Extract column of values from dataframe
+      yValuesCol <- self$data[ self$yColumnNames ] # Extract column of values from dataframe
       aggSummaries <- aggregate(yValuesCol, xGroupingCols, function(x) {
         res <- self$applyAggregationFunctions(x)
         return(res)
       })
 
-      xAggCols <- aggSummaries[ xGroupingColNames ]
-      summaryMatrix<-aggSummaries[[ self$yColumnName ]]
+      summaryMatrix<-matrix(aggSummaries[[ self$yColumnNames ]],ncol=length(self$aggregationFunctionsVector))
+
       self$dfHelper <- list()
+      self$metaDataHelper <- list()
 
       for (n in seq(1,length(self$aggregationFunctionNames))){
-        dF<-xAggCols
-        dF[self$aggregationFunctionNames[n]]<-summaryMatrix[,n]
+        dF<-aggSummaries[ xGroupingColNames ]
+        meta<-self$metaData[xGroupingColNames]
+
+        dF[self$aggregationFunctionNames[n]]<- summaryMatrix[,n]
+        meta[[self$aggregationFunctionNames[n]]]<-list(unit = self$aggregationUnitsVector[n] , dimension = self$aggregationDimensionsVector[n] )
+
         self$dfHelper[[self$aggregationFunctionNames[n]]]<-dF
+        self$metaDataHelper[[self$aggregationFunctionNames[n]]]<-meta
       }
 
 
