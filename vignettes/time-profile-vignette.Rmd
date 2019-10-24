@@ -210,7 +210,7 @@ In the above two examples, default captions are constructed by hyphenating the c
 # Grouping using a data.frame:
 mappingDataFrame <- data.frame(Compound    = c("Aspirin","Aspirin","Sugar","Sugar"),
                                Dose        = c(6,3,6,3),  
-                               "CompDose" = c("6mg of Aspirin",
+                               CompDose    = c("6mg of Aspirin",
                                                "3mg of Aspirin",
                                                "6mg of Sugar",
                                                "3mg of Sugar"))
@@ -242,7 +242,34 @@ names(groupingsDataFrame) <- c("IndividualID", "Dose", "Compound",
 pander::pandoc.table(groupingsDataFrame)
 ```
 
-  
+A dataframe can also be used to create a `GroupMapping` object that subsets the data based on whether a numeric grouping variable satisfies an specific inequality.  For example, individuals in `timeProfileDataFrame` can be grouped according to whether or not their age exceedss 6 years by first defining the following dataframe:
+```{r, results='asis'}
+# Grouping using a data.frame:
+binningDataFrame <- data.frame(Age      = I( list(c(0,6),c(7,100)) ), 
+                               AgeRange = c("Age 6 or lower",
+                                            "Above age 6"))
+```
+Then creating a new grouping:
+```{r, results='asis'}
+grouping4 <- GroupMapping$new(group = binningDataFrame , label = "Age range")
+```
+ 
+This new `GroupMapping` object `grouping4` yields the following captions
+
+```{r, results='asis'}
+# Apply the mapping to get the grouping captions:
+binnedGroupingsDataFrame <- data.frame(
+  timeProfileDataFrame$IndividualID,
+  timeProfileDataFrame$Age,
+  grouping4$getCaptions(timeProfileDataFrame)) 
+
+names(binnedGroupingsDataFrame) <- c("IndividualID", "Age", grouping4$label)
+
+# Show results for all groupings:
+pander::pandoc.table(binnedGroupingsDataFrame)
+```
+ 
+
 An additional `R6` class called `Groupings` maps a `GroupMapping` object to an aesthetic parameter such as `color` or `linetype`.  To distinguish between "Compound" and "Dose" groups by color and to use the captions and legend title specified in `grouping2`, the following groupings object `groups1` is constructed:
 
 ```{r, results='asis'}
