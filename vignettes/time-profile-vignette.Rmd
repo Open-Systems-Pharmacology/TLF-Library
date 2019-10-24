@@ -347,18 +347,18 @@ A `Theme` class can be used to standardize plot configurations. So far, four pre
 
 The `R6` class `TimeProfilePlotConfiguration` is used for setting the configuration of time profile plots. It inherits from the `R6` class `PlotConfiguration` and, as such, it is split into four subclasses:
 
-- `LabelConfiguration` from which any `PlotConfiguration` inherits and that defines the size and fonts of the labels (title, xlabel, ...)
-- `XAxisConfiguration` that defines the limits, scale and ticks of the x-axis
-- `YAxisConfiguration` that defines the limits, scale and ticks of the y-axis
-- `LegendConfiguration` that defines the titles, captions and values for any aesthetic parameter (`color`, `linetype`,...)
+- `LabelConfiguration`, which defines the size and fonts of the labels (title, xlabel, ...)
+- `XAxisConfiguration`, which defines the limits, scale and ticks of the x-axis
+- `YAxisConfiguration`, which defines the limits, scale and ticks of the y-axis
+- `LegendConfiguration`, which defines the titles, captions and values for aesthetic parameters (`color`, `linetype`,...)
 
 
-The definition of the configuration can be performed as follows:
+The construction of a generic plot configuration can be performed as follows:
 ```{r}
 config <- PlotConfiguration$new(title = "Title",
-                      xlabel = "x-axis label", 
-                      ylabel = "y-axis label", 
-                      watermark = "background")
+                                xlabel = "x-axis label", 
+                                ylabel = "y-axis label", 
+                                watermark = "background")
 
 # Overall features of the configurtion
 config
@@ -369,10 +369,9 @@ config$title$font
 
 # scale of x axis
 config$xAxis$scale
-
 ```
 
-Example for a time profile plot:
+On the other hand, a `TimeProfilePlotConfiguration` object is constructed using the commands
 ```{r}
 tpConfig <- TimeProfilePlotConfiguration$new()
 
@@ -380,9 +379,7 @@ tpConfig <- TimeProfilePlotConfiguration$new()
 tpConfig
 ```
 
-Since the plot configuration is not a necessary input for the plot functions, it can use default values if not overwritten. Called within plot functions its default values use data, metaData and dataMapping as input to get a smarter configuration.
-
-Below is an example for a time profile configuration using data, metaData and dataMapping:
+Since a plot configuration is not a necessary input for the generation of a plot, a default configuration is used when none is supplied.  The default plot configuation is constructed from `data`, `metaData` and `dataMapping` objects.  In fact, of these three objects, only the `data` is a necessary input as default `metaData` and `dataMapping` objects are also constructed when these are not input by the user.  As an illustration, the following is an example of a time profile configuration constructed using `timeProfileDataFrame` as `data`, `timeProfileMetaData` as `metaData` and `tpMapping` as `dataMapping`:
 
 ```{r}
 # Define the time profile mapping
@@ -398,9 +395,9 @@ tpConfig <- TimeProfilePlotConfiguration$new(data = timeProfileDataFrame,
 tpConfig
 ```
 
-# 5. Examples
+# 5. Plot generation
 
-The function that creates ggplot objects for time profiles is `plotTimeProfile` whose input arguments are `data`, `metaData`, `dataMapping` and `plotConfiguration`.
+The function that creates ggplot objects for time profiles is `plotTimeProfile`, the inputs arguments of which are `data`, `metaData`, `dataMapping` and `plotConfiguration`.
 
 ## 5.1. Basic example of time profile plot
 
@@ -417,9 +414,11 @@ plotObject
 
 ```
 
-You can notice that the plot presents almost error bars, this is due to the fact that the plot has more than 1 value per time point.
+The vertical bars seen in this plot occur because the dataframe `timeProfileDataFrame` has more than one `y` value per time point `x` and no `Grouping` object was supplied in the constructing the `TimeProfileDataMapping` object `tpMapping` so that these `y` values can be separated into different time profiles.
 
 ## 5.2. Workflow example of time profile plot using `TimeProfilePlotConfiguration`
+
+This example generates a similar plot to the preceding one, except that here `TimeProfilePlotConfiguration` object `tpConfig` is used to set a custom title and y-axis label. 
 
 ```{r, fig.height=5, fig.width=7.5}
 # Set current theme
@@ -446,6 +445,9 @@ plotObject
 ```
 
 ## 5.3. Workflow example of time profile plot using `TimeProfileDataMapping` with `Groupings`
+
+In this example, the vertical bars seen previous examples are removed through the use of a `Grouping` object that assigns a different color to each individual in the `IndividualID` column of `timeProfileDataFrame`, as well as a different linetype for each of the two populations (Asian and European).  This separates datapoints coincident in time into separate graphs.
+
 
 ```{r, fig.height=5, fig.width=7.5}
 # Map x, y and groups of the plot
@@ -493,14 +495,10 @@ plotObject
 ## 5.5. Workflow example of time profile plot using `TimeProfileDataMapping` with `AggregationSummary`
 
 
-<!-- hlp <- TimeProfileHelper$new(data = timeProfileDataFrame, -->
-<!--                              timeColumnName = "Time", -->
-<!--                              groupingColumnNames = c("Population"), -->
-<!--                              valuesColumnNames = "Simulated", -->
-<!--                              aggregationFunctionsVector = c(mean, min, max), -->
-<!--                              aggregationFunctionNames =  c("SimulatedMean", "SimulatedMin", "SimulatedMax")) -->
 
 ### 5.5.1. Plot aggregated mean value
+Here, the `AggregationSummary` object is used to aggregate the data in `timeProfileDataFrame` at each timepoint by population and then compute the mean, minimum and maximum of the aggregated data at each of the timepoints.  Next, the mean at each timepoint is plotted.  Since there are two populations in the "Population" column of `timeProfileDataFrame`, there are two mean values at each timepoint, giving rise to the vertical lines shown in the following plot.
+
 ```{r, fig.height=5, fig.width=7.5}
 # Define aggregated values through helper
 
@@ -535,6 +533,9 @@ meanPlot
 
 ### 5.5.2. Plot aggregated mean value by population
 
+Here, the means generated by the `AggregationSummary` object are grouped by population.  The `Groupings` object input to the constructor of the `TimeProfileDataMapping` object `tpMappingMean` specifies that each population should be plotted by a different color.
+
+
 ```{r, fig.height=5, fig.width=7.5}
 # Map x, y and groupings
 tpMappingMean <- TimeProfileDataMapping$new(x = "Time", 
@@ -557,6 +558,8 @@ meanPlot
 
 ### 5.5.3. Plot aggregated min and max values
 
+In this example, `x`, `yMin` and `yMax` variables are used to construct the `TimeProfileDataMapping` object `tpMappingRange`.  Since no `y` variable is supplied, the `plotTimeProfile` function produces a range plot.  The "dislocation" in the range plot at time 1 min is due to the fact that the `AggregationSummary` yielded two `yMin` and `yMax` values at each timepoint, one for each population.  
+
 ```{r, fig.height=5, fig.width=7.5}
 # Map x, yMin and yMax
 tpMappingRange <- TimeProfileDataMapping$new(x = "Time", 
@@ -578,6 +581,8 @@ rangePlot
 ```
 
 ### 5.5.4. Plot aggregated min and max values by population
+
+This example adds a grouping by population to the `TimeProfileDataMapping` object `tpMappingRange`.  This results in two range plots, where the fill color distinguishes between the Asian and European population values.
 
 ```{r, fig.height=5, fig.width=7.5}
 # Map x, yMin and yMax
@@ -602,6 +607,9 @@ rangePlot
 ```
 
 ### 5.5.5. Plot aggregated mean, min, max values by population
+
+With respect to the previous example, here, a `y` variable is added to the `TimeProfileDataMapping` object resulting in the `plotTimeProfile` returning a time profile plot with error bars. Note that the `Groupings` object in the `TimeProfileDataMapping` object constructor specifies that each population should be distinguished by color.
+
 ```{r, fig.height=5, fig.width=7.5}
 # Map x, y, yMin and yMax
 tpMappingErrorBar <- TimeProfileDataMapping$new(x = "Time", 
