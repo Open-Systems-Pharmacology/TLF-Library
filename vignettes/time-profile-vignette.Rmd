@@ -150,8 +150,6 @@ aggSummary <- AggregationSummary$new(data = timeProfileDataFrame ,
                                      aggregationUnitsVector = c("mg/L","mg/L"),
                                      aggregationDimensionsVector = c("Concentration",
                                                                      "Concentration"))
-
-
 ```
 
 The dataframe that holds the summary statistics of the aggregated rows is stored in the `dfHelper` property of the resulting `aggSummary` object.  Since two functions (`min` and `mean`) were specified in `aggregationFunctionsVector`, the dataframe `aggSummary$dfHelper` has, in addition to the `xColumnNames`and `groupingColumnNames` columns, two additional columns named `SimulatedMin` and `SimulatedMean`, which were the names specified in `aggregationFunctionNames`.
@@ -304,18 +302,31 @@ pander::pandoc.table(tpMapping$getMapData(data = timeProfileDataFrame,
                                           metaData = timeProfileMetaData))
 ```
 
-A feature of `TimeProfileDataMapping` class is that, in addition to specifying a `y` column, the user may also supply `yMin` and `yMax` columns that can represent the boundaries of error bars. If only `yMin` and `yMax` are input in the mapping `y` being undefined or `NULL`, the expected profile is a range.
-If `y`, `yMin` and `yMax` are input in the mapping, the expected profile is an error bar.
+A feature of `TimeProfileDataMapping` class is that, in addition to specifying a `y` column, the user may also supply `yMin` and `yMax` columns that can represent the boundaries of error bars. If only `yMin` and `yMax` are input when constructing the `TimeProfileDataMapping` object, with `y` left undefined or `NULL`, the default profile that will ultimately be plotted is a range plot.   If `y`, `yMin` and `yMax` are all input, the default plot will be a time profile plot with an error bar.
+
+<!-- hlp <- TimeProfileHelper$new(data = timeProfileDataFrame, -->
+<!--                              timeColumnName = "Time", -->
+<!--                              groupingColumnNames = c("Population"), -->
+<!--                              valuesColumnNames = "Simulated", -->
+<!--                              aggregationFunctionsVector = c(mean, min, max), -->
+<!--                              aggregationFunctionNames =  c("SimulatedMean", "SimulatedMin", "SimulatedMax")) -->
 
 ```{r, results='asis'}
 # Use the helper to aggregate min and max values
+hlp <- AggregationSummary$new(data = timeProfileDataFrame,
+                              metaData = timeProfileMetaData,
+                              xColumnNames = "Time",
+                              groupingColumnNames = "Gender",
+                              yColumnNames = "Simulated",
+                              aggregationFunctionsVector = c(mean,min,max),
+                              aggregationFunctionNames = c("SimulatedMean",
+                                                           "SimulatedMin",
+                                                           "SimulatedMax"),
+                              aggregationUnitsVector = c("mg/L","mg/L","mg/L"),
+                              aggregationDimensionsVector = c("Concentration",
+                                                              "Concentration",
+                                                              "Concentration"))
 
-hlp <- TimeProfileHelper$new(data = timeProfileDataFrame,
-                             timeColumnName = "Time",
-                             groupingColumnNames = c("Population"),
-                             valuesColumnNames = "Simulated",
-                             aggregationFunctionsVector = c(mean, min, max),
-                             aggregationFunctionNames =  c("SimulatedMean", "SimulatedMin", "SimulatedMax"))
 
 # Define Mapping with yMin and yMax
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="SimulatedMean", 
@@ -330,11 +341,11 @@ pander::pandoc.table(tpMapping$getMapData(data = hlp$dfHelper,
 
 ## Theme
 
-A `Theme` class can be used to standardize plot configurations. So far, 4 predefined themes are available: `defaultTheme`, `tlfTheme`, `bwTheme` and `bigTheme`. The function `useTheme` set a theme as the current theme of the environment. As for instance: `useTheme(tlfTheme)`.
+A `Theme` class can be used to standardize plot configurations. So far, four predefined themes are available: `defaultTheme`, `tlfTheme`, `bwTheme` and `bigTheme`. The function `useTheme` can be used to se specific theme. For instance, the `tlfTheme` is set using `useTheme(tlfTheme)`.
 
 ## Plot Configuration for time profiles
 
-The `R6` class `TimeProfilePlotConfiguration` is dedicated to set the configuration of time profile plots. It inherits from the `R6` class `PlotConfiguration` and as such it is split into 4 subclasses:
+The `R6` class `TimeProfilePlotConfiguration` is used for setting the configuration of time profile plots. It inherits from the `R6` class `PlotConfiguration` and, as such, it is split into four subclasses:
 
 - `LabelConfiguration` from which any `PlotConfiguration` inherits and that defines the size and fonts of the labels (title, xlabel, ...)
 - `XAxisConfiguration` that defines the limits, scale and ticks of the x-axis
@@ -479,17 +490,33 @@ plotObject
 
 ```
 
-## 5.5. Workflow example of time profile plot using `TimeProfileDataMapping` with `Helper`
+## 5.5. Workflow example of time profile plot using `TimeProfileDataMapping` with `AggregationSummary`
+
+
+<!-- hlp <- TimeProfileHelper$new(data = timeProfileDataFrame, -->
+<!--                              timeColumnName = "Time", -->
+<!--                              groupingColumnNames = c("Population"), -->
+<!--                              valuesColumnNames = "Simulated", -->
+<!--                              aggregationFunctionsVector = c(mean, min, max), -->
+<!--                              aggregationFunctionNames =  c("SimulatedMean", "SimulatedMin", "SimulatedMax")) -->
 
 ### 5.5.1. Plot aggregated mean value
 ```{r, fig.height=5, fig.width=7.5}
 # Define aggregated values through helper
-hlp <- TimeProfileHelper$new(data = timeProfileDataFrame,
-                             timeColumnName = "Time",
-                             groupingColumnNames = c("Population"),
-                             valuesColumnNames = "Simulated",
-                             aggregationFunctionsVector = c(mean, min, max),
-                             aggregationFunctionNames =  c("SimulatedMean", "SimulatedMin", "SimulatedMax"))
+
+hlp <- AggregationSummary$new(data = timeProfileDataFrame,
+                              metaData = timeProfileMetaData,
+                              xColumnNames = "Time",
+                              groupingColumnNames = c("Population"),
+                              yColumnNames = "Simulated",
+                              aggregationFunctionsVector = c(mean,min,max),
+                              aggregationFunctionNames = c("SimulatedMean",
+                                                           "SimulatedMin",
+                                                           "SimulatedMax"),
+                              aggregationUnitsVector = c("mg/L","mg/L","mg/L"),
+                              aggregationDimensionsVector = c("Concentration",
+                                                              "Concentration",
+                                                              "Concentration"))
 
 # Map x and y
 tpMappingMean <- TimeProfileDataMapping$new(x = "Time", 
