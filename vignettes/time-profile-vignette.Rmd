@@ -145,14 +145,14 @@ aggSummary <- AggregationSummary$new(data = timeProfileDataFrame ,
                                      groupingColumnNames = "Gender",
                                      yColumnNames = "Simulated",
                                      aggregationFunctionsVector = c(min,mean),
-                                     aggregationFunctionNames =c("SimulatedMin",
-                                                                 "SimulatedMean"),
+                                     aggregationFunctionNames =c("Simulated Min",
+                                                                 "Simulated Mean"),
                                      aggregationUnitsVector = c("mg/L","mg/L"),
                                      aggregationDimensionsVector = c("Concentration",
                                                                      "Concentration"))
 ```
 
-The dataframe that holds the summary statistics of the aggregated rows is stored in the `dfHelper` property of the resulting `aggSummary` object.  Since two functions (`min` and `mean`) were specified in `aggregationFunctionsVector`, the dataframe `aggSummary$dfHelper` has, in addition to the `xColumnNames`and `groupingColumnNames` columns, two additional columns named `SimulatedMin` and `SimulatedMean`, which were the names specified in `aggregationFunctionNames`.
+The dataframe that holds the summary statistics of the aggregated rows is stored in the `dfHelper` property of the resulting `aggSummary` object.  Since two functions (`min` and `mean`) were specified in `aggregationFunctionsVector`, the dataframe `aggSummary$dfHelper` has, in addition to the `xColumnNames`and `groupingColumnNames` columns, two additional columns named `Simulated Min` and `Simulated Mean`, which were the names specified in `aggregationFunctionNames`.
 
 ```{r, results='asis'}
 pander::pandoc.table(aggSummary$dfHelper, round=2)
@@ -160,7 +160,7 @@ pander::pandoc.table(aggSummary$dfHelper, round=2)
 
 
 
-The `metaData` corresponding to the columns of the resulting dataframes are lists that are stored together in a list with the `metaData` of the `xColumnNames`and `groupingColumnNames` columns.  The `metaData` for the new `aggSummary$dfHelper` dataframe is stored as the `metaDataHelper` property of the `aggSummary` object. For this example, the two `metaData` lists corresponding to the `SimulatedMin` and `SimulatedMean` columns are also are labeled `SimulatedMin` and `SimulatedMean`. The contents of the list `aggSummary$metaDataHelper` are:
+The `metaData` corresponding to the columns of the resulting dataframes are lists that are stored together in a list with the `metaData` of the `xColumnNames`and `groupingColumnNames` columns.  The `metaData` for the new `aggSummary$dfHelper` dataframe is stored as the `metaDataHelper` property of the `aggSummary` object. For this example, the two `metaData` lists corresponding to the `Simulated Min` and `Simulated Mean` columns are also are labeled `Simulated Min` and `Simulated Mean`. The contents of the list `aggSummary$metaDataHelper` are:
 
 ``` 
     * **Time**:
@@ -173,12 +173,12 @@ The `metaData` corresponding to the columns of the resulting dataframes are list
       * **unit**:
       * **dimension**:
 
-  * **SimulatedMin**:
+  * **Simulated Min**:
 
       * **unit**: mg/L
       * **dimension**: Concentration
 
-  * **SimulatedMean**:
+  * **Simulated Mean**:
 
       * **unit**: mg/L
       * **dimension**: Concentration
@@ -204,36 +204,33 @@ With this minimal input, a legend associated with this grouping will have the de
 grouping2 <- GroupMapping$new(c("Compound","Dose"), label = "Compound & Dose")
 ```
 
-In the above two examples, default captions are constructed by hyphenating the compound type and the dose amount for each row.  The captions can be customized by the user by supplying a dataframe with the custom captions to the `group` input of the `GroupMapping` object constructor.  The legend title can also be set, as before, using the `label` input of the object constructor:
-
+In the above two examples, default captions are constructed by hyphenating the compound type and the dose amount for each row.  Alternatively, the captions can be customized by the user by supplying a dataframe with the custom captions to the `group` input of the `GroupMapping` object constructor.  The format of this dataframe is such that the rightmost column contains the desired captions, the name of this rightmost column is the default legend title for this grouping, and the remaining columns define the combinations of row entries that are to receive each caption in the rightmost column.  To illustrate this method, the following dataframe `mappingDataFrame` is used to assign captions based on entries in the "Dose" and "Compound" columns.  For example the caption "6mg of Aspirin" is assigned to any row in which the "Dose" entry is 6 and the "Compound" entry is "Aspirin". 
 ```{r, results='asis'}
 # Grouping using a data.frame:
-mappingDataFrame <- data.frame(Compound    = c("Aspirin","Aspirin","Sugar","Sugar"),
-                               Dose        = c(6,3,6,3),  
-                               CompDose    = c("6mg of Aspirin",
-                                               "3mg of Aspirin",
-                                               "6mg of Sugar",
-                                               "3mg of Sugar"))
-grouping3 <- GroupMapping$new(group = mappingDataFrame , label = "Compound & Dose")
-```
-
-In this example, the dataframe supplied as the `group` input has the following structure
-```{r, results='asis'}
-# Show results for all groupings:
+mappingDataFrame <- data.frame(Compound = c("Aspirin","Aspirin","Sugar","Sugar"),
+                               Dose = c(6,3,6,3),  
+                               "Compound & Dose"  = c("6mg of Aspirin",
+                                                      "3mg of Aspirin",
+                                                      "6mg of Sugar",
+                                                      "3mg of Sugar"),
+                               check.names = FALSE)
 pander::pandoc.table(mappingDataFrame)
+grouping3 <- GroupMapping$new(group = mappingDataFrame)
 ```
+The default title of the legend that results from this grouping is the name of the rightmost column, which is "Compound & Dose".  Note that the `check.names` option should be set to `FALSE` when creating the dataframe `mappingDataFrame` since the legend title contains spaces in this instance.  This legend title can be overridden to be another string by using the `label` input of the object constructor, as in the case of `grouping2` above.
+
+
 
 
 The three `GroupMapping` objects, `grouping1`, `grouping2` and `grouping3` respectively yield the last three columns of the following dataframe:
 ```{r, results='asis'}
 # Apply the mapping to get the grouping captions:
-groupingsDataFrame <- data.frame(
-  timeProfileDataFrame$IndividualID,
-  timeProfileDataFrame$Dose,
-  timeProfileDataFrame$Compound,
-  grouping1$getCaptions(timeProfileDataFrame),
-  grouping2$getCaptions(timeProfileDataFrame),
-  grouping3$getCaptions(timeProfileDataFrame))
+groupingsDataFrame <- data.frame(timeProfileDataFrame$IndividualID,
+                                 timeProfileDataFrame$Dose,
+                                 timeProfileDataFrame$Compound,
+                                 grouping1$getCaptions(timeProfileDataFrame),
+                                 grouping2$getCaptions(timeProfileDataFrame),
+                                 grouping3$getCaptions(timeProfileDataFrame))
 
 names(groupingsDataFrame) <- c("IndividualID", "Dose", "Compound",
                                grouping1$label, grouping2$label, grouping3$label)
@@ -242,26 +239,26 @@ names(groupingsDataFrame) <- c("IndividualID", "Dose", "Compound",
 pander::pandoc.table(groupingsDataFrame)
 ```
 
-A dataframe can also be used to create a `GroupMapping` object that subsets the data based on whether a numeric grouping variable satisfies an specific inequality.  For example, individuals in `timeProfileDataFrame` can be grouped according to whether or not their age exceedss 6 years by first defining the following dataframe:
+A dataframe can also be used to create a `GroupMapping` object that subsets the data based on whether a numeric grouping variable satisfies an specific inequality.  For example, individuals in `timeProfileDataFrame` can be grouped according to whether or not their age exceeds 6 years by first defining the following dataframe:
 ```{r, results='asis'}
 # Grouping using a data.frame:
-binningDataFrame <- data.frame(Age      = I( list(c(0,6),c(7,100)) ), 
-                               AgeRange = c("Age 6 or lower",
-                                            "Above age 6"))
+binningDataFrame <- data.frame(Age = I( list(c(0,6),c(7,100)) ), 
+                               "Age Range" = c("Age 6 or lower",
+                                               "Above age 6"),
+                               check.names = FALSE)
 ```
 Then creating a new grouping:
 ```{r, results='asis'}
-grouping4 <- GroupMapping$new(group = binningDataFrame , label = "Age range")
+grouping4 <- GroupMapping$new(group = binningDataFrame)
 ```
  
 This new `GroupMapping` object `grouping4` yields the following captions
 
 ```{r, results='asis'}
 # Apply the mapping to get the grouping captions:
-binnedGroupingsDataFrame <- data.frame(
-  timeProfileDataFrame$IndividualID,
-  timeProfileDataFrame$Age,
-  grouping4$getCaptions(timeProfileDataFrame)) 
+binnedGroupingsDataFrame <- data.frame(timeProfileDataFrame$IndividualID,
+                                       timeProfileDataFrame$Age,
+                                       grouping4$getCaptions(timeProfileDataFrame)) 
 
 names(binnedGroupingsDataFrame) <- c("IndividualID", "Age", grouping4$label)
 
@@ -346,9 +343,9 @@ hlp <- AggregationSummary$new(data = timeProfileDataFrame,
                               groupingColumnNames = "Gender",
                               yColumnNames = "Simulated",
                               aggregationFunctionsVector = c(mean,min,max),
-                              aggregationFunctionNames = c("SimulatedMean",
-                                                           "SimulatedMin",
-                                                           "SimulatedMax"),
+                              aggregationFunctionNames = c("Simulated Mean",
+                                                           "Simulated Min",
+                                                           "Simulated Max"),
                               aggregationUnitsVector = c("mg/L","mg/L","mg/L"),
                               aggregationDimensionsVector = c("Concentration",
                                                               "Concentration",
@@ -356,8 +353,8 @@ hlp <- AggregationSummary$new(data = timeProfileDataFrame,
 
 
 # Define Mapping with yMin and yMax
-tpMapping <- TimeProfileDataMapping$new(x="Time", y="SimulatedMean", 
-                                        yMin = "SimulatedMin", yMax = "SimulatedMax")
+tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated Mean", 
+                                        yMin = "Simulated Min", yMax = "Simulated Max")
 
 pander::pandoc.table(tpMapping$getMapData(data = hlp$dfHelper,
                                           metaData = hlp$metaDataHelper))
@@ -487,8 +484,8 @@ tpMapping <- TimeProfileDataMapping$new(x = "Time",
 
 # Define the ggplot object
 plotObject <- plotTimeProfile(data=timeProfileDataFrame,
-                           metaData = timeProfileMetaData,
-                           dataMapping = tpMapping)
+                              metaData = timeProfileMetaData,
+                              dataMapping = tpMapping)
 
 # Show plot
 plotObject
@@ -511,8 +508,8 @@ tpMapping <- TimeProfileDataMapping$new(x = "Time",
 
 # Define the ggplot object
 plotObject <- plotTimeProfile(data=timeProfileDataFrame,
-                           metaData = timeProfileMetaData,
-                           dataMapping = tpMapping)
+                              metaData = timeProfileMetaData,
+                              dataMapping = tpMapping)
 
 # Show plot
 plotObject
@@ -535,9 +532,9 @@ hlp <- AggregationSummary$new(data = timeProfileDataFrame,
                               groupingColumnNames = c("Population"),
                               yColumnNames = "Simulated",
                               aggregationFunctionsVector = c(mean,min,max),
-                              aggregationFunctionNames = c("SimulatedMean",
-                                                           "SimulatedMin",
-                                                           "SimulatedMax"),
+                              aggregationFunctionNames = c("Simulated Mean",
+                                                           "Simulated Min",
+                                                           "Simulated Max"),
                               aggregationUnitsVector = c("mg/L","mg/L","mg/L"),
                               aggregationDimensionsVector = c("Concentration",
                                                               "Concentration",
@@ -545,7 +542,7 @@ hlp <- AggregationSummary$new(data = timeProfileDataFrame,
 
 # Map x and y
 tpMappingMean <- TimeProfileDataMapping$new(x = "Time", 
-                                            y = "SimulatedMean")
+                                            y = "Simulated Mean")
 # Overwrite the plot configuration
 tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
                                               xlabel = "Time")
@@ -566,7 +563,7 @@ Here, the means generated by the `AggregationSummary` object are grouped by popu
 ```{r, fig.height=5, fig.width=7.5}
 # Map x, y and groupings
 tpMappingMean <- TimeProfileDataMapping$new(x = "Time", 
-                                            y = "SimulatedMean",
+                                            y = "Simulated Mean",
                                             groupings = Groupings$new(color = "Population"))
 
 # Overwrite the plot configuration
@@ -590,8 +587,8 @@ In this example, `x`, `yMin` and `yMax` variables are used to construct the `Tim
 ```{r, fig.height=5, fig.width=7.5}
 # Map x, yMin and yMax
 tpMappingRange <- TimeProfileDataMapping$new(x = "Time", 
-                                             yMin = "SimulatedMin", 
-                                             yMax = "SimulatedMax")
+                                             yMin = "Simulated Min", 
+                                             yMax = "Simulated Max")
 
 # Overwrite the plot configuration
 tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
@@ -601,7 +598,7 @@ tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
 
 # Define the ggplot object
 rangePlot <- plotTimeProfile(data=hlp$dfHelper,
-                            dataMapping = tpMappingRange)
+                             dataMapping = tpMappingRange)
 
 # Show plot
 rangePlot
@@ -614,8 +611,8 @@ This example adds a grouping by population to the `TimeProfileDataMapping` objec
 ```{r, fig.height=5, fig.width=7.5}
 # Map x, yMin and yMax
 tpMappingRange <- TimeProfileDataMapping$new(x = "Time", 
-                                             yMin = "SimulatedMin", 
-                                             yMax = "SimulatedMax",
+                                             yMin = "Simulated Min", 
+                                             yMax = "Simulated Max",
                                              groupings = Groupings$new(fill = "Population"))
 
 # Overwrite the plot configuration
@@ -626,8 +623,8 @@ tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
 
 # Define the ggplot object
 rangePlot <- plotTimeProfile(data=hlp$dfHelper,
-                            dataMapping = tpMappingRange,
-                            plotConfiguration = tpConfig)
+                             dataMapping = tpMappingRange,
+                             plotConfiguration = tpConfig)
 
 # Show plot
 rangePlot
@@ -640,9 +637,9 @@ With respect to the previous example, here, a `y` variable is added to the `Time
 ```{r, fig.height=5, fig.width=7.5}
 # Map x, y, yMin and yMax
 tpMappingErrorBar <- TimeProfileDataMapping$new(x = "Time", 
-                                                y = "SimulatedMean",
-                                                yMin = "SimulatedMin", 
-                                                yMax = "SimulatedMax",
+                                                y = "Simulated Mean",
+                                                yMin = "Simulated Min", 
+                                                yMax = "Simulated Max",
                                                 groupings = Groupings$new(color = "Population"))
 
 # Overwrite the plot configuration
