@@ -5,3 +5,5 @@
 ^README\.md$
 ^tests/dev
 ^\.covrignore$
+^doc$
+^Meta$
