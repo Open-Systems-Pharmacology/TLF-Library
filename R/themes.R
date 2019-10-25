@@ -172,14 +172,26 @@ Theme <- R6::R6Class(
 ## -------------------------------------------------
 # Definition of a few standard themes to be used
 
+#' @title defaultTheme
+#' @description
+#' Default theme for plot configuration
+#' @export
 defaultTheme <- Theme$new(labelColors = themeLabelColors$default)
 
+#' @title tlfTheme
+#' @description
+#' tlf theme for plot configuration
+#' @export
 tlfTheme <- Theme$new(
   labelColors = themeLabelColors$tlf,
   watermarkText = "tlf-watermark",
   aesProperties = themeAesProperties$tlf
 )
 
+#' @title bwTheme
+#' @description
+#' Black and White theme for plot configuration
+#' @export
 bwTheme <- Theme$new(
   labelColors = themeLabelColors$bw,
   watermarkText = "black & white",
@@ -187,6 +199,10 @@ bwTheme <- Theme$new(
   pkRatioLinesProperties = themePKRatioLinesPropertiesBW
 )
 
+#' @title bigTheme
+#' @description
+#' Big theme for plot configuration
+#' @export
 bigTheme <- Theme$new(
   labelColors = themeLabelColors$default,
   labelBaseSize = 20,

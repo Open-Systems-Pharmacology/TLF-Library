@@ -27,3 +27,20 @@
 #'   \item{dimension}{}
 #' }
 "pkRatioMetaData"
+
+#' Test dataset for time profiles with 3 subjects.
+#' 
+#' @format A data frame with 12 rows and 10 variables:
+#' \describe{
+#'   \item{Time}{}
+#'   \item{IndividualID}{}
+#'   \item{Population}{}
+#'   \item{Gender}{}
+#'   \item{Age}{}
+#'   \item{Compound}{}
+#'   \item{Dose}{}
+#'   \item{Organ}{}
+#'   \item{Compartment}{}
+#'   \item{Simulated}{}
+#' }
+"timeProfileDataFrame"
