@@ -5,15 +5,21 @@ date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{time-profile-vignette}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignettePackage{tlf}
+  %\VignetteDepends{devtools}
+  %\VignetteDepends{pander}
+  %\VignetteDepends{ggplot2}
 ---
 
-```{r, include = FALSE}
+```{r setup, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+load("timeProfileDataFrame.RData")
+library(tlf)
 ```
 
 # Introduction
@@ -22,14 +28,6 @@ The aim of this vignette is to illustrate the workflow for producing time profil
 ## Libraries
 
 The main purpose of the `tlf`-library is to standardized the production of `ggplot` objects from data output by `OSPSuiteR`. As such, `tlf`-library requires that the `ggplot2` package be installed.
-
-```{r setup}
-# The update of the tlf library with document needs to be called in the vignette
-# Otherwise, the library is not up to date to be knitted
-devtools::document()
-library(tlf)
-library(ggplot2)
-```
 
 The suggested workflow for performing any kind of plot with the `tlf`-library is illustrated in the figure below. 
 
@@ -70,8 +68,8 @@ pander::pandoc.table(minimalDataFrame)
 
 **Example Step 2:**
 In this step, groupings of the data are specified.  In this simple example, each individual's measurements are to be plotted using different linetypes.  A `Grouping` object is therefore created that specifies that a graph with a different *linetype* is to be used to plot the points for each unique value of the *IndividualID* column. 
-```{r, results='asis'}
-minimalGrouping <- Groupings$new( linetype = "IndividualID" )
+```{r}
+minimalGrouping <- tlf:::Groupings$new( linetype = "IndividualID" )
 ```
 The construction of more detailed groupings is discussed in the Groupings section below.
 
