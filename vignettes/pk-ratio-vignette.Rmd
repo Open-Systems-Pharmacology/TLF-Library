@@ -4,35 +4,31 @@ author: "OSPSuiteR 2019"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{my-vignette}
+  %\VignetteIndexEntry{pk-ratio-vignette}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignettePackage{tlf}
+  %\VignetteDepends{pander}
+  %\VignetteDepends{ggplot2}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 load("pkRatioDataExample.RData")
+library(tlf)
 ```
 
 # Introduction
 The following vignette aims at showing an example workflow for performing PK Ratios plots and qualifications using the tlf-Library.
-The very first step of the workflow is to load the ``tlf` library and associated packages (so far `ggplot2`).
+The very first step of the workflow is to load the `tlf` library and associated packages (so far `ggplot2`).
 The 2 following steps are the definition of the `dataMapping` and `plotConfiguration`.
 
 * `dataMapping` aims at linking which variable from the `data`, `metaData` should be plotted.
 * `plotConfiguration` aims at defining how this map data should be plotted.
 
-
-```{r setup}
-# The update of the tlf library with document needs to be called in the vignette
-# Otherwise, the library is not up to date to be knitted
-devtools::document()
-library(tlf)
-library(ggplot2)
-```
 ```{r}
 useTheme(tlfTheme)
 ```
@@ -43,7 +39,7 @@ For this example, the `data` and its `metaData` will be called `pkRatioData` and
 Below are the first lines of the PK Ratio Dataset used in this example:
 
 ## Dataset
-```{r, results='asis'}
+```{r, echo = FALSE, results='asis'}
 # pkRatioData
 pander::pandoc.table(head(pkRatioData))
 ```
