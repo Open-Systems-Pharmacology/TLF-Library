@@ -8,7 +8,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignettePackage{tlf}
-  %\VignetteDepends{devtools}
   %\VignetteDepends{pander}
   %\VignetteDepends{ggplot2}
 ---
@@ -18,14 +17,13 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-devtools::document()
 load("pkRatioDataExample.RData")
 library(tlf)
 ```
 
 # Introduction
 The following vignette aims at showing an example workflow for performing PK Ratios plots and qualifications using the tlf-Library.
-The very first step of the workflow is to load the ``tlf` library and associated packages (so far `ggplot2`).
+The very first step of the workflow is to load the `tlf` library and associated packages (so far `ggplot2`).
 The 2 following steps are the definition of the `dataMapping` and `plotConfiguration`.
 
 * `dataMapping` aims at linking which variable from the `data`, `metaData` should be plotted.
