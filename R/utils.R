@@ -15,3 +15,12 @@ ifnotnull <- function(inputToCheck, outputIfNotNull, outputIfNull = NULL) {
     outputIfNull
   }
 }
+
+# If input x and y, output = input 3, else output = input 4
+ifequal <- function(x, y, outputIfEqual, outputIfNotEqual = NULL) {
+  if (x == y) {
+    outputIfEqual
+  } else {
+    outputIfNotEqual
+  }
+}
