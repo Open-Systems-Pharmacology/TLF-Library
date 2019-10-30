@@ -6,13 +6,12 @@
 
 XYDataMapping <- R6::R6Class(
   "XYDataMapping",
+  inherit = XDataMapping,
   public = list(
-    x = NULL,
     y = NULL,
-    data = NULL,
 
     initialize = function(x, y) {
-      self$x <- x
+      super$initialize(x)
       self$y <- y
     },
 
