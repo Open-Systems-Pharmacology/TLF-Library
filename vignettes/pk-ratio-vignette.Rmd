@@ -7,7 +7,6 @@ vignette: >
   %\VignetteIndexEntry{pk-ratio-vignette}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignettePackage{tlf}
   %\VignetteDepends{pander}
   %\VignetteDepends{ggplot2}
 ---
@@ -17,7 +16,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-load("pkRatioDataExample.RData")
+load("../data/pkRatioDataExample.RData")
 library(tlf)
 ```
 
@@ -54,15 +53,17 @@ Since `PKRatioDataMapping` inherits from an XY Group Mapping (`XYGDataMapping`),
 ## Example of Definition of PK Ratio Data Mapping
 ```{r}
 # Create a PK Ratio dataMapping
-groups <- list(color = "Gender", shape = c("Dose", "Compound"))
-dataMapping <- PKRatioDataMapping$new(x = "Age", y = "PKRatios", groupings = groups)
+groupings <- Groupings$new(color = "Gender", 
+                           shape = c("Dose", "Compound"))
+
+dataMapping <- PKRatioDataMapping$new(x = "Age", y = "PKRatios", groupings = groupings)
 
 
 dataMapping$x
 dataMapping$y
 dataMapping$pkRatioLines
-dataMapping$groupings$color
-dataMapping$groupings$shape
+dataMapping$groupings$color$group
+dataMapping$groupings$shape$group
 ```
 
 # Plot Configuration

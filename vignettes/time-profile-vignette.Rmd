@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-load("timeProfileDataFrame.RData")
+load("../data/timeProfileDataFrame.RData")
 library(tlf)
 ```
 
