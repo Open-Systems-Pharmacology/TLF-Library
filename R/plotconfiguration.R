@@ -24,7 +24,7 @@ PlotConfiguration <- R6::R6Class(
                               subtitle = NULL,
                               xlabel = NULL,
                               ylabel = NULL,
-                              watermark = tlfEnv$currentTheme$watermarkText,
+                              watermark = NULL,
                               legendTitles = NULL,
                               filename = "TestPlot.png",
                               legend = NULL, # R6 class
@@ -39,7 +39,7 @@ PlotConfiguration <- R6::R6Class(
         subtitle = subtitle,
         xlabel = xlabel,
         ylabel = ylabel,
-        watermark = watermark
+        watermark = watermark %||% tlfEnv$currentTheme$watermark
       )
 
       # If xlabel and ylabel are not defined, use dataMapping of x, y to label axes
