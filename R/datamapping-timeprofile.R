@@ -12,12 +12,12 @@ TimeProfileDataMapping <- R6::R6Class(
     LLOQ = NULL,
 
     initialize = function(x,
-                              y = NULL,
-                              groupings = NULL,
-                              dataFrame = NULL,
-                              yMin = NULL,
-                              yMax = NULL,
-                              LLOQ = NULL) {
+                          y = NULL,
+                          groupings = NULL,
+                          dataFrame = NULL,
+                          yMin = NULL,
+                          yMax = NULL,
+                          LLOQ = NULL) {
       if (is.null(y)) {
         if (is.null(yMin) && is.null(yMax)) {
           stop("Either y or yMin and yMax must be defined for TimeProfileDataMapping")
