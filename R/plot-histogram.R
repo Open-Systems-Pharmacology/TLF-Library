@@ -1,66 +1,53 @@
-set.seed(1234)
-dat <- data.frame(cond = factor(rep(c("A","B"), each=200)),
-                  rating = c(rnorm(200),rnorm(200, mean=.8)))
-# View first few rows
-head(dat)
+#' Create a histogram
+#'
+#' @title plotHistogram
+#' @param data data.frames containing the data to be used for the plot
+#' @param metaData list of lists (structure TO BE DISCUSSED)
+#' containing complementary information to data (e.g. unit)
+#' @param dataMapping R6 class HistogramDataMapping
+#' mapping of which data to use for histogram
+#' @param plotConfiguration R6 class HistogramPlotConfiguration
+#' Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend
+#' @description
+#' plotHistogram(data, metaData, dataMapping, plotConfiguration)
+#' @return a ggplot graphical object
+#' @export
+#'
+#'
+plotHistogram <- function(data,
+                          metaData = NULL,
+                          dataMapping = NULL,
+                          plotConfiguration = NULL,
+                          binWidth = NULL,
+                          bins = NULL,
+                          verticalLineFunctions = NULL,
+                          verticalLineFunctionNames = NULL) {
 
-binWidth = 2;
-bins = 20;
+  # If no data mapping or plot configuration is input, use default
+  metaData <- metaData %||% metaDataHelper(data)
+  dataMapping <- dataMapping %||% HistogramDataMapping$new()
+  plotConfiguration <- plotConfiguration %||% HistogramPlotConfiguration$new(
+    data = data,
+    metaData = metaData,
+    dataMapping = dataMapping,
+    binWidth = binWidth,
+    bins = bins,
+    verticalLineFunctions = verticalLineFunctions,
+    verticalLineFunctionNames = verticalLineFunctionNames
+  )
 
-
-#the histogram plot is actially two plots.
-#the first is the histrogram itself,
-#the second is the set of vertical lines that are functions of the data represented in the histogram.
-#so can use two data mappings.
-
-histGrouping <- Groupings$new(fill = GroupMapping$new(group = "cond", label = "Condition") )
-#verticalLineGrouping <- Groupings$new(fill = "cond")
-
-hdm <- HistogramDataMapping$new( x = "rating" , groupings = histGrouping )
-
-hpc <- HistogramPlotConfiguration$new(data = dat , dataMapping = hdm , bins = bins , binWidth = NULL , verticalLineFunctions = c(mean,median) , verticalLineFunctionNames = c("mean","median") )
-
-plotObject <- ggplot2::ggplot()
-
-plotObject <- hpc$addHistograms(plotObject, data = dat, metaData=NULL, dataMapping = hdm , bins = NULL, binWidth = NULL )
-
-#plotObject <- hpc$addHistograms(plotObject, data = dat, metaData=NULL, dataMapping = hdm)
-
-plotObject <- hpc$setPlotLabels(plotObject)
-
-plotObject <- hpc$legend$setPlotLegend(plotObject)
-
-#plotObject <- hpc$addVerticalLines(plotObject)
-
-sr <- aggregate(hpc$mapData$x,list(hpc$mapData$Condition),function(x) mean(x))
-
-colnames(sr)<-c("Grp","mean")
-
-plotObject <- plotObject + geom_vline(data=sr, aes(xintercept=mean, colour=Grp))
-
-
-
-#plotObject <- plotObject +  geom_vline( mapping =  aes(xintercept = c(0,2,3)) )
-
-#plotObject <- plotObject +  geom_vline(#data = hpc$mapData,
-#                                      mapping = aes(xintercept = c(-1,-2,-3))
-#                                       )
+  validateIsOfType(dataMapping, HistogramDataMapping)
+  validateIsOfType(plotConfiguration, HistogramPlotConfiguration)
 
 
-# plotObject <- plotObject + ggplot2::geom_histogram(
-#   data = dat,
-#   mapping = aes( x = rating , fill = cond ),
-#   show.legend = TRUE
-# )
-
-show(plotObject)
-
-#p <- p + geom_vline(data=sr, aes(xintercept=mean, colour=Grp))
+  plotObject <- ggplot2::ggplot()
+  plotObject <- plotConfiguration$addHistograms(plotObject, data = dat, metaData=NULL, dataMapping = hdm , bins = NULL, binWidth = NULL )
+  plotObject <- hpc$setPlotLabels(plotObject)
+  plotObject <- hpc$legend$setPlotLegend(plotObject)
+  plotObject <- hpc$addVerticalLines(plotObject)
 
 
 
-# plth <- plotHistogram(data  = data,
-#                       dataMapping = hdm,
-#                       plotConfiguration = hpc)
 
-
+  return(plotObject)
+}
