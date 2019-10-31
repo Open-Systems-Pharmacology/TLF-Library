@@ -42,9 +42,9 @@ plotHistogram <- function(data,
 
   plotObject <- ggplot2::ggplot()
   plotObject <- plotConfiguration$addHistograms(plotObject, data = dat, metaData=NULL, dataMapping = hdm , bins = NULL, binWidth = NULL )
-  plotObject <- hpc$setPlotLabels(plotObject)
-  plotObject <- hpc$legend$setPlotLegend(plotObject)
-  plotObject <- hpc$addVerticalLines(plotObject)
+  plotObject <- plotConfiguration$setPlotLabels(plotObject)
+  plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)
+  plotObject <- plotConfiguration$addVerticalLines(plotObject)
 
 
 
