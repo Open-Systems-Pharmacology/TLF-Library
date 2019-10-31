@@ -11,9 +11,9 @@ Groupings <- R6::R6Class(
     shape = NULL,
 
     initialize = function(color = NULL,
-                              fill = NULL,
-                              linetype = NULL,
-                              shape = NULL) {
+                          fill = NULL,
+                          linetype = NULL,
+                          shape = NULL) {
 
       if (!isOfType(color, "GroupMapping")) {
         color <- GroupMapping$new(group = color)
