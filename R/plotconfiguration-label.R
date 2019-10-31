@@ -13,12 +13,12 @@ LabelConfiguration <- R6::R6Class(
     legendTitles = NULL,
 
     initialize = function(title = NULL,
-                              subtitle = NULL,
-                              xlabel = NULL,
-                              ylabel = NULL,
-                              watermark = tlfEnv$currentTheme$watermarkText,
-                              legendTitles = NULL,
-                              theme = tlfEnv$currentTheme) {
+                          subtitle = NULL,
+                          xlabel = NULL,
+                          ylabel = NULL,
+                          watermark = tlfEnv$currentTheme$watermarkText,
+                          legendTitles = NULL,
+                          theme = tlfEnv$currentTheme) {
       self$title <- asLabel(title %||% "")
       self$title$font <- theme$titleFont
       self$subtitle <- asLabel(subtitle %||% "")
