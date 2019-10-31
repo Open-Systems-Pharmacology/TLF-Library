@@ -24,7 +24,7 @@ AggregationSummary <- R6::R6Class(
     metaDataHelper = NULL,
     initialize = function(data,
                           metaData = NULL,
-                          xColumnNames,
+                          xColumnNames = NULL,
                           groupingColumnNames = NULL,
                           yColumnNames = NULL,
                           aggregationFunctionsVector = NULL,

@@ -8,8 +8,8 @@ XYGDataMapping <- R6::R6Class(
   public = list(
     groupings = NULL, # R6 Class of GroupMappings
 
-    initialize = function(x,y=NULL,groupings = NULL) {
-      super$initialize(x,y)
+    initialize = function(groupings = NULL,...) {
+      super$initialize(...)
       self$groupings <- groupings %||% Groupings$new()
     },
 

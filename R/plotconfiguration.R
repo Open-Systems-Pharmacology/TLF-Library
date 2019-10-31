@@ -62,9 +62,6 @@ PlotConfiguration <- R6::R6Class(
         LegendConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping),
         LegendConfiguration$new()
       )
-      print("sw3")
-      print(self$legend)
-      print("sw4")
       self$xAxis <- xAxis %||% XAxisConfiguration$new()
       self$yAxis <- yAxis %||% YAxisConfiguration$new()
     },

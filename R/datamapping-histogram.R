@@ -7,9 +7,8 @@ HistogramDataMapping <- R6::R6Class(
   inherit = XYGDataMapping,
   public = list(
       verticalLineGroupings = NULL,
-
-      initialize = function( x, y=NULL , groupings=NULL , verticalLineGroupings = NULL ) {
-        super$initialize(x,y,groupings)
+      initialize = function( verticalLineGroupings = NULL , ... ) {
+        super$initialize(...)
         self$verticalLineGroupings <- verticalLineGroupings
       }
   )
