@@ -12,13 +12,13 @@ LegendConfiguration <- R6::R6Class(
     values = NULL,
 
     initialize = function(position = NULL,
-                              titles = NULL,
-                              captions = NULL,
-                              values = NULL,
-                              dataMapping = NULL,
-                              data = NULL,
-                              metaData = NULL,
-                              theme = tlfEnv$currentTheme) {
+                          titles = NULL,
+                          captions = NULL,
+                          values = NULL,
+                          dataMapping = NULL,
+                          data = NULL,
+                          metaData = NULL,
+                          theme = tlfEnv$currentTheme) {
       ifnotnull(
         position,
         self$position <- position,
