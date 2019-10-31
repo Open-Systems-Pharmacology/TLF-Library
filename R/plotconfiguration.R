@@ -21,19 +21,19 @@ PlotConfiguration <- R6::R6Class(
     ## ----------------------------------------------
     ## Initializing function to be called with $new()
     initialize = function(title = NULL,
-                              subtitle = NULL,
-                              xlabel = NULL,
-                              ylabel = NULL,
-                              watermark = tlfEnv$currentTheme$watermarkText,
-                              legendTitles = NULL,
-                              filename = "TestPlot.png",
-                              legend = NULL, # R6 class
-                              xAxis = NULL,
-                              yAxis = NULL,
-                              data = NULL,
-                              metaData = NULL,
-                              dataMapping = NULL,
-                              theme = tlfEnv$currentTheme, ...) {
+                          subtitle = NULL,
+                          xlabel = NULL,
+                          ylabel = NULL,
+                          watermark = tlfEnv$currentTheme$watermarkText,
+                          legendTitles = NULL,
+                          filename = "TestPlot.png",
+                          legend = NULL, # R6 class
+                          xAxis = NULL,
+                          yAxis = NULL,
+                          data = NULL,
+                          metaData = NULL,
+                          dataMapping = NULL,
+                          theme = tlfEnv$currentTheme, ...) {
       super$initialize(
         title = title,
         subtitle = subtitle,
@@ -55,8 +55,6 @@ PlotConfiguration <- R6::R6Class(
       self$xlabel$font <- theme$xlabelFont
       self$ylabel$font <- theme$ylabelFont
 
-
-
       self$filename <- filename
 
       self$legend <- legend %||% ifnotnull(
@@ -64,7 +62,9 @@ PlotConfiguration <- R6::R6Class(
         LegendConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping),
         LegendConfiguration$new()
       )
-
+      print("sw3")
+      print(self$legend)
+      print("sw4")
       self$xAxis <- xAxis %||% XAxisConfiguration$new()
       self$yAxis <- yAxis %||% YAxisConfiguration$new()
     },
