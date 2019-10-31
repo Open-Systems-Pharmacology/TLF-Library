@@ -110,7 +110,10 @@ HistogramPlotConfiguration <- R6::R6Class(
         for (n in seq(1,length(aggSummary$aggregationFunctionsVector))) {
 
 
-          plotObject <- plotObject + geom_vline( data=aggSummary$dfHelper , aes_string(xintercept=aggSummary$aggregationFunctionNames[n], colour = self$legend$titles$fill  ))
+          plotObject <- plotObject + geom_vline( data=aggSummary$dfHelper ,
+                         aes_string(xintercept=aggSummary$aggregationFunctionNames[n],
+                                    color = self$legend$titles$fill) ,
+                         linetype = ltp[n] )
 
           # plotObject <- plotObject + geom_vline(data=sr, aes(xintercept=mean, colour=Grp))
 
