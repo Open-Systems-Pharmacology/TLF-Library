@@ -100,34 +100,25 @@ HistogramPlotConfiguration <- R6::R6Class(
                                             aggregationUnitsVector = NULL ,
                                             aggregationDimensionsVector = NULL )
 
-        #print(aggSummary$dfHelper)
+
         #aggSummary$dfHelper$mean <- 10*aggSummary$dfHelper$mean
-        #print(aggSummary$dfHelper)
+        print(aggSummary$dfHelper)
 
 
         cls<-c("blue","green")
         ltp<-c("solid","dashed")
         for (n in seq(1,length(aggSummary$aggregationFunctionsVector))) {
-          #print( aggSummary$dfHelper[[ aggSummary$aggregationFunctionNames[n] ]] )
-          #print( aggSummary$aggregationFunctionNames[n] )
 
 
+          plotObject <- plotObject + geom_vline( data=aggSummary$dfHelper , aes_string(xintercept=aggSummary$aggregationFunctionNames[n], colour = self$legend$titles$fill  ))
 
-          plotObject <- plotObject +  geom_vline( mapping =  aes_string(xintercept = aggSummary$dfHelper[[ aggSummary$aggregationFunctionNames[n] ]] ) ,
-                                                  color = cls[n],
-                                                  linetype = ltp[n])
-          #show(plotObject)
-          #   plotObject <- plotObject +
-          #     ggplot2::geom_vline(data = aggSummary$dfHelper,
-          #                         xintercept = aggSummary$aggregationFunctionsVector[n],
-          #                         color = aggSummary$aggregationFunctionNames[n]
-          #                         #linetype = self$verticalLineProperties$linetype[vertLineIndex],
-          #                         #color = self$verticalLineProperties$color[vertLineIndex],
-          #                         #size = self$verticalLineProperties$size[vertLineIndex]
-          #     )
-          # print("333")
-          # print(plotObject$layers)
-          # print("444")
+          # plotObject <- plotObject + geom_vline(data=sr, aes(xintercept=mean, colour=Grp))
+
+
+          # plotObject <- plotObject +  geom_vline( mapping =  aes_string(xintercept = aggSummary$dfHelper[[ aggSummary$aggregationFunctionNames[n] ]] ) ,
+          #                                         color = cls[n],
+          #                                         linetype = ltp[n])
+
 
           }
 
