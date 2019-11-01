@@ -31,14 +31,14 @@ HistogramPlotConfiguration <- R6::R6Class(
       ...) {
 
       super$initialize(...,
-        title = title,
-        subtitle = subtitle,
-        xlabel = xlabel,
-        ylabel = ylabel,
-        watermark = watermark,
-        data = data,
-        metaData = metaData,
-        dataMapping = dataMapping
+                       title = title,
+                       subtitle = subtitle,
+                       xlabel = xlabel,
+                       ylabel = ylabel,
+                       watermark = watermark,
+                       data = data,
+                       metaData = metaData,
+                       dataMapping = dataMapping
       ) #self$verticalLineProperties <- verticalLineProperties
 
       self$binWidth = binWidth
@@ -74,8 +74,8 @@ HistogramPlotConfiguration <- R6::R6Class(
         mapping = aes(x = self$mapData$x, fill = self$mapData[ , fill ]   ),
         show.legend = TRUE,
         binwidth = binWidth,
-        alpha=.5,
-        bins = bins
+        bins = bins,
+        alpha=.5
       )
 
       # If no grouping is defined, remove the dummy aesthetic name from the legend
@@ -101,35 +101,33 @@ HistogramPlotConfiguration <- R6::R6Class(
                                             aggregationDimensionsVector = NULL )
 
 
-        #aggSummary$dfHelper$mean <- 10*aggSummary$dfHelper$mean
-        #print(aggSummary$dfHelper)
+        tidyHelper<-reshape2::melt(aggSummary$dfHelper)
+        verticalLineCaptions<-getDefaultCaptions(data = tidyHelper[,-ncol(tidyHelper),drop=FALSE],metaData = NULL)
 
-        rm<-reshape2::melt(aggSummary$dfHelper)
-        print(rm)
+        if (FALSE){
 
-        for (n in seq(1,length(aggSummary$aggregationFunctionsVector))) {
+          tidyHelper$sv <- verticalLineCaptions
+          verticalLineLegendName <- "Vertical line legend"
+          plotObject <- plotObject + geom_vline( data=tidyHelper,
+                                                 aes_string(xintercept="value",
+                                                            color = "sv",
+                                                            linetype = "sv" ) ) +
+            scale_colour_manual(name = verticalLineLegendName,
+                                values=c("red","red","blue","blue"),
+                                labels=verticalLineCaptions) +
+            scale_linetype_manual(name = verticalLineLegendName,
+                                  values=c(1,2,1,2),
+                                  labels=verticalLineCaptions)
+        } else {
 
-
-          plotObject <- plotObject + geom_vline( data=rm,
+          plotObject <- plotObject + geom_vline( data=tidyHelper,
                                                  aes_string(xintercept="value",
                                                             color = self$legend$titles$fill,
                                                             linetype = "variable") )
-
-          #print(aggSummary$dfHelper)
-
-          # plotObject <- plotObject + geom_vline( data=aggSummary$dfHelper ,
-          #                aes_string(xintercept=aggSummary$aggregationFunctionNames[n],
-          #                           color = self$legend$titles$fill) )
-
-          # plotObject <- plotObject + geom_vline(data=sr, aes(xintercept=mean, colour=Grp))
+        }
 
 
-          # plotObject <- plotObject +  geom_vline( mapping =  aes_string(xintercept = aggSummary$dfHelper[[ aggSummary$aggregationFunctionNames[n] ]] ) ,
-          #                                         color = cls[n],
-          #                                         linetype = ltp[n])
 
-
-          }
 
       }
 
