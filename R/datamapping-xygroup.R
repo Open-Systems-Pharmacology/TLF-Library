@@ -24,7 +24,7 @@ XYGDataMapping <- R6::R6Class(
         if (!is.null(self$groupings[[groupType]]$group)) {
           grouping <- self$groupings[[groupType]]
           self$data[, grouping$label] <- grouping$getCaptions(data, metaData)
-        }
+        } 
       }
       return(self$data)
     }
