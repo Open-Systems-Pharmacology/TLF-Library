@@ -13,7 +13,8 @@ URL: https://github.com/open-systems-pharmacology/tlf-library
 BugReports: https://github.com/open-systems-pharmacology/tlf-library/issues
 Imports: 
     ggplot2 (>= 3.2.0),
-    R6
+    R6,
+    reshape2
 Depends: 
     R (>= 3.5)
 Encoding: UTF-8
@@ -31,6 +32,7 @@ Collate:
     'data-description.R'
     'datamapping-groupings.R'
     'datamapping-groupmapping.R'
+    'datamapping-histogram.R'
     'datamapping-pkratio.R'
     'datamapping-timeprofile.R'
     'datamapping-xy.R'
@@ -43,9 +45,11 @@ Collate:
     'label.R'
     'messages.R'
     'metadata-helper.R'
+    'plot-histogram.R'
     'plot-pkratio.R'
     'plot-timeprofile.R'
     'plotconfiguration-axis.R'
+    'plotconfiguration-histogram.R'
     'plotconfiguration-label.R'
     'plotconfiguration-legend.R'
     'plotconfiguration-pkratio.R'

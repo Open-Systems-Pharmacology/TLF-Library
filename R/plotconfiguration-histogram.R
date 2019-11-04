@@ -104,12 +104,13 @@ HistogramPlotConfiguration <- R6::R6Class(
         tidyHelper<-reshape2::melt(aggSummary$dfHelper)
         verticalLineCaptions<-getDefaultCaptions(data = tidyHelper[,-ncol(tidyHelper),drop=FALSE],metaData = NULL)
 
-        if (FALSE){
+
+        if (TRUE){
 
           tidyHelper$sv <- verticalLineCaptions
           verticalLineLegendName <- "Vertical line legend"
           plotObject <- plotObject + geom_vline( data=tidyHelper,
-                                                 aes_string(xintercept="value",
+                                                 aes(xintercept="value",  #WAS aes_string
                                                             color = "sv",
                                                             linetype = "sv" ) ) +
             scale_colour_manual(name = verticalLineLegendName,
