@@ -24,7 +24,7 @@ TimeProfileDataMapping <- R6::R6Class(
         }
       }
 
-      super$initialize(x, y, groupings)
+      super$initialize(groupings=groupings, x=x, y=y)
 
       self$LLOQ <- LLOQ
       self$yMin <- yMin
