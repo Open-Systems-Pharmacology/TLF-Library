@@ -16,6 +16,7 @@ AggregationSummary <- R6::R6Class(
     xColumnNames = NULL,
     groupingColumnNames = NULL,
     yColumnNames = NULL,
+    aggregationInputsVector = NULL,
     aggregationFunctionsVector = NULL,
     aggregationFunctionNames = NULL,
     aggregationUnitsVector = NULL,
@@ -27,6 +28,7 @@ AggregationSummary <- R6::R6Class(
                           xColumnNames = NULL,
                           groupingColumnNames = NULL,
                           yColumnNames = NULL,
+                          aggregationInputsVector = NULL,
                           aggregationFunctionsVector = NULL,
                           aggregationFunctionNames = NULL,
                           aggregationUnitsVector = NULL,
@@ -36,10 +38,23 @@ AggregationSummary <- R6::R6Class(
       self$xColumnNames <- xColumnNames
       self$groupingColumnNames <- groupingColumnNames
       self$yColumnNames <- yColumnNames
-      self$aggregationFunctionsVector <- c(aggregationFunctionsVector)
-      self$aggregationFunctionNames <- aggregationFunctionNames
-      self$aggregationUnitsVector = aggregationUnitsVector
-      self$aggregationDimensionsVector = aggregationDimensionsVector
+
+      if(!is.null(aggregationInputsVector)){
+        for (n in seq( 1 , length(aggregationInputsVector)) ){
+          stopifnot( is(aggregationInputsVector[[n]],"AggregationInput") )
+          aggInp<-aggregationInputsVector[[n]]
+          self$aggregationFunctionsVector <- append( self$aggregationFunctionsVector , aggInp$aggregationFunction )
+          self$aggregationFunctionNames <- append( self$aggregationFunctionNames , aggInp$aggregationFunctionName )
+          self$aggregationUnitsVector <- append( self$aggregationUnitsVector , aggInp$aggregationUnit )
+          self$aggregationDimensionsVector <- append( self$aggregationDimensionsVector , aggInp$aggregationDimension )
+        }
+      }
+      else{
+        self$aggregationFunctionsVector <- c(aggregationFunctionsVector)
+        self$aggregationFunctionNames <- aggregationFunctionNames
+        self$aggregationUnitsVector = aggregationUnitsVector
+        self$aggregationDimensionsVector = aggregationDimensionsVector
+      }
       self$generateAggregatedValues()
     },
 
@@ -58,15 +73,13 @@ AggregationSummary <- R6::R6Class(
       xGroupingCols <- self$data[xGroupingColNames] # Extract grouping columns from dataframe and group them into a list called xGroupingCols
 
       yValuesCol <- self$data[ self$yColumnNames ] # Extract column of values from dataframe
+
       aggSummaries <- aggregate(yValuesCol, xGroupingCols, function(x) {
         res <- self$applyAggregationFunctions(x)
         return(res)
       })
 
       summaryMatrix<-matrix(aggSummaries[[ self$yColumnNames ]],ncol=length(self$aggregationFunctionsVector))
-
-
-
       self$dfHelper <- aggSummaries[ xGroupingColNames ]
       self$metaDataHelper <- self$metaData[xGroupingColNames]
 
@@ -78,12 +91,7 @@ AggregationSummary <- R6::R6Class(
         self$dfHelper <-cbind(self$dfHelper,dF)
 
         self$metaDataHelper [[self$aggregationFunctionNames[n]]]<-list(unit = self$aggregationUnitsVector[n] , dimension = self$aggregationDimensionsVector[n] )
-
-
-
       }
-
-
     }
   )
 )
