@@ -4,6 +4,7 @@ environment:
   USE_RTOOLS: true
   app_version: "0.1.0"
   R_ARCH: x64
+  KEEP_VIGNETTES: true
   NOT_CRAN: true
   COVERALLS_TOKEN:
     secure: QItC20vr6rKHkiDVvsE+kHFL4GTS3bcsPw5KcWe+qipEIj1+ncKngsCoCNelNdtg
