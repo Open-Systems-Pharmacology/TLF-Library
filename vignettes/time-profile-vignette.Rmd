@@ -198,7 +198,7 @@ grouping1 <- GroupMapping$new(c("Compound","Dose"))
 With this minimal input, a legend associated with this grouping will have the default title "Compound-Dose".  On the other hand, a custom title for this grouping and its legend can be supplied by the user with the optional `label` input:
 ```{r, results='asis'}
 # Grouping by variable names and overwriting the default label:
-grouping2 <- GroupMapping$new(c("Compound","Dose"), label = "Compound & Dose")
+grouping2 <- GroupMapping$new(group = c("Compound","Dose"), label = "Compound & Dose")
 ```
 
 In the above two examples, default captions are constructed by hyphenating the compound type and the dose amount for each row.  Alternatively, the captions can be customized by the user by supplying a dataframe with the custom captions to the `group` input of the `GroupMapping` object constructor.  The format of this dataframe is such that the rightmost column contains the desired captions, the name of this rightmost column is the default legend title for this grouping, and the remaining columns define the combinations of row entries that are to receive each caption in the rightmost column.  To illustrate this method, the following dataframe `mappingDataFrame` is used to assign captions based on entries in the "Dose" and "Compound" columns.  For example the caption "6mg of Aspirin" is assigned to any row in which the "Dose" entry is 6 and the "Compound" entry is "Aspirin". 
@@ -494,7 +494,8 @@ plotObject
 ```{r, fig.height=5, fig.width=7.5}
 # data.frame associating grouping to Individual ID with their captions
 groupingIndividualsDf <- data.frame(IndividualID = c(1,2,3,4) , 
-                                    "Name of Beatle" = c("Paul", "John", "George", "Ringo"))
+                                    "Name of Beatle" = c("Paul", "John", "George", "Ringo"),
+                                    check.names = FALSE)
 # Define the grouping variable
 groups = Groupings$new(color = groupingIndividualsDf)
 
