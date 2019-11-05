@@ -7,9 +7,6 @@ vignette: >
   %\VignetteIndexEntry{pk-ratio-vignette}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignettePackage{tlf}
-  %\VignetteDepends{pander}
-  %\VignetteDepends{ggplot2}
 ---
 
 ```{r setup, include = FALSE}
@@ -17,7 +14,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-load("pkRatioDataExample.RData")
+load("../data/pkRatioDataExample.RData")
 library(tlf)
 ```
 

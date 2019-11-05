@@ -7,9 +7,6 @@ vignette: >
   %\VignetteIndexEntry{time-profile-vignette}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignettePackage{tlf}
-  %\VignetteDepends{pander}
-  %\VignetteDepends{ggplot2}
 ---
 
 ```{r setup, echo = FALSE, message = FALSE}
@@ -17,7 +14,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-load("timeProfileDataFrame.RData")
+load("../data/timeProfileDataFrame.RData")
 library(tlf)
 ```
 
@@ -70,23 +67,24 @@ pander::pandoc.table(minimalDataFrame)
 **Example Step 2:**
 In this step, groupings of the data are specified.  In this simple example, each individual's measurements are to be plotted using different linetypes.  A `Grouping` object is therefore created that specifies that a graph with a different *linetype* is to be used to plot the points for each unique value of the *IndividualID* column. 
 ```{r}
-minimalGrouping <- tlf:::Groupings$new( linetype = "IndividualID" )
+minimalGrouping <- Groupings$new( linetype = "IndividualID" )
 ```
 The construction of more detailed groupings is discussed in the Groupings section below.
 
 **Example Step 3:**
 Here, the independent and dependent variables of the plot and the plot groupings are specified using a `TimeProfileDataMapping` object, which is a subclass of the DataMapping class specifically aimed at producing time profile plots.  The constructor of this class identifies the *Time* column of the dataframe as the time axis, the *Concentration* column of the dataframe as the vertical axis, and `minimalGrouping`, which was defined in the earlier step, as the grouping object to use.  
 ```{r, results='asis'}
-minimalDataMapping <-TimeProfileDataMapping$new(x = "Time",
-                                                y = "Concentration",
-                                                groupings = minimalGrouping)
+minimalDataMapping <- TimeProfileDataMapping$new(x = "Time",
+                                                 y = "Concentration",
+                                                 groupings = minimalGrouping)
 ```
  
 **Example Step 5:**
 In the final step of this example, a `ggplot` object called `timeProfilePlot` is created using the `plotTimeProfile` function:  
 ```{r, fig.height=5, fig.width=7.5}
-timeProfilePlot<-plotTimeProfile(data = minimalDataFrame , dataMapping = minimalDataMapping)
+timeProfilePlot <- plotTimeProfile(data = minimalDataFrame, metaData = NULL, dataMapping = minimalDataMapping)
 show(timeProfilePlot)
+
 ```
  
 # 0. Data gathering
