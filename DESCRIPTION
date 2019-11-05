@@ -28,6 +28,7 @@ Suggests:
     pander
 VignetteBuilder: knitr
 Collate: 
+    'aggregation-input.R'
     'aggregation-summary.R'
     'data-description.R'
     'datamapping-groupings.R'
