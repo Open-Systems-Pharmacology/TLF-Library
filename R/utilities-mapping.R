@@ -82,7 +82,7 @@ getDefaultCaptions <- function(data, metaData, variableList = colnames(data), se
 
   # Loop on the variableList except first one
   # pasting as a single data.frame column the association of names in all selected variables
-  for (variable in tail(variableList, -1)) {
+  for (variable in utils::tail(variableList, -1)) {
     groupingVariable <- paste(
       groupingVariable,
       asLegendCaptionSubset(

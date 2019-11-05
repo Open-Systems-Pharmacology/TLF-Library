@@ -19,6 +19,14 @@ mapping of which data to use for histogram}
 
 \item{plotConfiguration}{R6 class HistogramPlotConfiguration
 Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend}
+
+\item{binWidth}{(optional)}
+
+\item{bins}{(optional)}
+
+\item{verticalLineFunctions}{(optional)}
+
+\item{verticalLineFunctionNames}{(optional)}
 }
 \value{
 a ggplot graphical object

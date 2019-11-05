@@ -8,6 +8,10 @@
 #' mapping of which data to use for histogram
 #' @param plotConfiguration R6 class HistogramPlotConfiguration
 #' Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend
+#' @param binWidth (optional)
+#' @param bins (optional)
+#' @param verticalLineFunctions (optional)
+#' @param verticalLineFunctionNames (optional)
 #' @description
 #' plotHistogram(data, metaData, dataMapping, plotConfiguration)
 #' @return a ggplot graphical object
@@ -41,7 +45,7 @@ plotHistogram <- function(data,
 
 
   plotObject <- ggplot2::ggplot()
-  plotObject <- plotConfiguration$addHistograms(plotObject, data = dat, metaData=NULL, dataMapping = hdm , bins = NULL, binWidth = NULL )
+  plotObject <- plotConfiguration$addHistograms(plotObject, data = data, metaData=metaData, dataMapping = dataMapping , bins = bins, binWidth = binWidth )
   plotObject <- plotConfiguration$setPlotLabels(plotObject)
   plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)
   plotObject <- plotConfiguration$addVerticalLines(plotObject)

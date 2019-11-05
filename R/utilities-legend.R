@@ -1,6 +1,7 @@
 #' @title SetLegend
 #' @param plotObject Graphical object created from ggplot
 #' @param legendPosition element of legendPositions list
+#' @param legendTitles Title of the legend captions
 #' @param legendCaptions captions of the legend (as a list with LegendTypes attribute)
 #' @param legendValues values of the legend aesthetic attributes
 #' @return Current plot with Legend Layer
@@ -50,7 +51,7 @@ setLegend <- function(plotObject,
 }
 
 #' @title SetLegendPosition
-#' @param plotHandle Graphical object created from ggplot
+#' @param plotObject Graphical object created from ggplot
 #' @param legendPosition element of legendPositions list
 #' @param Subplot.Index (optional) OPTION NOT IMPLEMENTED YET
 #' @return Current plot with Legend Layer

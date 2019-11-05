@@ -12,6 +12,8 @@ setLegend(plotObject, legendPosition, legendTitles = NULL,
 
 \item{legendPosition}{element of legendPositions list}
 
+\item{legendTitles}{Title of the legend captions}
+
 \item{legendCaptions}{captions of the legend (as a list with LegendTypes attribute)}
 
 \item{legendValues}{values of the legend aesthetic attributes}
