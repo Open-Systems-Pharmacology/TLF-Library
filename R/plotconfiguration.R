@@ -21,21 +21,6 @@ PlotConfiguration <- R6::R6Class(
     ## ----------------------------------------------
     ## Initializing function to be called with $new()
     initialize = function(title = NULL,
-<<<<<<< HEAD
-                          subtitle = NULL,
-                          xlabel = NULL,
-                          ylabel = NULL,
-                          watermark = tlfEnv$currentTheme$watermarkText,
-                          legendTitles = NULL,
-                          filename = "TestPlot.png",
-                          legend = NULL, # R6 class
-                          xAxis = NULL,
-                          yAxis = NULL,
-                          data = NULL,
-                          metaData = NULL,
-                          dataMapping = NULL,
-                          theme = tlfEnv$currentTheme, ...) {
-=======
                               subtitle = NULL,
                               xlabel = NULL,
                               ylabel = NULL,
@@ -49,7 +34,7 @@ PlotConfiguration <- R6::R6Class(
                               metaData = NULL,
                               dataMapping = NULL,
                               theme = tlfEnv$currentTheme, ...) {
->>>>>>> 09f09b5... Simplify watermark workflow
+
       super$initialize(
         title = title,
         subtitle = subtitle,

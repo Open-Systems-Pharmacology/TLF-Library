@@ -13,7 +13,7 @@ PKRatioPlotConfiguration <- R6::R6Class(
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
                               xlabel = NULL,
                               ylabel = NULL,
-                              watermark = tlfEnv$currentTheme$watermark,
+                              watermark = NULL,
                               data = NULL,
                               metaData = NULL,
                               dataMapping = NULL,
@@ -23,7 +23,7 @@ PKRatioPlotConfiguration <- R6::R6Class(
         subtitle = subtitle,
         xlabel = xlabel,
         ylabel = ylabel,
-        watermark = watermark,
+        watermark = watermark %||% tlfEnv$currentTheme$watermark,
         data = data,
         metaData = metaData,
         dataMapping = dataMapping
