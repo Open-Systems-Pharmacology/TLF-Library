@@ -39,7 +39,7 @@ The standard workflow then proceeds as follows:
 
 **Step 1 - Data pre-processing** Pre-process the data using `AggregationSummary` class.
 
-**Step 2 - Data grouping** Use the `Groupings` class to specify groupings according to which the data will be captioned in figure legends.
+**Step 2 - Data grouping** Use the `GroupMapping` class to specify groupings according to which the data will be captioned in figure legends.
 
 **Step 3 - Data mapping.** Use the `DataMapping` class to select the independent and dependent variables of the processed data as well as the aesthetics that will be used to differentiate between the groupings of the data that were specified in step 2.
 
@@ -67,16 +67,16 @@ pander::pandoc.table(minimalDataFrame)
 **Example Step 2:**
 In this step, groupings of the data are specified.  In this simple example, each individual's measurements are to be plotted using different linetypes.  A `Grouping` object is therefore created that specifies that a graph with a different *linetype* is to be used to plot the points for each unique value of the *IndividualID* column. 
 ```{r}
-minimalGrouping <- Groupings$new( linetype = "IndividualID" )
+minimalGrouping <- Grouping$new( group = "IndividualID" )
 ```
-The construction of more detailed groupings is discussed in the Groupings section below.
+The construction of more detailed groupings is discussed in the GroupMapping section below.
 
 **Example Step 3:**
 Here, the independent and dependent variables of the plot and the plot groupings are specified using a `TimeProfileDataMapping` object, which is a subclass of the DataMapping class specifically aimed at producing time profile plots.  The constructor of this class identifies the *Time* column of the dataframe as the time axis, the *Concentration* column of the dataframe as the vertical axis, and `minimalGrouping`, which was defined in the earlier step, as the grouping object to use.  
 ```{r, results='asis'}
 minimalDataMapping <- TimeProfileDataMapping$new(x = "Time",
                                                  y = "Concentration",
-                                                 groupings = minimalGrouping)
+                                                 groupMapping = minimalGrouping)
 ```
  
 **Example Step 5:**
@@ -183,25 +183,22 @@ The `metaData` corresponding to the columns of the resulting dataframes are list
   
  
 
-## Groupings
+## GroupMapping
 
-An `R6` class called `GroupMapping` can be used to group the data into subsets that, in the final plots, are to be distinguished both aesthetically and in legend captions.  In addition, these subsets can be listed under descriptive legend titles.  
+An `R6` class called `Grouping` can be used to group the data into subsets that, in the final plots, are to be distinguished both aesthetically and in legend captions.  In addition, these subsets can be listed under descriptive legend titles.  
 
-
-
-
-  As an example, a `GroupMapping` object called `grouping1` can be used to specify that the data in a *tidy* dataframe such as `timeProfileDataFrame` should be grouped by both "Compound" and "Dose":
+  As an example, a `Grouping` object called `grouping1` can be used to specify that the data in a *tidy* dataframe such as `timeProfileDataFrame` should be grouped by both "Compound" and "Dose":
 ```{r, results='asis'}
 # Grouping by variable names:
-grouping1 <- GroupMapping$new(c("Compound","Dose"))
+grouping1 <- Grouping$new(c("Compound","Dose"))
 ```
 With this minimal input, a legend associated with this grouping will have the default title "Compound-Dose".  On the other hand, a custom title for this grouping and its legend can be supplied by the user with the optional `label` input:
 ```{r, results='asis'}
 # Grouping by variable names and overwriting the default label:
-grouping2 <- GroupMapping$new(group = c("Compound","Dose"), label = "Compound & Dose")
+grouping2 <- Grouping$new(group = c("Compound","Dose"), label = "Compound & Dose")
 ```
 
-In the above two examples, default captions are constructed by hyphenating the compound type and the dose amount for each row.  Alternatively, the captions can be customized by the user by supplying a dataframe with the custom captions to the `group` input of the `GroupMapping` object constructor.  The format of this dataframe is such that the rightmost column contains the desired captions, the name of this rightmost column is the default legend title for this grouping, and the remaining columns define the combinations of row entries that are to receive each caption in the rightmost column.  To illustrate this method, the following dataframe `mappingDataFrame` is used to assign captions based on entries in the "Dose" and "Compound" columns.  For example the caption "6mg of Aspirin" is assigned to any row in which the "Dose" entry is 6 and the "Compound" entry is "Aspirin". 
+In the above two examples, default captions are constructed by hyphenating the compound type and the dose amount for each row.  Alternatively, the captions can be customized by the user by supplying a dataframe with the custom captions to the `group` input of the `Grouping` object constructor.  The format of this dataframe is such that the rightmost column contains the desired captions, the name of this rightmost column is the default legend title for this grouping, and the remaining columns define the combinations of row entries that are to receive each caption in the rightmost column.  To illustrate this method, the following dataframe `mappingDataFrame` is used to assign captions based on entries in the "Dose" and "Compound" columns.  For example the caption "6mg of Aspirin" is assigned to any row in which the "Dose" entry is 6 and the "Compound" entry is "Aspirin". 
 ```{r, results='asis'}
 # Grouping using a data.frame:
 mappingDataFrame <- data.frame(Compound = c("Aspirin","Aspirin","Sugar","Sugar"),
@@ -212,14 +209,11 @@ mappingDataFrame <- data.frame(Compound = c("Aspirin","Aspirin","Sugar","Sugar")
                                                       "3mg of Sugar"),
                                check.names = FALSE)
 pander::pandoc.table(mappingDataFrame)
-grouping3 <- GroupMapping$new(group = mappingDataFrame)
+grouping3 <- Grouping$new(group = mappingDataFrame)
 ```
 The default title of the legend that results from this grouping is the name of the rightmost column, which is "Compound & Dose".  Note that the `check.names` option should be set to `FALSE` when creating the dataframe `mappingDataFrame` since the legend title contains spaces in this instance.  This legend title can be overridden to be another string by using the `label` input of the object constructor, as in the case of `grouping2` above.
 
-
-
-
-The three `GroupMapping` objects, `grouping1`, `grouping2` and `grouping3` respectively yield the last three columns of the following dataframe:
+The three `Grouping` objects, `grouping1`, `grouping2` and `grouping3` respectively yield the last three columns of the following dataframe:
 ```{r, results='asis'}
 # Apply the mapping to get the grouping captions:
 groupingsDataFrame <- data.frame(timeProfileDataFrame$IndividualID,
@@ -236,7 +230,7 @@ names(groupingsDataFrame) <- c("IndividualID", "Dose", "Compound",
 pander::pandoc.table(groupingsDataFrame)
 ```
 
-A dataframe can also be used to create a `GroupMapping` object that subsets the data based on whether a numeric grouping variable satisfies an specific inequality.  For example, individuals in `timeProfileDataFrame` can be grouped according to whether or not their age exceeds 6 years by first defining the following dataframe:
+A dataframe can also be used to create a `Grouping` object that subsets the data based on whether a numeric grouping variable satisfies an specific inequality.  For example, individuals in `timeProfileDataFrame` can be grouped according to whether or not their age exceeds 6 years by first defining the following dataframe:
 ```{r, results='asis'}
 # Grouping using a data.frame:
 binningDataFrame <- data.frame(Age = I( list(c(0,6),c(7,100)) ), 
@@ -246,10 +240,10 @@ binningDataFrame <- data.frame(Age = I( list(c(0,6),c(7,100)) ),
 ```
 Then creating a new grouping:
 ```{r, results='asis'}
-grouping4 <- GroupMapping$new(group = binningDataFrame)
+grouping4 <- Grouping$new(group = binningDataFrame)
 ```
  
-This new `GroupMapping` object `grouping4` yields the following captions
+This new `Grouping` object `grouping4` yields the following captions
 
 ```{r, results='asis'}
 # Apply the mapping to get the grouping captions:
@@ -264,28 +258,28 @@ pander::pandoc.table(binnedGroupingsDataFrame)
 ```
  
 
-An additional `R6` class called `Groupings` maps a `GroupMapping` object to an aesthetic parameter such as `color` or `linetype`.  To distinguish between "Compound" and "Dose" groups by color and to use the captions and legend title specified in `grouping2`, the following groupings object `groups1` is constructed:
+An additional `R6` class called `GroupMapping` maps `Grouping` objects to aesthetic parameters such as `color` or `linetype`.  To distinguish between "Compound" and "Dose" groups by color and to use the captions and legend title specified in `grouping2`, the following groupings object `groups1` is constructed:
 
 ```{r, results='asis'}
 # Map groups to aesthtic properties
-groups1 <- Groupings$new(color =  grouping2 )
+groups1 <- GroupMapping$new(color =  grouping2 )
 ```
 
-A `Groupings` object `groups2` can also be constructed more quickly by directly associating an aesthetic, such as `color`, to a vector of dataframe column names:
+A `GroupMapping` object `groups2` can also be constructed more quickly by directly associating an aesthetic, such as `color`, to a vector of dataframe column names:
 ```{r, results='asis'}
 # Map groups to aesthtic properties
-groups2 <- Groupings$new(color = c("Compound", "Dose"))
+groups2 <- GroupMapping$new(color = c("Compound", "Dose"))
 ```
 
-or to a `GroupMapping` object directly:
+or to a `Grouping` object directly:
 ```{r, results='asis'}
 # Map groups to aesthtic properties
-groups3 <- Groupings$new(color = GroupMapping$new(group = c("Compound", "Dose"),
+groups3 <- GroupMapping$new(color = Grouping$new(group = c("Compound", "Dose"),
                                                   label = c("Compound & Dose")))
 ```
 
 
-The following section discusses the use of `Groupings` objects to group the data to be plotted with into subsets associated with specific aesthetics.     
+The following section discusses the use of `GroupMapping` objects to group the data to be plotted with into subsets associated with specific aesthetics.     
   
 <!-- Then, this association can be used in `dataMapping` of type `XYGDataMapping` through the class  -->
 
@@ -304,20 +298,21 @@ The following section discusses the use of `Groupings` objects to group the data
 
 # 3. dataMapping
 
-The `R6` class `TimeProfileDataMapping` extracts the time profile plot data from an input dataframe and groups it according to the aesthetics specified in an input `Grouping` object.  This mapping is carried out by an internal function of this class named `getMapData`, which returns a dataframe with an `x` column, for the time axis, a `y` column for the verticle axis, and grouping columns named using the `label` properties of the input `Grouping` objects. 
+The `R6` class `TimeProfileDataMapping` extracts the time profile plot data from an input dataframe and groups it according to the aesthetics specified in an input `GroupMapping` object.  This mapping is carried out by an internal function of this class named `checkMapData` which check if the variables indicated the `GroupMapping` are included in the data. Then, this method returns a simplified data.frame with the variables defined by the dataMapping. 
  
-When no `Grouping` object is supplied upon construction of a `TimeProfileDataMapping` object, the function `getMapData` returns a dataframe with only an `x` and a `y` column:
+When no `GroupMapping` object is supplied upon construction of a `TimeProfileDataMapping` object, the function `checkMapData` returns a dataframe with `x` and `y`.
+A dummy variable named `aesDefault` is added to the data.frame, its sole purpose is to allow modifications of aesthetic properties after the creation of the ggplot object (not possible otherwise).
 ```{r, results='asis'}
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated")
-pander::pandoc.table(tpMapping$getMapData(data = timeProfileDataFrame,
-                                          metaData = timeProfileMetaData))
+pander::pandoc.table(tpMapping$checkMapData(data = timeProfileDataFrame,
+                                            metaData = timeProfileMetaData))
 ```
 
-When a `Groupings` object is supplied upon construction of the `TimeProfileDataMapping` object, each `x`,`y` pair is associated with a group that can be used to distinguish the pair aesthetically in the final plot:
+When a `GroupMapping` object is supplied upon construction of the `TimeProfileDataMapping` object, each `x`,`y` pair is associated with a group that can be used to distinguish the pair aesthetically in the final plot:
 ```{r, results='asis'}
 # Re-use the variable groups previously defined
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated", 
-                                        groupings = groups1)
+                                        groupMapping = groups1)
 
 pander::pandoc.table(tpMapping$getMapData(data = timeProfileDataFrame,
                                           metaData = timeProfileMetaData))
@@ -465,19 +460,19 @@ plotObject
 
 ```
 
-## 5.3. Workflow example of time profile plot using `TimeProfileDataMapping` with `Groupings`
+## 5.3. Workflow example of time profile plot using `TimeProfileDataMapping` with `GroupMapping`
 
-In this example, the vertical bars seen previous examples are removed through the use of a `Grouping` object that assigns a different color to each individual in the `IndividualID` column of `timeProfileDataFrame`, as well as a different linetype for each of the two populations (Asian and European).  This separates datapoints coincident in time into separate graphs.
+In this example, the vertical bars seen previous examples are removed through the use of a `GroupMapping` object that assigns a different color to each individual in the `IndividualID` column of `timeProfileDataFrame`, as well as a different linetype for each of the two populations (Asian and European).  This separates datapoints coincident in time into separate graphs.
 
 
 ```{r, fig.height=5, fig.width=7.5}
 # Map x, y and groups of the plot
-groups <- Groupings$new(color = "IndividualID", 
-                        linetype = "Population")
+groups <- GroupMapping$new(color = "IndividualID", 
+                           linetype = "Population")
 
 tpMapping <- TimeProfileDataMapping$new(x = "Time", 
                                         y = "Simulated", 
-                                        groupings = groups)
+                                        groupMapping = groups)
 
 # Define the ggplot object
 plotObject <- plotTimeProfile(data=timeProfileDataFrame,
@@ -489,7 +484,7 @@ plotObject
 
 ```
 
-## 5.4. Workflow example of time profile plot using `TimeProfileDataMapping` with `Groupings` as data.frame
+## 5.4. Workflow example of time profile plot using `TimeProfileDataMapping` with `GroupMapping` as data.frame
 
 ```{r, fig.height=5, fig.width=7.5}
 # data.frame associating grouping to Individual ID with their captions
@@ -497,12 +492,12 @@ groupingIndividualsDf <- data.frame(IndividualID = c(1,2,3,4) ,
                                     "Name of Beatle" = c("Paul", "John", "George", "Ringo"),
                                     check.names = FALSE)
 # Define the grouping variable
-groups = Groupings$new(color = groupingIndividualsDf)
+groups = GroupMapping$new(color = groupingIndividualsDf)
 
 # Map x, y and groups
 tpMapping <- TimeProfileDataMapping$new(x = "Time",
                                         y = "Simulated",
-                                        groupings = groups)
+                                        groupMapping = groups)
 
 # Define the ggplot object
 plotObject <- plotTimeProfile(data=timeProfileDataFrame,
@@ -555,14 +550,14 @@ meanPlot
 
 ### 5.5.2. Plot aggregated mean value by population
 
-Here, the means generated by the `AggregationSummary` object are grouped by population.  The `Groupings` object input to the constructor of the `TimeProfileDataMapping` object `tpMappingMean` specifies that each population should be plotted by a different color.
+Here, the means generated by the `AggregationSummary` object are grouped by population.  The `GroupMapping` object input to the constructor of the `TimeProfileDataMapping` object `tpMappingMean` specifies that each population should be plotted by a different color.
 
 
 ```{r, fig.height=5, fig.width=7.5}
 # Map x, y and groupings
 tpMappingMean <- TimeProfileDataMapping$new(x = "Time", 
                                             y = "Simulated Mean",
-                                            groupings = Groupings$new(color = "Population"))
+                                            groupMapping = GroupMapping$new(color = "Population"))
 
 # Overwrite the plot configuration
 tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
@@ -611,7 +606,7 @@ This example adds a grouping by population to the `TimeProfileDataMapping` objec
 tpMappingRange <- TimeProfileDataMapping$new(x = "Time", 
                                              yMin = "Simulated Min", 
                                              yMax = "Simulated Max",
-                                             groupings = Groupings$new(fill = "Population"))
+                                             groupMapping = GroupMapping$new(fill = "Population"))
 
 # Overwrite the plot configuration
 tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
@@ -630,7 +625,7 @@ rangePlot
 
 ### 5.5.5. Plot aggregated mean, min, max values by population
 
-With respect to the previous example, here, a `y` variable is added to the `TimeProfileDataMapping` object resulting in the `plotTimeProfile` returning a time profile plot with error bars. Note that the `Groupings` object in the `TimeProfileDataMapping` object constructor specifies that each population should be distinguished by color.
+With respect to the previous example, here, a `y` variable is added to the `TimeProfileDataMapping` object resulting in the `plotTimeProfile` returning a time profile plot with error bars. Note that the `GroupMapping` object in the `TimeProfileDataMapping` object constructor specifies that each population should be distinguished by color.
 
 ```{r, fig.height=5, fig.width=7.5}
 # Map x, y, yMin and yMax
@@ -638,7 +633,7 @@ tpMappingErrorBar <- TimeProfileDataMapping$new(x = "Time",
                                                 y = "Simulated Mean",
                                                 yMin = "Simulated Min", 
                                                 yMax = "Simulated Max",
-                                                groupings = Groupings$new(color = "Population"))
+                                                groupMapping = GroupMapping$new(color = "Population"))
 
 # Overwrite the plot configuration
 tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
