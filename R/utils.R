@@ -1,7 +1,7 @@
 #' Shortkey checking if argument 1 is not null,
 #' output argument 1 if not null, or output argument 2 otherwise
 #'
-#' @title `%||%`
+#' @title \%||\%
 #' @param lhs argument 1
 #' @param rhs argument 2
 #' @return lhs if lhs is not null, rhs otherwise
