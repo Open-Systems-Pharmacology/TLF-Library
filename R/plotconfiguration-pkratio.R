@@ -46,28 +46,30 @@ PKRatioPlotConfiguration <- R6::R6Class(
     },
 
     addPKRatios = function(plotObject, data, metaData, dataMapping) {
-      # mapData <- dataMapping$getMapData(data, metaData)
+      # Check if mapping is included in the data
+      # Add the group mapping and aesthtics variables in the data.frame
       mapData <- dataMapping$checkMapData(data, metaData)
-
+      
+      # Convert the mapping into characters usable by aes_string
       mapLabels <- getAesStringMapping(dataMapping)
-
+      
       plotObject <- plotObject + geom_point(
         data = mapData,
         mapping = aes_string(
           x = mapLabels$x,
           y = mapLabels$y,
           color = mapLabels$color,
-          shape = mapLabels$shape
-          # size = mapLabels$size TO DO add size into Themes
+          shape = mapLabels$shape,
+          size = mapLabels$size
         ),
         show.legend = TRUE
       )
 
       # If no mapping defined, remove dummy aesthetic label from the legend
       plotObject <- plotObject +
-        ifequal("defaultAes", mapLabels$color, guides(color = "none")) +
-        ifequal("defaultAes", mapLabels$shape, guides(shape = "none")) #+
-      # ifequal("defaultAes", mapLabels$size, guides(size = "none"))
+        ifEqual("defaultAes", mapLabels$color, guides(color = "none")) +
+        ifEqual("defaultAes", mapLabels$shape, guides(shape = "none")) +
+        ifEqual("defaultAes", mapLabels$size, guides(size = "none"))
 
       return(plotObject)
     }

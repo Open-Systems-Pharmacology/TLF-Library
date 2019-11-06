@@ -9,11 +9,13 @@ GroupMapping <- R6::R6Class(
     fill = NULL,
     linetype = NULL,
     shape = NULL,
+    size = NULL,
 
     initialize = function(color = NULL,
                               fill = NULL,
                               linetype = NULL,
-                              shape = NULL) {
+                              shape = NULL,
+                              size = NULL) {
       if (!isOfType(color, "Grouping")) {
         color <- Grouping$new(group = color)
       }
@@ -26,11 +28,15 @@ GroupMapping <- R6::R6Class(
       if (!isOfType(shape, "Grouping")) {
         shape <- Grouping$new(group = shape)
       }
+      if (!isOfType(size, "Grouping")) {
+        size <- Grouping$new(group = size)
+      }
 
       self$color <- color
       self$fill <- fill
       self$linetype <- linetype
       self$shape <- shape
+      self$size <- size
     }
   )
 )

@@ -126,6 +126,7 @@ getAesStringMapping <- function(dataMapping) {
   })
 
   names(dataMappingLabels) <- c(geomMappings, groupMappings)
+  print(dataMappingLabels)
 
   for (geomName in geomMappings) {
     if (!is.null(dataMapping[[geomName]])) {
@@ -136,7 +137,7 @@ getAesStringMapping <- function(dataMapping) {
   }
 
   for (groupName in groupMappings) {
-    if (!is.null(dataMapping$groupMapping[[groupName]])) {
+    if (!is.null(dataMapping$groupMapping[[groupName]]$group)) {
       if (length(grep(pattern = "`", x = dataMapping$groupMapping[[groupName]]$label)) == 0) {
         dataMappingLabels[[groupName]] <- paste0("`", dataMapping$groupMapping[[groupName]]$label, "`")
       }
