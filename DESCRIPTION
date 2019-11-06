@@ -31,7 +31,7 @@ Collate:
     'aggregation-input.R'
     'aggregation-summary.R'
     'data-description.R'
-    'datamapping-groupings.R'
+    'datamapping-grouping.R'
     'datamapping-groupmapping.R'
     'datamapping-histogram.R'
     'datamapping-pkratio.R'
