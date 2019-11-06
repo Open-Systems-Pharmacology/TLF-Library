@@ -21,7 +21,7 @@ AggregationSummary <- R6::R6Class(
     aggregationDimensionsVector = NULL,
     dfHelper = NULL,
     metaDataHelper = NULL,
-    
+
     initialize = function(data,
                               metaData = NULL,
                               xColumnNames = NULL,
@@ -41,7 +41,7 @@ AggregationSummary <- R6::R6Class(
       if (!is.null(aggregationInputsVector)) {
         for (aggregationInputValue in aggregationInputsVector) {
           stopifnot(is(aggregationInputValue, "AggregationInput"))
-          
+
           self$aggregationFunctionsVector <- append(self$aggregationFunctionsVector, aggregationInputValue$aggregationFunction)
           self$aggregationFunctionNames <- append(self$aggregationFunctionNames, aggregationInputValue$aggregationFunctionName)
           self$aggregationUnitsVector <- append(self$aggregationUnitsVector, aggregationInputValue$aggregationUnit)

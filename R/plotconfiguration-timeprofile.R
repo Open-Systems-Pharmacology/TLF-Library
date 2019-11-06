@@ -50,7 +50,7 @@ TimeProfilePlotConfiguration <- R6::R6Class(
 
     addTimeProfiles = function(plotObject, data, metaData, dataMapping) {
       mapData <- dataMapping$getMapData(data, metaData)
-      
+
       # In case there is no mapping, set dummy aesthetic label corresponding to constant factor
       # Allows further changes in the configuration later on using scales
       mapData$defaultAes <- factor("")
@@ -65,7 +65,7 @@ TimeProfilePlotConfiguration <- R6::R6Class(
           plotObject <- plotObject + ggplot2::geom_errorbar(
             mapping = aes(
               x = mapData$x, ymin = mapData$yMin, ymax = mapData$yMax,
-              color = mapData[,colorLabel], linetype = mapData[, linetypeLabel], size = mapData[, sizeLabel]
+              color = mapData[, colorLabel], linetype = mapData[, linetypeLabel], size = mapData[, sizeLabel]
             ),
             show.legend = TRUE
           )
@@ -73,15 +73,15 @@ TimeProfilePlotConfiguration <- R6::R6Class(
         plotObject <- plotObject + ggplot2::geom_line(
           mapping = aes(
             x = mapData$x, y = mapData$y,
-            color = mapData[,colorLabel], linetype = mapData[, linetypeLabel], size = mapData[, sizeLabel]
+            color = mapData[, colorLabel], linetype = mapData[, linetypeLabel], size = mapData[, sizeLabel]
           ),
           show.legend = TRUE
         )
         # If no mapping defined, remove dummy aesthetic label from the legend
-        plotObject <- plotObject + 
-          ifequal("defaultAes", colorLabel, guides(color = "none")) + 
-          ifequal("defaultAes", linetypeLabel, guides(linetype = "none")) + 
-          ifequal("defaultAes", sizeLabel, guides(size = "none")) 
+        plotObject <- plotObject +
+          ifequal("defaultAes", colorLabel, guides(color = "none")) +
+          ifequal("defaultAes", linetypeLabel, guides(linetype = "none")) +
+          ifequal("defaultAes", sizeLabel, guides(size = "none"))
       } else {
         plotObject <- plotObject + ggplot2::geom_ribbon(
           mapping = aes(
@@ -90,9 +90,9 @@ TimeProfilePlotConfiguration <- R6::R6Class(
           ),
           show.legend = TRUE
         )
-        
+
         # If no mapping defined, remove dummy aesthetic label from the legend
-        plotObject <- plotObject + 
+        plotObject <- plotObject +
           ifequal("defaultAes", fillLabel, guides(fill = "none"))
       }
 

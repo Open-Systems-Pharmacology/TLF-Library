@@ -3,7 +3,6 @@
 #' @description  Abstract class for X Y Mapping
 #' @export
 #'
-
 XYDataMapping <- R6::R6Class(
   "XYDataMapping",
   public = list(
@@ -17,7 +16,6 @@ XYDataMapping <- R6::R6Class(
     },
 
     getMapData = function(data, metaData = NULL) {
-
       x <- data[, self$x]
       y <- data[, self$y]
 

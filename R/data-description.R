@@ -29,7 +29,7 @@
 "pkRatioMetaData"
 
 #' Test dataset for time profiles with 3 subjects.
-#' 
+#'
 #' @format A data frame with 12 rows and 10 variables:
 #' \describe{
 #'   \item{Time}{}

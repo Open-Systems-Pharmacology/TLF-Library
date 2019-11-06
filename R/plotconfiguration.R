@@ -34,7 +34,6 @@ PlotConfiguration <- R6::R6Class(
                               metaData = NULL,
                               dataMapping = NULL,
                               theme = tlfEnv$currentTheme, ...) {
-
       super$initialize(
         title = title,
         subtitle = subtitle,

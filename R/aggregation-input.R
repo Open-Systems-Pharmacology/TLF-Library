@@ -12,13 +12,13 @@ AggregationInput <- R6::R6Class(
     aggregationUnit = NULL,
     aggregationDimension = NULL,
     initialize = function(aggregationFunction = NULL,
-                          aggregationFunctionName = NULL,
-                          aggregationUnit = NULL,
-                          aggregationDimension = NULL) {
-      self$aggregationFunction = aggregationFunction
-      self$aggregationFunctionName = aggregationFunctionName
-      self$aggregationUnit = aggregationUnit
-      self$aggregationDimension = aggregationDimension
+                              aggregationFunctionName = NULL,
+                              aggregationUnit = NULL,
+                              aggregationDimension = NULL) {
+      self$aggregationFunction <- aggregationFunction
+      self$aggregationFunctionName <- aggregationFunctionName
+      self$aggregationUnit <- aggregationUnit
+      self$aggregationDimension <- aggregationDimension
     }
   )
 )
