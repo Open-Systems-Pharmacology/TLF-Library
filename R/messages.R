@@ -27,5 +27,9 @@ messages <- list(
 
   errorValueNotInEnum = function(enum, value) {
     paste0("Value '", value, "' is not in defined enumeration values: '", paste0(names(enum), collapse = ", "), "'.")
+  },
+
+  errorNotIncluded = function(values, parentValues) {
+    paste0("Values '", paste0(values, collapse = ", "), "' are not in included in parent values: '", paste0(parentValues, collapse = ", "), "'.")
   }
 )
