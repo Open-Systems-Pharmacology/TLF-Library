@@ -1,10 +1,11 @@
-#' Shortkey checking if argument 1 is not null, 
-#' output argument 1 if not null, or output argument 2 otherwise 
-#' 
-#' @param lhs
-#' @param rhs
+#' Shortkey checking if argument 1 is not null,
+#' output argument 1 if not null, or output argument 2 otherwise
+#'
+#' @title `%||%`
+#' @param lhs argument 1
+#' @param rhs argument 2
 #' @return lhs if lhs is not null, rhs otherwise
-#' @description 
+#' @description
 #' Check if lhs argument is not null, output lhs if not null,
 #' output rhs otherwise
 `%||%` <- function(lhs, rhs) {
@@ -15,14 +16,15 @@
   }
 }
 
-#' Shortkey checking if argument 1 is not null, 
+#' Shortkey checking if argument 1 is not null,
 #' output the argument 2 if not null, or output argument 3 otherwise
-#' 
-#' @param inputToCheck
-#' @param outputIfNotNull
-#' @param outputIfNull
+#'
+#' @title ifnotnull
+#' @param inputToCheck argument 1
+#' @param outputIfNotNull argument 2
+#' @param outputIfNull argument 3
 #' @return outputIfNotNull if inputToCheck is not null, outputIfNull otherwise
-#' @description 
+#' @description
 #' Check if inputToCheck is not null, if so output outputIfNotNull,
 #' otherwise, output outputIfNull
 ifnotnull <- function(inputToCheck, outputIfNotNull, outputIfNull = NULL) {
@@ -33,18 +35,19 @@ ifnotnull <- function(inputToCheck, outputIfNotNull, outputIfNull = NULL) {
   }
 }
 
-#' Shortkey checking if arguments 1 and 2 are equal, 
+#' Shortkey checking if arguments 1 and 2 are equal,
 #' output argument 3 if equal, or output argument 4 otherwise
-#' 
-#' @param x
-#' @param y
-#' @param outputIfEqual
-#' @param outputIfNotEqual
+#'
+#' @title ifEqual
+#' @param x argument 1
+#' @param y argument 2
+#' @param outputIfEqual argument 3
+#' @param outputIfNotEqual argument 4
 #' @return outputIfEqual if x=y, outputIfNotEqual otherwise
-#' @description 
+#' @description
 #' Check if x=y, if so output outputIfEqual,
 #' otherwise, output outputIfNotEqual
-ifequal <- function(x, y, outputIfEqual, outputIfNotEqual = NULL) {
+ifEqual <- function(x, y, outputIfEqual, outputIfNotEqual = NULL) {
   if (x == y) {
     outputIfEqual
   } else {
@@ -52,15 +55,16 @@ ifequal <- function(x, y, outputIfEqual, outputIfNotEqual = NULL) {
   }
 }
 
-#' Shortkey checking if arguments 1 is included in 2, 
+#' Shortkey checking if arguments 1 is included in 2,
 #' output argument 3 if included, or output argument 4 otherwise
-#' 
-#' @param x
-#' @param y
-#' @param outputIfIncluded
-#' @param outputIfNotIncluded
+#'
+#' @title ifIncluded
+#' @param x argument 1
+#' @param y argument 2
+#' @param outputIfIncluded argument 3
+#' @param outputIfNotIncluded argument 4
 #' @return outputIfIncluded if x=y, outputIfNotIncluded otherwise
-#' @description 
+#' @description
 #' Check if x is in y, if so output outputIfIncluded,
 #' otherwise, output outputIfNotIncluded
 ifIncluded <- function(x, y, outputIfIncluded, outputIfNotIncluded = NULL) {
