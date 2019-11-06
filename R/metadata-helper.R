@@ -28,3 +28,33 @@ metaDataHelper <- function(data) {
   }
   return(metaData)
 }
+
+metaDataAlternativeFormat <- function(data) {
+  metaData <- data.frame(unit = rep("", length(names(data))),
+                         dimension = rep("", length(names(data))),
+                         LLOQ = rep(NA,length(names(data))),
+                         row.names = names(data))
+  
+  metaData$unit <- as.character(metaData$unit)
+  metaData$dimension <- as.character(metaData$dimension)
+  metaData$LLOQ <- as.character(metaData$LLOQ)
+ 
+  for (variable in colnames(data)) {
+    if (variable %in% "Age") {
+      metaData[variable, c("unit", "dimension")] <- c("yrs", "Age")
+    }
+    if (variable %in% "Time") {
+      metaData[variable, c("unit", "dimension")] <- c("min", "Time")
+    }
+    if (variable %in% "Dose") {
+      metaData[variable, c("unit", "dimension")] <- c("mg", "Amount")
+    }
+    if (variable %in% c("Observed", "Simulated", "Value")) {
+      metaData[variable, c("unit", "dimension")] <- c("umol/L", "Concentration")
+    }
+    if (variable %in% c("Ratio")) {
+      metaData[variable, c("unit", "dimension")] <- c("", "Fraction")
+    }
+  }
+  return(metaData) 
+}
