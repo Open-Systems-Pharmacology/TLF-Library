@@ -112,7 +112,11 @@ validateIsIncluded <- function(values, parentValues, nullAllowed = FALSE) {
   stop(messages$errorNotIncluded(values, parentValues))
 }
 
-validateMapping <- function(mapping, data) {
+validateMapping <- function(mapping, data, nullAllowed = FALSE) {
+  if (nullAllowed && is.null(mapping)) {
+    return()
+  }
+  
   validateIsString(mapping)
   variableNames <- names(data)
 

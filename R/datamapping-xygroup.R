@@ -8,7 +8,7 @@ XYGDataMapping <- R6::R6Class(
   public = list(
     groupMapping = NULL, # R6 Class of GroupMapping
 
-    initialize = function(groupMapping = NULL, ...) {
+    initialize = function(..., groupMapping = NULL) {
       super$initialize(...)
       self$groupMapping <- groupMapping %||% GroupMapping$new()
     },
