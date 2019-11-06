@@ -229,11 +229,11 @@ LegendValues <- R6::R6Class(
   inherit = GroupMapping,
   public = list(
     initialize = function(aesProperties = tlfEnv$currentTheme$aesProperties,
-                          color = NULL,
-                          fill = NULL,
-                          linetype = NULL,
-                          shape = NULL,
-                          size = NULL) {
+                              color = NULL,
+                              fill = NULL,
+                              linetype = NULL,
+                              shape = NULL,
+                              size = NULL) {
       self$color <- color %||% aesProperties$color
       self$fill <- fill %||% aesProperties$fill
       self$linetype <- linetype %||% aesProperties$linetype

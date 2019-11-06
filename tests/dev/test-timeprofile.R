@@ -16,16 +16,18 @@ nPopulation <- 20
 
 # -------------------------------------------------
 
-testData = data.frame(
-    IndivdualID = rep(1, 24),
-    Time = seq(1, 24),
-    Value = 10 * exp(-0.06 * seq(1, 24))
-  )
+testData <- data.frame(
+  IndivdualID = rep(1, 24),
+  Time = seq(1, 24),
+  Value = 10 * exp(-0.06 * seq(1, 24))
+)
 
 
-testMetaData <- list(IndivdualID = list("unit"= "", "dimension"=""),
-                     Time = list("unit"= "min", "dimension"="Time"),
-                     Value= list("unit"= "mg/L", "dimension"="Concentration"))
+testMetaData <- list(
+  IndivdualID = list("unit" = "", "dimension" = ""),
+  Time = list("unit" = "min", "dimension" = "Time"),
+  Value = list("unit" = "mg/L", "dimension" = "Concentration")
+)
 
 # -------------------------------------------------
 # Define Default plot Configuration & Mapping from R6 class for PK Ratio

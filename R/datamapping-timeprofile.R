@@ -12,18 +12,18 @@ TimeProfileDataMapping <- R6::R6Class(
     LLOQ = NULL,
 
     initialize = function(x,
-                          y = NULL,
-                          yMin = NULL,
-                          yMax = NULL,
-                          groupMapping = NULL,
-                          LLOQ = NULL,...) {
+                              y = NULL,
+                              yMin = NULL,
+                              yMax = NULL,
+                              groupMapping = NULL,
+                              LLOQ = NULL, ...) {
       if (is.null(y)) {
         if (is.null(yMin) && is.null(yMax)) {
           stop("Either y or yMin and yMax must be defined for TimeProfileDataMapping")
         }
       }
 
-      super$initialize(x=x, y=y, groupMapping=groupMapping)
+      super$initialize(x = x, y = y, groupMapping = groupMapping)
 
       self$yMin <- yMin
       self$yMax <- yMax
@@ -47,20 +47,20 @@ TimeProfileDataMapping <- R6::R6Class(
       }
       return(self$data)
     },
-    
+
     checkMapData = function(data, metaData = NULL) {
       validateMapping(self$x, data)
-      validateMapping(self$y, data, nullAllowed=TRUE)
-      validateMapping(self$yMin, data, nullAllowed=TRUE)
-      validateMapping(self$yMax, data, nullAllowed=TRUE)
-      
+      validateMapping(self$y, data, nullAllowed = TRUE)
+      validateMapping(self$yMin, data, nullAllowed = TRUE)
+      validateMapping(self$yMax, data, nullAllowed = TRUE)
+
       self$data <- data[, c(self$x, self$y, self$yMin, self$yMax)]
-      
+
       # All possible Groupings are listed in the enum LegendTypes
       for (groupType in LegendTypes) {
         if (!is.null(self$groupMapping[[groupType]]$group)) {
           grouping <- self$groupMapping[[groupType]]
-          
+
           groupVariables <- grouping$group
           if (isOfType(groupVariables, "data.frame")) {
             # Last group variable is the label in group data.frames
@@ -69,7 +69,7 @@ TimeProfileDataMapping <- R6::R6Class(
             groupVariables <- utils::head(groupVariables, -1)
           }
           validateMapping(groupVariables, data)
-          
+
           self$data[, grouping$label] <- grouping$getCaptions(data, metaData)
         }
       }

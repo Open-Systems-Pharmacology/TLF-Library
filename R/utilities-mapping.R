@@ -126,7 +126,7 @@ getAesStringMapping <- function(dataMapping) {
   })
 
   names(dataMappingLabels) <- c(geomMappings, groupMappings)
-  
+
   for (geomName in geomMappings) {
     if (!is.null(dataMapping[[geomName]])) {
       if (length(grep(pattern = "`", x = dataMapping[[geomName]])) == 0) {

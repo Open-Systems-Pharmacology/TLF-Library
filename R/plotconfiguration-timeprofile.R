@@ -34,12 +34,16 @@ TimeProfilePlotConfiguration <- R6::R6Class(
     },
 
     addLLOQLines = function(metaData, dataMapping, plotObject) {
-      if (is.null(metaData)){return(plotObject)}
-      
-      LLOQLines <- ifnotnull(dataMapping$y, 
-                             metaData[[dataMapping$y]]$LLOQ,
-                             metaData[[dataMapping$yMin]]$LLOQ)
-      
+      if (is.null(metaData)) {
+        return(plotObject)
+      }
+
+      LLOQLines <- ifnotnull(
+        dataMapping$y,
+        metaData[[dataMapping$y]]$LLOQ,
+        metaData[[dataMapping$yMin]]$LLOQ
+      )
+
       if (!is.null(LLOQLines)) {
         for (LLOQIndex in seq(1, length(LLOQLines))) {
           plotObject <- plotObject +
@@ -58,7 +62,7 @@ TimeProfilePlotConfiguration <- R6::R6Class(
       # Check if mapping is included in the data
       # Add the group mapping and aesthtics variables in the data.frame
       mapData <- dataMapping$checkMapData(data, metaData)
-      
+
       # Convert the mapping into characters usable by aes_string
       mapLabels <- getAesStringMapping(dataMapping)
 
@@ -77,7 +81,7 @@ TimeProfilePlotConfiguration <- R6::R6Class(
         }
         # Plot time profile on top
         # Priority of time profiles Shape > Linetype
-        if (!is.null(dataMapping$groupMapping$linetype$group)){
+        if (!is.null(dataMapping$groupMapping$linetype$group)) {
           plotObject <- plotObject + ggplot2::geom_line(
             data = mapData,
             mapping = aes_string(
@@ -86,28 +90,26 @@ TimeProfilePlotConfiguration <- R6::R6Class(
             ),
             show.legend = TRUE
           )
-          
+
           plotObject <- plotObject +
             ifEqual("defaultAes", mapLabels$color, guides(color = "none")) +
             ifEqual("defaultAes", mapLabels$linetype, guides(linetype = "none")) +
             ifEqual("defaultAes", mapLabels$size, guides(size = "none"))
-          
-        }else{
-        plotObject <- plotObject + ggplot2::geom_point(
-          data = mapData,
-          mapping = aes_string(
-            x = mapLabels$x, y = mapLabels$y,
-            color = mapLabels$color, shape = mapLabels$shape, size = mapLabels$size
-          ),
-          show.legend = TRUE
-        )
-        
-        plotObject <- plotObject +
-          ifEqual("defaultAes", mapLabels$color, guides(color = "none")) +
-          ifEqual("defaultAes", mapLabels$shape, guides(shape = "none")) +
-          ifEqual("defaultAes", mapLabels$size, guides(size = "none"))
+        } else {
+          plotObject <- plotObject + ggplot2::geom_point(
+            data = mapData,
+            mapping = aes_string(
+              x = mapLabels$x, y = mapLabels$y,
+              color = mapLabels$color, shape = mapLabels$shape, size = mapLabels$size
+            ),
+            show.legend = TRUE
+          )
+
+          plotObject <- plotObject +
+            ifEqual("defaultAes", mapLabels$color, guides(color = "none")) +
+            ifEqual("defaultAes", mapLabels$shape, guides(shape = "none")) +
+            ifEqual("defaultAes", mapLabels$size, guides(size = "none"))
         }
-        
       } else {
         # Plot shaded area
         plotObject <- plotObject + ggplot2::geom_ribbon(

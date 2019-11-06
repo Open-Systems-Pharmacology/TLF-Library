@@ -49,10 +49,10 @@ PKRatioPlotConfiguration <- R6::R6Class(
       # Check if mapping is included in the data
       # Add the group mapping and aesthtics variables in the data.frame
       mapData <- dataMapping$checkMapData(data, metaData)
-      
+
       # Convert the mapping into characters usable by aes_string
       mapLabels <- getAesStringMapping(dataMapping)
-      
+
       plotObject <- plotObject + geom_point(
         data = mapData,
         mapping = aes_string(

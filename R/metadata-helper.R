@@ -30,15 +30,17 @@ metaDataHelper <- function(data) {
 }
 
 metaDataAlternativeFormat <- function(data) {
-  metaData <- data.frame(unit = rep("", length(names(data))),
-                         dimension = rep("", length(names(data))),
-                         LLOQ = rep(NA,length(names(data))),
-                         row.names = names(data))
-  
+  metaData <- data.frame(
+    unit = rep("", length(names(data))),
+    dimension = rep("", length(names(data))),
+    LLOQ = rep(NA, length(names(data))),
+    row.names = names(data)
+  )
+
   metaData$unit <- as.character(metaData$unit)
   metaData$dimension <- as.character(metaData$dimension)
   metaData$LLOQ <- as.character(metaData$LLOQ)
- 
+
   for (variable in colnames(data)) {
     if (variable %in% "Age") {
       metaData[variable, c("unit", "dimension")] <- c("yrs", "Age")
@@ -56,5 +58,5 @@ metaDataAlternativeFormat <- function(data) {
       metaData[variable, c("unit", "dimension")] <- c("", "Fraction")
     }
   }
-  return(metaData) 
+  return(metaData)
 }

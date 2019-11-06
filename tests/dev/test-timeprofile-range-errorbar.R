@@ -16,7 +16,7 @@ nPopulation <- 20
 
 # -------------------------------------------------
 
-testData = data.frame(
+testData <- data.frame(
   IndivdualID = rep(1, 24),
   Time = seq(1, 24),
   Mean = 10 * exp(-0.06 * seq(1, 24)),
@@ -25,30 +25,38 @@ testData = data.frame(
 )
 
 
-testMetaData <- list(IndivdualID = list("unit"= "", "dimension"=""),
-                     Time = list("unit"= "min", "dimension"="Time"),
-                     Mean= list("unit"= "mg/L", "dimension"="Concentration"),
-                     Min= list("unit"= "mg/L", "dimension"="Concentration"),
-                     Max= list("unit"= "mg/L", "dimension"="Concentration"))
+testMetaData <- list(
+  IndivdualID = list("unit" = "", "dimension" = ""),
+  Time = list("unit" = "min", "dimension" = "Time"),
+  Mean = list("unit" = "mg/L", "dimension" = "Concentration"),
+  Min = list("unit" = "mg/L", "dimension" = "Concentration"),
+  Max = list("unit" = "mg/L", "dimension" = "Concentration")
+)
 
 # -------------------------------------------------
 # Define Default plot Configuration & Mapping from R6 class for PK Ratio
 
-meanDataMapping <- TimeProfileDataMapping$new(x = "Time", 
-                                              y = "Mean")
+meanDataMapping <- TimeProfileDataMapping$new(
+  x = "Time",
+  y = "Mean"
+)
 
-errorDataMapping <- TimeProfileDataMapping$new(x = "Time", 
-                                               y = "Mean",
-                                               yMin = "Min",
-                                               yMax = "Max")
+errorDataMapping <- TimeProfileDataMapping$new(
+  x = "Time",
+  y = "Mean",
+  yMin = "Min",
+  yMax = "Max"
+)
 
-rangeDataMapping <- TimeProfileDataMapping$new(x = "Time", 
-                                               yMin = "Min",
-                                               yMax = "Max")
+rangeDataMapping <- TimeProfileDataMapping$new(
+  x = "Time",
+  yMin = "Min",
+  yMax = "Max"
+)
 # -------------------------------------------------
 # Plot PK Ratio using the previously defined variables
-meanPlot <- plotTimeProfile(data = testData, metaData = testMetaData,  dataMapping = meanDataMapping)
+meanPlot <- plotTimeProfile(data = testData, metaData = testMetaData, dataMapping = meanDataMapping)
 
-errorPlot <- plotTimeProfile(data = testData, metaData = testMetaData,  dataMapping = errorDataMapping)
+errorPlot <- plotTimeProfile(data = testData, metaData = testMetaData, dataMapping = errorDataMapping)
 
-rangePlot <- plotTimeProfile(data = testData, metaData = testMetaData,  dataMapping = rangeDataMapping)
+rangePlot <- plotTimeProfile(data = testData, metaData = testMetaData, dataMapping = rangeDataMapping)
