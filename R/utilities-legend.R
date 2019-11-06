@@ -150,7 +150,7 @@ getLegendPosition <- function(position) {
 
 LegendTitles <- R6::R6Class(
   "LegendTitles",
-  inherit = Groupings,
+  inherit = GroupMapping,
   public = list(
     initialize = function(color = NULL,
                               fill = NULL,
@@ -174,7 +174,7 @@ LegendTitles <- R6::R6Class(
 
 LegendCaptions <- R6::R6Class(
   "LegendCaptions",
-  inherit = Groupings,
+  inherit = GroupMapping,
   public = list(
     initialize = function(color = NULL,
                               fill = NULL,
@@ -216,7 +216,7 @@ LegendCaptions <- R6::R6Class(
 
 LegendValues <- R6::R6Class(
   "LegendValues",
-  inherit = Groupings,
+  inherit = GroupMapping,
   public = list(
     initialize = function(color = tlfEnv$currentTheme$aesProperties$color,
                               fill = tlfEnv$currentTheme$aesProperties$fill,
