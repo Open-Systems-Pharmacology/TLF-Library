@@ -111,3 +111,36 @@ asLegendCaptionSubset <- function(data, metaData) {
 
   return(captionSubset)
 }
+
+# Function Converting DataMappings to aes_string mapping
+# Accounts for special character issues by using ``
+getAesStringMapping <- function(dataMapping) {
+  # Define list of mappings to check
+  geomMappings <- c("x", "y", "yMin", "yMax")
+  groupMappings <- names(LegendTypes)
+
+  # Initialize Labels
+  dataMappingLabels <- vector(mode = "list", length = length(geomMappings) + length(groupMappings))
+  dataMappingLabels <- lapply(dataMappingLabels, function(x) {
+    return("defaultAes")
+  })
+
+  names(dataMappingLabels) <- c(geomMappings, groupMappings)
+
+  for (geomName in geomMappings) {
+    if (!is.null(dataMapping[[geomName]])) {
+      if (length(grep(pattern = "`", x = dataMapping[[geomName]])) == 0) {
+        dataMappingLabels[[geomName]] <- paste0("`", dataMapping[[geomName]], "`")
+      }
+    }
+  }
+
+  for (groupName in groupMappings) {
+    if (!is.null(dataMapping$groupMapping[[groupName]])) {
+      if (length(grep(pattern = "`", x = dataMapping$groupMapping[[groupName]]$label)) == 0) {
+        dataMappingLabels[[groupName]] <- paste0("`", dataMapping$groupMapping[[groupName]]$label, "`")
+      }
+    }
+  }
+  return(dataMappingLabels)
+}
