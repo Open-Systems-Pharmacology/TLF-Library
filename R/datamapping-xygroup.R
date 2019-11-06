@@ -6,11 +6,11 @@ XYGDataMapping <- R6::R6Class(
   "XYGDataMapping",
   inherit = XYDataMapping,
   public = list(
-    groupings = NULL, # R6 Class of GroupMappings
+    groupMapping = NULL, # R6 Class of GroupMapping
 
-    initialize = function(groupings = NULL,...) {
+    initialize = function(groupMapping = NULL, ...) {
       super$initialize(...)
-      self$groupings <- groupings %||% Groupings$new()
+      self$groupMapping <- groupMapping %||% GroupMapping$new()
     },
 
     getMapData = function(data, metaData = NULL) {
@@ -24,7 +24,7 @@ XYGDataMapping <- R6::R6Class(
         if (!is.null(self$groupings[[groupType]]$group)) {
           grouping <- self$groupings[[groupType]]
           self$data[, grouping$label] <- grouping$getCaptions(data, metaData)
-        } 
+        }
       }
       return(self$data)
     }
