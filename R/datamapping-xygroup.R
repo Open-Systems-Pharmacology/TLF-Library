@@ -12,23 +12,7 @@ XYGDataMapping <- R6::R6Class(
       super$initialize(...)
       self$groupMapping <- groupMapping %||% GroupMapping$new()
     },
-
-    getMapData = function(data, metaData = NULL) {
-      x <- data[, self$x]
-      y <- data[, self$y]
-
-      self$data <- cbind.data.frame(x, y)
-
-      # All possible Groupings are listed in the enum LegendTypes
-      for (groupType in LegendTypes) {
-        if (!is.null(self$groupingMapping[[groupType]]$group)) {
-          grouping <- self$groupingMapping[[groupType]]
-          self$data[, grouping$label] <- grouping$getCaptions(data, metaData)
-        }
-      }
-      return(self$data)
-    },
-
+    
     checkMapData = function(data, metaData = NULL) {
       validateMapping(self$x, data)
       validateMapping(self$y, data)

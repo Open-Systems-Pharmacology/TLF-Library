@@ -29,25 +29,7 @@ TimeProfileDataMapping <- R6::R6Class(
       self$yMax <- yMax
       self$LLOQ <- LLOQ
     },
-
-    getMapData = function(data, metaData = NULL) {
-      x <- data[, self$x]
-      y <- ifnotnull(self$y, data[, self$y], NULL)
-      yMin <- ifnotnull(self$yMin, data[, self$yMin], NULL)
-      yMax <- ifnotnull(self$yMax, data[, self$yMax], NULL)
-
-      self$data <- as.data.frame(cbind(x, y, yMin, yMax))
-
-      # All possible Groupings are listed in the enum LegendTypes
-      for (groupType in LegendTypes) {
-        if (!is.null(self$groupings[[groupType]]$group)) {
-          grouping <- self$groupings[[groupType]]
-          self$data[, grouping$label] <- grouping$getCaptions(data, metaData)
-        }
-      }
-      return(self$data)
-    },
-
+    
     checkMapData = function(data, metaData = NULL) {
       validateMapping(self$x, data)
       validateMapping(self$y, data, nullAllowed = TRUE)
