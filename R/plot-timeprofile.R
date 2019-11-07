@@ -38,7 +38,7 @@ plotTimeProfile <- function(data,
 
   plotObject <- plotConfiguration$setWatermark(plotObject)
 
-  plotObject <- plotConfiguration$addLLOQLines(dataMapping$LLOQ, plotObject)
+  plotObject <- plotConfiguration$addLLOQLines(metaData, dataMapping, plotObject)
 
   plotObject <- plotConfiguration$addTimeProfiles(plotObject, data, metaData, dataMapping)
 

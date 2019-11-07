@@ -85,3 +85,42 @@ validateIsSameLength <- function(...) {
 
   stop(messages$errorDifferentLength(arguments))
 }
+
+#' Check if the provided object is included in a parent object
+#'
+#' @param values Vector of values
+#' @param parentValues Vector of values
+#'
+#' @return TRUE if the values are inside the parent values.
+isIncluded <- function(values, parentValues) {
+  if (is.null(values)) {
+    return(FALSE)
+  }
+
+  return(min(values %in% parentValues))
+}
+
+validateIsIncluded <- function(values, parentValues, nullAllowed = FALSE) {
+  if (nullAllowed && is.null(values)) {
+    return()
+  }
+
+  if (isIncluded(values, parentValues)) {
+    return()
+  }
+
+  stop(messages$errorNotIncluded(values, parentValues))
+}
+
+validateMapping <- function(mapping, data, nullAllowed = FALSE) {
+  if (nullAllowed && is.null(mapping)) {
+    return()
+  }
+
+  validateIsString(mapping)
+  variableNames <- names(data)
+
+  validateIsIncluded(mapping, variableNames)
+
+  return()
+}

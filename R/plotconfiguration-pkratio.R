@@ -46,33 +46,31 @@ PKRatioPlotConfiguration <- R6::R6Class(
     },
 
     addPKRatios = function(plotObject, data, metaData, dataMapping) {
-      
-      mapData <- dataMapping$getMapData(data, metaData)
-      
-      # In case there is no mapping, set dummy aesthetic label corresponding to constant factor
-      # Allows further changes in the configuration later on using scales
-      mapData$defaultAes <- factor("")
-      colorLabel <- dataMapping$groupings$color$label %||% "defaultAes"
-      shapeLabel <- dataMapping$groupings$shape$label %||% "defaultAes"
-      sizeLabel <- dataMapping$groupings$size$label %||% "defaultAes"
-      
+      # Check if mapping is included in the data
+      # Add the group mapping and aesthtics variables in the data.frame
+      mapData <- dataMapping$checkMapData(data, metaData)
+
+      # Convert the mapping into characters usable by aes_string
+      mapLabels <- getAesStringMapping(dataMapping)
+
       plotObject <- plotObject + geom_point(
-        mapping = aes(
-          x = mapData$x, 
-          y = mapData$y,
-          color = mapData[,colorLabel],
-          shape = mapData[,shapeLabel],
-          size = mapData[,sizeLabel]
+        data = mapData,
+        mapping = aes_string(
+          x = mapLabels$x,
+          y = mapLabels$y,
+          color = mapLabels$color,
+          shape = mapLabels$shape,
+          size = mapLabels$size
         ),
         show.legend = TRUE
       )
 
       # If no mapping defined, remove dummy aesthetic label from the legend
-      plotObject <- plotObject + 
-          ifequal("defaultAes", colorLabel, guides(color = "none")) + 
-          ifequal("defaultAes", shapeLabel, guides(shape = "none")) + 
-          ifequal("defaultAes", sizeLabel, guides(size = "none")) 
-      
+      plotObject <- plotObject +
+        ifEqual("defaultAes", mapLabels$color, guides(color = "none")) +
+        ifEqual("defaultAes", mapLabels$shape, guides(shape = "none")) +
+        ifEqual("defaultAes", mapLabels$size, guides(size = "none"))
+
       return(plotObject)
     }
   )

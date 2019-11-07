@@ -6,10 +6,10 @@ HistogramDataMapping <- R6::R6Class(
   "HistogramDataMapping",
   inherit = XYGDataMapping,
   public = list(
-      verticalLineGroupings = NULL,
-      initialize = function( verticalLineGroupings = NULL , ... ) {
-        super$initialize(...)
-        self$verticalLineGroupings <- verticalLineGroupings
-      }
+    verticalLineGroupings = NULL,
+    initialize = function(verticalLineGroupings = NULL, ...) {
+      super$initialize(...)
+      self$verticalLineGroupings <- verticalLineGroupings
+    }
   )
 )

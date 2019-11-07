@@ -17,7 +17,6 @@
 #' @return a ggplot graphical object
 #' @export
 #'
-#'
 plotHistogram <- function(data,
                           metaData = NULL,
                           dataMapping = NULL,
@@ -43,15 +42,11 @@ plotHistogram <- function(data,
   validateIsOfType(dataMapping, HistogramDataMapping)
   validateIsOfType(plotConfiguration, HistogramPlotConfiguration)
 
-
   plotObject <- ggplot2::ggplot()
-  plotObject <- plotConfiguration$addHistograms(plotObject, data = data, metaData=metaData, dataMapping = dataMapping , bins = bins, binWidth = binWidth )
+  plotObject <- plotConfiguration$addHistograms(plotObject, data = data, metaData = metaData, dataMapping = dataMapping, bins = bins, binWidth = binWidth)
   plotObject <- plotConfiguration$setPlotLabels(plotObject)
   plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)
   plotObject <- plotConfiguration$addVerticalLines(plotObject)
-
-
-
 
   return(plotObject)
 }

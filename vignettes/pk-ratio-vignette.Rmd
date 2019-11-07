@@ -51,15 +51,15 @@ Since `PKRatioDataMapping` inherits from an XY Group Mapping (`XYGDataMapping`),
 ## Example of Definition of PK Ratio Data Mapping
 ```{r}
 # Create a PK Ratio dataMapping
-groups <- list(color = "Gender", shape = c("Dose", "Compound"))
-dataMapping <- PKRatioDataMapping$new(x = "Age", y = "PKRatios", groupings = groups)
+groups <- GroupMapping$new(color = "Gender", shape = c("Dose", "Compound"))
+dataMapping <- PKRatioDataMapping$new(x = "Age", y = "PKRatios", groupMapping = groups)
 
 
 dataMapping$x
 dataMapping$y
 dataMapping$pkRatioLines
-dataMapping$groupings$color
-dataMapping$groupings$shape
+dataMapping$groupMapping$color
+dataMapping$groupMapping$shape
 ```
 
 # Plot Configuration
@@ -87,9 +87,6 @@ plotConfiguration <- PKRatioPlotConfiguration$new(
 )
 
 plotConfiguration
-#plotConfiguration$legend
-#plotConfiguration$xAxis
-#plotConfiguration$yAxis
 ```
 
 # Plot PK Ratios
@@ -105,8 +102,8 @@ If no `dataMapping` and `plotConfiguration` is provided, `plotPKRatio` uses a de
 ```{r, fig.height=5, fig.width=7.5}
 # Create PK Ratio data Mapping
 pkRatioDataMapping <- PKRatioDataMapping$new(
-  groupings = Groupings$new(color = "Gender",
-                            shape = c("Dose", "Compound")))
+  groupMapping = GroupMapping$new(color = "Gender",
+                               shape = c("Dose", "Compound")))
 
 # Create associated PK Ratio plot Configuration
 pkRatioPlotConfiguration <- PKRatioPlotConfiguration$new(
@@ -139,7 +136,7 @@ Currently, 4 themes are defined in the library: `defaultTheme`, `tlfTheme`, `bwT
 useTheme(defaultTheme)
 # Create PK Ratio data Mapping
 pkRatioDataMapping <- PKRatioDataMapping$new(
-  groupings = Groupings$new(color = "Gender",
+  groupMapping = GroupMapping$new(color = "Gender",
                             shape = c("Dose", "Compound")))
 
 # Create associated PK Ratio plot Configuration
@@ -166,7 +163,7 @@ plotObject
 useTheme(bwTheme)
 # Create PK Ratio data Mapping
 pkRatioDataMapping <- PKRatioDataMapping$new(
-  groupings = Groupings$new(color = "Gender",
+  groupMapping = GroupMapping$new(color = "Gender",
                             shape = c("Dose", "Compound")))
 
 # Create associated PK Ratio plot Configuration

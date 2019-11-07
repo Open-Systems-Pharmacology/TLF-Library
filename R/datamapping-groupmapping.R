@@ -1,39 +1,42 @@
 #' @title GroupMapping
 #' @docType class
-#' @description  Abstract class for Grouping
+#' @description  Abstract class for GroupMapping
 #' @export
 GroupMapping <- R6::R6Class(
   "GroupMapping",
   public = list(
-    group = NULL,
-    label = NULL,
+    color = NULL,
+    fill = NULL,
+    linetype = NULL,
+    shape = NULL,
+    size = NULL,
 
-    initialize = function(group, label = NULL) {
-      validateIsOfType(group, c("data.frame", "character"), nullAllowed = TRUE)
-
-      self$group <- group
-
-      if (is.data.frame(group)) {
-        # For data.frame, label is last column as default
-        self$label <- utils::tail(names(group), 1)
+    initialize = function(color = NULL,
+                              fill = NULL,
+                              linetype = NULL,
+                              shape = NULL,
+                              size = NULL) {
+      if (!isOfType(color, "Grouping")) {
+        color <- Grouping$new(group = color)
       }
-      if (is.character(group)) {
-        self$label <- paste(group, collapse = "-")
+      if (!isOfType(fill, "Grouping")) {
+        fill <- Grouping$new(group = fill)
+      }
+      if (!isOfType(linetype, "Grouping")) {
+        linetype <- Grouping$new(group = linetype)
+      }
+      if (!isOfType(shape, "Grouping")) {
+        shape <- Grouping$new(group = shape)
+      }
+      if (!isOfType(size, "Grouping")) {
+        size <- Grouping$new(group = size)
       }
 
-      self$label <- label %||% self$label
-    },
-
-    getCaptions = function(data, metaData = NULL) {
-      validateIsOfType(self$group, c("data.frame", "character"), nullAllowed = TRUE)
-
-      if (is.data.frame(self$group)) {
-        captions <- getCustomCaptions(data, self$group)
-      }
-      if (is.character(self$group)) {
-        captions <- getDefaultCaptions(data, metaData, variableList = self$group)
-      }
-      return(captions)
+      self$color <- color
+      self$fill <- fill
+      self$linetype <- linetype
+      self$shape <- shape
+      self$size <- size
     }
   )
 )

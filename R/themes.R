@@ -22,7 +22,7 @@ ThemeFont <- R6::R6Class(
     watermarkFont = NULL,
 
     initialize = function(labelColors = tlfEnvThemesProperties$default$labelColors,
-                          labelBaseSize = 14) {
+                              labelBaseSize = 14) {
 
       # Set font properties of labels
       self$titleFont <- Font$new(color = labelColors$title, size = labelBaseSize * 2, fontFace = "bold")
@@ -48,19 +48,21 @@ ThemeAesProperties <- R6::R6Class(
     size = NULL,
     fill = NULL,
     linetype = NULL,
-    
+    alpha = NULL,
+
     initialize = function(aesProperties = tlfEnvThemesProperties$default$aesProperties,
-                          color = NULL,
-                          shape = NULL,
-                          size = NULL,
-                          fill = NULL,
-                          linetype = NULL){
-      
+                              color = NULL,
+                              shape = NULL,
+                              size = NULL,
+                              fill = NULL,
+                              linetype = NULL,
+                              alpha = NULL) {
       self$color <- color %||% aesProperties$color
-      self$shape <- color %||% aesProperties$shape
+      self$shape <- shape %||% aesProperties$shape
       self$size <- size %||% aesProperties$size
       self$fill <- fill %||% aesProperties$fill
       self$linetype <- linetype %||% aesProperties$linetype
+      self$alpha <- alpha %||% aesProperties$alpha
     }
   )
 )
@@ -76,30 +78,37 @@ Theme <- R6::R6Class(
   inherit = ThemeFont,
   public = list(
     watermark = NULL,
+    background = NULL,
     aesProperties = NULL,
 
     pkRatioLinesProperties = NULL,
     lloqLinesProperties = NULL,
+    histogramLinesProperties = NULL,
 
     initialize = function(themesProperties = tlfEnvThemesProperties$default,
-                          labelColors = NULL,
-                          labelBaseSize = 14,
-                          watermark = NULL,
-                          aesProperties = NULL,
-                          pkRatioLinesProperties = NULL,
-                          lloqLinesProperties = NULL) {
-      
-      super$initialize(labelColors = labelColors %||% themesProperties$labelColors,
-                       labelBaseSize = labelBaseSize)
-      
+                              labelColors = NULL,
+                              labelBaseSize = 14,
+                              watermark = NULL,
+                              background = NULL,
+                              aesProperties = NULL,
+                              pkRatioLinesProperties = NULL,
+                              lloqLinesProperties = NULL,
+                              histogramLinesProperties = NULL) {
+      super$initialize(
+        labelColors = labelColors %||% themesProperties$labelColors,
+        labelBaseSize = labelBaseSize
+      )
+
       self$watermark <- watermark %||% themesProperties$watermark
+      self$background <- background %||% themesProperties$background
 
       # Set the color, shape, size maps
-      self$aesProperties <- aesProperties %||%ThemeAesProperties$new(aesProperties = themesProperties$aesProperties)
+      self$aesProperties <- aesProperties %||% ThemeAesProperties$new(aesProperties = themesProperties$aesProperties)
 
       # Set the properties of specific plots
       self$pkRatioLinesProperties <- pkRatioLinesProperties %||% themesProperties$pkRatioLinesProperties
       self$lloqLinesProperties <- lloqLinesProperties %||% themesProperties$pkRatioLinesProperties
+      self$histogramLinesProperties <- histogramLinesProperties %||% themesProperties$histogramLinesProperties
     }
   )
 )

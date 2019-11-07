@@ -9,6 +9,6 @@
 GroupMapping
 }
 \description{
-Abstract class for Grouping
+Abstract class for GroupMapping
 }
 \keyword{datasets}

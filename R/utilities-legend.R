@@ -113,7 +113,8 @@ LegendTypes <- enum(c(
   "color",
   "shape",
   "linetype",
-  "fill"
+  "fill",
+  "size"
 ))
 
 getLegendPosition <- function(position) {
@@ -150,23 +151,26 @@ getLegendPosition <- function(position) {
 
 LegendTitles <- R6::R6Class(
   "LegendTitles",
-  inherit = Groupings,
+  inherit = GroupMapping,
   public = list(
     initialize = function(color = NULL,
                               fill = NULL,
                               linetype = NULL,
                               shape = NULL,
+                              size =NULL,
                               groupings = NULL) {
       if (!is.null(groupings)) {
         self$color <- groupings$color$label
         self$fill <- groupings$fill$label
         self$linetype <- groupings$linetype$label
         self$shape <- groupings$shape$label
+        self$size <- groupings$size$label
       } else {
         self$color <- color
         self$fill <- fill
         self$linetype <- linetype
         self$shape <- shape
+        self$size <- size
       }
     }
   )
@@ -174,12 +178,13 @@ LegendTitles <- R6::R6Class(
 
 LegendCaptions <- R6::R6Class(
   "LegendCaptions",
-  inherit = Groupings,
+  inherit = GroupMapping,
   public = list(
     initialize = function(color = NULL,
                               fill = NULL,
                               linetype = NULL,
                               shape = NULL,
+                              size = NULL,
                               groupings = NULL,
                               data = NULL,
                               metaData = NULL) {
@@ -204,11 +209,17 @@ LegendCaptions <- R6::R6Class(
           groupings$shape$getCaptions(data, metaData),
           NA
         )
+        self$size <- ifnotnull(
+          groupings$size$group,
+          groupings$size$getCaptions(data, metaData),
+          NA
+        )
       } else {
         self$color <- color
         self$fill <- fill
         self$linetype <- linetype
         self$shape <- shape
+        self$size <- size
       }
     }
   )
@@ -216,16 +227,19 @@ LegendCaptions <- R6::R6Class(
 
 LegendValues <- R6::R6Class(
   "LegendValues",
-  inherit = Groupings,
+  inherit = GroupMapping,
   public = list(
-    initialize = function(color = tlfEnv$currentTheme$aesProperties$color,
-                              fill = tlfEnv$currentTheme$aesProperties$fill,
-                              linetype = tlfEnv$currentTheme$aesProperties$linetype,
-                              shape = tlfEnv$currentTheme$aesProperties$shape) {
-      self$color <- color
-      self$fill <- fill
-      self$linetype <- linetype
-      self$shape <- shape
+    initialize = function(aesProperties = tlfEnv$currentTheme$aesProperties,
+                              color = NULL,
+                              fill = NULL,
+                              linetype = NULL,
+                              shape = NULL,
+                              size = NULL) {
+      self$color <- color %||% aesProperties$color
+      self$fill <- fill %||% aesProperties$fill
+      self$linetype <- linetype %||% aesProperties$linetype
+      self$shape <- shape %||% aesProperties$shape
+      self$size <- size %||% aesProperties$size
     }
   )
 )
