@@ -6,27 +6,38 @@ XYGDataMapping <- R6::R6Class(
   "XYGDataMapping",
   inherit = XYDataMapping,
   public = list(
-    groupings = NULL, # R6 Class of GroupMappings
+    groupMapping = NULL, # R6 Class of GroupMapping
 
-    initialize = function(x, y, groupings = NULL) {
-      super$initialize(x, y)
-
-      self$groupings <- groupings %||% Groupings$new()
+    initialize = function(..., groupMapping = NULL) {
+      super$initialize(...)
+      self$groupMapping <- groupMapping %||% GroupMapping$new()
     },
+    
+    checkMapData = function(data, metaData = NULL) {
+      validateMapping(self$x, data)
+      validateMapping(self$y, data)
 
-    getMapData = function(data, metaData = NULL) {
-      x <- data[, self$x]
-      y <- data[, self$y]
-
-      self$data <- cbind.data.frame(x, y)
+      self$data <- data[, c(self$x, self$y)]
 
       # All possible Groupings are listed in the enum LegendTypes
       for (groupType in LegendTypes) {
-        if (!is.null(self$groupings[[groupType]]$group)) {
-          grouping <- self$groupings[[groupType]]
+        if (!is.null(self$groupMapping[[groupType]]$group)) {
+          grouping <- self$groupMapping[[groupType]]
+
+          groupVariables <- grouping$group
+          if (isOfType(groupVariables, "data.frame")) {
+            # Last group variable is the label in group data.frames
+            # and need to be removed from the check
+            groupVariables <- names(groupVariables)
+            groupVariables <- utils::head(groupVariables, -1)
+          }
+          validateMapping(groupVariables, data)
+
           self$data[, grouping$label] <- grouping$getCaptions(data, metaData)
         }
       }
+      # Dummy variable for default aesthetics
+      self$data$defaultAes <- factor("")
       return(self$data)
     }
   )

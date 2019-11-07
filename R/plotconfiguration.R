@@ -12,10 +12,7 @@ PlotConfiguration <- R6::R6Class(
     xAxis = NULL, # R6 class
     yAxis = NULL, # R6 class
 
-    colorMap = NULL,
-    sizeMap = NULL,
-    shapeMap = NULL,
-
+    theme = NULL,
     filename = NULL,
 
     ## ----------------------------------------------
@@ -24,7 +21,7 @@ PlotConfiguration <- R6::R6Class(
                               subtitle = NULL,
                               xlabel = NULL,
                               ylabel = NULL,
-                              watermark = tlfEnv$currentTheme$watermarkText,
+                              watermark = NULL,
                               legendTitles = NULL,
                               filename = "TestPlot.png",
                               legend = NULL, # R6 class
@@ -39,7 +36,7 @@ PlotConfiguration <- R6::R6Class(
         subtitle = subtitle,
         xlabel = xlabel,
         ylabel = ylabel,
-        watermark = watermark
+        watermark = watermark %||% theme$watermark
       )
 
       # If xlabel and ylabel are not defined, use dataMapping of x, y to label axes
@@ -55,16 +52,14 @@ PlotConfiguration <- R6::R6Class(
       self$xlabel$font <- theme$xlabelFont
       self$ylabel$font <- theme$ylabelFont
 
-
-
       self$filename <- filename
+      self$theme <- theme
 
       self$legend <- legend %||% ifnotnull(
         dataMapping,
         LegendConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping),
         LegendConfiguration$new()
       )
-
       self$xAxis <- xAxis %||% XAxisConfiguration$new()
       self$yAxis <- yAxis %||% YAxisConfiguration$new()
     },

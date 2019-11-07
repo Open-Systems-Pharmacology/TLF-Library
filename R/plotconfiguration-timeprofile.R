@@ -7,14 +7,14 @@ TimeProfilePlotConfiguration <- R6::R6Class(
   inherit = PlotConfiguration,
 
   public = list(
-    LLOQLinesProperties = NULL,
+    lloqLinesProperties = NULL,
 
-    initialize = function(LLOQLinesProperties = tlfEnv$currentTheme$LLOQLinesProperties,
+    initialize = function(lloqLinesProperties = tlfEnv$currentTheme$lloqLinesProperties,
                               title = "Time Profile Plot",
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
                               xlabel = NULL,
                               ylabel = NULL,
-                              watermark = tlfEnv$currentTheme$watermarkText,
+                              watermark = NULL,
                               data = NULL,
                               metaData = NULL,
                               dataMapping = NULL,
@@ -24,24 +24,34 @@ TimeProfilePlotConfiguration <- R6::R6Class(
         subtitle = subtitle,
         xlabel = xlabel,
         ylabel = ylabel,
-        watermark = watermark,
+        watermark = watermark %||% tlfEnv$currentTheme$watermark,
         data = data,
         metaData = metaData,
         dataMapping = dataMapping
       )
 
-      self$LLOQLinesProperties <- LLOQLinesProperties
+      self$lloqLinesProperties <- lloqLinesProperties
     },
 
-    addLLOQLines = function(LLOQLines, plotObject) {
+    addLLOQLines = function(metaData, dataMapping, plotObject) {
+      if (is.null(metaData)) {
+        return(plotObject)
+      }
+
+      LLOQLines <- ifnotnull(
+        dataMapping$y,
+        metaData[[dataMapping$y]]$LLOQ,
+        metaData[[dataMapping$yMin]]$LLOQ
+      )
+
       if (!is.null(LLOQLines)) {
         for (LLOQIndex in seq(1, length(LLOQLines))) {
           plotObject <- plotObject +
             ggplot2::geom_hline(
               yintercept = LLOQLines[LLOQIndex],
-              linetype = self$LLOQLinesProperties$linetype[LLOQIndex],
-              color = self$LLOQLinesProperties$color[LLOQIndex],
-              size = self$LLOQLinesProperties$size[LLOQIndex]
+              linetype = self$lloqLinesProperties$linetype[LLOQIndex],
+              color = self$lloqLinesProperties$color[LLOQIndex],
+              size = self$lloqLinesProperties$size[LLOQIndex]
             )
         }
       }
@@ -49,69 +59,72 @@ TimeProfilePlotConfiguration <- R6::R6Class(
     },
 
     addTimeProfiles = function(plotObject, data, metaData, dataMapping) {
-      mapData <- dataMapping$getMapData(data, metaData)
+      # Check if mapping is included in the data
+      # Add the group mapping and aesthtics variables in the data.frame
+      mapData <- dataMapping$checkMapData(data, metaData)
 
-      color <- self$legend$titles$color %||% "none"
-      shape <- self$legend$titles$shape %||% "none"
-      linetype <- self$legend$titles$linetype %||% "none"
-      fill <- self$legend$titles$fill %||% "none"
-
-      # Define dummy unique value for grouping
-      # Allows further modification of the aesthtic property
-      if (is.null(self$legend$titles$color)) {
-        mapData[, color] <- as.factor(1)
-      }
-      if (is.null(self$legend$titles$shape)) {
-        mapData[, shape] <- as.factor(1)
-      }
-      if (is.null(self$legend$titles$linetype)) {
-        mapData[, linetype] <- as.factor(1)
-      }
-      if (is.null(self$legend$titles$fill)) {
-        mapData[, fill] <- as.factor(1)
-      }
+      # Convert the mapping into characters usable by aes_string
+      mapLabels <- getAesStringMapping(dataMapping)
 
       if (!is.null(dataMapping$y)) {
+        # Plot error bars if yMin and yMax defined
         if (!is.null(dataMapping$yMin) && !is.null(dataMapping$yMax)) {
+          # Shape is not an input of geom_errorbar
           plotObject <- plotObject + ggplot2::geom_errorbar(
-            mapping = aes(
-              x = mapData$x, ymin = mapData$yMin, ymax = mapData$yMax,
-              color = mapData[, color], linetype = mapData[, linetype]
+            data = mapData,
+            mapping = aes_string(
+              x = mapLabels$x, ymin = mapLabels$yMin, ymax = mapLabels$yMax,
+              color = mapLabels$color, size = mapLabels$size
             ),
-            size = 1,
             show.legend = TRUE
           )
         }
-        plotObject <- plotObject + ggplot2::geom_line(
-          mapping = aes(
-            x = mapData$x, y = mapData$y,
-            color = mapData[, color], linetype = mapData[, linetype]
-          ),
-          size = 1,
-          show.legend = TRUE
-        )
-      } else {
-        plotObject <- plotObject + ggplot2::geom_ribbon(
-          mapping = aes(
-            x = mapData$x, ymin = mapData$yMin, ymax = mapData$yMax,
-            fill = mapData[, fill]
-          ),
-          show.legend = TRUE
-        )
-      }
+        # Plot time profile on top
+        # Priority of time profiles Shape > Linetype
+        if (!is.null(dataMapping$groupMapping$linetype$group)) {
+          plotObject <- plotObject + ggplot2::geom_line(
+            data = mapData,
+            mapping = aes_string(
+              x = mapLabels$x, y = mapLabels$y,
+              color = mapLabels$color, linetype = mapLabels$linetype, size = mapLabels$size
+            ),
+            show.legend = TRUE
+          )
 
-      # If no grouping is defined, remove the dummy aesthtic name from the legend
-      if ("none" %in% linetype) {
-        plotObject <- plotObject + guides(linetype = "none")
-      }
-      if ("none" %in% color) {
-        plotObject <- plotObject + guides(color = "none")
-      }
-      if ("none" %in% fill) {
-        plotObject <- plotObject + guides(fill = "none")
-      }
-      if ("none" %in% shape) {
-        plotObject <- plotObject + guides(shape = "none")
+          plotObject <- plotObject +
+            ifEqual("defaultAes", mapLabels$color, guides(color = "none")) +
+            ifEqual("defaultAes", mapLabels$linetype, guides(linetype = "none")) +
+            ifEqual("defaultAes", mapLabels$size, guides(size = "none"))
+        } else {
+          plotObject <- plotObject + ggplot2::geom_point(
+            data = mapData,
+            mapping = aes_string(
+              x = mapLabels$x, y = mapLabels$y,
+              color = mapLabels$color, shape = mapLabels$shape, size = mapLabels$size
+            ),
+            show.legend = TRUE
+          )
+
+          plotObject <- plotObject +
+            ifEqual("defaultAes", mapLabels$color, guides(color = "none")) +
+            ifEqual("defaultAes", mapLabels$shape, guides(shape = "none")) +
+            ifEqual("defaultAes", mapLabels$size, guides(size = "none"))
+        }
+      } else {
+        # Plot shaded area
+        plotObject <- plotObject + ggplot2::geom_ribbon(
+          data = mapData,
+          mapping = aes_string(
+            x = mapLabels$x, ymin = mapLabels$yMin, ymax = mapLabels$yMax,
+            fill = mapLabels$fill
+          ),
+          alpha = self$theme$aesProperties$alpha[1],
+          show.legend = TRUE
+        )
+
+        # If no mapping defined, remove dummy aesthetic label from the legend
+        plotObject <- plotObject +
+          ifEqual("defaultAes", mapLabels$fill, guides(fill = "none"))
       }
 
       return(plotObject)

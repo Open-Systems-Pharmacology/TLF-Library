@@ -27,9 +27,9 @@ LegendConfiguration <- R6::R6Class(
 
       if (!is.null(dataMapping) && !is.null(data)) {
         if ("XYGDataMapping" %in% class(dataMapping)) {
-          self$titles <- LegendTitles$new(groupings = dataMapping$groupings)
+          self$titles <- LegendTitles$new(groupings = dataMapping$groupMapping)
           self$captions <- LegendCaptions$new(
-            groupings = dataMapping$groupings,
+            groupings = dataMapping$groupMapping,
             data = data,
             metaData = metaData
           )

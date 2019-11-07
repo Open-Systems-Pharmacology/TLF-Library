@@ -1,109 +1,10 @@
 # Theme Properties and theme object definitions
 #
 ## -------------------------------------------------
-# Define color palettes for plot labels
+# Load theme properties from a Json file
+load("data/tlfEnvThemesProperties.RData")
+# jsonlite::fromJSON("../data/default-themes.json") if imported from a .json
 
-ThemeEnum <- enum(c("default", "tlf", "bw"))
-ThemeLabelColors <- enum(c("title", "subtitle", "xlabel", "ylabel", "watermark"))
-ThemeAesProperties <- enum(c("color", "size", "shape", "linetype", "fill"))
-
-asThemeLabelColors <- function(x) {
-  x <- ThemeLabelColors
-}
-asThemeAesProperties <- function(x) {
-  x <- ThemeAesProperties
-}
-
-# To associate easily colors to each label and palettes for each aes property
-addValuesToList <- function(listInput, values) {
-  validateIsOfType(listInput, "list")
-  validateIsOfType(values, c("list", "numeric", "character"))
-
-  if (isTRUE(class(values) %in% c("numeric", "character"))) {
-    for (valueIndex in seq(1, length(values))) {
-      listInput[[valueIndex]] <- values[valueIndex]
-    }
-  }
-  if (isTRUE(class(values) %in% "list")) {
-    for (valueName in names(values)) {
-      listInput[[valueName]] <- values[[valueName]]
-    }
-  }
-  return(listInput)
-}
-
-themeLabelColors <- ThemeEnum
-themeAesProperties <- ThemeEnum
-
-themeLabelColors <- lapply(themeLabelColors, asThemeLabelColors)
-themeAesProperties <- lapply(themeAesProperties, asThemeAesProperties)
-
-themeLabelColors$default <- addValuesToList(
-  themeLabelColors$default,
-  c("darkblue", "black", "black", "black", "blue")
-)
-
-themeLabelColors$tlf <- addValuesToList(
-  themeLabelColors$default,
-  c("darkblue", "black", "black", "black", "green")
-)
-
-themeLabelColors$bw <- addValuesToList(
-  themeLabelColors$default,
-  c("black", "black", "black", "black", "grey50")
-)
-
-## -------------------------------------------------
-
-themeAesProperties$default <- lapply(themeAesProperties$default, function(x) {
-  seq(1, 10)
-})
-
-themeAesProperties$tlf <- addValuesToList(
-  themeAesProperties$default,
-  list(
-    color = c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7"),
-    shape = c("circle", "square", "diamond", "triangle"),
-    linetype = c("solid", "dashed", "dotted"),
-    fill = c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-  )
-)
-
-themeAesProperties$bw <- addValuesToList(
-  themeAesProperties$tlf,
-  list(
-    color = c("#000000", "#999999", "#555555", "#222222", "#888888"),
-    fill = c("#000000", "#999999", "#555555", "#222222", "#888888")
-  )
-)
-
-themeAesProperties$big <- themeAesProperties$tlf
-themeAesProperties$big$size <- seq(4, 20, 2)
-
-## -------------------------------------------------
-# Define PK Ratio Lines Properties
-themePKRatioLinesProperties <- data.frame(
-  linetype = c("solid", "dashed", "dashed", "dashed", "dashed"),
-  color = c("black", "blue", "blue", "red", "red"),
-  size = c(2, 1, 1, 1, 1)
-)
-# Otherwise linetype and color are assumed as levels
-themePKRatioLinesProperties$linetype <- as.character(themePKRatioLinesProperties$linetype)
-themePKRatioLinesProperties$color <- as.character(themePKRatioLinesProperties$color)
-
-# Black and White properties
-themePKRatioLinesPropertiesBW <- themePKRatioLinesProperties
-themePKRatioLinesPropertiesBW$color <- as.character(c("#000000", "#555555", "#555555", "#999999", "#999999"))
-themePKRatioLinesPropertiesBW$linetype <- as.character(c("solid", "dashed", "dashed", "dotted", "dotted"))
-
-# Big theme properties
-themePKRatioLinesPropertiesBig <- themePKRatioLinesProperties
-themePKRatioLinesPropertiesBig$size <- themePKRatioLinesProperties$size * 1.5
-
-## -------------------------------------------------
-# Define LLOQ Lines Properties
-themeLLOQLinesProperties <- list(linetype = "dashed", color = "black", size = 1)
-## -------------------------------------------------
 
 #' @title ThemeFont
 #' @docType class
@@ -120,7 +21,7 @@ ThemeFont <- R6::R6Class(
     ylabelFont = NULL,
     watermarkFont = NULL,
 
-    initialize = function(labelColors = themeLabelColors$default,
+    initialize = function(labelColors = tlfEnvThemesProperties$default$labelColors,
                               labelBaseSize = 14) {
 
       # Set font properties of labels
@@ -133,6 +34,38 @@ ThemeFont <- R6::R6Class(
   )
 )
 
+#' @title ThemeAesProperties
+#' @docType class
+#' @description
+#' Theme aesthetics class to set aesthetic properties plots
+#' @include utils.R
+#' @export
+ThemeAesProperties <- R6::R6Class(
+  "ThemeAesProperties",
+  public = list(
+    color = NULL,
+    shape = NULL,
+    size = NULL,
+    fill = NULL,
+    linetype = NULL,
+    alpha = NULL,
+
+    initialize = function(aesProperties = tlfEnvThemesProperties$default$aesProperties,
+                              color = NULL,
+                              shape = NULL,
+                              size = NULL,
+                              fill = NULL,
+                              linetype = NULL,
+                              alpha = NULL) {
+      self$color <- color %||% aesProperties$color
+      self$shape <- shape %||% aesProperties$shape
+      self$size <- size %||% aesProperties$size
+      self$fill <- fill %||% aesProperties$fill
+      self$linetype <- linetype %||% aesProperties$linetype
+      self$alpha <- alpha %||% aesProperties$alpha
+    }
+  )
+)
 
 #' @title Theme
 #' @docType class
@@ -144,27 +77,38 @@ Theme <- R6::R6Class(
   "Theme",
   inherit = ThemeFont,
   public = list(
-    watermarkText = NULL,
+    watermark = NULL,
+    background = NULL,
     aesProperties = NULL,
 
     pkRatioLinesProperties = NULL,
-    LLOQLinesProperties = NULL,
+    lloqLinesProperties = NULL,
+    histogramLinesProperties = NULL,
 
-    initialize = function(labelColors = themeLabelColors$default,
+    initialize = function(themesProperties = tlfEnvThemesProperties$default,
+                              labelColors = NULL,
                               labelBaseSize = 14,
-                              watermarkText = "",
-                              aesProperties = themeAesProperties$default,
-                              pkRatioLinesProperties = themePKRatioLinesProperties,
-                              LLOQLinesProperties = themeLLOQLinesProperties) {
-      super$initialize(labelColors, labelBaseSize)
-      self$watermarkText <- watermarkText
+                              watermark = NULL,
+                              background = NULL,
+                              aesProperties = NULL,
+                              pkRatioLinesProperties = NULL,
+                              lloqLinesProperties = NULL,
+                              histogramLinesProperties = NULL) {
+      super$initialize(
+        labelColors = labelColors %||% themesProperties$labelColors,
+        labelBaseSize = labelBaseSize
+      )
+
+      self$watermark <- watermark %||% themesProperties$watermark
+      self$background <- background %||% themesProperties$background
 
       # Set the color, shape, size maps
-      self$aesProperties <- aesProperties
+      self$aesProperties <- aesProperties %||% ThemeAesProperties$new(aesProperties = themesProperties$aesProperties)
 
       # Set the properties of specific plots
-      self$pkRatioLinesProperties <- pkRatioLinesProperties
-      self$LLOQLinesProperties <- LLOQLinesProperties
+      self$pkRatioLinesProperties <- pkRatioLinesProperties %||% themesProperties$pkRatioLinesProperties
+      self$lloqLinesProperties <- lloqLinesProperties %||% themesProperties$pkRatioLinesProperties
+      self$histogramLinesProperties <- histogramLinesProperties %||% themesProperties$histogramLinesProperties
     }
   )
 )
@@ -176,40 +120,25 @@ Theme <- R6::R6Class(
 #' @description
 #' Default theme for plot configuration
 #' @export
-defaultTheme <- Theme$new(labelColors = themeLabelColors$default)
+defaultTheme <- Theme$new()
 
 #' @title tlfTheme
 #' @description
 #' tlf theme for plot configuration
 #' @export
-tlfTheme <- Theme$new(
-  labelColors = themeLabelColors$tlf,
-  watermarkText = "tlf-watermark",
-  aesProperties = themeAesProperties$tlf
-)
+tlfTheme <- Theme$new(themesProperties = tlfEnvThemesProperties$tlf)
 
 #' @title bwTheme
 #' @description
 #' Black and White theme for plot configuration
 #' @export
-bwTheme <- Theme$new(
-  labelColors = themeLabelColors$bw,
-  watermarkText = "black & white",
-  aesProperties = themeAesProperties$bw,
-  pkRatioLinesProperties = themePKRatioLinesPropertiesBW
-)
+bwTheme <- Theme$new(themesProperties = tlfEnvThemesProperties$bw)
 
 #' @title bigTheme
 #' @description
 #' Big theme for plot configuration
 #' @export
-bigTheme <- Theme$new(
-  labelColors = themeLabelColors$default,
-  labelBaseSize = 20,
-  watermarkText = "Big",
-  aesProperties = themeAesProperties$big,
-  pkRatioLinesProperties = themePKRatioLinesPropertiesBig
-)
+bigTheme <- Theme$new(labelBaseSize = 20, watermark = "Big")
 
 ## -------------------------------------------------
 #' @title useTheme

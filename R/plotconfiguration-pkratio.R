@@ -13,7 +13,7 @@ PKRatioPlotConfiguration <- R6::R6Class(
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
                               xlabel = NULL,
                               ylabel = NULL,
-                              watermark = tlfEnv$currentTheme$watermarkText,
+                              watermark = NULL,
                               data = NULL,
                               metaData = NULL,
                               dataMapping = NULL,
@@ -23,7 +23,7 @@ PKRatioPlotConfiguration <- R6::R6Class(
         subtitle = subtitle,
         xlabel = xlabel,
         ylabel = ylabel,
-        watermark = watermark,
+        watermark = watermark %||% tlfEnv$currentTheme$watermark,
         data = data,
         metaData = metaData,
         dataMapping = dataMapping
@@ -46,37 +46,30 @@ PKRatioPlotConfiguration <- R6::R6Class(
     },
 
     addPKRatios = function(plotObject, data, metaData, dataMapping) {
-      mapData <- dataMapping$getMapData(data, metaData)
-      
-      color <- self$legend$titles$color %||% "none"
-      shape <- self$legend$titles$shape %||% "none"
+      # Check if mapping is included in the data
+      # Add the group mapping and aesthtics variables in the data.frame
+      mapData <- dataMapping$checkMapData(data, metaData)
 
-      # Define dummy unique value for grouping
-      # Allows further modification of the aesthtic property
-      if (is.null(self$legend$titles$color)) {
-        mapData[, color] <- as.factor(1)
-      }
-      if (is.null(self$legend$titles$shape)) {
-        mapData[, shape] <- as.factor(1)
-      }
+      # Convert the mapping into characters usable by aes_string
+      mapLabels <- getAesStringMapping(dataMapping)
 
       plotObject <- plotObject + geom_point(
-        mapping = aes(
-          x = mapData$x, y = mapData$y,
-          color = mapData[, color],
-          shape = mapData[, shape]
+        data = mapData,
+        mapping = aes_string(
+          x = mapLabels$x,
+          y = mapLabels$y,
+          color = mapLabels$color,
+          shape = mapLabels$shape,
+          size = mapLabels$size
         ),
-        size = 1, # TO DO: discuss if this is a set entry of current Theme or part of size palette
         show.legend = TRUE
       )
 
-      # If no grouping is defined, remove the dummy aesthtic name from the legend
-      if ("none" %in% shape) {
-        plotObject <- plotObject + guides(shape = "none")
-      }
-      if ("none" %in% color) {
-        plotObject <- plotObject + guides(color = "none")
-      }
+      # If no mapping defined, remove dummy aesthetic label from the legend
+      plotObject <- plotObject +
+        ifEqual("defaultAes", mapLabels$color, guides(color = "none")) +
+        ifEqual("defaultAes", mapLabels$shape, guides(shape = "none")) +
+        ifEqual("defaultAes", mapLabels$size, guides(size = "none"))
 
       return(plotObject)
     }
