@@ -9,8 +9,9 @@ PlotConfiguration <- R6::R6Class(
   ## List of plotConfiguration Variables
   public = list(
     legend = NULL, # R6 class
-    xAxis = NULL, # R6 class
-    yAxis = NULL, # R6 class
+    xAxis = NULL,  # R6 class
+    yAxis = NULL,  # R6 class
+    background = NULL, # R6 class
 
     theme = NULL,
     filename = NULL,
@@ -24,9 +25,10 @@ PlotConfiguration <- R6::R6Class(
                               watermark = NULL,
                               legendTitles = NULL,
                               filename = "TestPlot.png",
-                              legend = NULL, # R6 class
+                              legend = NULL,
                               xAxis = NULL,
                               yAxis = NULL,
+                              background = NULL,
                               data = NULL,
                               metaData = NULL,
                               dataMapping = NULL,
@@ -35,8 +37,7 @@ PlotConfiguration <- R6::R6Class(
         title = title,
         subtitle = subtitle,
         xlabel = xlabel,
-        ylabel = ylabel,
-        watermark = watermark %||% theme$watermark
+        ylabel = ylabel
       )
 
       # If xlabel and ylabel are not defined, use dataMapping of x, y to label axes
@@ -62,6 +63,8 @@ PlotConfiguration <- R6::R6Class(
       )
       self$xAxis <- xAxis %||% XAxisConfiguration$new()
       self$yAxis <- yAxis %||% YAxisConfiguration$new()
+      self$background <- background %||% BackgroundConfiguration$new(watermark = watermark,
+                                                                     theme = theme)
     },
 
     ## ---------------------------------------------------------------
@@ -84,6 +87,11 @@ PlotConfiguration <- R6::R6Class(
       plotObject <- self$xAxis$setPlotAxis(plotObject)
       plotObject <- self$yAxis$setPlotAxis(plotObject)
 
+      return(plotObject)
+    },
+    
+    setPlotBackground = function(plotObject) {
+      plotObject <- self$background$setBackground(plotObject)
       return(plotObject)
     },
 
