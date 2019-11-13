@@ -21,16 +21,14 @@ plotBoxWhisker <- function(data,
   # If no data mapping or plot configuration is input, use default
   metaData <- metaData %||% metaDataHelper(data)
   dataMapping <- dataMapping %||% BoxWhiskerDataMapping$new()
-  plotConfiguration <- plotConfiguration %||% BoxWhiskerConfiguration$new(
+  plotConfiguration <- plotConfiguration %||% BoxWhiskerPlotConfiguration$new(
     data = data,
     metaData = metaData,
     dataMapping = dataMapping
   )
   
   validateIsOfType(dataMapping, BoxWhiskerDataMapping)
-  validateIsOfType(plotConfiguration, BoxWhiskerConfiguration)
-  
-  # mapData <- dataMapping$getMapData(data, metaData)
+  validateIsOfType(plotConfiguration, BoxWhiskerPlotConfiguration)
   
   plotObject <- ggplot2::ggplot()
   
@@ -38,11 +36,11 @@ plotBoxWhisker <- function(data,
   plotObject <- plotConfiguration$setPlotBackground(plotObject)
   plotObject <- plotConfiguration$addBoxWhisker(plotObject, data, metaData, dataMapping)
   
-  #plotObject <- plotConfiguration$addPKRatios(plotObject, data, metaData, dataMapping)
+  #plotObject <- plotConfiguration$addOutliers(plotObject, data, metaData, dataMapping)
   
-  #plotObject <- plotConfiguration$setPlotLabels(plotObject)
+  plotObject <- plotConfiguration$setPlotLabels(plotObject)
   #plotObject <- plotConfiguration$setPlotProperties(plotObject)
-  #plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)
+  plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)
   
   return(plotObject)
 }
