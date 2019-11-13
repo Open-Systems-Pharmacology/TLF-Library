@@ -12,31 +12,21 @@ HistogramPlotConfiguration <- R6::R6Class(
     binWidth = NULL,
     verticalLineFunctions = NULL,
     verticalLineFunctionNames = NULL,
-    # verticalLineProperties = NULL, # TO DO add default values from theme
+    verticalLineProperties = NULL,
 
-    initialize = function( # verticalLineProperties = tlfEnv$currentTheme$verticalLineProperties,
+    initialize = function(verticalLineProperties = tlfEnv$currentTheme$histogramLinesProperties,
                               title = "Histogram",
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
-                              xlabel = NULL,
-                              ylabel = NULL,
-                              watermark = tlfEnv$currentTheme$watermarkText,
-                              data = NULL,
-                              metaData = NULL,
-                              dataMapping = NULL,
+                              ...,
                               binWidth = NULL,
                               bins = NULL,
                               verticalLineFunctions = NULL,
-                              verticalLineFunctionNames = NULL,
-                              ...) {
-      super$initialize(...,
+                              verticalLineFunctionNames = NULL
+                              ) {
+      super$initialize(
         title = title,
         subtitle = subtitle,
-        xlabel = xlabel,
-        ylabel = ylabel,
-        watermark = watermark,
-        data = data,
-        metaData = metaData,
-        dataMapping = dataMapping
+        ...
       )
 
       self$binWidth <- binWidth
@@ -44,7 +34,7 @@ HistogramPlotConfiguration <- R6::R6Class(
 
       self$verticalLineFunctions <- verticalLineFunctions
       self$verticalLineFunctionNames <- verticalLineFunctionNames
-      # self$verticalLineProperties <- verticalLineProperties
+      self$verticalLineProperties <- verticalLineProperties
     },
 
     addHistograms = function(plotObject,
@@ -55,34 +45,28 @@ HistogramPlotConfiguration <- R6::R6Class(
       binWidth <- ifnotnull(binWidth, binWidth, self$binWidth)
       bins <- ifnotnull(bins, bins, self$bins)
 
-      self$mapData <- dataMapping$getMapData(data, metaData)
-
-      fill <- self$legend$titles$fill %||% "none"
-
-      # Define dummy unique value for grouping
-      # Allows further modification of the aesthetic property
-      if (is.null(self$legend$titles$fill)) {
-        self$mapData[, fill] <- as.factor(1)
-      }
-
+      mapData <- dataMapping$checkMapData(data, metaData)
+      
+      # Convert the mapping into characters usable by aes_string
+      mapLabels <- getAesStringMapping(dataMapping)
+      
       plotObject <- plotObject + ggplot2::geom_histogram(
-        mapping = aes(x = self$mapData$x, fill = self$mapData[, fill ]),
+        data = mapData,
+        mapping = aes_string(x = mapLabels$x, fill = mapLabels$fill),
         show.legend = TRUE,
         binwidth = binWidth,
         bins = bins,
-        alpha = .5 # TO DO set default value of transparency within Theme
+        alpha = theme$aesProperties$alpha
       )
-
-      # If no grouping is defined, remove the dummy aesthetic name from the legend
-      if ("none" %in% fill) {
-        plotObject <- plotObject + guides(fill = "none")
-      }
+      
+      # If no mapping defined, remove dummy aesthetic label from the legend
+      plotObject <- plotObject +
+        ifEqual("defaultAes", mapLabels$fill, guides(fill = "none"))
 
       return(plotObject)
     },
 
-
-    addVerticalLines = function(plotObject) {
+    addVerticalLines = function(data, metaData, dataMapping, plotObject) {
       if (!is.null(self$verticalLineFunctions)) {
         aggSummary <- AggregationSummary$new(
           data = self$mapData,
@@ -94,7 +78,6 @@ HistogramPlotConfiguration <- R6::R6Class(
           aggregationUnitsVector = NULL,
           aggregationDimensionsVector = NULL
         )
-
 
         tidyHelper <- reshape2::melt(aggSummary$dfHelper)
         verticalLineCaptions <- getDefaultCaptions(data = tidyHelper[, -ncol(tidyHelper), drop = FALSE], metaData = NULL)
