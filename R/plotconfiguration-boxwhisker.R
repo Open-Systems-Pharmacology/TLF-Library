@@ -22,7 +22,7 @@ BoxWhiskerPlotConfiguration <- R6::R6Class(
       
       mapData <- dataMapping$checkMapData(data, metaData)
       
-      # Get the box plot quantiles from getBoxWhiskerMeasure
+      # Get the box plot quantiles from dataMapping
       mapQuantiles <- dataMapping$getQuantiles(data)
       
       # Convert the mapping into characters usable by aes_string
@@ -53,6 +53,32 @@ BoxWhiskerPlotConfiguration <- R6::R6Class(
       return(plotObject)
     },
     
-    addOutliers = function(plotObject, data, metaData, dataMapping) {}
+    addOutliers = function(plotObject, data, metaData, dataMapping) {
+      # TO DO : add method to plot outliers
+      mapData <- dataMapping$checkMapData(data, metaData)
+      
+      # Get the outliers from data mapping method
+      # mapOutliers <- dataMapping$getOutliers(data)
+      mapOutliers <- mapData
+      
+      # Convert the mapping into characters usable by aes_string
+      mapLabels <- getAesStringMapping(dataMapping)
+      
+      plotObject <- plotObject + ggplot2::geom_point(data = mapOutliers,
+                                                       mapping = aes_string(x = mapLabels$x,
+                                                                            y = "outliers",
+                                                                            shape = mapLabels$shape,
+                                                                            color = mapLabels$color,
+                                                                            size = mapLabels$size
+                                                       ),
+                                                       show.legend = TRUE)
+      
+      plotObject <- plotObject +
+        ifEqual("defaultAes", mapLabels$shape, guides(color = "none")) +
+        ifEqual("defaultAes", mapLabels$color, guides(color = "none")) +
+        ifEqual("defaultAes", mapLabels$size, guides(size = "none"))
+      
+      return(plotObject)
+    }
   )
 )
