@@ -4,10 +4,10 @@
 \alias{setWatermark}
 \title{setWatermark}
 \usage{
-setWatermark(plotHandle, label, angle = 30, alpha = 0.4)
+setWatermark(plotObject, label, angle = 30, alpha = 0.4)
 }
 \arguments{
-\item{plotHandle}{ggplot object}
+\item{plotObject}{ggplot object}
 
 \item{label}{to be written in watermark (class Label and character allowed)}
 
@@ -16,7 +16,7 @@ setWatermark(plotHandle, label, angle = 30, alpha = 0.4)
 \item{alpha}{(optional argument) transparency of the watermark}
 }
 \value{
-plotHandle ggplot object with watermark background as a grob
+plotObject ggplot object with watermark background as a grob
 }
 \description{
 setWatermark set watermark as defined by label
