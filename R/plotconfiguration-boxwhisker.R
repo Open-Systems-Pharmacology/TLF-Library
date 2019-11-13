@@ -20,16 +20,16 @@ BoxWhiskerPlotConfiguration <- R6::R6Class(
     
     addBoxWhisker = function(plotObject, data, metaData, dataMapping) {
       
-      mapData <- dataMapping$checkMapData(mapData, metaData)
+      mapData <- dataMapping$checkMapData(data, metaData)
       
       # Get the box plot quantiles from getBoxWhiskerMeasure
-      mapQuantiles <- dataMapping$getQUantiles(data)
+      mapQuantiles <- dataMapping$getQuantiles(data)
       
       # Convert the mapping into characters usable by aes_string
       mapLabels <- getAesStringMapping(dataMapping)
       
       plotObject <- plotObject + ggplot2::geom_boxplot(data = mapQuantiles,
-                             mapping = aes_string(x=mapLabels$x,
+                             mapping = aes_string(x = mapLabels$x,
                                                   ymin = mapLabels$yMin,
                                                   lower = mapLabels$lower,
                                                   middle = mapLabels$middle,
@@ -38,7 +38,9 @@ BoxWhiskerPlotConfiguration <- R6::R6Class(
                                                   fill = mapLabels$fill,
                                                   color = mapLabels$color,
                                                   linetype = mapLabels$linetype,
-                                                  size = mapLabels$size),
+                                                  size = mapLabels$size
+                                                  ),
+                             alpha = self$theme$aesProperties$alpha[1],
                              show.legend = TRUE,
                              stat ="identity")
       
