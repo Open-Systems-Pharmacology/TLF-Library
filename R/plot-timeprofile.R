@@ -36,7 +36,7 @@ plotTimeProfile <- function(data,
 
   plotObject <- ggplot2::ggplot()
 
-  plotObject <- plotConfiguration$setWatermark(plotObject)
+  plotObject <- plotConfiguration$setPlotBackground(plotObject)
 
   plotObject <- plotConfiguration$addLLOQLines(metaData, dataMapping, plotObject)
 

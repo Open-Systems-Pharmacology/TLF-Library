@@ -43,6 +43,7 @@ plotHistogram <- function(data,
   validateIsOfType(plotConfiguration, HistogramPlotConfiguration)
 
   plotObject <- ggplot2::ggplot()
+  plotObject <- plotConfiguration$setPlotBackground(plotObject)
   plotObject <- plotConfiguration$addHistograms(plotObject, data = data, metaData = metaData, dataMapping = dataMapping, bins = bins, binWidth = binWidth)
   plotObject <- plotConfiguration$setPlotLabels(plotObject)
   plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)

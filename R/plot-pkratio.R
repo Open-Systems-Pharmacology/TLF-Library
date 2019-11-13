@@ -35,7 +35,7 @@ plotPKRatio <- function(data,
   plotObject <- ggplot2::ggplot()
 
   # Add Plot Configuration layers and PK Ratios
-  plotObject <- plotConfiguration$setWatermark(plotObject)
+  plotObject <- plotConfiguration$setPlotBackground(plotObject)
   plotObject <- plotConfiguration$addPKRatioLines(dataMapping$pkRatioLines, plotObject)
 
   plotObject <- plotConfiguration$addPKRatios(plotObject, data, metaData, dataMapping)
