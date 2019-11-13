@@ -88,8 +88,8 @@ Theme <- R6::R6Class(
     initialize = function(themesProperties = tlfEnvThemesProperties$default,
                               labelColors = NULL,
                               labelBaseSize = 14,
-                              watermark = NULL,
                               background = NULL,
+                              watermark = NULL,
                               aesProperties = NULL,
                               pkRatioLinesProperties = NULL,
                               lloqLinesProperties = NULL,
@@ -99,8 +99,8 @@ Theme <- R6::R6Class(
         labelBaseSize = labelBaseSize
       )
 
-      self$watermark <- watermark %||% themesProperties$watermark
       self$background <- background %||% themesProperties$background
+      ifnotnull(watermark, self$background$watermark <- watermark)
 
       # Set the color, shape, size maps
       self$aesProperties <- aesProperties %||% ThemeAesProperties$new(aesProperties = themesProperties$aesProperties)
