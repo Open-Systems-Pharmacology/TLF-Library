@@ -15,10 +15,10 @@ XYGDataMapping <- R6::R6Class(
     
     checkMapData = function(data, metaData = NULL) {
       validateMapping(self$x, data)
-      validateMapping(self$y, data)
+      validateMapping(self$y, data, nullAllowed=TRUE)
 
-      self$data <- data[, c(self$x, self$y)]
-
+      self$data <- data[, c(self$x, self$y), drop=FALSE]
+      
       # All possible Groupings are listed in the enum LegendTypes
       for (groupType in LegendTypes) {
         if (!is.null(self$groupMapping[[groupType]]$group)) {
@@ -32,7 +32,6 @@ XYGDataMapping <- R6::R6Class(
             groupVariables <- utils::head(groupVariables, -1)
           }
           validateMapping(groupVariables, data)
-
           self$data[, grouping$label] <- grouping$getCaptions(data, metaData)
         }
       }
