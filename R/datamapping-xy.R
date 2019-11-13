@@ -14,13 +14,13 @@ XYDataMapping <- R6::R6Class(
       self$x <- x
       self$y <- y
     },
-    
+
     checkMapData = function(data, metaData = NULL) {
       validateMapping(self$x, data)
       validateMapping(self$y, data)
-      
+
       self$data <- data[, c(self$x, self$y)]
-      
+
       # Dummy variable for default aesthetics
       self$data$defaultAes <- factor("")
       return(self$data)

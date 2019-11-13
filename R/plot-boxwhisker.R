@@ -15,9 +15,9 @@
 #' @export
 #'
 plotBoxWhisker <- function(data,
-                        metaData = NULL,
-                        dataMapping = NULL,
-                        plotConfiguration = NULL) {
+                           metaData = NULL,
+                           dataMapping = NULL,
+                           plotConfiguration = NULL) {
   # If no data mapping or plot configuration is input, use default
   metaData <- metaData %||% metaDataHelper(data)
   dataMapping <- dataMapping %||% BoxWhiskerDataMapping$new()
@@ -26,22 +26,22 @@ plotBoxWhisker <- function(data,
     metaData = metaData,
     dataMapping = dataMapping
   )
-  
+
   validateIsOfType(dataMapping, BoxWhiskerDataMapping)
   validateIsOfType(plotConfiguration, BoxWhiskerPlotConfiguration)
-  
+
   plotObject <- ggplot2::ggplot()
-  
+
   # Add Plot Configuration layers and box whisker plots
   plotObject <- plotConfiguration$setPlotBackground(plotObject)
   plotObject <- plotConfiguration$addBoxWhisker(plotObject, data, metaData, dataMapping)
   # TO DO: create addOutliers method
-  #plotObject <- plotConfiguration$addOutliers(plotObject, data, metaData, dataMapping)
-  
+  # plotObject <- plotConfiguration$addOutliers(plotObject, data, metaData, dataMapping)
+
   plotObject <- plotConfiguration$setPlotLabels(plotObject)
   # TO DO: fix x axis which has become discrete, scale_x_continous crashes
-  #plotObject <- plotConfiguration$setPlotProperties(plotObject)
+  # plotObject <- plotConfiguration$setPlotProperties(plotObject)
   plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)
-  
+
   return(plotObject)
 }

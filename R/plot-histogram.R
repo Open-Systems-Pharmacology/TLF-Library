@@ -49,6 +49,6 @@ plotHistogram <- function(data,
   plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)
   plotObject <- plotConfiguration$addVerticalLines(plotObject, data, metaData, dataMapping)
   plotObject <- plotConfiguration$setPlotProperties(plotObject)
-  
+
   return(plotObject)
 }

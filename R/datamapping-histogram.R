@@ -10,9 +10,9 @@ HistogramDataMapping <- R6::R6Class(
     verticalLineFunctionNames = NULL,
     verticalLineFunctions = NULL,
     initialize = function(verticalLineGroupings = NULL,
-                          verticalLineFunctionNames = c("mean", "median"),
-                          verticalLineFunctions = c(mean,median),
-                          ...) {
+                              verticalLineFunctionNames = c("mean", "median"),
+                              verticalLineFunctions = c(mean, median),
+                              ...) {
       super$initialize(...)
       self$verticalLineGroupings <- verticalLineGroupings
       self$verticalLineFunctionNames <- verticalLineFunctionNames

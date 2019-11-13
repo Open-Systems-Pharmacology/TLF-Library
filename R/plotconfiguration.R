@@ -9,8 +9,8 @@ PlotConfiguration <- R6::R6Class(
   ## List of plotConfiguration Variables
   public = list(
     legend = NULL, # R6 class
-    xAxis = NULL,  # R6 class
-    yAxis = NULL,  # R6 class
+    xAxis = NULL, # R6 class
+    yAxis = NULL, # R6 class
     background = NULL, # R6 class
 
     theme = NULL,
@@ -63,8 +63,10 @@ PlotConfiguration <- R6::R6Class(
       )
       self$xAxis <- xAxis %||% XAxisConfiguration$new()
       self$yAxis <- yAxis %||% YAxisConfiguration$new()
-      self$background <- background %||% BackgroundConfiguration$new(watermark = watermark,
-                                                                     theme = theme)
+      self$background <- background %||% BackgroundConfiguration$new(
+        watermark = watermark,
+        theme = theme
+      )
     },
 
     ## ---------------------------------------------------------------
@@ -89,7 +91,7 @@ PlotConfiguration <- R6::R6Class(
 
       return(plotObject)
     },
-    
+
     setPlotBackground = function(plotObject) {
       plotObject <- self$background$setBackground(plotObject)
       return(plotObject)

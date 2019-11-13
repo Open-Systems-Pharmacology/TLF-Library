@@ -29,7 +29,7 @@ TimeProfileDataMapping <- R6::R6Class(
       self$yMax <- yMax
       self$LLOQ <- LLOQ
     },
-    
+
     checkMapData = function(data, metaData = NULL) {
       validateMapping(self$x, data)
       validateMapping(self$y, data, nullAllowed = TRUE)

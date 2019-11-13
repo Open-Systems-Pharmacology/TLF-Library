@@ -12,13 +12,13 @@ XYGDataMapping <- R6::R6Class(
       super$initialize(...)
       self$groupMapping <- groupMapping %||% GroupMapping$new()
     },
-    
+
     checkMapData = function(data, metaData = NULL) {
       validateMapping(self$x, data)
-      validateMapping(self$y, data, nullAllowed=TRUE)
+      validateMapping(self$y, data, nullAllowed = TRUE)
 
-      self$data <- data[, c(self$x, self$y), drop=FALSE]
-      
+      self$data <- data[, c(self$x, self$y), drop = FALSE]
+
       # All possible Groupings are listed in the enum LegendTypes
       for (groupType in LegendTypes) {
         if (!is.null(self$groupMapping[[groupType]]$group)) {
