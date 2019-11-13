@@ -10,18 +10,14 @@ HistogramPlotConfiguration <- R6::R6Class(
     mapData = NULL,
     bins = NULL,
     binWidth = NULL,
-    verticalLineFunctions = NULL,
-    verticalLineFunctionNames = NULL,
     verticalLineProperties = NULL,
 
-    initialize = function(verticalLineProperties = tlfEnv$currentTheme$histogramLinesProperties,
-                              title = "Histogram",
+    initialize = function(title = "Histogram",
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
                               ...,
                               binWidth = NULL,
                               bins = NULL,
-                              verticalLineFunctions = NULL,
-                              verticalLineFunctionNames = NULL
+                          verticalLineProperties = tlfEnv$currentTheme$histogramLinesProperties
                               ) {
       super$initialize(
         title = title,
@@ -32,8 +28,6 @@ HistogramPlotConfiguration <- R6::R6Class(
       self$binWidth <- binWidth
       self$bins <- bins
 
-      self$verticalLineFunctions <- verticalLineFunctions
-      self$verticalLineFunctionNames <- verticalLineFunctionNames
       self$verticalLineProperties <- verticalLineProperties
     },
 
@@ -56,7 +50,7 @@ HistogramPlotConfiguration <- R6::R6Class(
         show.legend = TRUE,
         binwidth = binWidth,
         bins = bins,
-        alpha = theme$aesProperties$alpha
+        alpha = self$theme$aesProperties$alpha[1]
       )
       
       # If no mapping defined, remove dummy aesthetic label from the legend
@@ -66,56 +60,45 @@ HistogramPlotConfiguration <- R6::R6Class(
       return(plotObject)
     },
 
-    addVerticalLines = function(data, metaData, dataMapping, plotObject) {
-      if (!is.null(self$verticalLineFunctions)) {
+    addVerticalLines = function(plotObject, data, metaData, dataMapping) {
+      if (!is.null(dataMapping$verticalLineFunctions)) {
+          
+        mapData <- dataMapping$checkMapData(data, metaData)
+        
         aggSummary <- AggregationSummary$new(
-          data = self$mapData,
+          data = mapData,
           xColumnNames = NULL,
-          groupingColumnNames = self$legend$titles$fill,
-          yColumnNames = "x",
-          aggregationFunctionsVector = self$verticalLineFunctions,
-          aggregationFunctionNames = self$verticalLineFunctionNames,
+          groupingColumnNames = dataMapping$groupMapping$fill$label,
+          yColumnNames = dataMapping$x,
+          aggregationFunctionsVector = dataMapping$verticalLineFunctions,
+          aggregationFunctionNames = dataMapping$verticalLineFunctionNames,
           aggregationUnitsVector = NULL,
           aggregationDimensionsVector = NULL
         )
-
+        
+        # melt reshapes a tidy data.frame with variable names as "variable" and "value"
         tidyHelper <- reshape2::melt(aggSummary$dfHelper)
-        verticalLineCaptions <- getDefaultCaptions(data = tidyHelper[, -ncol(tidyHelper), drop = FALSE], metaData = NULL)
-
-
-        if (TRUE) {
-          tidyHelper$sv <- verticalLineCaptions
-          verticalLineLegendName <- "Vertical line legend"
-          plotObject <- plotObject + geom_vline(
-            data = tidyHelper,
-            aes(
-              xintercept = "value", # WAS aes_string
-              color = "sv",
-              linetype = "sv"
-            )
-          ) +
-            scale_colour_manual(
-              name = verticalLineLegendName,
-              values = c("red", "red", "blue", "blue"),
-              labels = verticalLineCaptions
-            ) +
-            scale_linetype_manual(
-              name = verticalLineLegendName,
-              values = c(1, 2, 1, 2),
-              labels = verticalLineCaptions
-            )
-        } else {
-          plotObject <- plotObject + geom_vline(
+        
+        # Left here, in case more refined named are asked for legend
+        # verticalLineCaptions <- getDefaultCaptions(data = tidyHelper[, -ncol(tidyHelper), drop = FALSE], metaData = NULL)
+        
+        plotObject <- plotObject + ggplot2::geom_vline(
             data = tidyHelper,
             aes_string(
               xintercept = "value",
-              color = self$legend$titles$fill,
-              linetype = "variable"
-            )
-          )
-        }
+              color = dataMapping$groupMapping$fill$label,
+              linetype = "variable"),
+            size = self$verticalLineProperties$size[1],
+            show.legend = TRUE
+        )  
+        
+        # Legend linetype
+        plotObject <- plotObject + guides(color = "none",
+                                          linetype = guide_legend(title = "Stat", 
+                                                                  labels = dataMapping$verticalLineFunctionNames,
+                                                                  values = self$verticalLineProperties$linetype)) +
+          scale_linetype_discrete(labels = dataMapping$verticalLineFunctionNames)
       }
-
       return(plotObject)
     }
   )
