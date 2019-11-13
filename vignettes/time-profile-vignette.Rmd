@@ -314,7 +314,7 @@ When a `GroupMapping` object is supplied upon construction of the `TimeProfileDa
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated", 
                                         groupMapping = groups1)
 
-pander::pandoc.table(tpMapping$getMapData(data = timeProfileDataFrame,
+pander::pandoc.table(tpMapping$checkMapData(data = timeProfileDataFrame,
                                           metaData = timeProfileMetaData))
 ```
 
@@ -348,7 +348,7 @@ hlp <- AggregationSummary$new(data = timeProfileDataFrame,
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated Mean", 
                                         yMin = "Simulated Min", yMax = "Simulated Max")
 
-pander::pandoc.table(tpMapping$getMapData(data = hlp$dfHelper,
+pander::pandoc.table(tpMapping$checkMapData(data = hlp$dfHelper,
                                           metaData = hlp$metaDataHelper))
 ```
 
