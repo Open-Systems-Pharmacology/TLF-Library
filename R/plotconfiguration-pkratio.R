@@ -11,22 +11,11 @@ PKRatioPlotConfiguration <- R6::R6Class(
     initialize = function(pkRatioLinesProperties = tlfEnv$currentTheme$pkRatioLinesProperties,
                               title = "PK Ratio Plot",
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
-                              xlabel = NULL,
-                              ylabel = NULL,
-                              watermark = NULL,
-                              data = NULL,
-                              metaData = NULL,
-                              dataMapping = NULL,
                               ...) {
       super$initialize(
         title = title,
         subtitle = subtitle,
-        xlabel = xlabel,
-        ylabel = ylabel,
-        watermark = watermark %||% tlfEnv$currentTheme$watermark,
-        data = data,
-        metaData = metaData,
-        dataMapping = dataMapping
+        ...
       )
 
       self$pkRatioLinesProperties <- pkRatioLinesProperties

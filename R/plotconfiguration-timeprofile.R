@@ -12,22 +12,11 @@ TimeProfilePlotConfiguration <- R6::R6Class(
     initialize = function(lloqLinesProperties = tlfEnv$currentTheme$lloqLinesProperties,
                               title = "Time Profile Plot",
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
-                              xlabel = NULL,
-                              ylabel = NULL,
-                              watermark = NULL,
-                              data = NULL,
-                              metaData = NULL,
-                              dataMapping = NULL,
                               ...) {
       super$initialize(
         title = title,
         subtitle = subtitle,
-        xlabel = xlabel,
-        ylabel = ylabel,
-        watermark = watermark %||% tlfEnv$currentTheme$watermark,
-        data = data,
-        metaData = metaData,
-        dataMapping = dataMapping
+        ...
       )
 
       self$lloqLinesProperties <- lloqLinesProperties
