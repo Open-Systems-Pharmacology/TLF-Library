@@ -7,7 +7,7 @@ BoxWhiskerPlotConfiguration <- R6::R6Class(
   inherit = PlotConfiguration,
 
   public = list(
-    initialize = function(title = "Time Profile Plot",
+    initialize = function(title = "Box Whisker Plot",
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
                               ...) {
       super$initialize(
