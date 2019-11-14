@@ -84,6 +84,8 @@ Theme <- R6::R6Class(
     pkRatioLinesProperties = NULL,
     lloqLinesProperties = NULL,
     histogramLinesProperties = NULL,
+    ddiRatioLinesProperties = NULL,
+    gofLinesProperties = NULL,
 
     initialize = function(themesProperties = tlfEnvThemesProperties$default,
                               labelColors = NULL,
@@ -93,7 +95,9 @@ Theme <- R6::R6Class(
                               aesProperties = NULL,
                               pkRatioLinesProperties = NULL,
                               lloqLinesProperties = NULL,
-                              histogramLinesProperties = NULL) {
+                              histogramLinesProperties = NULL,
+                              ddiRatioLinesProperties = NULL,
+                              gofLinesProperties = NULL) {
       super$initialize(
         labelColors = labelColors %||% themesProperties$labelColors,
         labelBaseSize = labelBaseSize
@@ -109,6 +113,8 @@ Theme <- R6::R6Class(
       self$pkRatioLinesProperties <- pkRatioLinesProperties %||% themesProperties$pkRatioLinesProperties
       self$lloqLinesProperties <- lloqLinesProperties %||% themesProperties$pkRatioLinesProperties
       self$histogramLinesProperties <- histogramLinesProperties %||% themesProperties$histogramLinesProperties
+      self$ddiRatioLinesProperties <- ddiRatioLinesProperties %||% themesProperties$ddiRatioLinesProperties
+      self$gofLinesProperties <- gofLinesProperties %||% themesProperties$gofLinesProperties
     }
   )
 )
