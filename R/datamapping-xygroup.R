@@ -17,6 +17,8 @@ XYGDataMapping <- R6::R6Class(
       validateMapping(self$x, data)
       validateMapping(self$y, data, nullAllowed = TRUE)
 
+      # Drop option simplify data.frame into vectors
+      # False enforces data to stay as data.frame if x or y is empty
       self$data <- data[, c(self$x, self$y), drop = FALSE]
 
       # All possible Groupings are listed in the enum LegendTypes
