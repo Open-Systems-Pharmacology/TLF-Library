@@ -36,7 +36,7 @@ plotPKRatio <- function(data,
 
   # Add Plot Configuration layers and PK Ratios
   plotObject <- plotConfiguration$setPlotBackground(plotObject)
-  plotObject <- plotConfiguration$addPKRatioLines(dataMapping$pkRatioLines, plotObject)
+  plotObject <- plotConfiguration$addPKRatioLines(plotObject, dataMapping$pkRatioLines)
 
   plotObject <- plotConfiguration$addPKRatios(plotObject, data, metaData, dataMapping)
 

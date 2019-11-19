@@ -10,13 +10,13 @@ HistogramPlotConfiguration <- R6::R6Class(
     mapData = NULL,
     bins = NULL,
     binWidth = NULL,
-    verticalLineProperties = NULL,
+    histogramProperties = NULL,
 
     initialize = function(title = "Histogram",
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
                               binWidth = NULL,
                               bins = NULL,
-                              verticalLineProperties = tlfEnv$currentTheme$histogramLinesProperties,
+                          histogramProperties = tlfEnv$currentTheme$histogram,
                               ...) {
       super$initialize(
         title = title,
@@ -27,7 +27,7 @@ HistogramPlotConfiguration <- R6::R6Class(
       self$binWidth <- binWidth
       self$bins <- bins
 
-      self$verticalLineProperties <- verticalLineProperties
+      self$histogramProperties <- histogramProperties
     },
 
     addHistograms = function(plotObject,
@@ -87,7 +87,7 @@ HistogramPlotConfiguration <- R6::R6Class(
             color = dataMapping$groupMapping$fill$label,
             linetype = "variable"
           ),
-          size = self$verticalLineProperties$size[1],
+          size = self$histogramProperties$lines$size[1],
           show.legend = TRUE
         )
 
@@ -97,7 +97,7 @@ HistogramPlotConfiguration <- R6::R6Class(
           linetype = guide_legend(
             title = "Stat",
             labels = dataMapping$verticalLineFunctionNames,
-            values = self$verticalLineProperties$linetype
+            values = self$histogramProperties$lines$linetype
           )
         ) +
           scale_linetype_discrete(labels = dataMapping$verticalLineFunctionNames)

@@ -81,11 +81,11 @@ Theme <- R6::R6Class(
     background = NULL,
     aesProperties = NULL,
 
-    pkRatioLinesProperties = NULL,
-    lloqLinesProperties = NULL,
-    histogramLinesProperties = NULL,
-    ddiRatioLinesProperties = NULL,
-    gofLinesProperties = NULL,
+    pkRatio = NULL,
+    timeProfile = NULL,
+    histogram = NULL,
+    ddiRatio = NULL,
+    gof = NULL,
 
     initialize = function(themesProperties = tlfEnvThemesProperties$default,
                               labelColors = NULL,
@@ -93,11 +93,11 @@ Theme <- R6::R6Class(
                               background = NULL,
                               watermark = NULL,
                               aesProperties = NULL,
-                              pkRatioLinesProperties = NULL,
-                              lloqLinesProperties = NULL,
-                              histogramLinesProperties = NULL,
-                              ddiRatioLinesProperties = NULL,
-                              gofLinesProperties = NULL) {
+                              pkRatio = NULL,
+                              timeProfile = NULL,
+                              histogram = NULL,
+                              ddiRatio = NULL,
+                              gof = NULL) {
       super$initialize(
         labelColors = labelColors %||% themesProperties$labelColors,
         labelBaseSize = labelBaseSize
@@ -110,11 +110,11 @@ Theme <- R6::R6Class(
       self$aesProperties <- aesProperties %||% ThemeAesProperties$new(aesProperties = themesProperties$aesProperties)
 
       # Set the properties of specific plots
-      self$pkRatioLinesProperties <- pkRatioLinesProperties %||% themesProperties$pkRatioLinesProperties
-      self$lloqLinesProperties <- lloqLinesProperties %||% themesProperties$pkRatioLinesProperties
-      self$histogramLinesProperties <- histogramLinesProperties %||% themesProperties$histogramLinesProperties
-      self$ddiRatioLinesProperties <- ddiRatioLinesProperties %||% themesProperties$ddiRatioLinesProperties
-      self$gofLinesProperties <- gofLinesProperties %||% themesProperties$gofLinesProperties
+      self$pkRatio <- pkRatio %||% themesProperties$pkRatio
+      self$timeProfile <- timeProfile %||% themesProperties$timeProfile
+      self$histogram <- histogram %||% themesProperties$histogram
+      self$ddiRatio <- ddiRatio %||% themesProperties$ddiRatio
+      self$gof <- gof %||% themesProperties$gof
     }
   )
 )

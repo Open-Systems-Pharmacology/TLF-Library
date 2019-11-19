@@ -7,9 +7,9 @@ TimeProfilePlotConfiguration <- R6::R6Class(
   inherit = PlotConfiguration,
 
   public = list(
-    lloqLinesProperties = NULL,
+    timeProfileProperties = NULL,
 
-    initialize = function(lloqLinesProperties = tlfEnv$currentTheme$lloqLinesProperties,
+    initialize = function(timeProfileProperties = tlfEnv$currentTheme$timeProfile,
                               title = "Time Profile Plot",
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
                               ...) {
@@ -19,10 +19,10 @@ TimeProfilePlotConfiguration <- R6::R6Class(
         ...
       )
 
-      self$lloqLinesProperties <- lloqLinesProperties
+      self$timeProfileProperties <- timeProfileProperties
     },
 
-    addLLOQLines = function(metaData, dataMapping, plotObject) {
+    addLLOQLines = function(plotObject, metaData, dataMapping) {
       if (is.null(metaData)) {
         return(plotObject)
       }
@@ -38,9 +38,9 @@ TimeProfilePlotConfiguration <- R6::R6Class(
           plotObject <- plotObject +
             ggplot2::geom_hline(
               yintercept = LLOQLines[LLOQIndex],
-              linetype = self$lloqLinesProperties$linetype[LLOQIndex],
-              color = self$lloqLinesProperties$color[LLOQIndex],
-              size = self$lloqLinesProperties$size[LLOQIndex]
+              linetype = self$timeProfileProperties$lloq$linetype[LLOQIndex],
+              color = self$timeProfileProperties$lloq$color[LLOQIndex],
+              size = self$timeProfileProperties$lloq$size[LLOQIndex]
             )
         }
       }

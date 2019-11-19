@@ -38,7 +38,7 @@ plotTimeProfile <- function(data,
 
   plotObject <- plotConfiguration$setPlotBackground(plotObject)
 
-  plotObject <- plotConfiguration$addLLOQLines(metaData, dataMapping, plotObject)
+  plotObject <- plotConfiguration$addLLOQLines(plotObject, metaData, dataMapping)
 
   plotObject <- plotConfiguration$addTimeProfiles(plotObject, data, metaData, dataMapping)
 
