@@ -28,10 +28,13 @@ Suggests:
     pander
 VignetteBuilder: knitr
 Collate: 
+    'enum.R'
     'aggregation-input.R'
     'aggregation-summary.R'
     'data-description.R'
     'datamapping-boxwhisker.R'
+    'datamapping-ddiratio.R'
+    'datamapping-gof.R'
     'datamapping-grouping.R'
     'datamapping-groupmapping.R'
     'datamapping-histogram.R'
@@ -39,7 +42,6 @@ Collate:
     'datamapping-timeprofile.R'
     'datamapping-xy.R'
     'datamapping-xygroup.R'
-    'enum.R'
     'error-checks.R'
     'utils.R'
     'font.R'
