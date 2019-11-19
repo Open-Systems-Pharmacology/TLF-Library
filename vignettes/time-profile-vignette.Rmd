@@ -318,7 +318,7 @@ pander::pandoc.table(tpMapping$checkMapData(data = timeProfileDataFrame,
                                           metaData = timeProfileMetaData))
 ```
 
-A feature of `TimeProfileDataMapping` class is that, in addition to specifying a `y` column, the user may also supply `yMin` and `yMax` columns that can represent the boundaries of error bars. If only `yMin` and `yMax` are input when constructing the `TimeProfileDataMapping` object, with `y` left undefined or `NULL`, the default profile that will ultimately be plotted is a range plot.   If `y`, `yMin` and `yMax` are all input, the default plot will be a time profile plot with an error bar.
+A feature of `TimeProfileDataMapping` class is that, in addition to specifying a `y` column, the user may also supply `ymin` and `ymax` columns that can represent the boundaries of error bars. If only `ymin` and `ymax` are input when constructing the `TimeProfileDataMapping` object, with `y` left undefined or `NULL`, the default profile that will ultimately be plotted is a range plot.   If `y`, `ymin` and `ymax` are all input, the default plot will be a time profile plot with an error bar.
 
 <!-- hlp <- TimeProfileHelper$new(data = timeProfileDataFrame, -->
 <!--                              timeColumnName = "Time", -->
@@ -344,9 +344,9 @@ hlp <- AggregationSummary$new(data = timeProfileDataFrame,
                                                               "Concentration"))
 
 
-# Define Mapping with yMin and yMax
+# Define Mapping with ymin and ymax
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated Mean", 
-                                        yMin = "Simulated Min", yMax = "Simulated Max")
+                                        ymin = "Simulated Min", ymax = "Simulated Max")
 
 pander::pandoc.table(tpMapping$checkMapData(data = hlp$dfHelper,
                                           metaData = hlp$metaDataHelper))
@@ -575,13 +575,13 @@ meanPlot
 
 ### 5.5.3. Plot aggregated min and max values
 
-In this example, `x`, `yMin` and `yMax` variables are used to construct the `TimeProfileDataMapping` object `tpMappingRange`.  Since no `y` variable is supplied, the `plotTimeProfile` function produces a range plot.  The "dislocation" in the range plot at time 1 min is due to the fact that the `AggregationSummary` yielded two `yMin` and `yMax` values at each timepoint, one for each population.  
+In this example, `x`, `ymin` and `ymax` variables are used to construct the `TimeProfileDataMapping` object `tpMappingRange`.  Since no `y` variable is supplied, the `plotTimeProfile` function produces a range plot.  The "dislocation" in the range plot at time 1 min is due to the fact that the `AggregationSummary` yielded two `ymin` and `ymax` values at each timepoint, one for each population.  
 
 ```{r, fig.height=5, fig.width=7.5}
-# Map x, yMin and yMax
+# Map x, ymin and ymax
 tpMappingRange <- TimeProfileDataMapping$new(x = "Time", 
-                                             yMin = "Simulated Min", 
-                                             yMax = "Simulated Max")
+                                             ymin = "Simulated Min", 
+                                             ymax = "Simulated Max")
 
 # Overwrite the plot configuration
 tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
@@ -602,10 +602,10 @@ rangePlot
 This example adds a grouping by population to the `TimeProfileDataMapping` object `tpMappingRange`.  This results in two range plots, where the fill color distinguishes between the Asian and European population values.
 
 ```{r, fig.height=5, fig.width=7.5}
-# Map x, yMin and yMax
+# Map x, ymin and ymax
 tpMappingRange <- TimeProfileDataMapping$new(x = "Time", 
-                                             yMin = "Simulated Min", 
-                                             yMax = "Simulated Max",
+                                             ymin = "Simulated Min", 
+                                             ymax = "Simulated Max",
                                              groupMapping = GroupMapping$new(fill = "Population"))
 
 # Overwrite the plot configuration
@@ -628,11 +628,11 @@ rangePlot
 With respect to the previous example, here, a `y` variable is added to the `TimeProfileDataMapping` object resulting in the `plotTimeProfile` returning a time profile plot with error bars. Note that the `GroupMapping` object in the `TimeProfileDataMapping` object constructor specifies that each population should be distinguished by color.
 
 ```{r, fig.height=5, fig.width=7.5}
-# Map x, y, yMin and yMax
+# Map x, y, ymin and ymax
 tpMappingErrorBar <- TimeProfileDataMapping$new(x = "Time", 
                                                 y = "Simulated Mean",
-                                                yMin = "Simulated Min", 
-                                                yMax = "Simulated Max",
+                                                ymin = "Simulated Min", 
+                                                ymax = "Simulated Max",
                                                 groupMapping = GroupMapping$new(color = "Population"))
 
 # Overwrite the plot configuration
