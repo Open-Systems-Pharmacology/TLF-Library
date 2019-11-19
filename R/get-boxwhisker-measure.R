@@ -14,10 +14,10 @@
 #' @return a data.frame reporting the PK Ratio Qualification Measure
 #' @export
 #'
-getBoxWhiskerMeasure <- function(data, 
-                                 dataMapping = NULL, 
-                                 y = NULL, 
-                                 group = NULL, 
+getBoxWhiskerMeasure <- function(data,
+                                 dataMapping = NULL,
+                                 y = NULL,
+                                 group = NULL,
                                  quantiles = c(0.05, 0.25, 0.5, 0.75, 0.95)) {
 
   # If no data mapping is input, use default
@@ -32,9 +32,11 @@ getBoxWhiskerMeasure <- function(data,
 
   # Redfine group and y while removing NA values
   y <- data[!is.na.data.frame(data[, dataMapping$y]), dataMapping$y]
-  group <- ifnotnull(dataMapping$x,
-                     data[!is.na.data.frame(data[, dataMapping$y]), dataMapping$x],
-                     as.factor(rep("", length(y))))
+  group <- ifnotnull(
+    dataMapping$x,
+    data[!is.na.data.frame(data[, dataMapping$y]), dataMapping$x],
+    as.factor(rep("", length(y)))
+  )
 
   summary <- tapply(y, group, FUN = function(x) {
     summaryStat(x, quantiles)

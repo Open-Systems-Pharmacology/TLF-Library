@@ -22,7 +22,7 @@ messages <- list(
       "' must have the same length, but they don't!", optionalMessage
     )
   },
-  
+
   errorWrongLength = function(object, nbElements, optionalMessage = NULL) {
     # Name of the calling function
     callingFunctions <- sys.calls()
