@@ -14,11 +14,14 @@
 #' @return a data.frame reporting the PK Ratio Qualification Measure
 #' @export
 #'
-getBoxWhiskerMeasure <- function(data, dataMapping = NULL, y = NULL, group = NULL, quantiles = c(0.05, 0.25, 0.5, 0.75, 0.95)) {
+getBoxWhiskerMeasure <- function(data, 
+                                 dataMapping = NULL, 
+                                 y = NULL, 
+                                 group = NULL, 
+                                 quantiles = c(0.05, 0.25, 0.5, 0.75, 0.95)) {
 
   # If no data mapping is input, use default
   variableNames <- names(data)
-  group <- group
   y <- y %||% utils::tail(variableNames, 1)
   dataMapping <- dataMapping %||% BoxWhiskerDataMapping$new(
     x = group,
