@@ -14,10 +14,10 @@ HistogramPlotConfiguration <- R6::R6Class(
 
     initialize = function(title = "Histogram",
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
-                              ...,
                               binWidth = NULL,
                               bins = NULL,
-                              verticalLineProperties = tlfEnv$currentTheme$histogramLinesProperties) {
+                              verticalLineProperties = tlfEnv$currentTheme$histogramLinesProperties,
+                              ...) {
       super$initialize(
         title = title,
         subtitle = subtitle,
