@@ -115,7 +115,7 @@ isIncluded <- function(values, parentValues) {
     return(FALSE)
   }
 
-  return(min(values %in% parentValues))
+  return(as.logical(min(values %in% parentValues)))
 }
 
 validateIsIncluded <- function(values, parentValues, nullAllowed = FALSE) {
