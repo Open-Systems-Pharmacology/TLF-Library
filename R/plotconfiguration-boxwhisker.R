@@ -21,13 +21,13 @@ BoxWhiskerPlotConfiguration <- R6::R6Class(
       mapData <- dataMapping$checkMapData(data, metaData)
 
       # Get the box plot quantiles from dataMapping
-      mapQuantiles <- dataMapping$getQuantiles(data)
+      mapPercentiles <- dataMapping$getPercentiles(data)
 
       # Convert the mapping into characters usable by aes_string
       mapLabels <- getAesStringMapping(dataMapping)
 
       plotObject <- plotObject + ggplot2::geom_boxplot(
-        data = mapQuantiles,
+        data = mapPercentiles,
         mapping = aes_string(
           x = mapLabels$x,
           ymin = mapLabels$ymin,
