@@ -116,7 +116,7 @@ asLegendCaptionSubset <- function(data, metaData) {
 # Accounts for special character issues by using ``
 getAesStringMapping <- function(dataMapping) {
   # Define list of mappings to check
-  geomMappings <- c("x", "y", "yMin", "yMax", "lower", "middle", "upper")
+  geomMappings <- c("x", "y", "ymin", "ymax", "lower", "middle", "upper")
   groupMappings <- names(LegendTypes)
 
   # Initialize Labels

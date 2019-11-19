@@ -8,31 +8,33 @@ BoxWhiskerDataMapping <- R6::R6Class(
   public = list(
     quantiles = NULL,
     outliers = NULL,
-    yMin = NULL,
+    ymin = NULL,
     lower = NULL,
     middle = NULL,
     upper = NULL,
-    yMax = NULL,
+    ymax = NULL,
 
     initialize = function(...,
-                              yMin = NULL,
+                              ymin = NULL,
                               lower = NULL,
                               middle = NULL,
                               upper = NULL,
-                              yMax = NULL,
+                              ymax = NULL,
                               quantiles = c(0.05, 0.25, 0.5, 0.75, 0.95),
                               outliers = NULL) {
       super$initialize(...)
+      
+      validateIsOfLength(quantiles, 5)
       self$quantiles <- sort(quantiles)
       self$outliers <- outliers
 
-      self$yMin <- yMin %||% self$quantiles[1]
+      self$ymin <- ymin %||% self$quantiles[1]
       self$lower <- lower %||% self$quantiles[2]
       self$middle <- middle %||% self$quantiles[3]
       self$upper <- upper %||% self$quantiles[4]
-      self$yMax <- yMax %||% self$quantiles[5]
+      self$ymax <- ymax %||% self$quantiles[5]
 
-      self$quantiles <- c(self$yMin, self$lower, self$middle, self$upper, self$yMax)
+      self$quantiles <- c(self$ymin, self$lower, self$middle, self$upper, self$ymax)
     },
 
     getQuantiles = function(data) {

@@ -30,7 +30,7 @@ TimeProfilePlotConfiguration <- R6::R6Class(
       LLOQLines <- ifnotnull(
         dataMapping$y,
         metaData[[dataMapping$y]]$LLOQ,
-        metaData[[dataMapping$yMin]]$LLOQ
+        metaData[[dataMapping$ymin]]$LLOQ
       )
 
       if (!is.null(LLOQLines)) {
@@ -56,13 +56,13 @@ TimeProfilePlotConfiguration <- R6::R6Class(
       mapLabels <- getAesStringMapping(dataMapping)
 
       if (!is.null(dataMapping$y)) {
-        # Plot error bars if yMin and yMax defined
-        if (!is.null(dataMapping$yMin) && !is.null(dataMapping$yMax)) {
+        # Plot error bars if ymin and ymax defined
+        if (!is.null(dataMapping$ymin) && !is.null(dataMapping$ymax)) {
           # Shape is not an input of geom_errorbar
           plotObject <- plotObject + ggplot2::geom_errorbar(
             data = mapData,
             mapping = aes_string(
-              x = mapLabels$x, ymin = mapLabels$yMin, ymax = mapLabels$yMax,
+              x = mapLabels$x, ymin = mapLabels$ymin, ymax = mapLabels$ymax,
               color = mapLabels$color, size = mapLabels$size
             ),
             show.legend = TRUE
@@ -104,7 +104,7 @@ TimeProfilePlotConfiguration <- R6::R6Class(
         plotObject <- plotObject + ggplot2::geom_ribbon(
           data = mapData,
           mapping = aes_string(
-            x = mapLabels$x, ymin = mapLabels$yMin, ymax = mapLabels$yMax,
+            x = mapLabels$x, ymin = mapLabels$ymin, ymax = mapLabels$ymax,
             fill = mapLabels$fill
           ),
           alpha = self$theme$aesProperties$alpha[1],

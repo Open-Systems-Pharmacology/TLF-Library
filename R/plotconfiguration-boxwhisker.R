@@ -30,11 +30,11 @@ BoxWhiskerPlotConfiguration <- R6::R6Class(
         data = mapQuantiles,
         mapping = aes_string(
           x = mapLabels$x,
-          ymin = mapLabels$yMin,
+          ymin = mapLabels$ymin,
           lower = mapLabels$lower,
           middle = mapLabels$middle,
           upper = mapLabels$upper,
-          ymax = mapLabels$yMax,
+          ymax = mapLabels$ymax,
           fill = mapLabels$fill,
           color = mapLabels$color,
           linetype = mapLabels$linetype,
