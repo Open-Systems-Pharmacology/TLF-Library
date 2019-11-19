@@ -22,6 +22,15 @@ messages <- list(
       "' must have the same length, but they don't!", optionalMessage
     )
   },
+  
+  errorWrongLength = function(object, nbElements, optionalMessage = NULL) {
+    # Name of the calling function
+    callingFunctions <- sys.calls()
+    callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
+    paste0(
+      callingFunction, ": Object should be of length '", nbElements, "', but is of length '", length(object), "' instead. ", optionalMessage
+    )
+  },
 
   errorEnumNotAllNames = "The enumValues has some but not all names assigned. They must be all assigned or none assigned",
 
