@@ -14,9 +14,9 @@ XYGDataMapping <- R6::R6Class(
     },
 
     checkMapData = function(data, metaData = NULL) {
-      validateMapping(self$x, data)
-      validateMapping(self$y, data, nullAllowed = TRUE)
-
+      if (isOfType(self$x, "character")){validateMapping(self$x, data)}
+      if (isOfType(self$y, "character")){validateMapping(self$y, data, nullAllowed = TRUE)}
+      
       # Drop option simplify data.frame into vectors
       # False enforces data to stay as data.frame if x or y is empty
       self$data <- data[, c(self$x, self$y), drop = FALSE]
