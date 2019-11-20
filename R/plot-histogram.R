@@ -43,10 +43,12 @@ plotHistogram <- function(data,
   validateIsOfType(plotConfiguration, HistogramPlotConfiguration)
 
   plotObject <- ggplot2::ggplot()
-  plotObject <- plotConfiguration$addHistograms(plotObject, data = data, metaData = metaData, dataMapping = dataMapping, bins = bins, binWidth = binWidth)
+  plotObject <- plotConfiguration$setPlotBackground(plotObject)
   plotObject <- plotConfiguration$setPlotLabels(plotObject)
+  plotObject <- plotConfiguration$addHistograms(plotObject, data, metaData, dataMapping, bins, binWidth)
   plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)
-  plotObject <- plotConfiguration$addVerticalLines(plotObject)
+  plotObject <- plotConfiguration$addVerticalLines(plotObject, data, metaData, dataMapping)
+  plotObject <- plotConfiguration$setPlotProperties(plotObject)
 
   return(plotObject)
 }

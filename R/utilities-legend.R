@@ -157,7 +157,7 @@ LegendTitles <- R6::R6Class(
                               fill = NULL,
                               linetype = NULL,
                               shape = NULL,
-                              size =NULL,
+                              size = NULL,
                               groupings = NULL) {
       if (!is.null(groupings)) {
         self$color <- groupings$color$label

@@ -12,12 +12,18 @@ XYGDataMapping <- R6::R6Class(
       super$initialize(...)
       self$groupMapping <- groupMapping %||% GroupMapping$new()
     },
-    
-    checkMapData = function(data, metaData = NULL) {
-      validateMapping(self$x, data)
-      validateMapping(self$y, data)
 
-      self$data <- data[, c(self$x, self$y)]
+    checkMapData = function(data, metaData = NULL) {
+      if (isOfType(self$x, "character")) {
+        validateMapping(self$x, data)
+      }
+      if (isOfType(self$y, "character")) {
+        validateMapping(self$y, data, nullAllowed = TRUE)
+      }
+
+      # Drop option simplify data.frame into vectors
+      # False enforces data to stay as data.frame if x or y is empty
+      self$data <- data[, c(self$x, self$y), drop = FALSE]
 
       # All possible Groupings are listed in the enum LegendTypes
       for (groupType in LegendTypes) {
@@ -32,7 +38,6 @@ XYGDataMapping <- R6::R6Class(
             groupVariables <- utils::head(groupVariables, -1)
           }
           validateMapping(groupVariables, data)
-
           self$data[, grouping$label] <- grouping$getCaptions(data, metaData)
         }
       }

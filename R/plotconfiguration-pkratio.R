@@ -6,40 +6,29 @@ PKRatioPlotConfiguration <- R6::R6Class(
   "PKRatioPlotConfiguration",
   inherit = PlotConfiguration,
   public = list(
-    pkRatioLinesProperties = NULL,
+    pkRatioProperties = NULL,
 
-    initialize = function(pkRatioLinesProperties = tlfEnv$currentTheme$pkRatioLinesProperties,
+    initialize = function(pkRatioProperties = tlfEnv$currentTheme$pkRatio,
                               title = "PK Ratio Plot",
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
-                              xlabel = NULL,
-                              ylabel = NULL,
-                              watermark = NULL,
-                              data = NULL,
-                              metaData = NULL,
-                              dataMapping = NULL,
                               ...) {
       super$initialize(
         title = title,
         subtitle = subtitle,
-        xlabel = xlabel,
-        ylabel = ylabel,
-        watermark = watermark %||% tlfEnv$currentTheme$watermark,
-        data = data,
-        metaData = metaData,
-        dataMapping = dataMapping
+        ...
       )
 
-      self$pkRatioLinesProperties <- pkRatioLinesProperties
+      self$pkRatioProperties <- pkRatioProperties
     },
 
-    addPKRatioLines = function(pkRatioLines, plotObject) {
+    addPKRatioLines = function(plotObject, pkRatioLines) {
       for (RatioIndex in seq(1, length(pkRatioLines))) {
         plotObject <- plotObject +
           ggplot2::geom_hline(
             yintercept = pkRatioLines[RatioIndex],
-            linetype = self$pkRatioLinesProperties$linetype[RatioIndex],
-            color = self$pkRatioLinesProperties$color[RatioIndex],
-            size = self$pkRatioLinesProperties$size[RatioIndex]
+            linetype = self$pkRatioProperties$lines$linetype[RatioIndex],
+            color = self$pkRatioProperties$lines$color[RatioIndex],
+            size = self$pkRatioProperties$lines$size[RatioIndex]
           )
       }
       return(plotObject)

@@ -5,6 +5,24 @@ isSameLength <- function(...) {
   return(nrOfLengths == 1)
 }
 
+#' Check if the provided object has nbElements elements
+#'
+#' @param object An object or a list of objects
+#' @param nbElements number of elements that are supposed in object
+#'
+#' @return TRUE if the object or all objects inside the list have nbElements.
+#' Only the first level of the given list is considered.
+isOfLength <- function(object, nbElements) {
+  return(length(object) == nbElements)
+}
+
+validateIsOfLength <- function(object, nbElements) {
+  if (isOfLength(object, nbElements)) {
+    return()
+  }
+  stop(messages$errorWrongLength(object, nbElements))
+}
+
 #' Check if the provided object is of certain type
 #'
 #' @param object An object or a list of objects
@@ -97,7 +115,7 @@ isIncluded <- function(values, parentValues) {
     return(FALSE)
   }
 
-  return(min(values %in% parentValues))
+  return(as.logical(min(values %in% parentValues)))
 }
 
 validateIsIncluded <- function(values, parentValues, nullAllowed = FALSE) {

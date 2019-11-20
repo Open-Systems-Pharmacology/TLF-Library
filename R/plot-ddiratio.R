@@ -1,6 +1,6 @@
-#' Create a PK-Ratio plot
+#' Create a DDI-Ratio plot
 #'
-#' @title plotPKRatio
+#' @title plotDDIRatio
 #' @param data data.frame (or list of data.frames? TO BE DISCUSSED)
 #' containing the data to be used for the plot
 #' @param metaData list of lists (structure TO BE DISCUSSED)
@@ -10,35 +10,34 @@
 #' @param plotConfiguration R6 class PKRatioPlotConfiguration
 #' Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend
 #' @description
-#' plotPKRatio(data, metaData, dataMapping, plotConfiguration)
+#' plotDDIRatio(data, metaData, dataMapping, plotConfiguration)
 #' @return a ggplot graphical object
 #' @export
 #'
-plotPKRatio <- function(data,
-                        metaData = NULL,
-                        dataMapping = NULL,
-                        plotConfiguration = NULL) {
+plotDDIRatio <- function(data,
+                         metaData = NULL,
+                         dataMapping = NULL,
+                         plotConfiguration = NULL) {
   # If no data mapping or plot configuration is input, use default
   metaData <- metaData %||% metaDataHelper(data)
-  dataMapping <- dataMapping %||% PKRatioDataMapping$new()
-  plotConfiguration <- plotConfiguration %||% PKRatioPlotConfiguration$new(
+  dataMapping <- dataMapping %||% DDIRatioDataMapping$new()
+  plotConfiguration <- plotConfiguration %||% DDIRatioPlotConfiguration$new(
     data = data,
     metaData = metaData,
     dataMapping = dataMapping
   )
 
-  validateIsOfType(dataMapping, PKRatioDataMapping)
-  validateIsOfType(plotConfiguration, PKRatioPlotConfiguration)
-
-  # mapData <- dataMapping$getMapData(data, metaData)
+  validateIsOfType(dataMapping, DDIRatioDataMapping)
+  validateIsOfType(plotConfiguration, DDIRatioPlotConfiguration)
 
   plotObject <- ggplot2::ggplot()
 
   # Add Plot Configuration layers and PK Ratios
   plotObject <- plotConfiguration$setPlotBackground(plotObject)
-  plotObject <- plotConfiguration$addPKRatioLines(plotObject, dataMapping$pkRatioLines)
+  plotObject <- plotConfiguration$addDDIRatioLines(plotObject, dataMapping)
+  plotObject <- plotConfiguration$addGuestLines(plotObject, dataMapping)
 
-  plotObject <- plotConfiguration$addPKRatios(plotObject, data, metaData, dataMapping)
+  plotObject <- plotConfiguration$addDDIRatios(plotObject, data, metaData, dataMapping)
 
   plotObject <- plotConfiguration$setPlotLabels(plotObject)
   plotObject <- plotConfiguration$setPlotProperties(plotObject)

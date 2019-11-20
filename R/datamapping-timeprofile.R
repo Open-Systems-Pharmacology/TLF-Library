@@ -7,36 +7,36 @@ TimeProfileDataMapping <- R6::R6Class(
   inherit = XYGDataMapping,
 
   public = list(
-    yMin = NULL,
-    yMax = NULL,
+    ymin = NULL,
+    ymax = NULL,
     LLOQ = NULL,
 
     initialize = function(x,
                               y = NULL,
-                              yMin = NULL,
-                              yMax = NULL,
+                              ymin = NULL,
+                              ymax = NULL,
                               groupMapping = NULL,
                               LLOQ = NULL, ...) {
       if (is.null(y)) {
-        if (is.null(yMin) && is.null(yMax)) {
-          stop("Either y or yMin and yMax must be defined for TimeProfileDataMapping")
+        if (is.null(ymin) && is.null(ymax)) {
+          stop("Either y or ymin and ymax must be defined for TimeProfileDataMapping")
         }
       }
 
       super$initialize(x = x, y = y, groupMapping = groupMapping)
 
-      self$yMin <- yMin
-      self$yMax <- yMax
+      self$ymin <- ymin
+      self$ymax <- ymax
       self$LLOQ <- LLOQ
     },
-    
+
     checkMapData = function(data, metaData = NULL) {
       validateMapping(self$x, data)
       validateMapping(self$y, data, nullAllowed = TRUE)
-      validateMapping(self$yMin, data, nullAllowed = TRUE)
-      validateMapping(self$yMax, data, nullAllowed = TRUE)
+      validateMapping(self$ymin, data, nullAllowed = TRUE)
+      validateMapping(self$ymax, data, nullAllowed = TRUE)
 
-      self$data <- data[, c(self$x, self$y, self$yMin, self$yMax)]
+      self$data <- data[, c(self$x, self$y, self$ymin, self$ymax)]
 
       # All possible Groupings are listed in the enum LegendTypes
       for (groupType in LegendTypes) {

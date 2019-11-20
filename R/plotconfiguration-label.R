@@ -9,14 +9,12 @@ LabelConfiguration <- R6::R6Class(
     subtitle = NULL,
     xlabel = NULL,
     ylabel = NULL,
-    watermark = NULL,
     legendTitles = NULL,
 
     initialize = function(title = NULL,
                               subtitle = NULL,
                               xlabel = NULL,
                               ylabel = NULL,
-                              watermark = tlfEnv$currentTheme$watermarkText,
                               legendTitles = NULL,
                               theme = tlfEnv$currentTheme) {
       self$title <- asLabel(title %||% "")
@@ -28,9 +26,6 @@ LabelConfiguration <- R6::R6Class(
       self$xlabel$font <- theme$xlabelFont
       self$ylabel <- asLabel(ylabel %||% "")
       self$ylabel$font <- theme$ylabelFont
-
-      self$watermark <- asLabel(watermark %||% "")
-      self$watermark$font <- theme$watermarkFont
 
       self$legendTitles <- asLabel(legendTitles %||% "")
       self$legendTitles$font <- theme$legendTitles
@@ -57,11 +52,6 @@ LabelConfiguration <- R6::R6Class(
         yAxisFont = self$ylabel$font,
         legendFont = self$legendTitles$font
       )
-      return(plotObject)
-    },
-
-    setWatermark = function(plotObject) {
-      plotObject <- setWatermark(plotHandle = plotObject, label = self$watermark)
       return(plotObject)
     }
   )

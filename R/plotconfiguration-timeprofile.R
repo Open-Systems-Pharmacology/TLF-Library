@@ -7,33 +7,22 @@ TimeProfilePlotConfiguration <- R6::R6Class(
   inherit = PlotConfiguration,
 
   public = list(
-    lloqLinesProperties = NULL,
+    timeProfileProperties = NULL,
 
-    initialize = function(lloqLinesProperties = tlfEnv$currentTheme$lloqLinesProperties,
+    initialize = function(timeProfileProperties = tlfEnv$currentTheme$timeProfile,
                               title = "Time Profile Plot",
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
-                              xlabel = NULL,
-                              ylabel = NULL,
-                              watermark = NULL,
-                              data = NULL,
-                              metaData = NULL,
-                              dataMapping = NULL,
                               ...) {
       super$initialize(
         title = title,
         subtitle = subtitle,
-        xlabel = xlabel,
-        ylabel = ylabel,
-        watermark = watermark %||% tlfEnv$currentTheme$watermark,
-        data = data,
-        metaData = metaData,
-        dataMapping = dataMapping
+        ...
       )
 
-      self$lloqLinesProperties <- lloqLinesProperties
+      self$timeProfileProperties <- timeProfileProperties
     },
 
-    addLLOQLines = function(metaData, dataMapping, plotObject) {
+    addLLOQLines = function(plotObject, metaData, dataMapping) {
       if (is.null(metaData)) {
         return(plotObject)
       }
@@ -41,7 +30,7 @@ TimeProfilePlotConfiguration <- R6::R6Class(
       LLOQLines <- ifnotnull(
         dataMapping$y,
         metaData[[dataMapping$y]]$LLOQ,
-        metaData[[dataMapping$yMin]]$LLOQ
+        metaData[[dataMapping$ymin]]$LLOQ
       )
 
       if (!is.null(LLOQLines)) {
@@ -49,9 +38,9 @@ TimeProfilePlotConfiguration <- R6::R6Class(
           plotObject <- plotObject +
             ggplot2::geom_hline(
               yintercept = LLOQLines[LLOQIndex],
-              linetype = self$lloqLinesProperties$linetype[LLOQIndex],
-              color = self$lloqLinesProperties$color[LLOQIndex],
-              size = self$lloqLinesProperties$size[LLOQIndex]
+              linetype = self$timeProfileProperties$lloq$linetype[LLOQIndex],
+              color = self$timeProfileProperties$lloq$color[LLOQIndex],
+              size = self$timeProfileProperties$lloq$size[LLOQIndex]
             )
         }
       }
@@ -67,13 +56,13 @@ TimeProfilePlotConfiguration <- R6::R6Class(
       mapLabels <- getAesStringMapping(dataMapping)
 
       if (!is.null(dataMapping$y)) {
-        # Plot error bars if yMin and yMax defined
-        if (!is.null(dataMapping$yMin) && !is.null(dataMapping$yMax)) {
+        # Plot error bars if ymin and ymax defined
+        if (!is.null(dataMapping$ymin) && !is.null(dataMapping$ymax)) {
           # Shape is not an input of geom_errorbar
           plotObject <- plotObject + ggplot2::geom_errorbar(
             data = mapData,
             mapping = aes_string(
-              x = mapLabels$x, ymin = mapLabels$yMin, ymax = mapLabels$yMax,
+              x = mapLabels$x, ymin = mapLabels$ymin, ymax = mapLabels$ymax,
               color = mapLabels$color, size = mapLabels$size
             ),
             show.legend = TRUE
@@ -115,7 +104,7 @@ TimeProfilePlotConfiguration <- R6::R6Class(
         plotObject <- plotObject + ggplot2::geom_ribbon(
           data = mapData,
           mapping = aes_string(
-            x = mapLabels$x, ymin = mapLabels$yMin, ymax = mapLabels$yMax,
+            x = mapLabels$x, ymin = mapLabels$ymin, ymax = mapLabels$ymax,
             fill = mapLabels$fill
           ),
           alpha = self$theme$aesProperties$alpha[1],

@@ -1,21 +1,21 @@
 #' @title setWatermark
-#' @param plotHandle ggplot object
+#' @param plotObject ggplot object
 #' @param label to be written in watermark (class Label and character allowed)
 #' @param angle (optional argument) angle of the watermark
 #' @param alpha (optional argument) transparency of the watermark
-#' @return plotHandle ggplot object with watermark background as a grob
+#' @return plotObject ggplot object with watermark background as a grob
 #' @description
 #' setWatermark set watermark as defined by label
 #' @import  ggplot2
 #' @export
-setWatermark <- function(plotHandle, label, angle = 30, alpha = 0.4) {
+setWatermark <- function(plotObject, label, angle = 30, alpha = 0.4) {
   label <- asLabel(label)
 
   watermark <- createWatermarkGrob(label = label, angle = angle, alpha = alpha)
 
-  plotHandle <- plotHandle + ggplot2::annotation_custom(grob = watermark, xmin = -Inf, ymin = -Inf, xmax = Inf, ymax = Inf)
+  plotObject <- plotObject + ggplot2::annotation_custom(grob = watermark, xmin = -Inf, ymin = -Inf, xmax = Inf, ymax = Inf)
 
-  return(plotHandle)
+  return(plotObject)
 }
 
 #' @title createWatermarkGrob

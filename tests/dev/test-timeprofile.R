@@ -5,45 +5,26 @@ rm(list = ls())
 library(ggplot2)
 library(tlf)
 
-# Set your folder to test folder:
-# setwd("C:/Design2Code/TLF-Playground/TLF-Playground/R/")
-useTheme(defaultTheme)
+# Load Data
+load("../data/tlf-output.RData")
+
+# Set default Config
+useTheme(tlfTheme)
+
+variableNames <- names(outputValues$data)
+# Show Variable Names of Data
+print("Variable Names")
+print(variableNames)
+
+# Define what to plot
+timeProfileMapping <- TimeProfileDataMapping$new(x = "Time", y = variableNames[7])
 
 # -------------------------------------------------
-# Get the data and metadata for PK Ratio plot
-
-nPopulation <- 20
-
-# -------------------------------------------------
-
-testData <- data.frame(
-  IndivdualID = rep(1, 24),
-  Time = seq(1, 24),
-  Value = 10 * exp(-0.06 * seq(1, 24))
+# Plot Time Profile with default configuration
+timeProfilePlot <- plotTimeProfile(
+  data = outputValues$data,
+  metaData = outputValues$metaData,
+  dataMapping = timeProfileMapping
 )
 
-
-testMetaData <- list(
-  IndivdualID = list("unit" = "", "dimension" = ""),
-  Time = list("unit" = "min", "dimension" = "Time"),
-  Value = list("unit" = "mg/L", "dimension" = "Concentration")
-)
-
-# -------------------------------------------------
-# Define Default plot Configuration & Mapping from R6 class for PK Ratio
-
-testDataMapping <- TimeProfileDataMapping$new(x = "Time", y = "Value")
-
-# Renaming of Label from initialize
-testConfiguration <- TimeProfilePlotConfiguration$new(
-  data = testData,
-  metaData = testMetaData,
-  dataMapping = testDataMapping
-)
-
-# -------------------------------------------------
-# Plot PK Ratio using the previously defined variables
-pkrp <- plotTimeProfile(
-  data = testData, metaData = testMetaData,
-  dataMapping = testDataMapping, plotConfiguration = testConfiguration
-)
+print(timeProfilePlot)
