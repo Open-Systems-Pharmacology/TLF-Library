@@ -34,7 +34,6 @@ Collate:
     'data-description.R'
     'datamapping-boxwhisker.R'
     'datamapping-ddiratio.R'
-    'datamapping-gof.R'
     'datamapping-grouping.R'
     'datamapping-groupmapping.R'
     'datamapping-histogram.R'
