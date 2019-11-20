@@ -38,7 +38,7 @@ Below are the first lines of the PK Ratio Dataset used in this example:
 ## Dataset
 ```{r, echo = FALSE, results='asis'}
 # pkRatioData
-pander::pandoc.table(head(pkRatioData))
+knitr::kable(head(pkRatioData), digits = 2)
 ```
 
 # Data Mapping
@@ -195,6 +195,6 @@ As a default, these ranges are within 1.5 and 2 folds. However, they can be upda
 PKRatioMeasure <- getPKRatioMeasure(data = pkRatioData, 
                                     dataMapping = pkRatioDataMapping)
 
-pander::pandoc.table(t = PKRatioMeasure,
-                     caption = "Qualification of PK Ratios")
+knitr::kable(x = PKRatioMeasure,
+             caption = "Qualification of PK Ratios")
 ```

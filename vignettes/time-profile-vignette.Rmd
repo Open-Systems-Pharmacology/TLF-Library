@@ -60,7 +60,7 @@ minimalDataFrame <- data.frame("Time"=c(0,1,2,0,1,2),
                                "Concentration"=c(3,4,5,4,5,6))
 ```
 ```{r, results='asis',echo=FALSE}
-pander::pandoc.table(minimalDataFrame)
+knitr::kable(minimalDataFrame)
 ```
 
 
@@ -95,7 +95,7 @@ In the sequel, the data that will be used for the time profile plot is the follo
 
 ```{r, results='asis'}
 # Data frame printed in a nice markdown table:
-pander::pandoc.table(timeProfileDataFrame[,c("IndividualID", "Time", "Population" ,  "Gender", "Age", "Compound" , "Dose"  , "Simulated")], justify='center', round=2)
+knitr::kable(timeProfileDataFrame[,c("IndividualID", "Time", "Population" ,  "Gender", "Age", "Compound" , "Dose"  , "Simulated")], align='c', digits =2)
 ```
 
 The workflow assumes that the data to be plotted has been gathered in the form of a [*tidy*](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) dataframe.  In a tidy format dataframe, each *measurement*, such as a simulation result or experimental observation, is described entirely in one row.  The columns of the dataframe are limited to no more than the *independent variable* columns of the measurement (in this example, *Time* and *IndividualID*) and the *dependent variable* columns (in this case *Simulated*), which hold the value of the measurement.  Since no additional columns are allowed, two dependent variables that have differing sets of independent variables should each have their own tidy dataframes.
@@ -152,7 +152,7 @@ aggSummary <- AggregationSummary$new(data = timeProfileDataFrame ,
 The dataframe that holds the summary statistics of the aggregated rows is stored in the `dfHelper` property of the resulting `aggSummary` object.  Since two functions (`min` and `mean`) were specified in `aggregationFunctionsVector`, the dataframe `aggSummary$dfHelper` has, in addition to the `xColumnNames`and `groupingColumnNames` columns, two additional columns named `Simulated Min` and `Simulated Mean`, which were the names specified in `aggregationFunctionNames`.
 
 ```{r, results='asis'}
-pander::pandoc.table(aggSummary$dfHelper, round=2)
+knitr::kable(aggSummary$dfHelper, digits=2)
 ```
 
 
@@ -208,7 +208,7 @@ mappingDataFrame <- data.frame(Compound = c("Aspirin","Aspirin","Sugar","Sugar")
                                                       "6mg of Sugar",
                                                       "3mg of Sugar"),
                                check.names = FALSE)
-pander::pandoc.table(mappingDataFrame)
+knitr::kable(mappingDataFrame)
 grouping3 <- Grouping$new(group = mappingDataFrame)
 ```
 The default title of the legend that results from this grouping is the name of the rightmost column, which is "Compound & Dose".  Note that the `check.names` option should be set to `FALSE` when creating the dataframe `mappingDataFrame` since the legend title contains spaces in this instance.  This legend title can be overridden to be another string by using the `label` input of the object constructor, as in the case of `grouping2` above.
@@ -227,7 +227,7 @@ names(groupingsDataFrame) <- c("IndividualID", "Dose", "Compound",
                                grouping1$label, grouping2$label, grouping3$label)
 
 # Show results for all groupings:
-pander::pandoc.table(groupingsDataFrame)
+knitr::kable(groupingsDataFrame)
 ```
 
 A dataframe can also be used to create a `Grouping` object that subsets the data based on whether a numeric grouping variable satisfies an specific inequality.  For example, individuals in `timeProfileDataFrame` can be grouped according to whether or not their age exceeds 6 years by first defining the following dataframe:
@@ -254,7 +254,7 @@ binnedGroupingsDataFrame <- data.frame(timeProfileDataFrame$IndividualID,
 names(binnedGroupingsDataFrame) <- c("IndividualID", "Age", grouping4$label)
 
 # Show results for all groupings:
-pander::pandoc.table(binnedGroupingsDataFrame)
+knitr::kable(binnedGroupingsDataFrame)
 ```
  
 
@@ -304,7 +304,7 @@ When no `GroupMapping` object is supplied upon construction of a `TimeProfileDat
 A dummy variable named `aesDefault` is added to the data.frame, its sole purpose is to allow modifications of aesthetic properties after the creation of the ggplot object (not possible otherwise).
 ```{r, results='asis'}
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated")
-pander::pandoc.table(tpMapping$checkMapData(data = timeProfileDataFrame,
+knitr::kable(tpMapping$checkMapData(data = timeProfileDataFrame,
                                             metaData = timeProfileMetaData))
 ```
 
@@ -314,7 +314,7 @@ When a `GroupMapping` object is supplied upon construction of the `TimeProfileDa
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated", 
                                         groupMapping = groups1)
 
-pander::pandoc.table(tpMapping$checkMapData(data = timeProfileDataFrame,
+knitr::kable(tpMapping$checkMapData(data = timeProfileDataFrame,
                                           metaData = timeProfileMetaData))
 ```
 
@@ -348,7 +348,7 @@ hlp <- AggregationSummary$new(data = timeProfileDataFrame,
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated Mean", 
                                         ymin = "Simulated Min", ymax = "Simulated Max")
 
-pander::pandoc.table(tpMapping$checkMapData(data = hlp$dfHelper,
+knitr::kable(tpMapping$checkMapData(data = hlp$dfHelper,
                                           metaData = hlp$metaDataHelper))
 ```
 
@@ -586,7 +586,7 @@ tpMappingRange <- TimeProfileDataMapping$new(x = "Time",
 # Overwrite the plot configuration
 tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
                                               xlabel = "Time",
-                                              data=hlp$dfHelper,
+                                              data = hlp$dfHelper,
                                               dataMapping = tpMappingRange)
 
 # Define the ggplot object
