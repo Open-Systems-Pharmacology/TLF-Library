@@ -16,7 +16,7 @@ HistogramPlotConfiguration <- R6::R6Class(
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
                               binWidth = NULL,
                               bins = NULL,
-                          histogramProperties = tlfEnv$currentTheme$histogram,
+                              histogramProperties = tlfEnv$currentTheme$histogram,
                               ...) {
       super$initialize(
         title = title,

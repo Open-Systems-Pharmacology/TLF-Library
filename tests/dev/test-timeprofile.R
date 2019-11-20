@@ -22,7 +22,7 @@ timeProfileMapping <- TimeProfileDataMapping$new(x = "Time", y = variableNames[7
 # -------------------------------------------------
 # Plot Time Profile with default configuration
 timeProfilePlot <- plotTimeProfile(
-  data = outputValues$data, 
+  data = outputValues$data,
   metaData = outputValues$metaData,
   dataMapping = timeProfileMapping
 )

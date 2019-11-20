@@ -15,9 +15,9 @@
 #' @export
 #'
 plotDDIRatio <- function(data,
-                        metaData = NULL,
-                        dataMapping = NULL,
-                        plotConfiguration = NULL) {
+                         metaData = NULL,
+                         dataMapping = NULL,
+                         plotConfiguration = NULL) {
   # If no data mapping or plot configuration is input, use default
   metaData <- metaData %||% metaDataHelper(data)
   dataMapping <- dataMapping %||% DDIRatioDataMapping$new()
@@ -26,22 +26,22 @@ plotDDIRatio <- function(data,
     metaData = metaData,
     dataMapping = dataMapping
   )
-  
+
   validateIsOfType(dataMapping, DDIRatioDataMapping)
   validateIsOfType(plotConfiguration, DDIRatioPlotConfiguration)
-  
+
   plotObject <- ggplot2::ggplot()
-  
+
   # Add Plot Configuration layers and PK Ratios
   plotObject <- plotConfiguration$setPlotBackground(plotObject)
   plotObject <- plotConfiguration$addDDIRatioLines(plotObject, dataMapping)
   plotObject <- plotConfiguration$addGuestLines(plotObject, dataMapping)
-  
+
   plotObject <- plotConfiguration$addDDIRatios(plotObject, data, metaData, dataMapping)
-  
+
   plotObject <- plotConfiguration$setPlotLabels(plotObject)
   plotObject <- plotConfiguration$setPlotProperties(plotObject)
   plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)
-  
+
   return(plotObject)
 }

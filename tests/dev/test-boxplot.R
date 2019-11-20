@@ -13,12 +13,14 @@ df <- data.frame(
   y = c(rnorm(100) + 5, 10 + rnorm(100), 10 - 2 * rnorm(100))
 )
 
+load("../data/tlf-output.RData")
+variableNames <- names(outputValues$data)
 
 group <- GroupMapping$new(fill = "x")
-map <- BoxWhiskerDataMapping$new(x = "x", y = "y")
+map <- BoxWhiskerDataMapping$new(x = "Gender", y = variableNames[6])
 
-boxplot <- plotBoxWhisker(df, dataMapping = map)
+boxplot <- plotBoxWhisker(outputValues$data, dataMapping = map)
 show(boxplot)
 
-boxtable <- getBoxWhiskerMeasure(df, dataMapping = map)
-show(boxtable)
+# boxtable <- getBoxWhiskerMeasure(outputValues$data, dataMapping = map)
+# show(boxtable)
