@@ -9,6 +9,27 @@
 LegendConfiguration
 }
 \description{
-Generic Legend Configuration
+Class for Legend Configuration
 }
+\section{Fields}{
+
+\describe{
+\item{\code{position}}{Legend position as defined in LegendPositions enum}
+
+\item{\code{titles}}{R6 class defining titles of legend}
+
+\item{\code{captions}}{R6 class defining captions of legend}
+
+\item{\code{values}}{R6 class defining values of aesthetic properties (e.g. circle, square for shape)}
+}}
+
+\section{Methods}{
+
+\describe{
+\item{new(position = NULL, titles = NULL, captions = NULL, values = NULL, dataMapping = NULL,
+data = NULL, metaData = NULL, theme = tlfEnv$currentTheme)}{Initialize LegendConfiguration.}
+\item{setPlotLegend(plotObject)}{Apply properties to plot legend.}
+}
+}
+
 \keyword{datasets}

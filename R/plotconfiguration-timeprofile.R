@@ -1,6 +1,23 @@
 #' @title TimeProfilePlotConfiguration
 #' @docType class
-#' @description  Plot Configuration for Time Profile Plots
+#' @description  Class for TimeProfile Plot Configuration
+#' @field legend R6 class defining legendConfiguration
+#' @field xAxis R6 class defining xAxisConfiguration
+#' @field yAxis R6 class defining yAxisConfiguration
+#' @field background R6 class defining backgroundConfiguration
+#' @field theme R6 class defining theme aesthtic properties
+#' @field filename Name of the saved plot
+#' @field timeProfileProperties Properties of time profile plot specific features
+#' @section Methods:
+#' \describe{
+#' \item{new(timeProfileProperties = tlfEnv$currentTheme$timeProfile, title = "Time Profile Plot", subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")), ...)}{
+#' Initialize TimeProfilePlotConfiguration}
+#' \item{setPlotProperties(plotObject)}{Apply properties of plot labels.}
+#' \item{setPlotBackground(plotObject)}{Apply background properties to plot.}
+#' \item{savePlot(plotObject)}{Save ggplot as file.}
+#' \item{addLLOQLines(plotObject, metaData, dataMapping)}{Add LLOQ horizontal lines to plot.}
+#' \item{addTimeProfiles(plotObject, data, metaData, dataMapping)}{Add time profiles to plot.}
+#' }
 #' @export
 TimeProfilePlotConfiguration <- R6::R6Class(
   "TimeProfilePlotConfiguration",

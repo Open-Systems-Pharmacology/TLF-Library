@@ -1,12 +1,21 @@
 #' @title LegendConfiguration
 #' @docType class
-#' @description  Generic Legend Configuration
+#' @description  Class for Legend Configuration
+#' @field position Legend position as defined in LegendPositions enum
+#' @field titles R6 class defining titles of legend
+#' @field captions R6 class defining captions of legend
+#' @field values R6 class defining values of aesthetic properties (e.g. circle, square for shape)
+#' @section Methods:
+#' \describe{
+#' \item{new(position = NULL, titles = NULL, captions = NULL, values = NULL, dataMapping = NULL,
+#' data = NULL, metaData = NULL, theme = tlfEnv$currentTheme)}{Initialize LegendConfiguration.}
+#' \item{setPlotLegend(plotObject)}{Apply properties to plot legend.}
+#' }
 #' @export
 LegendConfiguration <- R6::R6Class(
   "LegendConfiguration",
   public = list(
     position = NULL,
-    # next variables are R6 classes with aesthetic propoerties as names
     titles = NULL,
     captions = NULL,
     values = NULL,

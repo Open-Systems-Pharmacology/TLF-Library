@@ -9,6 +9,27 @@
 BackgroundConfiguration
 }
 \description{
-Generic Background Configuration
+Class for Background Configuration
 }
+\section{Fields}{
+
+\describe{
+\item{\code{outerBackground}}{R6 class defining backgroundElement}
+
+\item{\code{innerBackground}}{R6 class defining backgroundElement}
+
+\item{\code{grid}}{R6 class defining backgroundElement}
+
+\item{\code{watermark}}{R6 class defining watermark label}
+}}
+
+\section{Methods}{
+
+\describe{
+\item{new(outerBackground = NULL, innerBackground = NULL, grid = NULL, watermark = NULL, watermarkFont = NULL,
+theme = tlfEnv$currentTheme)}{Initialize BackgroundConfiguration.}
+\item{setBackground(plotObject)}{Apply properties to plot background.}
+}
+}
+
 \keyword{datasets}

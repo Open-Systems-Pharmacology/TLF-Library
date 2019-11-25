@@ -9,6 +9,37 @@
 TimeProfilePlotConfiguration
 }
 \description{
-Plot Configuration for Time Profile Plots
+Class for TimeProfile Plot Configuration
 }
+\section{Fields}{
+
+\describe{
+\item{\code{legend}}{R6 class defining legendConfiguration}
+
+\item{\code{xAxis}}{R6 class defining xAxisConfiguration}
+
+\item{\code{yAxis}}{R6 class defining yAxisConfiguration}
+
+\item{\code{background}}{R6 class defining backgroundConfiguration}
+
+\item{\code{theme}}{R6 class defining theme aesthtic properties}
+
+\item{\code{filename}}{Name of the saved plot}
+
+\item{\code{timeProfileProperties}}{Properties of time profile plot specific features}
+}}
+
+\section{Methods}{
+
+\describe{
+\item{new(timeProfileProperties = tlfEnv$currentTheme$timeProfile, title = "Time Profile Plot", subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")), ...)}{
+Initialize TimeProfilePlotConfiguration}
+\item{setPlotProperties(plotObject)}{Apply properties of plot labels.}
+\item{setPlotBackground(plotObject)}{Apply background properties to plot.}
+\item{savePlot(plotObject)}{Save ggplot as file.}
+\item{addLLOQLines(plotObject, metaData, dataMapping)}{Add LLOQ horizontal lines to plot.}
+\item{addTimeProfiles(plotObject, data, metaData, dataMapping)}{Add time profiles to plot.}
+}
+}
+
 \keyword{datasets}

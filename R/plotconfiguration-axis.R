@@ -19,7 +19,15 @@ Scaling <- enum(c(
 
 #' @title AxisConfiguration
 #' @docType class
-#' @description  Generic axis Configuration
+#' @description  Class for axis Configuration
+#' @field limits Axis limits
+#' @field scale Plot scale (lin, log...)
+#' @field ticks Values where ticks should be applied
+#' @field ticklabels Names of associated to ticks
+#' @section Methods:
+#' \describe{
+#' \item{new(limits = NULL, scale = Scaling$lin, ticks = "default", ticklabels = "default")}{Initialize AxisConfiguration.}
+#' }
 #' @export
 AxisConfiguration <- R6::R6Class(
   "AxisConfiguration",
@@ -53,7 +61,16 @@ AxisConfiguration <- R6::R6Class(
 
 #' @title XAxisConfiguration
 #' @docType class
-#' @description  Generic X axis Configuration
+#' @description  Class for X-axis Configuration
+#' @field limits Axis limits
+#' @field scale Plot scale (lin, log...)
+#' @field ticks Values where ticks should be applied
+#' @field ticklabels Names of associated to ticks
+#' @section Methods:
+#' \describe{
+#' \item{new(limits = NULL, scale = Scaling$lin, ticks = "default", ticklabels = "default")}{Initialize AxisConfiguration.}
+#' \item{setPlotAxis(plotObject)}{Apply properties to plot X-axis.}
+#' }
 #' @export
 XAxisConfiguration <- R6::R6Class(
   "XAxisConfiguration",
@@ -68,7 +85,16 @@ XAxisConfiguration <- R6::R6Class(
 
 #' @title YAxisConfiguration
 #' @docType class
-#' @description  Generic Y axis Configuration
+#' @description  Class for Y-axis Configuration
+#' @field limits Axis limits
+#' @field scale Plot scale (lin, log...)
+#' @field ticks Values where ticks should be applied
+#' @field ticklabels Names of associated to ticks
+#' @section Methods:
+#' \describe{
+#' \item{new(limits = NULL, scale = Scaling$lin, ticks = "default", ticklabels = "default")}{Initialize AxisConfiguration.}
+#' \item{setPlotAxis(plotObject)}{Apply properties to plot X-axis.}
+#' }
 #' @export
 YAxisConfiguration <- R6::R6Class(
   "YAxisConfiguration",

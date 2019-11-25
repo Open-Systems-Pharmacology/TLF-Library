@@ -1,6 +1,21 @@
 #' @title PlotConfiguration
 #' @docType class
-#' @description  Generic Plot Configuration
+#' @description  Class for Plot Configuration
+#' @field legend R6 class defining legendConfiguration
+#' @field xAxis R6 class defining xAxisConfiguration
+#' @field yAxis R6 class defining yAxisConfiguration
+#' @field background R6 class defining backgroundConfiguration
+#' @field theme R6 class defining theme aesthtic properties
+#' @field filename Name of the saved plot
+#' @section Methods:
+#' \describe{
+#' \item{new(title = NULL, subtitle = NULL, xlabel = NULL, ylabel = NULL, watermark = NULL, legendTitles = NULL, filename = "TestPlot.png",
+#' legend = NULL, xAxis = NULL, yAxis = NULL, background = NULL, data = NULL, metaData = NULL, dataMapping = NULL, theme = tlfEnv$currentTheme, ...)}{
+#' Initialize PlotConfiguration.}
+#' \item{setPlotProperties(plotObject)}{Apply properties of plot labels.}
+#' \item{setPlotBackground(plotObject)}{Apply background properties to plot.}
+#' \item{savePlot(plotObject)}{Save ggplot as file.}
+#' }
 #' @export
 PlotConfiguration <- R6::R6Class(
   "PlotConfiguration",

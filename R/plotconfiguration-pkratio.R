@@ -1,6 +1,23 @@
 #' @title PKRatioPlotConfiguration
 #' @docType class
-#' @description  Plot Configuration for PKRatio
+#' @description  Class for PKRatio Plot Configuration
+#' @field legend R6 class defining legendConfiguration
+#' @field xAxis R6 class defining xAxisConfiguration
+#' @field yAxis R6 class defining yAxisConfiguration
+#' @field background R6 class defining backgroundConfiguration
+#' @field theme R6 class defining theme aesthtic properties
+#' @field filename Name of the saved plot
+#' @field pkRatioProperties Properties of PK ratio plot specific features
+#' @section Methods:
+#' \describe{
+#' \item{new(pkRatioProperties = tlfEnv$currentTheme$pkRatio, title = "PK Ratio Plot", subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")), ...)}{
+#' Initialize PKRatioPlotConfiguration}
+#' \item{setPlotProperties(plotObject)}{Apply properties of plot labels.}
+#' \item{setPlotBackground(plotObject)}{Apply background properties to plot.}
+#' \item{savePlot(plotObject)}{Save ggplot as file.}
+#' \item{addPKRatioLines(plotObject, pkRatioLines)}{Add PK ratio horizontal lines to plot.}
+#' \item{addPKRatios(plotObject, data, metaData, dataMapping)}{Add PK ratios to plot.}
+#' }
 #' @export
 PKRatioPlotConfiguration <- R6::R6Class(
   "PKRatioPlotConfiguration",
