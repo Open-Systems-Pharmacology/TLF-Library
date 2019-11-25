@@ -1,0 +1,318 @@
+---
+title: "tlf-workflow"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{tlf-workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+load("../data/pkRatioDataExample.RData")
+load("../data/timeProfileDataFrame.RData")
+library(tlf)
+```
+
+# 1. Introduction
+## 1.1. Objectives
+The aim of this vignette is to document and illustrate the typical workflow for producing plots using the `tlf`-library.
+
+## 1.2. Libraries
+The main purpose of the `tlf`-library is to standardized the production of `ggplot` objects from data output by `OSPSuiteR`. 
+As such, `tlf`-library requires that the `ggplot2` package be installed.
+
+## 1.3. `tlf` typical workflow
+The suggested workflow for performing any kind of plot with the `tlf`-library is illustrated in the figure below. 
+
+```{r, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
+knitr::include_graphics("workflowSlide.png")
+```
+
+The standard workflow then proceeds as follows:
+
+**Step 0 - Data gathering.** Gather the data into tidy `data.frame` format.
+
+**Step 1 - Data pre-processing** Pre-process the data using `AggregationSummary` class.
+
+**Step 2 - Data grouping** Use the `GroupMapping` class to specify groupings according to which the data will be captioned in figure legends.
+
+**Step 3 - Data mapping.** Use the `DataMapping` class to select the independent and dependent variables of the processed data as well as the aesthetics that will be used to differentiate between the groupings of the data that were specified in step 2.
+
+**Step 4 - Plot configuration** Set the `PlotConfiguration` object which will define settings of the plot such as axis labeling, font sizes and watermarks.
+
+**Step 5 - Plot generation** Create a `ggplot` object from the above classes using the dedicated plotting function.
+
+Steps 1, 2, 3 and 4 are not mandatory.  If not implemented, `tlf`-libray uses default settings in lieu of the objects that are otherwise created in these optional steps. In addition, the `PlotConfiguration` object and the `DataMapping` object can be created independently. 
+Sections 2 to 4 will focus on `AggregationSummary`, `DataMapping` and `PlotConfiguration`.
+
+## 1.4. Naming Conventions
+In this package, it was chosen to use specific names for functions and classes referring to specific plots.
+The naming convention for classes is `<Plot Name><Class>` and for function `<function><Plot Name>`. 
+Below presents the table of specific classes and functions that are created using this convention:
+
+```{r, echo = FALSE, results='asis'}
+plotNames <- c("PKRatio", "TimeProfile", "Histogram", "BoxWhisker", "DDIRatio")
+classesNames <- c("DataMapping", "PlotConfiguration")
+functionNames <- c("plot")
+
+conventionTable <- data.frame(sapply(classesNames, function(x){paste0(plotNames, x)}), 
+           sapply(functionNames, function(x){paste0(x, plotNames)}),
+           row.names = plotNames)
+
+
+knitr::kable(conventionTable)
+```
+
+# 2. Data pre-processing: `AggregationSummary` class
+
+In the sequel, the data that will be used for the time profile plot is the following `data.frame` variable named `timeProfileDataFrame`:
+
+```{r, echo=FALSE, results='asis'}
+# Data frame printed in a nice markdown table:
+knitr::kable(timeProfileDataFrame[,c("IndividualID", "Time", "Population" ,  "Gender", "Age", "Compound" , "Dose"  , "Simulated")], align='c', digits =2)
+```
+
+The workflow assumes that the data to be plotted has been gathered in the form of a [*tidy*](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) dataframe.  In a tidy format dataframe, each *measurement*, such as a simulation result or experimental observation, is described entirely in one row.  The columns of the dataframe are limited to no more than the *independent variable* columns of the measurement (in this example, *Time* and *IndividualID*) and the *dependent variable* columns (in this case *Simulated*), which hold the value of the measurement.  Since no additional columns are allowed, two dependent variables that have differing sets of independent variables should each have their own tidy dataframes.
+
+## MetaData
+
+A `metaData` variable associated with the data can be used to define additional information such as the `dimension` and `units` of each column in the `data.frame`. The lower limit of quantitiation of time profile data can also be stored in the `metaData`. 
+
+```{r, results='asis'}
+timeProfileMetaData<-list("Time"        =list(unit = "min",  dimension = "Time"         ),
+                          "IndividualID"=list(unit = NULL,   dimension = NULL           ),
+                          "Population"  =list(unit = NULL,   dimension = NULL           ),
+                          "Gender"      =list(unit = NULL,   dimension = NULL           ),
+                          "Age"         =list(unit = "yrs",  dimension = "Time"         ),
+                          "Compound"    =list(unit = NULL,   dimension = NULL           ),
+                          "Dose"        =list(unit = "mg",   dimension = "Amount"       ),
+                          "Organ"       =list(unit = NULL,   dimension = NULL           ),
+                          "Compartment" =list(unit = NULL,   dimension = NULL           ),
+                          "Simulated"   =list(unit = "mg/L", dimension = "Concentration")) 
+```
+
+
+The `R6` class `AggregationSummary` automates the computation of multiple summary statistics of the raw data that is output by **Step 0**.  The output of this optional data pre-processing step is a dataframe with a column for each summary statistic.  This dataframe can be input into the subsequent steps of the workflow.  The user also has the option of generating `metaData` for each of the summary statistics evaluated.
+
+To illustrate the function of this class for the example of the dataframe `timeProfileDataFrame`, suppose that for each timepoint in the *Time* column, the *minimum* and the *mean* value of the *Simulated* column is to be computed for each gender in the *Gender* column.  The `AggregationSummary` class works in three steps:
+
+1. Three sets of columns are selected from the input dataframe `data`: an *independent variable* set called `xColumnNames` (in this case, the *Time* column in `timeProfileDataFrame`),  a *grouping variables* set called `groupingColumnNames` (the *Gender* column in `timeProfileDataFrame`) and a *dependent variables* set called `yColumnNames` (the *Simulated* column in `timeProfileDataFrame`).
+
+2. For each value of the independent variable `xColumnNames`, the rows of the dataframe are aggregated into groups defined by unique combinations of the elements in the grouping variable columns `groupingColumnNames`.
+
+3. Summary statistics (in this case, the minimum and the mean) for the `yColumnNames` variables in each group are evaluated.  The functions for computing the the summary statistics are specified when initializing an `AggregationSummary`, via `aggregationFunctionsVector`.  User-specified descriptive names of these functions are supplied via the vector of strings named `aggregationFunctionNames`.  The units and dimensions of the outputs of these functions are supplied via the vectors of strings named `aggregationUnitsVector` and `aggregationDimensionsVector`, respectively. 
+
+For this example, the `AggregationSummary` object `aggSummary` is instatiated as follows:
+
+```{r, results='asis'}
+aggSummary <- AggregationSummary$new(data = timeProfileDataFrame , 
+                                     metaData = timeProfileMetaData,
+                                     xColumnNames = "Time",
+                                     groupingColumnNames = "Gender",
+                                     yColumnNames = "Simulated",
+                                     aggregationFunctionsVector = c(min,mean),
+                                     aggregationFunctionNames =c("Simulated Min",
+                                                                 "Simulated Mean"),
+                                     aggregationUnitsVector = c("mg/L","mg/L"),
+                                     aggregationDimensionsVector = c("Concentration",
+                                                                     "Concentration"))
+```
+
+The dataframe that holds the summary statistics of the aggregated rows is stored in the `dfHelper` property of the resulting `aggSummary` object.  Since two functions (`min` and `mean`) were specified in `aggregationFunctionsVector`, the dataframe `aggSummary$dfHelper` has, in addition to the `xColumnNames`and `groupingColumnNames` columns, two additional columns named `Simulated Min` and `Simulated Mean`, which were the names specified in `aggregationFunctionNames`.
+
+```{r, echo=FALSE, results='asis'}
+knitr::kable(aggSummary$dfHelper, digits=2)
+```
+
+The `metaData` corresponding to the columns of the resulting dataframes are lists that are stored together in a list with the `metaData` of the `xColumnNames`and `groupingColumnNames` columns.  The `metaData` for the new `aggSummary$dfHelper` dataframe is stored as the `metaDataHelper` property of the `aggSummary` object. For this example, the two `metaData` lists corresponding to the `Simulated Min` and `Simulated Mean` columns are also are labeled `Simulated Min` and `Simulated Mean`. The contents of the list `aggSummary$metaDataHelper` are:
+
+``` 
+    * **Time**:
+
+      * **unit**: min
+      * **dimension**: Time
+
+  * **Gender**:
+
+      * **unit**:
+      * **dimension**:
+
+  * **Simulated Min**:
+
+      * **unit**: mg/L
+      * **dimension**: Concentration
+
+  * **Simulated Mean**:
+
+      * **unit**: mg/L
+      * **dimension**: Concentration
+``` 
+
+# 3. Mapping and grouping of data: `DataMapping` class.
+
+## 3.1. GroupMapping
+### 3.1.1. Grouping class
+
+An `R6` class called `Grouping` can be used to group the data into subsets that, in the final plots, are to be distinguished both aesthetically and in legend captions.  In addition, these subsets can be listed under descriptive legend titles.  
+
+  As an example, a `Grouping` object called `grouping1` can be used to specify that the data in a *tidy* dataframe such as `timeProfileDataFrame` should be grouped by both "Compound" and "Dose":
+```{r, results='asis'}
+# Grouping by variable names:
+grouping1 <- Grouping$new(c("Compound","Dose"))
+```
+With this minimal input, a legend associated with this grouping will have the default title "Compound-Dose".  On the other hand, a custom title for this grouping and its legend can be supplied by the user with the optional `label` input:
+```{r, results='asis'}
+# Grouping by variable names and overwriting the default label:
+grouping2 <- Grouping$new(group = c("Compound","Dose"), label = "Compound & Dose")
+```
+
+In the above two examples, default captions are constructed by hyphenating the compound type and the dose amount for each row.  Alternatively, the captions can be customized by the user by supplying a dataframe with the custom captions to the `group` input of the `Grouping` object constructor.  The format of this dataframe is such that the rightmost column contains the desired captions, the name of this rightmost column is the default legend title for this grouping, and the remaining columns define the combinations of row entries that are to receive each caption in the rightmost column.  To illustrate this method, the following dataframe `mappingDataFrame` is used to assign captions based on entries in the "Dose" and "Compound" columns.  For example the caption "6mg of Aspirin" is assigned to any row in which the "Dose" entry is 6 and the "Compound" entry is "Aspirin". 
+```{r, results='asis'}
+# Grouping using a data.frame:
+mappingDataFrame <- data.frame(Compound = c("Aspirin","Aspirin","Sugar","Sugar"),
+                               Dose = c(6,3,6,3),  
+                               "Compound & Dose"  = c("6mg of Aspirin",
+                                                      "3mg of Aspirin",
+                                                      "6mg of Sugar",
+                                                      "3mg of Sugar"),
+                               check.names = FALSE)
+knitr::kable(mappingDataFrame)
+grouping3 <- Grouping$new(group = mappingDataFrame)
+```
+The default title of the legend that results from this grouping is the name of the rightmost column, which is "Compound & Dose".  Note that the `check.names` option should be set to `FALSE` when creating the dataframe `mappingDataFrame` since the legend title contains spaces in this instance.  This legend title can be overridden to be another string by using the `label` input of the object constructor, as in the case of `grouping2` above.
+
+The three `Grouping` objects, `grouping1`, `grouping2` and `grouping3` respectively yield the last three columns of the following dataframe:
+```{r, results='asis'}
+# Apply the mapping to get the grouping captions:
+groupingsDataFrame <- data.frame(timeProfileDataFrame$IndividualID,
+                                 timeProfileDataFrame$Dose,
+                                 timeProfileDataFrame$Compound,
+                                 grouping1$getCaptions(timeProfileDataFrame),
+                                 grouping2$getCaptions(timeProfileDataFrame),
+                                 grouping3$getCaptions(timeProfileDataFrame))
+
+names(groupingsDataFrame) <- c("IndividualID", "Dose", "Compound",
+                               grouping1$label, grouping2$label, grouping3$label)
+
+# Show results for all groupings:
+knitr::kable(groupingsDataFrame)
+```
+
+A dataframe can also be used to create a `Grouping` object that subsets the data based on whether a numeric grouping variable satisfies an specific inequality.  For example, individuals in `timeProfileDataFrame` can be grouped according to whether or not their age exceeds 6 years by first defining the following dataframe:
+```{r, results='asis'}
+# Grouping using a data.frame:
+binningDataFrame <- data.frame(Age = I( list(c(0,6),c(7,100)) ), 
+                               "Age Range" = c("Age 6 or lower",
+                                               "Above age 6"),
+                               check.names = FALSE)
+```
+Then creating a new grouping:
+```{r, results='asis'}
+grouping4 <- Grouping$new(group = binningDataFrame)
+```
+ 
+This new `Grouping` object `grouping4` yields the following captions
+
+```{r, results='asis'}
+# Apply the mapping to get the grouping captions:
+binnedGroupingsDataFrame <- data.frame(timeProfileDataFrame$IndividualID,
+                                       timeProfileDataFrame$Age,
+                                       grouping4$getCaptions(timeProfileDataFrame)) 
+
+names(binnedGroupingsDataFrame) <- c("IndividualID", "Age", grouping4$label)
+
+# Show results for all groupings:
+knitr::kable(binnedGroupingsDataFrame)
+```
+
+### 3.1.2. GroupingMapping class 
+
+An additional `R6` class called `GroupMapping` maps `Grouping` objects to aesthetic parameters such as `color` or `linetype`.  To distinguish between "Compound" and "Dose" groups by color and to use the captions and legend title specified in `grouping2`, the following groupings object `groups1` is constructed:
+
+```{r, results='asis'}
+# Map groups to aesthtic properties
+groups1 <- GroupMapping$new(color =  grouping2 )
+```
+
+A `GroupMapping` object `groups2` can also be constructed more quickly by directly associating an aesthetic, such as `color`, to a vector of dataframe column names:
+```{r, results='asis'}
+# Map groups to aesthtic properties
+groups2 <- GroupMapping$new(color = c("Compound", "Dose"))
+```
+
+or to a `Grouping` object directly:
+```{r, results='asis'}
+# Map groups to aesthtic properties
+groups3 <- GroupMapping$new(color = Grouping$new(group = c("Compound", "Dose"),
+                                                  label = c("Compound & Dose")))
+```
+
+## 3.2. DataMapping
+
+The `R6` class `TimeProfileDataMapping` extracts the time profile plot data from an input dataframe and groups it according to the aesthetics specified in an input `GroupMapping` object.  This mapping is carried out by an internal function of this class named `checkMapData` which check if the variables indicated the `GroupMapping` are included in the data. Then, this method returns a simplified data.frame with the variables defined by the dataMapping. 
+ 
+When no `GroupMapping` object is supplied upon construction of a `TimeProfileDataMapping` object, the function `checkMapData` returns a dataframe with `x` and `y`.
+A dummy variable named `aesDefault` is added to the data.frame, its sole purpose is to allow modifications of aesthetic properties after the creation of the ggplot object (not possible otherwise).
+```{r, results='asis'}
+tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated")
+knitr::kable(tpMapping$checkMapData(data = timeProfileDataFrame,
+                                            metaData = timeProfileMetaData))
+```
+
+When a `GroupMapping` object is supplied upon construction of the `TimeProfileDataMapping` object, each `x`,`y` pair is associated with a group that can be used to distinguish the pair aesthetically in the final plot:
+```{r, results='asis'}
+# Re-use the variable groups previously defined
+tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated", 
+                                        groupMapping = groups1)
+
+knitr::kable(tpMapping$checkMapData(data = timeProfileDataFrame,
+                                          metaData = timeProfileMetaData))
+```
+
+A feature of `TimeProfileDataMapping` class is that, in addition to specifying a `y` column, the user may also supply `ymin` and `ymax` columns that can represent the boundaries of error bars. If only `ymin` and `ymax` are input when constructing the `TimeProfileDataMapping` object, with `y` left undefined or `NULL`, the default profile that will ultimately be plotted is a range plot.   If `y`, `ymin` and `ymax` are all input, the default plot will be a time profile plot with an error bar.
+
+
+
+# 4. Configure plot features: `PlotConfiguration` class.
+To configure the plot properties, `PlotConfiguration` objects derived from `R6Class` can be used.
+They associate the following features:
+
+* `LabelConfiguration`, inherited `R6Class` defining the labels of the plot (title, subtitles, x axis, y axis and watermark)
+* `LegendConfiguration`, `R6Class` defining the legend properties of the plot
+* `xAxisConfiguration`, `R6Class` defining the properties of the X axis (scale, limits, printed values)
+* `yAxisConfiguration`, `R6Class` defining the properties of the Y axis (scale, limits, printed values)
+
+For PK Ratio Plots, `PKRatioPlotConfiguration` is the most suited of `PlotConfiguration`
+The most suited way is to provide `data`, `metaData` and `dataMapping` to get automatically the associated plot configuration. However, any of the properties can be overwritten (either by indicating the updated input or by redifing the value after the creation of the object).
+
+## Themes
+
+## Example of Definition of PK Ratio Plot Configuration:
+
+```{r}
+# Create PK Ratio data Maping
+dataMapping <- PKRatioDataMapping$new()
+
+plotConfiguration <- PKRatioPlotConfiguration$new(
+  data = pkRatioData,
+  metaData = pkRatioMetaData,
+  dataMapping = dataMapping
+)
+
+plotConfiguration
+```
+
+# 5. Minimal example worklow
+The function `plotPKRatio` allows for an easy way of plotting PK Ratios with specific PK Ratio limits.
+
+* Input arguments of `plotPKRatio` are the `data`, `metaData`, their `dataMapping` and  `plotConfiguration
+* Output argument of `plotPKRatio` is the `plotObject` corresponding to a `ggplot` object.
+
+If no `dataMapping` and `plotConfiguration` is provided, `plotPKRatio` uses a default mapping and configuration.
+
+
+
