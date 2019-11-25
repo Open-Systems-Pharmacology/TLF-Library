@@ -11,4 +11,25 @@ PKRatioDataMapping
 \description{
 Data Mapping for PKRatio
 }
+\section{Fields}{
+
+\describe{
+\item{\code{x}}{Name of x variable to map}
+
+\item{\code{y}}{Name of y variable to map}
+
+\item{\code{groupMapping}}{R6 class mapping groups to aesthetic properties}
+
+\item{\code{pkRatioLines}}{Values of the horizontal lines plotted in PK ratio plots}
+}}
+
+\section{Methods}{
+
+\describe{
+\item{new(pkRatioLines, x, y, groupMapping = NULL, color = NULL, fill = NULL, linetype = NULL, shape = NULL, size = NULL)}{
+Initialize PKRatioDataMapping Either input groupMapping or input color, fill, linetype, shape and/or size.}
+\item{checkMapData(data, metaData = NULL)}{Check data mapping is correct. Create output data.frame with map data only.}
+}
+}
+
 \keyword{datasets}

@@ -11,4 +11,18 @@ GroupMapping
 \description{
 Abstract class for GroupMapping
 }
+\section{Fields}{
+
+\describe{
+\item{\code{color}}{Grouping class mapping variables to colors}
+
+\item{\code{fill}}{Grouping class mapping variables to color fillings}
+
+\item{\code{linetype}}{Grouping class mapping variables to line types}
+
+\item{\code{shape}}{Grouping class mapping variables to shapes}
+
+\item{\code{size}}{Grouping class mapping variables to sizes}
+}}
+
 \keyword{datasets}

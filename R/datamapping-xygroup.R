@@ -1,6 +1,15 @@
 #' @title XYGDataMapping
 #' @docType class
 #' @description  Abstract class for X Y Group Mapping
+#' @field x Name of x variable to map
+#' @field y Name of y variable to map
+#' @field groupMapping R6 class mapping groups to aesthetic properties
+#' @section Methods:
+#' \describe{
+#' \item{new(x, y, groupMapping = NULL, color = NULL, fill = NULL, linetype = NULL, shape = NULL, size = NULL)}{
+#' Initialize XYGDataMapping. Either input groupMapping or input color, fill, linetype, shape and/or size}
+#' \item{checkMapData(data, metaData = NULL)}{Check data mapping is correct. Create output data.frame with map data only.}
+#' }
 #' @export
 XYGDataMapping <- R6::R6Class(
   "XYGDataMapping",
@@ -8,18 +17,35 @@ XYGDataMapping <- R6::R6Class(
   public = list(
     groupMapping = NULL, # R6 Class of GroupMapping
 
-    initialize = function(..., groupMapping = NULL) {
-      super$initialize(...)
-      self$groupMapping <- groupMapping %||% GroupMapping$new()
+    initialize = function(x, y,
+                              groupMapping = NULL,
+                              color = NULL,
+                              fill = NULL,
+                              linetype = NULL,
+                              shape = NULL,
+                              size = NULL) {
+      super$initialize(x, y)
+
+      validateEitherOrNullInput(groupMapping, list(
+        "color" = color,
+        "fill" = fill,
+        "linetype" = linetype,
+        "shape" = shape,
+        "size" = size
+      ))
+      # To simplify the process workflow, groupMapping inputs color, fill... can be used directly instead of groupMapping
+      self$groupMapping <- groupMapping %||% GroupMapping$new(
+        color,
+        fill,
+        linetype,
+        shape,
+        size
+      )
     },
 
     checkMapData = function(data, metaData = NULL) {
-      if (isOfType(self$x, "character")) {
-        validateMapping(self$x, data)
-      }
-      if (isOfType(self$y, "character")) {
-        validateMapping(self$y, data, nullAllowed = TRUE)
-      }
+      validateMapping(self$x, data)
+      validateMapping(self$y, data, nullAllowed = TRUE)
 
       # Drop option simplify data.frame into vectors
       # False enforces data to stay as data.frame if x or y is empty
