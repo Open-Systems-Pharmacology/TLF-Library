@@ -1,19 +1,15 @@
-#' How should comparison of entities be performed
-#'
+#' @title Scaling
 #' @include enum.R
 #' @export
 #' @description
-#'  Built-in transformations include
-#'  "asn", "atanh", "boxcox", "date", "exp", "hms", "identity",
-#'  "log", "log10", "log1p", "log2", "logit", "modulus", "probability",
-#'  "probit", "pseudo_log", "reciprocal", "reverse", "sqrt" and "time"
+#'  Pre-defined transformation of axes
+#'  Not that built-in transformations from ggplot2 includes more transformations
 Scaling <- enum(c(
   "lin",
   "log10",
   "log",
-  "asn", "atanh", "boxcox", "date", "exp", "hms", "identity",
-  "log1p", "log2", "logit", "modulus", "probability",
-  "probit", "pseudo_log", "reciprocal", "reverse", "sqrt", "time"
+  "discrete",
+  "reverse", "sqrt", "time", "date"
 ))
 
 
@@ -77,8 +73,14 @@ XAxisConfiguration <- R6::R6Class(
   inherit = AxisConfiguration,
   public = list(
     setPlotAxis = function(plotObject) {
-      plotObject <- plotObject +
+      if(self$scale %in% "discrete"){
+        plotObject <- plotObject
+        scale_x_discrete(limits = self$limits, breaks = self$ticks, labels = self$ticklabels)
+        return(plotObject)
+      }
+      plotObject <- plotObject
         scale_x_continuous(trans = self$scale, limits = self$limits, breaks = self$ticks, labels = self$ticklabels)
+        return(plotObject)
     }
   )
 )
@@ -100,6 +102,7 @@ YAxisConfiguration <- R6::R6Class(
   "YAxisConfiguration",
   inherit = AxisConfiguration,
   public = list(
+    position = NULL, # TO DO: initialize position, then scale position = "left" or "right"
     setPlotAxis = function(plotObject) {
       plotObject <- plotObject +
         scale_y_continuous(trans = self$scale, limits = self$limits, breaks = self$ticks, labels = self$ticklabels)
