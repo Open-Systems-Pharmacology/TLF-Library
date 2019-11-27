@@ -9,6 +9,41 @@
 BoxWhiskerDataMapping
 }
 \description{
-Class for Box Whisker Mapping
+Data Mapping for Box Whisker Plots
 }
+\section{Fields}{
+
+\describe{
+\item{\code{x}}{Name of x variable to map}
+
+\item{\code{y}}{Name of y variable to map}
+
+\item{\code{ymin}}{Name of function used for calculating lower whisker}
+
+\item{\code{lower}}{Name of function used for calculating lower line of box}
+
+\item{\code{middle}}{Name of function used for calculating middle line}
+
+\item{\code{upper}}{Name of function used for calculating upper line of box}
+
+\item{\code{ymax}}{Name of function used for calculating upper whisker}
+
+\item{\code{minOutlierLimit}}{Name of function used for calculating lower outlier limit}
+
+\item{\code{maxOutlierLimit}}{Name of function used for calculating upper outlier limit}
+}}
+
+\section{Methods}{
+
+\describe{
+\item{new(x,y,ymin = tlfStatFunctions$\code{Percentile-2.5\%},lower = tlfStatFunctions$\code{Percentile-25\%},
+middle = tlfStatFunctions$\code{Percentile-50\%},upper = tlfStatFunctions$\code{Percentile-75\%},ymax = tlfStatFunctions$\code{Percentile-97.5\%},
+minOutlierLimit = tlfStatFunctions$\code{median-1.5IQR},maxOutlierLimit = tlfStatFunctions$\code{median+1.5IQR},...)}{
+Initialize BoxWhiskerDataMapping. ymin, lower, middle, upper, ymax, minOutlierLimit, maxOutlierLimit inputs are names of functions}
+\item{checkMapData(data, metaData = NULL)}{Check data mapping is correct. Create output data.frame with map data only.}
+\item{getBoxWhiskers(data)}{Check data mapping is correct. Create output data.frame with map data only.}
+\item{getOutliers(data)}{Check data mapping is correct. Create output data.frame with map data only.}
+}
+}
+
 \keyword{datasets}
