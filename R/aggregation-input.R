@@ -42,9 +42,9 @@ tlfStatFunctions <- enum(c(
 
 # Use assign to define a function with a specific name
 for (percentileValue in predefinedPercentiles) {
-  assign(paste0("Percentile-", percentileValue, "%"), function(x) {
-    stats::quantile(x, probs = percentileValue / 100)
-  })
+  # Use eval and parse to use evaluated values within functions
+  percentileFunction <- eval(parse(text = paste0("function (x) {as.numeric(stats::quantile(x, probs = ", percentileValue/ 100, "))}")))
+  assign(paste0("Percentile-", percentileValue, "%"), percentileFunction)
 }
 
 assign("mean-1.96sd", function(x) {
