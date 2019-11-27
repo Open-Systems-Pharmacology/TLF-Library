@@ -15,26 +15,27 @@ BoxWhiskerPlotConfiguration <- R6::R6Class(
         subtitle = subtitle,
         ...
       )
+      # x scale is discrete in box plots
+      self$xAxis$scale <- Scaling$discrete
     },
 
     addBoxWhisker = function(plotObject, data, metaData, dataMapping) {
-      mapData <- dataMapping$checkMapData(data, metaData)
 
       # Get the box plot quantiles from dataMapping
-      mapPercentiles <- dataMapping$getPercentiles(data)
+      mapBoxWhiskers <- dataMapping$getBoxWhiskerLimits(data)
 
       # Convert the mapping into characters usable by aes_string
       mapLabels <- getAesStringMapping(dataMapping)
 
       plotObject <- plotObject + ggplot2::geom_boxplot(
-        data = mapPercentiles,
+        data = mapBoxWhiskers,
         mapping = aes_string(
           x = mapLabels$x,
-          ymin = mapLabels$ymin,
-          lower = mapLabels$lower,
-          middle = mapLabels$middle,
-          upper = mapLabels$upper,
-          ymax = mapLabels$ymax,
+          ymin = "ymin",
+          lower = "lower",
+          middle = "middle",
+          upper = "upper",
+          ymax = "ymax",
           fill = mapLabels$fill,
           color = mapLabels$color,
           linetype = mapLabels$linetype,

@@ -73,14 +73,14 @@ XAxisConfiguration <- R6::R6Class(
   inherit = AxisConfiguration,
   public = list(
     setPlotAxis = function(plotObject) {
-      if(self$scale %in% "discrete"){
+      if (self$scale %in% "discrete") {
         plotObject <- plotObject +
-        scale_x_discrete(limits = self$limits, breaks = self$ticks, labels = self$ticklabels)
+          scale_x_discrete(limits = self$limits, breaks = self$ticks, labels = self$ticklabels)
         return(plotObject)
       }
-      plotObject <- plotObject + 
+      plotObject <- plotObject +
         scale_x_continuous(trans = self$scale, limits = self$limits, breaks = self$ticks, labels = self$ticklabels)
-        return(plotObject)
+      return(plotObject)
     }
   )
 )
