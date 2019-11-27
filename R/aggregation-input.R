@@ -43,7 +43,7 @@ tlfStatFunctions <- enum(c(
 # Use assign to define a function with a specific name
 for (percentileValue in predefinedPercentiles) {
   # Use eval and parse to use evaluated values within functions
-  percentileFunction <- eval(parse(text = paste0("function (x) {as.numeric(stats::quantile(x, probs = ", percentileValue/ 100, "))}")))
+  percentileFunction <- eval(parse(text = paste0("function (x) {as.numeric(stats::quantile(x, probs = ", percentileValue / 100, "))}")))
   assign(paste0("Percentile-", percentileValue, "%"), percentileFunction)
 }
 
@@ -69,7 +69,7 @@ assign("median-1.5IQR", function(x) {
   res <- quartiles[1] - 1.5 * (quartiles[2] - quartiles[3])
   return(res)
 })
-assign("median-1.5IQR", function(x) {
+assign("median+1.5IQR", function(x) {
   quartiles <- stats::quantile(x, probs = c(0.5, 0.75, 0.25))
   res <- quartiles[1] + 1.5 * (quartiles[2] - quartiles[3])
   return(res)
