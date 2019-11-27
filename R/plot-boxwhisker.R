@@ -35,12 +35,10 @@ plotBoxWhisker <- function(data,
   # Add Plot Configuration layers and box whisker plots
   plotObject <- plotConfiguration$setPlotBackground(plotObject)
   plotObject <- plotConfiguration$addBoxWhisker(plotObject, data, metaData, dataMapping)
-  # TO DO: create addOutliers method
-  # plotObject <- plotConfiguration$addOutliers(plotObject, data, metaData, dataMapping)
+  plotObject <- plotConfiguration$addOutliers(plotObject, data, metaData, dataMapping)
 
   plotObject <- plotConfiguration$setPlotLabels(plotObject)
-  # TO DO: fix x axis which has become discrete, scale_x_continous crashes
-  # plotObject <- plotConfiguration$setPlotProperties(plotObject)
+  plotObject <- plotConfiguration$setPlotProperties(plotObject)
   plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)
 
   return(plotObject)
