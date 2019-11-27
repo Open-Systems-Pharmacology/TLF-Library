@@ -1,6 +1,22 @@
 #' @title BoxWhiskerPlotConfiguration
 #' @docType class
-#' @description  Plot Configuration for Box Whisker Plots
+#' @description  Class for BoxWhisker Plot Configuration
+#' @field legend R6 class defining legendConfiguration
+#' @field xAxis R6 class defining xAxisConfiguration
+#' @field yAxis R6 class defining yAxisConfiguration
+#' @field background R6 class defining backgroundConfiguration
+#' @field theme R6 class defining theme aesthtic properties
+#' @field filename Name of the saved plot
+#' @section Methods:
+#' \describe{
+#' \item{new(title = "Box Whisker Plot", subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")), ...)}{
+#' Initialize BoxWhiskerPlotConfiguration}
+#' \item{setPlotProperties(plotObject)}{Apply properties of plot labels.}
+#' \item{setPlotBackground(plotObject)}{Apply background properties to plot.}
+#' \item{savePlot(plotObject)}{Save ggplot as file.}
+#' \item{addBoxWhisker(plotObject, data, metaData, dataMapping)}{Add Box and whiskers to plot.}
+#' \item{addOutliers(plotObject, data, metaData, dataMapping)}{Add Outliers to plot.}
+#' }
 #' @export
 BoxWhiskerPlotConfiguration <- R6::R6Class(
   "BoxWhiskerPlotConfiguration",
@@ -47,7 +63,7 @@ BoxWhiskerPlotConfiguration <- R6::R6Class(
       )
 
       plotObject <- plotObject +
-        ifEqual("defaultAes", mapLabels$fill, guides(color = "none")) +
+        ifEqual("defaultAes", mapLabels$fill, guides(fill = "none")) +
         ifEqual("defaultAes", mapLabels$color, guides(color = "none")) +
         ifEqual("defaultAes", mapLabels$linetype, guides(linetype = "none")) +
         ifEqual("defaultAes", mapLabels$size, guides(size = "none"))
@@ -56,30 +72,39 @@ BoxWhiskerPlotConfiguration <- R6::R6Class(
     },
 
     addOutliers = function(plotObject, data, metaData, dataMapping) {
-      # TO DO : add method to plot outliers
-      mapData <- dataMapping$checkMapData(data, metaData)
-
-      # Get the outliers from data mapping method
-      # mapOutliers <- dataMapping$getOutliers(data)
-      mapOutliers <- mapData
+      mapOutliers <- dataMapping$getOutliers(data)
 
       # Convert the mapping into characters usable by aes_string
       mapLabels <- getAesStringMapping(dataMapping)
 
-      plotObject <- plotObject + ggplot2::geom_point(
-        data = mapOutliers,
-        mapping = aes_string(
-          x = mapLabels$x,
-          y = "outliers",
-          shape = mapLabels$shape,
-          color = mapLabels$color,
-          size = mapLabels$size
-        ),
-        show.legend = TRUE
-      )
+      plotObject <- plotObject +
+        ggplot2::geom_point(
+          data = mapOutliers,
+          mapping = aes_string(
+            x = mapLabels$x,
+            y = "maxOutliers",
+            shape = mapLabels$shape,
+            color = mapLabels$color,
+            size = mapLabels$size
+          ),
+          show.legend = TRUE,
+          na.rm = TRUE
+        ) +
+        ggplot2::geom_point(
+          data = mapOutliers,
+          mapping = aes_string(
+            x = mapLabels$x,
+            y = "minOutliers",
+            shape = mapLabels$shape,
+            color = mapLabels$color,
+            size = mapLabels$size
+          ),
+          show.legend = TRUE,
+          na.rm = TRUE
+        )
 
       plotObject <- plotObject +
-        ifEqual("defaultAes", mapLabels$shape, guides(color = "none")) +
+        ifEqual("defaultAes", mapLabels$shape, guides(shape = "none")) +
         ifEqual("defaultAes", mapLabels$color, guides(color = "none")) +
         ifEqual("defaultAes", mapLabels$size, guides(size = "none"))
 
