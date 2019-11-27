@@ -10,8 +10,7 @@
 #' @field timeProfileProperties Properties of time profile plot specific features
 #' @section Methods:
 #' \describe{
-#' \item{new(timeProfileProperties = tlfEnv$currentTheme$timeProfile, title = "Time Profile Plot", subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")), ...)}{
-#' Initialize TimeProfilePlotConfiguration}
+#' \item{new(...)}{Initialize TimeProfilePlotConfiguration}
 #' \item{setPlotProperties(plotObject)}{Apply properties of plot labels.}
 #' \item{setPlotBackground(plotObject)}{Apply background properties to plot.}
 #' \item{savePlot(plotObject)}{Save ggplot as file.}

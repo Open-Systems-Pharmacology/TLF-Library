@@ -30,8 +30,7 @@ Class for BoxWhisker Plot Configuration
 \section{Methods}{
 
 \describe{
-\item{new(title = "Box Whisker Plot", subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")), ...)}{
-Initialize BoxWhiskerPlotConfiguration}
+\item{new(...)}{Initialize BoxWhiskerPlotConfiguration}
 \item{setPlotProperties(plotObject)}{Apply properties of plot labels.}
 \item{setPlotBackground(plotObject)}{Apply background properties to plot.}
 \item{savePlot(plotObject)}{Save ggplot as file.}

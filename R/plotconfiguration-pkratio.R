@@ -10,8 +10,7 @@
 #' @field pkRatioProperties Properties of PK ratio plot specific features
 #' @section Methods:
 #' \describe{
-#' \item{new(pkRatioProperties = tlfEnv$currentTheme$pkRatio, title = "PK Ratio Plot", subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")), ...)}{
-#' Initialize PKRatioPlotConfiguration}
+#' \item{new(...)}{Initialize PKRatioPlotConfiguration}
 #' \item{setPlotProperties(plotObject)}{Apply properties of plot labels.}
 #' \item{setPlotBackground(plotObject)}{Apply background properties to plot.}
 #' \item{savePlot(plotObject)}{Save ggplot as file.}

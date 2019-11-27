@@ -32,8 +32,7 @@ Class for DDIRatio Plot Configuration
 \section{Methods}{
 
 \describe{
-\item{new(ddiRatioProperties = tlfEnv$currentTheme$ddiRatio, title = "DDI Ratio Plot", subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")), ...)}{
-Initialize PKRatioPlotConfiguration}
+\item{new(...)}{Initialize DDIRatioPlotConfiguration}
 \item{setPlotProperties(plotObject)}{Apply properties of plot labels.}
 \item{setPlotBackground(plotObject)}{Apply background properties to plot.}
 \item{savePlot(plotObject)}{Save ggplot as file.}
