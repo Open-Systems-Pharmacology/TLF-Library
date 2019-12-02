@@ -62,7 +62,8 @@ minimalDataFrame <- data.frame("Time"=c(0,1,2,0,1,2),
                                "Concentration"=c(3,4,5,4,5,6))
 ```
 ```{r, results='asis',echo=FALSE}
-pander::pandoc.table(minimalDataFrame)
+knitr::kable(minimalDataFrame)
+#pander::pandoc.table(minimalDataFrame)
 ```
 
 
@@ -186,7 +187,8 @@ aggSummary <- AggregationSummary$new(data = stp ,
 The dataframe that holds the summary statistics of the aggregated rows is stored in the `dfHelper` property of the resulting `aggSummary` object.  Since two functions (`min` and `mean`) were specified in `aggregationFunctionsVector`, the dataframe `aggSummary$dfHelper` has, in addition to the `xColumnNames`and `groupingColumnNames` columns, two additional columns named `VenousBlood Min` and `VenousBlood Mean`, which were the names specified in `aggregationFunctionNames`.
 
 ```{r, results='asis',echo=FALSE}
-pander::pandoc.table(head(aggSummary$dfHelper), round=2)
+knitr::kable(head(aggSummary$dfHelper), digits=2)
+#pander::pandoc.table(head(aggSummary$dfHelper), round=2)
 ```
 
 
@@ -244,7 +246,8 @@ groupingDataFrame <- data.frame(Compound = c("Aspirin","Aspirin","Sugar","Sugar"
 ```
 
 ```{r, results='asis',echo=FALSE}
-pander::pandoc.table(head(groupingDataFrame))
+#pander::pandoc.table(head(groupingDataFrame))
+knitr::kable(head(groupingDataFrame))
 grouping3 <- Grouping$new(group = groupingDataFrame)
 ```
 The default title of the legend that results from this grouping is the name of the rightmost column, which is "Compound & Dose".  Note that the `check.names` option should be set to `FALSE` when creating the dataframe `groupingDataFrame` whenever the legend title contains spaces and/or special characters, as in this instance.  This legend title can be overridden to be another string by using the `label` input of the object constructor, as in the case of `grouping2` above.
@@ -272,7 +275,8 @@ shortGroupingsDataFrame <-rbind(
 
 
 # Show results for all groupings:
-pander::pandoc.table(head(shortGroupingsDataFrame), row.names = FALSE)
+knitr::kable(head(shortGroupingsDataFrame))
+#pander::pandoc.table(head(shortGroupingsDataFrame), row.names = FALSE)
 ```
 
 A dataframe can also be used to create a `Grouping` object that subsets the data based on whether a numeric grouping variable satisfies an specific inequality.  For example, individuals in `stp` can be grouped according to whether or not their age exceeds 6 years by first defining the following dataframe:
@@ -284,7 +288,8 @@ binningDataFrame <- data.frame(Age = I( list(c(0,6),c(7,100)) ),
                                check.names = FALSE)
 ```
 ```{r, results='asis',echo = FALSE}
-pander::pandoc.table(  binningDataFrame )
+knitr::kable(binningDataFrame)
+#pander::pandoc.table(  binningDataFrame )
 ```
 and then creating a new grouping:
 ```{r, results='asis'}
@@ -309,7 +314,8 @@ shortBinnedGroupingsDataFrame <-rbind(
   binnedGroupingsDataFrame[binnedGroupingsDataFrame$IndividualId==6,][1,]  )
 
 # Show results for all groupings:
-pander::pandoc.table( shortBinnedGroupingsDataFrame , row.names = FALSE)
+knitr::kable(shortBinnedGroupingsDataFrame , row.names = FALSE)
+#pander::pandoc.table( shortBinnedGroupingsDataFrame , row.names = FALSE)
 ```
  
 
@@ -359,8 +365,10 @@ When no `GroupMapping` object is supplied upon construction of a `TimeProfileDat
 A dummy variable named `aesDefault` is added to the dataframe, its sole purpose is to allow modifications of aesthetic properties after the creation of the ggplot object (not possible otherwise).
 ```{r, results='asis'}
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="VenousBlood")
-pander::pandoc.table(head(tpMapping$checkMapData(data = stp,
-                                            metaData = timeProfileMetaData)))
+knitr::kable(head(tpMapping$checkMapData(data = stp,
+                                           metaData = timeProfileMetaData)))
+# pander::pandoc.table(head(tpMapping$checkMapData(data = stp,
+#                                             metaData = timeProfileMetaData)))
 ```
 
 When a `GroupMapping` object is supplied upon construction of the `TimeProfileDataMapping` object, each `x`,`y` pair is associated with a group that can be used to distinguish the pair aesthetically in the final plot:
@@ -368,9 +376,10 @@ When a `GroupMapping` object is supplied upon construction of the `TimeProfileDa
 # Re-use the variable groups previously defined
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="VenousBlood", 
                                         groupMapping = groups1)
-
-pander::pandoc.table(head(tpMapping$checkMapData(data = stp,
-                                          metaData = timeProfileMetaData)) )
+knitr::kable(head(tpMapping$checkMapData(data = stp,
+                                         metaData = timeProfileMetaData)) )
+# pander::pandoc.table(head(tpMapping$checkMapData(data = stp,
+#                                           metaData = timeProfileMetaData)) )
 ```
 
 A feature of `TimeProfileDataMapping` class is that, in addition to specifying a `y` column, the user may also supply `ymin` and `ymax` columns that can represent the boundaries of error bars. If only `ymin` and `ymax` are input when constructing the `TimeProfileDataMapping` object, with `y` left undefined or `NULL`, the default profile that will ultimately be plotted is a range plot.   If `y`, `ymin` and `ymax` are all input, the default plot will be a time profile plot with an error bar.
@@ -402,9 +411,10 @@ hlp <- AggregationSummary$new(data = stp,
 # Define Mapping with ymin and ymax
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="VenousBlood Mean", 
                                         ymin = "VenousBlood Min", ymax = "VenousBlood Max")
-
-pander::pandoc.table(head(tpMapping$checkMapData(data = hlp$dfHelper,
-                                          metaData = hlp$metaDataHelper)))
+knitr::kable(head(tpMapping$checkMapData(data = hlp$dfHelper,
+                                         metaData = hlp$metaDataHelper)))
+# pander::pandoc.table(head(tpMapping$checkMapData(data = hlp$dfHelper,
+#                                           metaData = hlp$metaDataHelper)))
 ```
 
 
@@ -634,8 +644,8 @@ In this example, `x`, `ymin` and `ymax` variables are used to construct the `Tim
 
 ```{r, fig.height=5, fig.width=7.5}
 # Map x, ymin and ymax
-tpMappingRange <- TimeProfileDataMapping$new(x = "Time", 
-                                             ymin = "VenousBlood Min", 
+tpMappingRange <- TimeProfileDataMapping$new(x = "Time",
+                                             ymin = "VenousBlood Min",
                                              ymax = "VenousBlood Max")
 
 # Overwrite the plot configuration
@@ -658,8 +668,8 @@ This example adds a grouping by population to the `TimeProfileDataMapping` objec
 
 ```{r, fig.height=5, fig.width=7.5}
 # Map x, ymin and ymax
-tpMappingRange <- TimeProfileDataMapping$new(x = "Time", 
-                                             ymin = "VenousBlood Min", 
+tpMappingRange <- TimeProfileDataMapping$new(x = "Time",
+                                             ymin = "VenousBlood Min",
                                              ymax = "VenousBlood Max",
                                              groupMapping = GroupMapping$new(fill = "Population"))
 
