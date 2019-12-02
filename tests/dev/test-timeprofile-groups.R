@@ -47,16 +47,16 @@ meanDataMapping <- TimeProfileDataMapping$new(
 errorDataMapping <- TimeProfileDataMapping$new(
   x = "Time",
   y = "Mean",
-  yMin = "Min",
-  yMax = "Max",
+  ymin = "Min",
+  ymax = "Max",
   groupMapping = group
 )
 
 group <- GroupMapping$new(fill = "IndivdualID")
 rangeDataMapping <- TimeProfileDataMapping$new(
   x = "Time",
-  yMin = "Min",
-  yMax = "Max",
+  ymin = "Min",
+  ymax = "Max",
   groupMapping = group
 )
 # -------------------------------------------------

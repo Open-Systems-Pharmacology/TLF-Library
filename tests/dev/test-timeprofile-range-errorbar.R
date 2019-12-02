@@ -44,14 +44,14 @@ meanDataMapping <- TimeProfileDataMapping$new(
 errorDataMapping <- TimeProfileDataMapping$new(
   x = "Time",
   y = "Mean",
-  yMin = "Min",
-  yMax = "Max"
+  ymin = "Min",
+  ymax = "Max"
 )
 
 rangeDataMapping <- TimeProfileDataMapping$new(
   x = "Time",
-  yMin = "Min",
-  yMax = "Max"
+  ymin = "Min",
+  ymax = "Max"
 )
 # -------------------------------------------------
 # Plot PK Ratio using the previously defined variables
