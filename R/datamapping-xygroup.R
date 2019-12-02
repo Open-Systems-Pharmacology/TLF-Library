@@ -17,7 +17,7 @@ XYGDataMapping <- R6::R6Class(
   public = list(
     groupMapping = NULL, # R6 Class of GroupMapping
 
-    initialize = function(x, y,
+    initialize = function(x, y=NULL,
                               groupMapping = NULL,
                               color = NULL,
                               fill = NULL,
