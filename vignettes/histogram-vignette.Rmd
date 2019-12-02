@@ -15,8 +15,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-library(tlf)
-load("../data/extSimulatedTimeProfiles.rda")
+library(tlf) 
 useTheme(defaultTheme)
 ```
 
