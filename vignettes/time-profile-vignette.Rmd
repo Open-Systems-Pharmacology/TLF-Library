@@ -14,8 +14,10 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-load("../data/timeProfileDataFrame.RData")
+
 library(tlf)
+#load("../data/extSimulatedTimeProfiles.rda")
+stp <- read.csv("../data/timeProfileSixIndividualsData.csv")
 ```
 
 # Introduction
@@ -30,16 +32,16 @@ The suggested workflow for performing any kind of plot with the `tlf`-library is
 
 ## `tlf` workflow
 ```{r, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
-knitr::include_graphics("workflowSlide.png")
+knitr::include_graphics("workflow.png")
 ```
 
 The standard workflow then proceeds as follows:
 
 **Step 0 - Data gathering.** Gather the data into tidy dataframe format.
 
-**Step 1 - Data pre-processing** Pre-process the data using `AggregationSummary` class.
+**Step 1 - Data pre-processing** Specify how to summarize the data using the `AggregationInput` class, then create a data summary the `AggregationSummary` class.
 
-**Step 2 - Data grouping** Use the `GroupMapping` class to specify groupings according to which the data will be captioned in figure legends.
+**Step 2 - Group mapping** Use the `Grouping` class to specify groupings according to which the data will be captioned in figure legends.  Use the `GroupMapping` class to associate a `Grouping` object to a specific aesthetic such as a graph color or linetype.  
 
 **Step 3 - Data mapping.** Use the `DataMapping` class to select the independent and dependent variables of the processed data as well as the aesthetics that will be used to differentiate between the groupings of the data that were specified in step 2.
 
@@ -47,36 +49,39 @@ The standard workflow then proceeds as follows:
 
 **Step 5  - Plot generation** Create a `ggplot` object from the above classes using the dedicated plotting function.
 
-Steps 1, 2, 3 and 4 are not mandatory.  If not implemented, `tlf`-libray uses default settings in lieu of the objects that are otherwise created in these optional steps. In addition, the `PlotConfiguration` object and the `DataMapping` object can be created independently. 
+Steps 0, 1, 2, 3 and 4 are not mandatory.  If not implemented, `tlf`-libray uses default settings in lieu of the objects that are otherwise created in these optional steps. In addition, the `PlotConfiguration` object and the `DataMapping` object can be created independently. 
 
 ### A minimal example
-Before presentation of the full functionality of `tlf` classes, the following minimal example of a time profile plot will demonstrate the workflow for producing a `ggplot` image using Steps 0, 2, 3 and 5.
+The following minimal example of a time profile plot will demonstrate the workflow for producing a `ggplot` image using Steps 0, 2, 3 and 5.
 
 **Example Step 0:**
-The data to be plotted in `tlf` is assumed to be in R dataframe format.  An example such dataframe is the following, which contains time profile concentration data for two individuals.  Each individual is allocated a unqiue indentifier in the column *IndividualID*.
+The data to be plotted in `tlf` is assumed to be in R dataframe format.  An example such dataframe is the following, which contains time profile concentration data for two individuals.  Each individual is allocated a unqiue indentifier in the column *IndividualId*.
 ```{r}
 minimalDataFrame <- data.frame("Time"=c(0,1,2,0,1,2),
-                               "IndividualID"=as.factor(c(1,1,1,2,2,2)),
+                               "IndividualId"=as.factor(c(1,1,1,2,2,2)),
                                "Concentration"=c(3,4,5,4,5,6))
 ```
 ```{r, results='asis',echo=FALSE}
-knitr::kable(minimalDataFrame)
+pander::pandoc.table(minimalDataFrame)
 ```
+
+
+
 
 
 **Example Step 2:**
-In this step, groupings of the data are specified.  In this simple example, each individual's measurements are to be plotted using different linetypes.  A `Grouping` object is therefore created that specifies that a graph with a different *linetype* is to be used to plot the points for each unique value of the *IndividualID* column. 
+In this step, groupings of the data are specified.  In this simple example, each individual's measurements are to be plotted using different aesthetics (below, the aesthetic that will be used to differentiate the time profile of each individual is the *linetype*).  A `Grouping` object is therefore created that specifies that a graph with a different aesthetic is to be used to plot the points for each unique value of the *IndividualId* column. 
 ```{r}
-minimalGrouping <- Grouping$new( group = "IndividualID" )
+minimalGrouping <- Grouping$new( group = "IndividualId" )
 ```
-The construction of more detailed groupings is discussed in the GroupMapping section below.
+The construction of more detailed groupings is discussed in the Grouping section below.
 
 **Example Step 3:**
-Here, the independent and dependent variables of the plot and the plot groupings are specified using a `TimeProfileDataMapping` object, which is a subclass of the DataMapping class specifically aimed at producing time profile plots.  The constructor of this class identifies the *Time* column of the dataframe as the time axis, the *Concentration* column of the dataframe as the vertical axis, and `minimalGrouping`, which was defined in the earlier step, as the grouping object to use.  
+Here, the independent and dependent variables of the plot and the plot groupings are specified using a `TimeProfileDataMapping` object, which is a subclass of the DataMapping class specifically aimed at producing time profile plots.  The constructor of this class identifies the *Time* column of the dataframe as the time axis, the *Concentration* column of the dataframe as the vertical axis, and `minimalGrouping`, which was defined in the earlier step, as the grouping object specifying that each individual's time profile is to be plotted separately.  
 ```{r, results='asis'}
 minimalDataMapping <- TimeProfileDataMapping$new(x = "Time",
                                                  y = "Concentration",
-                                                 groupMapping = minimalGrouping)
+                                                 groupMapping = GroupMapping$new(linetype = minimalGrouping))
 ```
  
 **Example Step 5:**
@@ -84,40 +89,69 @@ In the final step of this example, a `ggplot` object called `timeProfilePlot` is
 ```{r, fig.height=5, fig.width=7.5}
 timeProfilePlot <- plotTimeProfile(data = minimalDataFrame, metaData = NULL, dataMapping = minimalDataMapping)
 show(timeProfilePlot)
-
 ```
  
 # 0. Data gathering
 
 ## The dataset
 
-In the sequel, the data that will be used for the time profile plot is the following `data.frame` variable named `timeProfileDataFrame`:
+In the sequel, the data that will be used for the time profile plot is a dataframe variable named `stp`, the first twelve rows of which are:
 
-```{r, results='asis'}
-# Data frame printed in a nice markdown table:
-knitr::kable(timeProfileDataFrame[,c("IndividualID", "Time", "Population" ,  "Gender", "Age", "Compound" , "Dose"  , "Simulated")], align='c', digits =2)
+
+<!--
+```{r, results='asis',echo=FALSE}
+pander::pandoc.table(head(stp))
 ```
 
-The workflow assumes that the data to be plotted has been gathered in the form of a [*tidy*](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) dataframe.  In a tidy format dataframe, each *measurement*, such as a simulation result or experimental observation, is described entirely in one row.  The columns of the dataframe are limited to no more than the *independent variable* columns of the measurement (in this example, *Time* and *IndividualID*) and the *dependent variable* columns (in this case *Simulated*), which hold the value of the measurement.  Since no additional columns are allowed, two dependent variables that have differing sets of independent variables should each have their own tidy dataframes.
+```{r, results='asis',echo=FALSE}
+pander::pandoc.table(head(stp[order(stp$Time,stp$IndividualId),c("IndividualId","Time","Gender","Population","Compound","Dose","VenousBlood")]))
+```
+-->
+
+```{r, results='asis',echo=FALSE}
+pander::pandoc.table( rbind(
+  stp[which(stp$IndividualId==1)[1],c("IndividualId","Time","Age","Gender","Population","Compound","Dose","VenousBlood")],
+  stp[which(stp$IndividualId==2)[1],c("IndividualId","Time","Age","Gender","Population","Compound","Dose","VenousBlood")],
+  stp[which(stp$IndividualId==3)[1],c("IndividualId","Time","Age","Gender","Population","Compound","Dose","VenousBlood")],
+  stp[which(stp$IndividualId==4)[1],c("IndividualId","Time","Age","Gender","Population","Compound","Dose","VenousBlood")],
+  stp[which(stp$IndividualId==5)[1],c("IndividualId","Time","Age","Gender","Population","Compound","Dose","VenousBlood")],
+  stp[which(stp$IndividualId==6)[1],c("IndividualId","Time","Age","Gender","Population","Compound","Dose","VenousBlood")],
+  stp[which(stp$IndividualId==1)[2],c("IndividualId","Time","Age","Gender","Population","Compound","Dose","VenousBlood")],
+  stp[which(stp$IndividualId==2)[2],c("IndividualId","Time","Age","Gender","Population","Compound","Dose","VenousBlood")],
+  stp[which(stp$IndividualId==3)[2],c("IndividualId","Time","Age","Gender","Population","Compound","Dose","VenousBlood")],
+  stp[which(stp$IndividualId==4)[2],c("IndividualId","Time","Age","Gender","Population","Compound","Dose","VenousBlood")],
+  stp[which(stp$IndividualId==5)[2],c("IndividualId","Time","Age","Gender","Population","Compound","Dose","VenousBlood")],
+  stp[which(stp$IndividualId==6)[2],c("IndividualId","Time","Age","Gender","Population","Compound","Dose","VenousBlood")]) , row.names= FALSE )
+```
+
+
+<!--
+```{r, results='asis',echo=FALSE}
+stp <- stp
+```
+
+
+```{r, results='asis'}
+pander::pandoc.table( head(stp[,c("IndividualId", "Time", "Population" ,  "Gender", "Age", "Compound" , "Dose"  , "VenousBlood")]) , justify='center', round=2)
+```
+-->
+The format of this dataframe is such that the independent variables of each *measurement* (here, `VenousBlood`), such as a simulation result or experimental observation, is described entirely in one row.   
 
 ## MetaData
 
-A `metaData` variable associated with the data can be used to define additional information such as the `dimension` and `units` of each column in the `data.frame`. The lower limit of quantitiation of time profile data can also be stored in the `metaData`. 
-
-
+A `metaData` variable associated with the data can be used to define additional information such as the `dimension` and `units` of each column in the dataframe. The lower limit of quantitiation of time profile data can also be stored in the `metaData`. 
 
 
 ```{r, results='asis'}
 timeProfileMetaData<-list("Time"        =list(unit = "min",  dimension = "Time"         ),
-                          "IndividualID"=list(unit = NULL,   dimension = NULL           ),
+                          "IndividualId"=list(unit = NULL,   dimension = NULL           ),
                           "Population"  =list(unit = NULL,   dimension = NULL           ),
                           "Gender"      =list(unit = NULL,   dimension = NULL           ),
                           "Age"         =list(unit = "yrs",  dimension = "Time"         ),
                           "Compound"    =list(unit = NULL,   dimension = NULL           ),
                           "Dose"        =list(unit = "mg",   dimension = "Amount"       ),
-                          "Organ"       =list(unit = NULL,   dimension = NULL           ),
                           "Compartment" =list(unit = NULL,   dimension = NULL           ),
-                          "Simulated"   =list(unit = "mg/L", dimension = "Concentration")) 
+                          "VenousBlood" =list(unit = "mg/L", dimension = "Concentration")) 
 ```
 
 
@@ -125,9 +159,9 @@ timeProfileMetaData<-list("Time"        =list(unit = "min",  dimension = "Time" 
 
 The `R6` class `AggregationSummary` automates the computation of multiple summary statistics of the raw data that is output by **Step 0**.  The output of this optional data pre-processing step is a dataframe with a column for each summary statistic.  This dataframe can be input into the subsequent steps of the workflow.  The user also has the option of generating `metaData` for each of the summary statistics evaluated.
 
-To illustrate the function of this class for the example of the dataframe `timeProfileDataFrame`, suppose that for each timepoint in the *Time* column, the *minimum* and the *mean* value of the *Simulated* column is to be computed for each gender in the *Gender* column.  The `AggregationSummary` class works in three steps:
+To illustrate the function of this class for the example of the dataframe `stp`, suppose that for each timepoint in the *Time* column, the *minimum* and the *mean* value of the *VenousBlood* column are to be computed for each gender in the *Gender* column.  The `AggregationSummary` class works in three steps:
 
-1. Three sets of columns are selected from the input dataframe `data`: an *independent variable* set called `xColumnNames` (in this case, the *Time* column in `timeProfileDataFrame`),  a *grouping variables* set called `groupingColumnNames` (the *Gender* column in `timeProfileDataFrame`) and a *dependent variables* set called `yColumnNames` (the *Simulated* column in `timeProfileDataFrame`).
+1. Three sets of columns are selected from the input dataframe `data`: an *independent variable* set called `xColumnNames` (in this case, the *Time* column in `stp`),  a *grouping variables* set called `groupingColumnNames` (the *Gender* column in `stp`) and a *dependent variables* set called `yColumnNames` (the *VenousBlood* column in `stp`).
 
 2. For each value of the independent variable `xColumnNames`, the rows of the dataframe are aggregated into groups defined by unique combinations of the elements in the grouping variable columns `groupingColumnNames`.
 
@@ -136,28 +170,28 @@ To illustrate the function of this class for the example of the dataframe `timeP
 For this example, the `AggregationSummary` object `aggSummary` is instatiated as follows:
 
 ```{r, results='asis'}
-aggSummary <- AggregationSummary$new(data = timeProfileDataFrame , 
+aggSummary <- AggregationSummary$new(data = stp , 
                                      metaData = timeProfileMetaData,
                                      xColumnNames = "Time",
                                      groupingColumnNames = "Gender",
-                                     yColumnNames = "Simulated",
+                                     yColumnNames = "VenousBlood",
                                      aggregationFunctionsVector = c(min,mean),
-                                     aggregationFunctionNames =c("Simulated Min",
-                                                                 "Simulated Mean"),
+                                     aggregationFunctionNames =c("VenousBlood Min",
+                                                                 "VenousBlood Mean"),
                                      aggregationUnitsVector = c("mg/L","mg/L"),
                                      aggregationDimensionsVector = c("Concentration",
                                                                      "Concentration"))
 ```
 
-The dataframe that holds the summary statistics of the aggregated rows is stored in the `dfHelper` property of the resulting `aggSummary` object.  Since two functions (`min` and `mean`) were specified in `aggregationFunctionsVector`, the dataframe `aggSummary$dfHelper` has, in addition to the `xColumnNames`and `groupingColumnNames` columns, two additional columns named `Simulated Min` and `Simulated Mean`, which were the names specified in `aggregationFunctionNames`.
+The dataframe that holds the summary statistics of the aggregated rows is stored in the `dfHelper` property of the resulting `aggSummary` object.  Since two functions (`min` and `mean`) were specified in `aggregationFunctionsVector`, the dataframe `aggSummary$dfHelper` has, in addition to the `xColumnNames`and `groupingColumnNames` columns, two additional columns named `VenousBlood Min` and `VenousBlood Mean`, which were the names specified in `aggregationFunctionNames`.
 
-```{r, results='asis'}
-knitr::kable(aggSummary$dfHelper, digits=2)
+```{r, results='asis',echo=FALSE}
+pander::pandoc.table(head(aggSummary$dfHelper), round=2)
 ```
 
 
 
-The `metaData` corresponding to the columns of the resulting dataframes are lists that are stored together in a list with the `metaData` of the `xColumnNames`and `groupingColumnNames` columns.  The `metaData` for the new `aggSummary$dfHelper` dataframe is stored as the `metaDataHelper` property of the `aggSummary` object. For this example, the two `metaData` lists corresponding to the `Simulated Min` and `Simulated Mean` columns are also are labeled `Simulated Min` and `Simulated Mean`. The contents of the list `aggSummary$metaDataHelper` are:
+The `metaData` corresponding to the columns of the resulting dataframes are lists that are stored together in a list with the `metaData` of the `xColumnNames`and `groupingColumnNames` columns.  The `metaData` for the new `aggSummary$dfHelper` dataframe is stored as the `metaDataHelper` property of the `aggSummary` object. For this example, the two `metaData` lists corresponding to the `VenousBlood Min` and `VenousBlood Mean` columns are also are labeled `VenousBlood Min` and `VenousBlood Mean`. The contents of the list `aggSummary$metaDataHelper` are:
 
 ``` 
     * **Time**:
@@ -170,12 +204,12 @@ The `metaData` corresponding to the columns of the resulting dataframes are list
       * **unit**:
       * **dimension**:
 
-  * **Simulated Min**:
+  * **VenousBlood Min**:
 
       * **unit**: mg/L
       * **dimension**: Concentration
 
-  * **Simulated Mean**:
+  * **VenousBlood Mean**:
 
       * **unit**: mg/L
       * **dimension**: Concentration
@@ -183,11 +217,10 @@ The `metaData` corresponding to the columns of the resulting dataframes are list
   
  
 
-## GroupMapping
+## Grouping
 
-An `R6` class called `Grouping` can be used to group the data into subsets that, in the final plots, are to be distinguished both aesthetically and in legend captions.  In addition, these subsets can be listed under descriptive legend titles.  
-
-  As an example, a `Grouping` object called `grouping1` can be used to specify that the data in a *tidy* dataframe such as `timeProfileDataFrame` should be grouped by both "Compound" and "Dose":
+The `Grouping` class can be used to group the data into subsets that, in the final plots, are to be distinguished both aesthetically and in legend captions.  In addition, these subsets can be listed under descriptive legend titles.  
+As an example, a `Grouping` object called `grouping1` can be used to specify that the data in a *tidy* dataframe such as `stp` should be grouped by both "Compound" and "Dose":
 ```{r, results='asis'}
 # Grouping by variable names:
 grouping1 <- Grouping$new(c("Compound","Dose"))
@@ -198,63 +231,85 @@ With this minimal input, a legend associated with this grouping will have the de
 grouping2 <- Grouping$new(group = c("Compound","Dose"), label = "Compound & Dose")
 ```
 
-In the above two examples, default captions are constructed by hyphenating the compound type and the dose amount for each row.  Alternatively, the captions can be customized by the user by supplying a dataframe with the custom captions to the `group` input of the `Grouping` object constructor.  The format of this dataframe is such that the rightmost column contains the desired captions, the name of this rightmost column is the default legend title for this grouping, and the remaining columns define the combinations of row entries that are to receive each caption in the rightmost column.  To illustrate this method, the following dataframe `mappingDataFrame` is used to assign captions based on entries in the "Dose" and "Compound" columns.  For example the caption "6mg of Aspirin" is assigned to any row in which the "Dose" entry is 6 and the "Compound" entry is "Aspirin". 
-```{r, results='asis'}
+In the above two examples, default captions are constructed by hyphenating the compound type and the dose amount for each row.  Alternatively, the captions can be customized by the user by supplying a dataframe with the custom captions to the `group` input of the `Grouping` object constructor.  The format of this dataframe is such that the rightmost column contains the desired captions, the name of this rightmost column is the default legend title for this grouping, and the remaining columns define the combinations of row entries that are to receive each caption in the rightmost column.  To illustrate this method, the following dataframe `groupingDataFrame` is used to assign captions based on entries in the "Dose" and "Compound" columns.  For example the caption "6mg of Aspirin" is assigned to any row in which the "Dose" entry is 6 and the "Compound" entry is "Aspirin". 
+```{r}
 # Grouping using a data.frame:
-mappingDataFrame <- data.frame(Compound = c("Aspirin","Aspirin","Sugar","Sugar"),
-                               Dose = c(6,3,6,3),  
-                               "Compound & Dose"  = c("6mg of Aspirin",
-                                                      "3mg of Aspirin",
-                                                      "6mg of Sugar",
-                                                      "3mg of Sugar"),
-                               check.names = FALSE)
-knitr::kable(mappingDataFrame)
-grouping3 <- Grouping$new(group = mappingDataFrame)
+groupingDataFrame <- data.frame(Compound = c("Aspirin","Aspirin","Sugar","Sugar"),
+                                Dose = c(6,3,6,3),  
+                                "Compound & Dose"  = c("6mg of Aspirin",
+                                                       "3mg of Aspirin",
+                                                       "6mg of Sugar",
+                                                       "3mg of Sugar"),
+                                check.names = FALSE)
 ```
-The default title of the legend that results from this grouping is the name of the rightmost column, which is "Compound & Dose".  Note that the `check.names` option should be set to `FALSE` when creating the dataframe `mappingDataFrame` since the legend title contains spaces in this instance.  This legend title can be overridden to be another string by using the `label` input of the object constructor, as in the case of `grouping2` above.
+
+```{r, results='asis',echo=FALSE}
+pander::pandoc.table(head(groupingDataFrame))
+grouping3 <- Grouping$new(group = groupingDataFrame)
+```
+The default title of the legend that results from this grouping is the name of the rightmost column, which is "Compound & Dose".  Note that the `check.names` option should be set to `FALSE` when creating the dataframe `groupingDataFrame` whenever the legend title contains spaces and/or special characters, as in this instance.  This legend title can be overridden to be another string by using the `label` input of the object constructor, as in the case of `grouping2` above.
 
 The three `Grouping` objects, `grouping1`, `grouping2` and `grouping3` respectively yield the last three columns of the following dataframe:
-```{r, results='asis'}
+```{r, results='asis',echo=FALSE}
 # Apply the mapping to get the grouping captions:
-groupingsDataFrame <- data.frame(timeProfileDataFrame$IndividualID,
-                                 timeProfileDataFrame$Dose,
-                                 timeProfileDataFrame$Compound,
-                                 grouping1$getCaptions(timeProfileDataFrame),
-                                 grouping2$getCaptions(timeProfileDataFrame),
-                                 grouping3$getCaptions(timeProfileDataFrame))
+groupingsDataFrame <- data.frame(stp$IndividualId,
+                                 stp$Dose,
+                                 stp$Compound,
+                                 grouping1$getCaptions(stp),
+                                 grouping2$getCaptions(stp),
+                                 grouping3$getCaptions(stp))
 
-names(groupingsDataFrame) <- c("IndividualID", "Dose", "Compound",
+names(groupingsDataFrame) <- c("IndividualId", "Dose", "Compound",
                                grouping1$label, grouping2$label, grouping3$label)
 
+shortGroupingsDataFrame <-rbind( 
+  groupingsDataFrame[groupingsDataFrame$IndividualId==1,][1,],
+  groupingsDataFrame[groupingsDataFrame$IndividualId==2,][1,],
+  groupingsDataFrame[groupingsDataFrame$IndividualId==3,][1,],
+  groupingsDataFrame[groupingsDataFrame$IndividualId==4,][1,],
+  groupingsDataFrame[groupingsDataFrame$IndividualId==5,][1,],
+  groupingsDataFrame[groupingsDataFrame$IndividualId==6,][1,]  )
+
+
 # Show results for all groupings:
-knitr::kable(groupingsDataFrame)
+pander::pandoc.table(head(shortGroupingsDataFrame), row.names = FALSE)
 ```
 
-A dataframe can also be used to create a `Grouping` object that subsets the data based on whether a numeric grouping variable satisfies an specific inequality.  For example, individuals in `timeProfileDataFrame` can be grouped according to whether or not their age exceeds 6 years by first defining the following dataframe:
-```{r, results='asis'}
-# Grouping using a data.frame:
+A dataframe can also be used to create a `Grouping` object that subsets the data based on whether a numeric grouping variable satisfies an specific inequality.  For example, individuals in `stp` can be grouped according to whether or not their age exceeds 6 years by first defining the following dataframe:
+```{r}
+# Grouping using a dataframe:
 binningDataFrame <- data.frame(Age = I( list(c(0,6),c(7,100)) ), 
                                "Age Range" = c("Age 6 or lower",
                                                "Above age 6"),
                                check.names = FALSE)
 ```
-Then creating a new grouping:
+```{r, results='asis',echo = FALSE}
+pander::pandoc.table(  binningDataFrame )
+```
+and then creating a new grouping:
 ```{r, results='asis'}
 grouping4 <- Grouping$new(group = binningDataFrame)
 ```
  
 This new `Grouping` object `grouping4` yields the following captions
-
-```{r, results='asis'}
+```{r, results='asis',echo=FALSE}
 # Apply the mapping to get the grouping captions:
-binnedGroupingsDataFrame <- data.frame(timeProfileDataFrame$IndividualID,
-                                       timeProfileDataFrame$Age,
-                                       grouping4$getCaptions(timeProfileDataFrame)) 
+binnedGroupingsDataFrame <- data.frame(stp$IndividualId,
+                                       stp$Age,
+                                       grouping4$getCaptions(stp)) 
 
-names(binnedGroupingsDataFrame) <- c("IndividualID", "Age", grouping4$label)
+names(binnedGroupingsDataFrame) <- c("IndividualId", "Age", grouping4$label)
+
+shortBinnedGroupingsDataFrame <-rbind( 
+  binnedGroupingsDataFrame[binnedGroupingsDataFrame$IndividualId==1,][1,],
+  binnedGroupingsDataFrame[binnedGroupingsDataFrame$IndividualId==2,][1,],
+  binnedGroupingsDataFrame[binnedGroupingsDataFrame$IndividualId==3,][1,],
+  binnedGroupingsDataFrame[binnedGroupingsDataFrame$IndividualId==4,][1,],
+  binnedGroupingsDataFrame[binnedGroupingsDataFrame$IndividualId==5,][1,],
+  binnedGroupingsDataFrame[binnedGroupingsDataFrame$IndividualId==6,][1,]  )
 
 # Show results for all groupings:
-knitr::kable(binnedGroupingsDataFrame)
+pander::pandoc.table( shortBinnedGroupingsDataFrame , row.names = FALSE)
 ```
  
 
@@ -275,7 +330,7 @@ or to a `Grouping` object directly:
 ```{r, results='asis'}
 # Map groups to aesthtic properties
 groups3 <- GroupMapping$new(color = Grouping$new(group = c("Compound", "Dose"),
-                                                  label = c("Compound & Dose")))
+                                                 label = c("Compound & Dose")))
 ```
 
 
@@ -287,10 +342,10 @@ The following section discusses the use of `GroupMapping` objects to group the d
 
 <!-- ```{r, results='asis'} -->
 <!-- # Apply the mapping to get the grouping captions: -->
-<!-- dataMapping <- XYGDataMapping$new(x="Time", y="Simulated", groupings = groups1) -->
+<!-- dataMapping <- XYGDataMapping$new(x="Time", y="VenousBlood", groupings = groups1) -->
 
 <!-- # Show results for all groupings: -->
-<!-- pander::pandoc.table(dataMapping$getMapData(data = timeProfileDataFrame, -->
+<!-- pander::pandoc.table(dataMapping$getMapData(data = stp, -->
 <!--                                             metaData = timeProfileMetaData)) -->
 <!-- ``` -->
 
@@ -298,58 +353,58 @@ The following section discusses the use of `GroupMapping` objects to group the d
 
 # 3. dataMapping
 
-The `R6` class `TimeProfileDataMapping` extracts the time profile plot data from an input dataframe and groups it according to the aesthetics specified in an input `GroupMapping` object.  This mapping is carried out by an internal function of this class named `checkMapData` which check if the variables indicated the `GroupMapping` are included in the data. Then, this method returns a simplified data.frame with the variables defined by the dataMapping. 
+The `R6` class `TimeProfileDataMapping` extracts the time profile plot data from an input dataframe and groups it according to the aesthetics specified in an input `GroupMapping` object.  This mapping is carried out by an internal function of this class named `checkMapData` which checks if the variables indicated the `GroupMapping` are included in the data. Then, this method returns a simplified dataframe with the variables defined by the dataMapping. 
  
 When no `GroupMapping` object is supplied upon construction of a `TimeProfileDataMapping` object, the function `checkMapData` returns a dataframe with `x` and `y`.
-A dummy variable named `aesDefault` is added to the data.frame, its sole purpose is to allow modifications of aesthetic properties after the creation of the ggplot object (not possible otherwise).
+A dummy variable named `aesDefault` is added to the dataframe, its sole purpose is to allow modifications of aesthetic properties after the creation of the ggplot object (not possible otherwise).
 ```{r, results='asis'}
-tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated")
-knitr::kable(tpMapping$checkMapData(data = timeProfileDataFrame,
-                                            metaData = timeProfileMetaData))
+tpMapping <- TimeProfileDataMapping$new(x="Time", y="VenousBlood")
+pander::pandoc.table(head(tpMapping$checkMapData(data = stp,
+                                            metaData = timeProfileMetaData)))
 ```
 
 When a `GroupMapping` object is supplied upon construction of the `TimeProfileDataMapping` object, each `x`,`y` pair is associated with a group that can be used to distinguish the pair aesthetically in the final plot:
 ```{r, results='asis'}
 # Re-use the variable groups previously defined
-tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated", 
+tpMapping <- TimeProfileDataMapping$new(x="Time", y="VenousBlood", 
                                         groupMapping = groups1)
 
-knitr::kable(tpMapping$checkMapData(data = timeProfileDataFrame,
-                                          metaData = timeProfileMetaData))
+pander::pandoc.table(head(tpMapping$checkMapData(data = stp,
+                                          metaData = timeProfileMetaData)) )
 ```
 
-A feature of `TimeProfileDataMapping` class is that, in addition to specifying a `y` column, the user may also supply `ymin` and `ymax` columns that can represent the boundaries of error bars. If only `ymin` and `ymax` are input when constructing the `TimeProfileDataMapping` object, with `y` left undefined or `NULL`, the default profile that will ultimately be plotted is a range plot.   If `y`, `ymin` and `ymax` are all input, the default plot will be a time profile plot with an error bar.
+A feature of `TimeProfileDataMapping` class is that, in addition to specifying a `y` column, the user may also supply `yMin` and `yMax` columns that can represent the boundaries of error bars. If only `yMin` and `yMax` are input when constructing the `TimeProfileDataMapping` object, with `y` left undefined or `NULL`, the default profile that will ultimately be plotted is a range plot.   If `y`, `yMin` and `yMax` are all input, the default plot will be a time profile plot with an error bar.
 
-<!-- hlp <- TimeProfileHelper$new(data = timeProfileDataFrame, -->
+<!-- hlp <- TimeProfileHelper$new(data = stp, -->
 <!--                              timeColumnName = "Time", -->
 <!--                              groupingColumnNames = c("Population"), -->
-<!--                              valuesColumnNames = "Simulated", -->
+<!--                              valuesColumnNames = "VenousBlood", -->
 <!--                              aggregationFunctionsVector = c(mean, min, max), -->
-<!--                              aggregationFunctionNames =  c("SimulatedMean", "SimulatedMin", "SimulatedMax")) -->
+<!--                              aggregationFunctionNames =  c("VenousBloodMean", "VenousBloodMin", "VenousBloodMax")) -->
 
 ```{r, results='asis'}
 # Use the helper to aggregate min and max values
-hlp <- AggregationSummary$new(data = timeProfileDataFrame,
+hlp <- AggregationSummary$new(data = stp,
                               metaData = timeProfileMetaData,
                               xColumnNames = "Time",
                               groupingColumnNames = "Gender",
-                              yColumnNames = "Simulated",
+                              yColumnNames = "VenousBlood",
                               aggregationFunctionsVector = c(mean,min,max),
-                              aggregationFunctionNames = c("Simulated Mean",
-                                                           "Simulated Min",
-                                                           "Simulated Max"),
+                              aggregationFunctionNames = c("VenousBlood Mean",
+                                                           "VenousBlood Min",
+                                                           "VenousBlood Max"),
                               aggregationUnitsVector = c("mg/L","mg/L","mg/L"),
                               aggregationDimensionsVector = c("Concentration",
                                                               "Concentration",
                                                               "Concentration"))
 
 
-# Define Mapping with ymin and ymax
-tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated Mean", 
-                                        ymin = "Simulated Min", ymax = "Simulated Max")
+# Define Mapping with yMin and yMax
+tpMapping <- TimeProfileDataMapping$new(x="Time", y="VenousBlood Mean", 
+                                        yMin = "VenousBlood Min", yMax = "VenousBlood Max")
 
-knitr::kable(tpMapping$checkMapData(data = hlp$dfHelper,
-                                          metaData = hlp$metaDataHelper))
+pander::pandoc.table(head(tpMapping$checkMapData(data = hlp$dfHelper,
+                                          metaData = hlp$metaDataHelper)))
 ```
 
 
@@ -395,15 +450,15 @@ tpConfig <- TimeProfilePlotConfiguration$new()
 tpConfig
 ```
 
-Since a plot configuration is not a necessary input for the generation of a plot, a default configuration is used when none is supplied.  The default plot configuation is constructed from `data`, `metaData` and `dataMapping` objects.  In fact, of these three objects, only the `data` is a necessary input as default `metaData` and `dataMapping` objects are also constructed when these are not input by the user.  As an illustration, the following is an example of a time profile configuration constructed using `timeProfileDataFrame` as `data`, `timeProfileMetaData` as `metaData` and `tpMapping` as `dataMapping`:
+Since a plot configuration is not a necessary input for the generation of a plot, a default configuration is used when none is supplied.  The default plot configuation is constructed from `data`, `metaData` and `dataMapping` objects.  In fact, of these three objects, only the `data` is a necessary input as default `metaData` and `dataMapping` objects are also constructed when these are not input by the user.  As an illustration, the following is an example of a time profile configuration constructed using `stp` as `data`, `timeProfileMetaData` as `metaData` and `tpMapping` as `dataMapping`:
 
 ```{r}
 # Define the time profile mapping
-tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated")
+tpMapping <- TimeProfileDataMapping$new(x="Time", y="VenousBlood")
 
 # Define the time profile configuration using
 # data, metaData and dataMapping
-tpConfig <- TimeProfilePlotConfiguration$new(data = timeProfileDataFrame,
+tpConfig <- TimeProfilePlotConfiguration$new(data = stp,
                                              metaData = timeProfileMetaData,
                                              dataMapping = tpMapping)
 
@@ -419,10 +474,10 @@ The function that creates ggplot objects for time profiles is `plotTimeProfile`,
 
 ```{r, fig.height=5, fig.width=7.5}
 # Map x and y of the plot
-tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated")
+tpMapping <- TimeProfileDataMapping$new(x="Time", y="VenousBlood")
 
 # Define the ggplot object
-plotObject <- plotTimeProfile(data=timeProfileDataFrame, 
+plotObject <- plotTimeProfile(data=stp, 
                               metaData = timeProfileMetaData,
                               dataMapping = tpMapping)
 # Show plot
@@ -430,7 +485,7 @@ plotObject
 
 ```
 
-The vertical bars seen in this plot occur because the dataframe `timeProfileDataFrame` has more than one `y` value per time point `x` and no `Grouping` object was supplied in the constructing the `TimeProfileDataMapping` object `tpMapping` so that these `y` values can be separated into different time profiles.
+The vertical bars seen in this plot occur because the dataframe `stp` has more than one `y` value per time point `x` and no `Grouping` object was supplied in the constructing the `TimeProfileDataMapping` object `tpMapping` so that these `y` values can be separated into different time profiles.
 
 ## 5.2. Workflow example of time profile plot using `TimeProfilePlotConfiguration`
 
@@ -441,17 +496,17 @@ This example generates a similar plot to the preceding one, except that here `Ti
 useTheme(tlfTheme)
 
 # Map x and y of the plot
-tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated")
+tpMapping <- TimeProfileDataMapping$new(x="Time", y="VenousBlood")
 
 # Overwrite plot configuration 
 tpConfig <- TimeProfilePlotConfiguration$new(title = "New Plot",
-                                             ylabel = "Simulated Results",
-                                             data = timeProfileDataFrame,
+                                             ylabel = "VenousBlood Results",
+                                             data = stp,
                                              metaData = timeProfileMetaData,
                                              dataMapping = tpMapping)
 
 # Define the ggplot object with updated configuration
-plotObject <- plotTimeProfile(data=timeProfileDataFrame, 
+plotObject <- plotTimeProfile(data=stp, 
                               metaData = timeProfileMetaData,
                               dataMapping = tpMapping, 
                               plotConfiguration = tpConfig)
@@ -462,20 +517,20 @@ plotObject
 
 ## 5.3. Workflow example of time profile plot using `TimeProfileDataMapping` with `GroupMapping`
 
-In this example, the vertical bars seen previous examples are removed through the use of a `GroupMapping` object that assigns a different color to each individual in the `IndividualID` column of `timeProfileDataFrame`, as well as a different linetype for each of the two populations (Asian and European).  This separates datapoints coincident in time into separate graphs.
+In this example, the vertical bars seen previous examples are removed through the use of a `GroupMapping` object that assigns a different color to each individual in the `IndividualId` column of `stp`, as well as a different linetype for each of the two populations (Asian and European).  This separates datapoints coincident in time into separate graphs.
 
 
 ```{r, fig.height=5, fig.width=7.5}
 # Map x, y and groups of the plot
-groups <- GroupMapping$new(color = "IndividualID", 
+groups <- GroupMapping$new(color = "IndividualId", 
                            linetype = "Population")
 
 tpMapping <- TimeProfileDataMapping$new(x = "Time", 
-                                        y = "Simulated", 
+                                        y = "VenousBlood", 
                                         groupMapping = groups)
 
 # Define the ggplot object
-plotObject <- plotTimeProfile(data=timeProfileDataFrame,
+plotObject <- plotTimeProfile(data=stp,
                               metaData = timeProfileMetaData,
                               dataMapping = tpMapping)
 
@@ -488,7 +543,7 @@ plotObject
 
 ```{r, fig.height=5, fig.width=7.5}
 # data.frame associating grouping to Individual ID with their captions
-groupingIndividualsDf <- data.frame(IndividualID = c(1,2,3,4) , 
+groupingIndividualsDf <- data.frame(IndividualId = c(1,2,3,4) , 
                                     "Name of Beatle" = c("Paul", "John", "George", "Ringo"),
                                     check.names = FALSE)
 # Define the grouping variable
@@ -496,11 +551,11 @@ groups = GroupMapping$new(color = groupingIndividualsDf)
 
 # Map x, y and groups
 tpMapping <- TimeProfileDataMapping$new(x = "Time",
-                                        y = "Simulated",
+                                        y = "VenousBlood",
                                         groupMapping = groups)
 
 # Define the ggplot object
-plotObject <- plotTimeProfile(data=timeProfileDataFrame,
+plotObject <- plotTimeProfile(data=stp,
                               metaData = timeProfileMetaData,
                               dataMapping = tpMapping)
 
@@ -514,20 +569,20 @@ plotObject
 
 
 ### 5.5.1. Plot aggregated mean value
-Here, the `AggregationSummary` object is used to aggregate the data in `timeProfileDataFrame` at each timepoint by population and then compute the mean, minimum and maximum of the aggregated data at each of the timepoints.  Next, the mean at each timepoint is plotted.  Since there are two populations in the "Population" column of `timeProfileDataFrame`, there are two mean values at each timepoint, giving rise to the vertical lines shown in the following plot.
+Here, the `AggregationSummary` object is used to aggregate the data in `stp` at each timepoint by population and then compute the mean, minimum and maximum of the aggregated data at each of the timepoints.  Next, the mean at each timepoint is plotted.  Since there are two populations in the "Population" column of `stp`, there are two mean values at each timepoint, giving rise to the vertical lines shown in the following plot.
 
 ```{r, fig.height=5, fig.width=7.5}
 # Define aggregated values through helper
 
-hlp <- AggregationSummary$new(data = timeProfileDataFrame,
+hlp <- AggregationSummary$new(data = stp,
                               metaData = timeProfileMetaData,
                               xColumnNames = "Time",
                               groupingColumnNames = c("Population"),
-                              yColumnNames = "Simulated",
+                              yColumnNames = "VenousBlood",
                               aggregationFunctionsVector = c(mean,min,max),
-                              aggregationFunctionNames = c("Simulated Mean",
-                                                           "Simulated Min",
-                                                           "Simulated Max"),
+                              aggregationFunctionNames = c("VenousBlood Mean",
+                                                           "VenousBlood Min",
+                                                           "VenousBlood Max"),
                               aggregationUnitsVector = c("mg/L","mg/L","mg/L"),
                               aggregationDimensionsVector = c("Concentration",
                                                               "Concentration",
@@ -535,9 +590,9 @@ hlp <- AggregationSummary$new(data = timeProfileDataFrame,
 
 # Map x and y
 tpMappingMean <- TimeProfileDataMapping$new(x = "Time", 
-                                            y = "Simulated Mean")
+                                            y = "VenousBlood Mean")
 # Overwrite the plot configuration
-tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
+tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "VenousBlood Results",
                                               xlabel = "Time")
 
 # Define the ggplot object
@@ -556,11 +611,11 @@ Here, the means generated by the `AggregationSummary` object are grouped by popu
 ```{r, fig.height=5, fig.width=7.5}
 # Map x, y and groupings
 tpMappingMean <- TimeProfileDataMapping$new(x = "Time", 
-                                            y = "Simulated Mean",
+                                            y = "VenousBlood Mean",
                                             groupMapping = GroupMapping$new(color = "Population"))
 
 # Overwrite the plot configuration
-tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
+tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "VenousBlood Results",
                                               xlabel = "Time",
                                               data=hlp$dfHelper,
                                               dataMapping = tpMappingMean)
@@ -575,18 +630,18 @@ meanPlot
 
 ### 5.5.3. Plot aggregated min and max values
 
-In this example, `x`, `ymin` and `ymax` variables are used to construct the `TimeProfileDataMapping` object `tpMappingRange`.  Since no `y` variable is supplied, the `plotTimeProfile` function produces a range plot.  The "dislocation" in the range plot at time 1 min is due to the fact that the `AggregationSummary` yielded two `ymin` and `ymax` values at each timepoint, one for each population.  
+In this example, `x`, `yMin` and `yMax` variables are used to construct the `TimeProfileDataMapping` object `tpMappingRange`.  Since no `y` variable is supplied, the `plotTimeProfile` function produces a range plot.  The "dislocation" in the range plot at time 1 min is due to the fact that the `AggregationSummary` yielded two `yMin` and `yMax` values at each timepoint, one for each population.  
 
 ```{r, fig.height=5, fig.width=7.5}
-# Map x, ymin and ymax
+# Map x, yMin and yMax
 tpMappingRange <- TimeProfileDataMapping$new(x = "Time", 
-                                             ymin = "Simulated Min", 
-                                             ymax = "Simulated Max")
+                                             yMin = "VenousBlood Min", 
+                                             yMax = "VenousBlood Max")
 
 # Overwrite the plot configuration
-tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
+tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "VenousBlood Results",
                                               xlabel = "Time",
-                                              data = hlp$dfHelper,
+                                              data=hlp$dfHelper,
                                               dataMapping = tpMappingRange)
 
 # Define the ggplot object
@@ -602,14 +657,14 @@ rangePlot
 This example adds a grouping by population to the `TimeProfileDataMapping` object `tpMappingRange`.  This results in two range plots, where the fill color distinguishes between the Asian and European population values.
 
 ```{r, fig.height=5, fig.width=7.5}
-# Map x, ymin and ymax
+# Map x, yMin and yMax
 tpMappingRange <- TimeProfileDataMapping$new(x = "Time", 
-                                             ymin = "Simulated Min", 
-                                             ymax = "Simulated Max",
+                                             yMin = "VenousBlood Min", 
+                                             yMax = "VenousBlood Max",
                                              groupMapping = GroupMapping$new(fill = "Population"))
 
 # Overwrite the plot configuration
-tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
+tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "VenousBlood Results",
                                               xlabel = "Time",
                                               data=hlp$dfHelper,
                                               dataMapping = tpMappingRange)
@@ -628,15 +683,15 @@ rangePlot
 With respect to the previous example, here, a `y` variable is added to the `TimeProfileDataMapping` object resulting in the `plotTimeProfile` returning a time profile plot with error bars. Note that the `GroupMapping` object in the `TimeProfileDataMapping` object constructor specifies that each population should be distinguished by color.
 
 ```{r, fig.height=5, fig.width=7.5}
-# Map x, y, ymin and ymax
+# Map x, y, yMin and yMax
 tpMappingErrorBar <- TimeProfileDataMapping$new(x = "Time", 
-                                                y = "Simulated Mean",
-                                                ymin = "Simulated Min", 
-                                                ymax = "Simulated Max",
+                                                y = "VenousBlood Mean",
+                                                yMin = "VenousBlood Min", 
+                                                yMax = "VenousBlood Max",
                                                 groupMapping = GroupMapping$new(color = "Population"))
 
 # Overwrite the plot configuration
-tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "Simulated Results",
+tpConfig <-  TimeProfilePlotConfiguration$new(ylabel = "VenousBlood Results",
                                               xlabel = "Time",
                                               data=hlp$dfHelper,
                                               dataMapping = tpMappingErrorBar)

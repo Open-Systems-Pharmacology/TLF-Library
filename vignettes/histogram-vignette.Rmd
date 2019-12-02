@@ -1,0 +1,65 @@
+---
+title: "Histogram Vignette"
+author: "OSPSuiteR 2019"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{histogram-vignette}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r setup, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(tlf)
+load("../data/extSimulatedTimeProfiles.rda")
+useTheme(defaultTheme)
+```
+
+# Setup data
+
+```{r}
+populationData <- read.table("../data/population.csv",skip = 3,sep = ",",header = TRUE)
+histogramData<-populationData[,c(1,2,5)]
+colnames(histogramData)<-c("IndividalId","Gender","Weight")
+```
+
+
+```{r, results='asis',echo=FALSE}
+pander::pandoc.table(head(histogramData))
+```
+
+```{r, fig.height=5, fig.width=7.5}
+getQuantile05 <- function(x) {
+  return(quantile(x,.05))
+}
+
+getQuantile95 <- function(x) {
+  return(quantile(x,.95))
+}
+
+bins = 50
+histGrouping <- GroupMapping$new(fill = Grouping$new(group = "Gender", label = "Gender") )
+
+hdm <- HistogramDataMapping$new( x = "Weight" , groupMapping = histGrouping , verticalLineFunctions = c(getQuantile05,median,getQuantile95) , verticalLineFunctionNames = c("Q05","Median","Q95"))
+
+hpc <- HistogramPlotConfiguration$new(data = histogramData , dataMapping = hdm , bins = bins , binWidth = NULL  )
+
+plt <- plotHistogram(data=histogramData,
+                      metaData = NULL,
+                      dataMapping = hdm,
+                      plotConfiguration = hpc)
+
+
+show(plt)
+
+
+```
+
+ 
+
+
