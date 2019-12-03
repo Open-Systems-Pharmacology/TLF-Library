@@ -13,23 +13,25 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 load("../data/pkRatioDataExample.RData")
+load("../data/tlf-output.RData")
 load("../data/timeProfileDataFrame.RData")
 library(tlf)
 ```
 
 # 1. Introduction
 ## 1.1. Objectives
-The aim of this vignette is to document and illustrate the typical workflow for producing plots using the `tlf`-library.
+The aim of this vignette is to document and illustrate the typical workflow needed for the production of plots using the `tlf`-library.
 
 ## 1.2. Libraries
-The main purpose of the `tlf`-library is to standardized the production of `ggplot` objects from data output by `OSPSuiteR`. 
+The main purpose of the `tlf`-library is to standardized the production of `ggplot` objects from data output by the `OSPSuiteR`. 
 As such, `tlf`-library requires that the `ggplot2` package be installed.
 
 ## 1.3. `tlf` typical workflow
 The suggested workflow for performing any kind of plot with the `tlf`-library is illustrated in the figure below. 
 
 ```{r, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
-knitr::include_graphics("workflowSlide.png")
+# echo=FALSE prints only code chunk output
+knitr::include_graphics("workflow.png")
 ```
 
 The standard workflow then proceeds as follows:
@@ -55,7 +57,8 @@ The naming convention for classes is `<Plot Name><Class>` and for function `<fun
 Below presents the table of specific classes and functions that are created using this convention:
 
 ```{r, echo = FALSE, results='asis'}
-plotNames <- c("PKRatio", "TimeProfile", "Histogram", "BoxWhisker", "DDIRatio")
+# This small script gives a fast way to introduce the nomenclature of the classes and functions
+plotNames <- c("PKRatio", "TimeProfile", "Histogram", "BoxWhisker", "GOF", "DDIRatio")
 classesNames <- c("DataMapping", "PlotConfiguration")
 functionNames <- c("plot")
 
@@ -69,55 +72,57 @@ knitr::kable(conventionTable)
 
 # 2. Data pre-processing: `AggregationSummary` class
 
-In the sequel, the data that will be used for the time profile plot is the following `data.frame` variable named `timeProfileDataFrame`:
+## 2.1. Data format
+
+The workflow assumes that the data to be plotted has been gathered in the form of a [*tidy*](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) dataframe.  In a tidy format dataframe, each *measurement*, such as a simulation result or experimental observation, is described entirely in one row.  The columns of the dataframe are limited to no more than the *independent variable* columns of the measurement (in this example, *Time* and *IndividualID*) and the *dependent variable* columns (in this case *Organism|ArterialBlood|Aciclovir|Whole Blood*), which hold the value of the measurement.  Since no additional columns are allowed, two dependent variables that have differing sets of independent variables should each have their own tidy dataframes.
+
+In the sequel, we will use a standard dataset exported from the `OSPSuiteR` package: `testData`. This data is a `data.frame` with 10 variables and 22500 observations.
 
 ```{r, echo=FALSE, results='asis'}
-# Data frame printed in a nice markdown table:
-knitr::kable(timeProfileDataFrame[,c("IndividualID", "Time", "Population" ,  "Gender", "Age", "Compound" , "Dose"  , "Simulated")], align='c', digits =2)
+testData <- outputValues$data
+knitr::kable(head(testData)) #For aesthetics of the table align='c', digits =2)
 ```
 
-The workflow assumes that the data to be plotted has been gathered in the form of a [*tidy*](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) dataframe.  In a tidy format dataframe, each *measurement*, such as a simulation result or experimental observation, is described entirely in one row.  The columns of the dataframe are limited to no more than the *independent variable* columns of the measurement (in this example, *Time* and *IndividualID*) and the *dependent variable* columns (in this case *Simulated*), which hold the value of the measurement.  Since no additional columns are allowed, two dependent variables that have differing sets of independent variables should each have their own tidy dataframes.
+## 2.2. MetaData
 
-## MetaData
+A `metaData` variable associated with the data can be used to define additional information such as the `dimension` and `unit` of each column in the `data.frame`. The lower limit of quantitiation of a time profile  can also be stored in the `metaData`. The format of metaData is currently expected to be a list on each variable of lists showing unit and dimension.
 
-A `metaData` variable associated with the data can be used to define additional information such as the `dimension` and `units` of each column in the `data.frame`. The lower limit of quantitiation of time profile data can also be stored in the `metaData`. 
+```{r, results='asis', echo=FALSE}
+testMetaData <- outputValues$metaData
+metaDataTable <- data.frame("unit" = sapply(testMetaData, function(x){x$unit}),
+                            "dimension" = sapply(testMetaData, function(x){x$dimension}))
 
-```{r, results='asis'}
-timeProfileMetaData<-list("Time"        =list(unit = "min",  dimension = "Time"         ),
-                          "IndividualID"=list(unit = NULL,   dimension = NULL           ),
-                          "Population"  =list(unit = NULL,   dimension = NULL           ),
-                          "Gender"      =list(unit = NULL,   dimension = NULL           ),
-                          "Age"         =list(unit = "yrs",  dimension = "Time"         ),
-                          "Compound"    =list(unit = NULL,   dimension = NULL           ),
-                          "Dose"        =list(unit = "mg",   dimension = "Amount"       ),
-                          "Organ"       =list(unit = NULL,   dimension = NULL           ),
-                          "Compartment" =list(unit = NULL,   dimension = NULL           ),
-                          "Simulated"   =list(unit = "mg/L", dimension = "Concentration")) 
+knitr::kable(metaDataTable)
 ```
 
+## 2.3. Aggregation
 
+A common processing of the data is its aggregation. The aggregation consists in splitting the data into subsets, then computes summary statistics for each, and returns the result in a convenient form.
+Visual predictive checks are typical plots where such method is useful.
+
+The `AggregationSummary` class is a helper class that simplifies the use of aggregation methods on the data.
 The `R6` class `AggregationSummary` automates the computation of multiple summary statistics of the raw data that is output by **Step 0**.  The output of this optional data pre-processing step is a dataframe with a column for each summary statistic.  This dataframe can be input into the subsequent steps of the workflow.  The user also has the option of generating `metaData` for each of the summary statistics evaluated.
 
-To illustrate the function of this class for the example of the dataframe `timeProfileDataFrame`, suppose that for each timepoint in the *Time* column, the *minimum* and the *mean* value of the *Simulated* column is to be computed for each gender in the *Gender* column.  The `AggregationSummary` class works in three steps:
+To illustrate the functions of this class for the example of the dataframe `testData`, let's suppose that for each timepoint in the *Time* column, the *minimum* and the *mean* value of the simulated  *Organism|ArterialBlood|Aciclovir|Whole Blood* column is to be computed for each gender in the *Gender* column.  The `AggregationSummary` class works in 3 steps:
 
-1. Three sets of columns are selected from the input dataframe `data`: an *independent variable* set called `xColumnNames` (in this case, the *Time* column in `timeProfileDataFrame`),  a *grouping variables* set called `groupingColumnNames` (the *Gender* column in `timeProfileDataFrame`) and a *dependent variables* set called `yColumnNames` (the *Simulated* column in `timeProfileDataFrame`).
+1. Three sets of columns are selected from the input dataframe `data`: an *independent variable* set called `xColumnNames` (in this case, the *Time* column in `testData`),  a *grouping variables* set called `groupingColumnNames` (the *Gender* column in `testData`) and a *dependent variables* set called `yColumnNames` (the *Organism|ArterialBlood|Aciclovir|Whole Blood* column in `testData`).
 
 2. For each value of the independent variable `xColumnNames`, the rows of the dataframe are aggregated into groups defined by unique combinations of the elements in the grouping variable columns `groupingColumnNames`.
 
-3. Summary statistics (in this case, the minimum and the mean) for the `yColumnNames` variables in each group are evaluated.  The functions for computing the the summary statistics are specified when initializing an `AggregationSummary`, via `aggregationFunctionsVector`.  User-specified descriptive names of these functions are supplied via the vector of strings named `aggregationFunctionNames`.  The units and dimensions of the outputs of these functions are supplied via the vectors of strings named `aggregationUnitsVector` and `aggregationDimensionsVector`, respectively. 
+3. Summary statistics (in this case, the `minimum` and the `mean`) for the `yColumnNames` variables in each group are evaluated.  The functions for computing the the summary statistics are specified when initializing an `AggregationSummary`, via `aggregationFunctionsVector`.  User-specified descriptive names of these functions are supplied via the vector of strings named `aggregationFunctionNames`.  The units and dimensions of the outputs of these functions are supplied via the vectors of strings named `aggregationUnitsVector` and `aggregationDimensionsVector`, respectively. 
 
 For this example, the `AggregationSummary` object `aggSummary` is instatiated as follows:
 
 ```{r, results='asis'}
-aggSummary <- AggregationSummary$new(data = timeProfileDataFrame , 
-                                     metaData = timeProfileMetaData,
+aggSummary <- AggregationSummary$new(data = testData , 
+                                     metaData = testMetaData,
                                      xColumnNames = "Time",
                                      groupingColumnNames = "Gender",
-                                     yColumnNames = "Simulated",
+                                     yColumnNames = "Organism|ArterialBlood|Aciclovir|Whole Blood",
                                      aggregationFunctionsVector = c(min,mean),
                                      aggregationFunctionNames =c("Simulated Min",
                                                                  "Simulated Mean"),
-                                     aggregationUnitsVector = c("mg/L","mg/L"),
+                                     aggregationUnitsVector = c("µmol/l","µmol/l"),
                                      aggregationDimensionsVector = c("Concentration",
                                                                      "Concentration"))
 ```
@@ -125,34 +130,26 @@ aggSummary <- AggregationSummary$new(data = timeProfileDataFrame ,
 The dataframe that holds the summary statistics of the aggregated rows is stored in the `dfHelper` property of the resulting `aggSummary` object.  Since two functions (`min` and `mean`) were specified in `aggregationFunctionsVector`, the dataframe `aggSummary$dfHelper` has, in addition to the `xColumnNames`and `groupingColumnNames` columns, two additional columns named `Simulated Min` and `Simulated Mean`, which were the names specified in `aggregationFunctionNames`.
 
 ```{r, echo=FALSE, results='asis'}
-knitr::kable(aggSummary$dfHelper, digits=2)
+knitr::kable(head(aggSummary$dfHelper, digits=2))
 ```
 
 The `metaData` corresponding to the columns of the resulting dataframes are lists that are stored together in a list with the `metaData` of the `xColumnNames`and `groupingColumnNames` columns.  The `metaData` for the new `aggSummary$dfHelper` dataframe is stored as the `metaDataHelper` property of the `aggSummary` object. For this example, the two `metaData` lists corresponding to the `Simulated Min` and `Simulated Mean` columns are also are labeled `Simulated Min` and `Simulated Mean`. The contents of the list `aggSummary$metaDataHelper` are:
 
-``` 
-    * **Time**:
+```{r, results='asis'}
+# Currently issue with metaData of Gender
+aggSummary$metaDataHelper[[2]] <- NULL
+aggMetaData <- data.frame("unit" = sapply(aggSummary$metaDataHelper, function(x){x$unit}),
+                          "dimension" = sapply(aggSummary$metaDataHelper, function(x){x$dimension}))
 
-      * **unit**: min
-      * **dimension**: Time
-
-  * **Gender**:
-
-      * **unit**:
-      * **dimension**:
-
-  * **Simulated Min**:
-
-      * **unit**: mg/L
-      * **dimension**: Concentration
-
-  * **Simulated Mean**:
-
-      * **unit**: mg/L
-      * **dimension**: Concentration
+knitr::kable(aggMetaData)
 ``` 
 
 # 3. Mapping and grouping of data: `DataMapping` class.
+
+The role of the `DataMapping` class is to provide a user-friendly interface to indicate what data should plotted.
+In most cases, this class needs to be initiliazed to map what variable is `x`,  `y` and sometimes what variable(s) will group the data.
+Thus, the most common input are `x` and `y`, however, for more advanced plots input such as `groupMapping` may be used often.
+For advanced plots, subclasses are derived from `DataMapping`, they use unique input and default related to the advanced plot to make it easier to use them.
 
 ## 3.1. GroupMapping
 ### 3.1.1. Grouping class
@@ -183,6 +180,7 @@ mappingDataFrame <- data.frame(Compound = c("Aspirin","Aspirin","Sugar","Sugar")
 knitr::kable(mappingDataFrame)
 grouping3 <- Grouping$new(group = mappingDataFrame)
 ```
+
 The default title of the legend that results from this grouping is the name of the rightmost column, which is "Compound & Dose".  Note that the `check.names` option should be set to `FALSE` when creating the dataframe `mappingDataFrame` since the legend title contains spaces in this instance.  This legend title can be overridden to be another string by using the `label` input of the object constructor, as in the case of `grouping2` above.
 
 The three `Grouping` objects, `grouping1`, `grouping2` and `grouping3` respectively yield the last three columns of the following dataframe:
@@ -229,7 +227,7 @@ names(binnedGroupingsDataFrame) <- c("IndividualID", "Age", grouping4$label)
 knitr::kable(binnedGroupingsDataFrame)
 ```
 
-### 3.1.2. GroupingMapping class 
+### 3.1.2. GroupMapping class 
 
 An additional `R6` class called `GroupMapping` maps `Grouping` objects to aesthetic parameters such as `color` or `linetype`.  To distinguish between "Compound" and "Dose" groups by color and to use the captions and legend title specified in `grouping2`, the following groupings object `groups1` is constructed:
 
@@ -269,50 +267,172 @@ When a `GroupMapping` object is supplied upon construction of the `TimeProfileDa
 tpMapping <- TimeProfileDataMapping$new(x="Time", y="Simulated", 
                                         groupMapping = groups1)
 
-knitr::kable(tpMapping$checkMapData(data = timeProfileDataFrame,
-                                          metaData = timeProfileMetaData))
+knitr::kable(tpMapping$checkMapData(data = timeProfileDataFrame))
 ```
 
 A feature of `TimeProfileDataMapping` class is that, in addition to specifying a `y` column, the user may also supply `ymin` and `ymax` columns that can represent the boundaries of error bars. If only `ymin` and `ymax` are input when constructing the `TimeProfileDataMapping` object, with `y` left undefined or `NULL`, the default profile that will ultimately be plotted is a range plot.   If `y`, `ymin` and `ymax` are all input, the default plot will be a time profile plot with an error bar.
 
 
-
 # 4. Configure plot features: `PlotConfiguration` class.
-To configure the plot properties, `PlotConfiguration` objects derived from `R6Class` can be used.
-They associate the following features:
 
-* `LabelConfiguration`, inherited `R6Class` defining the labels of the plot (title, subtitles, x axis, y axis and watermark)
-* `LegendConfiguration`, `R6Class` defining the legend properties of the plot
-* `xAxisConfiguration`, `R6Class` defining the properties of the X axis (scale, limits, printed values)
-* `yAxisConfiguration`, `R6Class` defining the properties of the Y axis (scale, limits, printed values)
+The role of the `PlotConfiguration` class is to provide a user-friendly interface to configure how the plot should look like.
+In most cases, this class may be initialized with default settings within the plot function.
+For cases where the plot needs specific settings or default, the class or its default values can be overwritten.
+For advanced plots, subclasses are derived from `PlotConfiguration`, they use unique inputs and default related to the advanced plot to make it easier to use them.
 
-For PK Ratio Plots, `PKRatioPlotConfiguration` is the most suited of `PlotConfiguration`
-The most suited way is to provide `data`, `metaData` and `dataMapping` to get automatically the associated plot configuration. However, any of the properties can be overwritten (either by indicating the updated input or by redifing the value after the creation of the object).
+In more details, the `PlotConfiguration` class is a `R6Class` regrouping  other `R6Class` objecrs defining specific settings to be implemented:
+* `LabelConfiguration` defines the labels of the plot (title, subtitles, x axis, y axis)
+* `LegendConfiguration` defines the legend properties of the plot
+* `BackgroundConfiguration` defines the bakground properties of the plot (color, grid, watermark)
+* `xAxisConfiguration` defines the properties of the X axis (scale, limits, printed values)
+* `yAxisConfiguration` defines the properties of the Y axis (scale, limits, printed values)
 
-## Themes
+## 4.1. Labels Configuration
 
-## Example of Definition of PK Ratio Plot Configuration:
+The labels configuration is a class that define a `Label` class for each plot label. 
+The `Label` class is defined by its `text` and `font`. The `font` is a class regrouping the `color`, `size`, `fontFace` and `fontFamily` of the font.
+For instance, 
+```{r, result='as.is'}
+title <- Label$new(text = "This is a title text",
+                   font = Font$new(color = "red",
+                                   size = "12"))
 
-```{r}
-# Create PK Ratio data Maping
-dataMapping <- PKRatioDataMapping$new()
-
-plotConfiguration <- PKRatioPlotConfiguration$new(
-  data = pkRatioData,
-  metaData = pkRatioMetaData,
-  dataMapping = dataMapping
-)
-
-plotConfiguration
+knitr::kable(data.frame("text" = title$text, 
+           "color" = title$font$color,
+           "size" = title$font$color,
+           "face" = title$font$fontFace,
+           "family" = title$font$fontFamily
+           ))
 ```
 
-# 5. Minimal example worklow
-The function `plotPKRatio` allows for an easy way of plotting PK Ratios with specific PK Ratio limits.
+Within the `PlotConfiguration` each label uses a default font and text defined from the current `Theme`, however this default can be overwritten.
+```{r, result='as.is'}
+config <- PlotConfiguration$new()
+tilteConfig <- config$title
 
-* Input arguments of `plotPKRatio` are the `data`, `metaData`, their `dataMapping` and  `plotConfiguration
-* Output argument of `plotPKRatio` is the `plotObject` corresponding to a `ggplot` object.
+knitr::kable(data.frame("text" = tilteConfig$text, 
+           "color" = tilteConfig$font$color,
+           "size" = tilteConfig$font$color,
+           "face" = tilteConfig$font$fontFace,
+           "family" = tilteConfig$font$fontFamily
+           ))
 
-If no `dataMapping` and `plotConfiguration` is provided, `plotPKRatio` uses a default mapping and configuration.
+```
+
+Advanced plots can use different defaults, which can be overwritten as well:
+```{r, result='as.is'}
+config <- PKRatioPlotConfiguration$new()
+tilteConfig <- config$title
+
+knitr::kable(data.frame("text" = tilteConfig$text, 
+           "color" = tilteConfig$font$color,
+           "size" = tilteConfig$font$color,
+           "face" = tilteConfig$font$fontFace,
+           "family" = tilteConfig$font$fontFamily
+           ))
+
+```
+
+## 4.2. Background Configuration
+
+Background configuration defines the configuration of the following Background elements: `innerBackground`, `outerBackground`, `grid` and `watermark`.
+If `watermark` is also a `Label` class, the 3 other elements are `BackgroundElementConfiguration` which can associate a color, linetype and size to the frame or grid of the background as well as a color fill for inner and outer background.
+As for all the `PlotConfiguration` input, default is defined from the current `Theme`, however this default can be overwritten.
+For instance:
+```{r, result='as.is'}
+background <- BackgroundConfiguration$new()
+
+knitr::kable(data.frame("grid color" = background$grid$color, 
+           "grid linetype" = background$grid$linetype, 
+           "grid size" = background$grid$size))
+
+```
 
 
+## 4.3. Axes Configuration
+
+`XAxisConfiguration` and `YAxisConfiguration` define the axes settings of the plot.
+Within each axis configuration, `limits`, `scale`, `ticks` and their `ticklabels` can be defined.
+A list of available scales can be used directly from the enum `Scaling`: 
+```{r, results='as.is', echo=FALSE}
+knitr::kable(data.frame("Scaling" = as.character(sapply(Scaling, identity))))
+
+```
+
+## 4.4. Legend Configuration
+
+The legend configuration set the `position`, `title(s)`, `captions` `values` of the legend(s).
+A list of available positions can be used directly from the enum `LegendPositions`: 
+```{r, results='as.is', echo=FALSE}
+knitr::kable(data.frame("LegendPositions" = as.character(sapply(LegendPositions, identity))))
+```
+
+The other features are `GrouMapping` classes since they will match the groups defined by the data mapping step.
+For each group, default `titles` and `captions` will use the data specified by the groupMapping defined with `DataMapping`, however they can be overwritten.
+`Values` correspond to the actual `colors`, `linetypes`, `shapes`, `fills`, `sizes` of the plot. The default are defined within the `Themes`, however they can also be overwritten.
+For instance, the current default `values` are :
+```{r, results='as.is', echo=FALSE}
+legend <- LegendConfiguration$new()
+# Currently color and fill have only 8 values, lintype 6 and shape and size 10.
+# The following table will fill with "" the empty spaces
+knitr::kable(data.frame("color" = c(legend$values$color, rep("",2)),
+                        "fill" = c(legend$values$fill, rep("",2)),
+                        "linetype" = c(legend$values$linetype, rep("",4)),
+                        "shape" = legend$values$shape,
+                        "size" = legend$values$size))
+```
+
+## 4.5. Themes
+
+The class `Theme` allows a user-friendly way to set many default plot settings. 
+Three predefined themes `defaultTheme`, `tlfTheme` and `bwTheme` are already available and can be used as templates, or it is possible to creates one's own theme either by initiliazing the class with overwritten or default input.
+The themes defines not only the default for simple but account for advanced plots as well.
+
+In order to define a theme as the current default, the function `useTheme(theme)` needs to be called.
+For instance,
+```{r}
+useTheme(tlfTheme)
+```
+
+# 5. Minimal example
+
+The following minimal example show how to perform a basic time profile plot:
+Data output from the `OSPSuiteR` is available in `data/tlf-output.RData` and includes `outputValues` which is a list containing data in as a data.frame and metaData as a list.
+
+A basic workflow defining the steps of mapping and setting the plot configuration can be:
+
+```{r, fig.height=5, fig.width=7.5}
+# Input data and their metaData
+data <- outputValues$data
+metaData <- outputValues$metaData
+
+variableNames <- names(data)
+
+# Mapping x as Time, 8th variable of data as y and group the color by Gender
+variableNames[8]
+
+map <- TimeProfileDataMapping$new(x = "Time", 
+                                  y = variableNames[8],
+                                  color = "Gender")
+
+# Define the default Theme
+useTheme(tlfTheme)
+
+# Define Y axis as a log scale
+yAxis <- YAxisConfiguration$new(scale = Scaling$log10)
+
+# By using metaData and dataMapping, the configuration get the label as dimension [unit] directly
+config <- TimeProfilePlotConfiguration$new(title = "Minimal Example",
+                                           yAxis = yAxis,
+                                           data = data,
+                                           metaData = metaData,
+                                           dataMapping = map)
+
+# Get the ggplot object
+timeProfile <- plotTimeProfile(data = data,
+                               metaData = metaData,
+                               dataMapping = map,
+                               plotConfiguration = config)
+timeProfile
+```
 
