@@ -10,6 +10,5 @@ AggregationInput
 }
 \description{
 #Class to be used to construct inputs to the AggregationSummary class
-@export
 }
 \keyword{datasets}

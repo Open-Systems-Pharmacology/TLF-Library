@@ -4,7 +4,7 @@
 \name{tlfStatFunctions}
 \alias{tlfStatFunctions}
 \title{tlfStatFunctions}
-\format{An object of class \code{list} of length 27.}
+\format{An object of class \code{list} of length 29.}
 \usage{
 tlfStatFunctions
 }
