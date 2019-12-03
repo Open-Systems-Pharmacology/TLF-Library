@@ -1,0 +1,74 @@
+---
+title: "box-whisker-vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{box-whisker-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(tlf)
+```
+
+
+# 1. Introduction
+## 1.1. Objectives
+The following vignette aims at documenting and illustrating workflows for producing PK ratio plots using the `tlf`-Library.
+
+## 1.2. Prerequisite
+This vignette focuses PK ratio plots examples. Detailed documentation on typical `tlf` workflow, use of `AgregationSummary`, `DataMapping`, `PlotConfiguration` and `Theme` can be found in `vignette("tlf-workflow")`.
+
+# 2. Illustration of basic Boxplots
+## 2.1. Data
+```{r}
+boxData <- data.frame(
+  x = c(rep("A", 100), rep("B", 100), rep("C", 100)),
+  y = c(rnorm(100) + 5, 10 + rnorm(100), 10 - 2 * rnorm(100))
+)
+```
+```{r, echo=FALSE}
+knitr::kable(head(boxData))
+```
+
+## 2.2. `plotBoxWhisker`
+
+## 2.3. Minimal example
+```{r, fig.height=5, fig.width=7.5}
+boxMap <- BoxWhiskerDataMapping$new(x = "x",
+                                    y = "y")
+
+boxplot <- plotBoxWhisker(boxData, 
+                          dataMapping = boxMap)
+boxplot
+```
+
+## 2.4. Tune Boxes, Whiskers and Outliers functions
+```{r, fig.height=5, fig.width=7.5}
+normMap <- BoxWhiskerDataMapping$new(x = "x",
+                                    y = "y",
+                                    ymin = tlfStatFunctions$`mean-1.96sd`,
+                                    lower = tlfStatFunctions$`mean-sd`,
+                                    middle = tlfStatFunctions$mean,
+                                    upper = tlfStatFunctions$`mean+sd`,
+                                    ymax = tlfStatFunctions$`mean+1.96sd`)
+
+normplot <- plotBoxWhisker(boxData, 
+                          dataMapping = normMap)
+normplot
+```
+
+```{r, fig.height=5, fig.width=7.5}
+outMap <- BoxWhiskerDataMapping$new(x = "x",
+                                    y = "y",
+                                    minOutlierLimit = tlfStatFunctions$`Percentile-2.5%`,
+                                    maxOutlierLimit = tlfStatFunctions$`Percentile-97.5%`)
+
+outplot <- plotBoxWhisker(boxData, 
+                          dataMapping = outMap)
+outplot
+```

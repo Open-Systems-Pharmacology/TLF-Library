@@ -51,7 +51,7 @@ BoxWhiskerPlotConfiguration <- R6::R6Class(
           middle = "middle",
           upper = "upper",
           ymax = "ymax",
-          fill = mapLabels$fill,
+          fill = mapLabels$x, # This allow different colors per categories
           color = mapLabels$color,
           linetype = mapLabels$linetype,
           size = mapLabels$size
