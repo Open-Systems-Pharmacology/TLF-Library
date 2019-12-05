@@ -53,6 +53,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
       summaryObject <- AggregationSummary$new(
         data = data,
         xColumnNames = self$x,
+        groupingColumnNames = self$groupMapping$fill$label,
         yColumnNames = self$y,
         aggregationFunctionsVector = boxWhiskerLimitsFunctions,
         aggregationFunctionNames = c("ymin", "lower", "middle", "upper", "ymax")
@@ -75,6 +76,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
       summaryObject <- AggregationSummary$new(
         data = data,
         xColumnNames = self$x,
+        groupingColumnNames = self$groupMapping$fill$label,
         yColumnNames = self$y,
         aggregationFunctionsVector = outlierLimitsFunctions,
         aggregationFunctionNames = c("minOutlierLimit", "maxOutlierLimit")
