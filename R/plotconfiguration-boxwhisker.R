@@ -51,7 +51,7 @@ BoxWhiskerPlotConfiguration <- R6::R6Class(
           middle = "middle",
           upper = "upper",
           ymax = "ymax",
-          fill = mapLabels$x, # This allow different colors per categories
+          fill = mapLabels$fill,
           color = mapLabels$color,
           linetype = mapLabels$linetype,
           size = mapLabels$size
@@ -82,25 +82,32 @@ BoxWhiskerPlotConfiguration <- R6::R6Class(
           mapping = aes_string(
             x = mapLabels$x,
             y = "maxOutliers",
+            group = mapLabels$fill,
             shape = mapLabels$shape,
             color = mapLabels$color,
             size = mapLabels$size
           ),
           show.legend = TRUE,
-          na.rm = TRUE
+          na.rm = TRUE,
+          position = position_dodge(width = 0.9)
         ) +
         ggplot2::geom_point(
           data = mapOutliers,
           mapping = aes_string(
             x = mapLabels$x,
             y = "minOutliers",
+            group = mapLabels$fill,
             shape = mapLabels$shape,
             color = mapLabels$color,
             size = mapLabels$size
           ),
           show.legend = TRUE,
-          na.rm = TRUE
+          na.rm = TRUE,
+          position = position_dodge(width = 0.9)
         )
+      # position = position_dodge(width = 0.9) aligns points with centers of boxplots
+      # no matter the number of groups, the value of 0.9 will be always fix,
+      # otherwise, points won't be centered anymore
 
       plotObject <- plotObject +
         ifEqual("defaultAes", mapLabels$shape, guides(shape = "none")) +
