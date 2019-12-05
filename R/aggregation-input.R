@@ -33,9 +33,10 @@ tlfStatFunctions <- enum(c(
   "min", "max",
   "mean-sd", "mean+sd", "mean-1.96sd", "mean+1.96sd",
   sapply(predefinedPercentiles, function(percentileValue) {
-    paste0("Percentile-", percentileValue, "%")
+    paste0("Percentile", percentileValue, "%")
   }),
-  "median-IQR", "median+IQR", "median-1.5IQR", "median+1.5IQR"
+  "median-IQR", "median+IQR", "median-1.5IQR", "median+1.5IQR",
+  "Percentile25%-1.5IQR", "Percentile75%+1.5IQR"
 ))
 
 #' @export
@@ -110,86 +111,86 @@ tlfStatFunctions <- enum(c(
 # }
 
 #' @export
-`Percentile-0%` <- function(x) {
+`Percentile0%` <- function(x) {
   as.numeric(stats::quantile(x, probs = 0))
 }
 
 #' @export
-`Percentile-1%` <- function(x) {
+`Percentile1%` <- function(x) {
   as.numeric(stats::quantile(x, probs = 1 / 100))
 }
 
 #' @export
-`Percentile-2.5%` <- function(x) {
+`Percentile2.5%` <- function(x) {
   as.numeric(stats::quantile(x, probs = 2.5 / 100))
 }
 
 #' @export
-`Percentile-5%` <- function(x) {
+`Percentile5%` <- function(x) {
   as.numeric(stats::quantile(x, probs = 5 / 100))
 }
 
 #' @export
-`Percentile-10%` <- function(x) {
+`Percentile10%` <- function(x) {
   as.numeric(stats::quantile(x, probs = 10 / 100))
 }
 
 #' @export
-`Percentile-15%` <- function(x) {
+`Percentile15%` <- function(x) {
   as.numeric(stats::quantile(x, probs = 15 / 100))
 }
 
 #' @export
-`Percentile-20%` <- function(x) {
+`Percentile20%` <- function(x) {
   as.numeric(stats::quantile(x, probs = 20 / 100))
 }
 
 #' @export
-`Percentile-25%` <- function(x) {
+`Percentile25%` <- function(x) {
   as.numeric(stats::quantile(x, probs = 25 / 100))
 }
 
 #' @export
-`Percentile-50%` <- function(x) {
+`Percentile50%` <- function(x) {
   as.numeric(stats::quantile(x, probs = 50 / 100))
 }
 
 #' @export
-`Percentile-75%` <- function(x) {
+`Percentile75%` <- function(x) {
   as.numeric(stats::quantile(x, probs = 75 / 100))
 }
 
 #' @export
-`Percentile-80%` <- function(x) {
+`Percentile80%` <- function(x) {
   as.numeric(stats::quantile(x, probs = 80 / 100))
 }
 
 #' @export
-`Percentile-85%` <- function(x) {
+`Percentile85%` <- function(x) {
   as.numeric(stats::quantile(x, probs = 85 / 100))
 }
 
 #' @export
-`Percentile-90%` <- function(x) {
+`Percentile90%` <- function(x) {
   as.numeric(stats::quantile(x, probs = 90 / 100))
 }
 
 #' @export
-`Percentile-95%` <- function(x) {
+`Percentile95%` <- function(x) {
   as.numeric(stats::quantile(x, probs = 95 / 100))
 }
 
 #' @export
-`Percentile-97.5%` <- function(x) {
+`Percentile97.5%` <- function(x) {
   as.numeric(stats::quantile(x, probs = 97.5 / 100))
 }
 
 #' @export
-`Percentile-99%` <- function(x) {
+`Percentile99%` <- function(x) {
   as.numeric(stats::quantile(x, probs = 99 / 100))
 }
 
 #' @export
-`Percentile-100%` <- function(x) {
+`Percentile100%` <- function(x) {
   as.numeric(stats::quantile(x, probs = 1))
 }
