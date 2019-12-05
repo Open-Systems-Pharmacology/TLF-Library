@@ -62,28 +62,42 @@ tlfStatFunctions <- enum(c(
 `median-IQR` <- function(x) {
   quartiles <- stats::quantile(x, probs = c(0.5, 0.75, 0.25))
   res <- quartiles[1] - (quartiles[2] - quartiles[3])
-  return(res)
+  return(as.numeric(res))
 }
 
 #' @export
 `median+IQR` <- function(x) {
   quartiles <- stats::quantile(x, probs = c(0.5, 0.75, 0.25))
   res <- quartiles[1] + (quartiles[2] - quartiles[3])
-  return(res)
+  return(as.numeric(res))
 }
 
 #' @export
 `median-1.5IQR` <- function(x) {
   quartiles <- stats::quantile(x, probs = c(0.5, 0.75, 0.25))
   res <- quartiles[1] - 1.5 * (quartiles[2] - quartiles[3])
-  return(res)
+  return(as.numeric(res))
 }
 
 #' @export
 `median+1.5IQR` <- function(x) {
   quartiles <- stats::quantile(x, probs = c(0.5, 0.75, 0.25))
   res <- quartiles[1] + 1.5 * (quartiles[2] - quartiles[3])
-  return(res)
+  return(as.numeric(res))
+}
+
+#' @export
+`Percentile25%-1.5IQR` <- function(x) {
+  quartiles <- stats::quantile(x, probs = c(0.75, 0.25))
+  res <- quartiles[2] - 1.5 * (quartiles[1] - quartiles[2])
+  return(as.numeric(res))
+}
+
+#' @export
+`Percentile75%+1.5IQR` <- function(x) {
+  quartiles <- stats::quantile(x, probs = c(0.75, 0.25))
+  res <- quartiles[1] + 1.5 * (quartiles[1] - quartiles[2])
+  return(as.numeric(res))
 }
 
 # Assign did not work because the functions need to be documented with @export

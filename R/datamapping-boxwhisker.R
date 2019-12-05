@@ -23,22 +23,25 @@
 #' @export
 BoxWhiskerDataMapping <- R6::R6Class(
   "BoxWhiskerDataMapping",
-  inherit = XYDataMapping,
+  inherit = XYGDataMapping,
   public = list(
     outlierLimits = NULL,
     boxWhiskerLimits = NULL,
 
     initialize = function(x,
                               y,
-                              ymin = tlfStatFunctions$`Percentile-2.5%`,
-                              lower = tlfStatFunctions$`Percentile-25%`,
-                              middle = tlfStatFunctions$`Percentile-50%`,
-                              upper = tlfStatFunctions$`Percentile-75%`,
-                              ymax = tlfStatFunctions$`Percentile-97.5%`,
-                              minOutlierLimit = tlfStatFunctions$`median-1.5IQR`,
-                              maxOutlierLimit = tlfStatFunctions$`median+1.5IQR`,
+                              ymin = tlfStatFunctions$`Percentile2.5%`,
+                              lower = tlfStatFunctions$`Percentile25%`,
+                              middle = tlfStatFunctions$`Percentile50%`,
+                              upper = tlfStatFunctions$`Percentile75%`,
+                              ymax = tlfStatFunctions$`Percentile97.5%`,
+                              minOutlierLimit = tlfStatFunctions$`Percentile25%-1.5IQR`,
+                              maxOutlierLimit = tlfStatFunctions$`Percentile75%+1.5IQR`,
                               ...) {
       super$initialize(x = x, y = y, ...)
+
+      #
+      super$groupMapping$color <- super$groupMapping$color %||% super$groupMapping$fill
 
       self$boxWhiskerLimits <- c(ymin, lower, middle, upper, ymax)
       self$outlierLimits <- c(minOutlierLimit, maxOutlierLimit)
