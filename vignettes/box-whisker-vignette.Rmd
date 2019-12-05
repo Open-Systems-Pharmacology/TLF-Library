@@ -28,6 +28,8 @@ This vignette focuses PK ratio plots examples. Detailed documentation on typical
 ```{r}
 boxData <- data.frame(
   x = c(rep("A", 100), rep("B", 100), rep("C", 100)),
+  Gender = c(rep("Male", 150), rep("Female", 150)),
+  Compound = rep(c(rep("DrugA", 25), rep("DrugB", 25), rep("DrugC", 25), rep("DrugD", 25)), 3),
   y = c(rnorm(100) + 5, 10 + rnorm(100), 10 - 2 * rnorm(100))
 )
 ```
@@ -47,7 +49,19 @@ boxplot <- plotBoxWhisker(boxData,
 boxplot
 ```
 
-## 2.4. Tune Boxes, Whiskers and Outliers functions
+## 2.4. Create sub groups
+```{r, fig.height=5, fig.width=7.5}
+groupMap <- BoxWhiskerDataMapping$new(x = "x",
+                                      y = "y",
+                                      fill = "Compound")
+
+groupplot <- plotBoxWhisker(boxData, 
+                          dataMapping = groupMap)
+groupplot
+```
+
+
+## 2.5. Tune Boxes, Whiskers and Outliers functions
 ```{r, fig.height=5, fig.width=7.5}
 normMap <- BoxWhiskerDataMapping$new(x = "x",
                                     y = "y",
@@ -65,8 +79,8 @@ normplot
 ```{r, fig.height=5, fig.width=7.5}
 outMap <- BoxWhiskerDataMapping$new(x = "x",
                                     y = "y",
-                                    minOutlierLimit = tlfStatFunctions$`Percentile-2.5%`,
-                                    maxOutlierLimit = tlfStatFunctions$`Percentile-97.5%`)
+                                    minOutlierLimit = tlfStatFunctions$`Percentile2.5%`,
+                                    maxOutlierLimit = tlfStatFunctions$`Percentile97.5%`)
 
 outplot <- plotBoxWhisker(boxData, 
                           dataMapping = outMap)
