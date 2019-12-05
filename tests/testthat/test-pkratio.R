@@ -5,8 +5,11 @@ load("pkRatioDataExample.RData")
 
 useTheme(tlfTheme)
 
-test_that("PK Ratio test example works properly", {
-  pkrp <- plotPKRatio(data = pkRatioData, metaData = pkRatioMetaData)
+test_that("plotPKRatio() function works properly", {
+  pkrp <- plotPKRatio(
+    data = pkRatioData,
+    metaData = pkRatioMetaData
+  )
 
   expect_is(pkrp, "ggplot")
 
@@ -17,7 +20,10 @@ test_that("PK Ratio test example works properly", {
   expect_error(
     plotPKRatio(
       data = pkRatioData,
-      dataMapping = list(x = "Age", y = "Ratio")
+      dataMapping = list(
+        x = "Age",
+        y = "Ratio"
+      )
     ),
     "argument 'dataMapping' is of type 'list', but expected 'PKRatioDataMapping'!"
   )
@@ -28,9 +34,6 @@ test_that("PK Ratio test example works properly", {
     ),
     "argument 'plotConfiguration' is of type 'list', but expected 'PKRatioPlotConfiguration'!"
   )
-
-  # TO DO: define unit test plots for simple examples
-  # expect_known_output(pkrp, file="pkRatioTestPlot.RData")
 })
 
 test_that("PK Ratio default settings work", {
@@ -62,4 +65,28 @@ test_that("PK Ratio default settings work", {
   expect_equal(pkRatioConfigAsCalledInPlot$xlabel$text, "Age [yrs]")
   expect_equal(pkRatioConfigAsCalledInPlot$ylabel$text, "Ratio")
   expect_equal(pkRatioConfigAsCalledInPlot$background$watermark$text, "tlf v0.1.0")
+})
+
+test_that("PK Ratio typical test works", {
+
+  # tlf theme
+  useTheme(tlfTheme)
+
+  # Data mapping:
+  # x = Age, y = Ratio, color = Gender, shape = c(Dose, Compound)
+  pkRatioMap <- PKRatioDataMapping$new(
+    x = "Age",
+    y = "Ratio",
+    color = "Gender",
+    shape = c("Dose", "Compound")
+  )
+
+  # Use default configuration
+  pkrp <- plotPKRatio(
+    data = pkRatioData,
+    metaData = pkRatioMetaData,
+    dataMapping = pkRatioMap
+  )
+
+  expect_known_output(pkrp, "expectedPKRatioPlot.RData")
 })
