@@ -36,9 +36,7 @@ Data Mapping for Box Whisker Plots
 \section{Methods}{
 
 \describe{
-\item{new(x,y,ymin = tlfStatFunctions$\code{Percentile-2.5\%},lower = tlfStatFunctions$\code{Percentile-25\%},
-middle = tlfStatFunctions$\code{Percentile-50\%},upper = tlfStatFunctions$\code{Percentile-75\%},ymax = tlfStatFunctions$\code{Percentile-97.5\%},
-minOutlierLimit = tlfStatFunctions$\code{median-1.5IQR},maxOutlierLimit = tlfStatFunctions$\code{median+1.5IQR},...)}{
+\item{new(...)}{
 Initialize BoxWhiskerDataMapping. ymin, lower, middle, upper, ymax, minOutlierLimit, maxOutlierLimit inputs are names of functions}
 \item{checkMapData(data, metaData = NULL)}{Check data mapping is correct. Create output data.frame with map data only.}
 \item{getBoxWhiskers(data)}{Check data mapping is correct. Create output data.frame with map data only.}

@@ -12,9 +12,7 @@
 #' @field maxOutlierLimit Name of function used for calculating upper outlier limit
 #' @section Methods:
 #' \describe{
-#' \item{new(x,y,ymin = tlfStatFunctions$`Percentile-2.5%`,lower = tlfStatFunctions$`Percentile-25%`,
-#' middle = tlfStatFunctions$`Percentile-50%`,upper = tlfStatFunctions$`Percentile-75%`,ymax = tlfStatFunctions$`Percentile-97.5%`,
-#' minOutlierLimit = tlfStatFunctions$`median-1.5IQR`,maxOutlierLimit = tlfStatFunctions$`median+1.5IQR`,...)}{
+#' \item{new(...)}{
 #' Initialize BoxWhiskerDataMapping. ymin, lower, middle, upper, ymax, minOutlierLimit, maxOutlierLimit inputs are names of functions}
 #' \item{checkMapData(data, metaData = NULL)}{Check data mapping is correct. Create output data.frame with map data only.}
 #' \item{getBoxWhiskers(data)}{Check data mapping is correct. Create output data.frame with map data only.}
@@ -28,13 +26,13 @@ BoxWhiskerDataMapping <- R6::R6Class(
     outlierLimits = NULL,
     boxWhiskerLimits = NULL,
 
-    initialize = function(x,
-                              y,
-                              ymin = tlfStatFunctions$`Percentile2.5%`,
+    initialize = function(x = NULL, # If user wants a unique box, x does not need to be filled
+                          y,
+                              ymin = tlfStatFunctions$`Percentile5%`,
                               lower = tlfStatFunctions$`Percentile25%`,
                               middle = tlfStatFunctions$`Percentile50%`,
                               upper = tlfStatFunctions$`Percentile75%`,
-                              ymax = tlfStatFunctions$`Percentile97.5%`,
+                              ymax = tlfStatFunctions$`Percentile95%`,
                               minOutlierLimit = tlfStatFunctions$`Percentile25%-1.5IQR`,
                               maxOutlierLimit = tlfStatFunctions$`Percentile75%+1.5IQR`,
                               ...) {
@@ -48,6 +46,10 @@ BoxWhiskerDataMapping <- R6::R6Class(
     },
 
     getBoxWhiskerLimits = function(data) {
+      # Dummy silent variable if x is NULL
+      if (is.null(self$x)){
+        data$defaultAes <- factor("")
+      }
 
       # Transform names into functions for aggregation summary
       boxWhiskerLimitsFunctions <- sapply(self$boxWhiskerLimits, match.fun)
@@ -55,7 +57,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
       # Use aggregation summary to get box specific values
       summaryObject <- AggregationSummary$new(
         data = data,
-        xColumnNames = self$x,
+        xColumnNames = self$x %||% "defaultAes",
         groupingColumnNames = self$groupMapping$fill$label,
         yColumnNames = self$y,
         aggregationFunctionsVector = boxWhiskerLimitsFunctions,
@@ -71,6 +73,10 @@ BoxWhiskerDataMapping <- R6::R6Class(
     },
 
     getOutliers = function(data) {
+      # Dummy silent variable if x is NULL
+      if (is.null(self$x)){
+        data$defaultAes <- factor("")
+      }
 
       # Transform names into functions for aggregation summary
       outlierLimitsFunctions <- sapply(self$outlierLimits, match.fun)
@@ -78,7 +84,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
       # Use aggregation summary to get outliers boundaries specific values
       summaryObject <- AggregationSummary$new(
         data = data,
-        xColumnNames = self$x,
+        xColumnNames = self$x %||% "defaultAes",
         groupingColumnNames = self$groupMapping$fill$label,
         yColumnNames = self$y,
         aggregationFunctionsVector = outlierLimitsFunctions,
