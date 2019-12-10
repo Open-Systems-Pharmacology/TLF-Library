@@ -9,6 +9,27 @@
 Font
 }
 \description{
-Font class defining properties of a text (size, color, font)
+Font properties for ggplot labels
 }
+\section{Fields}{
+
+\describe{
+\item{\code{size}}{numeric}
+
+\item{\code{color}}{character}
+
+\item{\code{fontFamily}}{character}
+
+\item{\code{fontFace}}{character}
+}}
+
+\section{Methods}{
+
+\describe{
+\item{new(...)}{Initialize Font}
+\item{print(...)}{Print Font properties}
+\item{setFont()}{Create element_text for ggplot with Font properties}
+}
+}
+
 \keyword{datasets}

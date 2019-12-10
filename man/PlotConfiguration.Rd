@@ -4,7 +4,6 @@
 \name{PlotConfiguration}
 \alias{PlotConfiguration}
 \title{PlotConfiguration}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
 \usage{
 PlotConfiguration
 }
@@ -14,28 +13,26 @@ Class for Plot Configuration
 \section{Fields}{
 
 \describe{
-\item{\code{legend}}{R6 class defining legendConfiguration}
+\item{\code{legend}}{\code{LegendConfiguration} R6 class defining legend properties}
 
-\item{\code{xAxis}}{R6 class defining xAxisConfiguration}
+\item{\code{xAxis}}{\code{XAxisConfiguration} R6 class defining X-axis properties}
 
-\item{\code{yAxis}}{R6 class defining yAxisConfiguration}
+\item{\code{yAxis}}{\code{YAxisConfiguration} R6 class defining Y-axis properties}
 
-\item{\code{background}}{R6 class defining backgroundConfiguration}
+\item{\code{background}}{\code{BackgroundConfiguration} R6 class defining background properties}
 
-\item{\code{theme}}{R6 class defining theme aesthtic properties}
+\item{\code{saveConfiguration}}{\code{SaveConfiguration} R6 class defining save properties}
 
-\item{\code{filename}}{Name of the saved plot}
+\item{\code{theme}}{\code{Theme} R6 class defining theme aesthetic properties}
 }}
 
 \section{Methods}{
 
 \describe{
-\item{new(title = NULL, subtitle = NULL, xlabel = NULL, ylabel = NULL, watermark = NULL, legendTitles = NULL, filename = "TestPlot.png",
-legend = NULL, xAxis = NULL, yAxis = NULL, background = NULL, data = NULL, metaData = NULL, dataMapping = NULL, theme = tlfEnv$currentTheme, ...)}{
-Initialize PlotConfiguration.}
-\item{setPlotProperties(plotObject)}{Apply properties of plot labels.}
-\item{setPlotBackground(plotObject)}{Apply background properties to plot.}
-\item{savePlot(plotObject)}{Save ggplot as file.}
+\item{new(...)}{Initialize PlotConfiguration}
+\item{setPlotProperties(plotObject)}{Apply plot labels properties to plotObject}
+\item{setPlotBackground(plotObject)}{Apply background properties to plotObject}
+\item{savePlot(plotObject)}{Save plotObject into a file.}
 }
 }
 

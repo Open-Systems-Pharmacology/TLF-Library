@@ -4,7 +4,6 @@
 \name{BoxWhiskerDataMapping}
 \alias{BoxWhiskerDataMapping}
 \title{BoxWhiskerDataMapping}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
 \usage{
 BoxWhiskerDataMapping
 }
