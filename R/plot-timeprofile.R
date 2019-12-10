@@ -37,7 +37,7 @@ plotTimeProfile <- function(data,
 
 
   emptyPlot <- ggplot2::ggplot()
-  
+
   plotObject <- plotObject %||% plotConfiguration$setPlotBackground(emptyPlot)
 
   plotObject <- plotConfiguration$addLLOQLines(plotObject, metaData, dataMapping)

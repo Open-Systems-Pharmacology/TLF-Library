@@ -19,6 +19,7 @@
 #' \item{getOutliers(data)}{Check data mapping is correct. Create output data.frame with map data only.}
 #' }
 #' @export
+#' @format NULL
 BoxWhiskerDataMapping <- R6::R6Class(
   "BoxWhiskerDataMapping",
   inherit = XYGDataMapping,
@@ -27,7 +28,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
     boxWhiskerLimits = NULL,
 
     initialize = function(x = NULL, # If user wants a unique box, x does not need to be filled
-                          y,
+                              y,
                               ymin = tlfStatFunctions$`Percentile5%`,
                               lower = tlfStatFunctions$`Percentile25%`,
                               middle = tlfStatFunctions$`Percentile50%`,
@@ -38,7 +39,6 @@ BoxWhiskerDataMapping <- R6::R6Class(
                               ...) {
       super$initialize(x = x, y = y, ...)
 
-      #
       super$groupMapping$color <- super$groupMapping$color %||% super$groupMapping$fill
 
       self$boxWhiskerLimits <- c(ymin, lower, middle, upper, ymax)
@@ -47,7 +47,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
 
     getBoxWhiskerLimits = function(data) {
       # Dummy silent variable if x is NULL
-      if (is.null(self$x)){
+      if (is.null(self$x)) {
         data$defaultAes <- factor("")
       }
 
@@ -74,7 +74,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
 
     getOutliers = function(data) {
       # Dummy silent variable if x is NULL
-      if (is.null(self$x)){
+      if (is.null(self$x)) {
         data$defaultAes <- factor("")
       }
 
