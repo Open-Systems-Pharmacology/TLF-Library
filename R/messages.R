@@ -47,6 +47,9 @@ messages <- list(
   },
 
   errorConflictingInput = function(eitherInput, orInput) {
-    paste0("Conflicting inputs provided. Inputs '", eitherInput, "' and '", orInput, "' can't be provided at the same time.")
+    paste0(
+      "Conflicting inputs provided. Inputs '", paste0(eitherInput, collapse = ", "),
+      "' and '", paste0(orInput, collapse = ", "), "' can't be provided at the same time."
+    )
   }
 )
