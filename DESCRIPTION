@@ -62,6 +62,7 @@ Collate:
     'plotconfiguration-label.R'
     'plotconfiguration-legend.R'
     'plotconfiguration-pkratio.R'
+    'plotconfiguration-save.R'
     'plotconfiguration-timeprofile.R'
     'plotconfiguration.R'
     'themes.R'
