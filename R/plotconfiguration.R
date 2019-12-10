@@ -1,53 +1,69 @@
 #' @title PlotConfiguration
 #' @docType class
 #' @description  Class for Plot Configuration
-#' @field legend R6 class defining legendConfiguration
-#' @field xAxis R6 class defining xAxisConfiguration
-#' @field yAxis R6 class defining yAxisConfiguration
-#' @field background R6 class defining backgroundConfiguration
-#' @field theme R6 class defining theme aesthtic properties
-#' @field filename Name of the saved plot
+#' @field legend \code{LegendConfiguration} R6 class defining legend properties
+#' @field xAxis \code{XAxisConfiguration} R6 class defining X-axis properties
+#' @field yAxis \code{YAxisConfiguration} R6 class defining Y-axis properties
+#' @field background \code{BackgroundConfiguration} R6 class defining background properties
+#' @field saveConfiguration  \code{SaveConfiguration} R6 class defining save properties
+#' @field theme \code{Theme} R6 class defining theme aesthetic properties
 #' @section Methods:
 #' \describe{
-#' \item{new(title = NULL, subtitle = NULL, xlabel = NULL, ylabel = NULL, watermark = NULL, legendTitles = NULL, filename = "TestPlot.png",
-#' legend = NULL, xAxis = NULL, yAxis = NULL, background = NULL, data = NULL, metaData = NULL, dataMapping = NULL, theme = tlfEnv$currentTheme, ...)}{
-#' Initialize PlotConfiguration.}
-#' \item{setPlotProperties(plotObject)}{Apply properties of plot labels.}
-#' \item{setPlotBackground(plotObject)}{Apply background properties to plot.}
-#' \item{savePlot(plotObject)}{Save ggplot as file.}
+#' \item{new(...)}{Initialize PlotConfiguration}
+#' \item{setPlotProperties(plotObject)}{Apply plot labels properties to plotObject}
+#' \item{setPlotBackground(plotObject)}{Apply background properties to plotObject}
+#' \item{savePlot(plotObject)}{Save plotObject into a file.}
 #' }
 #' @export
+#' @format NULL
 PlotConfiguration <- R6::R6Class(
   "PlotConfiguration",
   inherit = LabelConfiguration,
   ## ----------------------------------
   ## List of plotConfiguration Variables
   public = list(
-    legend = NULL, # R6 class
-    xAxis = NULL, # R6 class
-    yAxis = NULL, # R6 class
-    background = NULL, # R6 class
-
+    legend = NULL,
+    xAxis = NULL,
+    yAxis = NULL,
+    background = NULL,
+    saveConfiguration = NULL,
     theme = NULL,
-    filename = NULL,
-
+    
     ## ----------------------------------------------
     ## Initializing function to be called with $new()
-    initialize = function(title = NULL,
-                              subtitle = NULL,
-                              xlabel = NULL,
-                              ylabel = NULL,
-                              watermark = NULL,
-                              legendTitles = NULL,
-                              filename = "TestPlot.png",
-                              legend = NULL,
-                              xAxis = NULL,
-                              yAxis = NULL,
-                              background = NULL,
-                              data = NULL,
-                              metaData = NULL,
-                              dataMapping = NULL,
-                              theme = tlfEnv$currentTheme, ...) {
+    initialize = function(
+      # Label configuration
+      title = NULL,
+      subtitle = NULL,
+      xlabel = NULL,
+      ylabel = NULL,
+      # Legend Configuration
+      legend = NULL,
+      legendTitles = NULL,
+      # X-Axis configuration
+      xAxis = NULL,
+      xScale = NULL,
+      xLimits = NULL,
+      # Y-Axis configuration
+      yAxis = NULL,
+      yScale = NULL,
+      yLimits = NULL,
+      # Background configuration
+      background = NULL,
+      watermark = NULL,
+      # Save configuration
+      saveConfiguration = NULL,
+      filename = NULL,
+      width = NULL,
+      height = NULL,
+      units = NULL,
+      # Smart configuration using metaData
+      data = NULL,
+      metaData = NULL,
+      dataMapping = NULL,
+      # Theme
+      theme = tlfEnv$currentTheme, ...) {
+      
       super$initialize(
         title = title,
         subtitle = subtitle,
@@ -55,9 +71,13 @@ PlotConfiguration <- R6::R6Class(
         ylabel = ylabel
       )
 
-      # If xlabel and ylabel are not defined, use dataMapping of x, y to label axes
+      # Smart configuration if xlabel and ylabel are not defined, 
+      # use dataMapping of x, y to label axes
       xMapping <- NULL
       yMapping <- NULL
+      if (!is.null(data) && is.null(dataMapping)) {
+        dataMapping <- XYDataMapping$new(data = data)
+      }
       if (!is.null(dataMapping)) {
         xMapping <- dataMapping$x
         yMapping <- dataMapping$y
@@ -68,33 +88,40 @@ PlotConfiguration <- R6::R6Class(
       self$xlabel$font <- theme$xlabelFont
       self$ylabel$font <- theme$ylabelFont
 
-      self$filename <- filename
-      self$theme <- theme
-
+      # Smart configuration if legend is not defined, 
       self$legend <- legend %||% ifnotnull(
         dataMapping,
         LegendConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping),
         LegendConfiguration$new()
       )
+      
+      # Define X-Axis configuration, overwrite properties only if they are defined
       self$xAxis <- xAxis %||% XAxisConfiguration$new()
+      self$xAxis$limits <- xLimits %||% self$xAxis$limits
+      self$xAxis$scale <- xScale %||% self$xAxis$scale
+      
+      # Define Y-Axis configuration, overwrite properties only if they are defined
       self$yAxis <- yAxis %||% YAxisConfiguration$new()
+      self$yAxis$limits <- yLimits %||% self$xAxis$limits
+      self$yAxis$scale <- yScale %||% self$xAxis$scale
+      
+      # Set background properties
       self$background <- background %||% BackgroundConfiguration$new(
         watermark = watermark,
         theme = theme
       )
+      
+      # Define save configuration, overwrite properties only if they are defined
+      self$saveConfiguration <- saveConfiguration %||% SaveConfiguration$new()
+      self$saveConfiguration$filename <- filename %||% self$saveConfiguration$filename
+      self$saveConfiguration$width <- width %||% self$saveConfiguration$width
+      self$saveConfiguration$height <- height %||% self$saveConfiguration$height
+      self$saveConfiguration$units <- units %||% self$saveConfiguration$units
+      
+      self$theme <- theme
+      
     },
-
-    ## ---------------------------------------------------------------
-    ## Printing function, only show main elements of plotConfiguration
-
-    print = function() {
-      cat("  Title: ", self$title$text, "\n", sep = "\t")
-      cat("  Subtitle: ", self$subtitle$text, "\n", sep = "\t")
-      cat("  Xlabel:  ", self$xlabel$text, "\n", sep = "\t")
-      cat("  Ylabel:  ", self$ylabel$text, "\n", sep = "\t")
-      invisible(self)
-    },
-
+    
     ## ---------------------------------------------------------------
     ## Define Labels: plotConfiguration function to first define Watermark
 
@@ -112,8 +139,8 @@ PlotConfiguration <- R6::R6Class(
       return(plotObject)
     },
 
-    savePlot = function(plotHandle) {
-      ggplot2::ggsave(filename = self$filename, plotHandle, width = 20, height = 12, units = "cm")
+    savePlot = function(plotObject) {
+      self$saveConfiguration$savePlot(plotObject)
     }
   )
 )
