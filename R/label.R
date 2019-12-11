@@ -45,7 +45,10 @@ Label <- R6::R6Class(
 
     print = function() {
       cat("text:", self$text, "\n", sep = " ")
-      cat("font:", self$font, "\n", sep = " ")
+      cat("font color:", self$font$color, "\n", sep = " ")
+      cat("font size:", self$font$size, "\n", sep = " ")
+      cat("font family:", self$font$fontFamily, "\n", sep = " ")
+      cat("font face:", self$font$fontFace, "\n", sep = " ")
       invisible(self)
     },
 
