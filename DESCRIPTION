@@ -12,7 +12,11 @@ Authors@R:
       person(given = "Pierre",
              family = "Chelle",
              role = "aut",
-             email = "chelle.pierre@gmail.com"))
+             email = "chelle.pierre@gmail.com"),
+      person(given = "Abdullah",
+             family = "Hamadeh",
+             role = "aut",
+             email = "aoh123@gmail.com"))
 Description: An implementation of the Table, Listing and Figure concepts in R. This library provides
     a standardized approach to creating tables and graphs based on conventions over configurations.
 License: GPL-2 | file LICENSE
