@@ -4,11 +4,43 @@
 \name{BoxWhiskerDataMapping}
 \alias{BoxWhiskerDataMapping}
 \title{BoxWhiskerDataMapping}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
 \usage{
 BoxWhiskerDataMapping
 }
 \description{
-Class for Box Whisker Mapping
+Data Mapping for Box Whisker Plots
 }
+\section{Fields}{
+
+\describe{
+\item{\code{x}}{Name of x variable to map}
+
+\item{\code{y}}{Name of y variable to map}
+
+\item{\code{ymin}}{Name of function used for calculating lower whisker}
+
+\item{\code{lower}}{Name of function used for calculating lower line of box}
+
+\item{\code{middle}}{Name of function used for calculating middle line}
+
+\item{\code{upper}}{Name of function used for calculating upper line of box}
+
+\item{\code{ymax}}{Name of function used for calculating upper whisker}
+
+\item{\code{minOutlierLimit}}{Name of function used for calculating lower outlier limit}
+
+\item{\code{maxOutlierLimit}}{Name of function used for calculating upper outlier limit}
+}}
+
+\section{Methods}{
+
+\describe{
+\item{new(...)}{
+Initialize BoxWhiskerDataMapping. ymin, lower, middle, upper, ymax, minOutlierLimit, maxOutlierLimit inputs are names of functions}
+\item{checkMapData(data, metaData = NULL)}{Check data mapping is correct. Create output data.frame with map data only.}
+\item{getBoxWhiskers(data)}{Check data mapping is correct. Create output data.frame with map data only.}
+\item{getOutliers(data)}{Check data mapping is correct. Create output data.frame with map data only.}
+}
+}
+
 \keyword{datasets}

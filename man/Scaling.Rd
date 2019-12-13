@@ -3,15 +3,13 @@
 \docType{data}
 \name{Scaling}
 \alias{Scaling}
-\title{How should comparison of entities be performed}
-\format{An object of class \code{list} of length 21.}
+\title{Scaling}
+\format{An object of class \code{list} of length 8.}
 \usage{
 Scaling
 }
 \description{
-Built-in transformations include
-"asn", "atanh", "boxcox", "date", "exp", "hms", "identity",
-"log", "log10", "log1p", "log2", "logit", "modulus", "probability",
-"probit", "pseudo_log", "reciprocal", "reverse", "sqrt" and "time"
+Pre-defined transformation of axes
+Not that built-in transformations from ggplot2 includes more transformations
 }
 \keyword{datasets}

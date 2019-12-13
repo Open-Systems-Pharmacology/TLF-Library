@@ -11,4 +11,22 @@ XYDataMapping
 \description{
 Abstract class for X Y Mapping
 }
+\section{Fields}{
+
+\describe{
+\item{\code{x}}{Name of x variable to map}
+
+\item{\code{y}}{Name of y variable to map}
+
+\item{\code{data}}{Dataset after mapping}
+}}
+
+\section{Methods}{
+
+\describe{
+\item{new(x, y=NULL)}{Initialize XYDataMapping.}
+\item{checkMapData(data, metaData = NULL)}{Check data mapping is correct. Create output data.frame with map data only.}
+}
+}
+
 \keyword{datasets}

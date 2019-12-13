@@ -9,6 +9,34 @@
 BoxWhiskerPlotConfiguration
 }
 \description{
-Plot Configuration for Box Whisker Plots
+Class for BoxWhisker Plot Configuration
 }
+\section{Fields}{
+
+\describe{
+\item{\code{legend}}{R6 class defining legendConfiguration}
+
+\item{\code{xAxis}}{R6 class defining xAxisConfiguration}
+
+\item{\code{yAxis}}{R6 class defining yAxisConfiguration}
+
+\item{\code{background}}{R6 class defining backgroundConfiguration}
+
+\item{\code{theme}}{R6 class defining theme aesthtic properties}
+
+\item{\code{filename}}{Name of the saved plot}
+}}
+
+\section{Methods}{
+
+\describe{
+\item{new(...)}{Initialize BoxWhiskerPlotConfiguration}
+\item{setPlotProperties(plotObject)}{Apply properties of plot labels.}
+\item{setPlotBackground(plotObject)}{Apply background properties to plot.}
+\item{savePlot(plotObject)}{Save ggplot as file.}
+\item{addBoxWhisker(plotObject, data, metaData, dataMapping)}{Add Box and whiskers to plot.}
+\item{addOutliers(plotObject, data, metaData, dataMapping)}{Add Outliers to plot.}
+}
+}
+
 \keyword{datasets}

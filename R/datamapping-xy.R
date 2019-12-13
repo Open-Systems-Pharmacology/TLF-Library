@@ -1,8 +1,15 @@
 #' @title XYDataMapping
 #' @docType class
 #' @description  Abstract class for X Y Mapping
+#' @field x Name of x variable to map
+#' @field y Name of y variable to map
+#' @field data Dataset after mapping
+#' @section Methods:
+#' \describe{
+#' \item{new(x, y=NULL)}{Initialize XYDataMapping.}
+#' \item{checkMapData(data, metaData = NULL)}{Check data mapping is correct. Create output data.frame with map data only.}
+#' }
 #' @export
-#'
 XYDataMapping <- R6::R6Class(
   "XYDataMapping",
   public = list(

@@ -9,6 +9,37 @@
 DDIRatioPlotConfiguration
 }
 \description{
-Plot Configuration for DDIRatio
+Class for DDIRatio Plot Configuration
 }
+\section{Fields}{
+
+\describe{
+\item{\code{legend}}{R6 class defining legendConfiguration}
+
+\item{\code{xAxis}}{R6 class defining xAxisConfiguration}
+
+\item{\code{yAxis}}{R6 class defining yAxisConfiguration}
+
+\item{\code{background}}{R6 class defining backgroundConfiguration}
+
+\item{\code{theme}}{R6 class defining theme aesthtic properties}
+
+\item{\code{filename}}{Name of the saved plot}
+
+\item{\code{ddiRatioProperties}}{Properties of DDI ratio plot specific features}
+}}
+
+\section{Methods}{
+
+\describe{
+\item{new(...)}{Initialize DDIRatioPlotConfiguration}
+\item{setPlotProperties(plotObject)}{Apply properties of plot labels.}
+\item{setPlotBackground(plotObject)}{Apply background properties to plot.}
+\item{savePlot(plotObject)}{Save ggplot as file.}
+\item{addDDIRatioLines(plotObject, dataMapping)}{Add DDI ratio diagonal lines to plot.}
+\item{addGuestLines(plotObject, dataMapping)}{Add DDI ratio Guest et al. limits to plot.}
+\item{addDDIRatios(plotObject, data, metaData, dataMapping)}{Add DDI ratios to plot.}
+}
+}
+
 \keyword{datasets}

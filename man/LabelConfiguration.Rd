@@ -9,6 +9,29 @@
 LabelConfiguration
 }
 \description{
-Generic Label Configuration
+Class for Label Configuration
 }
+\section{Fields}{
+
+\describe{
+\item{\code{title}}{Label properties of title}
+
+\item{\code{subtitle}}{Label properties of subtitle}
+
+\item{\code{xlabel}}{Label properties of xlabel}
+
+\item{\code{ylabel}}{Label properties of ylabel}
+
+\item{\code{legendTitles}}{Label properties of legendTitles}
+}}
+
+\section{Methods}{
+
+\describe{
+\item{new(title = NULL, subtitle = NULL, xlabel = NULL, ylabel = NULL, legendTitles = NULL, theme = tlfEnv$currentTheme)}{
+Initialize LabelConfiguration. Set font properties for each label of the plot.}
+\item{setPlotLabels(plotObject)}{Apply properties of plot labels.}
+}
+}
+
 \keyword{datasets}

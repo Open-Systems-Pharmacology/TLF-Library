@@ -9,6 +9,23 @@
 Label
 }
 \description{
-Label class associate font to a text
+Properties for ggplot labels
 }
+\section{Fields}{
+
+\describe{
+\item{\code{text}}{character}
+
+\item{\code{font}}{Font object}
+}}
+
+\section{Methods}{
+
+\describe{
+\item{new(...)}{Initialize Label}
+\item{print(...)}{Print Label properties}
+\item{setFontProperties(color, size, fontFamily, fontFace)}{Set fields of font object}
+}
+}
+
 \keyword{datasets}

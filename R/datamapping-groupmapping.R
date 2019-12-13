@@ -1,6 +1,11 @@
 #' @title GroupMapping
 #' @docType class
 #' @description  Abstract class for GroupMapping
+#' @field color Grouping class mapping variables to colors
+#' @field fill Grouping class mapping variables to color fillings
+#' @field linetype Grouping class mapping variables to line types
+#' @field shape Grouping class mapping variables to shapes
+#' @field size Grouping class mapping variables to sizes
 #' @export
 GroupMapping <- R6::R6Class(
   "GroupMapping",
@@ -16,6 +21,7 @@ GroupMapping <- R6::R6Class(
                               linetype = NULL,
                               shape = NULL,
                               size = NULL) {
+      # If mappings are not of type Grouping, they are assumed as Grouping inputs
       if (!isOfType(color, "Grouping")) {
         color <- Grouping$new(group = color)
       }

@@ -10,16 +10,18 @@
 #' x, y axes + mapping of colorGrouping, sizeGrouping, shapeGrouping
 #' @param plotConfiguration R6 class PKRatioPlotConfiguration
 #' Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend
+#' @param plotObject
+#' ggplot object, if null creates new plot, if not add time profile layers to ggplot
 #' @description
-#' plotTimeProfile(data, metaData, dataMapping, plotConfiguration)
+#' plotTimeProfile(data, metaData = NULL, dataMapping = NULL, plotConfiguration = NULL, plotObject = NULL)
 #' @return a ggplot graphical object
 #' @export
-#'
 #'
 plotTimeProfile <- function(data,
                             metaData = NULL,
                             dataMapping = NULL,
-                            plotConfiguration = NULL) {
+                            plotConfiguration = NULL,
+                            plotObject = NULL) {
 
   # If no data mapping or plot configuration is input, use default
   metaData <- metaData %||% metaDataHelper(data)
@@ -34,9 +36,9 @@ plotTimeProfile <- function(data,
   validateIsOfType(plotConfiguration, TimeProfilePlotConfiguration)
 
 
-  plotObject <- ggplot2::ggplot()
+  emptyPlot <- ggplot2::ggplot()
 
-  plotObject <- plotConfiguration$setPlotBackground(plotObject)
+  plotObject <- plotObject %||% plotConfiguration$setPlotBackground(emptyPlot)
 
   plotObject <- plotConfiguration$addLLOQLines(plotObject, metaData, dataMapping)
 

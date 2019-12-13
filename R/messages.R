@@ -40,5 +40,16 @@ messages <- list(
 
   errorNotIncluded = function(values, parentValues) {
     paste0("Values '", paste0(values, collapse = ", "), "' are not in included in parent values: '", paste0(parentValues, collapse = ", "), "'.")
+  },
+
+  errorExceedLength = function(values, parentLengths) {
+    paste0("Values '", paste0(values, collapse = ", "), "' exceed variable length : '", paste0(parentLengths, collapse = ", "), "'.")
+  },
+
+  errorConflictingInput = function(eitherInput, orInput) {
+    paste0(
+      "Conflicting inputs provided. Inputs '", paste0(eitherInput, collapse = ", "),
+      "' and '", paste0(orInput, collapse = ", "), "' can't be provided at the same time."
+    )
   }
 )

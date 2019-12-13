@@ -11,4 +11,34 @@ DDIRatioDataMapping
 \description{
 Data Mapping for DDI Ratio plots
 }
+\section{Fields}{
+
+\describe{
+\item{\code{x}}{Name of x variable to map}
+
+\item{\code{y}}{Name of y variable to map}
+
+\item{\code{groupMapping}}{R6 class mapping groups to aesthetic properties}
+
+\item{\code{ddiRatioLines}}{Values of the horizontal or diagonal lines plotted in DDI ratio plots}
+
+\item{\code{deltaGuest}}{Value of delta for plotting DDI limits from Guest et al.}
+
+\item{\code{xmin}}{Min value for DDI ratio lines and Guest et al. limits}
+
+\item{\code{xmax}}{Max value for DDI ratio lines and Guest et al. limits}
+}}
+
+\section{Methods}{
+
+\describe{
+\item{new(ddiRatioLines = c(1, 2, 1 / 2), deltaGuest = 1, xmin = 1e-1, xmax = 1e1,
+x, y, groupMapping = NULL, color = NULL, fill = NULL, linetype = NULL, shape = NULL, size = NULL)}{
+Initialize DDIRatioDataMapping Either input groupMapping or input color, fill, linetype, shape and/or size.}
+\item{checkMapData(data, metaData = NULL)}{Check data mapping is correct. Create output data.frame with map data only.}
+\item{getDDIRatioLines()}{Get DDI ratio limits as a data.frame whose variables are x, y, ymax, ymin.}
+\item{getGuestLines()}{Get Guest et al. limits as a data.frame whose variables are x, y, ymax, ymin.}
+}
+}
+
 \keyword{datasets}

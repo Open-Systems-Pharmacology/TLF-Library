@@ -47,8 +47,8 @@ lloqDataMapping <- TimeProfileDataMapping$new(
 group <- GroupMapping$new(fill = "IndivdualID")
 lloqRangeDataMapping <- TimeProfileDataMapping$new(
   x = "Time",
-  yMin = "Min",
-  yMax = "Max",
+  ymin = "Min",
+  ymax = "Max",
   groupMapping = group
 )
 # -------------------------------------------------

@@ -2,7 +2,7 @@
 
 # Version 0.1.0 for alpha-testing
 
-# October 25th, 2019
+# December 3rd, 2019
 
 # Overview
 The `tlf` library is an R package compatible with the `ospsuite` package. 
@@ -17,15 +17,21 @@ They can also get the measure of how many of these ratios were in the predefined
 ## Time Profiles Plots
 Users can plot time profiles through the function `plotTimeProfile`.
 
+## Histograms
+Users can plot histograms through the function `plotHistogram`.
+
+## Box Whiskers
+Users can plot box whiskers through the function `plotBoxWhisker`.
+
 ## Plot Configuration
-Users can use and create standardized plot configurations with through the `PlotConfiguration` objects.
-These configurations allows simple definitions of titles, subtitles, labels and even watermark. 
+Users can create and use standardized plots by setting their configuration using `Theme` and `PlotConfiguration`.
+These configurations allows easy definitions of labels, background and axes properties. 
 
 # How to test the `tlf` library
-Two tutorials explaining how to use the objects from the `tlf` library are accessible through vignettes.
+Five tutorials explaining how to use the objects and functions from the `tlf` library are accessible through vignettes.
 Use `browseVignettes(package = "tlf")` to access all vignettes tutorials. 
 To test the new features, data are already saved within the library and can be used directly.
-For PK ratios, the data and its related metadata are called: `pkRatioData` and `pkRatioMetaData`
+For PK ratios, the data and its related metadata are called: `pkRatioData` and `pkRatioMetaData`.
 
 # Report feedback
 Users can report feedback and bugs through Github forum and issues at: https://github.com/open-systems-pharmacology/tlf-library/issues

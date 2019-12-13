@@ -5,7 +5,7 @@
 \title{plotTimeProfile}
 \usage{
 plotTimeProfile(data, metaData = NULL, dataMapping = NULL,
-  plotConfiguration = NULL)
+  plotConfiguration = NULL, plotObject = NULL)
 }
 \arguments{
 \item{data}{list of data.frames (or list of data.frames? TO BE DISCUSSED)
@@ -20,12 +20,14 @@ x, y axes + mapping of colorGrouping, sizeGrouping, shapeGrouping}
 
 \item{plotConfiguration}{R6 class PKRatioPlotConfiguration
 Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend}
+
+\item{plotObject}{ggplot object, if null creates new plot, if not add time profile layers to ggplot}
 }
 \value{
 a ggplot graphical object
 }
 \description{
-plotTimeProfile(data, metaData, dataMapping, plotConfiguration)
+plotTimeProfile(data, metaData = NULL, dataMapping = NULL, plotConfiguration = NULL, plotObject = NULL)
 }
 \details{
 Create a Time Profile plot

@@ -11,4 +11,29 @@ TimeProfileDataMapping
 \description{
 Data Mapping for Time Profile
 }
+\section{Fields}{
+
+\describe{
+\item{\code{x}}{Name of x variable to map}
+
+\item{\code{y}}{Name of y variable to map}
+
+\item{\code{ymin}}{Name of ymin variable to map}
+
+\item{\code{ymax}}{Name of ymax variable to map}
+
+\item{\code{groupMapping}}{R6 class mapping groups to aesthetic properties}
+
+\item{\code{LLOQ}}{Value(s) of lower limit of quantitation}
+}}
+
+\section{Methods}{
+
+\describe{
+\item{new(LLOQ = NULL, x, y, y = NULL, ymin = NULL, ymax = NULL, groupMapping = NULL, color = NULL, fill = NULL, linetype = NULL, shape = NULL, size = NULL)}{
+Initialize TimeProfileDataMapping.  Either input groupMapping or input color, fill, linetype, shape and/or size.}
+\item{checkMapData(data, metaData = NULL)}{Check data mapping is correct. Create output data.frame with map data only.}
+}
+}
+
 \keyword{datasets}

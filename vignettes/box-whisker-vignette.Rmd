@@ -1,0 +1,228 @@
+---
+title: "box-whisker-vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{box-whisker-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(tlf)
+useTheme(tlfTheme)
+```
+
+
+# 1. Introduction
+## 1.1. Objectives
+The following vignette aims at documenting and illustrating workflows for producing PK ratio plots using the `tlf`-Library.
+
+## 1.2. Prerequisite
+This vignette focuses boxplot examples. Detailed documentation on typical `tlf` workflow, use of `AgregationSummary`, `DataMapping`, `PlotConfiguration` and `Theme` can be found in `vignette("tlf-workflow")`.
+
+# 2. Definition of the boxplot fonctions and classes
+## 2.1. The `plotBoxWhisker` function
+The function for plotting box-whiskers is: `plotBoxWhisker`. 
+Basic documentation of the function can be found using: `?plotBoxWhisker`.
+The typical usage of this function is: `plotBoxWhisker(data, metaData = NULL, dataMapping = NULL, plotConfiguration = NULL)`.
+The output of the function is a `ggplot` object.
+
+## 2.2. The `BoxWhiskerDataMapping` class
+The `dataMapping` from `plotBoxWhisker` requires a `BoxWhiskerDataMapping` class.
+This class can simply be initialized by `BoxWhiskerDataMapping$new()`, needing `y` variable name input only.
+For boxplots with multiple boxes, `x` variable name or/and `fill` groupMapping can be used. The `x` variable is expected to be factor levels.
+Beside these common input, it is possible to overwrite the aggregation functions that plot the edges of the box, the whiskers and the oultying data.
+
+- For the box edges `lower`, `middle` and `upper` use respectively the first quartile, median and third quartile (25th, 50th and 75th percentiles).
+- For the whiskers, `ymin` and `ymax` use the 5th and 95th percentiles.
+- For outliers, points lower than the 25th percentile - 1.5IQR and points higher than 75th percentiles + 1.5IQR (where IQR is the inter-quartile range) are flagged and plotted.
+
+In order to help with the boxplot aggregation functions, a bank of predefined function names is already available in the tlfStatFunctions (as an enum). Consequently, a tree with the available predefined function names will appear when writing `tlfStatFunctions$`. 
+```{r, results='asis', echo=FALSE}
+tlfFunctionsTable <- data.frame("tlfStatFunctions" = as.character(sapply(tlfStatFunctions, identity)))
+
+knitr::kable(tlfFunctionsTable)
+```
+
+# 3. Examples
+## 3.1. Data
+To illustrate the workflow leading to performing boxplots. The `pkRatioDataExample.RData` example can be loaded from the `data` folder. 
+It includes the dataset `pkRatioData` and its metaData `pkRatioMetaData`.
+
+```{r, results='asis'}
+# Load example
+load("../data/pkRatioDataExample.RData")
+
+# pkRatioData
+knitr::kable(utils::head(pkRatioData), digits = 2)
+
+# pkRatioMetaData is a list of variables contianing a lists with unit, dimension and lloq for each
+# Unit and dimension of pkRatioData are consequently the following:
+knitr::kable(data.frame(unit = t(rbind(sapply(pkRatioMetaData, function(x){x$unit}))),
+                        dimension = t(rbind(sapply(pkRatioMetaData, function(x){x$dimension})))))
+```
+
+## 3.2. Minimal example
+In the minimal example, only the basic `y` variable name is indicated. Here, `"Age"` was chosen for the boxplot.
+
+```{r, fig.height=5, fig.width=7.5}
+minMap <- BoxWhiskerDataMapping$new(y = "Age")
+
+minBoxplot <- plotBoxWhisker(data = pkRatioData, 
+                          metaData = pkRatioMetaData, 
+                          dataMapping = minMap)
+minBoxplot
+```
+
+## 3.3. Difference `x` vs `fill` input
+As explained in section 2, `x` and/or `fill` can be provided.
+If providing only `x`, the plot will use the `x` variable for aggregation and the boxplots will be disposed according to `x`. If providing `fill`, the plot will use the `fill` groupMapping for aggregation and the boxplots will be disposed around the same `x` but comparing the color filling. Consequently, the `fill` variable is useful when performing a double comparison.
+
+In the example below, `"Population"` and `"Gender"` can both be used for comparison of `"Age"`.
+
+```{r}
+xPopMap <- BoxWhiskerDataMapping$new(x = "Population",
+                                     y = "Age")
+xGenderMap <- BoxWhiskerDataMapping$new(x = "Gender",
+                                        y = "Age")
+fillPopMap <- BoxWhiskerDataMapping$new(y = "Age",
+                                        fill = "Population")
+fillGenderMap <- BoxWhiskerDataMapping$new(y = "Age",
+                                           fill = "Gender")
+xPopFillGenderMap <- BoxWhiskerDataMapping$new(x = "Population",
+                                               y = "Age",
+                                               fill = "Gender")
+xGenderFillPopMap <- BoxWhiskerDataMapping$new(x = "Gender",
+                                               y = "Age",
+                                               fill = "Population")
+
+xPopPlot <- plotBoxWhisker(data = pkRatioData,
+                           metaData = pkRatioMetaData,
+                           dataMapping = xPopMap)
+
+xGenderPlot <- plotBoxWhisker(data = pkRatioData,
+                              metaData = pkRatioMetaData,
+                              dataMapping = xGenderMap)
+
+fillPopPlot <- plotBoxWhisker(data = pkRatioData,
+                              metaData = pkRatioMetaData,
+                              dataMapping = fillPopMap)
+
+fillGenderPlot <- plotBoxWhisker(data = pkRatioData,
+                                 metaData = pkRatioMetaData,
+                                 dataMapping = fillGenderMap)
+
+xPopFillGenderPlot <- plotBoxWhisker(data = pkRatioData,
+                                        metaData = pkRatioMetaData,
+                                        dataMapping = xPopFillGenderMap)
+
+xGenderFillPopPlot <- plotBoxWhisker(data = pkRatioData,
+                                        metaData = pkRatioMetaData,
+                                        dataMapping = xGenderFillPopMap)
+
+```
+
+```{r, fig.height=5, fig.width=7.5, fig.cap="Boxplot mapping Population as x"}
+xPopPlot
+```
+```{r, fig.height=5, fig.width=7.5, fig.cap="Boxplot mapping Gender as x"}
+xGenderPlot
+```
+```{r, fig.height=5, fig.width=7.5, fig.cap="Boxplot mapping Population as fill"}
+fillPopPlot
+```
+```{r, fig.height=5, fig.width=7.5, fig.cap="Boxplot mapping Gender as fill"}
+fillGenderPlot
+```
+```{r, fig.height=5, fig.width=7.5, fig.cap="Boxplot mapping Population as x and Gender as fill"}
+xPopFillGenderPlot
+```
+```{r, fig.height=5, fig.width=7.5, fig.cap="Boxplot mapping Gender as x and Population as fill"}
+xGenderFillPopPlot
+```
+
+## 3.4. Boxplot functions
+In some cases, 5th and 95th percentiles are not wanted for whiskers for instance when a normal distribution is assumed and mean +/- 1.96 standard deviation would be preferred.
+In these cases, it is easy to overwrite the default functions by specifying either using an home made function or directly using predifined functions as suggested in section 2.2.
+
+In the 2 following examples, the boxplot will use the mean for the middle line and mean +/- 1.96 standard deviation for the whiskers:
+```{r, fig.height=5, fig.width=7.5, fig.cap="Boxplot mapping Population as x, Gender as fill and assuming normal distribution"}
+
+normMap <- BoxWhiskerDataMapping$new(x = "Population",
+                                     y = "Age",
+                                     fill = "Gender",
+                                     ymin = tlfStatFunctions$`mean-1.96sd`,
+                                     middle = tlfStatFunctions$mean,
+                                     ymax = tlfStatFunctions$`mean+1.96sd`)
+
+normBoxplot <- plotBoxWhisker(data = pkRatioData,
+                              metaData = pkRatioMetaData,
+                              dataMapping = normMap)
+normBoxplot
+```
+
+In this example, the boxplot use also mean +/- standard deviation for the box edges
+```{r, fig.height=5, fig.width=7.5, fig.cap="Boxplot mapping Population as x, Gender as fill and assuming normal distribution"}
+
+normMap2 <- BoxWhiskerDataMapping$new(x = "Population",
+                                     y = "Age",
+                                     fill = "Gender",
+                                     ymin = tlfStatFunctions$`mean-1.96sd`,
+                                     lower = tlfStatFunctions$`mean-sd`,
+                                     middle = tlfStatFunctions$mean,
+                                     upper = tlfStatFunctions$`mean+sd`,
+                                     ymax = tlfStatFunctions$`mean+1.96sd`)
+
+normBoxplot2 <- plotBoxWhisker(data = pkRatioData,
+                              metaData = pkRatioMetaData,
+                              dataMapping = normMap2)
+normBoxplot2
+```
+
+## 3.5. Outlyier functions
+
+Default outliers are flagged when oustide the range from 25th percentiles - 1.5IQR to 75th percentiles + 1.5IQR as suggested by McGill and implemented by the current boxplot functions from ggplot (`geom_boxplot`).
+However, these default can also be overwritten. 
+
+In the following example, outliers will be flagged when values are out of the 10th-90th percentiles, while whiskers will go until these same percentiles:
+```{r, fig.height=5, fig.width=7.5, fig.cap="Boxplot mapping Population as x, Gender as fill and assuming normal distribution"}
+
+outlierMap <- BoxWhiskerDataMapping$new(x = "Population",
+                                        y = "Age",
+                                        fill = "Gender",
+                                        ymin = tlfStatFunctions$`Percentile10%`,
+                                        ymax = tlfStatFunctions$`Percentile90%`,
+                                        minOutlierLimit = tlfStatFunctions$`Percentile10%`,
+                                        maxOutlierLimit = tlfStatFunctions$`Percentile90%`)
+
+outlierBoxplot <- plotBoxWhisker(data = pkRatioData,
+                              metaData = pkRatioMetaData,
+                              dataMapping = outlierMap)
+outlierBoxplot
+```
+
+## 3.4. plotConfiguration of boxplots: `BoxWhiskerPlotConfiguration`
+
+# 4. Derive use of `BoxWhiskerDataMapping`
+
+Since the boxplot datamapping performs an aggregation of the data, it possible to get directly the resulting aggregated statistic as a table using `getBoxWhiskerLimits()`
+Similarly, it can be used to flag any values out of a certain range using `getOutliers()`.
+
+For instance, using the example from section 3.5., one can get the following results
+
+```{r, results='as.is'}
+boxplotSummary <- outlierMap$getBoxWhiskerLimits(pkRatioData)
+
+knitr::kable(boxplotSummary, digits = 2)
+```
+
+```{r, results='as.is'}
+outliers <- outlierMap$getOutliers(pkRatioData)
+
+knitr::kable(outliers, digits = 2)
+```
+

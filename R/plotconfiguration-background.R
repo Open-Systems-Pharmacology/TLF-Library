@@ -1,6 +1,16 @@
 #' @title BackgroundConfiguration
 #' @docType class
-#' @description  Generic Background Configuration
+#' @description  Class for Background Configuration
+#' @field outerBackground R6 class defining backgroundElement
+#' @field innerBackground R6 class defining backgroundElement
+#' @field grid R6 class defining backgroundElement
+#' @field watermark R6 class defining watermark label
+#' @section Methods:
+#' \describe{
+#' \item{new(outerBackground = NULL, innerBackground = NULL, grid = NULL, watermark = NULL, watermarkFont = NULL,
+#' theme = tlfEnv$currentTheme)}{Initialize BackgroundConfiguration.}
+#' \item{setBackground(plotObject)}{Apply properties to plot background.}
+#' }
 #' @export
 BackgroundConfiguration <- R6::R6Class(
   "BackgroundConfiguration",

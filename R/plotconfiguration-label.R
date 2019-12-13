@@ -1,6 +1,17 @@
 #' @title LabelConfiguration
 #' @docType class
-#' @description  Generic Label Configuration
+#' @description  Class for Label Configuration
+#' @field title Label properties of title
+#' @field subtitle Label properties of subtitle
+#' @field xlabel Label properties of xlabel
+#' @field ylabel Label properties of ylabel
+#' @field legendTitles Label properties of legendTitles
+#' @section Methods:
+#' \describe{
+#' \item{new(title = NULL, subtitle = NULL, xlabel = NULL, ylabel = NULL, legendTitles = NULL, theme = tlfEnv$currentTheme)}{
+#' Initialize LabelConfiguration. Set font properties for each label of the plot.}
+#' \item{setPlotLabels(plotObject)}{Apply properties of plot labels.}
+#' }
 #' @export
 LabelConfiguration <- R6::R6Class(
   "LabelConfiguration",

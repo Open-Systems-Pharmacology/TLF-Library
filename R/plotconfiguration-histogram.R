@@ -61,6 +61,8 @@ HistogramPlotConfiguration <- R6::R6Class(
 
     addVerticalLines = function(plotObject, data, metaData, dataMapping) {
       if (!is.null(dataMapping$verticalLineFunctions)) {
+        fillVec <- tlfEnv$currentTheme$aesProperties$fill
+
         mapData <- dataMapping$checkMapData(data, metaData)
 
         aggSummary <- AggregationSummary$new(
@@ -74,33 +76,31 @@ HistogramPlotConfiguration <- R6::R6Class(
           aggregationDimensionsVector = NULL
         )
 
+        numVerticalLineFunctions <- length(dataMapping$verticalLineFunctions)
+
         # melt reshapes a tidy data.frame with variable names as "variable" and "value"
-        tidyHelper <- reshape2::melt(aggSummary$dfHelper)
+        summaryDataFrame <- reshape2::melt(aggSummary$dfHelper)
+        numHistograms <- length(levels(  summaryDataFrame[[dataMapping$groupMapping$fill$label]]  ))
+
 
         # Left here, in case more refined named are asked for legend
-        # verticalLineCaptions <- getDefaultCaptions(data = tidyHelper[, -ncol(tidyHelper), drop = FALSE], metaData = NULL)
+        summaryDataFrame$summaryCaptions <- getDefaultCaptions(data = summaryDataFrame[, -ncol(summaryDataFrame), drop = FALSE], metaData = NULL)
+
+        legendLabels <- levels(summaryDataFrame$summaryCaptions)
 
         plotObject <- plotObject + ggplot2::geom_vline(
-          data = tidyHelper,
-          aes_string(
-            xintercept = "value",
-            color = dataMapping$groupMapping$fill$label,
-            linetype = "variable"
-          ),
-          size = self$histogramProperties$lines$size[1],
-          show.legend = TRUE
-        )
-
-        # Legend linetype
-        plotObject <- plotObject + guides(
-          color = "none",
-          linetype = guide_legend(
-            title = "Stat",
-            labels = dataMapping$verticalLineFunctionNames,
-            values = self$histogramProperties$lines$linetype
+          data = summaryDataFrame,
+          aes_string( xintercept = "value", color = "summaryCaptions", linetype = "summaryCaptions") , size = 1) + scale_colour_manual(
+            name = "Summary",
+            values = fillVec[ rep(seq(1,numHistograms) , each= numVerticalLineFunctions) ] ,
+            labels = legendLabels
+          )  + scale_linetype_manual(
+            name = "Summary",
+            values = rep(seq(1,numVerticalLineFunctions),numHistograms),
+            labels = legendLabels
           )
-        ) +
-          scale_linetype_discrete(labels = dataMapping$verticalLineFunctionNames)
+
+
       }
       return(plotObject)
     }

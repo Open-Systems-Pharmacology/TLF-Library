@@ -9,6 +9,24 @@
 Grouping
 }
 \description{
-Abstract class for Grouping
+Abstract class for Grouping. Maps variable(s) to a group
 }
+\section{Fields}{
+
+\describe{
+\item{\code{group}}{Mapping of variable(s) to its group
+Can be as a vector of variable names or as a data.frame}
+
+\item{\code{label}}{Name of the variable that will be defined by the Grouping (optional)}
+}}
+
+\section{Methods}{
+
+\describe{
+\item{new(group, label = NULL)}{Initialize Grouping. group is either a vector of variable names or a data.frame linking variables to their captions.}
+\item{getCaptions(data, metaData = NULL)}{Create captions variable as a data.frame column whose header is label.
+Variable is of type factor to define groups.}
+}
+}
+
 \keyword{datasets}

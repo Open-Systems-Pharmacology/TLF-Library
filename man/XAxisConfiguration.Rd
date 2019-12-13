@@ -9,6 +9,26 @@
 XAxisConfiguration
 }
 \description{
-Generic X axis Configuration
+Class for X-axis Configuration
 }
+\section{Fields}{
+
+\describe{
+\item{\code{limits}}{Axis limits}
+
+\item{\code{scale}}{Plot scale (lin, log...)}
+
+\item{\code{ticks}}{Values where ticks should be applied}
+
+\item{\code{ticklabels}}{Names of associated to ticks}
+}}
+
+\section{Methods}{
+
+\describe{
+\item{new(limits = NULL, scale = Scaling$lin, ticks = "default", ticklabels = "default")}{Initialize AxisConfiguration.}
+\item{setPlotAxis(plotObject)}{Apply properties to plot X-axis.}
+}
+}
+
 \keyword{datasets}
