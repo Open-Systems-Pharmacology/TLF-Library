@@ -17,14 +17,19 @@ XYGDataMapping <- R6::R6Class(
   public = list(
     groupMapping = NULL, # R6 Class of GroupMapping
 
-    initialize = function(x, y = NULL,
+    initialize = function(x = NULL,
+                              y = NULL,
                               groupMapping = NULL,
                               color = NULL,
                               fill = NULL,
                               linetype = NULL,
                               shape = NULL,
-                              size = NULL) {
-      super$initialize(x, y)
+                              size = NULL,
+                              data = NULL) {
+
+      # smartMapping is available in utilities-mapping.R
+      smartMap <- smartMapping(data)
+      super$initialize(x %||% smartMap$x, y %||% smartMap$y)
 
       validateEitherOrNullInput(groupMapping, list(
         "color" = color,
@@ -35,11 +40,11 @@ XYGDataMapping <- R6::R6Class(
       ))
       # To simplify the process workflow, groupMapping inputs color, fill... can be used directly instead of groupMapping
       self$groupMapping <- groupMapping %||% GroupMapping$new(
-        color,
-        fill,
-        linetype,
-        shape,
-        size
+        color %||% smartMap$color,
+        fill %||% smartMap$fill,
+        linetype %||% smartMap$linetype,
+        shape %||% smartMap$shape,
+        size %||% smartMap$size
       )
     },
 
