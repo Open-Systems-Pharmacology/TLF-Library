@@ -174,3 +174,61 @@ getAesStringMapping <- function(dataMapping) {
   }
   return(dataMappingLabels)
 }
+
+#' @title smartMapping
+#' @param data data.frame on which the smart mapping is used
+#' @description
+#' Check data size and variable names,
+#' Get the mapping if variable names correspond to usual aesthetic or mapping names.
+#' Else return NULL for the mapping property.
+#'
+#' If data has only one variable, it will be mapped as \code{x}.
+#' If data has only 2 variables, they will be respectively mapped as \code{x} and \code{y}.
+#'
+#' Recognized names for the mapping are \code{x}, \code{y}, \code{ymin}, \code{ymax},
+#' \code{lower}, \code{middle}, \code{upper}, \code{color}, \code{shape}, \code{linetype},
+#' \code{size} and \code{fill}
+#' @return A list of usual mappings that can be guessed from data
+#' @examples
+#' \dontrun{
+#' # Get variable names x and y directly from data
+#' data <- data.frame(x = c(1, 2, 3), y = c(6, 5, 4), z = c(7, 8, 9))
+#' mapping <- smartMapping(data)
+#'
+#' # If data has aesthetic propoerties
+#' data <- data.frame(x = c(1, 2, 3), y = c(6, 5, 4), color = c("blue", "red", "blue"))
+#' mapping <- smartMapping(data)
+#' }
+smartMapping <- function(data) {
+  # Initialize smart mapping with null values
+  geomMappings <- c("x", "y", "ymin", "ymax", "lower", "middle", "upper")
+  groupMappings <- names(LegendTypes)
+
+  mapping <- vector(mode = "list", length = length(geomMappings) + length(groupMappings))
+  names(mapping) <- c(geomMappings, groupMappings)
+
+  if (is.null(data)) {
+    return(mapping)
+  }
+
+  # Names of data.frame variables
+  variableNames <- names(data)
+  # If one column, set as y
+  if (ncol(data) == 1) {
+    mapping$y <- variableNames[1]
+  }
+  # If 2 columns, set as x, y
+  if (ncol(data) == 2) {
+    mapping$x <- variableNames[1]
+    mapping$y <- variableNames[2]
+  }
+
+  # If data.frame variable name match a usual mapping,
+  # set as mapping
+  for (variableName in variableNames) {
+    if (variableName %in% c(geomMappings, groupMappings)) {
+      mapping[[variableName]] <- variableName
+    }
+  }
+  return(mapping)
+}
