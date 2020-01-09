@@ -80,7 +80,7 @@ HistogramPlotConfiguration <- R6::R6Class(
 
         # melt reshapes a tidy data.frame with variable names as "variable" and "value"
         summaryDataFrame <- reshape2::melt(aggSummary$dfHelper)
-        numHistograms <- length(levels(  summaryDataFrame[[dataMapping$groupMapping$fill$label]]  ))
+        numHistograms <- length(levels(summaryDataFrame[[dataMapping$groupMapping$fill$label]]))
 
 
         # Left here, in case more refined named are asked for legend
@@ -90,17 +90,16 @@ HistogramPlotConfiguration <- R6::R6Class(
 
         plotObject <- plotObject + ggplot2::geom_vline(
           data = summaryDataFrame,
-          aes_string( xintercept = "value", color = "summaryCaptions", linetype = "summaryCaptions") , size = 1) + scale_colour_manual(
-            name = "Summary",
-            values = fillVec[ rep(seq(1,numHistograms) , each= numVerticalLineFunctions) ] ,
-            labels = legendLabels
-          )  + scale_linetype_manual(
-            name = "Summary",
-            values = rep(seq(1,numVerticalLineFunctions),numHistograms),
-            labels = legendLabels
-          )
-
-
+          aes_string(xintercept = "value", color = "summaryCaptions", linetype = "summaryCaptions"), size = 1
+        ) + scale_colour_manual(
+          name = "Summary",
+          values = fillVec[ rep(seq(1, numHistograms), each = numVerticalLineFunctions) ],
+          labels = legendLabels
+        ) + scale_linetype_manual(
+          name = "Summary",
+          values = rep(seq(1, numVerticalLineFunctions), numHistograms),
+          labels = legendLabels
+        )
       }
       return(plotObject)
     }

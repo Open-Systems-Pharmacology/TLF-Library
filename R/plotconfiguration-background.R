@@ -49,7 +49,7 @@ BackgroundConfiguration <- R6::R6Class(
           linetype = self$grid$linetype
         )
       )
-      plotObject <- setWatermark(plotObject = plotObject, label = self$watermark)
+      plotObject <- addWatermark(plotObject = plotObject, label = self$watermark)
       return(plotObject)
     }
   )
