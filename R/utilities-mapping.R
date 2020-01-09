@@ -57,19 +57,35 @@ getCustomCaptions <- function(dataDf, groupingDf) {
   return(newCol)
 }
 
-
-
-
 #' @title getDefaultCaptions
-#' @param data input data.frame with variables to group by
-#' @param metaData input data.frame with variables to group by
-#' @param variableList groups as factor levels
+#' @param data data.frame used for legend caption
+#' @param metaData list of lists containing metaData on \code{data}
+#' @param variableList ordered vector of variables used for specifying the caption
 #' @param sep characters separating variables in caption
 #' @description
-#' getDefaultCaptions create a new column that groups the grouping variable
-#' @return groupingVariable
+#' Creates default legend captions by concatenating the values of
+#' the \code{data} and \code{metaData} of \code{variableList} variables from \code{data}.
+#' @return Factor levels corresponding to the legend captions
 #' @export
+#' @examples
 #'
+#' data <- data.frame(
+#'   Population = c("Caucasian", "Asian", "Caucasian", "Asian"),
+#'   Gender = c("Male", "Male", "Female", "Female"),
+#'   Dose = c(50, 100, 100, 50),
+#'   Compound = c("Midazolam", "Midazolam", "Midazolam", "Midazolam")
+#' )
+#'
+#' metaData <- list(Dose = list(unit = "mg"))
+#'
+#' # Get captions using every variable of data
+#' getDefaultCaptions(data, metaData)
+#'
+#' # Get captions using specific variables of data
+#' getDefaultCaptions(data, metaData, variableList = c("Gender", "Population"))
+#'
+#' # Get captions separating variables witha space (character " ")
+#' getDefaultCaptions(data, metaData, sep = " ")
 getDefaultCaptions <- function(data, metaData, variableList = colnames(data), sep = "-") {
 
   # Check that the grouping is in the list of data variables
@@ -112,8 +128,22 @@ asLegendCaptionSubset <- function(data, metaData) {
   return(captionSubset)
 }
 
-# Function Converting DataMappings to aes_string mapping
-# Accounts for special character issues by using ``
+#' @title getAesStringMapping
+#' @param dataMapping DataMapping class or subclass object
+#' @description
+#' Get the \code{dataMapping} elements and convert them into
+#' character string usable by ggplot mapping function \code{aes_string}.
+#' The conversion fixes any issue of special characters by wrapping the string by \code{``}
+#' if not already used.
+#'
+#' \code{dataMapping} unmapped aesthetic elements (e.g. \code{color}) are associated to
+#' the dummy aesthetic variable \code{"defaultAes"} which allows further modification of the plot aesthetics.
+#' @return A list of mappings that can be used as is by \code{aes_string}.
+#' @examples
+#' \dontrun{
+#' dataMapping <- XYGDataMapping$new(x = "Time [h]", y = "Concentration [mol/L]", color = "Dose")
+#' mappingLabels <- getAesStringMapping(dataMapping)
+#' }
 getAesStringMapping <- function(dataMapping) {
   # Define list of mappings to check
   geomMappings <- c("x", "y", "ymin", "ymax", "lower", "middle", "upper")
