@@ -42,6 +42,7 @@ Collate:
     'enum.R'
     'aggregation-input.R'
     'aggregation-summary.R'
+    'atom-plots.R'
     'data-description.R'
     'datamapping-boxwhisker.R'
     'datamapping-ddiratio.R'
