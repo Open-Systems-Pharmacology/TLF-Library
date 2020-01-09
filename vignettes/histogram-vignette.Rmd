@@ -1,5 +1,5 @@
 ---
-title: "Histogram Vignette"
+title: "Histogram plots"
 author: "OSPSuiteR 2019"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette

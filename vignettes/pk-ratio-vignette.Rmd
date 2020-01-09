@@ -1,5 +1,5 @@
 ---
-title: "PK Ratio Example"
+title: "PK Ratio plots"
 author: "OSPSuiteR 2019"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -204,12 +204,6 @@ labelConfiguration2$title$font$color <- "red"
 
 isTRUE(labelConfiguration1$title$font$color == labelConfiguration2$title$font$color)
 ```
-
-## 2.5.3 Axes
-
-## 2.5.4 Background
-
-## 2.5.2 Legends
 
 # 3. Qualification of PK Ratios
 The qualification of the PK Ratios can be performed using `getPKRatioMeasure`.

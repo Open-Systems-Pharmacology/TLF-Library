@@ -1,5 +1,5 @@
 ---
-title: "Time Profile Plot Vignette"
+title: "Time Profile plots"
 author: "OSPSuiteR 2019"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
