@@ -16,19 +16,22 @@
 Font <- R6::R6Class(
   "Font",
   public = list(
-    size = NULL,
-    color = NULL,
-    fontFamily = NULL,
-    fontFace = NULL,
+    # Defining default font properties here fixes
+    # default input that can be overwritten by NULL,
+    # which leads to empty font property field
+    size = 12,
+    color = "black",
+    fontFamily = "",
+    fontFace = "plain",
 
-    initialize = function(size = 12,
-                              color = "black",
-                              fontFamily = "",
-                              fontFace = "plain") {
-      self$size <- size
-      self$color <- color
-      self$fontFamily <- fontFamily
-      self$fontFace <- fontFace
+    initialize = function(size = NULL,
+                              color = NULL,
+                              fontFamily = NULL,
+                              fontFace = NULL) {
+      self$size <- size %||% self$size
+      self$color <- color %||% self$color
+      self$fontFamily <- fontFamily %||% self$fontFamily
+      self$fontFace <- fontFace %||% self$fontFace
     },
 
     print = function() {
