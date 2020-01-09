@@ -46,3 +46,31 @@ XYDataMapping <- R6::R6Class(
     }
   )
 )
+
+
+#' @title LineDataMapping
+#' @docType class
+#' @description  Abstract class for X Y Mapping
+#' @field x Name of x variable to map
+#' @field y Name of y variable to map
+#' @field data Dataset after mapping
+#' @section Methods:
+#' \describe{
+#' \item{new(x, y=NULL)}{Initialize LineDataMapping.}
+#' \item{checkMapData(data, metaData = NULL)}{Check data mapping is correct. Create output data.frame with map data only.}
+#' }
+#' @export
+LineDataMapping <- R6::R6Class(
+  "LineDataMapping",
+  inherit = XYDataMapping,
+  public = list(
+    initialize = function(x = NULL,
+                              y = NULL,
+                              data = NULL) {
+
+      # smartMapping is available in utilities-mapping.R
+      smartMap <- smartMapping(data)
+      super$initialize(x %||% smartMap$x, y %||% smartMap$y)
+    }
+  )
+)
