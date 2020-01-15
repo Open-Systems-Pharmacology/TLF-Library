@@ -204,3 +204,105 @@ addLine <- function(data = NULL,
 
   return(plotObject)
 }
+
+#' @title addRibbon
+#' @param data data.frame containing the ribbon endpoints to be plotted.
+#' @param x numeric value for vertical line.
+#' @param ymin numeric value for lower horizontal limit. 
+#' A value of 0 is assumed if only \code{ymax} value is input.
+#' @param ymax numeric value for upper horizontal limit.
+#' A value of 0 is assumed if only \code{ymin} value is input.
+#' @param dataMapping \code{RangeDataMapping} class or subclass
+#' mapping x, ymin and ymax variables to the variable names of \code{data}.
+#' @param fill character string defining the color of the ribbon.
+#' This parameter is optional: default value is "grey".
+#' @param alpha numerical value between 0 and 1 defining the transparency of the ribbon.
+#' This parameter is optional: default value is 0.9.
+#' @param plotObject \code{ggplot} graphical object to which the line layer is added
+#' This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided
+#' @description
+#' Add a ribbon layer to a \code{ggplot} graphical object.
+#' @return A \code{ggplot} graphical object
+#' @export
+#' @examples
+#' # Add a horizontal ribbon to a previous plot
+#' p <- ggplot2::ggplot()
+#' pmin <- addRibbon(ymin = -5, plotObject = p)
+#' pmax <- addRibbon(ymax = 5, plotObject = p)
+#' 
+#' p <- addRibbon(ymin = -5, ymax = 5, plotObject = p)
+#'
+#' # Add a custom ribbon
+#' time <- seq(0,30,0.01)
+#' customRibbonData <- data.frame(x=time, ymin = cos(time), ymax = cos(time)+1)
+#' 
+#' p <- addRibbon(data=customRibbonData,
+#' dataMapping = RangeDataMapping$new(x="x",ymin="ymin",ymax="ymax"))
+#'
+#' # Or for simple cases a smart mapping will get directly x and y from data
+#' p <- addRibbon(data = customRibbonData)
+#'
+#' # Add a ribbon with custom aesthetic properties
+#' p <- addRibbon(data = customRibbonData, fill = "#34eb89", alpha = 0.5)
+#' 
+addRibbon <- function(data = NULL,
+                    x = NULL,
+                    ymin = NULL,
+                    ymax = NULL,
+                    dataMapping = NULL,
+                    fill = "grey",
+                    alpha = 0.9,
+                    plotObject = NULL) {
+  
+  # Enforce data to be a data.frame for dataMapping
+  if (!isOfType(data, "data.frame")) {
+    data <- data.frame(data)
+  }
+  
+  dataMapping <- dataMapping %||% RangeDataMapping$new(
+    x = x,
+    ymin = ymin,
+    ymax = ymax,
+    data = data
+  )
+  validateIsOfType(dataMapping, RangeDataMapping)
+  
+  # If no plot, initialize empty plot
+  plotObject <- plotObject %||% initializePlot()
+  
+  # If no mapping, return plot
+  if (is.null(dataMapping$x) && is.null(dataMapping$ymin) && is.null(dataMapping$ymax)) {
+    return(plotObject)
+  }
+  
+  # Define a data.frame for y ribbon intercept
+  interceptData <- data.frame(x = c(-Inf, Inf),
+                              ymin = rep(dataMapping$ymin %||% 0, 2),
+                              ymax = rep(dataMapping$ymax %||% 0, 2))
+  
+  if (is.null(dataMapping$x)){
+    plotObject <- plotObject +
+      ggplot2::geom_ribbon(
+        data = interceptData,
+        mapping = aes_string(x= "x", ymin = "ymin", ymax = "ymax"),
+        fill = fill,
+        alpha = alpha
+      )
+    return(plotObject)
+  }
+  
+  # Else regular line from data endpoints
+  mapData <- dataMapping$checkMapData(data)
+  # Convert the mapping into characters usable by aes_string
+  mapLabels <- getAesStringMapping(dataMapping)
+  
+  plotObject <- plotObject + ggplot2::geom_ribbon(
+    data = mapData,
+    mapping = aes_string(x = mapLabels$x,
+                         ymin = mapLabels$ymin, 
+                         ymax = mapLabels$ymax),
+    fill = fill,
+    alpha =alpha)
+  
+  return(plotObject)
+}
