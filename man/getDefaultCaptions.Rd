@@ -8,17 +8,38 @@ getDefaultCaptions(data, metaData, variableList = colnames(data),
   sep = "-")
 }
 \arguments{
-\item{data}{input data.frame with variables to group by}
+\item{data}{data.frame used for legend caption}
 
-\item{metaData}{input data.frame with variables to group by}
+\item{metaData}{list of lists containing metaData on \code{data}}
 
-\item{variableList}{groups as factor levels}
+\item{variableList}{ordered vector of variables used for specifying the caption}
 
 \item{sep}{characters separating variables in caption}
 }
 \value{
-groupingVariable
+Factor levels corresponding to the legend captions
 }
 \description{
-getDefaultCaptions create a new column that groups the grouping variable
+Creates default legend captions by concatenating the values of
+the \code{data} and \code{metaData} of \code{variableList} variables from \code{data}.
+}
+\examples{
+
+data <- data.frame(
+  Population = c("Caucasian", "Asian", "Caucasian", "Asian"),
+  Gender = c("Male", "Male", "Female", "Female"),
+  Dose = c(50, 100, 100, 50),
+  Compound = c("Midazolam", "Midazolam", "Midazolam", "Midazolam")
+)
+
+metaData <- list(Dose = list(unit = "mg"))
+
+# Get captions using every variable of data
+getDefaultCaptions(data, metaData)
+
+# Get captions using specific variables of data
+getDefaultCaptions(data, metaData, variableList = c("Gender", "Population"))
+
+# Get captions separating variables witha space (character " ")
+getDefaultCaptions(data, metaData, sep = " ")
 }

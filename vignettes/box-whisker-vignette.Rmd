@@ -1,5 +1,5 @@
 ---
-title: "box-whisker-vignette"
+title: "Box-whisker plots"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{box-whisker-vignette}
@@ -222,6 +222,7 @@ knitr::kable(boxplotSummary, digits = 2)
 
 ```{r, results='as.is'}
 outliers <- outlierMap$getOutliers(pkRatioData)
+outliers <- outliers[, c("Age", "minOutlierLimit", "maxOutlierLimit", "minOutliers", "maxOutliers")]
 
 knitr::kable(outliers, digits = 2)
 ```

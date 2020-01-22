@@ -27,7 +27,6 @@ plotHandle ggplot object with updated fonts
 setFontProperties set Font Properties on a ggplot object
 }
 \examples{
-
 p <- ggplot2::ggplot() + ggplot2::labs(title = "Title")
 newFont <- Font$new(color = "blue", size = 20)
 p <- setFontProperties(plotHandle = p, titleFont = newFont)

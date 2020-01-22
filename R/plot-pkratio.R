@@ -1,26 +1,33 @@
-#' Create a PK-Ratio plot
-#'
 #' @title plotPKRatio
-#' @param data data.frame (or list of data.frames? TO BE DISCUSSED)
-#' containing the data to be used for the plot
-#' @param metaData list of lists (structure TO BE DISCUSSED)
-#' containing complementary information to data (e.g. unit)
-#' @param dataMapping R6 class PKRatioDataMapping
-#' mapping of x, y axes + mapping of colorGrouping, sizeGrouping, shapeGrouping
-#' @param plotConfiguration R6 class PKRatioPlotConfiguration
-#' Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend
+#' @param data data.frame containing the data to be used for the plot
+#' @param metaData list of lists
+#' containing complementary information to data (e.g. their unit and dimension).
+#' This parameter is optional.
+#' @param dataMapping
+#' \code{PKRatioDataMapping} class or subclass mapping x and y variables to \code{data} variable names.
+#' \code{dataMapping} provides also the values of the PK Ratio limits plotted as horizontal lines.
+#' This parameter is optional: the \code{tlf} library provides a smart mapping if only \code{data} is provided
+#' and default values of the PK Ratio limits.
+#' @param plotConfiguration
+#' \code{PKRatioPlotConfiguration} class or subclass defining labels, grid, background and watermark
+#' This parameter is optional: the \code{tlf} library provides a default configuration according to the current theme
+#' @param plotObject \code{ggplot} graphical object to which the PK Ratio plot layer is added
+#' This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided
 #' @description
-#' plotPKRatio(data, metaData, dataMapping, plotConfiguration)
-#' @return a ggplot graphical object
+#' Add PK Ratio plot layers to a \code{ggplot} graphical object.
+#' PK Ratio limits are plotted as horizontal lines.
+#' PK Ratios are plotted as a scatter plot.
+#' @return A \code{ggplot} graphical object
 #' @export
-#'
 plotPKRatio <- function(data,
                         metaData = NULL,
                         dataMapping = NULL,
-                        plotConfiguration = NULL) {
+                        plotConfiguration = NULL,
+                        plotObject = NULL) {
+
   # If no data mapping or plot configuration is input, use default
-  metaData <- metaData %||% metaDataHelper(data)
-  dataMapping <- dataMapping %||% PKRatioDataMapping$new()
+  # metaData <- metaData %||% metaDataHelper(data)
+  dataMapping <- dataMapping %||% PKRatioDataMapping$new(data = data)
   plotConfiguration <- plotConfiguration %||% PKRatioPlotConfiguration$new(
     data = data,
     metaData = metaData,
@@ -30,17 +37,11 @@ plotPKRatio <- function(data,
   validateIsOfType(dataMapping, PKRatioDataMapping)
   validateIsOfType(plotConfiguration, PKRatioPlotConfiguration)
 
-  # mapData <- dataMapping$getMapData(data, metaData)
+  plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
-  plotObject <- ggplot2::ggplot()
-
-  # Add Plot Configuration layers and PK Ratios
-  plotObject <- plotConfiguration$setPlotBackground(plotObject)
   plotObject <- plotConfiguration$addPKRatioLines(plotObject, dataMapping$pkRatioLines)
-
   plotObject <- plotConfiguration$addPKRatios(plotObject, data, metaData, dataMapping)
 
-  plotObject <- plotConfiguration$setPlotLabels(plotObject)
   plotObject <- plotConfiguration$setPlotProperties(plotObject)
   plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)
 

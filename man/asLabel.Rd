@@ -12,12 +12,11 @@ asLabel(text = "", font = NULL)
 \item{font}{font properties of Label}
 }
 \value{
-Label
+Label class object
 }
 \description{
-Set a character class into a Label class
-Associate font if input
-If text is already Label class return it and update font if input
+Set a character string into a Label class associating font properties to input
+If text is already a Label class, asLabel can be used to updated the font properties
 }
 \examples{
 title <- "Title of Plot"

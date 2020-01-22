@@ -28,42 +28,41 @@ PlotConfiguration <- R6::R6Class(
     background = NULL,
     saveConfiguration = NULL,
     theme = NULL,
-    
+
     ## ----------------------------------------------
     ## Initializing function to be called with $new()
     initialize = function(
-      # Label configuration
-      title = NULL,
-      subtitle = NULL,
-      xlabel = NULL,
-      ylabel = NULL,
-      # Legend Configuration
-      legend = NULL,
-      legendTitles = NULL,
-      # X-Axis configuration
-      xAxis = NULL,
-      xScale = NULL,
-      xLimits = NULL,
-      # Y-Axis configuration
-      yAxis = NULL,
-      yScale = NULL,
-      yLimits = NULL,
-      # Background configuration
-      background = NULL,
-      watermark = NULL,
-      # Save configuration
-      saveConfiguration = NULL,
-      filename = NULL,
-      width = NULL,
-      height = NULL,
-      units = NULL,
-      # Smart configuration using metaData
-      data = NULL,
-      metaData = NULL,
-      dataMapping = NULL,
-      # Theme
-      theme = tlfEnv$currentTheme, ...) {
-      
+                              # Label configuration
+                              title = NULL,
+                              subtitle = NULL,
+                              xlabel = NULL,
+                              ylabel = NULL,
+                              # Legend Configuration
+                              legend = NULL,
+                              legendTitles = NULL,
+                              # X-Axis configuration
+                              xAxis = NULL,
+                              xScale = NULL,
+                              xLimits = NULL,
+                              # Y-Axis configuration
+                              yAxis = NULL,
+                              yScale = NULL,
+                              yLimits = NULL,
+                              # Background configuration
+                              background = NULL,
+                              watermark = NULL,
+                              # Save configuration
+                              saveConfiguration = NULL,
+                              filename = NULL,
+                              width = NULL,
+                              height = NULL,
+                              units = NULL,
+                              # Smart configuration using metaData
+                              data = NULL,
+                              metaData = NULL,
+                              dataMapping = NULL,
+                              # Theme
+                              theme = tlfEnv$currentTheme, ...) {
       super$initialize(
         title = title,
         subtitle = subtitle,
@@ -71,57 +70,58 @@ PlotConfiguration <- R6::R6Class(
         ylabel = ylabel
       )
 
-      # Smart configuration if xlabel and ylabel are not defined, 
-      # use dataMapping of x, y to label axes
-      xMapping <- NULL
-      yMapping <- NULL
-      if (!is.null(data) && is.null(dataMapping)) {
-        dataMapping <- XYDataMapping$new(data = data)
+      # Smart configuration if xlabel and ylabel
+      # 1) If xlabel and ylabel provided: use as is.
+      # 2) Else, if data, metaData (and optionally dataMapping) provided: use dimension [unit] from metaData
+      # 3) Else, if data (and optionally dataMapping) provided: use variable names from data
+      if (!is.null(data)) {
+        dataMapping <- dataMapping %||% XYGDataMapping$new(data = data)
       }
-      if (!is.null(dataMapping)) {
-        xMapping <- dataMapping$x
-        yMapping <- dataMapping$y
-      }
-      self$xlabel <- asLabel(xlabel %||% (dataMappingLabel(xMapping, metaData) %||% ""))
-      self$ylabel <- asLabel(ylabel %||% (dataMappingLabel(yMapping, metaData) %||% ""))
+      self$xlabel <- asLabel(xlabel %||%
+        dataMappingLabel(dataMapping$x, metaData) %||%
+        dataMapping$x %||%
+        self$xlabel)
+      self$ylabel <- asLabel(ylabel %||%
+        dataMappingLabel(dataMapping$y, metaData) %||%
+        dataMapping$y %||%
+        self$ylabel)
 
       self$xlabel$font <- theme$xlabelFont
       self$ylabel$font <- theme$ylabelFont
 
-      # Smart configuration if legend is not defined, 
+      # Smart configuration if legend is not defined,
       self$legend <- legend %||% ifnotnull(
         dataMapping,
         LegendConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping),
         LegendConfiguration$new()
       )
-      
+
       # Define X-Axis configuration, overwrite properties only if they are defined
       self$xAxis <- xAxis %||% XAxisConfiguration$new()
       self$xAxis$limits <- xLimits %||% self$xAxis$limits
       self$xAxis$scale <- xScale %||% self$xAxis$scale
-      
+
       # Define Y-Axis configuration, overwrite properties only if they are defined
       self$yAxis <- yAxis %||% YAxisConfiguration$new()
       self$yAxis$limits <- yLimits %||% self$xAxis$limits
       self$yAxis$scale <- yScale %||% self$xAxis$scale
-      
+
       # Set background properties
       self$background <- background %||% BackgroundConfiguration$new(
         watermark = watermark,
         theme = theme
       )
-      
+
       # Define save configuration, overwrite properties only if they are defined
       self$saveConfiguration <- saveConfiguration %||% SaveConfiguration$new()
       self$saveConfiguration$filename <- filename %||% self$saveConfiguration$filename
       self$saveConfiguration$width <- width %||% self$saveConfiguration$width
       self$saveConfiguration$height <- height %||% self$saveConfiguration$height
       self$saveConfiguration$units <- units %||% self$saveConfiguration$units
-      
+
       self$theme <- theme
-      
     },
-    
+
     ## ---------------------------------------------------------------
     ## Define Labels: plotConfiguration function to first define Watermark
 

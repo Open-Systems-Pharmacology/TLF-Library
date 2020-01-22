@@ -4,18 +4,21 @@
 \alias{createWatermarkGrob}
 \title{createWatermarkGrob}
 \usage{
-createWatermarkGrob(label, angle = 30, alpha = 0.4)
+createWatermarkGrob(label, angle = 30, alpha = 0.6)
 }
 \arguments{
-\item{label}{Label class of Watermark}
+\item{label}{Character or Label class object corresponding to the watermark text
+(and its font properties if Label)}
 
-\item{angle}{orientation of the watermark}
+\item{angle}{Angle in degree from horizontal of the watermark label. Default angle is 30 degrees.}
 
-\item{alpha}{(optional argument) transparency of the watermark}
+\item{alpha}{Transparency of the watermark label.
+Alpha is a numeric between 0 and 1: 0 label is totally transparent, 1 label is totally opaque.
+Default alpha is 0.6.}
 }
 \value{
-watermark Background as a grob for ggplot objects
+Watermark background as a ggplot grob object
 }
 \description{
-createWatermarkGrob use a label to define a Background Watermark as a grob
+createWatermarkGrob creates a ggplot grob based on the label text and its font properties.
 }

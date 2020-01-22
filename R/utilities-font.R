@@ -1,12 +1,12 @@
-# Utils fonctions to go along with fonts and labels
+# Utils fonctions for Font and Label class objects
+
 #' @title asLabel
 #' @param text text to be set as label class
 #' @param font font properties of Label
-#' @return Label
+#' @return Label class object
 #' @description
-#' Set a character class into a Label class
-#' Associate font if input
-#' If text is already Label class return it and update font if input
+#' Set a character string into a Label class associating font properties to input
+#' If text is already a Label class, asLabel can be used to updated the font properties
 #' @export
 #' @examples
 #' title <- "Title of Plot"
@@ -22,9 +22,7 @@ asLabel <- function(text = "", font = NULL) {
   }
 
   # If font is not null, set font properties of Label
-  if (!is.null(font)) {
-    text$font <- font
-  }
+  text$font <- font %||% text$font
 
   return(text)
 }
@@ -42,7 +40,6 @@ asLabel <- function(text = "", font = NULL) {
 #' @include font.R
 #' @export
 #' @examples
-#'
 #' p <- ggplot2::ggplot() + ggplot2::labs(title = "Title")
 #' newFont <- Font$new(color = "blue", size = 20)
 #' p <- setFontProperties(plotHandle = p, titleFont = newFont)

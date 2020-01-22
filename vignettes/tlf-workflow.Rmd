@@ -58,7 +58,7 @@ Below presents the table of specific classes and functions that are created usin
 
 ```{r, echo = FALSE, results='asis'}
 # This small script gives a fast way to introduce the nomenclature of the classes and functions
-plotNames <- c("PKRatio", "TimeProfile", "Histogram", "BoxWhisker", "GOF", "DDIRatio")
+plotNames <- c("PKRatio", "TimeProfile", "Histogram", "BoxWhisker", "DDIRatio") #"GOF", 
 classesNames <- c("DataMapping", "PlotConfiguration")
 functionNames <- c("plot")
 
@@ -295,11 +295,11 @@ For instance,
 ```{r, result='as.is'}
 title <- Label$new(text = "This is a title text",
                    font = Font$new(color = "red",
-                                   size = "12"))
+                                   size = 12))
 
 knitr::kable(data.frame("text" = title$text, 
            "color" = title$font$color,
-           "size" = title$font$color,
+           "size" = title$font$size,
            "face" = title$font$fontFace,
            "family" = title$font$fontFamily
            ))
