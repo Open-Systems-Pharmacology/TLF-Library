@@ -6,8 +6,6 @@ TLF Library implementation in R
 
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/Open-Systems-Pharmacology/TLF-Library?branch=develop&svg=true)](https://ci.appveyor.com/project/open-systems-pharmacology-ci/TLF-Library/branch/develop)
 [![codecov](https://codecov.io/gh/Open-Systems-Pharmacology/TLF-Library/branch/develop/graph/badge.svg)](https://codecov.io/gh/Open-Systems-Pharmacology/TLF-Library)
-
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/pchelle/TLF-Library?branch=master&svg=true)](https://ci.appveyor.com/project/pchelle/TLF-Library)
 <!-- badges: end -->
 
 # Development tasks
@@ -30,8 +28,6 @@ devtools::load_all()
 or `Ctrl + Shift + L`
 
 ## Add or update script files
-
-TODO: Is this the right way? Maybe use vignette for that?
 
 `.R` files defined in `tests\dev\` will be removed from the package and can be used to simulate interaction with the package. See [scripts.R](tests/dev/scripts.R)
 
