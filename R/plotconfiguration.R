@@ -1,38 +1,52 @@
 #' @title PlotConfiguration
-#' @docType class
-#' @description  Class for Plot Configuration
-#' @field legend \code{LegendConfiguration} R6 class defining legend properties
-#' @field xAxis \code{XAxisConfiguration} R6 class defining X-axis properties
-#' @field yAxis \code{YAxisConfiguration} R6 class defining Y-axis properties
-#' @field background \code{BackgroundConfiguration} R6 class defining background properties
-#' @field saveConfiguration  \code{SaveConfiguration} R6 class defining save properties
-#' @field theme \code{Theme} R6 class defining theme aesthetic properties
-#' @section Methods:
-#' \describe{
-#' \item{new(...)}{Initialize PlotConfiguration}
-#' \item{setPlotProperties(plotObject)}{Apply plot labels properties to plotObject}
-#' \item{setPlotBackground(plotObject)}{Apply background properties to plotObject}
-#' \item{savePlot(plotObject)}{Save plotObject into a file.}
-#' }
+#' @description R6 class defining the configuration of a \code{ggplot} object
 #' @export
-#' @format NULL
 PlotConfiguration <- R6::R6Class(
   "PlotConfiguration",
   inherit = LabelConfiguration,
   ## ----------------------------------
   ## List of plotConfiguration Variables
   public = list(
+    #' @field legend R6 class \code{LegendConfiguration} defining legend properties
     legend = NULL,
+    #' @field xAxis R6 class \code{XAxisConfiguration} defining X-axis properties
     xAxis = NULL,
+    #' @field yAxis R6 class \code{YAxisConfiguration} defining Y-axis properties
     yAxis = NULL,
+    #' @field background R6 class \code{BackgroundConfiguration} defining background properties
     background = NULL,
+    #' @field saveConfiguration R6 class \code{SaveConfiguration} defining saving properties
     saveConfiguration = NULL,
+    #' @field theme \code{Theme} R6 class defining theme aesthetic properties
     theme = NULL,
 
-    ## ----------------------------------------------
-    ## Initializing function to be called with $new()
-    initialize = function(
-                              # Label configuration
+    #' @description Create a new \code{PlotConfiguration} object
+    #' @param title R6 class \code{Label} object
+    #' @param subtitle R6 class \code{Label} object
+    #' @param xlabel R6 class \code{Label} object
+    #' @param ylabel R6 class \code{Label} object
+    #' @param legend R6 class \code{LegendConfiguration} object defining legend properties
+    #' @param legendTitles List of legend titles
+    #' @param xAxis R6 class \code{XAxisConfiguration} object defining X-axis properties
+    #' @param xScale character defining X-axis scale. Use enum `Scaling` to access predefined scales.
+    #' @param xLimits numeric vector of X-axis limits
+    #' @param yAxis R6 class \code{YAxisConfiguration} object defining X-axis properties
+    #' @param yScale character defining Y-axis scale. Use enum `Scaling` to access predefined scales.
+    #' @param yLimits numeric vector of Y-axis limits
+    #' @param background R6 class \code{BackgroundConfiguration} defining background properties
+    #' @param watermark R6 class \code{Label} object defining watermark background
+    #' @param saveConfiguration R6 class \code{SaveConfiguration} defining saving properties
+    #' @param filename character defining the name of the file to be saved
+    #' @param width numeric values defining the width in `units` of the plot dimensions after saving
+    #' @param height numeric values defining the height in `units` of the plot dimensions after saving
+    #' @param units character defining the unit of the saving dimension
+    #' @param data data.frame used by \code{smartMapping}
+    #' @param metaData list of information on \code{data}
+    #' @param dataMapping R6 class or subclass \code{XYDataMapping}
+    #' @param theme R6 class \code{Theme}
+    #' @param ... parameters inherited from R6 class \code{LabelConfiguration}
+    #' @return A new \code{PlotConfiguration} object
+    initialize = function( # Label configuration
                               title = NULL,
                               subtitle = NULL,
                               xlabel = NULL,
@@ -122,9 +136,9 @@ PlotConfiguration <- R6::R6Class(
       self$theme <- theme
     },
 
-    ## ---------------------------------------------------------------
-    ## Define Labels: plotConfiguration function to first define Watermark
-
+    #' @description Set axes properties of a \code{ggplot} object
+    #' @param plotObject a \code{ggplot} object
+    #' @return A \code{ggplot} object
     setPlotProperties = function(plotObject) {
       # plotObject <- self$legend$setPlotLegend(plotObject)
 
@@ -134,11 +148,17 @@ PlotConfiguration <- R6::R6Class(
       return(plotObject)
     },
 
+    #' @description Set background properties of a \code{ggplot} object
+    #' @param plotObject a \code{ggplot} object
+    #' @return A \code{ggplot} object
     setPlotBackground = function(plotObject) {
       plotObject <- self$background$setBackground(plotObject)
       return(plotObject)
     },
 
+    #' @description Save \code{ggplot} object into a file
+    #' @param plotObject a \code{ggplot} object
+    #' @return NULL
     savePlot = function(plotObject) {
       self$saveConfiguration$savePlot(plotObject)
     }

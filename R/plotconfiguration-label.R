@@ -1,27 +1,28 @@
 #' @title LabelConfiguration
-#' @docType class
-#' @description  Class for Label Configuration
-#' @field title Label properties of title
-#' @field subtitle Label properties of subtitle
-#' @field xlabel Label properties of xlabel
-#' @field ylabel Label properties of ylabel
-#' @field legendTitles Label properties of legendTitles
-#' @section Methods:
-#' \describe{
-#' \item{new(title = NULL, subtitle = NULL, xlabel = NULL, ylabel = NULL, legendTitles = NULL, theme = tlfEnv$currentTheme)}{
-#' Initialize LabelConfiguration. Set font properties for each label of the plot.}
-#' \item{setPlotLabels(plotObject)}{Apply properties of plot labels.}
-#' }
+#' @description R6 class defining the configuration of the labels of a \code{ggplot} object
 #' @export
 LabelConfiguration <- R6::R6Class(
   "LabelConfiguration",
   public = list(
+    #' @field title R6 class \code{Label} object
     title = NULL,
+    #' @field subtitle R6 class \code{Label} object
     subtitle = NULL,
+    #' @field xlabel R6 class \code{Label} object
     xlabel = NULL,
+    #' @field ylabel R6 class \code{Label} object
     ylabel = NULL,
+    #' @field legendTitles List of legend titles
     legendTitles = NULL,
 
+    #' @description Create a new \code{LabelConfiguration} object
+    #' @param title R6 class \code{Label} object
+    #' @param subtitle R6 class \code{Label} object
+    #' @param xlabel R6 class \code{Label} object
+    #' @param ylabel R6 class \code{Label} object
+    #' @param legendTitles List of legend titles
+    #' @param theme R6 class \code{Theme}
+    #' @return A new \code{LabelConfiguration} object
     initialize = function(title = NULL,
                               subtitle = NULL,
                               xlabel = NULL,
@@ -42,9 +43,9 @@ LabelConfiguration <- R6::R6Class(
       self$legendTitles$font <- theme$legendTitles
     },
 
-    ## ---------------------------------------------------------------
-    ## Define Labels: plotConfiguration function that uses data mapping
-    ## to set labels and legends
+    #' @description Set plot labels properties of a \code{ggplot} object
+    #' @param plotObject a \code{ggplot} object
+    #' @return A \code{ggplot} object
     setPlotLabels = function(plotObject) {
 
       # Titles and axes labels

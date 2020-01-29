@@ -84,6 +84,8 @@ Default value is \verb{Percentile25-1.5IQR\%}.}
 \item{\code{maxOutlierLimit}}{Name of function used for calculating upper outlier limit
 Default value is \verb{Percentile75+1.5IQR\%}.}
 
+\item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
+
 \item{\code{groupMapping}}{R6 class \code{GroupMapping} object}
 
 \item{\code{color}}{R6 class \code{Grouping} object or its input}

@@ -1,30 +1,40 @@
 #' @title DDIRatioPlotConfiguration
-#' @docType class
-#' @description  Class for DDIRatio Plot Configuration
-#' @field legend R6 class defining legendConfiguration
-#' @field xAxis R6 class defining xAxisConfiguration
-#' @field yAxis R6 class defining yAxisConfiguration
-#' @field background R6 class defining backgroundConfiguration
-#' @field theme R6 class defining theme aesthtic properties
-#' @field filename Name of the saved plot
-#' @field ddiRatioProperties Properties of DDI ratio plot specific features
-#' @section Methods:
-#' \describe{
-#' \item{new(...)}{Initialize DDIRatioPlotConfiguration}
-#' \item{setPlotProperties(plotObject)}{Apply properties of plot labels.}
-#' \item{setPlotBackground(plotObject)}{Apply background properties to plot.}
-#' \item{savePlot(plotObject)}{Save ggplot as file.}
-#' \item{addDDIRatioLines(plotObject, dataMapping)}{Add DDI ratio diagonal lines to plot.}
-#' \item{addGuestLines(plotObject, dataMapping)}{Add DDI ratio Guest et al. limits to plot.}
-#' \item{addDDIRatios(plotObject, data, metaData, dataMapping)}{Add DDI ratios to plot.}
-#' }
+#' @description R6 class defining the configuration of a \code{ggplot} object for DDI Ratio plots
 #' @export
 DDIRatioPlotConfiguration <- R6::R6Class(
   "DDIRatioPlotConfiguration",
   inherit = PlotConfiguration,
   public = list(
+    #' @field ddiRatioProperties list of properties for DDI ratio plot specific features
     ddiRatioProperties = NULL,
 
+    #' @description Create a new \code{BoxWhiskerPlotConfiguration} object
+    #' @param ddiRatioProperties list of properties for DDI ratio plot specific features
+    #' @param title R6 class \code{Label} object
+    #' @param subtitle R6 class \code{Label} object
+    #' @param xlabel R6 class \code{Label} object
+    #' @param ylabel R6 class \code{Label} object
+    #' @param legend R6 class \code{LegendConfiguration} object defining legend properties
+    #' @param legendTitles List of legend titles
+    #' @param xAxis R6 class \code{XAxisConfiguration} object defining X-axis properties
+    #' @param xScale character defining X-axis scale. Use enum `Scaling` to access predefined scales.
+    #' @param xLimits numeric vector of X-axis limits
+    #' @param yAxis R6 class \code{YAxisConfiguration} object defining X-axis properties
+    #' @param yScale character defining Y-axis scale. Use enum `Scaling` to access predefined scales.
+    #' @param yLimits numeric vector of Y-axis limits
+    #' @param background R6 class \code{BackgroundConfiguration} defining background properties
+    #' @param watermark R6 class \code{Label} object defining watermark background
+    #' @param saveConfiguration R6 class \code{SaveConfiguration} defining saving properties
+    #' @param filename character defining the name of the file to be saved
+    #' @param width numeric values defining the width in `units` of the plot dimensions after saving
+    #' @param height numeric values defining the height in `units` of the plot dimensions after saving
+    #' @param units character defining the unit of the saving dimension
+    #' @param data data.frame used by \code{smartMapping}
+    #' @param metaData list of information on \code{data}
+    #' @param dataMapping R6 class or subclass \code{XYDataMapping}
+    #' @param theme R6 class \code{Theme}
+    #' @param ... parameters inherited from \code{PlotConfiguration}
+    #' @return A new \code{BoxWhiskerPlotConfiguration} object
     initialize = function(ddiRatioProperties = tlfEnv$currentTheme$ddiRatio,
                               title = "DDI Ratio Plot",
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
@@ -38,6 +48,10 @@ DDIRatioPlotConfiguration <- R6::R6Class(
       self$ddiRatioProperties <- ddiRatioProperties
     },
 
+    #' @description Add DDI ratio limits as line layer to a \code{ggplot} object
+    #' @param plotObject \code{ggplot} object
+    #' @param dataMapping R6 class \code{DDIRatioDataMapping}
+    #' @return A \code{ggplot} object with DDI ratio limits
     addDDIRatioLines = function(plotObject, dataMapping) {
       # geom_abline don't work properly when plot scale is log
       ddiRatioLines <- dataMapping$getDDIRatioLines()
@@ -56,6 +70,10 @@ DDIRatioPlotConfiguration <- R6::R6Class(
       return(plotObject)
     },
 
+    #' @description Add Guest et al ratio limits as line layer to a \code{ggplot} object
+    #' @param plotObject \code{ggplot} object
+    #' @param dataMapping R6 class \code{DDIRatioDataMapping}
+    #' @return A \code{ggplot} object with Guest et al ratio limits
     addGuestLines = function(plotObject, dataMapping) {
       guestLines <- dataMapping$getGuestLines()
       plotObject <- plotObject +
@@ -76,6 +94,12 @@ DDIRatioPlotConfiguration <- R6::R6Class(
       return(plotObject)
     },
 
+    #' @description Add DDI ratios as scatter layer to a \code{ggplot} object
+    #' @param plotObject \code{ggplot} object
+    #' @param data data.frame
+    #' @param metaData list of information on \code{data}
+    #' @param dataMapping R6 class \code{DDIRatioDataMapping}
+    #' @return A \code{ggplot} object DDI ratios
     addDDIRatios = function(plotObject, data, metaData, dataMapping) {
       # Check if mapping is included in the data
       # Add the group mapping and aesthtics variables in the data.frame

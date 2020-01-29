@@ -63,6 +63,8 @@ Create a new \code{DDIRatioDataMapping} object
 
 \item{\code{xmax}}{numeric value xmax for ratio and Guest et al limits}
 
+\item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
+
 \item{\code{x}}{Name of x variable to map}
 
 \item{\code{y}}{Name of y variable to map}
