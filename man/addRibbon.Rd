@@ -4,29 +4,48 @@
 \alias{addRibbon}
 \title{addRibbon}
 \usage{
-addRibbon(data = NULL, x = NULL, ymin = NULL, ymax = NULL,
-  dataMapping = NULL, fill = "grey", alpha = 0.9,
-  plotObject = NULL)
+addRibbon(
+  data = NULL,
+  metaData = NULL,
+  x = NULL,
+  ymin = NULL,
+  ymax = NULL,
+  caption = NULL,
+  alpha = 0.8,
+  dataMapping = NULL,
+  plotConfiguration = NULL,
+  plotObject = NULL
+)
 }
 \arguments{
 \item{data}{data.frame containing the ribbon endpoints to be plotted.}
 
-\item{x}{numeric value for vertical line.}
+\item{metaData}{list of information on \code{data} such as \code{dimension} and \code{unit} of their variables}
 
-\item{ymin}{numeric value for lower horizontal limit.
-A value of 0 is assumed if only \code{ymax} value is input.}
+\item{x}{Mapping for x values.
+If \code{data} is NULL or not input, \code{x} numeric values will be used as is for the plot.}
 
-\item{ymax}{numeric value for upper horizontal limit.
-A value of 0 is assumed if only \code{ymin} value is input.}
+\item{ymin}{Mapping for ymin values.
+If \code{data} is NULL or not input, \code{ymin} numeric values will be used as is for the plot.
+In case there is no \code{x} mapping, \code{ymin} are the y-values of horizontal lines.
+In case there is no \code{ymax} mapping, a value of 0 is assumed for \code{ymax}.}
 
-\item{dataMapping}{\code{RangeDataMapping} class or subclass
-mapping x, ymin and ymax variables to the variable names of \code{data}.}
+\item{ymax}{Mapping for ymax values.
+If \code{data} is NULL or not input, \code{ymax} numeric values will be used as is for the plot.
+In case there is no \code{x} mapping, \code{ymax} are the y-values of horizontal lines.
+In case there is no \code{ymin} mapping, a value of 0 is assumed for \code{ymin}.}
 
-\item{fill}{character string defining the color of the ribbon.
-This parameter is optional: default value is "grey".}
+\item{caption}{vector of character strings defining the legend captions.
+This parameter is optional: default value is NULL.}
 
-\item{alpha}{numerical value between 0 and 1 defining the transparency of the ribbon.
-This parameter is optional: default value is 0.9.}
+\item{alpha}{transparency of the ribbon.
+Numeric value between 0 and 1. Value of 0, the plot is transparent. Value of 1, the plot is opaque.
+Default value for \code{alpha} is 0.8.}
+
+\item{dataMapping}{\code{XYGDataMapping} class or subclass
+mapping x, y and aesthetic variables to the variable names of \code{data}.}
+
+\item{plotConfiguration}{\code{PlotConfiguration} object defining the label and background properties of the plot.}
 
 \item{plotObject}{\code{ggplot} graphical object to which the line layer is added
 This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided}
@@ -36,6 +55,9 @@ A \code{ggplot} graphical object
 }
 \description{
 Add a ribbon layer to a \code{ggplot} graphical object.
+Use optional argument \code{caption} to set legend caption.
+Since \code{ggplot} manage aesthetic properties across all layers,
+aesthetic properties defined in \code{plotConfiguration} will apply across all layers.
 }
 \examples{
 # Add a horizontal ribbon to a previous plot
@@ -46,16 +68,26 @@ pmax <- addRibbon(ymax = 5, plotObject = p)
 p <- addRibbon(ymin = -5, ymax = 5, plotObject = p)
 
 # Add a custom ribbon
-time <- seq(0,30,0.01)
-customRibbonData <- data.frame(x=time, ymin = cos(time), ymax = cos(time)+1)
+time <- seq(0, 30, 0.01)
+customRibbonData <- data.frame(x = time, y = cos(time), ymin = cos(time)-0.5, ymax = cos(time)+0.5)
 
-p <- addRibbon(data=customRibbonData,
-dataMapping = RangeDataMapping$new(x="x",ymin="ymin",ymax="ymax"))
+p <- addRibbon(
+  data = customRibbonData,
+  dataMapping = RangeDataMapping$new(x = "x", ymin = "ymin", ymax = "ymax")
+)
 
 # Or for simple cases a smart mapping will get directly x and y from data
 p <- addRibbon(data = customRibbonData)
 
-# Add a ribbon with custom aesthetic properties
-p <- addRibbon(data = customRibbonData, fill = "#34eb89", alpha = 0.5)
+# Add a ribbon with caption
+pr <- addRibbon(data = customRibbonData, caption = "My plot with ribbon")
 
+# Add a ribbon with different transparency
+p <- addRibbon(data = customRibbonData, alpha = 1)
+
+# Add a scatter to the ribbon
+pScatter <- addScatter(data = customData, caption = "My plot with ribbon", plotObject = pr)
+
+# Add a scatter to the ribbon
+pLine <- addLine(data = customData, caption = "My plot with ribbon", plotObject = pr)
 }
