@@ -1,33 +1,41 @@
 #' @title BoxWhiskerDataMapping
-#' @docType class
-#' @description  Data Mapping for Box Whisker Plots
-#' @field x Name of x variable to map
-#' @field y Name of y variable to map
-#' @field ymin Name of function used for calculating lower whisker
-#' @field lower Name of function used for calculating lower line of box
-#' @field middle Name of function used for calculating middle line
-#' @field upper Name of function used for calculating upper line of box
-#' @field ymax Name of function used for calculating upper whisker
-#' @field minOutlierLimit Name of function used for calculating lower outlier limit
-#' @field maxOutlierLimit Name of function used for calculating upper outlier limit
-#' @section Methods:
-#' \describe{
-#' \item{new(...)}{
-#' Initialize BoxWhiskerDataMapping. ymin, lower, middle, upper, ymax, minOutlierLimit, maxOutlierLimit inputs are names of functions}
-#' \item{checkMapData(data, metaData = NULL)}{Check data mapping is correct. Create output data.frame with map data only.}
-#' \item{getBoxWhiskers(data)}{Check data mapping is correct. Create output data.frame with map data only.}
-#' \item{getOutliers(data)}{Check data mapping is correct. Create output data.frame with map data only.}
-#' }
+#' @description  R6 class for mapping \code{y}, \code{GroupMapping}, \code{boxWhiskerLimits} and \code{outlierLimits} to \code{data}
 #' @export
-#' @format NULL
 BoxWhiskerDataMapping <- R6::R6Class(
   "BoxWhiskerDataMapping",
   inherit = XYGDataMapping,
   public = list(
+    #' @field outlierLimits List of `minOutlierLimit` and `maxOutlierLimit` functions 
+    #' outside which \code{data} is flagged as outlier
     outlierLimits = NULL,
+    #' @field boxWhiskerLimits List of `ymin`, `lower`, `middle`, `upper` and `ymax` functions 
+    #' calculated on \code{data} to obtain box whiskers
     boxWhiskerLimits = NULL,
 
-    initialize = function(x = NULL, # If user wants a unique box, x does not need to be filled
+    #' @description Create a new \code{BoxWhiskerDataMapping} object
+    #' @param x Name of x variable to map
+    #' Default value is NULL in case of a unique box in the boxplot.
+    #' @param y Name of y variable to map
+    #' @param ymin Name of function used for calculating lower whisker. 
+    #' Default value is `Percentile5%`.
+    #' @param lower Name of function used for calculating lower line of box
+    #' Default value is `Percentile25%`.
+    #' @param middle Name of function used for calculating middle line
+    #' Default value is `Percentile55%`.
+    #' @param upper Name of function used for calculating upper line of box
+    #' Default value is `Percentile75%`.
+    #' @param ymax Name of function used for calculating upper whisker
+    #' Default value is `Percentile95%`.
+    #' @param minOutlierLimit Name of function used for calculating lower outlier limit
+    #' Default value is `Percentile25-1.5IQR%`.
+    #' @param maxOutlierLimit Name of function used for calculating upper outlier limit
+    #' Default value is `Percentile75+1.5IQR%`.
+    #' @param groupMapping R6 class \code{GroupMapping} object
+    #' @param color R6 class \code{Grouping} object or its input
+    #' @param fill R6 class \code{Grouping} object or its input
+    #' @param data data.frame to map used by \code{smartMapping} 
+    #' @return A new \code{BoxWhiskerDataMapping} object
+    initialize = function(x = NULL,
                               y,
                               ymin = tlfStatFunctions$`Percentile5%`,
                               lower = tlfStatFunctions$`Percentile25%`,
@@ -45,6 +53,9 @@ BoxWhiskerDataMapping <- R6::R6Class(
       self$outlierLimits <- c(minOutlierLimit, maxOutlierLimit)
     },
 
+    #' @description Get a data.frame with box-whisker limit by group
+    #' @param data data.frame to check
+    #' @return A data.frame with `ymin`, `lower`, `middle`, `upper`, `ymax` variables.
     getBoxWhiskerLimits = function(data) {
       # Dummy silent variable if x is NULL
       if (is.null(self$x)) {
@@ -72,6 +83,10 @@ BoxWhiskerDataMapping <- R6::R6Class(
       return(boxWhiskerLimits)
     },
 
+    #' @description Get a data.frame flagging outliers
+    #' @param data data.frame to check
+    #' @return A data.frame with `minOutliers` and `maxOutliers` variables.
+    #' Values not flagged are `NA` in the outliers variables
     getOutliers = function(data) {
       # Dummy silent variable if x is NULL
       if (is.null(self$x)) {

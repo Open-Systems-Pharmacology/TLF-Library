@@ -1,21 +1,27 @@
 #' @title GroupMapping
-#' @docType class
-#' @description  Abstract class for GroupMapping
-#' @field color Grouping class mapping variables to colors
-#' @field fill Grouping class mapping variables to color fillings
-#' @field linetype Grouping class mapping variables to line types
-#' @field shape Grouping class mapping variables to shapes
-#' @field size Grouping class mapping variables to sizes
+#' @description  R6 class for mapping \code{Grouping} variables to \code{data}
 #' @export
 GroupMapping <- R6::R6Class(
   "GroupMapping",
   public = list(
+    #' @field color R6 class \code{Grouping} object
     color = NULL,
+    #' @field fill R6 class \code{Grouping} object
     fill = NULL,
+    #' @field linetype R6 class \code{Grouping} object
     linetype = NULL,
+    #' @field shape R6 class \code{Grouping} object
     shape = NULL,
+    #' @field size R6 class \code{Grouping} object
     size = NULL,
 
+    #' @description Create a new \code{GroupMapping} object
+    #' @param color R6 class \code{Grouping} object or its input
+    #' @param fill R6 class \code{Grouping} object or its input
+    #' @param linetype R6 class \code{Grouping} object or its input
+    #' @param shape R6 class \code{Grouping} object or its input
+    #' @param size R6 class \code{Grouping} object or its input
+    #' @return A new \code{GroupMapping} object
     initialize = function(color = NULL,
                               fill = NULL,
                               linetype = NULL,
