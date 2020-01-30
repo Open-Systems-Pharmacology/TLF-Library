@@ -26,7 +26,7 @@ R6 class defining theme
 
 \item{\code{ddiRatio}}{list of aesthetic properties for DDI ratio plot features}
 
-\item{\code{gof}}{list of aesthetic properties for GOF plot features}
+\item{\code{obsVsPred}}{list of aesthetic properties for GOF plot features}
 }
 \if{html}{\out{</div>}}
 }
@@ -59,7 +59,7 @@ Create a new \code{Theme} object
   timeProfile = NULL,
   histogram = NULL,
   ddiRatio = NULL,
-  gof = NULL
+  obsVsPred = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -86,7 +86,7 @@ Create a new \code{Theme} object
 
 \item{\code{ddiRatio}}{list of aesthetic properties for DDI ratio plot features}
 
-\item{\code{gof}}{list of aesthetic properties for GOF plot features}
+\item{\code{obsVsPred}}{list of aesthetic properties for GOF plot features}
 }
 \if{html}{\out{</div>}}
 }

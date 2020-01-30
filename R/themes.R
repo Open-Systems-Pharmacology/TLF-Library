@@ -109,8 +109,8 @@ Theme <- R6::R6Class(
     histogram = NULL,
     #' @field ddiRatio list of aesthetic properties for DDI ratio plot features
     ddiRatio = NULL,
-    #' @field gof list of aesthetic properties for GOF plot features
-    gof = NULL,
+    #' @field obsVsPred list of aesthetic properties for GOF plot features
+    obsVsPred = NULL,
 
     #' @description Create a new \code{Theme} object
     #' @param themesProperties list of aesthetic properties
@@ -123,7 +123,7 @@ Theme <- R6::R6Class(
     #' @param timeProfile list of aesthetic properties for time profile plot features
     #' @param histogram list of aesthetic properties for histogram features
     #' @param ddiRatio list of aesthetic properties for DDI ratio plot features
-    #' @param gof list of aesthetic properties for GOF plot features
+    #' @param obsVsPred list of aesthetic properties for GOF plot features
     #' @return A new \code{Theme} object
     initialize = function(themesProperties = tlfEnvThemesProperties$default,
                               labelColors = NULL,
@@ -135,7 +135,7 @@ Theme <- R6::R6Class(
                               timeProfile = NULL,
                               histogram = NULL,
                               ddiRatio = NULL,
-                              gof = NULL) {
+                              obsVsPred = NULL) {
       super$initialize(
         labelColors = labelColors %||% themesProperties$labelColors,
         labelBaseSize = labelBaseSize
@@ -152,7 +152,7 @@ Theme <- R6::R6Class(
       self$timeProfile <- timeProfile %||% themesProperties$timeProfile
       self$histogram <- histogram %||% themesProperties$histogram
       self$ddiRatio <- ddiRatio %||% themesProperties$ddiRatio
-      self$gof <- gof %||% themesProperties$gof
+      self$obsVsPred <- obsVsPred %||% themesProperties$obsVsPred
     }
   )
 )
