@@ -19,3 +19,11 @@ def update_package_version(version)
 
   Utils.replace_tokens(replacement, description_file)
 end
+
+def solution_dir
+  File.dirname(__FILE__)
+end
+
+def description_file
+  File.join(solution_dir,'DESCRIPTION')
+end 
