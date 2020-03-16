@@ -12,7 +12,7 @@ install:
   - git submodule update --init --recursive
 
 environment:
-  app_version: "1.0.0"
+  app_version: "1.0"
   USE_RTOOLS: true
   R_ARCH: x64
   KEEP_VIGNETTES: true
@@ -44,8 +44,6 @@ branches:
 
 pull_requests:
   do_not_increment_build_number: true
-
-# Adapt as necessary starting from here
 
 before_test:
   - cinst pandoc
