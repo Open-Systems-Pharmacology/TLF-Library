@@ -252,7 +252,7 @@ addLine <- function(data = NULL,
   validateIsOfType(plotConfiguration, PlotConfiguration)
 
   # If no plot, initialize empty plot
-  plotObject <- plotObject %||% initializePlot()
+  plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
   # If no mapping, return plot
   if (is.null(dataMapping$x) && is.null(dataMapping$y)) {
