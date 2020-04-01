@@ -77,7 +77,7 @@ setLegendPosition <- function(plotObject,
   # Check and Transform Legend Position enum into actual position
   legendPosition <- getLegendPosition(legendPosition %||% LegendPositions$none)
 
-  plotHandle <- plotObject + theme(
+  plotObject <- plotObject + theme(
     legend.position = c(legendPosition$xPosition, legendPosition$yPosition),
     legend.justification = c(legendPosition$xJustification, legendPosition$yJustification)
   )
