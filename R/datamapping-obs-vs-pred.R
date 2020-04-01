@@ -17,6 +17,7 @@ ObsVsPredDataMapping <- R6::R6Class(
     #' @description Create a new \code{ObsVsPredDataMapping} object
     #' @param obsVsPredLines numeric vector of limits to plot
     #' @param smoother smoother function or parameter
+    #' To map a loess smoother to the plot, use `smoother`="loess"
     #' @param xmin numeric value xmin for of \code{obsVsPredLines}
     #' @param xmax numeric value xmax for of \code{obsVsPredLines}
     #' @param x Name of x variable to map
@@ -33,7 +34,7 @@ ObsVsPredDataMapping <- R6::R6Class(
     initialize = function(obsVsPredLines = 1,
                           xmin = NULL,
                           xmax = NULL,
-                          smoother = "loess",
+                          smoother = NULL,
                           ...) {
       super$initialize(...)
       self$obsVsPredLines <- obsVsPredLines
