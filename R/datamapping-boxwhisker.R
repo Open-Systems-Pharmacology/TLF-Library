@@ -30,10 +30,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
     #' Default value is `Percentile25-1.5IQR%`.
     #' @param maxOutlierLimit Name of function used for calculating upper outlier limit
     #' Default value is `Percentile75+1.5IQR%`.
-    #' @param groupMapping R6 class \code{GroupMapping} object
-    #' @param color R6 class \code{Grouping} object or its input
-    #' @param fill R6 class \code{Grouping} object or its input
-    #' @param data data.frame to map used by \code{smartMapping} 
+    #' @param ... parameters inherited from \code{XYGDataMapping}
     #' @return A new \code{BoxWhiskerDataMapping} object
     initialize = function(x = NULL,
                               y,

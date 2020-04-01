@@ -16,14 +16,12 @@ HistogramDataMapping <- R6::R6Class(
     verticalLineFunctions = NULL,
     
     #' @description Create a new \code{HistogramDataMapping} object
-    #' @param x Name of variable to map
-    #' @param y Name of variable to map
     #' @param verticalLineGroupings R6 class \code{Grouping} variable
     #' @param verticalLineFunctionNames Vector of function name to be indicated in captions of the histogram
     #' Default value uses `mean` and `median`.
     #' @param verticalLineFunctions List of functions calculated on \code{data} 
     #' Default value uses `mean` and `median`.
-    #' @param data data.frame to map used by \code{smartMapping} 
+    #' @param ... parameters inherited from \code{XYGDataMapping}
     #' @return A new \code{HistogramDataMapping} object
     initialize = function(verticalLineGroupings = NULL,
                               verticalLineFunctionNames = c("mean", "median"),

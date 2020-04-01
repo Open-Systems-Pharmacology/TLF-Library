@@ -10,15 +10,7 @@ PKRatioDataMapping <- R6::R6Class(
 
     #' @description Create a new \code{PKRatioDataMapping} object
     #' @param pkRatioLines numeric vector of ratio limits to plot
-    #' @param x Name of x variable to map
-    #' @param y Name of y variable to map
-    #' @param groupMapping R6 class \code{GroupMapping} object
-    #' @param color R6 class \code{Grouping} object or its input
-    #' @param fill R6 class \code{Grouping} object or its input
-    #' @param linetype R6 class \code{Grouping} object or its input
-    #' @param shape R6 class \code{Grouping} object or its input
-    #' @param size R6 class \code{Grouping} object or its input
-    #' @param data data.frame to map used by \code{smartMapping} 
+    #' @param ... parameters inherited from \code{XYGDataMapping}
     #' @return A new \code{PKRatioDataMapping} object
     initialize = function(pkRatioLines = c(1, 1.5, 1 / 1.5, 2, 1 / 2),
                           ...) {

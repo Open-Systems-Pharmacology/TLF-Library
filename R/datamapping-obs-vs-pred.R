@@ -20,15 +20,6 @@ ObsVsPredDataMapping <- R6::R6Class(
     #' To map a loess smoother to the plot, use `smoother`="loess"
     #' @param xmin numeric value xmin for of \code{obsVsPredLines}
     #' @param xmax numeric value xmax for of \code{obsVsPredLines}
-    #' @param x Name of x variable to map
-    #' @param y Name of y variable to map
-    #' @param groupMapping R6 class \code{GroupMapping} object
-    #' @param color R6 class \code{Grouping} object or its input
-    #' @param fill R6 class \code{Grouping} object or its input
-    #' @param linetype R6 class \code{Grouping} object or its input
-    #' @param shape R6 class \code{Grouping} object or its input
-    #' @param size R6 class \code{Grouping} object or its input
-    #' @param data data.frame to map used by \code{smartMapping}
     #' @param ... parameters inherited from \code{XYGDataMapping}
     #' @return A new \code{ObsVsPredDataMapping} object
     initialize = function(obsVsPredLines = 1,

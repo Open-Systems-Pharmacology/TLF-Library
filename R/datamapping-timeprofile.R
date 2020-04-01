@@ -1,23 +1,10 @@
 #' @title TimeProfileDataMapping
-#' @docType class
-#' @description  Data Mapping for Time Profile
-#' @field x Name of x variable to map
-#' @field y Name of y variable to map
-#' @field ymin Name of ymin variable to map
-#' @field ymax Name of ymax variable to map
-#' @field groupMapping R6 class mapping groups to aesthetic properties
-#' @field LLOQ Value(s) of lower limit of quantitation
-#' @section Methods:
-#' \describe{
-#' \item{new(LLOQ = NULL, x, y, y = NULL, ymin = NULL, ymax = NULL, groupMapping = NULL, color = NULL, fill = NULL, linetype = NULL, shape = NULL, size = NULL)}{
-#' Initialize TimeProfileDataMapping.  Either input groupMapping or input color, fill, linetype, shape and/or size.}
-#' \item{checkMapData(data, metaData = NULL)}{Check data mapping is correct. Create output data.frame with map data only.}
-#' }
+#' @description  R6 class defining the configuration of a \code{ggplot} object for time profile plot
 #' @export
 TimeProfileDataMapping <- R6::R6Class(
   "TimeProfileDataMapping",
   inherit = XYGDataMapping,
-
+  
   public = list(
     #' @field ymin Name of ymin variable to map
     ymin = NULL,
@@ -32,13 +19,7 @@ TimeProfileDataMapping <- R6::R6Class(
     #' @param y Name of y variable to map
     #' @param ymin Name of ymin variable to map
     #' @param ymax Name of ymax variable to map
-    #' @param groupMapping R6 class \code{GroupMapping} object
-    #' @param color R6 class \code{Grouping} object or its input
-    #' @param fill R6 class \code{Grouping} object or its input
-    #' @param linetype R6 class \code{Grouping} object or its input
-    #' @param shape R6 class \code{Grouping} object or its input
-    #' @param size R6 class \code{Grouping} object or its input
-    #' @param data data.frame to map used by \code{smartMapping} 
+    #' @param ... parameters inherited from \code{XYGDataMapping}
     #' @return A new \code{TimeProfileDataMapping} object
     initialize = function(LLOQ = NULL,
                               x,
