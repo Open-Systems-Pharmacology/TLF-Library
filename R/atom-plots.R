@@ -142,6 +142,11 @@ addScatter <- function(data = NULL,
   
   # Set the color values from plot configuration or theme
   legendValues <- plotConfiguration$theme$aesProperties %||% tlfEnv$currentTheme$aesProperties
+  
+  # In case a plot object already has a scale for the legend values, 
+  # reset scale to prevent warning due to overwriting
+  plotObject$scales$scales <- list()
+  
   for (legendType in LegendTypes) {
     plotObject <- plotObject + scale_discrete_manual(
       aesthetics = legendType,
@@ -309,6 +314,11 @@ addLine <- function(data = NULL,
 
   # Set the color values from plot configuration or theme
   legendValues <- plotConfiguration$theme$aesProperties %||% tlfEnv$currentTheme$aesProperties
+  
+  # In case a plot object already has a scale for the legend values, 
+  # reset scale to prevent warning due to overwriting
+  plotObject$scales$scales <- list()
+  
   for (legendType in LegendTypes) {
     plotObject <- plotObject + scale_discrete_manual(
       aesthetics = legendType,
@@ -465,6 +475,11 @@ addRibbon <- function(data = NULL,
 
   # Set the color values from plot configuration or theme
   legendValues <- plotConfiguration$theme$aesProperties %||% tlfEnv$currentTheme$aesProperties
+  
+  # In case a plot object already has a scale for the legend values, 
+  # reset scale to prevent warning due to overwriting
+  plotObject$scales$scales <- list()
+  
   for (legendType in LegendTypes) {
     plotObject <- plotObject + scale_discrete_manual(
       aesthetics = legendType,
@@ -601,6 +616,11 @@ addErrorbar <- function(data = NULL,
   
   # Set the color values from plot configuration or theme
   legendValues <- plotConfiguration$theme$aesProperties %||% tlfEnv$currentTheme$aesProperties
+  
+  # In case a plot object already has a scale for the legend values, 
+  # reset scale to prevent warning due to overwriting
+  plotObject$scales$scales <- list()
+  
   for (legendType in LegendTypes) {
     plotObject <- plotObject + scale_discrete_manual(
       aesthetics = legendType,
