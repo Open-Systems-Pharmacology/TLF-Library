@@ -81,6 +81,9 @@ AggregationSummary <- R6::R6Class(
       self$generateAggregatedValues()
     },
 
+    #' @description Apply aggregation functions on \code{x} 
+    #' @param x numeric vector 
+    #' @return A list or vector of aggregated values 
     applyAggregationFunctions = function(x) {
       # input the vector of aggregated x into each aggregation function y and return the results in a vector res
       res <- sapply(self$aggregationFunctionsVector, function(y) {
@@ -89,6 +92,8 @@ AggregationSummary <- R6::R6Class(
       return(res)
     },
 
+    #' @description Generate aggregated values 
+    #' @return A list or vector of aggregated values 
     generateAggregatedValues = function() {
       xGroupingColNames <- c(self$xColumnNames, self$groupingColumnNames) # Get names of grouping columns and groups then into a vector xGroupingColNames
 
