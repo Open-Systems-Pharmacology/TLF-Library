@@ -1,14 +1,26 @@
 #' @title AggregationInput
-#' @docType class
-#' @description  #Class to be used to construct inputs to the AggregationSummary class
+#' @description  R6 class to be used to construct inputs to the AggregationSummary class
 #' @export
 AggregationInput <- R6::R6Class(
   "AggregationInput",
   public = list(
+    #' @field aggregationFunction list of functions to use for aggregation
     aggregationFunction = NULL,
+    #' @field aggregationFunctionName vector of function names
+    #' that will be used as variable name of the aggregation
     aggregationFunctionName = NULL,
+    #' @field aggregationUnit unit of aggregation output
     aggregationUnit = NULL,
+    #' @field aggregationDimension dimension of aggregation output
     aggregationDimension = NULL,
+    
+    #' @description Create a new \code{AggregationInput} object
+    #' @param aggregationFunction list of functions to use for aggregation
+    #' @param aggregationFunctionName vector of function names
+    #' that will be used as variable name of the aggregation
+    #' @param aggregationUnit unit of aggregation output
+    #' @param aggregationDimension dimension of aggregation output
+    #' @return A new \code{AggregationInput} object
     initialize = function(aggregationFunction = NULL,
                               aggregationFunctionName = NULL,
                               aggregationUnit = NULL,
