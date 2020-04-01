@@ -50,17 +50,14 @@ The typical usage of this function is: `plotPKRatio(data, metaData = NULL, dataM
 The output of the function is a `ggplot` object.
 It can be seen from this usage that only `data` is a necessary input.
 Default set ups are used for `metaData`, `dataMapping` and `plotConfiguration` within the call of `plotPKRatio`.
-A `metaDataHelper` function is first used if `metaData` is not provided. The function creates a `metaData` structure with empty values, then identifies the variable names that are commonly used to linik them to their usual `unit` and `dimension`. 
-For instance, `Age` can be identified and its most common unit `yrs` can be associated to the plot.
-`PKRatioDataMapping` is initialized if not provided, defining a standard mapping for plotting `"Age"` as `x` variable and `"Ratio"` as `y` variable.
+For instance, if `dataMapping` is not provided, a smart mapping will be tested checking if data contains a `"x"` and a `"y"` named column.
+If the `data` has only two columns not named `"x"` and `"y"`, it will assume the first one should be plot in x-axis and the second in y-axis.
 Then, `PKRatioPlotConfiguration` is initialized if not provided, defining a standard configuration with `PK Ratio Plot` as title, the current date as subtitle and using predifned fonts as defined by the current theme.
 
 ## 2.3. Minimal example
-The minimal example can work using directly the function `plotPKRatio(pkRatioData)`.
-The output is exactly the same as calling `plotPKRatio(data = pkRatioData, metaData = NULL, dataMapping = NULL, plotConfiguration = NULL)`.
-
+The minimal example can work using directly the function `plotPKRatio(data = pkRatioData[, c("Age", "Ratio")])`.
 ```{r, fig.height=5, fig.width=7.5}
-plotPKRatio(data = pkRatioData)
+plotPKRatio(data = pkRatioData[,c("Age", "Ratio")])
 ```
 
 ## 2.4. Examples with `dataMapping`
@@ -173,11 +170,11 @@ Currently, 3 main themes are predefined and available. However, it is possible t
 To set theme, use function `useTheme` as introduced in the following example:
 ```{r, fig.height=5, fig.width=7.5}
 useTheme(bwTheme)
-plotPKRatio(data = pkRatioData)
+plotPKRatio(data = pkRatioData[,c("Age", "Ratio")])
 ```
 ```{r, fig.height=5, fig.width=7.5}
 useTheme(tlfTheme)
-plotPKRatio(data = pkRatioData)
+plotPKRatio(data = pkRatioData[,c("Age", "Ratio")])
 ```
 
 
@@ -190,7 +187,7 @@ labelConfiguration <- PKRatioPlotConfiguration$new(title = "New Title",
                                                    subtitle = "New subtitle",
                                                    xlabel = "New X-axis",
                                                    ylabel = "New Y-axis")
-plotPKRatio(data = pkRatioData,
+plotPKRatio(data = pkRatioData[,c("Age", "Ratio")],
             plotConfiguration = labelConfiguration)
 ```
 
@@ -212,7 +209,7 @@ As a default, these ranges are within 1.5 and 2 folds. However, they can be upda
 
 ```{r, results='asis'}
 # Test of getPKRatioMeasure
-PKRatioMeasure <- getPKRatioMeasure(data = pkRatioData)
+PKRatioMeasure <- getPKRatioMeasure(data = pkRatioData[,c("Age", "Ratio")])
 
 knitr::kable(x = PKRatioMeasure,
              caption = "Qualification of PK Ratios")
@@ -243,7 +240,9 @@ pkRatioData$Simulated <- pkRatioData$Simulated/10
 ddiMapping <- DDIRatioDataMapping$new(x = "Observed",
                                       y = "Simulated",
                                       color = "Gender",
-                                      shape = c("Dose", "Compound"))
+                                      shape = c("Dose", "Compound"),
+                                      xmin = 1e-2,
+                                      xmax =1e2)
 # Define configuration
 xAxis <- XAxisConfiguration$new(scale = Scaling$log10)
 yAxis <- YAxisConfiguration$new(scale = Scaling$log10)
