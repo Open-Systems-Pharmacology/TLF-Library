@@ -43,23 +43,7 @@ Create a new \code{PKRatioDataMapping} object
 \describe{
 \item{\code{pkRatioLines}}{numeric vector of ratio limits to plot}
 
-\item{\code{x}}{Name of x variable to map}
-
-\item{\code{y}}{Name of y variable to map}
-
-\item{\code{groupMapping}}{R6 class \code{GroupMapping} object}
-
-\item{\code{color}}{R6 class \code{Grouping} object or its input}
-
-\item{\code{fill}}{R6 class \code{Grouping} object or its input}
-
-\item{\code{linetype}}{R6 class \code{Grouping} object or its input}
-
-\item{\code{shape}}{R6 class \code{Grouping} object or its input}
-
-\item{\code{size}}{R6 class \code{Grouping} object or its input}
-
-\item{\code{data}}{data.frame to map used by \code{smartMapping}}
+\item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
 }
 \if{html}{\out{</div>}}
 }

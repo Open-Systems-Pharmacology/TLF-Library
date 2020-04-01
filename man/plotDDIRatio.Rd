@@ -4,8 +4,12 @@
 \alias{plotDDIRatio}
 \title{plotDDIRatio}
 \usage{
-plotDDIRatio(data, metaData = NULL, dataMapping = NULL,
-  plotConfiguration = NULL)
+plotDDIRatio(
+  data,
+  metaData = NULL,
+  dataMapping = NULL,
+  plotConfiguration = NULL
+)
 }
 \arguments{
 \item{data}{data.frame (or list of data.frames? TO BE DISCUSSED)

@@ -61,11 +61,7 @@ Default value uses \code{mean} and \code{median}.}
 \item{\code{verticalLineFunctions}}{List of functions calculated on \code{data}
 Default value uses \code{mean} and \code{median}.}
 
-\item{\code{x}}{Name of variable to map}
-
-\item{\code{y}}{Name of variable to map}
-
-\item{\code{data}}{data.frame to map used by \code{smartMapping}}
+\item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
 }
 \if{html}{\out{</div>}}
 }

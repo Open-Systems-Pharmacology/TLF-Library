@@ -69,21 +69,21 @@ p <- addRibbon(ymin = -5, ymax = 5, plotObject = p)
 
 # Add a custom ribbon
 time <- seq(0, 30, 0.01)
-customRibbonData <- data.frame(x = time, y = cos(time), ymin = cos(time)-0.5, ymax = cos(time)+0.5)
+customData <- data.frame(x = time, y = cos(time), ymin = cos(time) - 0.5, ymax = cos(time) + 0.5)
 
 p <- addRibbon(
-  data = customRibbonData,
+  data = customData,
   dataMapping = RangeDataMapping$new(x = "x", ymin = "ymin", ymax = "ymax")
 )
 
 # Or for simple cases a smart mapping will get directly x and y from data
-p <- addRibbon(data = customRibbonData)
+p <- addRibbon(data = customData)
 
 # Add a ribbon with caption
-pr <- addRibbon(data = customRibbonData, caption = "My plot with ribbon")
+pr <- addRibbon(data = customData, caption = "My plot with ribbon")
 
 # Add a ribbon with different transparency
-p <- addRibbon(data = customRibbonData, alpha = 1)
+p <- addRibbon(data = customData, alpha = 1)
 
 # Add a scatter to the ribbon
 pScatter <- addScatter(data = customData, caption = "My plot with ribbon", plotObject = pr)

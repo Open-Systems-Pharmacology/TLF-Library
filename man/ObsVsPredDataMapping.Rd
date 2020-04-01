@@ -46,7 +46,7 @@ Create a new \code{ObsVsPredDataMapping} object
   obsVsPredLines = 1,
   xmin = NULL,
   xmax = NULL,
-  smoother = "loess",
+  smoother = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -60,27 +60,10 @@ Create a new \code{ObsVsPredDataMapping} object
 
 \item{\code{xmax}}{numeric value xmax for of \code{obsVsPredLines}}
 
-\item{\code{smoother}}{smoother function or parameter}
+\item{\code{smoother}}{smoother function or parameter
+To map a loess smoother to the plot, use \code{smoother}="loess"}
 
 \item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
-
-\item{\code{x}}{Name of x variable to map}
-
-\item{\code{y}}{Name of y variable to map}
-
-\item{\code{groupMapping}}{R6 class \code{GroupMapping} object}
-
-\item{\code{color}}{R6 class \code{Grouping} object or its input}
-
-\item{\code{fill}}{R6 class \code{Grouping} object or its input}
-
-\item{\code{linetype}}{R6 class \code{Grouping} object or its input}
-
-\item{\code{shape}}{R6 class \code{Grouping} object or its input}
-
-\item{\code{size}}{R6 class \code{Grouping} object or its input}
-
-\item{\code{data}}{data.frame to map used by \code{smartMapping}}
 }
 \if{html}{\out{</div>}}
 }

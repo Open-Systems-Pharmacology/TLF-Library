@@ -53,21 +53,21 @@ If caption is the same as a previous scatter plot layer, the legend will merge t
 }
 \examples{
 # Add errorbar using x, ymin and ymax
-p <- addErrorbar(x = c(1,2,1,2,3), ymax = c(5,0,2,3,4), ymin = c(2,-1,1.5,0,0.3))
+p <- addErrorbar(x = c(1, 2, 1, 2, 3), ymax = c(5, 0, 2, 3, 4), ymin = c(2, -1, 1.5, 0, 0.3))
 
 # Add a custom scatter
 time <- seq(0, 10, 0.1)
-customData <- data.frame(x = time, y = cos(time), ymin = (cos(time)-0.2*cos(time)), ymax = cos(time) + 0.2*cos(time))
+customData <- data.frame(x = time, y = cos(time), ymin = (cos(time) - 0.2 * cos(time)), ymax = cos(time) + 0.2 * cos(time))
 
 p <- addErrorbar(
   data = customData,
-  dataMapping = RangeDataMapping$new(x = "x", ymin = "ymin", ymin = "ymax")
+  dataMapping = RangeDataMapping$new(x = "x", ymin = "ymin", ymax = "ymax")
 )
 
 # Or for simple cases a smart mapping will get directly x, ymin and ymax from data
 p <- addErrorbar(data = customData)
 
-Add an errorbar with caption
+# Add an errorbar with caption
 pe <- addErrorbar(data = customData, caption = "My plot with error bars")
 
 # Add a scatter to the errorbar

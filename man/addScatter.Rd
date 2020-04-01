@@ -48,7 +48,7 @@ aesthetic properties defined in \code{plotConfiguration} will apply across all l
 }
 \examples{
 # Add scatter using x and y
-p <- addScatter(x = c(1,2,1,2,3), y = c(5,0,2,3,4))
+p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
 
 # Add a custom scatter
 time <- seq(0, 30, 0.1)

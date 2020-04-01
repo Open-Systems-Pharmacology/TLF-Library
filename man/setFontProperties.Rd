@@ -4,8 +4,14 @@
 \alias{setFontProperties}
 \title{setFontProperties}
 \usage{
-setFontProperties(plotHandle, titleFont = NULL, subtitleFont = NULL,
-  xAxisFont = NULL, yAxisFont = NULL, legendFont = NULL)
+setFontProperties(
+  plotHandle,
+  titleFont = NULL,
+  subtitleFont = NULL,
+  xAxisFont = NULL,
+  yAxisFont = NULL,
+  legendFont = NULL
+)
 }
 \arguments{
 \item{plotHandle}{ggplot object}

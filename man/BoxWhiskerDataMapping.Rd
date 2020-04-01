@@ -85,14 +85,6 @@ Default value is \verb{Percentile25-1.5IQR\%}.}
 Default value is \verb{Percentile75+1.5IQR\%}.}
 
 \item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
-
-\item{\code{groupMapping}}{R6 class \code{GroupMapping} object}
-
-\item{\code{color}}{R6 class \code{Grouping} object or its input}
-
-\item{\code{fill}}{R6 class \code{Grouping} object or its input}
-
-\item{\code{data}}{data.frame to map used by \code{smartMapping}}
 }
 \if{html}{\out{</div>}}
 }

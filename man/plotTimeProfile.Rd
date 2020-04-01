@@ -4,8 +4,13 @@
 \alias{plotTimeProfile}
 \title{plotTimeProfile}
 \usage{
-plotTimeProfile(data, metaData = NULL, dataMapping = NULL,
-  plotConfiguration = NULL, plotObject = NULL)
+plotTimeProfile(
+  data,
+  metaData = NULL,
+  dataMapping = NULL,
+  plotConfiguration = NULL,
+  plotObject = NULL
+)
 }
 \arguments{
 \item{data}{list of data.frames (or list of data.frames? TO BE DISCUSSED)

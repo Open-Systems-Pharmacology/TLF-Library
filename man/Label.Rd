@@ -68,9 +68,6 @@ Print \code{Label} properties.
 \if{html}{\out{<div class="r">}}\preformatted{Label$print()}\if{html}{\out{</div>}}
 }
 
-\subsection{Returns}{
-NULL
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-setFontProperties"></a>}}
@@ -97,9 +94,6 @@ Set font properties of Label
 \item{\code{fontFace}}{character face of font}
 }
 \if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-R6 class \code{Label} with updated font properties
 }
 }
 \if{html}{\out{<hr>}}
