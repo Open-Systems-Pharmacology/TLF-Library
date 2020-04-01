@@ -13,7 +13,7 @@ Font <- R6::R6Class(
     fontFamily = "",
     #' @field fontFace character face of font
     fontFace = "plain",
-    
+
     #' @description Create a new \code{Font} object.
     #' Default font properties are defined directly in the object field,
     #' so `NULL` input is allowed will lead to default properties.

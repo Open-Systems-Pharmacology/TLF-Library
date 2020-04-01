@@ -5,10 +5,10 @@ BoxWhiskerDataMapping <- R6::R6Class(
   "BoxWhiskerDataMapping",
   inherit = XYGDataMapping,
   public = list(
-    #' @field outlierLimits List of `minOutlierLimit` and `maxOutlierLimit` functions 
+    #' @field outlierLimits List of `minOutlierLimit` and `maxOutlierLimit` functions
     #' outside which \code{data} is flagged as outlier
     outlierLimits = NULL,
-    #' @field boxWhiskerLimits List of `ymin`, `lower`, `middle`, `upper` and `ymax` functions 
+    #' @field boxWhiskerLimits List of `ymin`, `lower`, `middle`, `upper` and `ymax` functions
     #' calculated on \code{data} to obtain box whiskers
     boxWhiskerLimits = NULL,
 
@@ -16,7 +16,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
     #' @param x Name of x variable to map
     #' Default value is NULL in case of a unique box in the boxplot.
     #' @param y Name of y variable to map
-    #' @param ymin Name of function used for calculating lower whisker. 
+    #' @param ymin Name of function used for calculating lower whisker.
     #' Default value is `Percentile5%`.
     #' @param lower Name of function used for calculating lower line of box
     #' Default value is `Percentile25%`.

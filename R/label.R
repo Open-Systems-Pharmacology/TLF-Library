@@ -8,7 +8,7 @@ Label <- R6::R6Class(
     text = NULL,
     #' @field font R6 class \code{Font} object
     font = NULL,
-    
+
     #' @description Create a new \code{Label} object.
     #' @param text character text of label
     #' @param font R6 class \code{Font} object

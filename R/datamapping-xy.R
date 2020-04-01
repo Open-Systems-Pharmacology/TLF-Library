@@ -15,16 +15,15 @@ XYDataMapping <- R6::R6Class(
     #' @param x Name of x variable to map
     #' @param y Name of y variable to map
     #' @return A new \code{XYDataMapping} object
-    initialize = function(x, 
-                          y = NULL) {
-      
+    initialize = function(x,
+                              y = NULL) {
       if (isOfType(x, "numeric")) {
         warning(paste("'x' is a numeric, dataMapping will select the column of indice", x, "in data"))
       }
       if (isOfType(y, "numeric")) {
         warning(paste("'y' is a numeric, dataMapping will select the column of indice", y, "in data"))
       }
-      
+
       self$x <- x
       self$y <- y
     },
@@ -64,13 +63,13 @@ RangeDataMapping <- R6::R6Class(
     ymin = NULL,
     #' @field ymax Name of ymax variable to map
     ymax = NULL,
-    
+
     #' @description Create a new \code{RangeDataMapping} object
     #' @param x Name of x variable to map
     #' @param ymin Name of ymin variable to map
     #' @param ymax Name of ymax variable to map
-    #' @param data data.frame to map used by \code{smartMapping} 
-    #' @return A new \code{RangeDataMapping} object    
+    #' @param data data.frame to map used by \code{smartMapping}
+    #' @return A new \code{RangeDataMapping} object
     initialize = function(x = NULL,
                               ymin = NULL,
                               ymax = NULL,

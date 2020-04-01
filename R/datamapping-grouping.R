@@ -12,7 +12,7 @@ Grouping <- R6::R6Class(
     #' @description Create a new \code{Grouping} object
     #' @param group data.frame or character vector of groups
     #' @param label character name of the \code{group}
-    #' @return A new \code{Grouping} object    
+    #' @return A new \code{Grouping} object
     initialize = function(group, label = NULL) {
       validateIsOfType(group, c("data.frame", "character"), nullAllowed = TRUE)
 

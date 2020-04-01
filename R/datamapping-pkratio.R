@@ -13,7 +13,7 @@ PKRatioDataMapping <- R6::R6Class(
     #' @param ... parameters inherited from \code{XYGDataMapping}
     #' @return A new \code{PKRatioDataMapping} object
     initialize = function(pkRatioLines = c(1, 1.5, 1 / 1.5, 2, 1 / 2),
-                          ...) {
+                              ...) {
       super$initialize(...)
       self$pkRatioLines <- pkRatioLines
     }

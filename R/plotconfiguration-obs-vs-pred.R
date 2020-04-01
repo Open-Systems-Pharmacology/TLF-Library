@@ -7,7 +7,7 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
   public = list(
     #' @field obsVsPredProperties list of properties for obs vs pred plot specific features
     obsVsPredProperties = NULL,
-    
+
     #' @description Create a new \code{ObsVsPredPlotConfiguration} object
     #' @param obsVsPredProperties list of properties for DDI ratio plot specific features
     #' @param title R6 class \code{Label} object
@@ -36,18 +36,18 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
     #' @param ... parameters inherited from \code{PlotConfiguration}
     #' @return A new \code{obsVsPredProperties} object
     initialize = function(obsVsPredProperties = tlfEnv$currentTheme$obsVsPred,
-                          title = "Obs vs Pred Plot",
-                          subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
-                          ...) {
+                              title = "Obs vs Pred Plot",
+                              subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
+                              ...) {
       super$initialize(
         title = title,
         subtitle = subtitle,
         ...
       )
-      
+
       self$obsVsPredProperties <- obsVsPredProperties
     },
-    
+
     #' @description Add identity as line layer to a \code{ggplot} object
     #' @param plotObject \code{ggplot} object
     #' @param data data.frame
@@ -56,12 +56,14 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
     addObsVsPredLines = function(plotObject, data, dataMapping) {
       # geom_abline don't work properly when plot scale is log
       obsVsPredLines <- dataMapping$getObsVsPredLines(data)
-      
-      plotObject <- addLine(data = obsVsPredLines,
-                            plotObject = plotObject)
+
+      plotObject <- addLine(
+        data = obsVsPredLines,
+        plotObject = plotObject
+      )
       return(plotObject)
     },
-    
+
     #' @description Add smoother layer to a \code{ggplot} object
     #' @param plotObject \code{ggplot} object
     #' @param data data.frame
@@ -72,10 +74,10 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
       # Check if mapping is included in the data
       # Add the group mapping and aesthtics variables in the data.frame
       mapData <- dataMapping$checkMapData(data, metaData)
-      
+
       # Convert the mapping into characters usable by aes_string
       mapLabels <- getAesStringMapping(dataMapping)
-      
+
       plotObject <- plotObject + geom_smooth(
         data = mapData,
         mapping = aes_string(
@@ -91,7 +93,7 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
       )
       return(plotObject)
     },
-    
+
     #' @description Add obs vs pred as scatter layer to a \code{ggplot} object
     #' @param plotObject \code{ggplot} object
     #' @param data data.frame
@@ -99,14 +101,14 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
     #' @param dataMapping R6 class \code{ObsVsPredDataMapping}
     #' @return A \code{ggplot} object
     addObsVsPred = function(plotObject, data, metaData, dataMapping) {
-      
+
       # Check if mapping is included in the data
       # Add the group mapping and aesthtics variables in the data.frame
       mapData <- dataMapping$checkMapData(data, metaData)
-      
+
       # Convert the mapping into characters usable by aes_string
       mapLabels <- getAesStringMapping(dataMapping)
-      
+
       plotObject <- plotObject + geom_point(
         data = mapData,
         mapping = aes_string(
@@ -118,13 +120,13 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
         ),
         show.legend = TRUE
       )
-      
+
       # If no mapping defined, remove dummy aesthetic label from the legend
       plotObject <- plotObject +
         ifEqual("defaultAes", mapLabels$color, guides(color = "none")) +
         ifEqual("defaultAes", mapLabels$shape, guides(shape = "none")) +
         ifEqual("defaultAes", mapLabels$size, guides(size = "none"))
-      
+
       return(plotObject)
     }
   )

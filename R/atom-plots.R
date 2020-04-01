@@ -53,12 +53,12 @@ initializePlot <- function(plotConfiguration = NULL) {
 #' @export
 #' @examples
 #' # Add scatter using x and y
-#' p <- addScatter(x = c(1,2,1,2,3), y = c(5,0,2,3,4))
-#' 
+#' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+#'
 #' # Add a custom scatter
 #' time <- seq(0, 30, 0.1)
 #' customScatterData <- data.frame(x = time, y = cos(time))
-#' 
+#'
 #' p <- addScatter(
 #'   data = customScatterData,
 #'   dataMapping = XYGDataMapping$new(x = "x", y = "y")
@@ -70,14 +70,14 @@ initializePlot <- function(plotConfiguration = NULL) {
 #' # Add a scatter with caption
 #' p <- addScatter(data = customScatterData, caption = "My scatter plot")
 addScatter <- function(data = NULL,
-                           metaData = NULL,
-                           x = NULL,
-                           y = NULL,
-                           caption = NULL,
-                           dataMapping = NULL,
-                           plotConfiguration = NULL,
-                           plotObject = NULL) {
-  
+                       metaData = NULL,
+                       x = NULL,
+                       y = NULL,
+                       caption = NULL,
+                       dataMapping = NULL,
+                       plotConfiguration = NULL,
+                       plotObject = NULL) {
+
   # If data is not input
   # Create new data and its mapping from x and y input
   if (is.null(data)) {
@@ -85,7 +85,7 @@ addScatter <- function(data = NULL,
       x = x,
       y = y
     ))
-    
+
     dataMapping <- dataMapping %||% XYGDataMapping$new(
       x = ifnotnull(x, "x"),
       y = ifnotnull(y, "y"),
@@ -96,64 +96,64 @@ addScatter <- function(data = NULL,
   if (!isOfType(data, "data.frame")) {
     data <- data.frame(data, check.names = FALSE)
   }
-  
+
   dataMapping <- dataMapping %||% XYGDataMapping$new(
     x = x,
     y = y,
     data = data
   )
   validateIsOfType(dataMapping, XYGDataMapping)
-  
+
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(
     data = data,
     metaData = metaData,
     dataMapping = dataMapping
   )
   validateIsOfType(plotConfiguration, PlotConfiguration)
-  
+
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
-  
+
   # If no mapping, return plot
   if (is.null(dataMapping$x) || is.null(dataMapping$y)) {
     warning("No mapping found for x or y, scatter layer was not added")
     return(plotObject)
   }
-  
+
   # Get mapping and convert labels into characters usable by aes_string
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- getAesStringMapping(dataMapping)
-  
+
   # Get default legend for defaultAes
   mapData$defaultAes <- caption %||% paste0("data", length(plotObject$layers))
-  
+
   plotObject <- plotObject +
-      ggplot2::geom_point(
-        data = mapData,
-        mapping = aes_string(
-          x = mapLabels$x,
-          y = mapLabels$y,
-          shape = mapLabels$shape,
-          color = mapLabels$color,
-          size = mapLabels$size
-        ),
-        show.legend = TRUE
-      )
-  
+    ggplot2::geom_point(
+      data = mapData,
+      mapping = aes_string(
+        x = mapLabels$x,
+        y = mapLabels$y,
+        shape = mapLabels$shape,
+        color = mapLabels$color,
+        size = mapLabels$size
+      ),
+      show.legend = TRUE
+    )
+
   # Set the color values from plot configuration or theme
   legendValues <- plotConfiguration$theme$aesProperties %||% tlfEnv$currentTheme$aesProperties
-  
-  # In case a plot object already has a scale for the legend values, 
+
+  # In case a plot object already has a scale for the legend values,
   # reset scale to prevent warning due to overwriting
   plotObject$scales$scales <- list()
-  
+
   for (legendType in LegendTypes) {
     plotObject <- plotObject + scale_discrete_manual(
       aesthetics = legendType,
       values = legendValues[[legendType]]
     )
   }
-  
+
   return(plotObject)
 }
 
@@ -198,7 +198,7 @@ addScatter <- function(data = NULL,
 #' # Add a custom line
 #' time <- seq(0, 30, 0.01)
 #' customLineData <- data.frame(x = time, y = cos(time))
-#' 
+#'
 #' p <- addLine(
 #'   data = customLineData,
 #'   dataMapping = XYGDataMapping$new(x = "x", y = "y")
@@ -243,7 +243,7 @@ addLine <- function(data = NULL,
     data = data
   )
   validateIsOfType(dataMapping, XYGDataMapping)
-  
+
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(
     data = data,
     metaData = metaData,
@@ -314,11 +314,11 @@ addLine <- function(data = NULL,
 
   # Set the color values from plot configuration or theme
   legendValues <- plotConfiguration$theme$aesProperties %||% tlfEnv$currentTheme$aesProperties
-  
-  # In case a plot object already has a scale for the legend values, 
+
+  # In case a plot object already has a scale for the legend values,
   # reset scale to prevent warning due to overwriting
   plotObject$scales$scales <- list()
-  
+
   for (legendType in LegendTypes) {
     plotObject <- plotObject + scale_discrete_manual(
       aesthetics = legendType,
@@ -369,7 +369,7 @@ addLine <- function(data = NULL,
 #'
 #' # Add a custom ribbon
 #' time <- seq(0, 30, 0.01)
-#' customData <- data.frame(x = time, y = cos(time), ymin = cos(time)-0.5, ymax = cos(time)+0.5)
+#' customData <- data.frame(x = time, y = cos(time), ymin = cos(time) - 0.5, ymax = cos(time) + 0.5)
 #'
 #' p <- addRibbon(
 #'   data = customData,
@@ -381,13 +381,13 @@ addLine <- function(data = NULL,
 #'
 #' # Add a ribbon with caption
 #' pr <- addRibbon(data = customData, caption = "My plot with ribbon")
-#' 
+#'
 #' # Add a ribbon with different transparency
 #' p <- addRibbon(data = customData, alpha = 1)
-#' 
+#'
 #' # Add a scatter to the ribbon
 #' pScatter <- addScatter(data = customData, caption = "My plot with ribbon", plotObject = pr)
-#' 
+#'
 #' # Add a scatter to the ribbon
 #' pLine <- addLine(data = customData, caption = "My plot with ribbon", plotObject = pr)
 addRibbon <- function(data = NULL,
@@ -437,7 +437,7 @@ addRibbon <- function(data = NULL,
     data = data
   )
   validateIsOfType(dataMapping, RangeDataMapping)
-  
+
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(
     data = data,
     metaData = metaData,
@@ -475,11 +475,11 @@ addRibbon <- function(data = NULL,
 
   # Set the color values from plot configuration or theme
   legendValues <- plotConfiguration$theme$aesProperties %||% tlfEnv$currentTheme$aesProperties
-  
-  # In case a plot object already has a scale for the legend values, 
+
+  # In case a plot object already has a scale for the legend values,
   # reset scale to prevent warning due to overwriting
   plotObject$scales$scales <- list()
-  
+
   for (legendType in LegendTypes) {
     plotObject <- plotObject + scale_discrete_manual(
       aesthetics = legendType,
@@ -512,17 +512,17 @@ addRibbon <- function(data = NULL,
 #' Use optional argument \code{caption} to set legend caption.
 #' Since \code{ggplot} manage aesthetic properties across all layers,
 #' aesthetic properties defined in \code{plotConfiguration} will apply across all layers.
-#' If caption is the same as a previous scatter plot layer, the legend will merge their caption and aesthetic properties 
+#' If caption is the same as a previous scatter plot layer, the legend will merge their caption and aesthetic properties
 #' @return A \code{ggplot} graphical object
 #' @export
 #' @examples
 #' # Add errorbar using x, ymin and ymax
-#' p <- addErrorbar(x = c(1,2,1,2,3), ymax = c(5,0,2,3,4), ymin = c(2,-1,1.5,0,0.3))
-#' 
+#' p <- addErrorbar(x = c(1, 2, 1, 2, 3), ymax = c(5, 0, 2, 3, 4), ymin = c(2, -1, 1.5, 0, 0.3))
+#'
 #' # Add a custom scatter
 #' time <- seq(0, 10, 0.1)
-#' customData <- data.frame(x = time, y = cos(time), ymin = (cos(time)-0.2*cos(time)), ymax = cos(time) + 0.2*cos(time))
-#' 
+#' customData <- data.frame(x = time, y = cos(time), ymin = (cos(time) - 0.2 * cos(time)), ymax = cos(time) + 0.2 * cos(time))
+#'
 #' p <- addErrorbar(
 #'   data = customData,
 #'   dataMapping = RangeDataMapping$new(x = "x", ymin = "ymin", ymin = "ymax")
@@ -531,24 +531,24 @@ addRibbon <- function(data = NULL,
 #' # Or for simple cases a smart mapping will get directly x, ymin and ymax from data
 #' p <- addErrorbar(data = customData)
 #'
-#' Add an errorbar with caption
+#' # Add an errorbar with caption
 #' pe <- addErrorbar(data = customData, caption = "My plot with error bars")
-#' 
+#'
 #' # Add a scatter to the errorbar
 #' pScatter <- addScatter(data = customData, caption = "My plot with error bars", plotObject = pe)
-#' 
+#'
 #' # Add a scatter to the errorbar
 #' pLine <- addLine(data = customData, caption = "My plot with error bars", plotObject = pe)
 addErrorbar <- function(data = NULL,
-                       metaData = NULL,
-                       x = NULL,
-                       ymin = NULL,
-                       ymax = NULL,
-                       caption = NULL,
-                       dataMapping = NULL,
-                       plotConfiguration = NULL,
-                       plotObject = NULL) {
-  
+                        metaData = NULL,
+                        x = NULL,
+                        ymin = NULL,
+                        ymax = NULL,
+                        caption = NULL,
+                        dataMapping = NULL,
+                        plotConfiguration = NULL,
+                        plotObject = NULL) {
+
   # If data is not input
   # Create new data and its mapping from x and y input
   if (is.null(data)) {
@@ -557,7 +557,7 @@ addErrorbar <- function(data = NULL,
       ymin = ymin,
       ymax = ymax
     ))
-    
+
     dataMapping <- dataMapping %||% RangeDataMapping$new(
       x = ifnotnull(x, "x"),
       ymin = ifnotnull(ymin, "ymin"),
@@ -569,7 +569,7 @@ addErrorbar <- function(data = NULL,
   if (!isOfType(data, "data.frame")) {
     data <- data.frame(data, check.names = FALSE)
   }
-  
+
   dataMapping <- dataMapping %||% RangeDataMapping$new(
     x = x,
     ymin = ymin,
@@ -577,30 +577,30 @@ addErrorbar <- function(data = NULL,
     data = data
   )
   validateIsOfType(dataMapping, RangeDataMapping)
-  
+
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(
     data = data,
     metaData = metaData,
     dataMapping = dataMapping
   )
   validateIsOfType(plotConfiguration, PlotConfiguration)
-  
+
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
-  
+
   # If no mapping, return plot
   if (is.null(dataMapping$x) || is.null(dataMapping$ymin) || is.null(dataMapping$ymax)) {
     warning("No mapping found for x, ymin or ymax, errorbar layer was not added")
     return(plotObject)
   }
-  
+
   # Get mapping and convert labels into characters usable by aes_string
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- getAesStringMapping(dataMapping)
-  
+
   # Get default legend for defaultAes
   mapData$defaultAes <- caption %||% paste0("data", length(plotObject$layers))
-  
+
   plotObject <- plotObject +
     ggplot2::geom_errorbar(
       data = mapData,
@@ -613,20 +613,20 @@ addErrorbar <- function(data = NULL,
       ),
       show.legend = TRUE
     )
-  
+
   # Set the color values from plot configuration or theme
   legendValues <- plotConfiguration$theme$aesProperties %||% tlfEnv$currentTheme$aesProperties
-  
-  # In case a plot object already has a scale for the legend values, 
+
+  # In case a plot object already has a scale for the legend values,
   # reset scale to prevent warning due to overwriting
   plotObject$scales$scales <- list()
-  
+
   for (legendType in LegendTypes) {
     plotObject <- plotObject + scale_discrete_manual(
       aesthetics = legendType,
       values = legendValues[[legendType]]
     )
   }
-  
+
   return(plotObject)
 }

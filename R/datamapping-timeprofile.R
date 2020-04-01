@@ -4,7 +4,7 @@
 TimeProfileDataMapping <- R6::R6Class(
   "TimeProfileDataMapping",
   inherit = XYGDataMapping,
-  
+
   public = list(
     #' @field ymin Name of ymin variable to map
     ymin = NULL,

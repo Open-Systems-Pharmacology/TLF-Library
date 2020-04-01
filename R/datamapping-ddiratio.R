@@ -25,7 +25,7 @@ DDIRatioDataMapping <- R6::R6Class(
                               deltaGuest = 1,
                               xmin = 1e-1,
                               xmax = 1e1,
-                          ...) {
+                              ...) {
       super$initialize(...)
       self$ddiRatioLines <- ddiRatioLines
       self$deltaGuest <- deltaGuest

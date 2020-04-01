@@ -17,7 +17,7 @@ XYGDataMapping <- R6::R6Class(
     #' @param linetype R6 class \code{Grouping} object or its input
     #' @param shape R6 class \code{Grouping} object or its input
     #' @param size R6 class \code{Grouping} object or its input
-    #' @param data data.frame to map used by \code{smartMapping} 
+    #' @param data data.frame to map used by \code{smartMapping}
     #' @return A new \code{XYGDataMapping} object
     initialize = function(x = NULL,
                               y = NULL,

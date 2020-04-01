@@ -13,7 +13,7 @@ AggregationInput <- R6::R6Class(
     aggregationUnit = NULL,
     #' @field aggregationDimension dimension of aggregation output
     aggregationDimension = NULL,
-    
+
     #' @description Create a new \code{AggregationInput} object
     #' @param aggregationFunction list of functions to use for aggregation
     #' @param aggregationFunctionName vector of function names

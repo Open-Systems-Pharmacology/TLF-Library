@@ -20,11 +20,11 @@
 #' @return A \code{ggplot} graphical object
 #' @export
 plotObsVsPred <- function(data,
-                        metaData = NULL,
-                        dataMapping = NULL,
-                        plotConfiguration = NULL,
-                        plotObject = NULL) {
-  
+                          metaData = NULL,
+                          dataMapping = NULL,
+                          plotConfiguration = NULL,
+                          plotObject = NULL) {
+
   # If no data mapping or plot configuration is input, use default
   # metaData <- metaData %||% metaDataHelper(data)
   dataMapping <- dataMapping %||% ObsVsPredDataMapping$new(data = data)
@@ -33,24 +33,24 @@ plotObsVsPred <- function(data,
     metaData = metaData,
     dataMapping = dataMapping
   )
-  
+
   validateIsOfType(dataMapping, ObsVsPredDataMapping)
   validateIsOfType(plotConfiguration, ObsVsPredPlotConfiguration)
-  
+
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
-  
+
   # Add obs vs pred lines
   plotObject <- plotConfiguration$addObsVsPredLines(plotObject, data, dataMapping)
-    
+
   # Add scatter data
   plotObject <- plotConfiguration$addObsVsPred(plotObject, data, metaData, dataMapping)
-    
+
   # Add smoothers
-  if(!is.null(dataMapping$smoother)){
+  if (!is.null(dataMapping$smoother)) {
     plotObject <- plotConfiguration$addSmoother(plotObject, data, metaData, dataMapping)
   }
-  
+
   plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)
-  
+
   return(plotObject)
 }
