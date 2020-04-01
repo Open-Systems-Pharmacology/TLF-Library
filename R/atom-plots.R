@@ -525,7 +525,7 @@ addRibbon <- function(data = NULL,
 #'
 #' p <- addErrorbar(
 #'   data = customData,
-#'   dataMapping = RangeDataMapping$new(x = "x", ymin = "ymin", ymin = "ymax")
+#'   dataMapping = RangeDataMapping$new(x = "x", ymin = "ymin", ymax = "ymax")
 #' )
 #'
 #' # Or for simple cases a smart mapping will get directly x, ymin and ymax from data
