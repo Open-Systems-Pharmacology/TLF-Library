@@ -7,20 +7,27 @@ load("data/tlfEnvThemesProperties.RData")
 
 
 #' @title ThemeFont
-#' @docType class
-#' @description
-#' ThemeFont class sets of font properties for texts
+#' @description R6 class defining theme fonts
 #' @include utils.R
 #' @export
 ThemeFont <- R6::R6Class(
   "ThemeFont",
   public = list(
+    #' @field titleFont R6 class \code{Font} object
     titleFont = NULL,
+    #' @field subtitleFont R6 class \code{Font} object
     subtitleFont = NULL,
+    #' @field xlabelFont R6 class \code{Font} object
     xlabelFont = NULL,
+    #' @field ylabelFont R6 class \code{Font} object
     ylabelFont = NULL,
+    #' @field watermarkFont R6 class \code{Font} object
     watermarkFont = NULL,
 
+    #' @description Create a new \code{ThemeFont} object
+    #' @param labelColors list of colors for each label
+    #' @param labelBaseSize numeric value for theme base size
+    #' @return A new \code{ThemeFont} object
     initialize = function(labelColors = tlfEnvThemesProperties$default$labelColors,
                               labelBaseSize = 14) {
 
@@ -35,21 +42,34 @@ ThemeFont <- R6::R6Class(
 )
 
 #' @title ThemeAesProperties
-#' @docType class
-#' @description
-#' Theme aesthetics class to set aesthetic properties plots
+#' @description R6 class defining theme aesthetic properties plots
 #' @include utils.R
 #' @export
 ThemeAesProperties <- R6::R6Class(
   "ThemeAesProperties",
   public = list(
+    #' @field color character vector of color properties
     color = NULL,
+    #' @field shape character vector of shape properties
     shape = NULL,
+    #' @field size numeric vector of size properties
     size = NULL,
+    #' @field fill character vector of fill properties
     fill = NULL,
+    #' @field linetype character vector of linetype properties
     linetype = NULL,
+    #' @field alpha numeric vector of alpha properties
     alpha = NULL,
 
+    #' @description Create a new \code{ThemeAesProperties} object
+    #' @param aesProperties list of aesthetic properties
+    #' @param color character vector of color properties
+    #' @param shape character vector of shape properties
+    #' @param size numeric vector of size properties
+    #' @param fill character vector of fill properties
+    #' @param linetype character vector of linetype properties
+    #' @param alpha numeric vector of alpha properties
+    #' @return A new \code{ThemeAesProperties} object
     initialize = function(aesProperties = tlfEnvThemesProperties$default$aesProperties,
                               color = NULL,
                               shape = NULL,
@@ -68,25 +88,43 @@ ThemeAesProperties <- R6::R6Class(
 )
 
 #' @title Theme
-#' @docType class
-#' @description
-#' Theme class sets of font properties for texts
+#' @description R6 class defining theme
 #' @include utils.R
 #' @export
 Theme <- R6::R6Class(
   "Theme",
   inherit = ThemeFont,
   public = list(
+    #' @field watermark list of font properties for watermark
     watermark = NULL,
+    #' @field background list of aesthetic properties for background configuration
     background = NULL,
+    #' @field aesProperties list of aesthetic properties for plots in general
     aesProperties = NULL,
-
+    #' @field pkRatio list of aesthetic properties for PK ratio plot features
     pkRatio = NULL,
+    #' @field timeProfile list of aesthetic properties for time profile plot features
     timeProfile = NULL,
+    #' @field histogram list of aesthetic properties for histogram features
     histogram = NULL,
+    #' @field ddiRatio list of aesthetic properties for DDI ratio plot features
     ddiRatio = NULL,
-    gof = NULL,
+    #' @field obsVsPred list of aesthetic properties for GOF plot features
+    obsVsPred = NULL,
 
+    #' @description Create a new \code{Theme} object
+    #' @param themesProperties list of aesthetic properties
+    #' @param labelColors list of colors for each label
+    #' @param labelBaseSize numeric value for theme base size
+    #' @param background list of aesthetic properties for background configuration
+    #' @param watermark list of font properties for watermark
+    #' @param aesProperties list of aesthetic properties for plots in general
+    #' @param pkRatio list of aesthetic properties for PK ratio plot features
+    #' @param timeProfile list of aesthetic properties for time profile plot features
+    #' @param histogram list of aesthetic properties for histogram features
+    #' @param ddiRatio list of aesthetic properties for DDI ratio plot features
+    #' @param obsVsPred list of aesthetic properties for GOF plot features
+    #' @return A new \code{Theme} object
     initialize = function(themesProperties = tlfEnvThemesProperties$default,
                               labelColors = NULL,
                               labelBaseSize = 14,
@@ -97,7 +135,7 @@ Theme <- R6::R6Class(
                               timeProfile = NULL,
                               histogram = NULL,
                               ddiRatio = NULL,
-                              gof = NULL) {
+                              obsVsPred = NULL) {
       super$initialize(
         labelColors = labelColors %||% themesProperties$labelColors,
         labelBaseSize = labelBaseSize
@@ -114,7 +152,7 @@ Theme <- R6::R6Class(
       self$timeProfile <- timeProfile %||% themesProperties$timeProfile
       self$histogram <- histogram %||% themesProperties$histogram
       self$ddiRatio <- ddiRatio %||% themesProperties$ddiRatio
-      self$gof <- gof %||% themesProperties$gof
+      self$obsVsPred <- obsVsPred %||% themesProperties$obsVsPred
     }
   )
 )

@@ -1,25 +1,29 @@
 #' @title LegendConfiguration
-#' @docType class
-#' @description  Class for Legend Configuration
-#' @field position Legend position as defined in LegendPositions enum
-#' @field titles R6 class defining titles of legend
-#' @field captions R6 class defining captions of legend
-#' @field values R6 class defining values of aesthetic properties (e.g. circle, square for shape)
-#' @section Methods:
-#' \describe{
-#' \item{new(position = NULL, titles = NULL, captions = NULL, values = NULL, dataMapping = NULL,
-#' data = NULL, metaData = NULL, theme = tlfEnv$currentTheme)}{Initialize LegendConfiguration.}
-#' \item{setPlotLegend(plotObject)}{Apply properties to plot legend.}
-#' }
+#' @description R6 class defining the legend configuration of a \code{ggplot} object
 #' @export
 LegendConfiguration <- R6::R6Class(
   "LegendConfiguration",
   public = list(
+    #' @field position character position of the legend
     position = NULL,
+    #' @field titles R6 class \code{LegendTitles} object
     titles = NULL,
+    #' @field captions R6 class \code{LegendCaptions} object
     captions = NULL,
+    #' @field values R6 class \code{LegendValues} object
     values = NULL,
 
+    #' @description Create a new \code{LegendConfiguration} object
+    #' @param position character position of the legend.
+    #' Use enum `LegendPositions` to assess available legend positions.
+    #' @param titles R6 class \code{LegendTitles} object
+    #' @param captions R6 class \code{LegendCaptions} object
+    #' @param values R6 class \code{LegendValues} object
+    #' @param data data.frame used by \code{smartMapping}
+    #' @param metaData list of information on \code{data}
+    #' @param dataMapping R6 class or subclass \code{XYDataMapping}
+    #' @param theme R6 class \code{Theme}
+    #' @return A new \code{LegendConfiguration} object
     initialize = function(position = NULL,
                               titles = NULL,
                               captions = NULL,
@@ -43,13 +47,16 @@ LegendConfiguration <- R6::R6Class(
             metaData = metaData
           )
         }
-      } else {
-        self$titles <- titles %||% LegendTitles$new()
-        self$captions <- captions %||% LegendCaptions$new()
       }
-      self$values <- captions %||% LegendValues$new()
+
+      self$titles <- titles %||% self$titles %||% LegendTitles$new()
+      self$captions <- captions %||% self$captions %||% LegendCaptions$new()
+      self$values <- values %||% LegendValues$new()
     },
 
+    #' @description Set plot legend of a \code{ggplot} object
+    #' @param plotObject \code{ggplot} object
+    #' @return A \code{ggplot} object
     setPlotLegend = function(plotObject) {
       plotObject <- setLegend(plotObject,
         legendPosition = self$position,

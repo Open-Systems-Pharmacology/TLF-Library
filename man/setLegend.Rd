@@ -4,8 +4,13 @@
 \alias{setLegend}
 \title{SetLegend}
 \usage{
-setLegend(plotObject, legendPosition, legendTitles = NULL,
-  legendCaptions = NULL, legendValues = NULL)
+setLegend(
+  plotObject,
+  legendPosition,
+  legendTitles = NULL,
+  legendCaptions = NULL,
+  legendValues = NULL
+)
 }
 \arguments{
 \item{plotObject}{Graphical object created from ggplot}

@@ -13,7 +13,7 @@ test_that("default works", {
     "Ratio" = c(NA, 8 / 50, 16 / 50),
     row.names = c("Points Total", "Points within 1.5-fold", "Points within 2-fold")
   )
-  expect_equal(getPKRatioMeasure(data), expectedDefaultResult)
+  expect_equal(getPKRatioMeasure(data$Ratio), expectedDefaultResult)
 })
 
 test_that("works when ratio limits are changed", {
@@ -22,7 +22,7 @@ test_that("works when ratio limits are changed", {
     "Ratio" = c(NA, 0.52),
     row.names = c("Points Total", "Points within 3-fold")
   )
-  expect_equal(getPKRatioMeasure(data, dataMapping = NULL, ratioLimits = 3), expectedResultLimit)
+  expect_equal(getPKRatioMeasure(data$Ratio, dataMapping = NULL, ratioLimits = 3), expectedResultLimit)
 })
 
 test_that("dataMapping input works", {

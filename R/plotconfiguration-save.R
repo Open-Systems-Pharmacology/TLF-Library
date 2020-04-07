@@ -1,29 +1,31 @@
 #' @title saveConfiguration
-#' @docType class
-#' @description  Configuration to save a gglot
-#' @field filename character
-#' @field width numeric
-#' @field height numeric
-#' @field units character
-#' @section Methods:
-#' \describe{
-#' \item{new()}{Initialize SaveConfiguration}
-#' \item{print()}{Show SaveConfiguration properties}
-#' \item{savePlot(plotObject)}{Save ggplot object into filename file}
-#' }
+#' @description R6 class defining the save configuration of a \code{ggplot} object
 #' @export
-#' @format NULL
 SaveConfiguration <- R6::R6Class(
   "SaveConfiguration",
   public = list(
+    #' @field filename character defining the name of the file to be saved
     filename = NULL,
-    height = NULL,
+    #' @field width numeric values defining the width in `units` of the plot dimensions after saving
     width = NULL,
+    #' @field height numeric values defining the height in `units` of the plot dimensions after saving
+    height = NULL,
+    #' @field units character defining the unit of the saving dimension
     units = NULL,
 
+    #' @description Create a new \code{SaveConfiguration} object
+    #' @param filename character defining the name of the file to be saved
+    #' @param width numeric values defining the width in `units` of the plot dimensions after saving
+    #' @param height numeric values defining the height in `units` of the plot dimensions after saving
+    #' @param units character defining the unit of the saving dimension
+    #' @param format character defining the name of the file to be saved.
+    #' If `NULL` use "png" format.
+    #' @param path character defining the path where to save the file.
+    #' If `NULL` use current path.
+    #' @return A new \code{SaveConfiguration} object
     initialize = function(filename = "tlf-plot.png",
-                              height = 12,
                               width = 20,
+                              height = 12,
                               units = "cm",
                               format = NULL,
                               path = NULL) {
@@ -37,12 +39,17 @@ SaveConfiguration <- R6::R6Class(
       self$units <- units
     },
 
+    #' @description Print file save properties
+    #' @return NULL
     print = function() {
       cat("file name: ", self$filename, "\n", sep = " ")
       cat("plot size: ", self$width, "x", self$height, self$units, "\n", sep = " ")
       invisible(self)
     },
 
+    #' @description Save \code{ggplot} object into a file
+    #' @param plotObject a \code{ggplot} object
+    #' @return NULL
     savePlot = function(plotObject) {
       ggplot2::ggsave(
         filename = self$filename,

@@ -14,25 +14,27 @@ Scaling <- enum(c(
 
 
 #' @title AxisConfiguration
-#' @docType class
-#' @description  Class for axis Configuration
-#' @field limits Axis limits
-#' @field scale Plot scale (lin, log...)
-#' @field ticks Values where ticks should be applied
-#' @field ticklabels Names of associated to ticks
-#' @section Methods:
-#' \describe{
-#' \item{new(limits = NULL, scale = Scaling$lin, ticks = "default", ticklabels = "default")}{Initialize AxisConfiguration.}
-#' }
+#' @description  R6 class defining the configuration of axis
 #' @export
 AxisConfiguration <- R6::R6Class(
   "AxisConfiguration",
   public = list(
+    #' @field limits numeric vector of axis limits
     limits = NULL,
+    #' @field scale character defining axis scale
     scale = NULL,
+    #' @field ticks numeric vector or function defining where to position axis ticks
     ticks = NULL,
+    #' @field ticklabels character vector or function defining what to print on axis ticks
     ticklabels = NULL,
 
+    #' @description Create a new \code{AxisConfiguration} object
+    #' @param limits numeric vector of axis limits
+    #' @param scale character defining axis scale
+    #' Use enum `Scaling` to access predefined scales.
+    #' @param ticks numeric vector or function defining where to position axis ticks
+    #' @param ticklabels character vector or function defining what to print on axis ticks
+    #' @return A new \code{AxisConfiguration} object
     initialize = function(limits = NULL,
                               scale = Scaling$lin,
                               ticks = "default",
@@ -56,22 +58,15 @@ AxisConfiguration <- R6::R6Class(
 )
 
 #' @title XAxisConfiguration
-#' @docType class
-#' @description  Class for X-axis Configuration
-#' @field limits Axis limits
-#' @field scale Plot scale (lin, log...)
-#' @field ticks Values where ticks should be applied
-#' @field ticklabels Names of associated to ticks
-#' @section Methods:
-#' \describe{
-#' \item{new(limits = NULL, scale = Scaling$lin, ticks = "default", ticklabels = "default")}{Initialize AxisConfiguration.}
-#' \item{setPlotAxis(plotObject)}{Apply properties to plot X-axis.}
-#' }
+#' @description  R6 class defining the configuration of X-axis
 #' @export
 XAxisConfiguration <- R6::R6Class(
   "XAxisConfiguration",
   inherit = AxisConfiguration,
   public = list(
+    #' @description Set axis configuration on a \code{ggplot} object
+    #' @param plotObject \code{ggplot} object
+    #' @return A \code{ggplot} object with updated axis properties
     setPlotAxis = function(plotObject) {
       if (self$scale %in% "discrete") {
         plotObject <- plotObject +
@@ -86,23 +81,18 @@ XAxisConfiguration <- R6::R6Class(
 )
 
 #' @title YAxisConfiguration
-#' @docType class
-#' @description  Class for Y-axis Configuration
-#' @field limits Axis limits
-#' @field scale Plot scale (lin, log...)
-#' @field ticks Values where ticks should be applied
-#' @field ticklabels Names of associated to ticks
-#' @section Methods:
-#' \describe{
-#' \item{new(limits = NULL, scale = Scaling$lin, ticks = "default", ticklabels = "default")}{Initialize AxisConfiguration.}
-#' \item{setPlotAxis(plotObject)}{Apply properties to plot X-axis.}
-#' }
+#' @description  R6 class defining the configuration of Y-axis
 #' @export
 YAxisConfiguration <- R6::R6Class(
   "YAxisConfiguration",
   inherit = AxisConfiguration,
   public = list(
+    #' @field position character poistion of the Y-axis
     position = NULL, # TO DO: initialize position, then scale position = "left" or "right"
+
+    #' @description Set axis configuration on a \code{ggplot} object
+    #' @param plotObject \code{ggplot} object
+    #' @return A \code{ggplot} object with updated axis properties
     setPlotAxis = function(plotObject) {
       plotObject <- plotObject +
         scale_y_continuous(trans = self$scale, limits = self$limits, breaks = self$ticks, labels = self$ticklabels)

@@ -1,27 +1,51 @@
 #' @title AggregationSummary
-#' @docType class
-#' @description  #Splits the dataframe data into subsets defined by unique combinations of elements in the columns xColumnNames and groupingColumnNames.
-# Applies functions defined in aggregationFunctionsVector to column yColumnNames.
-# Returns a list of dataframes, one dataframe for each function listed in aggregationFunctionsVector.
-# Each dataframe in list element is named after the function's corresponding string in aggregationFunctionNames.
-# The summary statistic column name in each dataframe is the same as the name of the dataframe in the returned list.
+#' @description R6 class to split a data.frame data into subsets defined by unique combinations of elements
+#' in the columns \code{xColumnNames} and \code{groupingColumnNames}.
+#' Applies functions defined in \code{aggregationFunctionsVector} to column \code{yColumnNames.}
+#' Returns a list of data.frame, one data.frame for each function listed in \code{aggregationFunctionsVector}.
+#' Each data.frame in list element is named after the function's corresponding string in \code{aggregationFunctionNames}.
+#' The summary statistic column name in each data.frame is the same as the name of the data.frame in the returned list.
 #' @export
 AggregationSummary <- R6::R6Class(
   "AggregationSummary",
   public = list(
+    #' @field data data.frame
     data = NULL,
+    #' @field metaData list of information on \code{data}
     metaData = NULL,
+    #' @field xColumnNames character names of grouping variables
     xColumnNames = NULL,
+    #' @field groupingColumnNames character names of grouping variables
     groupingColumnNames = NULL,
+    #' @field yColumnNames character names of dependent variables (that are grouped)
     yColumnNames = NULL,
+    #' @field aggregationInputsVector list of R6 class \code{AggregationInput} objects
     aggregationInputsVector = NULL,
+    #' @field aggregationFunctionsVector list of functions to use for aggregation
     aggregationFunctionsVector = NULL,
+    #' @field aggregationFunctionNames vector of function names that will be used as variable name of the aggregation
     aggregationFunctionNames = NULL,
+    #' @field aggregationUnitsVector character vector of units of aggregation output
     aggregationUnitsVector = NULL,
+    #' @field aggregationDimensionsVector character vector of dimensions of aggregation output
     aggregationDimensionsVector = NULL,
+    #' @field dfHelper data.frame of aggregated values
     dfHelper = NULL,
+    #' @field metaDataHelper list of information on \code{dfHelper}
     metaDataHelper = NULL,
 
+    #' @description Create a new \code{AggregationSummary} object
+    #' @param data data.frame
+    #' @param metaData list of information on \code{data}
+    #' @param xColumnNames character names of grouping variables
+    #' @param groupingColumnNames character names of grouping variables
+    #' @param yColumnNames character names of dependent variables (that are grouped)
+    #' @param aggregationInputsVector list of R6 class \code{AggregationInput} objects
+    #' @param aggregationFunctionsVector list of functions to use for aggregation
+    #' @param aggregationFunctionNames vector of function names that will be used as variable name of the aggregation
+    #' @param aggregationUnitsVector character vector of units of aggregation output
+    #' @param aggregationDimensionsVector character vector of dimensions of aggregation output
+    #' @return A new \code{AggregationSummary} object
     initialize = function(data,
                               metaData = NULL,
                               xColumnNames = NULL,
@@ -57,6 +81,9 @@ AggregationSummary <- R6::R6Class(
       self$generateAggregatedValues()
     },
 
+    #' @description Apply aggregation functions on \code{x}
+    #' @param x numeric vector
+    #' @return A list or vector of aggregated values
     applyAggregationFunctions = function(x) {
       # input the vector of aggregated x into each aggregation function y and return the results in a vector res
       res <- sapply(self$aggregationFunctionsVector, function(y) {
@@ -65,6 +92,8 @@ AggregationSummary <- R6::R6Class(
       return(res)
     },
 
+    #' @description Generate aggregated values
+    #' @return A list or vector of aggregated values
     generateAggregatedValues = function() {
       xGroupingColNames <- c(self$xColumnNames, self$groupingColumnNames) # Get names of grouping columns and groups then into a vector xGroupingColNames
 

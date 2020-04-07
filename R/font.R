@@ -1,29 +1,27 @@
 #' @title Font
-#' @docType class
-#' @description Font properties for ggplot labels
-#' @field size numeric
-#' @field color character
-#' @field fontFamily character
-#' @field fontFace character
-#' @section Methods:
-#' \describe{
-#' \item{new(...)}{Initialize Font}
-#' \item{print(...)}{Print Font properties}
-#' \item{setFont()}{Create element_text for ggplot with Font properties}
-#' }
+#' @description  R6 class defining \code{size}, \code{color}, \code{fontFamily}, \code{fontFace} of font
 #' @include utils.R
 #' @export
 Font <- R6::R6Class(
   "Font",
   public = list(
-    # Defining default font properties here fixes
-    # default input that can be overwritten by NULL,
-    # which leads to empty font property field
+    #' @field size numeric size of font
     size = 12,
+    #' @field color character color of font
     color = "black",
+    #' @field fontFamily character family of font
     fontFamily = "",
+    #' @field fontFace character face of font
     fontFace = "plain",
 
+    #' @description Create a new \code{Font} object.
+    #' Default font properties are defined directly in the object field,
+    #' so `NULL` input is allowed will lead to default properties.
+    #' @param size numeric size of font
+    #' @param color character color of font
+    #' @param fontFamily character family of font
+    #' @param fontFace character face of font
+    #' @return A new \code{Font} object
     initialize = function(size = NULL,
                               color = NULL,
                               fontFamily = NULL,
@@ -34,6 +32,7 @@ Font <- R6::R6Class(
       self$fontFace <- fontFace %||% self$fontFace
     },
 
+    #' @description Print \code{Font} properties.
     print = function() {
       cat("size:", self$size, "\n", sep = " ")
       cat("color:", self$color, "\n", sep = " ")
@@ -42,6 +41,8 @@ Font <- R6::R6Class(
       invisible(self)
     },
 
+    #' @description Create an `element_text` for ggplot with \code{Font} properties.
+    #' @return An `element_text` for ggplot with \code{Font} properties.
     setFont = function() {
       element_text(
         colour = self$color,

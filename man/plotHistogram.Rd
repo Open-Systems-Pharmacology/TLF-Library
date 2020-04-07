@@ -4,9 +4,16 @@
 \alias{plotHistogram}
 \title{plotHistogram}
 \usage{
-plotHistogram(data, metaData = NULL, dataMapping = NULL,
-  plotConfiguration = NULL, binWidth = NULL, bins = NULL,
-  verticalLineFunctions = NULL, verticalLineFunctionNames = NULL)
+plotHistogram(
+  data,
+  metaData = NULL,
+  dataMapping = NULL,
+  plotConfiguration = NULL,
+  binWidth = NULL,
+  bins = NULL,
+  verticalLineFunctions = NULL,
+  verticalLineFunctionNames = NULL
+)
 }
 \arguments{
 \item{data}{data.frames containing the data to be used for the plot}

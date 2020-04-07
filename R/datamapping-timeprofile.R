@@ -1,28 +1,26 @@
 #' @title TimeProfileDataMapping
-#' @docType class
-#' @description  Data Mapping for Time Profile
-#' @field x Name of x variable to map
-#' @field y Name of y variable to map
-#' @field ymin Name of ymin variable to map
-#' @field ymax Name of ymax variable to map
-#' @field groupMapping R6 class mapping groups to aesthetic properties
-#' @field LLOQ Value(s) of lower limit of quantitation
-#' @section Methods:
-#' \describe{
-#' \item{new(LLOQ = NULL, x, y, y = NULL, ymin = NULL, ymax = NULL, groupMapping = NULL, color = NULL, fill = NULL, linetype = NULL, shape = NULL, size = NULL)}{
-#' Initialize TimeProfileDataMapping.  Either input groupMapping or input color, fill, linetype, shape and/or size.}
-#' \item{checkMapData(data, metaData = NULL)}{Check data mapping is correct. Create output data.frame with map data only.}
-#' }
+#' @description  R6 class defining the configuration of a \code{ggplot} object for time profile plot
 #' @export
 TimeProfileDataMapping <- R6::R6Class(
   "TimeProfileDataMapping",
   inherit = XYGDataMapping,
 
   public = list(
+    #' @field ymin Name of ymin variable to map
     ymin = NULL,
+    #' @field ymax Name of ymax variable to map
     ymax = NULL,
+    #' @field LLOQ values of lower limit of quatification
     LLOQ = NULL,
 
+    #' @description Create a new \code{TimeProfileDataMapping} object
+    #' @param LLOQ values of lower limit of quatification
+    #' @param x Name of x variable to map
+    #' @param y Name of y variable to map
+    #' @param ymin Name of ymin variable to map
+    #' @param ymax Name of ymax variable to map
+    #' @param ... parameters inherited from \code{XYGDataMapping}
+    #' @return A new \code{TimeProfileDataMapping} object
     initialize = function(LLOQ = NULL,
                               x,
                               y = NULL,
@@ -41,6 +39,11 @@ TimeProfileDataMapping <- R6::R6Class(
       self$LLOQ <- LLOQ
     },
 
+    #' @description Check that \code{data} variables include map variables
+    #' @param data data.frame to check
+    #' @param metaData list containing information on \code{data}
+    #' @return A data.frame with map and \code{defaultAes} variables.
+    #' Dummy variable \code{defaultAes} is necessary to allow further modification of plots.
     checkMapData = function(data, metaData = NULL) {
       validateMapping(self$x, data)
       validateMapping(self$y, data, nullAllowed = TRUE)

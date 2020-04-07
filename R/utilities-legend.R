@@ -28,6 +28,15 @@ setLegend <- function(plotObject,
 
   plotObject <- setLegendPosition(plotObject = plotObject, legendPosition = legendPosition)
 
+  # TO DO: reconcile this method with atom plots
+  # The idea would be to change defautAes to legend in all mappings
+  # and create captions automatically within the data.frame input to ggplot
+  # This way it becomes easy to update the legend captions
+
+  # In case a plot object already has a scale for the legend values,
+  # reset scale to prevent warning due to overwriting
+  plotObject$scales$scales <- list()
+
   # Redefine label of groups in legend
   for (legendType in LegendTypes) {
     plotObject <- plotObject + ifnotnull(
@@ -68,7 +77,7 @@ setLegendPosition <- function(plotObject,
   # Check and Transform Legend Position enum into actual position
   legendPosition <- getLegendPosition(legendPosition %||% LegendPositions$none)
 
-  plotHandle <- plotObject + theme(
+  plotObject <- plotObject + theme(
     legend.position = c(legendPosition$xPosition, legendPosition$yPosition),
     legend.justification = c(legendPosition$xJustification, legendPosition$yJustification)
   )

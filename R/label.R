@@ -1,22 +1,22 @@
 #' @title Label
-#' @docType class
-#' @description Properties for ggplot labels
-#' @field text character
-#' @field font Font object
-#' @section Methods:
-#' \describe{
-#' \item{new(...)}{Initialize Label}
-#' \item{print(...)}{Print Label properties}
-#' \item{setFontProperties(color, size, fontFamily, fontFace)}{Set fields of font object}
-#' }
-#' @include utils.R
+#' @description  R6 class defining \code{text} and \code{font} of label
 #' @export
 Label <- R6::R6Class(
   "Label",
   public = list(
+    #' @field text character text of label
     text = NULL,
+    #' @field font R6 class \code{Font} object
     font = NULL,
 
+    #' @description Create a new \code{Label} object.
+    #' @param text character text of label
+    #' @param font R6 class \code{Font} object
+    #' @param size numeric size of font
+    #' @param color character color of font
+    #' @param fontFamily character family of font
+    #' @param fontFace character face of font
+    #' @return A new \code{Label} object
     initialize = function(text = "",
                               font = NULL,
                               color = NULL,
@@ -43,6 +43,7 @@ Label <- R6::R6Class(
       validateIsOfType(self$font, Font)
     },
 
+    #' @description Print \code{Label} properties.
     print = function() {
       cat("text:", self$text, "\n", sep = " ")
       cat("font color:", self$font$color, "\n", sep = " ")
@@ -52,6 +53,11 @@ Label <- R6::R6Class(
       invisible(self)
     },
 
+    #' @description Set font properties of Label
+    #' @param size numeric size of font
+    #' @param color character color of font
+    #' @param fontFamily character family of font
+    #' @param fontFace character face of font
     setFontProperties = function(color = self$font$color,
                                      size = self$font$size,
                                      fontFamily = self$font$fontFamily,

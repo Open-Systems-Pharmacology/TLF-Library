@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{\%||\%}
 \alias{\%||\%}
-\title{\%||\%}
+\title{\\%||\\%}
 \usage{
 lhs \%||\% rhs
 }

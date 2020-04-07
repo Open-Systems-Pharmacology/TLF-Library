@@ -1,22 +1,24 @@
 #' @title XYGDataMapping
-#' @docType class
-#' @description  Abstract class for X Y Group Mapping
-#' @field x Name of x variable to map
-#' @field y Name of y variable to map
-#' @field groupMapping R6 class mapping groups to aesthetic properties
-#' @section Methods:
-#' \describe{
-#' \item{new(x, y, groupMapping = NULL, color = NULL, fill = NULL, linetype = NULL, shape = NULL, size = NULL)}{
-#' Initialize XYGDataMapping. Either input groupMapping or input color, fill, linetype, shape and/or size}
-#' \item{checkMapData(data, metaData = NULL)}{Check data mapping is correct. Create output data.frame with map data only.}
-#' }
+#' @description  R6 class for mapping \code{x}, \code{y} and \code{GroupMapping} variables to \code{data}
 #' @export
 XYGDataMapping <- R6::R6Class(
   "XYGDataMapping",
   inherit = XYDataMapping,
   public = list(
-    groupMapping = NULL, # R6 Class of GroupMapping
+    #' @field groupMapping R6 class \code{GroupMapping} object
+    groupMapping = NULL,
 
+    #' @description Create a new \code{XYGDataMapping} object
+    #' @param x Name of x variable to map
+    #' @param y Name of y variable to map
+    #' @param groupMapping R6 class \code{GroupMapping} object
+    #' @param color R6 class \code{Grouping} object or its input
+    #' @param fill R6 class \code{Grouping} object or its input
+    #' @param linetype R6 class \code{Grouping} object or its input
+    #' @param shape R6 class \code{Grouping} object or its input
+    #' @param size R6 class \code{Grouping} object or its input
+    #' @param data data.frame to map used by \code{smartMapping}
+    #' @return A new \code{XYGDataMapping} object
     initialize = function(x = NULL,
                               y = NULL,
                               groupMapping = NULL,
@@ -29,7 +31,7 @@ XYGDataMapping <- R6::R6Class(
 
       # smartMapping is available in utilities-mapping.R
       smartMap <- smartMapping(data)
-      super$initialize(x %||% smartMap$x, y %||% smartMap$y)
+      super$initialize(x = x %||% smartMap$x, y = y %||% smartMap$y)
 
       validateEitherOrNullInput(groupMapping, list(
         "color" = color,
@@ -48,8 +50,13 @@ XYGDataMapping <- R6::R6Class(
       )
     },
 
+    #' @description Check that \code{data} variables include map variables
+    #' @param data data.frame to check
+    #' @param metaData list containing information on \code{data}
+    #' @return A data.frame with map and \code{defaultAes} variables.
+    #' Dummy variable \code{defaultAes} is necessary to allow further modification of plots.
     checkMapData = function(data, metaData = NULL) {
-      validateMapping(self$x, data)
+      validateMapping(self$x, data, nullAllowed = TRUE)
       validateMapping(self$y, data, nullAllowed = TRUE)
 
       # Drop option simplify data.frame into vectors

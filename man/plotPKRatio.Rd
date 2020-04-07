@@ -4,8 +4,13 @@
 \alias{plotPKRatio}
 \title{plotPKRatio}
 \usage{
-plotPKRatio(data, metaData = NULL, dataMapping = NULL,
-  plotConfiguration = NULL, plotObject = NULL)
+plotPKRatio(
+  data,
+  metaData = NULL,
+  dataMapping = NULL,
+  plotConfiguration = NULL,
+  plotObject = NULL
+)
 }
 \arguments{
 \item{data}{data.frame containing the data to be used for the plot}

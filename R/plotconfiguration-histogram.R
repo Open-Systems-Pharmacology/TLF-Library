@@ -1,17 +1,49 @@
 #' @title HistogramPlotConfiguration
-#' @docType class
-#' @description  Plot Configuration for Histograms
+#' @description R6 class defining the configuration of a \code{ggplot} object for histograms
 #' @export
 HistogramPlotConfiguration <- R6::R6Class(
   "HistogramPlotConfiguration",
   inherit = PlotConfiguration,
 
   public = list(
+    #' @field mapData data.frame after dataMapping
     mapData = NULL,
+    #' @field bins numeric vector of bin edges
     bins = NULL,
+    #' @field binWidth numeric value of bin width
     binWidth = NULL,
+    #' @field histogramProperties list of properties for histogram specific features
     histogramProperties = NULL,
 
+    #' @description Create a new \code{TimeProfilePlotConfiguration} object
+    #' @param bins numeric vector of bin edges
+    #' @param binWidth numeric value of bin width
+    #' @param histogramProperties list of properties for PK ratio plot specific features
+    #' @param title R6 class \code{Label} object
+    #' @param subtitle R6 class \code{Label} object
+    #' @param xlabel R6 class \code{Label} object
+    #' @param ylabel R6 class \code{Label} object
+    #' @param legend R6 class \code{LegendConfiguration} object defining legend properties
+    #' @param legendTitles List of legend titles
+    #' @param xAxis R6 class \code{XAxisConfiguration} object defining X-axis properties
+    #' @param xScale character defining X-axis scale. Use enum `Scaling` to access predefined scales.
+    #' @param xLimits numeric vector of X-axis limits
+    #' @param yAxis R6 class \code{YAxisConfiguration} object defining X-axis properties
+    #' @param yScale character defining Y-axis scale. Use enum `Scaling` to access predefined scales.
+    #' @param yLimits numeric vector of Y-axis limits
+    #' @param background R6 class \code{BackgroundConfiguration} defining background properties
+    #' @param watermark R6 class \code{Label} object defining watermark background
+    #' @param saveConfiguration R6 class \code{SaveConfiguration} defining saving properties
+    #' @param filename character defining the name of the file to be saved
+    #' @param width numeric values defining the width in `units` of the plot dimensions after saving
+    #' @param height numeric values defining the height in `units` of the plot dimensions after saving
+    #' @param units character defining the unit of the saving dimension
+    #' @param data data.frame used by \code{smartMapping}
+    #' @param metaData list of information on \code{data}
+    #' @param dataMapping R6 class or subclass \code{XYGDataMapping}
+    #' @param theme R6 class \code{Theme}
+    #' @param ... parameters inherited from \code{PlotConfiguration}
+    #' @return A new \code{TimeProfilePlotConfiguration} object
     initialize = function(title = "Histogram",
                               subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
                               binWidth = NULL,
@@ -30,6 +62,14 @@ HistogramPlotConfiguration <- R6::R6Class(
       self$histogramProperties <- histogramProperties
     },
 
+    #' @description Add histogram as histogram layer to a \code{ggplot} object
+    #' @param plotObject \code{ggplot} object
+    #' @param data data.frame
+    #' @param metaData list of information on \code{data}
+    #' @param dataMapping R6 class \code{HistogramDataMapping}
+    #' @param bins numeric vector of bin edges
+    #' @param binWidth numeric value of bin width
+    #' @return A \code{ggplot} object with histogram
     addHistograms = function(plotObject,
                                  data,
                                  metaData = NULL,
@@ -59,6 +99,12 @@ HistogramPlotConfiguration <- R6::R6Class(
       return(plotObject)
     },
 
+    #' @description Add statistics as line layer to a \code{ggplot} object
+    #' @param plotObject \code{ggplot} object
+    #' @param data data.frame
+    #' @param metaData list of information on \code{data}
+    #' @param dataMapping R6 class \code{HistogramDataMapping}
+    #' @return A \code{ggplot} object
     addVerticalLines = function(plotObject, data, metaData, dataMapping) {
       if (!is.null(dataMapping$verticalLineFunctions)) {
         fillVec <- tlfEnv$currentTheme$aesProperties$fill

@@ -15,15 +15,19 @@
 #' @export
 #'
 getPKRatioMeasure <- function(data, dataMapping = NULL, ratioLimits = c(1.5, 2)) {
+  
+  if(is.numeric(data)){
+    PKratios <- data[!is.na(data)]
+  }else{
   # If no data mapping is input, use default
-  dataMapping <- dataMapping %||% PKRatioDataMapping$new(data)
+  dataMapping <- dataMapping %||% PKRatioDataMapping$new(data = data)
 
   stopifnot("PKRatioDataMapping" %in% class(dataMapping))
 
   y <- dataMapping$y
-
+  
   # Remove NA values
-  PKratios <- data[!is.na.data.frame(data[, y]), y]
+  PKratios <- data[!is.na.data.frame(data[, y]), y]}
 
   PointsTotal <- length(PKratios)
 

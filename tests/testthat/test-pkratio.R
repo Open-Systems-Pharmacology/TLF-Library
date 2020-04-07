@@ -7,8 +7,8 @@ useTheme(tlfTheme)
 
 test_that("plotPKRatio() function works properly", {
   pkrp <- plotPKRatio(
-    data = pkRatioData,
-    metaData = pkRatioMetaData
+    data = data.frame(x = c(1, 2, 10, 20, 100),
+                      y = c(1, 3, 4, 0.5, 0.2))
   )
 
   expect_is(pkrp, "ggplot")
@@ -40,31 +40,29 @@ test_that("PK Ratio default settings work", {
   pkRatioMapping <- PKRatioDataMapping$new()
   pkRatioConfig <- PKRatioPlotConfiguration$new()
   pkRatioConfigAsCalledInPlot <- PKRatioPlotConfiguration$new(
-    data = pkRatioData,
-    metaData = pkRatioMetaData,
-    dataMapping = pkRatioMapping
+    data = pkRatioData[,c("Age", "Ratio")],
+    metaData = pkRatioMetaData
   )
 
-  expect_equal(pkRatioMapping$x, "Age")
-  expect_equal(pkRatioMapping$y, "Ratio")
+  expect_null(pkRatioMapping$x)
+  expect_null(pkRatioMapping$y)
   expect_equal(pkRatioMapping$pkRatioLines, c(1, 1.5, 1 / 1.5, 2, 1 / 2))
 
   expect_is(pkRatioConfig$title, "Label")
   expect_is(pkRatioConfig$subtitle, "Label")
   expect_is(pkRatioConfig$xlabel, "Label")
   expect_is(pkRatioConfig$ylabel, "Label")
+  expect_is(pkRatioConfig$background$watermark, "Label")
 
   expect_equal(pkRatioConfig$title$text, "PK Ratio Plot")
   expect_equal(pkRatioConfig$subtitle$text, paste("Date:", format(Sys.Date(), "%y-%m-%d")))
   expect_equal(pkRatioConfig$xlabel$text, "")
   expect_equal(pkRatioConfig$ylabel$text, "")
-  expect_equal(pkRatioConfig$background$watermark$text, "tlf v0.1.0")
-
+  
   expect_equal(pkRatioConfigAsCalledInPlot$title$text, "PK Ratio Plot")
   expect_equal(pkRatioConfigAsCalledInPlot$subtitle$text, paste("Date:", format(Sys.Date(), "%y-%m-%d")))
   expect_equal(pkRatioConfigAsCalledInPlot$xlabel$text, "Age [yrs]")
   expect_equal(pkRatioConfigAsCalledInPlot$ylabel$text, "Ratio")
-  expect_equal(pkRatioConfigAsCalledInPlot$background$watermark$text, "tlf v0.1.0")
 })
 
 test_that("PK Ratio typical test works", {
