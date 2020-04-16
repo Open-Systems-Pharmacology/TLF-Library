@@ -163,6 +163,20 @@ PlotConfiguration <- R6::R6Class(
     #' @return NULL
     savePlot = function(plotObject) {
       self$saveConfiguration$savePlot(plotObject)
+    },
+    
+    #' @description Print plot configuration
+    #' @return Plot configuration
+    print = function(){
+      plotProperties <- list(
+        labels = self$labels$print(),
+        legend = self$legend$print(),
+        xAxis = self$xAxis$print(),
+        yAxis = self$yAxis$print(),
+        background = self$background$print(),
+        saveConfiguration = self$saveConfiguration$print()
+      )
+      return(plotProperties)
     }
   )
 )

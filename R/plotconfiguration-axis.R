@@ -53,6 +53,27 @@ AxisConfiguration <- R6::R6Class(
       if (ticklabels %in% "default") {
         self$ticklabels <- waiver()
       }
+    },
+
+    #' @description Print axis properties
+    #' @return Axis properties
+    print = function() {
+      axisProperties <- list(
+        scale = self$scale,
+        limits = self$limits,
+        ticks = self$ticks,
+        ticklabels = self$ticklabels
+      )
+      if (axisProperties$scale %in% "identity") {
+        axisProperties$scale <- "linear"
+      }
+      if (length(axisProperties$ticks) == 0 & !is.null(axisProperties$ticks)) {
+        axisProperties$ticks <- "default"
+      }
+      if (length(axisProperties$ticklabels) == 0 & !is.null(axisProperties$ticklabels)) {
+        axisProperties$ticklabels <- "default"
+      }
+      return(axisProperties)
     }
   )
 )

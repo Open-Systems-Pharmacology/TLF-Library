@@ -12,7 +12,7 @@ LegendConfiguration <- R6::R6Class(
     captions = NULL,
     #' @field values R6 class \code{LegendValues} object
     values = NULL,
-
+    
     #' @description Create a new \code{LegendConfiguration} object
     #' @param position character position of the legend.
     #' Use enum `LegendPositions` to assess available legend positions.
@@ -50,8 +50,19 @@ LegendConfiguration <- R6::R6Class(
       }
 
       self$titles <- titles %||% self$titles %||% LegendTitles$new()
-      self$captions <- captions %||% self$captions %||% LegendCaptions$new()
+      self$captions <- captions #%||% self$captions %||% LegendCaptions$new()
       self$values <- values %||% LegendValues$new()
+    },
+    
+    #' @description Print legend properties
+    #' @return Legend properties
+    print = function() {
+      legendProperties <- list(titles = self$titles,
+                               position = self$position,
+                               captions = self$captions
+                               )
+      
+      return(legendProperties)
     },
 
     #' @description Set plot legend of a \code{ggplot} object

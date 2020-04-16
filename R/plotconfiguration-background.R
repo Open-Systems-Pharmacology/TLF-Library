@@ -35,6 +35,18 @@ BackgroundConfiguration <- R6::R6Class(
       self$watermark$font <- watermarkFont %||% theme$watermarkFont
     },
 
+    #' @description Print background properties
+    #' @return Background properties
+    print = function() {
+      backgroundProperties <- list(
+        "outerBackground" = self$outerBackground$print(),
+        "innerBackground" = self$innerBackground$print(),
+        "grid" = self$grid$print(),
+        "watermark" = self$watermark$text
+      )
+      return(backgroundProperties)
+    },
+
     #' @description Set background properties of a \code{ggplot} object
     #' @param plotObject a \code{ggplot} object
     #' @return A \code{ggplot} object
