@@ -7,6 +7,8 @@ PlotConfiguration <- R6::R6Class(
   ## ----------------------------------
   ## List of plotConfiguration Variables
   public = list(
+    #' @field labels R6 class \code{LabelConfiguration} defining labels properties
+    labels = NULL,
     #' @field legend R6 class \code{LegendConfiguration} defining legend properties
     legend = NULL,
     #' @field xAxis R6 class \code{XAxisConfiguration} defining X-axis properties
@@ -77,7 +79,7 @@ PlotConfiguration <- R6::R6Class(
                               dataMapping = NULL,
                               # Theme
                               theme = tlfEnv$currentTheme, ...) {
-      super$initialize(
+      self$labels <- LabelConfiguration$new(
         title = title,
         subtitle = subtitle,
         xlabel = xlabel,
@@ -91,17 +93,17 @@ PlotConfiguration <- R6::R6Class(
       if (!is.null(data)) {
         dataMapping <- dataMapping %||% XYGDataMapping$new(data = data)
       }
-      self$xlabel <- asLabel(xlabel %||%
+      self$labels$xlabel <- asLabel(xlabel %||%
         dataMappingLabel(dataMapping$x, metaData) %||%
         dataMapping$x %||%
-        self$xlabel)
-      self$ylabel <- asLabel(ylabel %||%
+        self$labels$xlabel)
+      self$labels$ylabel <- asLabel(ylabel %||%
         dataMappingLabel(dataMapping$y, metaData) %||%
         dataMapping$y %||%
-        self$ylabel)
+        self$labels$ylabel)
 
-      self$xlabel$font <- theme$xlabelFont
-      self$ylabel$font <- theme$ylabelFont
+      self$labels$xlabel$font <- theme$xlabelFont
+      self$labels$ylabel$font <- theme$ylabelFont
 
       # Smart configuration if legend is not defined,
       self$legend <- legend %||% ifnotnull(
