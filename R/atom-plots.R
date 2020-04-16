@@ -634,3 +634,86 @@ addErrorbar <- function(data = NULL,
 
   return(plotObject)
 }
+
+
+getDefaultAesCaption <- function(plotObject) {
+  defaultAesCaptionCount <- which(paste0("data ", seq(1, 100)) %in% plotObject$tlfConfiguration$legend$captions$caption)
+  if (length(defaultAesCaptionCount) == 0) {
+    defaultAesCaptionCount <- 0
+  }
+  return(paste0("data ", max(defaultAesCaptionCount) + 1))
+}
+
+reconcileGroupings <- function(dataMapping) {
+  mappings <- NULL
+  for (aestype in LegendTypes) {
+    mappings <- c(
+      mappings,
+      dataMapping$groupMapping[[aestype]]$label
+    )
+  }
+
+  groupingVariable <- levels(factor(mappings))
+
+  if (length(groupingVariable) > 1) {
+    warning(paste0(
+      "Groups: '",
+      paste0(groupingVariable, collapse = "', '"),
+      "' from dataMapping can't be reconciled in atom plots. \n",
+      "Only group '", groupingVariable[1], "' will be used for defining captions"
+    ))
+    groupingVariable <- groupingVariable[1]
+  }
+
+  return(groupingVariable)
+}
+
+mergeLegend <- function(plotObject,
+                        newCaptions,
+                        color,
+                        shape,
+                        size,
+                        linetype,
+                        fill) {
+  validateIsOfType(plotObject, "ggplot")
+  # validateIsIncluded(scale, Scaling, nullAllowed = TRUE)
+
+  # Clone tlfConfiguration into a new plot object
+  # Prevents update of R6 class being spread to plotObject
+  newPlotObject <- plotObject
+  newPlotObject$tlfConfiguration <- plotObject$tlfConfiguration$clone(deep = TRUE)
+
+  # newCaptions <- levels(factor(mapData$defaultAes))
+  # R6 class not cloned will spread modifications into newPlotObject$tlfConfiguration$yAxis
+  previousCaptions <- newPlotObject$tlfConfiguration$legend$captions
+  
+  # Merge captions: will overwrite properties of same captions as previous
+  previousCaptions <- previousCaptions[!previousCaptions$caption %in% newCaptions, ]
+  
+  newPlotObject$tlfConfiguration$legend$captions <- rbind.data.frame(
+    previousCaptions,
+    data.frame(
+      caption = newCaptions,
+      color = color,
+      shape = shape,
+      size = size,
+      linetype = linetype,
+      fill = fill,
+      stringsAsFactors = FALSE
+    )
+  )
+  
+  captionBreaks <- newPlotObject$tlfConfiguration$legend$captions$caption
+  
+  for (aestype in LegendTypes) {
+    suppressMessages(
+    newPlotObject <- newPlotObject + ggplot2::scale_discrete_manual(
+      name = NULL,
+      aesthetics = aestype,
+      breaks = captionBreaks,
+      values = newPlotObject$tlfConfiguration$legend$captions[order(captionBreaks), aestype]
+    )
+    )
+  }
+  return(newPlotObject)
+}
