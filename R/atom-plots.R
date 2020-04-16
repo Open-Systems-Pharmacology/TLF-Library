@@ -20,15 +20,19 @@
 #' config <- PlotConfiguration$new(title = "My Plot", xlabel = "x variable", ylabel = "y variable")
 #' p <- initializePlot(config)
 initializePlot <- function(plotConfiguration = NULL) {
+  validateIsOfType(plotConfiguration, "PlotConfiguration", nullAllowed = TRUE)
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new()
 
   plotObject <- ggplot2::ggplot()
-  plotObject <- plotConfiguration$setPlotBackground(plotObject)
-  plotObject <- plotConfiguration$setPlotLabels(plotObject)
+  plotObject$tlfConfiguration <- plotConfiguration
+
+  plotObject <- setWatermark(plotObject)
+  plotObject <- setBackground(plotObject)
+  plotObject <- setGrid(plotObject)
+  plotObject <- setPlotLabels(plotObject)
 
   return(plotObject)
 }
-
 
 #' @title addScatter
 #' @param data data.frame containing the scatter points to be plotted
