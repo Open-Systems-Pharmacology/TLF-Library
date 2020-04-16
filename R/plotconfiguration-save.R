@@ -40,11 +40,12 @@ SaveConfiguration <- R6::R6Class(
     },
 
     #' @description Print file save properties
-    #' @return NULL
+    #' @return File save properties
     print = function() {
-      cat("file name: ", self$filename, "\n", sep = " ")
-      cat("plot size: ", self$width, "x", self$height, self$units, "\n", sep = " ")
-      invisible(self)
+      saveProperties <- list(filename = self$filename,
+                             format = paste0(self$width, " ", self$units, " x ", self$height, " ", self$units)
+      )
+      return(saveProperties)
     },
 
     #' @description Save \code{ggplot} object into a file
