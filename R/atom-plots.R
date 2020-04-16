@@ -129,7 +129,12 @@ addScatter <- function(data = NULL,
   mapLabels <- getAesStringMapping(dataMapping)
 
   # Get default legend for defaultAes
-  mapData$defaultAes <- caption %||% paste0("data", length(plotObject$layers))
+  mapData$defaultAes <- caption %||% getDefaultAesCaption(plotObject)
+
+  groupingVariable <- reconcileGroupings(dataMapping)
+  if (length(groupingVariable) == 1) {
+    mapData$defaultAes <- mapData[, groupingVariable]
+  }
 
   plotObject <- plotObject +
     ggplot2::geom_point(
@@ -142,21 +147,42 @@ addScatter <- function(data = NULL,
         size = mapLabels$size
       ),
       show.legend = TRUE
+    ) +
+    ggplot2::geom_line(
+      data = mapData,
+      mapping = aes_string(
+        x = mapLabels$x,
+        y = mapLabels$y,
+        linetype = mapLabels$linetype,
+        color = mapLabels$color,
+        size = mapLabels$size
+      ),
+      show.legend = TRUE
+    ) +
+    ggplot2::geom_ribbon(
+      data = mapData,
+      mapping = aes_string(
+        x = mapLabels$x,
+        ymin = mapLabels$y,
+        ymax = mapLabels$y,
+        fill = mapLabels$fill
+      ),
+      show.legend = TRUE
     )
 
-  # Set the color values from plot configuration or theme
-  legendValues <- plotConfiguration$theme$aesProperties %||% tlfEnv$currentTheme$aesProperties
-
-  # In case a plot object already has a scale for the legend values,
-  # reset scale to prevent warning due to overwriting
-  plotObject$scales$scales <- list()
-
-  for (legendType in LegendTypes) {
-    plotObject <- plotObject + scale_discrete_manual(
-      aesthetics = legendType,
-      values = legendValues[[legendType]]
-    )
-  }
+  newCaptions <- levels(factor(mapData$defaultAes))
+  legendLength <- nrow(plotObject$tlfConfiguration$legend$captions) %||% 0
+  newLegendProperty <- seq(legendLength+1, legendLength + length(newCaptions))-1 %% 6 + 1
+  
+  # Sample LegendType properties based tlfTheme if not input
+  plotObject <- mergeLegend(plotObject,
+    newCaptions = newCaptions,
+    color = color %||% tlfEnv$currentTheme$aesProperties$color[newLegendProperty],
+    shape = shape %||% tlfEnv$currentTheme$aesProperties$shape[newLegendProperty],
+    size = size %||% rep(1, length(newCaptions)),
+    linetype = linetype %||% rep("blank", length(newCaptions)),
+    fill = rep(NA, length(newCaptions))
+  )
 
   return(plotObject)
 }
@@ -269,8 +295,13 @@ addLine <- function(data = NULL,
   mapLabels <- getAesStringMapping(dataMapping)
 
   # Get default legend for defaultAes
-  mapData$defaultAes <- caption %||% paste0("data", length(plotObject$layers))
-
+  mapData$defaultAes <- caption %||% getDefaultAesCaption(plotObject)
+  
+  groupingVariable <- reconcileGroupings(dataMapping)
+  if (length(groupingVariable) == 1) {
+    mapData$defaultAes <- mapData[, groupingVariable]
+  }
+  
   # y-intercept
   if (is.null(dataMapping$x) && !is.null(dataMapping$y)) {
     plotObject <- plotObject +
@@ -283,6 +314,13 @@ addLine <- function(data = NULL,
           size = mapLabels$size
         ),
         show.legend = TRUE
+      ) +
+      ggplot2::geom_blank(
+        data = mapData,
+        mapping = aes_string(
+          shape = mapLabels$shape,
+          fill = mapLabels$fill,
+        )
       )
   }
 
@@ -298,11 +336,29 @@ addLine <- function(data = NULL,
           size = mapLabels$size
         ),
         show.legend = TRUE
+      ) +
+      ggplot2::geom_blank(
+        data = mapData,
+        mapping = aes_string(
+          shape = mapLabels$shape,
+          fill = mapLabels$fill,
+        )
       )
   }
 
   if (!is.null(dataMapping$x) && !is.null(dataMapping$y)) {
     plotObject <- plotObject +
+      ggplot2::geom_point(
+        data = mapData,
+        mapping = aes_string(
+          x = mapLabels$x,
+          y = mapLabels$y,
+          shape = mapLabels$shape,
+          color = mapLabels$color,
+          size = mapLabels$size
+        ),
+        show.legend = TRUE
+      ) +
       ggplot2::geom_line(
         data = mapData,
         mapping = aes_string(
@@ -313,23 +369,33 @@ addLine <- function(data = NULL,
           size = mapLabels$size
         ),
         show.legend = TRUE
+      ) +
+      ggplot2::geom_ribbon(
+        data = mapData,
+        mapping = aes_string(
+          x = mapLabels$x,
+          ymin = mapLabels$y,
+          ymax = mapLabels$y,
+          fill = mapLabels$fill
+        ),
+        show.legend = TRUE
       )
   }
 
-  # Set the color values from plot configuration or theme
-  legendValues <- plotConfiguration$theme$aesProperties %||% tlfEnv$currentTheme$aesProperties
-
-  # In case a plot object already has a scale for the legend values,
-  # reset scale to prevent warning due to overwriting
-  plotObject$scales$scales <- list()
-
-  for (legendType in LegendTypes) {
-    plotObject <- plotObject + scale_discrete_manual(
-      aesthetics = legendType,
-      values = legendValues[[legendType]]
-    )
-  }
-
+  newCaptions <- levels(factor(mapData$defaultAes))
+  legendLength <- nrow(plotObject$tlfConfiguration$legend$captions) %||% 0
+  newLegendProperty <- seq(legendLength+1, legendLength + length(newCaptions))-1 %% 6 + 1
+  
+  # Sample LegendType properties based tlfTheme if not input
+  plotObject <- mergeLegend(plotObject,
+                            newCaptions = newCaptions,
+                            color = color %||% tlfEnv$currentTheme$aesProperties$color[newLegendProperty],
+                            shape = shape %||% rep(-2, length(newCaptions)),
+                            size = size %||% rep(1, length(newCaptions)),
+                            linetype = linetype %||% tlfEnv$currentTheme$aesProperties$linetype[newLegendProperty],
+                            fill = rep(NA, length(newCaptions))
+  )
+  
   return(plotObject)
 }
 
@@ -463,33 +529,71 @@ addRibbon <- function(data = NULL,
   mapLabels <- getAesStringMapping(dataMapping)
 
   # Get default legend for defaultAes
-  mapData$defaultAes <- caption %||% paste0("data", length(plotObject$layers))
-
-  plotObject <- plotObject + ggplot2::geom_ribbon(
-    data = mapData,
-    mapping = aes_string(
-      x = mapLabels$x,
-      ymin = mapLabels$ymin,
-      ymax = mapLabels$ymax,
-      fill = mapLabels$fill
-    ),
-    alpha = alpha,
-    show.legend = TRUE
-  )
-
-  # Set the color values from plot configuration or theme
-  legendValues <- plotConfiguration$theme$aesProperties %||% tlfEnv$currentTheme$aesProperties
-
-  # In case a plot object already has a scale for the legend values,
-  # reset scale to prevent warning due to overwriting
-  plotObject$scales$scales <- list()
-
-  for (legendType in LegendTypes) {
-    plotObject <- plotObject + scale_discrete_manual(
-      aesthetics = legendType,
-      values = legendValues[[legendType]]
-    )
+  mapData$defaultAes <- caption %||% getDefaultAesCaption(plotObject)
+  
+  groupingVariable <- reconcileGroupings(dataMapping)
+  if (length(groupingVariable) == 1) {
+    mapData$defaultAes <- mapData[, groupingVariable]
   }
+  
+  # y-intercept
+  if (max(is.infinite(mapData[, dataMapping$x])) == 1) {
+    plotObject <- plotObject + ggplot2::geom_ribbon(
+      data = mapData,
+      mapping = ggplot2::aes_string(
+        x = mapLabels$x,
+        ymin = mapLabels$ymin,
+        ymax = mapLabels$ymax,
+        fill = mapLabels$fill,
+        color = mapLabels$color,
+        size = mapLabels$size,
+        linetype = mapLabels$linetype
+      ),
+      alpha = alpha,
+      show.legend = TRUE
+    ) +
+      ggplot2::geom_blank(
+        data = mapData,
+        mapping = aes_string(
+          shape = mapLabels$shape
+        )
+      )
+  } else {
+    plotObject <- plotObject + ggplot2::geom_ribbon(
+      data = mapData,
+      mapping = ggplot2::aes_string(
+        x = mapLabels$x,
+        ymin = mapLabels$ymin,
+        ymax = mapLabels$ymax,
+        fill = mapLabels$fill,
+        color = mapLabels$color,
+        size = mapLabels$size,
+        linetype = mapLabels$linetype
+      ),
+      alpha = alpha,
+      show.legend = TRUE
+    ) +
+      ggplot2::geom_blank(
+        data = mapData,
+        mapping = aes_string(
+          shape = mapLabels$shape
+        )
+      )
+  }
+
+  newCaptions <- levels(factor(mapData$defaultAes))
+  legendLength <- nrow(plotObject$tlfConfiguration$legend$captions) %||% 0
+  newLegendProperty <- seq(legendLength+1, legendLength + length(newCaptions))-1 %% 6 + 1
+  
+  # Sample LegendType properties based tlfTheme if not input
+  plotObject <- mergeLegend(plotObject,
+                            newCaptions = newCaptions,
+                            color = color %||% tlfEnv$currentTheme$aesProperties$color[newLegendProperty],
+                            shape = rep(-2, length(newCaptions)),
+                            size = size %||% rep(1, length(newCaptions)),
+                            linetype = linetype %||% rep("blank", length(newCaptions)),
+                            fill = fill %||% tlfEnv$currentTheme$aesProperties$fill[newLegendProperty]
+  )
 
   return(plotObject)
 }
@@ -603,7 +707,7 @@ addErrorbar <- function(data = NULL,
   mapLabels <- getAesStringMapping(dataMapping)
 
   # Get default legend for defaultAes
-  mapData$defaultAes <- caption %||% paste0("data", length(plotObject$layers))
+  mapData$defaultAes <- caption %||% getDefaultAesCaption(plotObject)
 
   plotObject <- plotObject +
     ggplot2::geom_errorbar(
