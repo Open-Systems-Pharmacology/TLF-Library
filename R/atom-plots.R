@@ -41,11 +41,19 @@ initializePlot <- function(plotConfiguration = NULL) {
 #' If \code{data} is NULL or not input, \code{x} numeric values will be used as is for the plot.
 #' @param y Mapping for y values.
 #' If \code{data} is NULL or not input, \code{y} numeric values will be used as is for the plot.
-#' @param dataMapping \code{XYGDataMapping} class or subclass
+#' @param dataMapping \code{XYGDataMapping} class or subclass object
 #' mapping x, y and aesthetic variables to the variable names of \code{data}.
 #' @param caption vector of character strings defining the legend captions.
-#' This parameter is optional: default value is NULL.
-#' @param plotConfiguration \code{PlotConfiguration} object defining the label and background properties of the plot.
+#' This parameter is optional: default value `NULL` creates caption labels "data 1", "data 2" ...
+#' @param color vector of character strings defining the color of the scatter points.
+#' This parameter is optional: default value `NULL` will choose colors according to the current theme.
+#' @param shape vector of character strings or numerical defining the shapes of the scatter points.
+#' This parameter is optional: default value `NULL` will choose shapes according to the current theme.
+#' @param size vector of numerical defining the sizes of the scatter points.
+#' This parameter is optional: default value `NULL` will choose sizes according to the current theme.
+#' @param linetype vector of character strings defining the linetype linking the scatter points.
+#' This parameter is optional: default value `NULL` won't provide lines.
+#' @param plotConfiguration \code{PlotConfiguration} object defining the labels, axes, background and legend properties of the plot.
 #' @param plotObject \code{ggplot} graphical object to which the line layer is added
 #' This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided
 #' @description
@@ -73,11 +81,21 @@ initializePlot <- function(plotConfiguration = NULL) {
 #'
 #' # Add a scatter with caption
 #' p <- addScatter(data = customScatterData, caption = "My scatter plot")
+#'
+#' # Add a scatter with specific properties
+#' p <- addScatter(data = customScatterData, color = "blue", shape = 19, size = 2, caption = "My data")
+#'
+#' # Add a scatter with specific properties
+#' pp <- addScatter(x = c(0, 1), y = c(1, 0), color = "red", shape = 20, size = 3, plotObject = p)
 addScatter <- function(data = NULL,
                        metaData = NULL,
                        x = NULL,
                        y = NULL,
                        caption = NULL,
+                       color = NULL,
+                       shape = NULL,
+                       size = NULL,
+                       linetype = NULL,
                        dataMapping = NULL,
                        plotConfiguration = NULL,
                        plotObject = NULL) {
@@ -244,6 +262,10 @@ addLine <- function(data = NULL,
                     x = NULL,
                     y = NULL,
                     caption = NULL,
+                    color = NULL,
+                    shape = NULL,
+                    size = NULL,
+                    linetype = NULL,
                     dataMapping = NULL,
                     plotConfiguration = NULL,
                     plotObject = NULL) {
@@ -466,6 +488,10 @@ addRibbon <- function(data = NULL,
                       ymin = NULL,
                       ymax = NULL,
                       caption = NULL,
+                      fill = NULL,
+                      color = NULL,
+                      size = NULL,
+                      linetype = NULL,
                       alpha = 0.8,
                       dataMapping = NULL,
                       plotConfiguration = NULL,
