@@ -24,7 +24,7 @@ initializePlot <- function(plotConfiguration = NULL) {
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new()
 
   plotObject <- ggplot2::ggplot()
-  plotObject$tlfConfiguration <- plotConfiguration
+  plotObject$plotConfiguration <- plotConfiguration
 
   plotObject <- setWatermark(plotObject)
   plotObject <- setBackground(plotObject)
@@ -99,109 +99,77 @@ addScatter <- function(data = NULL,
                        dataMapping = NULL,
                        plotConfiguration = NULL,
                        plotObject = NULL) {
+  validateIsOfType(dataMapping, XYGDataMapping, nullAllowed = TRUE)
+  validateIsOfType(plotConfiguration, PlotConfiguration, nullAllowed = TRUE)
 
   # If data is not input
   # Create new data and its mapping from x and y input
   if (is.null(data)) {
-    data <- as.data.frame(cbind(
-      x = x,
-      y = y
-    ))
+    data <- as.data.frame(cbind(x = x, y = y))
 
-    dataMapping <- dataMapping %||% XYGDataMapping$new(
-      x = ifnotnull(x, "x"),
-      y = ifnotnull(y, "y"),
-      data = data
-    )
+    dataMapping <- dataMapping %||% XYGDataMapping$new(x = ifnotnull(x, "x"), y = ifnotnull(y, "y"), data = data)
   }
   # Enforce data to be a data.frame for dataMapping
   if (!isOfType(data, "data.frame")) {
     data <- data.frame(data, check.names = FALSE)
   }
 
-  dataMapping <- dataMapping %||% XYGDataMapping$new(
-    x = x,
-    y = y,
-    data = data
-  )
-  validateIsOfType(dataMapping, XYGDataMapping)
+  dataMapping <- dataMapping %||% XYGDataMapping$new(x = x, y = y, data = data)
 
-  plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(
-    data = data,
-    metaData = metaData,
-    dataMapping = dataMapping
-  )
-  validateIsOfType(plotConfiguration, PlotConfiguration)
+  plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
 
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
-  # If no mapping, return plot
+  # If no mapping, nor x or y, return plotObject
   if (is.null(dataMapping$x) || is.null(dataMapping$y)) {
     warning("No mapping found for x or y, scatter layer was not added")
     return(plotObject)
   }
 
-  # Get mapping and convert labels into characters usable by aes_string
+  # Get transformed data from mapping and convert labels into characters usable by aes_string
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- getAesStringMapping(dataMapping)
 
-  # Get default legend for defaultAes
-  mapData$defaultAes <- caption %||% getDefaultAesCaption(plotObject)
-
-  groupingVariable <- reconcileGroupings(dataMapping)
-  if (length(groupingVariable) == 1) {
-    mapData$defaultAes <- mapData[, groupingVariable]
+  # If no specific mapping, use default captions
+  if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
+    mapData$legendLabels <- getlegendLabelsCaption(plotObject)
   }
+  mapData$legendLabels <- caption %||% mapData$legendLabels
 
   plotObject <- plotObject +
     ggplot2::geom_point(
       data = mapData,
-      mapping = aes_string(
-        x = mapLabels$x,
-        y = mapLabels$y,
-        shape = mapLabels$shape,
-        color = mapLabels$color,
-        size = mapLabels$size
-      ),
+      mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, shape = "legendLabels", color = "legendLabels", size = "legendLabels"),
       show.legend = TRUE
     ) +
     ggplot2::geom_line(
       data = mapData,
-      mapping = aes_string(
-        x = mapLabels$x,
-        y = mapLabels$y,
-        linetype = mapLabels$linetype,
-        color = mapLabels$color,
-        size = mapLabels$size
-      ),
+      mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
       show.legend = TRUE
     ) +
     ggplot2::geom_ribbon(
       data = mapData,
-      mapping = aes_string(
-        x = mapLabels$x,
-        ymin = mapLabels$y,
-        ymax = mapLabels$y,
-        fill = mapLabels$fill
-      ),
+      mapping = ggplot2::aes_string(x = mapLabels$x, ymin = mapLabels$y, ymax = mapLabels$y, fill = "legendLabels"),
       show.legend = TRUE
     )
 
-  newCaptions <- levels(factor(mapData$defaultAes))
-  legendLength <- nrow(plotObject$tlfConfiguration$legend$captions) %||% 0
-  newLegendProperty <- seq(legendLength+1, legendLength + length(newCaptions))-1 %% 6 + 1
-  
+  # Prepare data for merging previous and current legend
+  # TO DO: base modulo of newLegendProperty on theme aesProperties lengths
+  newLabels <- levels(factor(mapData$legendLabels))
+  legendLength <- nrow(plotObject$plotConfiguration$legend$caption) %||% 0
+  newLegendProperty <- seq(legendLength + 1, legendLength + length(newLabels)) - 1 %% 6 + 1
+
   # Sample LegendType properties based tlfTheme if not input
   plotObject <- mergeLegend(plotObject,
-    newCaptions = newCaptions,
+    newLabels = newLabels,
     color = color %||% tlfEnv$currentTheme$aesProperties$color[newLegendProperty],
     shape = shape %||% tlfEnv$currentTheme$aesProperties$shape[newLegendProperty],
-    size = size %||% rep(1, length(newCaptions)),
-    linetype = linetype %||% rep("blank", length(newCaptions)),
-    fill = rep(NA, length(newCaptions))
+    size = size %||% rep(1, length(newLabels)),
+    linetype = linetype %||% rep("blank", length(newLabels)),
+    fill = rep(NA, length(newLabels))
   )
-
+  # plotObject <- setLegendTitle(plotObject, plotObject$plotConfiguration$legend$title)
   return(plotObject)
 }
 
@@ -269,39 +237,25 @@ addLine <- function(data = NULL,
                     dataMapping = NULL,
                     plotConfiguration = NULL,
                     plotObject = NULL) {
+  validateIsOfType(dataMapping, XYGDataMapping, nullAllowed = TRUE)
+  validateIsOfType(plotConfiguration, PlotConfiguration, nullAllowed = TRUE)
 
   # If data is not input
   # Create new data and its mapping from x and y input
   if (is.null(data)) {
-    data <- as.data.frame(cbind(
-      x = x,
-      y = y
-    ))
+    data <- as.data.frame(cbind(x = x, y = y))
 
-    dataMapping <- dataMapping %||% XYGDataMapping$new(
-      x = ifnotnull(x, "x"),
-      y = ifnotnull(y, "y"),
-      data = data
-    )
+    dataMapping <- dataMapping %||% XYGDataMapping$new(x = ifnotnull(x, "x"), y = ifnotnull(y, "y"), data = data)
   }
+
   # Enforce data to be a data.frame for dataMapping
   if (!isOfType(data, "data.frame")) {
     data <- data.frame(data, check.names = FALSE)
   }
 
-  dataMapping <- dataMapping %||% XYGDataMapping$new(
-    x = x,
-    y = y,
-    data = data
-  )
-  validateIsOfType(dataMapping, XYGDataMapping)
+  dataMapping <- dataMapping %||% XYGDataMapping$new(x = x, y = y, data = data)
 
-  plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(
-    data = data,
-    metaData = metaData,
-    dataMapping = dataMapping
-  )
-  validateIsOfType(plotConfiguration, PlotConfiguration)
+  plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
 
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
@@ -316,33 +270,25 @@ addLine <- function(data = NULL,
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- getAesStringMapping(dataMapping)
 
-  # Get default legend for defaultAes
-  mapData$defaultAes <- caption %||% getDefaultAesCaption(plotObject)
-  
-  groupingVariable <- reconcileGroupings(dataMapping)
-  if (length(groupingVariable) == 1) {
-    mapData$defaultAes <- mapData[, groupingVariable]
+  # If no specific mapping, use default captions
+  if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
+    mapData$legendLabels <- getlegendLabelsCaption(plotObject)
   }
-  
+  mapData$legendLabels <- caption %||% mapData$legendLabels
+
   # y-intercept
+  # geom_blank is used to fill the missing aes properties
+  # This prevents messing up the legend
   if (is.null(dataMapping$x) && !is.null(dataMapping$y)) {
     plotObject <- plotObject +
       ggplot2::geom_hline(
         data = mapData,
-        mapping = aes_string(
-          yintercept = mapLabels$y,
-          linetype = mapLabels$linetype,
-          color = mapLabels$color,
-          size = mapLabels$size
-        ),
+        mapping = aes_string(yintercept = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
         show.legend = TRUE
       ) +
       ggplot2::geom_blank(
         data = mapData,
-        mapping = aes_string(
-          shape = mapLabels$shape,
-          fill = mapLabels$fill,
-        )
+        mapping = aes_string(shape = "legendLabels", fill = "legendLabels")
       )
   }
 
@@ -351,20 +297,12 @@ addLine <- function(data = NULL,
     plotObject <- plotObject +
       ggplot2::geom_vline(
         data = mapData,
-        mapping = aes_string(
-          xintercept = mapLabels$x,
-          linetype = mapLabels$linetype,
-          color = mapLabels$color,
-          size = mapLabels$size
-        ),
+        mapping = aes_string(xintercept = mapLabels$x, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
         show.legend = TRUE
       ) +
       ggplot2::geom_blank(
         data = mapData,
-        mapping = aes_string(
-          shape = mapLabels$shape,
-          fill = mapLabels$fill,
-        )
+        mapping = aes_string(shape = "legendLabels", fill = "legendLabels")
       )
   }
 
@@ -372,52 +310,35 @@ addLine <- function(data = NULL,
     plotObject <- plotObject +
       ggplot2::geom_point(
         data = mapData,
-        mapping = aes_string(
-          x = mapLabels$x,
-          y = mapLabels$y,
-          shape = mapLabels$shape,
-          color = mapLabels$color,
-          size = mapLabels$size
-        ),
+        mapping = aes_string(x = mapLabels$x, y = mapLabels$y, shape = "legendLabels", color = "legendLabels", size = "legendLabels"),
         show.legend = TRUE
       ) +
       ggplot2::geom_line(
         data = mapData,
-        mapping = aes_string(
-          x = mapLabels$x,
-          y = mapLabels$y,
-          linetype = mapLabels$linetype,
-          color = mapLabels$color,
-          size = mapLabels$size
-        ),
+        mapping = aes_string(x = mapLabels$x, y = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
         show.legend = TRUE
       ) +
       ggplot2::geom_ribbon(
         data = mapData,
-        mapping = aes_string(
-          x = mapLabels$x,
-          ymin = mapLabels$y,
-          ymax = mapLabels$y,
-          fill = mapLabels$fill
-        ),
+        mapping = aes_string(x = mapLabels$x, ymin = mapLabels$y, ymax = mapLabels$y, fill = "legendLabels"),
         show.legend = TRUE
       )
   }
 
-  newCaptions <- levels(factor(mapData$defaultAes))
-  legendLength <- nrow(plotObject$tlfConfiguration$legend$captions) %||% 0
-  newLegendProperty <- seq(legendLength+1, legendLength + length(newCaptions))-1 %% 6 + 1
-  
+  newLabels <- levels(factor(mapData$legendLabels))
+  legendLength <- nrow(plotObject$plotConfiguration$legend$caption) %||% 0
+  newLegendProperty <- seq(legendLength + 1, legendLength + length(newLabels)) - 1 %% 6 + 1
+
   # Sample LegendType properties based tlfTheme if not input
   plotObject <- mergeLegend(plotObject,
-                            newCaptions = newCaptions,
-                            color = color %||% tlfEnv$currentTheme$aesProperties$color[newLegendProperty],
-                            shape = shape %||% rep(-2, length(newCaptions)),
-                            size = size %||% rep(1, length(newCaptions)),
-                            linetype = linetype %||% tlfEnv$currentTheme$aesProperties$linetype[newLegendProperty],
-                            fill = rep(NA, length(newCaptions))
+    newLabels = newLabels,
+    color = color %||% tlfEnv$currentTheme$aesProperties$color[newLegendProperty],
+    shape = shape %||% rep(-2, length(newLabels)),
+    size = size %||% rep(1, length(newLabels)),
+    linetype = linetype %||% tlfEnv$currentTheme$aesProperties$linetype[newLegendProperty],
+    fill = rep(NA, length(newLabels))
   )
-  
+  plotObject <- setLegendTitle(plotObject, plotObject$plotConfiguration$legend$title)
   return(plotObject)
 }
 
@@ -496,50 +417,29 @@ addRibbon <- function(data = NULL,
                       dataMapping = NULL,
                       plotConfiguration = NULL,
                       plotObject = NULL) {
+  validateIsOfType(dataMapping, RangeDataMapping, nullAllowed = TRUE)
+  validateIsOfType(plotConfiguration, PlotConfiguration, nullAllowed = TRUE)
 
   # If data is not input
   # Create new data and its mapping from x, ymin and ymax input
   if (is.null(data)) {
-    data <- as.data.frame(cbind(
-      x = x,
-      ymin = ymin %||% 0,
-      ymax = ymax %||% 0
-    ))
+    data <- as.data.frame(cbind(x = x, ymin = ymin %||% 0, ymax = ymax %||% 0))
+
     # y-intercept ribbon
     if (is.null(x)) {
       # Redefine data.frame for y-intercept ribbon
-      data <- rbind.data.frame(
-        cbind.data.frame(x = -Inf, data),
-        cbind.data.frame(x = Inf, data)
-      )
+      data <- rbind.data.frame(cbind.data.frame(x = -Inf, data), cbind.data.frame(x = Inf, data))
     }
-
-    dataMapping <- dataMapping %||% RangeDataMapping$new(
-      x = "x",
-      ymin = "ymin",
-      ymax = "ymax",
-      data = data
-    )
+    dataMapping <- dataMapping %||% RangeDataMapping$new(x = "x", ymin = "ymin", ymax = "ymax", data = data)
   }
   # Enforce data to be a data.frame for dataMapping
   if (!isOfType(data, "data.frame")) {
     data <- data.frame(data, check.names = FALSE)
   }
 
-  dataMapping <- dataMapping %||% RangeDataMapping$new(
-    x = x,
-    ymin = ymin,
-    ymax = ymax,
-    data = data
-  )
-  validateIsOfType(dataMapping, RangeDataMapping)
+  dataMapping <- dataMapping %||% RangeDataMapping$new(x = x, ymin = ymin, ymax = ymax, data = data)
 
-  plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(
-    data = data,
-    metaData = metaData,
-    dataMapping = dataMapping
-  )
-  validateIsOfType(plotConfiguration, PlotConfiguration)
+  plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
 
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
@@ -554,73 +454,53 @@ addRibbon <- function(data = NULL,
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- getAesStringMapping(dataMapping)
 
-  # Get default legend for defaultAes
-  mapData$defaultAes <- caption %||% getDefaultAesCaption(plotObject)
-  
-  groupingVariable <- reconcileGroupings(dataMapping)
-  if (length(groupingVariable) == 1) {
-    mapData$defaultAes <- mapData[, groupingVariable]
+  # If no specific mapping, use default captions
+  if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
+    mapData$legendLabels <- getlegendLabelsCaption(plotObject)
   }
-  
+  mapData$legendLabels <- caption %||% mapData$legendLabels
+
   # y-intercept
   if (max(is.infinite(mapData[, dataMapping$x])) == 1) {
-    plotObject <- plotObject + ggplot2::geom_ribbon(
-      data = mapData,
-      mapping = ggplot2::aes_string(
-        x = mapLabels$x,
-        ymin = mapLabels$ymin,
-        ymax = mapLabels$ymax,
-        fill = mapLabels$fill,
-        color = mapLabels$color,
-        size = mapLabels$size,
-        linetype = mapLabels$linetype
-      ),
-      alpha = alpha,
-      show.legend = TRUE
-    ) +
+    plotObject <- plotObject +
+      ggplot2::geom_ribbon(
+        data = mapData,
+        mapping = ggplot2::aes_string(x = mapLabels$x, ymin = mapLabels$ymin, ymax = mapLabels$ymax, fill = "legendLabels", color = "legendLabels", size = "legendLabels", linetype = "legendLabels"),
+        alpha = alpha,
+        show.legend = TRUE
+      ) +
       ggplot2::geom_blank(
         data = mapData,
-        mapping = aes_string(
-          shape = mapLabels$shape
-        )
+        mapping = aes_string(shape = "legendLabels")
       )
   } else {
-    plotObject <- plotObject + ggplot2::geom_ribbon(
-      data = mapData,
-      mapping = ggplot2::aes_string(
-        x = mapLabels$x,
-        ymin = mapLabels$ymin,
-        ymax = mapLabels$ymax,
-        fill = mapLabels$fill,
-        color = mapLabels$color,
-        size = mapLabels$size,
-        linetype = mapLabels$linetype
-      ),
-      alpha = alpha,
-      show.legend = TRUE
-    ) +
+    plotObject <- plotObject +
+      ggplot2::geom_ribbon(
+        data = mapData,
+        mapping = ggplot2::aes_string(x = mapLabels$x, ymin = mapLabels$ymin, ymax = mapLabels$ymax, fill = "legendLabels", color = "legendLabels", size = "legendLabels", linetype = "legendLabels"),
+        alpha = alpha,
+        show.legend = TRUE
+      ) +
       ggplot2::geom_blank(
         data = mapData,
-        mapping = aes_string(
-          shape = mapLabels$shape
-        )
+        mapping = aes_string(shape = "legendLabels")
       )
   }
 
-  newCaptions <- levels(factor(mapData$defaultAes))
-  legendLength <- nrow(plotObject$tlfConfiguration$legend$captions) %||% 0
-  newLegendProperty <- seq(legendLength+1, legendLength + length(newCaptions))-1 %% 6 + 1
-  
+  newLabels <- levels(factor(mapData$legendLabels))
+  legendLength <- nrow(plotObject$plotConfiguration$legend$caption) %||% 0
+  newLegendProperty <- seq(legendLength + 1, legendLength + length(newLabels)) - 1 %% 6 + 1
+
   # Sample LegendType properties based tlfTheme if not input
   plotObject <- mergeLegend(plotObject,
-                            newCaptions = newCaptions,
-                            color = color %||% tlfEnv$currentTheme$aesProperties$color[newLegendProperty],
-                            shape = rep(-2, length(newCaptions)),
-                            size = size %||% rep(1, length(newCaptions)),
-                            linetype = linetype %||% rep("blank", length(newCaptions)),
-                            fill = fill %||% tlfEnv$currentTheme$aesProperties$fill[newLegendProperty]
+    newLabels = newLabels,
+    color = color %||% tlfEnv$currentTheme$aesProperties$color[newLegendProperty],
+    shape = rep(-2, length(newLabels)),
+    size = size %||% rep(1, length(newLabels)),
+    linetype = linetype %||% rep("blank", length(newLabels)),
+    fill = fill %||% tlfEnv$currentTheme$aesProperties$fill[newLegendProperty]
   )
-
+  plotObject <- setLegendTitle(plotObject, plotObject$plotConfiguration$legend$title)
   return(plotObject)
 }
 
@@ -732,8 +612,8 @@ addErrorbar <- function(data = NULL,
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- getAesStringMapping(dataMapping)
 
-  # Get default legend for defaultAes
-  mapData$defaultAes <- caption %||% getDefaultAesCaption(plotObject)
+  # Get default legend for legendLabels
+  mapData$legendLabels <- caption %||% getlegendLabelsCaption(plotObject)
 
   plotObject <- plotObject +
     ggplot2::geom_errorbar(
@@ -742,8 +622,8 @@ addErrorbar <- function(data = NULL,
         x = mapLabels$x,
         ymin = mapLabels$ymin,
         ymax = mapLabels$ymax,
-        color = mapLabels$color,
-        size = mapLabels$size
+        color = "legendLabels",
+        size = "legendLabels"
       ),
       show.legend = TRUE
     )
@@ -766,84 +646,11 @@ addErrorbar <- function(data = NULL,
 }
 
 
-getDefaultAesCaption <- function(plotObject) {
-  defaultAesCaptionCount <- which(paste0("data ", seq(1, 100)) %in% plotObject$tlfConfiguration$legend$captions$caption)
-  if (length(defaultAesCaptionCount) == 0) {
-    defaultAesCaptionCount <- 0
+getlegendLabelsCaption <- function(plotObject) {
+  legendLabelsCaptionCount <- which(paste0("data ", seq(1, 100)) %in% plotObject$plotConfiguration$legend$caption$label)
+  if (length(legendLabelsCaptionCount) == 0) {
+    legendLabelsCaptionCount <- 0
   }
-  return(paste0("data ", max(defaultAesCaptionCount) + 1))
+  return(paste0("data ", max(legendLabelsCaptionCount) + 1))
 }
 
-reconcileGroupings <- function(dataMapping) {
-  mappings <- NULL
-  for (aestype in LegendTypes) {
-    mappings <- c(
-      mappings,
-      dataMapping$groupMapping[[aestype]]$label
-    )
-  }
-
-  groupingVariable <- levels(factor(mappings))
-
-  if (length(groupingVariable) > 1) {
-    warning(paste0(
-      "Groups: '",
-      paste0(groupingVariable, collapse = "', '"),
-      "' from dataMapping can't be reconciled in atom plots. \n",
-      "Only group '", groupingVariable[1], "' will be used for defining captions"
-    ))
-    groupingVariable <- groupingVariable[1]
-  }
-
-  return(groupingVariable)
-}
-
-mergeLegend <- function(plotObject,
-                        newCaptions,
-                        color,
-                        shape,
-                        size,
-                        linetype,
-                        fill) {
-  validateIsOfType(plotObject, "ggplot")
-  # validateIsIncluded(scale, Scaling, nullAllowed = TRUE)
-
-  # Clone tlfConfiguration into a new plot object
-  # Prevents update of R6 class being spread to plotObject
-  newPlotObject <- plotObject
-  newPlotObject$tlfConfiguration <- plotObject$tlfConfiguration$clone(deep = TRUE)
-
-  # newCaptions <- levels(factor(mapData$defaultAes))
-  # R6 class not cloned will spread modifications into newPlotObject$tlfConfiguration$yAxis
-  previousCaptions <- newPlotObject$tlfConfiguration$legend$captions
-  
-  # Merge captions: will overwrite properties of same captions as previous
-  previousCaptions <- previousCaptions[!previousCaptions$caption %in% newCaptions, ]
-  
-  newPlotObject$tlfConfiguration$legend$captions <- rbind.data.frame(
-    previousCaptions,
-    data.frame(
-      caption = newCaptions,
-      color = color,
-      shape = shape,
-      size = size,
-      linetype = linetype,
-      fill = fill,
-      stringsAsFactors = FALSE
-    )
-  )
-  
-  captionBreaks <- newPlotObject$tlfConfiguration$legend$captions$caption
-  
-  for (aestype in LegendTypes) {
-    suppressMessages(
-    newPlotObject <- newPlotObject + ggplot2::scale_discrete_manual(
-      name = NULL,
-      aesthetics = aestype,
-      breaks = captionBreaks,
-      values = newPlotObject$tlfConfiguration$legend$captions[order(captionBreaks), aestype]
-    )
-    )
-  }
-  return(newPlotObject)
-}
