@@ -1,88 +1,146 @@
-#' @title SetLegend
+#' @title setLegend
 #' @param plotObject Graphical object created from ggplot
-#' @param legendPosition element of legendPositions list
-#' @param legendTitles Title of the legend captions
-#' @param legendCaptions captions of the legend (as a list with LegendTypes attribute)
-#' @param legendValues values of the legend aesthetic attributes
-#' @return Current plot with Legend Layer
+#' @param position legend position.
+#' Use enum `LegendPositions` to access the list of legend positions.
+#' @param title title of legend
+#' @param caption data.frame containing the caption properties of the legend
+#' @return A \code{ggplot} graphical object
 #' @description
-#' SetLegend set a Legend Position and labels in a plot
+#' Set legend position, title and/or caption
 #' @export
 setLegend <- function(plotObject,
-                      legendPosition,
-                      legendTitles = NULL,
-                      legendCaptions = NULL,
-                      legendValues = NULL) {
+                      position,
+                      title = NULL,
+                      caption = NULL) {
+  validateIsIncluded(position, LegendPositions)
+  validateIsOfType(plotObject, "ggplot")
 
-  # Check Inputs
-  validateIsOfType(plotObject, c("gg", "ggplot"))
-  validateEnumValue(LegendPositions, legendPosition)
+  plotObject <- setLegendPosition(plotObject, position)
+  plotObject <- setLegendTitle(plotObject, title)
 
-  legendTitles <- legendTitles %||% LegendTitles$new()
-  legendCaptions <- legendCaptions %||% LegendCaptions$new()
-  legendValues <- legendValues %||% LegendValues$new()
-
-  validateIsOfType(legendTitles, "LegendTitles")
-  validateIsOfType(legendCaptions, "LegendCaptions")
-  validateIsOfType(legendValues, "LegendValues")
-
-  plotObject <- setLegendPosition(plotObject = plotObject, legendPosition = legendPosition)
-
-  # TO DO: reconcile this method with atom plots
-  # The idea would be to change defautAes to legend in all mappings
-  # and create captions automatically within the data.frame input to ggplot
-  # This way it becomes easy to update the legend captions
-
-  # In case a plot object already has a scale for the legend values,
-  # reset scale to prevent warning due to overwriting
-  plotObject$scales$scales <- list()
-
-  # Redefine label of groups in legend
-  for (legendType in LegendTypes) {
-    plotObject <- plotObject + ifnotnull(
-      legendCaptions[[legendType]],
-      scale_discrete_manual(
-        aesthetics = legendType,
-        name = legendTitles[[legendType]],
-        values = legendValues[[legendType]],
-        labels = levels(as.factor(legendCaptions[[legendType]]))
-      ),
-      scale_discrete_manual(
-        aesthetics = legendType,
-        name = legendTitles[[legendType]],
-        values = legendValues[[legendType]],
-        labels = NA,
-        guide = "none"
-      )
-    )
+  if (!is.null(caption)) {
+    plotObject <- setLegendCaption(plotObject, caption)
   }
   return(plotObject)
 }
 
-#' @title SetLegendPosition
-#' @param plotObject Graphical object created from ggplot
-#' @param legendPosition element of legendPositions list
-#' @param Subplot.Index (optional) OPTION NOT IMPLEMENTED YET
-#' @return Current plot with Legend Layer
+#' @title setLegendCaption
+#' @param plotObject \code{ggplot} graphical object
+#' @param caption data.frame containing the caption properties of the legend
+#' @return A \code{ggplot} graphical object
 #' @description
-#' SetLegendPosition set a Legend Position as defined by legendPosition key
-#' Default legend setting is within plot on the top right corner
+#' Set the legend caption
 #' @export
+#' @import ggplot2
+setLegendCaption <- function(plotObject,
+                             caption) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsOfType(caption, "data.frame")
+  validateIsIncluded(names(caption), CaptionProperties)
+
+  newPlotObject <- plotObject
+  newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
+
+  legend <- newPlotObject$plotConfiguration$legend
+  legend$caption <- caption
+
+  # Re-order based on order variable
+  orderedName <- legend$caption$name[legend$caption$order]
+  orderedLabel <- legend$caption$label[legend$caption$order]
+  orderedVisibility <- legend$caption$visibility[legend$caption$order]
+
+  # The next lines need to be looped on every element of LegendTypes
+  # Otherwise, there can be a legend per LegendTypes
+  # breaks and values don't need to match,
+  # however values is remapped on ggplot alphabetical order to get the right values
+  for (aestype in LegendTypes) {
+    # scale_discrete_manual sends warning every time it overwrite something
+    # so this line need to be silent
+    suppressMessages(
+      newPlotObject <- newPlotObject +
+        ggplot2::scale_discrete_manual(
+          aesthetics = aestype,
+          name = legend$title,
+          breaks = orderedName[orderedVisibility],
+          labels = orderedLabel[orderedVisibility],
+          values = legend$caption[order(legend$caption$name), aestype]
+        )
+    )
+  }
+  return(newPlotObject)
+}
+
+#' @title setLegendTitle
+#' @param plotObject \code{ggplot} graphical object
+#' @param title title of legend
+#' @return A \code{ggplot} graphical object
+#' @description
+#' Set the legend title
+#' @export
+#' @import ggplot2
+setLegendTitle <- function(plotObject,
+                           title) {
+  validateIsOfType(plotObject, "ggplot")
+
+  newPlotObject <- plotObject
+  newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
+
+  legend <- newPlotObject$plotConfiguration$legend
+  legend$title <- title
+
+  # Re-order based on order variable
+  orderedName <- legend$caption$name[legend$caption$order]
+  orderedLabel <- legend$caption$label[legend$caption$order]
+  orderedVisibility <- legend$caption$visibility[legend$caption$order]
+
+  # The next lines need to be looped on every element of LegendTypes
+  # Otherwise, there can be a title per LegendTypes
+  for (aestype in LegendTypes) {
+    # scale_discrete_manual sends warning every time it overwrite something
+    # besides the function need value input to be filled otherwise crash
+    # so this line need to be silent
+    suppressMessages(
+      newPlotObject <- newPlotObject +
+        ggplot2::scale_discrete_manual(
+          aesthetics = aestype,
+          name = legend$title,
+          breaks = orderedName[orderedVisibility],
+          labels = orderedLabel[orderedVisibility],
+          values = legend$caption[order(legend$caption$name), aestype]
+        )
+    )
+  }
+  return(newPlotObject)
+}
+
+#' @title setLegendTitle
+#' @param plotObject \code{ggplot} graphical object
+#' @param position legend position.
+#' Use enum `LegendPositions` to access the list of legend positions.
+#' @return A \code{ggplot} graphical object
+#' @description
+#' Set the legend position
+#' @export
+#' @import ggplot2
 setLegendPosition <- function(plotObject,
-                              legendPosition = LegendPositions$outsideRight,
-                              Subplot.Index = NA) {
-  # Check Plot Handle
-  validateIsOfType(plotObject, c("gg", "ggplot"))
+                              position) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsIncluded(position, LegendPositions)
 
-  # Check and Transform Legend Position enum into actual position
-  legendPosition <- getLegendPosition(legendPosition %||% LegendPositions$none)
+  newPlotObject <- plotObject
+  newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
 
-  plotObject <- plotObject + theme(
+  legend <- newPlotObject$plotConfiguration$legend
+  legend$position <- position
+
+  legendPosition <- getLegendPosition(legend$position)
+
+  newPlotObject <- newPlotObject + theme(
     legend.position = c(legendPosition$xPosition, legendPosition$yPosition),
     legend.justification = c(legendPosition$xJustification, legendPosition$yJustification)
   )
 
-  return(plotObject)
+  return(newPlotObject)
 }
 
 #' LegendPositions
@@ -126,10 +184,20 @@ LegendTypes <- enum(c(
   "size"
 ))
 
-getLegendPosition <- function(position) {
+CaptionProperties <- enum(c(
+  "name",
+  "label",
+  "visibility",
+  "order",
+  "color",
+  "shape",
+  "linetype",
+  "size",
+  "fill"
+))
 
-  # Check if legend position is in enum
-  validateEnumValue(LegendPositions, position)
+getLegendPosition <- function(position) {
+  validateIsIncluded(position, LegendPositions)
 
   listOfLegendPositions <- list(
     none = list(xPosition = "none", xJustification = NULL, yPosition = NULL, yJustification = NULL),
@@ -155,100 +223,35 @@ getLegendPosition <- function(position) {
   return(legendPosition)
 }
 
-# The following R6 classes inherit from Groupings
-# Consequently, they get the very same color, shape, linetype... properties
+mergeLegend <- function(plotObject,
+                        newLabels,
+                        color,
+                        shape,
+                        size,
+                        linetype,
+                        fill) {
+  validateIsOfType(plotObject, "ggplot")
 
-LegendTitles <- R6::R6Class(
-  "LegendTitles",
-  inherit = GroupMapping,
-  public = list(
-    initialize = function(color = NULL,
-                              fill = NULL,
-                              linetype = NULL,
-                              shape = NULL,
-                              size = NULL,
-                              groupings = NULL) {
-      if (!is.null(groupings)) {
-        self$color <- groupings$color$label
-        self$fill <- groupings$fill$label
-        self$linetype <- groupings$linetype$label
-        self$shape <- groupings$shape$label
-        self$size <- groupings$size$label
-      } else {
-        self$color <- color
-        self$fill <- fill
-        self$linetype <- linetype
-        self$shape <- shape
-        self$size <- size
-      }
-    }
+  oldCaption <- plotObject$plotConfiguration$legend$caption
+  legendLength <- nrow(plotObject$plotConfiguration$legend$caption) %||% 0
+  newCaption <- data.frame(
+    name = newLabels,
+    label = newLabels,
+    visibility = rep(TRUE, length(newLabels)),
+    order = seq(legendLength + 1, legendLength + length(newLabels)),
+    color = color,
+    shape = shape,
+    size = size,
+    linetype = linetype,
+    fill = fill,
+    stringsAsFactors = FALSE
   )
-)
 
-LegendCaptions <- R6::R6Class(
-  "LegendCaptions",
-  inherit = GroupMapping,
-  public = list(
-    initialize = function(color = NULL,
-                              fill = NULL,
-                              linetype = NULL,
-                              shape = NULL,
-                              size = NULL,
-                              groupings = NULL,
-                              data = NULL,
-                              metaData = NULL) {
-      if (!is.null(groupings) && !is.null(data)) {
-        self$color <- ifnotnull(
-          groupings$color$group,
-          groupings$color$getCaptions(data, metaData),
-          NA
-        )
-        self$fill <- ifnotnull(
-          groupings$fill$group,
-          groupings$fill$getCaptions(data, metaData),
-          NA
-        )
-        self$linetype <- ifnotnull(
-          groupings$linetype$group,
-          groupings$linetype$getCaptions(data, metaData),
-          NA
-        )
-        self$shape <- ifnotnull(
-          groupings$shape$group,
-          groupings$shape$getCaptions(data, metaData),
-          NA
-        )
-        self$size <- ifnotnull(
-          groupings$size$group,
-          groupings$size$getCaptions(data, metaData),
-          NA
-        )
-      } else {
-        self$color <- color
-        self$fill <- fill
-        self$linetype <- linetype
-        self$shape <- shape
-        self$size <- size
-      }
-    }
+  mergeCaption <- rbind.data.frame(
+    oldCaption,
+    newCaption
   )
-)
+  plotObject <- setLegendCaption(plotObject, mergeCaption)
 
-LegendValues <- R6::R6Class(
-  "LegendValues",
-  inherit = GroupMapping,
-  public = list(
-    initialize = function(aesProperties = tlfEnv$currentTheme$aesProperties,
-                              color = NULL,
-                              fill = NULL,
-                              linetype = NULL,
-                              shape = NULL,
-                              size = NULL) {
-      self$color <- color %||% aesProperties$color
-      self$fill <- fill %||% aesProperties$fill
-      self$linetype <- linetype %||% aesProperties$linetype
-      self$shape <- shape %||% aesProperties$shape
-      self$size <- size %||% aesProperties$size
-    }
-  )
-)
+  return(plotObject)
+}

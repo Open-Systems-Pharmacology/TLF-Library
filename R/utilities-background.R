@@ -1,3 +1,93 @@
+#' @title setGrid
+#' @description Set grid properties on a ggplot object
+#' @param plotObject ggplot object to set
+#' @param color character color of the grid
+#' @param linetype character linetype of the grid. Use "blank" to remove grid.
+#' @param size numeric size of the grid lines
+#' @return ggplot object with updated Y-axis
+#' @export
+setGrid <- function(plotObject,
+                    color = NULL,
+                    linetype = NULL,
+                    size = NULL) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsOfType(color, "character", nullAllowed = TRUE)
+  validateIsOfType(linetype, "character", nullAllowed = TRUE)
+  validateIsOfType(size, "numeric", nullAllowed = TRUE)
+
+  # Clone plotConfiguration into a new plot object
+  # Prevents update of R6 class being spread to plotObject
+  newPlotObject <- plotObject
+  newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
+
+  # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$grid
+  grid <- newPlotObject$plotConfiguration$background$grid
+
+  grid$color <- color %||% grid$color
+  grid$linetype <- linetype %||% grid$linetype
+  grid$size <- size %||% grid$size
+
+  newPlotObject <- newPlotObject + theme(
+    panel.grid = element_line(
+      color = grid$color,
+      size = grid$size,
+      linetype = grid$linetype
+    )
+  )
+
+  return(newPlotObject)
+}
+
+#' @title setBackground
+#' @description Set background properties on a ggplot object
+#' @param plotObject ggplot object to set
+#' @param fill character color fill of the background
+#' @param color character color of the background frame
+#' @param linetype character linetype of the background frame
+#' @param size numeric size of the background frame
+#' @param outerBackgroundFill character color fill of the outerBackground
+#' @return ggplot object with updated Y-axis
+#' @export
+setBackground <- function(plotObject,
+                          fill = NULL,
+                          color = NULL,
+                          linetype = NULL,
+                          size = NULL,
+                          outerBackgroundFill = NULL) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsOfType(size, "numeric", nullAllowed = TRUE)
+  inputs <- c("fill", "color", "linetype", "outerBackgroundFill")
+  validateExpressions <- parse(text = paste0("validateIsOfType(", inputs, ', "character", nullAllowed =TRUE)'))
+  eval(validateExpressions)
+
+  # Clone plotConfiguration into a new plot object
+  # Prevents update of R6 class being spread to plotObject
+  newPlotObject <- plotObject
+  newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
+
+  # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
+  innerBackground <- newPlotObject$plotConfiguration$background$innerBackground
+  outerBackground <- newPlotObject$plotConfiguration$background$outerBackground
+
+  innerBackground$fill <- fill %||% innerBackground$fill
+  innerBackground$color <- color %||% innerBackground$color
+  innerBackground$linetype <- linetype %||% innerBackground$linetype
+  innerBackground$size <- size %||% innerBackground$size
+  outerBackground$fill <- outerBackgroundFill %||% innerBackground$fill
+
+  newPlotObject <- newPlotObject + theme(
+    plot.background = element_rect(fill = outerBackground$fill),
+    panel.background = element_rect(
+      fill = innerBackground$fill,
+      color = innerBackground$color,
+      size = innerBackground$size,
+      linetype = innerBackground$linetype,
+    )
+  )
+  return(newPlotObject)
+}
+
+
 #' @title addWatermark
 #' @param plotObject ggplot object to which the watermark is added
 #' @param label Character or Label class object corresponding to the watermark text
@@ -68,13 +158,13 @@ setWatermark <- function(plotObject,
   # For this create Watermark R6 class inheriting from Label and which gets fields angle and alpha
   validateIsOfType(watermark, c("Label", "character"), nullAllowed = TRUE)
 
-  # Clone tlfConfiguration into a new plot object
+  # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
   newPlotObject <- plotObject
-  newPlotObject$tlfConfiguration <- plotObject$tlfConfiguration$clone(deep = TRUE)
+  newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
 
-  # R6 class not cloned will spread modifications into newPlotObject$tlfConfiguration$background$watermark
-  watermarkConfiguration <- newPlotObject$tlfConfiguration$background$watermark
+  # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$background$watermark
+  watermarkConfiguration <- newPlotObject$plotConfiguration$background$watermark
 
   if (!is.null(watermark)) {
     if (isOfType(watermark, "character")) {
