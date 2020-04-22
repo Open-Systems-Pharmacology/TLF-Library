@@ -152,7 +152,7 @@ getAesStringMapping <- function(dataMapping) {
   # Initialize Labels
   dataMappingLabels <- vector(mode = "list", length = length(geomMappings) + length(groupMappings))
   dataMappingLabels <- lapply(dataMappingLabels, function(x) {
-    return("defaultAes")
+    return("legendLabels")
   })
 
   names(dataMappingLabels) <- c(geomMappings, groupMappings)
