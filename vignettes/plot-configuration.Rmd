@@ -1,0 +1,227 @@
+---
+title: "Plot configuration"
+output: 
+  rmarkdown::html_vignette:
+    number_sections: true
+vignette: >
+  %\VignetteIndexEntry{plot-configuration}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(tlf)
+```
+
+
+This vignette tackles about *PlotConfiguration* objects and their implementation within the `tlf`-library.
+
+# Introduction
+
+*PlotConfiguration* objects are R6 class objects that define plot properties. 
+
+To create such an object, the method *new()* is required. 
+Multiple arguments can be passed on the method in order to directly define the properties. 
+The properties default values can be handled and managed using the concept of themes.
+
+The class possesses also a *print()* method that will print the configuration of the properties below.
+
+As the example below illustrates, the following properties are accounted for by the *PlotConfiguration* class. 
+Each of these properties is managed by a different R6 class object detailed in the next sections:
+
+- *labels*
+- *background*
+- *xAxis*/*yAxis*
+- *legend*
+- *save*
+
+```{r}
+myConfiguration <- PlotConfiguration$new()
+# myConfiguration$print()
+
+myConfiguration <- PlotConfiguration$new(title = "my title",
+                                         watermark = "my watermark")
+# myConfiguration$print()
+```
+
+When a `ggplot` object is initialized using the `tlf` method *initializePlot*, a *plotConfiguration* field of is implanted to the plot object.
+The *plotConfiguration* field is class or subclass of *PlotConfiguration* that aims at simplifying and clarifying the plot properties mentioned above.
+
+*PlotConfiguration* objects can also be pass on the method *initializePlot* as shown below:
+
+```{r}
+emptyPlot <- initializePlot()
+
+myEmptyPlot <- initializePlot(myConfiguration)
+```
+```{r, echo=FALSE, fig.cap="left: emptyPlot; right: myEmptyPlot", fig.width=7.5}
+gridExtra::grid.arrange(emptyPlot, myEmptyPlot, ncol=2)
+```
+
+# Label configuration: *labels*
+
+## Label and Label configuration objects
+
+The field *labels* from the *PlotConfiguration* object is a *LabelConfiguration* R6 class object.
+It defines the label properties of the following plot captions:
+
+- title
+- subtitle
+- xlabel
+- ylabel
+
+Each field is a *Label* R6 class object that associate a text with font properties:
+```{r}
+myEmptyLabel <- Label$new()
+myEmptyLabel$print()
+
+myLabel <- Label$new(text = "some text",
+                     color = "blue")
+myLabel$print()
+```
+
+When initializating a *LabelConfiguration* or *PlotConfiguration* object, *Label* or/and *character* objects can be passed on.
+*Character* objects will be converted into *Label* objects internally using the current theme.
+
+```{r}
+myRedPlotLabel <- LabelConfiguration$new(title = Label$new(text = "my title", 
+                                                           color = "red"))
+myRedPlotLabel$title$print()
+myRedPlotLabel$print()
+
+myPlotLabel <- LabelConfiguration$new(title = "my title")
+myPlotLabel$title$print()
+myPlotLabel$print()
+```
+
+It can be noted that in the latter case, the label configuration is equivalent to the label configuration defined in the previous plot configuration "myConfiguration":
+
+```{r}
+myConfiguration$labels$title$print()
+myConfiguration$labels$print()
+```
+
+## Label configuration in plots
+
+The effect of label configuration in plots is straightforward:
+```{r}
+plotConfigurationLabel1 <- PlotConfiguration$new(title = "Title",
+                                                     subtitle = "Subtitle",
+                                                     xlabel = "x label",
+                                                     ylabel = "y label")
+
+pLab1 <- initializePlot(plotConfigurationLabel1)
+
+plotConfigurationLabel2 <- PlotConfiguration$new(title = Label$new(text = "Title", size = 12, color = "deepskyblue4"),
+                                                 subtitle = Label$new(text = "Subtitle", size = 11, color = "steelblue"),
+                                                 xlabel = Label$new(text = "x label", size = 10, color = "dodgerblue2"),
+                                                 ylabel = Label$new(text = "y label", size = 10, color = "dodgerblue2"))
+
+pLab2 <- initializePlot(plotConfigurationLabel2)
+```
+```{r, echo=FALSE, fig.cap="left: pLab1; right: pLab2", fig.width=7.5}
+gridExtra::grid.arrange(pLab1, pLab2, ncol=2)
+```
+
+## Changing plot labels
+
+After creating a plot, it is possible to change its label configuration using the `tlf` method *setPlotLabels*.
+The metod requires the plot object and which label property to update.
+Similar to the construction of the Label configuration, *Label* or/and *character* objects can be passed on.
+
+Using the previous example, *pLab2*, 
+```{r}
+pLab2$plotConfiguration$labels$title$print()
+
+pLab2Title <-  setPlotLabels(pLab2, title = "new title")
+pLab2RedTitle <-  setPlotLabels(pLab2, title = Label$new(text = "new title", color = "red"))
+
+pLab2Title$plotConfiguration$labels$title$print()
+pLab2RedTitle$plotConfiguration$labels$title$print()
+```
+```{r, echo=FALSE, fig.cap="left: pLab2Title; right: pLab2RedTitle", fig.width=7.5}
+gridExtra::grid.arrange(pLab2Title, pLab2RedTitle, ncol=2)
+```
+
+
+## Smart plot configurations
+
+Smart plot labels are available for initializing *PlotConfiguration* objects. 
+The principle is to provide in advance the *data* that will be used within the plot.
+As a consequence, three optional arguments can be passed on *PlotConfiguration* initialization: *data*, *metaData* and *dataMapping*.
+If no label is specifically defined, the smart configuration will fetch x and y labels within *data* and *metaData* names based on the *dataMapping*.
+*dataMapping* uses also smart functions that will check the input data.frame if not specifically initialized and will use variables named "x" and "y" as *x* and *y*.
+
+The 4 examples below illustrates the smart configurations. *pSmart1* and *pSmart2* will turn out the same, while *pSmart3* will use the information from *metaData* to write the x and y labels. *pSmart4* will overwrite the y label and title based on the input.
+```{r}
+time <- seq(0,20, 0.1)
+myData <- data.frame(x = time,
+                     y = 2*cos(time))
+myMetaData <- list(x = list(dimension = "Time",
+                            unit = "min"),
+                   y = list(dimension = "Amplitude",
+                            unit = "cm"))
+myMapping <- XYGDataMapping$new(x = "x",
+                                y = "y")
+
+smartConfig1 <- PlotConfiguration$new(data = myData)
+smartConfig2 <- PlotConfiguration$new(data = myData,
+                                      dataMapping = myMapping)
+smartConfig3 <- PlotConfiguration$new(data = myData,
+                                      metaData = myMetaData)
+smartConfig4 <- PlotConfiguration$new(title = Label$new(text = "Cosinus", size = 14),
+                                      ylabel = "Variations",
+                                      data = myData,
+                                      metaData = myMetaData)
+
+pSmart1 <- initializePlot(smartConfig1) 
+pSmart2 <- initializePlot(smartConfig2) 
+pSmart3 <- initializePlot(smartConfig3) 
+pSmart4 <- initializePlot(smartConfig4) 
+```
+
+```{r, echo=FALSE, fig.cap="left: pSmart1; right: pSmart2", fig.width=7.5}
+gridExtra::grid.arrange(pSmart1, pSmart2, ncol=2)
+```
+
+```{r, echo=FALSE, fig.cap="left: pSmart3; right: pSmart4", fig.width=7.5}
+gridExtra::grid.arrange(pSmart3, pSmart4, ncol=2)
+```
+
+Since all of the `tlf` plots are using internally *initializePlot* if a previous plot is not provided, the smart configurations can directly be used through the plot functions. Consequently, if *scatter1* will provide simple x and y labels, *scatter2* will name these labels after the metaData properties.
+As for *scatter3* and *scatter4*, they will use the plotConfiguration defined by *smartConfig4* and lead to the exact same plot.
+```{r}
+scatter1 <-  addScatter(data = myData)
+scatter2 <-  addScatter(data = myData,
+                        metaData = myMetaData)
+
+scatter3 <-  addScatter(data = myData,
+                        plotConfiguration = smartConfig4)
+scatter4 <- initializePlot(smartConfig4)
+scatter4 <- addScatter(data = myData,
+                       plotObject = scatter4)
+```
+
+```{r, echo=FALSE, fig.cap="left: scatter1; right: scatter2", fig.width=7.5}
+gridExtra::grid.arrange(scatter1, scatter2, ncol=2)
+```
+
+```{r, echo=FALSE, fig.cap="left: scatter3; right: scatter4", fig.width=7.5}
+gridExtra::grid.arrange(scatter3, scatter4, ncol=2)
+```
+
+# Background configuration: *background*
+
+# X/Y axes configurations: *xAxis*/*yAxis*
+
+# Legend configuration: *legend*
+
+# *PlotConfiguration* derived classes
+
