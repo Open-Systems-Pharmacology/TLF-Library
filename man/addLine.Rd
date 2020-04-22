@@ -10,6 +10,10 @@ addLine(
   x = NULL,
   y = NULL,
   caption = NULL,
+  color = NULL,
+  shape = NULL,
+  size = NULL,
+  linetype = NULL,
   dataMapping = NULL,
   plotConfiguration = NULL,
   plotObject = NULL

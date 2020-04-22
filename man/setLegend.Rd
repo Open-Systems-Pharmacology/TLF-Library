@@ -2,30 +2,23 @@
 % Please edit documentation in R/utilities-legend.R
 \name{setLegend}
 \alias{setLegend}
-\title{SetLegend}
+\title{setLegend}
 \usage{
-setLegend(
-  plotObject,
-  legendPosition,
-  legendTitles = NULL,
-  legendCaptions = NULL,
-  legendValues = NULL
-)
+setLegend(plotObject, position, title = NULL, caption = NULL)
 }
 \arguments{
 \item{plotObject}{Graphical object created from ggplot}
 
-\item{legendPosition}{element of legendPositions list}
+\item{position}{legend position.
+Use enum \code{LegendPositions} to access the list of legend positions.}
 
-\item{legendTitles}{Title of the legend captions}
+\item{title}{title of legend}
 
-\item{legendCaptions}{captions of the legend (as a list with LegendTypes attribute)}
-
-\item{legendValues}{values of the legend aesthetic attributes}
+\item{caption}{data.frame containing the caption properties of the legend}
 }
 \value{
-Current plot with Legend Layer
+A \code{ggplot} graphical object
 }
 \description{
-SetLegend set a Legend Position and labels in a plot
+Set legend position, title and/or caption
 }

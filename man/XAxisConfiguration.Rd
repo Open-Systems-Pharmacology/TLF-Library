@@ -20,6 +20,7 @@ R6 class defining the configuration of X-axis
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="initialize">}\href{../../tlf/html/AxisConfiguration.html#method-initialize}{\code{tlf::AxisConfiguration$initialize()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="print">}\href{../../tlf/html/AxisConfiguration.html#method-print}{\code{tlf::AxisConfiguration$print()}}\out{</span>}
 }
 \out{</details>}
 }

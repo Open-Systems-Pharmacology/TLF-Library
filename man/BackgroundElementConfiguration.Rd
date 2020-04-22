@@ -23,6 +23,7 @@ R6 class defining the configuration of background elements
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{BackgroundElementConfiguration$new()}}
+\item \href{#method-print}{\code{BackgroundElementConfiguration$print()}}
 \item \href{#method-clone}{\code{BackgroundElementConfiguration$clone()}}
 }
 }
@@ -49,7 +50,7 @@ Create a new \code{BackgroundElementConfiguration} object
 
 \item{\code{size}}{character size of the frame of the background element}
 
-\item{\code{linetype}}{R6 class \code{Grouping} object or its input}
+\item{\code{linetype}}{character linetype of the frame of the background element}
 
 \item{\code{theme}}{R6 class \code{Theme} object}
 }
@@ -57,6 +58,18 @@ Create a new \code{BackgroundElementConfiguration} object
 }
 \subsection{Returns}{
 A new \code{BackgroundElementConfiguration} object
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Print background element properties
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{BackgroundElementConfiguration$print()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Background element properties
 }
 }
 \if{html}{\out{<hr>}}

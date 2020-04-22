@@ -12,6 +12,8 @@ R6 class defining the configuration of a \code{ggplot} object
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
+\item{\code{labels}}{R6 class \code{LabelConfiguration} defining labels properties}
+
 \item{\code{legend}}{R6 class \code{LegendConfiguration} defining legend properties}
 
 \item{\code{xAxis}}{R6 class \code{XAxisConfiguration} defining X-axis properties}
@@ -30,9 +32,7 @@ R6 class defining the configuration of a \code{ggplot} object
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{PlotConfiguration$new()}}
-\item \href{#method-setPlotProperties}{\code{PlotConfiguration$setPlotProperties()}}
-\item \href{#method-setPlotBackground}{\code{PlotConfiguration$setPlotBackground()}}
-\item \href{#method-savePlot}{\code{PlotConfiguration$savePlot()}}
+\item \href{#method-print}{\code{PlotConfiguration$print()}}
 \item \href{#method-clone}{\code{PlotConfiguration$clone()}}
 }
 }
@@ -134,60 +134,15 @@ A new \code{PlotConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setPlotProperties"></a>}}
-\subsection{Method \code{setPlotProperties()}}{
-Set axes properties of a \code{ggplot} object
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Print plot configuration
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlotConfiguration$setPlotProperties(plotObject)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PlotConfiguration$print()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{a \code{ggplot} object}
-}
-\if{html}{\out{</div>}}
-}
 \subsection{Returns}{
-A \code{ggplot} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setPlotBackground"></a>}}
-\subsection{Method \code{setPlotBackground()}}{
-Set background properties of a \code{ggplot} object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlotConfiguration$setPlotBackground(plotObject)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{a \code{ggplot} object}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{ggplot} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-savePlot"></a>}}
-\subsection{Method \code{savePlot()}}{
-Save \code{ggplot} object into a file
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlotConfiguration$savePlot(plotObject)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{a \code{ggplot} object}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-NULL
+Plot configuration
 }
 }
 \if{html}{\out{<hr>}}

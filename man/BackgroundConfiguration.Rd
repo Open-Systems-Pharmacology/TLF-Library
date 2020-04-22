@@ -23,6 +23,7 @@ R6 class defining the configuration of background
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{BackgroundConfiguration$new()}}
+\item \href{#method-print}{\code{BackgroundConfiguration$print()}}
 \item \href{#method-setBackground}{\code{BackgroundConfiguration$setBackground()}}
 \item \href{#method-clone}{\code{BackgroundConfiguration$clone()}}
 }
@@ -61,6 +62,18 @@ Create a new \code{BackgroundConfiguration} object
 }
 \subsection{Returns}{
 A new \code{BackgroundConfiguration} object
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Print background properties
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{BackgroundConfiguration$print()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Background properties
 }
 }
 \if{html}{\out{<hr>}}

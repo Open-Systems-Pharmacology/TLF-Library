@@ -29,9 +29,7 @@ R6 class defining the configuration of a \code{ggplot} object for time profile p
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="tlf" data-topic="LabelConfiguration" data-id="setPlotLabels">}\href{../../tlf/html/LabelConfiguration.html#method-setPlotLabels}{\code{tlf::LabelConfiguration$setPlotLabels()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="savePlot">}\href{../../tlf/html/PlotConfiguration.html#method-savePlot}{\code{tlf::PlotConfiguration$savePlot()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="setPlotBackground">}\href{../../tlf/html/PlotConfiguration.html#method-setPlotBackground}{\code{tlf::PlotConfiguration$setPlotBackground()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="setPlotProperties">}\href{../../tlf/html/PlotConfiguration.html#method-setPlotProperties}{\code{tlf::PlotConfiguration$setPlotProperties()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="print">}\href{../../tlf/html/PlotConfiguration.html#method-print}{\code{tlf::PlotConfiguration$print()}}\out{</span>}
 }
 \out{</details>}
 }

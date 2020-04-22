@@ -75,7 +75,7 @@ Print file save properties
 }
 
 \subsection{Returns}{
-NULL
+File save properties
 }
 }
 \if{html}{\out{<hr>}}
