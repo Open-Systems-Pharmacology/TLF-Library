@@ -83,7 +83,8 @@ PlotConfiguration <- R6::R6Class(
         title = title,
         subtitle = subtitle,
         xlabel = xlabel,
-        ylabel = ylabel
+        ylabel = ylabel,
+        theme = theme
       )
 
       # Smart configuration if xlabel and ylabel
@@ -102,15 +103,8 @@ PlotConfiguration <- R6::R6Class(
         dataMapping$y %||%
         self$labels$ylabel)
 
-      self$labels$xlabel$font <- theme$xlabelFont
-      self$labels$ylabel$font <- theme$ylabelFont
-
       # Smart configuration if legend is not defined,
-      self$legend <- legend %||% ifnotnull(
-        dataMapping,
-        LegendConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping),
-        LegendConfiguration$new()
-      )
+      self$legend <- legend %||% LegendConfiguration$new()
 
       # Define X-Axis configuration, overwrite properties only if they are defined
       self$xAxis <- xAxis %||% XAxisConfiguration$new()
@@ -138,36 +132,9 @@ PlotConfiguration <- R6::R6Class(
       self$theme <- theme
     },
 
-    #' @description Set axes properties of a \code{ggplot} object
-    #' @param plotObject a \code{ggplot} object
-    #' @return A \code{ggplot} object
-    setPlotProperties = function(plotObject) {
-      # plotObject <- self$legend$setPlotLegend(plotObject)
-
-      plotObject <- self$xAxis$setPlotAxis(plotObject)
-      plotObject <- self$yAxis$setPlotAxis(plotObject)
-
-      return(plotObject)
-    },
-
-    #' @description Set background properties of a \code{ggplot} object
-    #' @param plotObject a \code{ggplot} object
-    #' @return A \code{ggplot} object
-    setPlotBackground = function(plotObject) {
-      plotObject <- self$background$setBackground(plotObject)
-      return(plotObject)
-    },
-
-    #' @description Save \code{ggplot} object into a file
-    #' @param plotObject a \code{ggplot} object
-    #' @return NULL
-    savePlot = function(plotObject) {
-      self$saveConfiguration$savePlot(plotObject)
-    },
-    
     #' @description Print plot configuration
     #' @return Plot configuration
-    print = function(){
+    print = function() {
       plotProperties <- list(
         labels = self$labels$print(),
         legend = self$legend$print(),
@@ -191,7 +158,6 @@ PlotConfiguration <- R6::R6Class(
 #' @return label character of variable with its unit
 #' @description
 #' dataMappingLabel create an axis label with unit if available
-#' @export
 dataMappingLabel <- function(mapping = NULL, metaData = NULL) {
   label <- NULL
   ifnotnull(mapping, label <- getLabelWithUnit(metaData[[mapping]]$dimension, metaData[[mapping]]$unit))
