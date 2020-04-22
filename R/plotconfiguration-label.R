@@ -12,35 +12,30 @@ LabelConfiguration <- R6::R6Class(
     xlabel = NULL,
     #' @field ylabel R6 class \code{Label} object
     ylabel = NULL,
-    #' @field legendTitles List of legend titles
-    legendTitles = NULL,
-
+    
     #' @description Create a new \code{LabelConfiguration} object
     #' @param title R6 class \code{Label} object
     #' @param subtitle R6 class \code{Label} object
     #' @param xlabel R6 class \code{Label} object
     #' @param ylabel R6 class \code{Label} object
-    #' @param legendTitles List of legend titles
     #' @param theme R6 class \code{Theme}
     #' @return A new \code{LabelConfiguration} object
     initialize = function(title = NULL,
                               subtitle = NULL,
                               xlabel = NULL,
                               ylabel = NULL,
-                              legendTitles = NULL,
                               theme = tlfEnv$currentTheme) {
-      self$title <- asLabel(title %||% "")
-      self$title$font <- theme$titleFont
-      self$subtitle <- asLabel(subtitle %||% "")
-      self$subtitle$font <- theme$subtitleFont
-
-      self$xlabel <- asLabel(xlabel %||% "")
-      self$xlabel$font <- theme$xlabelFont
-      self$ylabel <- asLabel(ylabel %||% "")
-      self$ylabel$font <- theme$ylabelFont
-
-      self$legendTitles <- asLabel(legendTitles %||% "")
-      self$legendTitles$font <- theme$legendTitles
+      
+      inputs <- c("title", "subtitle", "xlabel", "ylabel")
+      validateExpressions <- parse(text = paste0("validateIsOfType(", inputs, ', c("Label", "character"), nullAllowed =TRUE)'))
+      eval(validateExpressions)
+      
+      enforceLabelExpressions <- parse(text = paste0('if(isOfType(', inputs, ',"character")){',
+                                                     inputs, '<- asLabel(text = ', inputs, ', font = theme$', inputs, 'Font)}'))
+      eval(enforceLabelExpressions)
+      
+      associateExpressions <- parse(text = paste0('self$', inputs, ' <- asLabel(', inputs, ')'))
+      eval(associateExpressions)
     },
 
     #' @description Set plot labels properties of a \code{ggplot} object
@@ -61,8 +56,7 @@ LabelConfiguration <- R6::R6Class(
         titleFont = self$title$font,
         subtitleFont = self$subtitle$font,
         xAxisFont = self$xlabel$font,
-        yAxisFont = self$ylabel$font,
-        legendFont = self$legendTitles$font
+        yAxisFont = self$ylabel$font
       )
       return(plotObject)
     },
@@ -87,7 +81,7 @@ LabelConfiguration <- R6::R6Class(
           labelProperties,
           data.frame(
             Property = elementName,
-            Value = self[[elementName]]$text
+            Value = self[[elementName]]$text %||% "NULL"
           )
         )
       }
