@@ -1,13 +1,3 @@
-#' Shortkey checking if argument 1 is not null,
-#' output argument 1 if not null, or output argument 2 otherwise
-#'
-#' @title \%||\%
-#' @param lhs argument 1
-#' @param rhs argument 2
-#' @return lhs if lhs is not null, rhs otherwise
-#' @description
-#' Check if lhs argument is not null, output lhs if not null,
-#' output rhs otherwise
 `%||%` <- function(lhs, rhs) {
   if (!is.null(lhs)) {
     lhs
