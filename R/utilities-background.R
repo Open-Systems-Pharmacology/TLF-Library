@@ -77,6 +77,7 @@ setBackground <- function(plotObject,
 
   newPlotObject <- newPlotObject + theme(
     plot.background = element_rect(fill = outerBackground$fill),
+    legend.background = element_rect(fill = outerBackground$fill),
     panel.background = element_rect(
       fill = innerBackground$fill,
       color = innerBackground$color,
