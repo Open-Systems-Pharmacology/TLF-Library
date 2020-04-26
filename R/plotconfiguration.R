@@ -104,10 +104,15 @@ PlotConfiguration <- R6::R6Class(
       self$labels$ylabel <- asLabel(ylabel %||%
         dataMappingLabel(dataMapping$y, metaData) %||%
         dataMapping$y %||%
+        dataMappingLabel(dataMapping$ymax, metaData) %||%
+        dataMapping$ymax %||%
         self$labels$ylabel)
 
       # Smart configuration if legend is not defined,
       self$legend <- legend %||% LegendConfiguration$new()
+      self$legend$title <- legendTitle %||% self$legend$title
+      validateIsIncluded(legendPosition, "LegendPositions", nullAllowed = TRUE)
+      self$legend$position <- legendPosition %||% self$legend$position
 
       # Define X-Axis configuration, overwrite properties only if they are defined
       self$xAxis <- xAxis %||% XAxisConfiguration$new()
@@ -124,6 +129,7 @@ PlotConfiguration <- R6::R6Class(
         watermark = watermark,
         theme = theme
       )
+      self$background$watermark <- watermark %||% self$background$watermark
 
       # Define save configuration, overwrite properties only if they are defined
       self$saveConfiguration <- saveConfiguration %||% SaveConfiguration$new()
