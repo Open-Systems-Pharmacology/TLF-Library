@@ -460,6 +460,17 @@ addRibbon <- function(data = NULL,
   }
   mapData$legendLabels <- caption %||% mapData$legendLabels
 
+
+  # Get mapping and convert labels into characters usable by aes_string
+  mapData <- dataMapping$checkMapData(data)
+  mapLabels <- getAesStringMapping(dataMapping)
+
+  # If no specific mapping, use default captions
+  if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
+    mapData$legendLabels <- getlegendLabelsCaption(plotObject)
+  }
+  mapData$legendLabels <- caption %||% mapData$legendLabels
+
   # y-intercept
   if (max(is.infinite(mapData[, dataMapping$x])) == 1) {
     plotObject <- plotObject +
@@ -653,4 +664,3 @@ getlegendLabelsCaption <- function(plotObject) {
   }
   return(paste0("data ", max(legendLabelsCaptionCount) + 1))
 }
-
