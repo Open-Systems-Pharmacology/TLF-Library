@@ -28,7 +28,9 @@ PlotConfiguration <- R6::R6Class(
     #' @param xlabel R6 class \code{Label} object
     #' @param ylabel R6 class \code{Label} object
     #' @param legend R6 class \code{LegendConfiguration} object defining legend properties
-    #' @param legendTitles List of legend titles
+    #' @param legendTitle character legend title
+    #' @param legendPositon character legend position. 
+    #' Use Enum `LegendPositions` to get a list of available to legend positions.
     #' @param xAxis R6 class \code{XAxisConfiguration} object defining X-axis properties
     #' @param xScale character defining X-axis scale. Use enum `Scaling` to access predefined scales.
     #' @param xLimits numeric vector of X-axis limits
@@ -55,7 +57,8 @@ PlotConfiguration <- R6::R6Class(
                               ylabel = NULL,
                               # Legend Configuration
                               legend = NULL,
-                              legendTitles = NULL,
+                              legendTitle = NULL,
+                              legendPosition = NULL,
                               # X-Axis configuration
                               xAxis = NULL,
                               xScale = NULL,
