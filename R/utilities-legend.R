@@ -70,6 +70,210 @@ setLegendCaption <- function(plotObject,
   return(newPlotObject)
 }
 
+#' @title getLegendCaption
+#' @param plotObject \code{ggplot} graphical object
+#' @return A data.frame corresponding to legend caption
+#' @description
+#' Get the legend caption
+#' @export
+#' @import ggplot2
+getLegendCaption <- function(plotObject) {
+  validateIsOfType(plotObject, "ggplot")
+
+  # Clone the properties object to prevent spreading of modifications
+  # to the plotObject itself
+  newPlotObject <- plotObject
+  newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
+
+  caption <- newPlotObject$plotConfiguration$legend$caption
+
+  return(caption)
+}
+
+#' @title setCaptionLabel
+#' @param plotObject \code{ggplot} graphical object
+#' @param label new labels of the legend caption
+#' @param name reference names in caption$name identifying the legend caption lines
+#' @return A \code{ggplot} graphical object
+#' @description
+#' Set the legend caption labels
+#' @export
+#' @import ggplot2
+setCaptionLabels <- function(plotObject,
+                             label,
+                             name = NULL) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsOfType(label, c("character", "numeric"))
+
+  # getCoreSetCaptionProperty is common for all the caption properties
+  # prevent duplication of code everywhere
+  labelExpression <- getCoreSetCaptionProperty("label")
+  eval(labelExpression)
+
+  return(newPlotObject)
+}
+
+#' @title setCaptionVisibility
+#' @param plotObject \code{ggplot} graphical object
+#' @param visibility logical visibility of the legend caption labels
+#' @param name reference names in caption$name identifying the legend caption lines
+#' @return A \code{ggplot} graphical object
+#' @description
+#' Set the visibility of the legend caption labels
+#' @export
+#' @import ggplot2
+setCaptionVisibility <- function(plotObject,
+                                 visibility,
+                                 name = NULL) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsLogical(visibility)
+
+  # getCoreSetCaptionProperty is common for all the caption properties
+  # prevent duplication of code everywhere
+  visibilityExpression <- getCoreSetCaptionProperty("visibility")
+  eval(visibilityExpression)
+
+  return(newPlotObject)
+}
+
+#' @title setCaptionOrder
+#' @param plotObject \code{ggplot} graphical object
+#' @param order numeric order of the legend ccaption labels
+#' @param name reference names in caption$name identifying the legend caption lines
+#' @return A \code{ggplot} graphical object
+#' @description
+#' Set the order of the legend caption labels
+#' @export
+#' @import ggplot2
+setCaptionOrder <- function(plotObject,
+                            order,
+                            name = NULL) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsOfType(order, "numeric")
+
+  # getCoreSetCaptionProperty is common for all the caption properties
+  # prevent duplication of code everywhere
+  orderExpression <- getCoreSetCaptionProperty("order")
+  eval(orderExpression)
+
+  return(newPlotObject)
+}
+
+#' @title setCaptionColor
+#' @param plotObject \code{ggplot} graphical object
+#' @param color colors of the data in plot and legend caption
+#' @param name reference names in caption$name identifying the legend caption lines
+#' @return A \code{ggplot} graphical object
+#' @description
+#' Set the colors of the data in plot and legend caption
+#' @export
+#' @import ggplot2
+setCaptionColor <- function(plotObject,
+                            color,
+                            name = NULL) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsOfType(color, c("character", "numeric"))
+
+  # getCoreSetCaptionProperty is common for all the caption properties
+  # prevent duplication of code everywhere
+  colorExpression <- getCoreSetCaptionProperty("color")
+  eval(colorExpression)
+
+  return(newPlotObject)
+}
+
+#' @title setCaptionShape
+#' @param plotObject \code{ggplot} graphical object
+#' @param shape shapes of the data in plot and legend caption
+#' @param name reference names in caption$name identifying the legend caption lines
+#' @return A \code{ggplot} graphical object
+#' @description
+#' Set the shapes of the data in plot and legend caption
+#' @export
+#' @import ggplot2
+setCaptionShape <- function(plotObject,
+                            shape,
+                            name = NULL) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsOfType(shape, c("character", "numeric"))
+
+  # getCoreSetCaptionProperty is common for all the caption properties
+  # prevent duplication of code everywhere
+  shapeExpression <- getCoreSetCaptionProperty("shape")
+  eval(shapeExpression)
+
+  return(newPlotObject)
+}
+
+#' @title setCaptionSize
+#' @param plotObject \code{ggplot} graphical object
+#' @param size sizes of the data in plot and legend caption
+#' @param name reference names in caption$name identifying the legend caption lines
+#' @return A \code{ggplot} graphical object
+#' @description
+#' Set the sizes of the data in plot and legend caption
+#' @export
+#' @import ggplot2
+setCaptionSize <- function(plotObject,
+                           size,
+                           name = NULL) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsOfType(size, c("character", "numeric"))
+
+  # getCoreSetCaptionProperty is common for all the caption properties
+  # prevent duplication of code everywhere
+  sizeExpression <- getCoreSetCaptionProperty("size")
+  eval(sizeExpression)
+
+  return(newPlotObject)
+}
+
+#' @title setCaptionLinetype
+#' @param plotObject \code{ggplot} graphical object
+#' @param linetype linetypes of the data in plot and legend caption
+#' @param name reference names in caption$name identifying the legend caption lines
+#' @return A \code{ggplot} graphical object
+#' @description
+#' Set the linetypes of the data in plot and legend caption
+#' @export
+#' @import ggplot2
+setCaptionLinetype <- function(plotObject,
+                               linetype,
+                               name = NULL) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsOfType(linetype, c("character", "numeric"))
+
+  # getCoreSetCaptionProperty is common for all the caption properties
+  # prevent duplication of code everywhere
+  linetypeExpression <- getCoreSetCaptionProperty("linetype")
+  eval(linetypeExpression)
+
+  return(newPlotObject)
+}
+
+#' @title setCaptionFill
+#' @param plotObject \code{ggplot} graphical object
+#' @param fill fills of the data in plot and legend caption
+#' @param name reference names in caption$name identifying the legend caption lines
+#' @return A \code{ggplot} graphical object
+#' @description
+#' Set the fills of the data in plot and legend caption
+#' @export
+#' @import ggplot2
+setCaptionFill <- function(plotObject,
+                           fill,
+                           name = NULL) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsOfType(fill, c("character", "numeric"))
+
+  # getCoreSetCaptionProperty is common for all the caption properties
+  # prevent duplication of code everywhere
+  fillExpression <- getCoreSetCaptionProperty("fill")
+  eval(fillExpression)
+
+  return(newPlotObject)
+}
+
 #' @title setLegendTitle
 #' @param plotObject \code{ggplot} graphical object
 #' @param title title of legend
@@ -254,4 +458,18 @@ mergeLegend <- function(plotObject,
   plotObject <- setLegendCaption(plotObject, mergeCaption)
 
   return(plotObject)
+}
+
+getCoreSetCaptionProperty <- function(property) {
+  parse(text = paste0(
+    'validateIsOfType(plotObject, "ggplot") ',
+    "newCaption <- getLegendCaption(plotObject) ",
+    property, "Indices <- seq(1, length(", property, ")) ",
+    "if(!is.null(name)){",
+    "validateIsIncluded(name, newCaption$name) ",
+    "validateIsSameLength(", property, ", name) ",
+    property, "Indices <- match(name, newCaption$name)} ",
+    "newCaption$", property, "[", property, "Indices] <- ", property,
+    " newPlotObject <- setLegendCaption(plotObject, newCaption)"
+  ))
 }
