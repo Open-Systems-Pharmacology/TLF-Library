@@ -32,7 +32,7 @@ BackgroundConfiguration <- R6::R6Class(
       self$grid <- grid %||% BackgroundElementConfiguration$new(theme = theme$background$grid)
 
       self$watermark <- asLabel(watermark %||% theme$background$watermark %||% "")
-      self$watermark$font <- watermarkFont %||% theme$watermarkFont
+      self$watermark$font <- watermarkFont %||% self$watermark$font
     },
 
     #' @description Print background properties
