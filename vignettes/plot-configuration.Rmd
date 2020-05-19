@@ -150,7 +150,6 @@ pLab2RedTitle$plotConfiguration$labels$title$print()
 gridExtra::grid.arrange(pLab2Title, pLab2RedTitle, ncol=2)
 ```
 
-
 ## Smart plot configurations
 
 Smart plot labels are available for initializing *PlotConfiguration* objects. 
@@ -219,9 +218,347 @@ gridExtra::grid.arrange(scatter3, scatter4, ncol=2)
 
 # Background configuration: *background*
 
+The field *background* from the *PlotConfiguration* object is a *BackgroundConfiguration* R6 class object.
+It defines the following plot properties:
+
+- inner and outer backgrounds
+- grid
+- watermark
+
+Inner, outer backgrounds and grid are all *BackgroundElementConfiguration* R6 class object that associate one or multiple aesthetic properties to the background element.
+Watermark is a *Label* R6 class object to which it is also possible to set the angle and transparency.
+
+When initializating a *BackgroundConfiguration* or *PlotConfiguration* object, the background properties and watermark can be passed on.
+
+```{r}
+myEmptyBackgroundConfiguration <- BackgroundConfiguration$new()
+myEmptyBackgroundConfiguration$print()
+```
+
+## Background configuration in plots
+
+The effect of background configuration in plots is quite straightforward:
+```{r}
+plotConfigurationBackground1 <- PlotConfiguration$new(watermark = "My Watermark")
+
+pBack1 <- initializePlot(plotConfigurationBackground1)
+
+plotConfigurationBackground2 <- PlotConfiguration$new(
+  watermark = Label$new(text = "Hello world", color = "goldenrod4", size = 8),
+  background = BackgroundConfiguration$new(outerBackground = BackgroundElementConfiguration$new(fill = "lemonchiffon"),
+                                           innerBackground = BackgroundElementConfiguration$new(fill = "lemonchiffon", 
+                                                                                                color = "goldenrod3"),
+                                           grid = BackgroundElementConfiguration$new(color = "goldenrod3")))
+
+pBack2 <- initializePlot(plotConfigurationBackground2)
+```
+
+```{r, echo=FALSE, fig.cap="left: pBack1; right: pBack2", fig.width=7.5}
+gridExtra::grid.arrange(pBack1, pBack2, ncol=2)
+```
+
+## Changing background properties
+
+After creating a plot, it is possible to change its background configuration using the following `tlf` methods:
+
+- *setBackground*
+- *setGrid*
+- *setWatermark*
+
+### Set Background
+
+The metod *setBackground* requires the plot object and which inner/outer background properties to update.
+
+Using the previous example, *scatter1*, 
+```{r}
+scatter1$plotConfiguration$background$print()
+
+scatterNewBackground1 <-  setBackground(scatter1, 
+                             outerBackgroundFill = "darkolivegreen1",
+                             fill = "darkolivegreen2",
+                             color = "darkgreen",
+                             linetype = "blank")
+scatterNewBackground2 <-  setBackground(scatter1, 
+                             outerBackgroundFill = "lemonchiffon",
+                             fill = "lemonchiffon",
+                             size = 2,
+                             linetype = "solid")
+
+scatterNewBackground1$plotConfiguration$background$print()
+scatterNewBackground2$plotConfiguration$background$print()
+```
+
+```{r, echo=FALSE, fig.cap="top: scatter1; bottom left: scatterNewBackground1; bottom right: scatterNewBackground2", fig.width=7.5}
+gridExtra::grid.arrange(grobs = list(scatter1, scatterNewBackground1, scatterNewBackground2), layout_matrix=rbind(c(1,1), c(2,3)))
+```
+
+### Set Grid
+
+The metod *setGrid* is very similar and requires the plot object and which grid properties to update.
+
+Using the previous examples, *scatterNewBackground1* and *scatterNewBackground2*:
+```{r}
+scatterNewBackground1$plotConfiguration$background$grid$print()
+
+# Remove grid
+scatterNewGrid1 <-  setGrid(scatterNewBackground1, 
+                             linetype = "blank")
+
+scatterNewGrid1$plotConfiguration$background$grid$print()
+
+scatterNewGrid2 <-  setGrid(scatterNewBackground2, 
+                             color = "darkgreen",
+                             size = 0.5,
+                             linetype = "dotted")
+
+scatterNewGrid2$plotConfiguration$background$grid$print()
+```
+
+```{r, echo=FALSE, fig.cap="left: scatterNewBackground1; right: scatterNewGrid1", fig.width=7.5}
+gridExtra::grid.arrange(scatterNewBackground1, scatterNewGrid1, ncol=2)
+```
+
+```{r, echo=FALSE, fig.cap="left: scatterNewBackground2; right: scatterNewGrid2", fig.width=7.5}
+gridExtra::grid.arrange(scatterNewBackground2, scatterNewGrid2, ncol=2)
+```
+
+
+### Set Watermark
+
+The metod *setWatermark* requires the plot object, the watermark and its properties to update.
+In the properties, *alpha* is a value between 0 and 1 managing transparency of the watermark.
+The closer to 0, the more transparent the watermark will be. 
+The closer to 1, the more opaque the watermark will be.
+The propert *angle*, is the angle of the watermark in degrees.
+
+Using the previous examples, *pBack2* and *scatterNewGrid2*, 
+```{r}
+pBack2$plotConfiguration$background$watermark$print()
+
+pWatermark1 <-  setWatermark(pBack2, 
+                            watermark = "Hi !!",
+                            alpha = 1,
+                            angle = 0)
+
+pWatermark2 <-  setWatermark(pBack2,
+                            alpha = 1,
+                            angle = 45)
+
+pWatermark1$plotConfiguration$background$watermark$print()
+pWatermark2$plotConfiguration$background$watermark$print()
+```
+
+```{r}
+scatterNewGrid2$plotConfiguration$background$watermark$print()
+
+scatterWatermark <-  setWatermark(scatterNewGrid2, 
+                                  watermark = Label$new(text = "Confidential", color = "firebrick"))
+
+scatterWatermark$plotConfiguration$background$watermark$print()
+```
+
+```{r, echo=FALSE, fig.cap="top: pBack2; bottom left: pWatermark2; bottom right: pWatermark2", fig.width=7.5}
+gridExtra::grid.arrange(grobs = list(pBack2, pWatermark1, pWatermark2), layout_matrix = rbind(c(1,1),c(2,3)))
+```
+
+```{r, echo=FALSE, fig.cap="left: scatterNewGrid2; right: scatterWatermark", fig.width=7.5}
+gridExtra::grid.arrange(scatterNewGrid2, scatterWatermark, ncol=2)
+```
+
 # X/Y axes configurations: *xAxis*/*yAxis*
 
+The fields *xAxis* and *yAxis* from the *PlotConfiguration* object are a *XAxisConfiguration* and *YAxisConfiguration* R6 class objects.
+They define the following plot properties:
+
+- scale
+- limits
+- ticks
+- ticklabels
+
+The property *scale* is a character string corresponding the axis scale.
+Available scales are `r paste0(c('"', paste0(Scaling, collapse = '", "'), '"'), collapse="")` and can be accessed using the enum *Scaling*.
+The property *limits* is a vector defining the range of the axis. 
+The value *"default"* will leave the management of the limits to R.
+The properties *ticks* and *ticklabels* are vectors defining the plot ticks and their labels. These vectors are required to have the same length.
+The value *"default"* will leave the management of the limits to R.
+
+When initializating a *XAxisConfiguration*, *YAxisConfiguration* or *PlotConfiguration* objects, the axis properties can be passed on.
+
+
+```{r}
+myEmptyAxisConfiguration <- XAxisConfiguration$new()
+myEmptyAxisConfiguration$print()
+
+myAxisConfiguration <- XAxisConfiguration$new(scale = Scaling$log10,
+                                              limits = c(1, 100))
+myAxisConfiguration$print()
+```
+
+## Axis configuration in plots
+
+## Changing axis properties
+
+The metods *setXAxis* and *setYAxis* requires the plot object, and the axis properties to update.
+
+Using the previous example, *scatter1*: 
+```{r}
+scatter1$plotConfiguration$xAxis$print()
+scatter1$plotConfiguration$yAxis$print()
+
+scatterXlog <-  setXAxis(scatter1,
+                          scale = Scaling$log10)
+
+scatterXlog$plotConfiguration$xAxis$print()
+
+scatterXTicks <-  setXAxis(scatter1,
+                           limits = c(0, 6*pi),
+                           ticks = seq(0, 6*pi, pi),
+                           ticklabels = parse(text = c("0", "pi", paste0(seq(2, 6), "*pi"))))
+
+scatterXTicks$plotConfiguration$xAxis$print()
+
+```
+
+```{r, echo=FALSE, fig.cap="top: scatter1; bottom left: scatterXlog; bottom right: scatterXTicks", fig.width=7.5}
+gridExtra::grid.arrange(grobs = list(scatter1, scatterXlog, scatterXTicks), layout_matrix = rbind(c(1,1),c(2,3)))
+```
+
 # Legend configuration: *legend*
+
+The field *legend* from the *PlotConfiguration* object is a *LegendConfiguration* R6 class object.
+It defines the following plot properties:
+
+- title
+- position
+- caption
+
+The property *title* is a character string corresponding the legend title.
+The property *position* is a character string corresponding the legend position.
+Available legend positions are `r paste0(c('"', paste0(LegendPositions, collapse = '", "'), '"'), collapse="")` and can be accessed using the enum *LegendPositions*.
+The property *caption* is a data.frame defining the caption properties of the legend. 
+
+When initializating a *LegendConfiguration* or *PlotConfiguration* object, the background properties and watermark can be passed on.
+
+```{r}
+myEmptyLegendConfiguration <- LegendConfiguration$new()
+myEmptyLegendConfiguration$print()
+
+myLegendConfiguration <- LegendConfiguration$new(title = "Legend Title",
+                                                 position = LegendPositions$insideTopRight)
+myLegendConfiguration$print()
+```
+
+## Legend configuration in plots
+
+The effect of legend configuration in plots is straightforward.
+Using the previous example with *myData*, initializing the plot won't print the legend on the plot since no data are plotted, but will keep in memory the configuration when adding layers.
+The legend caption is updated every type a new layer is added. 
+The atom plots also allow to manually indicates desired legend properties for the corresponding layer.
+
+```{r}
+plotConfigurationLegend1 <- PlotConfiguration$new()
+plotConfigurationLegend1$legend$print()
+
+emptyLegend1 <- initializePlot(plotConfigurationLegend1)
+emptyLegend1$plotConfiguration$legend$print()
+
+scatterLegend1 <- addScatter(data = myData,
+                             plotConfiguration = plotConfigurationLegend1)
+scatterLegend1$plotConfiguration$legend$print()
+
+scatterLegend2 <- addLine(y = c(-1, 0, 1),
+                          plotObject = scatterLegend1)
+scatterLegend2$plotConfiguration$legend$print()
+
+scatterLegend3 <- addScatter(data = myData,
+                             caption = "Cosinus data",
+                             color = "darkblue",
+                             size = 2,
+                             plotConfiguration = plotConfigurationLegend1)
+scatterLegend3 <- addLine(y = c(-1, 0, 1),
+                          caption = "Some lines",
+                          color = "coral3",
+                          linetype = "solid",
+                          plotObject = scatterLegend3)
+scatterLegend3$plotConfiguration$legend$print()
+```
+
+```{r, echo=FALSE, fig.cap="top left: emptyLegend1; top right: scatterLegend1; bottom left: scatterLegend2; bottom right: scatterLegend3", fig.width=7.5}
+gridExtra::grid.arrange(emptyLegend1, scatterLegend1, scatterLegend2, scatterLegend3, ncol=2)
+```
+
+```{r}
+plotConfigurationLegend1 <- PlotConfiguration$new(legendTitle = "my legend",
+                                                  legendPosition = LegendPositions$outsideTopLeft)
+plotConfigurationLegend1$legend$print()
+
+emptyLegend1 <- initializePlot(plotConfigurationLegend1)
+emptyLegend1$plotConfiguration$legend$print()
+
+scatterLegend1 <- addScatter(data = myData,
+                             plotConfiguration = plotConfigurationLegend1)
+scatterLegend1$plotConfiguration$legend$print()
+
+scatterLegend2 <- addLine(y = c(-1, 0, 1),
+                          plotObject = scatterLegend1)
+scatterLegend2$plotConfiguration$legend$print()
+
+scatterLegend3 <- addScatter(data = myData,
+                             caption = "Cosinus data",
+                             color = "darkblue",
+                             size = 2,
+                             plotConfiguration = plotConfigurationLegend1)
+scatterLegend3 <- addLine(y = c(-1, 0, 1),
+                          caption = "Some lines",
+                          color = "coral3",
+                          linetype = "solid",
+                          plotObject = scatterLegend3)
+scatterLegend3$plotConfiguration$legend$print()
+```
+
+```{r, echo=FALSE, fig.cap="top left: emptyLegend1; top right: scatterLegend1; bottom left: scatterLegend2; bottom right: scatterLegend3", fig.width=7.5}
+gridExtra::grid.arrange(emptyLegend1, scatterLegend1, scatterLegend2, scatterLegend3, ncol=2)
+```
+
+## Changing plot legend
+
+### Changing a legend title
+
+After creating a plot, it is possible to change its legend title using the `tlf` method *setLegendTitle*.
+The metod requires the plot object and the text of title to update with.
+
+Using *scatterLegend3* from the previous example:
+```{r}
+scatterLegend3$legend$title
+
+scatterLegend4<- setLegendTitle(scatterLegend3, "My new legend")
+scatterLegend4$legend$title
+```
+
+```{r, echo=FALSE, fig.cap="left: scatterLegend3; right: scatterLegend4", fig.width=7.5}
+gridExtra::grid.arrange(scatterLegend3, scatterLegend4, ncol=2)
+```
+
+### Changing a legend position
+
+After creating a plot, it is also possible to change its legend position using the `tlf` method *setLegendPosition*.
+The metod requires the plot object and the new position of the legend to update with.
+
+Using *scatterLegend3* from the previous example:
+```{r}
+scatterLegend3$legend$position
+
+scatterLegend3Inside<- setLegendPosition(scatterLegend3, LegendPositions$insideTopRight)
+scatterLegend3Inside$legend$position
+```
+
+```{r, echo=FALSE, fig.cap="left: scatterLegend3; right: scatterLegend3Inside", fig.width=7.5}
+gridExtra::grid.arrange(scatterLegend3, scatterLegend3Inside, ncol=2)
+```
+  
+### Changing a legend caption
+
+# Usage of *theme*
 
 # *PlotConfiguration* derived classes
 
