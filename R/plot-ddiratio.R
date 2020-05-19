@@ -1,5 +1,3 @@
-#' Create a DDI-Ratio plot
-#'
 #' @title plotDDIRatio
 #' @param data data.frame (or list of data.frames? TO BE DISCUSSED)
 #' containing the data to be used for the plot
@@ -13,35 +11,29 @@
 #' plotDDIRatio(data, metaData, dataMapping, plotConfiguration)
 #' @return a ggplot graphical object
 #' @export
-#'
 plotDDIRatio <- function(data,
                          metaData = NULL,
                          dataMapping = NULL,
-                         plotConfiguration = NULL) {
-  # If no data mapping or plot configuration is input, use default
-  metaData <- metaData %||% metaDataHelper(data)
-  dataMapping <- dataMapping %||% DDIRatioDataMapping$new()
-  plotConfiguration <- plotConfiguration %||% DDIRatioPlotConfiguration$new(
-    data = data,
-    metaData = metaData,
-    dataMapping = dataMapping
-  )
+                         plotConfiguration = NULL,
+                         plotObject = NULL) {
+  dataMapping <- dataMapping %||% DDIRatioDataMapping$new(data = data)
+  plotConfiguration <- plotConfiguration %||% DDIRatioPlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
 
   validateIsOfType(dataMapping, DDIRatioDataMapping)
   validateIsOfType(plotConfiguration, DDIRatioPlotConfiguration)
 
-  plotObject <- ggplot2::ggplot()
+  plotObject <- plotObject %||% initializePlot(plotConfiguration)
+  ratioData <- dataMapping$getDDIRatioLines()
+  guestData <- dataMapping$getGuestLines()
 
-  # Add Plot Configuration layers and PK Ratios
-  plotObject <- plotConfiguration$setPlotBackground(plotObject)
-  plotObject <- plotConfiguration$addDDIRatioLines(plotObject, dataMapping)
-  plotObject <- plotConfiguration$addGuestLines(plotObject, dataMapping)
+  plotObject <- addLine(x = ratioData$x, y = ratioData$y, caption = "ddiRatioLine1", plotObject = plotObject)
+  plotObject <- addLine(x = ratioData$x, y = ratioData$ymin, caption = "ddiRatioLine2", plotObject = plotObject)
+  plotObject <- addLine(x = ratioData$x, y = ratioData$ymax, caption = "ddiRatioLine2", plotObject = plotObject)
 
-  plotObject <- plotConfiguration$addDDIRatios(plotObject, data, metaData, dataMapping)
+  plotObject <- addLine(x = ratioData$x, y = guestData$ymin, caption = "guestLine", plotObject = plotObject)
+  plotObject <- addLine(x = ratioData$x, y = guestData$ymax, caption = "guestLine", plotObject = plotObject)
 
-  plotObject <- plotConfiguration$setPlotLabels(plotObject)
-  plotObject <- plotConfiguration$setPlotProperties(plotObject)
-  plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)
-
+  plotObject <- setLegendCaption(plotObject, plotConfiguration$ddiRatioCaption)
+  plotObject <- addScatter(data = data, dataMapping = dataMapping, plotObject = plotObject)
   return(plotObject)
 }
