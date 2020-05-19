@@ -232,3 +232,16 @@ smartMapping <- function(data) {
   }
   return(mapping)
 }
+
+DefaultDataMappingValues <- list(
+  pkRatio = list(
+    pkRatio1 = 1,
+    pkRatio2 = c(1.5, 1 / 1.5),
+    pkRatio3 = c(2, 1 / 2)
+  ),
+  ddiRatio = list(
+    ddiRatio1 = 1,
+    ddiRatio2 = c(2, 1 / 2),
+    guestLine = 1
+  )
+)
