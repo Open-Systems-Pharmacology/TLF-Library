@@ -32,8 +32,7 @@ setLegend <- function(plotObject,
 #' Set the legend caption
 #' @export
 #' @import ggplot2
-setLegendCaption <- function(plotObject,
-                             caption) {
+setLegendCaption <- function(plotObject, caption) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(caption, "data.frame")
   validateIsIncluded(names(caption), CaptionProperties)
@@ -99,9 +98,7 @@ getLegendCaption <- function(plotObject) {
 #' Set the legend caption labels
 #' @export
 #' @import ggplot2
-setCaptionLabels <- function(plotObject,
-                             label,
-                             name = NULL) {
+setCaptionLabels <- function(plotObject, label, name = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(label, c("character", "numeric"))
 
@@ -122,9 +119,7 @@ setCaptionLabels <- function(plotObject,
 #' Set the visibility of the legend caption labels
 #' @export
 #' @import ggplot2
-setCaptionVisibility <- function(plotObject,
-                                 visibility,
-                                 name = NULL) {
+setCaptionVisibility <- function(plotObject, visibility, name = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsLogical(visibility)
 
@@ -145,9 +140,7 @@ setCaptionVisibility <- function(plotObject,
 #' Set the order of the legend caption labels
 #' @export
 #' @import ggplot2
-setCaptionOrder <- function(plotObject,
-                            order,
-                            name = NULL) {
+setCaptionOrder <- function(plotObject, order, name = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(order, "numeric")
 
@@ -168,9 +161,7 @@ setCaptionOrder <- function(plotObject,
 #' Set the colors of the data in plot and legend caption
 #' @export
 #' @import ggplot2
-setCaptionColor <- function(plotObject,
-                            color,
-                            name = NULL) {
+setCaptionColor <- function(plotObject, color, name = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(color, c("character", "numeric"))
 
@@ -191,9 +182,7 @@ setCaptionColor <- function(plotObject,
 #' Set the shapes of the data in plot and legend caption
 #' @export
 #' @import ggplot2
-setCaptionShape <- function(plotObject,
-                            shape,
-                            name = NULL) {
+setCaptionShape <- function(plotObject, shape, name = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(shape, c("character", "numeric"))
 
@@ -214,9 +203,7 @@ setCaptionShape <- function(plotObject,
 #' Set the sizes of the data in plot and legend caption
 #' @export
 #' @import ggplot2
-setCaptionSize <- function(plotObject,
-                           size,
-                           name = NULL) {
+setCaptionSize <- function(plotObject, size, name = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(size, c("character", "numeric"))
 
@@ -237,9 +224,7 @@ setCaptionSize <- function(plotObject,
 #' Set the linetypes of the data in plot and legend caption
 #' @export
 #' @import ggplot2
-setCaptionLinetype <- function(plotObject,
-                               linetype,
-                               name = NULL) {
+setCaptionLinetype <- function(plotObject, linetype, name = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(linetype, c("character", "numeric"))
 
@@ -260,9 +245,7 @@ setCaptionLinetype <- function(plotObject,
 #' Set the fills of the data in plot and legend caption
 #' @export
 #' @import ggplot2
-setCaptionFill <- function(plotObject,
-                           fill,
-                           name = NULL) {
+setCaptionFill <- function(plotObject, fill, name = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(fill, c("character", "numeric"))
 
@@ -282,8 +265,7 @@ setCaptionFill <- function(plotObject,
 #' Set the legend title
 #' @export
 #' @import ggplot2
-setLegendTitle <- function(plotObject,
-                           title) {
+setLegendTitle <- function(plotObject, title) {
   validateIsOfType(plotObject, "ggplot")
 
   newPlotObject <- plotObject
@@ -326,8 +308,7 @@ setLegendTitle <- function(plotObject,
 #' Set the legend position
 #' @export
 #' @import ggplot2
-setLegendPosition <- function(plotObject,
-                              position) {
+setLegendPosition <- function(plotObject, position) {
   validateIsOfType(plotObject, "ggplot")
   validateIsIncluded(position, LegendPositions)
 
@@ -347,35 +328,10 @@ setLegendPosition <- function(plotObject,
   return(newPlotObject)
 }
 
-#' LegendPositions
-#'
-#' @include enum.R
-#' @export
-#' @description
-#' List of all available legend positions
-#'
-LegendPositions <- enum(c(
-  "none",
-  "insideTop",
-  "insideTopLeft",
-  "insideLeft",
-  "insideBottomLeft",
-  "insideBottom",
-  "insideBottomRight",
-  "insideRight",
-  "insideTopRight",
-  "outsideTop",
-  "outsideTopLeft",
-  "outsideLeft",
-  "outsideBottomLeft",
-  "outsideBottom",
-  "outsideBottomRight",
-  "outsideRight",
-  "outsideTopRight"
-))
+# LegendPositions needed to be defined before to tlfEnv$defaultLegendPosition
+# It was consequently moved from utilities-legend to tlf-env
 
-#' LegendTypes
-#'
+#' @title LegendTypes
 #' @include enum.R
 #' @export
 #' @description
@@ -427,49 +383,39 @@ getLegendPosition <- function(position) {
   return(legendPosition)
 }
 
-mergeLegend <- function(plotObject,
-                        newLabels,
-                        color,
-                        shape,
-                        size,
-                        linetype,
-                        fill) {
+mergeLegend <- function(plotObject, newLabels, color, shape, size, linetype, fill) {
   validateIsOfType(plotObject, "ggplot")
 
   oldCaption <- plotObject$plotConfiguration$legend$caption
   legendLength <- nrow(plotObject$plotConfiguration$legend$caption) %||% 0
   newCaption <- data.frame(
-    name = newLabels,
-    label = newLabels,
+    name = newLabels, label = newLabels,
     visibility = rep(TRUE, length(newLabels)),
     order = seq(legendLength + 1, legendLength + length(newLabels)),
-    color = color,
-    shape = shape,
-    size = size,
-    linetype = linetype,
-    fill = fill,
+    color = color, shape = shape, size = size, linetype = linetype, fill = fill,
     stringsAsFactors = FALSE
   )
 
-  mergeCaption <- rbind.data.frame(
-    oldCaption,
-    newCaption
-  )
+  mergeCaption <- rbind.data.frame(oldCaption, newCaption)
   plotObject <- setLegendCaption(plotObject, mergeCaption)
+  plotObject <- setLegendPosition(plotObject, plotObject$plotConfiguration$legend$position)
 
   return(plotObject)
 }
 
 getCoreSetCaptionProperty <- function(property) {
-  parse(text = paste0(
-    'validateIsOfType(plotObject, "ggplot") ',
-    "newCaption <- getLegendCaption(plotObject) ",
-    property, "Indices <- seq(1, length(", property, ")) ",
-    "if(!is.null(name)){",
-    "validateIsIncluded(name, newCaption$name) ",
-    "validateIsSameLength(", property, ", name) ",
-    property, "Indices <- match(name, newCaption$name)} ",
-    "newCaption$", property, "[", property, "Indices] <- ", property,
-    " newPlotObject <- setLegendCaption(plotObject, newCaption)"
-  ))
+  c(parse(text = 'validateIsOfType(plotObject, "ggplot")'), 
+    parse(text = "newCaption <- getLegendCaption(plotObject)"),
+    parse(text = paste0(property, "Indices <- seq(1, length(", property, "))")),
+    parse(text = paste0("if(!is.null(name)){", 
+                        "validateIsIncluded(name, newCaption$name) \n", 
+                        "validateIsSameLength(", property, ", name) \n",
+                        property, "Indices <- match(name, newCaption$name)}")),
+    parse(text = paste0("newCaption$", property, "[", property, "Indices] <- ", property, " \n")),
+    parse(text = "newPlotObject <- setLegendCaption(plotObject, newCaption)"))
+}
+
+
+getDefaultCaptionFor <- function(plotName){
+  as.data.frame(tlfEnv$currentTheme$defaultCaption[[plotName]], stringsAsFactors = FALSE)
 }
