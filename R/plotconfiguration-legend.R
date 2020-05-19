@@ -18,7 +18,7 @@ LegendConfiguration <- R6::R6Class(
     #' Default `NULL` does not provide any legend title.
     #' @param caption data.frame containing the legend caption properties
     #' @return A new \code{LegendConfiguration} object
-    initialize = function(position = LegendPositions$outsideRight,
+    initialize = function(position = tlfEnv$defaultLegendPosition,
                               title = NULL,
                               caption = NULL) {
       validateIsIncluded(position, LegendPositions)

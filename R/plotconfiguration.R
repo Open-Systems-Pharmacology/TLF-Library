@@ -3,9 +3,6 @@
 #' @export
 PlotConfiguration <- R6::R6Class(
   "PlotConfiguration",
-  inherit = LabelConfiguration,
-  ## ----------------------------------
-  ## List of plotConfiguration Variables
   public = list(
     #' @field labels R6 class \code{LabelConfiguration} defining labels properties
     labels = NULL,
@@ -17,8 +14,8 @@ PlotConfiguration <- R6::R6Class(
     yAxis = NULL,
     #' @field background R6 class \code{BackgroundConfiguration} defining background properties
     background = NULL,
-    #' @field saveConfiguration R6 class \code{SaveConfiguration} defining saving properties
-    saveConfiguration = NULL,
+    #' @field export R6 class \code{ExportConfiguration} defining export properties
+    export = NULL,
     #' @field theme \code{Theme} R6 class defining theme aesthetic properties
     theme = NULL,
 
@@ -29,7 +26,7 @@ PlotConfiguration <- R6::R6Class(
     #' @param ylabel R6 class \code{Label} object
     #' @param legend R6 class \code{LegendConfiguration} object defining legend properties
     #' @param legendTitle character legend title
-    #' @param legendPositon character legend position. 
+    #' @param legendPosition character legend position. 
     #' Use Enum `LegendPositions` to get a list of available to legend positions.
     #' @param xAxis R6 class \code{XAxisConfiguration} object defining X-axis properties
     #' @param xScale character defining X-axis scale. Use enum `Scaling` to access predefined scales.
@@ -39,8 +36,8 @@ PlotConfiguration <- R6::R6Class(
     #' @param yLimits numeric vector of Y-axis limits
     #' @param background R6 class \code{BackgroundConfiguration} defining background properties
     #' @param watermark R6 class \code{Label} object defining watermark background
-    #' @param saveConfiguration R6 class \code{SaveConfiguration} defining saving properties
-    #' @param filename character defining the name of the file to be saved
+    #' @param export R6 class \code{SaveConfiguration} defining saving properties
+    #' @param format character defining the format of the file to be saved
     #' @param width numeric values defining the width in `units` of the plot dimensions after saving
     #' @param height numeric values defining the height in `units` of the plot dimensions after saving
     #' @param units character defining the unit of the saving dimension
@@ -48,7 +45,6 @@ PlotConfiguration <- R6::R6Class(
     #' @param metaData list of information on \code{data}
     #' @param dataMapping R6 class or subclass \code{XYDataMapping}
     #' @param theme R6 class \code{Theme}
-    #' @param ... parameters inherited from R6 class \code{LabelConfiguration}
     #' @return A new \code{PlotConfiguration} object
     initialize = function( # Label configuration
                               title = NULL,
@@ -70,9 +66,9 @@ PlotConfiguration <- R6::R6Class(
                               # Background configuration
                               background = NULL,
                               watermark = NULL,
-                              # Save configuration
-                              saveConfiguration = NULL,
-                              filename = NULL,
+                              # Export configuration
+                              export = NULL,
+                              format = NULL,
                               width = NULL,
                               height = NULL,
                               units = NULL,
@@ -81,14 +77,11 @@ PlotConfiguration <- R6::R6Class(
                               metaData = NULL,
                               dataMapping = NULL,
                               # Theme
-                              theme = tlfEnv$currentTheme, ...) {
-      self$labels <- LabelConfiguration$new(
-        title = title,
-        subtitle = subtitle,
-        xlabel = xlabel,
-        ylabel = ylabel,
-        theme = theme
-      )
+                              theme = tlfEnv$currentTheme) {
+      
+      self$labels<-LabelConfiguration$new(title=title,subtitle=subtitle,
+                                          xlabel=xlabel,ylabel=ylabel,
+                                          theme=theme)
 
       # Smart configuration if xlabel and ylabel
       # 1) If xlabel and ylabel provided: use as is.
@@ -131,12 +124,12 @@ PlotConfiguration <- R6::R6Class(
       )
       self$background$watermark <- watermark %||% self$background$watermark
 
-      # Define save configuration, overwrite properties only if they are defined
-      self$saveConfiguration <- saveConfiguration %||% SaveConfiguration$new()
-      self$saveConfiguration$filename <- filename %||% self$saveConfiguration$filename
-      self$saveConfiguration$width <- width %||% self$saveConfiguration$width
-      self$saveConfiguration$height <- height %||% self$saveConfiguration$height
-      self$saveConfiguration$units <- units %||% self$saveConfiguration$units
+      # Define export configuration, overwrite properties only if they are defined
+      self$export <- export %||% ExportConfiguration$new()
+      self$export$format <- format %||% self$export$format
+      self$export$width <- width %||% self$export$width
+      self$export$height <- height %||% self$export$height
+      self$export$units <- units %||% self$export$units
 
       self$theme <- theme
     },
