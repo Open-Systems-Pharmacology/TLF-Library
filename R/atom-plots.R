@@ -105,6 +105,7 @@ addScatter <- function(data = NULL,
   # If data is not input
   # Create new data and its mapping from x and y input
   if (is.null(data)) {
+    validateIsSameLength(x, y)
     data <- as.data.frame(cbind(x = x, y = y))
 
     dataMapping <- dataMapping %||% XYGDataMapping$new(x = ifnotnull(x, "x"), y = ifnotnull(y, "y"), data = data)
@@ -169,7 +170,6 @@ addScatter <- function(data = NULL,
     linetype = linetype %||% rep("blank", length(newLabels)),
     fill = rep(NA, length(newLabels))
   )
-  # plotObject <- setLegendTitle(plotObject, plotObject$plotConfiguration$legend$title)
   return(plotObject)
 }
 
@@ -338,7 +338,6 @@ addLine <- function(data = NULL,
     linetype = linetype %||% tlfEnv$currentTheme$aesProperties$linetype[newLegendProperty],
     fill = rep(NA, length(newLabels))
   )
-  plotObject <- setLegendTitle(plotObject, plotObject$plotConfiguration$legend$title)
   return(plotObject)
 }
 
@@ -511,7 +510,6 @@ addRibbon <- function(data = NULL,
     linetype = linetype %||% rep("blank", length(newLabels)),
     fill = fill %||% tlfEnv$currentTheme$aesProperties$fill[newLegendProperty]
   )
-  plotObject <- setLegendTitle(plotObject, plotObject$plotConfiguration$legend$title)
   return(plotObject)
 }
 
