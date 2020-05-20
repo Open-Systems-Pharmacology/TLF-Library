@@ -170,6 +170,8 @@ addScatter <- function(data = NULL,
     linetype = linetype %||% rep("blank", length(newLabels)),
     fill = rep(NA, length(newLabels))
   )
+  try(suppressMessages(plotObject <- plotObject$plotConfiguration$xAxis$setPlotAxis(plotObject)))
+  try(suppressMessages(plotObject <- plotObject$plotConfiguration$yAxis$setPlotAxis(plotObject)))
   return(plotObject)
 }
 
@@ -338,6 +340,8 @@ addLine <- function(data = NULL,
     linetype = linetype %||% tlfEnv$currentTheme$aesProperties$linetype[newLegendProperty],
     fill = rep(NA, length(newLabels))
   )
+  try(suppressMessages(plotObject <- plotObject$plotConfiguration$xAxis$setPlotAxis(plotObject)))
+  try(suppressMessages(plotObject <- plotObject$plotConfiguration$yAxis$setPlotAxis(plotObject)))
   return(plotObject)
 }
 
@@ -510,6 +514,8 @@ addRibbon <- function(data = NULL,
     linetype = linetype %||% rep("blank", length(newLabels)),
     fill = fill %||% tlfEnv$currentTheme$aesProperties$fill[newLegendProperty]
   )
+  try(suppressMessages(plotObject <- plotObject$plotConfiguration$xAxis$setPlotAxis(plotObject)))
+  try(suppressMessages(plotObject <- plotObject$plotConfiguration$yAxis$setPlotAxis(plotObject)))
   return(plotObject)
 }
 
