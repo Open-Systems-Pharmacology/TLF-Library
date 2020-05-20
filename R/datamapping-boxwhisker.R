@@ -56,7 +56,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
     getBoxWhiskerLimits = function(data) {
       # Dummy silent variable if x is NULL
       if (is.null(self$x)) {
-        data$defaultAes <- factor("")
+        data$legendLabels <- factor("")
       }
 
       # Transform names into functions for aggregation summary
@@ -65,7 +65,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
       # Use aggregation summary to get box specific values
       summaryObject <- AggregationSummary$new(
         data = data,
-        xColumnNames = self$x %||% "defaultAes",
+        xColumnNames = self$x %||% "legendLabels",
         groupingColumnNames = self$groupMapping$fill$label,
         yColumnNames = self$y,
         aggregationFunctionsVector = boxWhiskerLimitsFunctions,
@@ -75,7 +75,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
       boxWhiskerLimits <- summaryObject$dfHelper
 
       # Dummy variable for aesthetics
-      boxWhiskerLimits$defaultAes <- factor("")
+      boxWhiskerLimits$legendLabels <- factor("")
 
       return(boxWhiskerLimits)
     },
@@ -85,9 +85,10 @@ BoxWhiskerDataMapping <- R6::R6Class(
     #' @return A data.frame with `minOutliers` and `maxOutliers` variables.
     #' Values not flagged are `NA` in the outliers variables
     getOutliers = function(data) {
+      data <- self$checkMapData(data)
       # Dummy silent variable if x is NULL
       if (is.null(self$x)) {
-        data$defaultAes <- factor("")
+        data$legendLabels <- factor("")
       }
 
       # Transform names into functions for aggregation summary
@@ -96,7 +97,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
       # Use aggregation summary to get outliers boundaries specific values
       summaryObject <- AggregationSummary$new(
         data = data,
-        xColumnNames = self$x %||% "defaultAes",
+        xColumnNames = self$x %||% "legendLabels",
         groupingColumnNames = self$groupMapping$fill$label,
         yColumnNames = self$y,
         aggregationFunctionsVector = outlierLimitsFunctions,
@@ -119,7 +120,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
       outliers$maxOutliers[!maxOutliersFlag] <- NA
 
       # Dummy variable for aesthetics
-      outliers$defaultAes <- factor("")
+      outliers$legendLabels <- factor("")
 
       return(outliers)
     }
