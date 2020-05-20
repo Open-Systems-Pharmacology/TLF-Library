@@ -6,12 +6,11 @@
 \description{
 R6 class defining the configuration of a \code{ggplot} object
 }
-\section{Super class}{
-\code{\link[tlf:LabelConfiguration]{tlf::LabelConfiguration}} -> \code{PlotConfiguration}
-}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
+\item{\code{labels}}{R6 class \code{LabelConfiguration} defining labels properties}
+
 \item{\code{legend}}{R6 class \code{LegendConfiguration} defining legend properties}
 
 \item{\code{xAxis}}{R6 class \code{XAxisConfiguration} defining X-axis properties}
@@ -20,7 +19,7 @@ R6 class defining the configuration of a \code{ggplot} object
 
 \item{\code{background}}{R6 class \code{BackgroundConfiguration} defining background properties}
 
-\item{\code{saveConfiguration}}{R6 class \code{SaveConfiguration} defining saving properties}
+\item{\code{export}}{R6 class \code{ExportConfiguration} defining export properties}
 
 \item{\code{theme}}{\code{Theme} R6 class defining theme aesthetic properties}
 }
@@ -30,18 +29,9 @@ R6 class defining the configuration of a \code{ggplot} object
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{PlotConfiguration$new()}}
-\item \href{#method-setPlotProperties}{\code{PlotConfiguration$setPlotProperties()}}
-\item \href{#method-setPlotBackground}{\code{PlotConfiguration$setPlotBackground()}}
-\item \href{#method-savePlot}{\code{PlotConfiguration$savePlot()}}
+\item \href{#method-print}{\code{PlotConfiguration$print()}}
 \item \href{#method-clone}{\code{PlotConfiguration$clone()}}
 }
-}
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="LabelConfiguration" data-id="setPlotLabels">}\href{../../tlf/html/LabelConfiguration.html#method-setPlotLabels}{\code{tlf::LabelConfiguration$setPlotLabels()}}\out{</span>}
-}
-\out{</details>}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
@@ -54,7 +44,8 @@ Create a new \code{PlotConfiguration} object
   xlabel = NULL,
   ylabel = NULL,
   legend = NULL,
-  legendTitles = NULL,
+  legendTitle = NULL,
+  legendPosition = NULL,
   xAxis = NULL,
   xScale = NULL,
   xLimits = NULL,
@@ -63,16 +54,15 @@ Create a new \code{PlotConfiguration} object
   yLimits = NULL,
   background = NULL,
   watermark = NULL,
-  saveConfiguration = NULL,
-  filename = NULL,
+  export = NULL,
+  format = NULL,
   width = NULL,
   height = NULL,
   units = NULL,
   data = NULL,
   metaData = NULL,
   dataMapping = NULL,
-  theme = tlfEnv$currentTheme,
-  ...
+  theme = tlfEnv$currentTheme
 )}\if{html}{\out{</div>}}
 }
 
@@ -89,7 +79,10 @@ Create a new \code{PlotConfiguration} object
 
 \item{\code{legend}}{R6 class \code{LegendConfiguration} object defining legend properties}
 
-\item{\code{legendTitles}}{List of legend titles}
+\item{\code{legendTitle}}{character legend title}
+
+\item{\code{legendPosition}}{character legend position.
+Use Enum \code{LegendPositions} to get a list of available to legend positions.}
 
 \item{\code{xAxis}}{R6 class \code{XAxisConfiguration} object defining X-axis properties}
 
@@ -107,9 +100,9 @@ Create a new \code{PlotConfiguration} object
 
 \item{\code{watermark}}{R6 class \code{Label} object defining watermark background}
 
-\item{\code{saveConfiguration}}{R6 class \code{SaveConfiguration} defining saving properties}
+\item{\code{export}}{R6 class \code{SaveConfiguration} defining saving properties}
 
-\item{\code{filename}}{character defining the name of the file to be saved}
+\item{\code{format}}{character defining the format of the file to be saved}
 
 \item{\code{width}}{numeric values defining the width in \code{units} of the plot dimensions after saving}
 
@@ -124,8 +117,6 @@ Create a new \code{PlotConfiguration} object
 \item{\code{dataMapping}}{R6 class or subclass \code{XYDataMapping}}
 
 \item{\code{theme}}{R6 class \code{Theme}}
-
-\item{\code{...}}{parameters inherited from R6 class \code{LabelConfiguration}}
 }
 \if{html}{\out{</div>}}
 }
@@ -134,60 +125,15 @@ A new \code{PlotConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setPlotProperties"></a>}}
-\subsection{Method \code{setPlotProperties()}}{
-Set axes properties of a \code{ggplot} object
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Print plot configuration
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlotConfiguration$setPlotProperties(plotObject)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PlotConfiguration$print()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{a \code{ggplot} object}
-}
-\if{html}{\out{</div>}}
-}
 \subsection{Returns}{
-A \code{ggplot} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setPlotBackground"></a>}}
-\subsection{Method \code{setPlotBackground()}}{
-Set background properties of a \code{ggplot} object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlotConfiguration$setPlotBackground(plotObject)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{a \code{ggplot} object}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{ggplot} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-savePlot"></a>}}
-\subsection{Method \code{savePlot()}}{
-Save \code{ggplot} object into a file
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlotConfiguration$savePlot(plotObject)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{a \code{ggplot} object}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-NULL
+Plot configuration
 }
 }
 \if{html}{\out{<hr>}}

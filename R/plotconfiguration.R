@@ -3,10 +3,9 @@
 #' @export
 PlotConfiguration <- R6::R6Class(
   "PlotConfiguration",
-  inherit = LabelConfiguration,
-  ## ----------------------------------
-  ## List of plotConfiguration Variables
   public = list(
+    #' @field labels R6 class \code{LabelConfiguration} defining labels properties
+    labels = NULL,
     #' @field legend R6 class \code{LegendConfiguration} defining legend properties
     legend = NULL,
     #' @field xAxis R6 class \code{XAxisConfiguration} defining X-axis properties
@@ -15,8 +14,8 @@ PlotConfiguration <- R6::R6Class(
     yAxis = NULL,
     #' @field background R6 class \code{BackgroundConfiguration} defining background properties
     background = NULL,
-    #' @field saveConfiguration R6 class \code{SaveConfiguration} defining saving properties
-    saveConfiguration = NULL,
+    #' @field export R6 class \code{ExportConfiguration} defining export properties
+    export = NULL,
     #' @field theme \code{Theme} R6 class defining theme aesthetic properties
     theme = NULL,
 
@@ -26,7 +25,9 @@ PlotConfiguration <- R6::R6Class(
     #' @param xlabel R6 class \code{Label} object
     #' @param ylabel R6 class \code{Label} object
     #' @param legend R6 class \code{LegendConfiguration} object defining legend properties
-    #' @param legendTitles List of legend titles
+    #' @param legendTitle character legend title
+    #' @param legendPosition character legend position.
+    #' Use Enum `LegendPositions` to get a list of available to legend positions.
     #' @param xAxis R6 class \code{XAxisConfiguration} object defining X-axis properties
     #' @param xScale character defining X-axis scale. Use enum `Scaling` to access predefined scales.
     #' @param xLimits numeric vector of X-axis limits
@@ -35,8 +36,8 @@ PlotConfiguration <- R6::R6Class(
     #' @param yLimits numeric vector of Y-axis limits
     #' @param background R6 class \code{BackgroundConfiguration} defining background properties
     #' @param watermark R6 class \code{Label} object defining watermark background
-    #' @param saveConfiguration R6 class \code{SaveConfiguration} defining saving properties
-    #' @param filename character defining the name of the file to be saved
+    #' @param export R6 class \code{SaveConfiguration} defining saving properties
+    #' @param format character defining the format of the file to be saved
     #' @param width numeric values defining the width in `units` of the plot dimensions after saving
     #' @param height numeric values defining the height in `units` of the plot dimensions after saving
     #' @param units character defining the unit of the saving dimension
@@ -44,7 +45,6 @@ PlotConfiguration <- R6::R6Class(
     #' @param metaData list of information on \code{data}
     #' @param dataMapping R6 class or subclass \code{XYDataMapping}
     #' @param theme R6 class \code{Theme}
-    #' @param ... parameters inherited from R6 class \code{LabelConfiguration}
     #' @return A new \code{PlotConfiguration} object
     initialize = function( # Label configuration
                               title = NULL,
@@ -53,7 +53,8 @@ PlotConfiguration <- R6::R6Class(
                               ylabel = NULL,
                               # Legend Configuration
                               legend = NULL,
-                              legendTitles = NULL,
+                              legendTitle = NULL,
+                              legendPosition = NULL,
                               # X-Axis configuration
                               xAxis = NULL,
                               xScale = NULL,
@@ -65,9 +66,9 @@ PlotConfiguration <- R6::R6Class(
                               # Background configuration
                               background = NULL,
                               watermark = NULL,
-                              # Save configuration
-                              saveConfiguration = NULL,
-                              filename = NULL,
+                              # Export configuration
+                              export = NULL,
+                              format = NULL,
                               width = NULL,
                               height = NULL,
                               units = NULL,
@@ -76,12 +77,11 @@ PlotConfiguration <- R6::R6Class(
                               metaData = NULL,
                               dataMapping = NULL,
                               # Theme
-                              theme = tlfEnv$currentTheme, ...) {
-      super$initialize(
-        title = title,
-        subtitle = subtitle,
-        xlabel = xlabel,
-        ylabel = ylabel
+                              theme = tlfEnv$currentTheme) {
+      self$labels <- LabelConfiguration$new(
+        title = title, subtitle = subtitle,
+        xlabel = xlabel, ylabel = ylabel,
+        theme = theme
       )
 
       # Smart configuration if xlabel and ylabel
@@ -91,76 +91,62 @@ PlotConfiguration <- R6::R6Class(
       if (!is.null(data)) {
         dataMapping <- dataMapping %||% XYGDataMapping$new(data = data)
       }
-      self$xlabel <- asLabel(xlabel %||%
+      self$labels$xlabel <- asLabel(xlabel %||%
         dataMappingLabel(dataMapping$x, metaData) %||%
         dataMapping$x %||%
-        self$xlabel)
-      self$ylabel <- asLabel(ylabel %||%
+        self$labels$xlabel)
+      self$labels$ylabel <- asLabel(ylabel %||%
         dataMappingLabel(dataMapping$y, metaData) %||%
         dataMapping$y %||%
-        self$ylabel)
-
-      self$xlabel$font <- theme$xlabelFont
-      self$ylabel$font <- theme$ylabelFont
+        dataMappingLabel(dataMapping$ymax, metaData) %||%
+        dataMapping$ymax %||%
+        self$labels$ylabel)
 
       # Smart configuration if legend is not defined,
-      self$legend <- legend %||% ifnotnull(
-        dataMapping,
-        LegendConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping),
-        LegendConfiguration$new()
-      )
+      self$legend <- legend %||% LegendConfiguration$new()
+      self$legend$title <- legendTitle %||% self$legend$title
+      validateIsIncluded(legendPosition, LegendPositions, nullAllowed = TRUE)
+      self$legend$position <- legendPosition %||% self$legend$position
 
       # Define X-Axis configuration, overwrite properties only if they are defined
-      self$xAxis <- xAxis %||% XAxisConfiguration$new()
+      self$xAxis <- xAxis %||% XAxisConfiguration$new(scale = xAxisDefaultScale(self))
       self$xAxis$limits <- xLimits %||% self$xAxis$limits
       self$xAxis$scale <- xScale %||% self$xAxis$scale
 
       # Define Y-Axis configuration, overwrite properties only if they are defined
-      self$yAxis <- yAxis %||% YAxisConfiguration$new()
-      self$yAxis$limits <- yLimits %||% self$xAxis$limits
-      self$yAxis$scale <- yScale %||% self$xAxis$scale
+      self$yAxis <- yAxis %||% YAxisConfiguration$new(scale = yAxisDefaultScale(self))
+      self$yAxis$limits <- yLimits %||% self$yAxis$limits
+      self$yAxis$scale <- yScale %||% self$yAxis$scale
 
       # Set background properties
       self$background <- background %||% BackgroundConfiguration$new(
         watermark = watermark,
         theme = theme
       )
+      self$background$watermark <- watermark %||% self$background$watermark
 
-      # Define save configuration, overwrite properties only if they are defined
-      self$saveConfiguration <- saveConfiguration %||% SaveConfiguration$new()
-      self$saveConfiguration$filename <- filename %||% self$saveConfiguration$filename
-      self$saveConfiguration$width <- width %||% self$saveConfiguration$width
-      self$saveConfiguration$height <- height %||% self$saveConfiguration$height
-      self$saveConfiguration$units <- units %||% self$saveConfiguration$units
+      # Define export configuration, overwrite properties only if they are defined
+      self$export <- export %||% ExportConfiguration$new()
+      self$export$format <- format %||% self$export$format
+      self$export$width <- width %||% self$export$width
+      self$export$height <- height %||% self$export$height
+      self$export$units <- units %||% self$export$units
 
       self$theme <- theme
     },
 
-    #' @description Set axes properties of a \code{ggplot} object
-    #' @param plotObject a \code{ggplot} object
-    #' @return A \code{ggplot} object
-    setPlotProperties = function(plotObject) {
-      # plotObject <- self$legend$setPlotLegend(plotObject)
-
-      plotObject <- self$xAxis$setPlotAxis(plotObject)
-      plotObject <- self$yAxis$setPlotAxis(plotObject)
-
-      return(plotObject)
-    },
-
-    #' @description Set background properties of a \code{ggplot} object
-    #' @param plotObject a \code{ggplot} object
-    #' @return A \code{ggplot} object
-    setPlotBackground = function(plotObject) {
-      plotObject <- self$background$setBackground(plotObject)
-      return(plotObject)
-    },
-
-    #' @description Save \code{ggplot} object into a file
-    #' @param plotObject a \code{ggplot} object
-    #' @return NULL
-    savePlot = function(plotObject) {
-      self$saveConfiguration$savePlot(plotObject)
+    #' @description Print plot configuration
+    #' @return Plot configuration
+    print = function() {
+      plotProperties <- list(
+        labels = self$labels$print(),
+        legend = self$legend$print(),
+        xAxis = self$xAxis$print(),
+        yAxis = self$yAxis$print(),
+        background = self$background$print(),
+        saveConfiguration = self$saveConfiguration$print()
+      )
+      return(plotProperties)
     }
   )
 )
@@ -175,7 +161,6 @@ PlotConfiguration <- R6::R6Class(
 #' @return label character of variable with its unit
 #' @description
 #' dataMappingLabel create an axis label with unit if available
-#' @export
 dataMappingLabel <- function(mapping = NULL, metaData = NULL) {
   label <- NULL
   ifnotnull(mapping, label <- getLabelWithUnit(metaData[[mapping]]$dimension, metaData[[mapping]]$unit))

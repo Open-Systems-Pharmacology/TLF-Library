@@ -18,15 +18,7 @@ R6 class defining theme
 
 \item{\code{aesProperties}}{list of aesthetic properties for plots in general}
 
-\item{\code{pkRatio}}{list of aesthetic properties for PK ratio plot features}
-
-\item{\code{timeProfile}}{list of aesthetic properties for time profile plot features}
-
-\item{\code{histogram}}{list of aesthetic properties for histogram features}
-
-\item{\code{ddiRatio}}{list of aesthetic properties for DDI ratio plot features}
-
-\item{\code{obsVsPred}}{list of aesthetic properties for GOF plot features}
+\item{\code{defaultCaption}}{aesthetic properties for specific plots}
 }
 \if{html}{\out{</div>}}
 }
@@ -55,11 +47,7 @@ Create a new \code{Theme} object
   background = NULL,
   watermark = NULL,
   aesProperties = NULL,
-  pkRatio = NULL,
-  timeProfile = NULL,
-  histogram = NULL,
-  ddiRatio = NULL,
-  obsVsPred = NULL
+  defaultCaption = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -78,15 +66,7 @@ Create a new \code{Theme} object
 
 \item{\code{aesProperties}}{list of aesthetic properties for plots in general}
 
-\item{\code{pkRatio}}{list of aesthetic properties for PK ratio plot features}
-
-\item{\code{timeProfile}}{list of aesthetic properties for time profile plot features}
-
-\item{\code{histogram}}{list of aesthetic properties for histogram features}
-
-\item{\code{ddiRatio}}{list of aesthetic properties for DDI ratio plot features}
-
-\item{\code{obsVsPred}}{list of aesthetic properties for GOF plot features}
+\item{\code{defaultCaption}}{list of aesthetic properties for specific plot features}
 }
 \if{html}{\out{</div>}}
 }

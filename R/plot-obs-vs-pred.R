@@ -28,29 +28,21 @@ plotObsVsPred <- function(data,
   # If no data mapping or plot configuration is input, use default
   # metaData <- metaData %||% metaDataHelper(data)
   dataMapping <- dataMapping %||% ObsVsPredDataMapping$new(data = data)
-  plotConfiguration <- plotConfiguration %||% ObsVsPredPlotConfiguration$new(
-    data = data,
-    metaData = metaData,
-    dataMapping = dataMapping
-  )
+  plotConfiguration <- plotConfiguration %||% ObsVsPredPlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
 
   validateIsOfType(dataMapping, ObsVsPredDataMapping)
   validateIsOfType(plotConfiguration, ObsVsPredPlotConfiguration)
 
+  identityData <- dataMapping$getObsVsPredLines(data)
+  lloq <- dataMapping$lloq
+
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
-  # Add obs vs pred lines
-  plotObject <- plotConfiguration$addObsVsPredLines(plotObject, data, dataMapping)
+  plotObject <- addLine(x = identityData$x, y = identityData$y, caption = "y=x", plotObject = plotObject)
+  plotObject <- ifnotnull(lloq, addLine(x = c(lloq, lloq), y = c(-Inf, Inf), caption = "lloq", plotObject = plotObject), plotObject)
 
-  # Add scatter data
-  plotObject <- plotConfiguration$addObsVsPred(plotObject, data, metaData, dataMapping)
-
-  # Add smoothers
-  if (!is.null(dataMapping$smoother)) {
-    plotObject <- plotConfiguration$addSmoother(plotObject, data, metaData, dataMapping)
-  }
-
-  plotObject <- plotConfiguration$legend$setPlotLegend(plotObject)
+  plotObject <- setLegendCaption(plotObject, plotConfiguration$obsVsPredCaption)
+  plotObject <- addScatter(data = data, dataMapping = dataMapping, plotObject = plotObject)
 
   return(plotObject)
 }

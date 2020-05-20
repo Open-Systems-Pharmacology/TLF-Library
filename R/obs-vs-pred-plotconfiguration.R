@@ -5,63 +5,20 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
   "ObsVsPredPlotConfiguration",
   inherit = PlotConfiguration,
   public = list(
-    #' @field obsVsPredProperties list of properties for obs vs pred plot specific features
-    obsVsPredProperties = NULL,
+    #' @field obsVsPredCaption list of properties for obs vs pred plot specific features
+    obsVsPredCaption = NULL,
 
     #' @description Create a new \code{ObsVsPredPlotConfiguration} object
-    #' @param obsVsPredProperties list of properties for DDI ratio plot specific features
-    #' @param title R6 class \code{Label} object
-    #' @param subtitle R6 class \code{Label} object
-    #' @param xlabel R6 class \code{Label} object
-    #' @param ylabel R6 class \code{Label} object
-    #' @param legend R6 class \code{LegendConfiguration} object defining legend properties
-    #' @param legendTitles List of legend titles
-    #' @param xAxis R6 class \code{XAxisConfiguration} object defining X-axis properties
-    #' @param xScale character defining X-axis scale. Use enum `Scaling` to access predefined scales.
-    #' @param xLimits numeric vector of X-axis limits
-    #' @param yAxis R6 class \code{YAxisConfiguration} object defining X-axis properties
-    #' @param yScale character defining Y-axis scale. Use enum `Scaling` to access predefined scales.
-    #' @param yLimits numeric vector of Y-axis limits
-    #' @param background R6 class \code{BackgroundConfiguration} defining background properties
-    #' @param watermark R6 class \code{Label} object defining watermark background
-    #' @param saveConfiguration R6 class \code{SaveConfiguration} defining saving properties
-    #' @param filename character defining the name of the file to be saved
-    #' @param width numeric values defining the width in `units` of the plot dimensions after saving
-    #' @param height numeric values defining the height in `units` of the plot dimensions after saving
-    #' @param units character defining the unit of the saving dimension
-    #' @param data data.frame used by \code{smartMapping}
-    #' @param metaData list of information on \code{data}
-    #' @param dataMapping R6 class or subclass \code{XYGDataMapping}
-    #' @param theme R6 class \code{Theme}
+    #' @param obsVsPredCaption list of properties for DDI ratio plot specific features
     #' @param ... parameters inherited from \code{PlotConfiguration}
     #' @return A new \code{obsVsPredProperties} object
-    initialize = function(obsVsPredProperties = tlfEnv$currentTheme$obsVsPred,
-                              title = "Obs vs Pred Plot",
-                              subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
+    initialize = function(obsVsPredCaption = getDefaultCaptionFor("obsVsPred"),
                               ...) {
-      super$initialize(
-        title = title,
-        subtitle = subtitle,
-        ...
-      )
+      validateIsOfType(obsVsPredCaption, "data.frame")
+      validateIsIncluded(names(obsVsPredCaption), CaptionProperties)
+      super$initialize(...)
 
-      self$obsVsPredProperties <- obsVsPredProperties
-    },
-
-    #' @description Add identity as line layer to a \code{ggplot} object
-    #' @param plotObject \code{ggplot} object
-    #' @param data data.frame
-    #' @param dataMapping R6 class \code{ObsVsPredDataMapping}
-    #' @return A \code{ggplot} object
-    addObsVsPredLines = function(plotObject, data, dataMapping) {
-      # geom_abline don't work properly when plot scale is log
-      obsVsPredLines <- dataMapping$getObsVsPredLines(data)
-
-      plotObject <- addLine(
-        data = obsVsPredLines,
-        plotObject = plotObject
-      )
-      return(plotObject)
+      self$obsVsPredCaption <- obsVsPredCaption
     },
 
     #' @description Add smoother layer to a \code{ggplot} object

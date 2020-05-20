@@ -16,8 +16,6 @@ R6 class defining the configuration of the labels of a \code{ggplot} object
 \item{\code{xlabel}}{R6 class \code{Label} object}
 
 \item{\code{ylabel}}{R6 class \code{Label} object}
-
-\item{\code{legendTitles}}{List of legend titles}
 }
 \if{html}{\out{</div>}}
 }
@@ -26,6 +24,7 @@ R6 class defining the configuration of the labels of a \code{ggplot} object
 \itemize{
 \item \href{#method-new}{\code{LabelConfiguration$new()}}
 \item \href{#method-setPlotLabels}{\code{LabelConfiguration$setPlotLabels()}}
+\item \href{#method-print}{\code{LabelConfiguration$print()}}
 \item \href{#method-clone}{\code{LabelConfiguration$clone()}}
 }
 }
@@ -39,7 +38,6 @@ Create a new \code{LabelConfiguration} object
   subtitle = NULL,
   xlabel = NULL,
   ylabel = NULL,
-  legendTitles = NULL,
   theme = tlfEnv$currentTheme
 )}\if{html}{\out{</div>}}
 }
@@ -54,8 +52,6 @@ Create a new \code{LabelConfiguration} object
 \item{\code{xlabel}}{R6 class \code{Label} object}
 
 \item{\code{ylabel}}{R6 class \code{Label} object}
-
-\item{\code{legendTitles}}{List of legend titles}
 
 \item{\code{theme}}{R6 class \code{Theme}}
 }
@@ -82,6 +78,18 @@ Set plot labels properties of a \code{ggplot} object
 }
 \subsection{Returns}{
 A \code{ggplot} object
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Print plot label properties
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{LabelConfiguration$print()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Plot label properties
 }
 }
 \if{html}{\out{<hr>}}

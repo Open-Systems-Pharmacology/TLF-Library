@@ -11,11 +11,9 @@ R6 class defining the legend configuration of a \code{ggplot} object
 \describe{
 \item{\code{position}}{character position of the legend}
 
-\item{\code{titles}}{R6 class \code{LegendTitles} object}
+\item{\code{title}}{character name of the legend}
 
-\item{\code{captions}}{R6 class \code{LegendCaptions} object}
-
-\item{\code{values}}{R6 class \code{LegendValues} object}
+\item{\code{caption}}{data.frame with}
 }
 \if{html}{\out{</div>}}
 }
@@ -23,7 +21,7 @@ R6 class defining the legend configuration of a \code{ggplot} object
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{LegendConfiguration$new()}}
-\item \href{#method-setPlotLegend}{\code{LegendConfiguration$setPlotLegend()}}
+\item \href{#method-print}{\code{LegendConfiguration$print()}}
 \item \href{#method-clone}{\code{LegendConfiguration$clone()}}
 }
 }
@@ -33,14 +31,9 @@ R6 class defining the legend configuration of a \code{ggplot} object
 Create a new \code{LegendConfiguration} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LegendConfiguration$new(
-  position = NULL,
-  titles = NULL,
-  captions = NULL,
-  values = NULL,
-  dataMapping = NULL,
-  data = NULL,
-  metaData = NULL,
-  theme = tlfEnv$currentTheme
+  position = tlfEnv$defaultLegendPosition,
+  title = NULL,
+  caption = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -50,19 +43,10 @@ Create a new \code{LegendConfiguration} object
 \item{\code{position}}{character position of the legend.
 Use enum \code{LegendPositions} to assess available legend positions.}
 
-\item{\code{titles}}{R6 class \code{LegendTitles} object}
+\item{\code{title}}{character title of the legend caption.
+Default \code{NULL} does not provide any legend title.}
 
-\item{\code{captions}}{R6 class \code{LegendCaptions} object}
-
-\item{\code{values}}{R6 class \code{LegendValues} object}
-
-\item{\code{dataMapping}}{R6 class or subclass \code{XYDataMapping}}
-
-\item{\code{data}}{data.frame used by \code{smartMapping}}
-
-\item{\code{metaData}}{list of information on \code{data}}
-
-\item{\code{theme}}{R6 class \code{Theme}}
+\item{\code{caption}}{data.frame containing the legend caption properties}
 }
 \if{html}{\out{</div>}}
 }
@@ -71,22 +55,15 @@ A new \code{LegendConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setPlotLegend"></a>}}
-\subsection{Method \code{setPlotLegend()}}{
-Set plot legend of a \code{ggplot} object
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Print legend properties
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LegendConfiguration$setPlotLegend(plotObject)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{LegendConfiguration$print()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{\code{ggplot} object}
-}
-\if{html}{\out{</div>}}
-}
 \subsection{Returns}{
-A \code{ggplot} object
+Legend properties
 }
 }
 \if{html}{\out{<hr>}}

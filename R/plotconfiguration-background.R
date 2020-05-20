@@ -32,7 +32,19 @@ BackgroundConfiguration <- R6::R6Class(
       self$grid <- grid %||% BackgroundElementConfiguration$new(theme = theme$background$grid)
 
       self$watermark <- asLabel(watermark %||% theme$background$watermark %||% "")
-      self$watermark$font <- watermarkFont %||% theme$watermarkFont
+      self$watermark$font <- watermarkFont %||% self$watermark$font
+    },
+
+    #' @description Print background properties
+    #' @return Background properties
+    print = function() {
+      backgroundProperties <- list(
+        "outerBackground" = self$outerBackground$print(),
+        "innerBackground" = self$innerBackground$print(),
+        "grid" = self$grid$print(),
+        "watermark" = self$watermark$text
+      )
+      return(backgroundProperties)
     },
 
     #' @description Set background properties of a \code{ggplot} object
@@ -78,7 +90,7 @@ BackgroundElementConfiguration <- R6::R6Class(
     #' @param fill character color filling of the background element
     #' @param color character color of the frame of the background element
     #' @param size character size of the frame of the background element
-    #' @param linetype R6 class \code{Grouping} object or its input
+    #' @param linetype character linetype of the frame of the background element
     #' @param theme R6 class \code{Theme} object
     #' @return A new \code{BackgroundElementConfiguration} object
     initialize = function(fill = NULL,
@@ -90,6 +102,33 @@ BackgroundElementConfiguration <- R6::R6Class(
       self$color <- color %||% theme$color
       self$size <- size %||% theme$size
       self$linetype <- linetype %||% theme$linetype
+    },
+
+    #' @description Print background element properties
+    #' @return Background element properties
+    print = function() {
+      backgroundProperties <- NULL
+
+      # Get properties that are of character type
+      elementProperties <- unlist(eapply(
+        self,
+        function(x) {
+          isOfType(x, "character")
+        }
+      ))
+      elementNames <- names(elementProperties[as.logical(elementProperties)])
+
+      # Build data.frame of properties while removing NULL values
+      for (elementName in elementNames) {
+        backgroundProperties <- rbind.data.frame(
+          backgroundProperties,
+          data.frame(
+            Property = elementName,
+            Value = self[[elementName]]
+          )
+        )
+      }
+      return(backgroundProperties)
     }
   )
 )

@@ -77,10 +77,19 @@ XYGDataMapping <- R6::R6Class(
           }
           validateMapping(groupVariables, data)
           self$data[, grouping$label] <- grouping$getCaptions(data, metaData)
+          # Dummy variable for default aesthetics
+          # Will be used to define legend labels
+          self$data$legendLabels <- ifnotnull(
+            self$data$legendLabels,
+            paste(self$data$legendLabels, grouping$getCaptions(data, metaData), sep = "-"),
+            grouping$getCaptions(data, metaData)
+          )
         }
       }
-      # Dummy variable for default aesthetics
-      self$data$defaultAes <- factor("")
+
+      if (is.null(self$data$legendLabels)) {
+        self$data$legendLabels <- factor("")
+      }
       return(self$data)
     }
   )

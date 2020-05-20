@@ -10,6 +10,10 @@ addLine(
   x = NULL,
   y = NULL,
   caption = NULL,
+  color = NULL,
+  shape = NULL,
+  size = NULL,
+  linetype = NULL,
   dataMapping = NULL,
   plotConfiguration = NULL,
   plotObject = NULL
@@ -30,6 +34,18 @@ In case there is no \code{x} mapping, \code{y} are the y-values of horizontal li
 
 \item{caption}{vector of character strings defining the legend captions.
 This parameter is optional: default value is NULL.}
+
+\item{color}{vector of character strings defining the color of the scatter points.
+This parameter is optional: default value \code{NULL} will choose colors according to the current theme.}
+
+\item{shape}{vector of character strings or numerical defining the shapes of the scatter points.
+This parameter is optional: default value \code{NULL} will choose shapes according to the current theme.}
+
+\item{size}{vector of numerical defining the sizes of the scatter points.
+This parameter is optional: default value \code{NULL} will choose sizes according to the current theme.}
+
+\item{linetype}{vector of character strings defining the linetype linking the scatter points.
+This parameter is optional: default value \code{NULL} won't provide lines.}
 
 \item{dataMapping}{\code{XYGDataMapping} class or subclass
 mapping x, y and aesthetic variables to the variable names of \code{data}.}

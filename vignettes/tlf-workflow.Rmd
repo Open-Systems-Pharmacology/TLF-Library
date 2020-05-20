@@ -1,6 +1,8 @@
 ---
 title: "tlf-workflow"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    number_sections: true
 vignette: >
   %\VignetteIndexEntry{tlf-workflow}
   %\VignetteEngine{knitr::rmarkdown}
@@ -18,15 +20,15 @@ load("../data/timeProfileDataFrame.RData")
 library(tlf)
 ```
 
-# 1. Introduction
-## 1.1. Objectives
+# Introduction
+## Objectives
 The aim of this vignette is to document and illustrate the typical workflow needed for the production of plots using the `tlf`-library.
 
-## 1.2. Libraries
+## Libraries
 The main purpose of the `tlf`-library is to standardized the production of `ggplot` objects from data output by the `OSPSuiteR`. 
 As such, `tlf`-library requires that the `ggplot2` package be installed.
 
-## 1.3. `tlf` typical workflow
+## `tlf` typical workflow
 The suggested workflow for performing any kind of plot with the `tlf`-library is illustrated in the figure below. 
 
 ```{r, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
@@ -51,7 +53,7 @@ The standard workflow then proceeds as follows:
 Steps 1, 2, 3 and 4 are not mandatory.  If not implemented, `tlf`-libray uses default settings in lieu of the objects that are otherwise created in these optional steps. In addition, the `PlotConfiguration` object and the `DataMapping` object can be created independently. 
 Sections 2 to 4 will focus on `AggregationSummary`, `DataMapping` and `PlotConfiguration`.
 
-## 1.4. Naming Conventions
+## Naming Conventions
 In this package, it was chosen to use specific names for functions and classes referring to specific plots.
 The naming convention for classes is `<Plot Name><Class>` and for function `<function><Plot Name>`. 
 Below presents the table of specific classes and functions that are created using this convention:
@@ -70,9 +72,9 @@ conventionTable <- data.frame(sapply(classesNames, function(x){paste0(plotNames,
 knitr::kable(conventionTable)
 ```
 
-# 2. Data pre-processing: `AggregationSummary` class
+# Data pre-processing: `AggregationSummary` class
 
-## 2.1. Data format
+## Data format
 
 The workflow assumes that the data to be plotted has been gathered in the form of a [*tidy*](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) dataframe.  In a tidy format dataframe, each *measurement*, such as a simulation result or experimental observation, is described entirely in one row.  The columns of the dataframe are limited to no more than the *independent variable* columns of the measurement (in this example, *Time* and *IndividualID*) and the *dependent variable* columns (in this case *Organism|ArterialBlood|Aciclovir|Whole Blood*), which hold the value of the measurement.  Since no additional columns are allowed, two dependent variables that have differing sets of independent variables should each have their own tidy dataframes.
 
@@ -83,7 +85,7 @@ testData <- outputValues$data
 knitr::kable(head(testData)) #For aesthetics of the table align='c', digits =2)
 ```
 
-## 2.2. MetaData
+## MetaData
 
 A `metaData` variable associated with the data can be used to define additional information such as the `dimension` and `unit` of each column in the `data.frame`. The lower limit of quantitiation of a time profile  can also be stored in the `metaData`. The format of metaData is currently expected to be a list on each variable of lists showing unit and dimension.
 
@@ -95,7 +97,7 @@ metaDataTable <- data.frame("unit" = sapply(testMetaData, function(x){x$unit}),
 knitr::kable(metaDataTable)
 ```
 
-## 2.3. Aggregation
+## Aggregation
 
 A common processing of the data is its aggregation. The aggregation consists in splitting the data into subsets, then computes summary statistics for each, and returns the result in a convenient form.
 Visual predictive checks are typical plots where such method is useful.
@@ -122,7 +124,7 @@ aggSummary <- AggregationSummary$new(data = testData ,
                                      aggregationFunctionsVector = c(min,mean),
                                      aggregationFunctionNames =c("Simulated Min",
                                                                  "Simulated Mean"),
-                                     aggregationUnitsVector = c("µmol/l","µmol/l"),
+                                     aggregationUnitsVector = c("?mol/l","?mol/l"),
                                      aggregationDimensionsVector = c("Concentration",
                                                                      "Concentration"))
 ```
@@ -249,7 +251,7 @@ groups3 <- GroupMapping$new(color = Grouping$new(group = c("Compound", "Dose"),
                                                   label = c("Compound & Dose")))
 ```
 
-## 3.2. DataMapping
+## DataMapping
 
 The `R6` class `TimeProfileDataMapping` extracts the time profile plot data from an input dataframe and groups it according to the aesthetics specified in an input `GroupMapping` object.  This mapping is carried out by an internal function of this class named `checkMapData` which check if the variables indicated the `GroupMapping` are included in the data. Then, this method returns a simplified data.frame with the variables defined by the dataMapping. 
  
@@ -287,7 +289,7 @@ In more details, the `PlotConfiguration` class is a `R6Class` regrouping  other 
 * `xAxisConfiguration` defines the properties of the X axis (scale, limits, printed values)
 * `yAxisConfiguration` defines the properties of the Y axis (scale, limits, printed values)
 
-## 4.1. Labels Configuration
+## Labels Configuration
 
 The labels configuration is a class that define a `Label` class for each plot label. 
 The `Label` class is defined by its `text` and `font`. The `font` is a class regrouping the `color`, `size`, `fontFace` and `fontFamily` of the font.
@@ -349,7 +351,7 @@ knitr::kable(data.frame("grid color" = background$grid$color,
 ```
 
 
-## 4.3. Axes Configuration
+## Axes Configuration
 
 `XAxisConfiguration` and `YAxisConfiguration` define the axes settings of the plot.
 Within each axis configuration, `limits`, `scale`, `ticks` and their `ticklabels` can be defined.
@@ -359,30 +361,15 @@ knitr::kable(data.frame("Scaling" = as.character(sapply(Scaling, identity))))
 
 ```
 
-## 4.4. Legend Configuration
+## Legend Configuration
 
-The legend configuration set the `position`, `title(s)`, `captions` `values` of the legend(s).
+The legend configuration set the `position`, `title(s)` and `caption` of the legend(s).
 A list of available positions can be used directly from the enum `LegendPositions`: 
 ```{r, results='as.is', echo=FALSE}
 knitr::kable(data.frame("LegendPositions" = as.character(sapply(LegendPositions, identity))))
 ```
 
-The other features are `GrouMapping` classes since they will match the groups defined by the data mapping step.
-For each group, default `titles` and `captions` will use the data specified by the groupMapping defined with `DataMapping`, however they can be overwritten.
-`Values` correspond to the actual `colors`, `linetypes`, `shapes`, `fills`, `sizes` of the plot. The default are defined within the `Themes`, however they can also be overwritten.
-For instance, the current default `values` are :
-```{r, results='as.is', echo=FALSE}
-legend <- LegendConfiguration$new()
-# Currently color and fill have only 8 values, lintype 6 and shape and size 10.
-# The following table will fill with "" the empty spaces
-knitr::kable(data.frame("color" = c(legend$values$color, rep("",2)),
-                        "fill" = c(legend$values$fill, rep("",2)),
-                        "linetype" = c(legend$values$linetype, rep("",4)),
-                        "shape" = legend$values$shape,
-                        "size" = legend$values$size))
-```
-
-## 4.5. Themes
+## Themes
 
 The class `Theme` allows a user-friendly way to set many default plot settings. 
 Three predefined themes `defaultTheme`, `tlfTheme` and `bwTheme` are already available and can be used as templates, or it is possible to creates one's own theme either by initiliazing the class with overwritten or default input.
@@ -394,7 +381,7 @@ For instance,
 useTheme(tlfTheme)
 ```
 
-# 5. Minimal example
+# Minimal example
 
 The following minimal example show how to perform a basic time profile plot:
 Data output from the `OSPSuiteR` is available in `data/tlf-output.RData` and includes `outputValues` which is a list containing data in as a data.frame and metaData as a list.

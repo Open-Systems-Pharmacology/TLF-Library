@@ -2,25 +2,19 @@
 % Please edit documentation in R/utilities-legend.R
 \name{setLegendPosition}
 \alias{setLegendPosition}
-\title{SetLegendPosition}
+\title{setLegendTitle}
 \usage{
-setLegendPosition(
-  plotObject,
-  legendPosition = LegendPositions$outsideRight,
-  Subplot.Index = NA
-)
+setLegendPosition(plotObject, position)
 }
 \arguments{
-\item{plotObject}{Graphical object created from ggplot}
+\item{plotObject}{\code{ggplot} graphical object}
 
-\item{legendPosition}{element of legendPositions list}
-
-\item{Subplot.Index}{(optional) OPTION NOT IMPLEMENTED YET}
+\item{position}{legend position.
+Use enum \code{LegendPositions} to access the list of legend positions.}
 }
 \value{
-Current plot with Legend Layer
+A \code{ggplot} graphical object
 }
 \description{
-SetLegendPosition set a Legend Position as defined by legendPosition key
-Default legend setting is within plot on the top right corner
+Set the legend position
 }

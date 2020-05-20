@@ -23,6 +23,7 @@ R6 class defining the configuration of axis
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{AxisConfiguration$new()}}
+\item \href{#method-print}{\code{AxisConfiguration$print()}}
 \item \href{#method-clone}{\code{AxisConfiguration$clone()}}
 }
 }
@@ -55,6 +56,18 @@ Use enum \code{Scaling} to access predefined scales.}
 }
 \subsection{Returns}{
 A new \code{AxisConfiguration} object
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Print axis properties
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AxisConfiguration$print()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Axis properties
 }
 }
 \if{html}{\out{<hr>}}

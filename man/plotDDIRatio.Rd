@@ -8,7 +8,8 @@ plotDDIRatio(
   data,
   metaData = NULL,
   dataMapping = NULL,
-  plotConfiguration = NULL
+  plotConfiguration = NULL,
+  plotObject = NULL
 )
 }
 \arguments{
@@ -29,7 +30,4 @@ a ggplot graphical object
 }
 \description{
 plotDDIRatio(data, metaData, dataMapping, plotConfiguration)
-}
-\details{
-Create a DDI-Ratio plot
 }

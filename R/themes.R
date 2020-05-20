@@ -101,16 +101,8 @@ Theme <- R6::R6Class(
     background = NULL,
     #' @field aesProperties list of aesthetic properties for plots in general
     aesProperties = NULL,
-    #' @field pkRatio list of aesthetic properties for PK ratio plot features
-    pkRatio = NULL,
-    #' @field timeProfile list of aesthetic properties for time profile plot features
-    timeProfile = NULL,
-    #' @field histogram list of aesthetic properties for histogram features
-    histogram = NULL,
-    #' @field ddiRatio list of aesthetic properties for DDI ratio plot features
-    ddiRatio = NULL,
-    #' @field obsVsPred list of aesthetic properties for GOF plot features
-    obsVsPred = NULL,
+    #' @field defaultCaption aesthetic properties for specific plots
+    defaultCaption = NULL,
 
     #' @description Create a new \code{Theme} object
     #' @param themesProperties list of aesthetic properties
@@ -119,11 +111,7 @@ Theme <- R6::R6Class(
     #' @param background list of aesthetic properties for background configuration
     #' @param watermark list of font properties for watermark
     #' @param aesProperties list of aesthetic properties for plots in general
-    #' @param pkRatio list of aesthetic properties for PK ratio plot features
-    #' @param timeProfile list of aesthetic properties for time profile plot features
-    #' @param histogram list of aesthetic properties for histogram features
-    #' @param ddiRatio list of aesthetic properties for DDI ratio plot features
-    #' @param obsVsPred list of aesthetic properties for GOF plot features
+    #' @param defaultCaption list of aesthetic properties for specific plot features
     #' @return A new \code{Theme} object
     initialize = function(themesProperties = tlfEnvThemesProperties$default,
                               labelColors = NULL,
@@ -131,11 +119,7 @@ Theme <- R6::R6Class(
                               background = NULL,
                               watermark = NULL,
                               aesProperties = NULL,
-                              pkRatio = NULL,
-                              timeProfile = NULL,
-                              histogram = NULL,
-                              ddiRatio = NULL,
-                              obsVsPred = NULL) {
+                              defaultCaption = NULL) {
       super$initialize(
         labelColors = labelColors %||% themesProperties$labelColors,
         labelBaseSize = labelBaseSize
@@ -148,11 +132,7 @@ Theme <- R6::R6Class(
       self$aesProperties <- aesProperties %||% ThemeAesProperties$new(aesProperties = themesProperties$aesProperties)
 
       # Set the properties of specific plots
-      self$pkRatio <- pkRatio %||% themesProperties$pkRatio
-      self$timeProfile <- timeProfile %||% themesProperties$timeProfile
-      self$histogram <- histogram %||% themesProperties$histogram
-      self$ddiRatio <- ddiRatio %||% themesProperties$ddiRatio
-      self$obsVsPred <- obsVsPred %||% themesProperties$obsVsPred
+      self$defaultCaption <- defaultCaption %||% themesProperties$defaultCaption
     }
   )
 )

@@ -12,7 +12,8 @@ plotHistogram(
   binWidth = NULL,
   bins = NULL,
   verticalLineFunctions = NULL,
-  verticalLineFunctionNames = NULL
+  verticalLineFunctionNames = NULL,
+  plotObject = NULL
 )
 }
 \arguments{
@@ -34,13 +35,12 @@ Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legen
 \item{verticalLineFunctions}{(optional)}
 
 \item{verticalLineFunctionNames}{(optional)}
+
+\item{plotObject}{ggplot object, if null creates new plot, if not add time profile layers to ggplot}
 }
 \value{
 a ggplot graphical object
 }
 \description{
 plotHistogram(data, metaData, dataMapping, plotConfiguration)
-}
-\details{
-Create a histogram
 }

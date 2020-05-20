@@ -4,9 +4,9 @@
 #'
 #' @return the Enum created
 #' @examples
-#'\dontrun{
+#' \dontrun{
 #' # Without predefined values
-#' 
+#'
 #' Color <- enum(c("Red", "Blue", "Green"))
 #' myColor <- Color$Red
 #'

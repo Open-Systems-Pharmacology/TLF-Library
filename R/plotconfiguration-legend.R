@@ -6,68 +6,37 @@ LegendConfiguration <- R6::R6Class(
   public = list(
     #' @field position character position of the legend
     position = NULL,
-    #' @field titles R6 class \code{LegendTitles} object
-    titles = NULL,
-    #' @field captions R6 class \code{LegendCaptions} object
-    captions = NULL,
-    #' @field values R6 class \code{LegendValues} object
-    values = NULL,
+    #' @field title character name of the legend
+    title = NULL,
+    #' @field caption data.frame with
+    caption = NULL,
 
     #' @description Create a new \code{LegendConfiguration} object
     #' @param position character position of the legend.
     #' Use enum `LegendPositions` to assess available legend positions.
-    #' @param titles R6 class \code{LegendTitles} object
-    #' @param captions R6 class \code{LegendCaptions} object
-    #' @param values R6 class \code{LegendValues} object
-    #' @param data data.frame used by \code{smartMapping}
-    #' @param metaData list of information on \code{data}
-    #' @param dataMapping R6 class or subclass \code{XYDataMapping}
-    #' @param theme R6 class \code{Theme}
+    #' @param title character title of the legend caption.
+    #' Default `NULL` does not provide any legend title.
+    #' @param caption data.frame containing the legend caption properties
     #' @return A new \code{LegendConfiguration} object
-    initialize = function(position = NULL,
-                              titles = NULL,
-                              captions = NULL,
-                              values = NULL,
-                              dataMapping = NULL,
-                              data = NULL,
-                              metaData = NULL,
-                              theme = tlfEnv$currentTheme) {
-      ifnotnull(
-        position,
-        self$position <- position,
-        self$position <- LegendPositions$outsideRight
-      )
+    initialize = function(position = tlfEnv$defaultLegendPosition,
+                              title = NULL,
+                              caption = NULL) {
+      validateIsIncluded(position, LegendPositions)
 
-      if (!is.null(dataMapping) && !is.null(data)) {
-        if ("XYGDataMapping" %in% class(dataMapping)) {
-          self$titles <- LegendTitles$new(groupings = dataMapping$groupMapping)
-          self$captions <- LegendCaptions$new(
-            groupings = dataMapping$groupMapping,
-            data = data,
-            metaData = metaData
-          )
-        }
-      }
-
-      self$titles <- titles %||% self$titles %||% LegendTitles$new()
-      self$captions <- captions %||% self$captions %||% LegendCaptions$new()
-      self$values <- values %||% LegendValues$new()
+      self$position <- position
+      self$title <- title
+      self$caption <- caption
     },
 
-    #' @description Set plot legend of a \code{ggplot} object
-    #' @param plotObject \code{ggplot} object
-    #' @return A \code{ggplot} object
-    setPlotLegend = function(plotObject) {
-      plotObject <- setLegend(plotObject,
-        legendPosition = self$position,
-        legendTitles = self$titles,
-        legendCaptions = self$captions,
-        legendValues = self$values
+    #' @description Print legend properties
+    #' @return Legend properties
+    print = function() {
+      legendProperties <- list(
+        title = self$title,
+        position = self$position,
+        caption = self$caption
       )
-
-      plotObject <- setLegendPosition(plotObject, legendPosition = self$position)
-
-      return(plotObject)
+      return(legendProperties)
     }
   )
 )

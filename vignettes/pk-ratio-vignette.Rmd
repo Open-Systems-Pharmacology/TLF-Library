@@ -128,19 +128,19 @@ plotPKRatio(data = pkRatioData,
 ```
 
 
-### 2.4.2 `pkRatioLines`
+### 2.4.2 `pkRatioValues`
 In PK ratio examples, usually horizontal lines are added allowing to flag values in and out of the [0.67-1.5] as well as [0.5-2.0] ranges.
-The value mapping these horizontal lines was predifined as the vector `c(1.0, )`.
+The value mapping these horizontal lines was predifined as a list: "pkRatioLine1" is 1, "pkRatioLine2" is c(0.67, 1.5) and "pkRatioLine3" is c(0.5, 2).
 Consequently, for any default `PKRatioDataMapping`, you have:
 ```{r}
 linesMapping <- PKRatioDataMapping$new()
-linesMapping$pkRatiolines
+linesMapping$pkRatioValues
 ```
 
 Overwriting these value is possible by updating the value either when initializing the mapping or afterwards.
 For instance:
 ```{r, fig.height=5, fig.width=7.5}
-linesMapping <- PKRatioDataMapping$new(pkRatioLines = c(1, 2, 3),
+linesMapping <- PKRatioDataMapping$new(pkRatioValues = list(pkRatioLine1 = 1, pkRatioLine2 = c(0.2, 5)),
                                        x = "Age", 
                                        y = "Ratio",
                                        color = "Gender")
@@ -197,9 +197,9 @@ For instance, the 2 following examples are equivalent:
 labelConfiguration1 <- PKRatioPlotConfiguration$new(title = Label$new(text = "Title as Label", 
                                                                      font = Font$new(color = "red")))
 labelConfiguration2 <- PKRatioPlotConfiguration$new(title = "Title as Label")
-labelConfiguration2$title$font$color <- "red"
+labelConfiguration2$labels$title$font$color <- "red"
 
-isTRUE(labelConfiguration1$title$font$color == labelConfiguration2$title$font$color)
+isTRUE(labelConfiguration1$labels$title$font$color == labelConfiguration2$labels$title$font$color)
 ```
 
 # 3. Qualification of PK Ratios
@@ -240,22 +240,13 @@ pkRatioData$Simulated <- pkRatioData$Simulated/10
 ddiMapping <- DDIRatioDataMapping$new(x = "Observed",
                                       y = "Simulated",
                                       color = "Gender",
-                                      shape = c("Dose", "Compound"),
-                                      xmin = 1e-2,
-                                      xmax =1e2)
+                                      shape = c("Dose", "Compound"))
 # Define configuration
-xAxis <- XAxisConfiguration$new(scale = Scaling$log10)
-yAxis <- YAxisConfiguration$new(scale = Scaling$log10)
 ddiConfiguration <- DDIRatioPlotConfiguration$new(xlabel = "Obs",
                                                   ylabel = "Pred",
                                                   data = pkRatioData,
                                                   metaData = pkRatioMetaData,
-                                                  dataMapping = ddiMapping,
-                                                  xAxis = xAxis,
-                                                  yAxis = yAxis)
-# Overwrite default size of points
-ddiConfiguration$legend$values$size <- 2
-
+                                                  dataMapping = ddiMapping)
 # Plot
 plotDDIRatio(data = pkRatioData,
              metaData = pkRatioMetaData,
