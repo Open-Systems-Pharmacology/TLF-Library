@@ -322,7 +322,8 @@ setLegendPosition <- function(plotObject, position) {
 
   newPlotObject <- newPlotObject + theme(
     legend.position = c(legendPosition$xPosition, legendPosition$yPosition),
-    legend.justification = c(legendPosition$xJustification, legendPosition$yJustification)
+    legend.justification = c(legendPosition$xJustification, legendPosition$yJustification),
+    legend.direction = "vertical"
   )
 
   return(newPlotObject)
@@ -404,18 +405,22 @@ mergeLegend <- function(plotObject, newLabels, color, shape, size, linetype, fil
 }
 
 getCoreSetCaptionProperty <- function(property) {
-  c(parse(text = 'validateIsOfType(plotObject, "ggplot")'), 
+  c(
+    parse(text = 'validateIsOfType(plotObject, "ggplot")'),
     parse(text = "newCaption <- getLegendCaption(plotObject)"),
     parse(text = paste0(property, "Indices <- seq(1, length(", property, "))")),
-    parse(text = paste0("if(!is.null(name)){", 
-                        "validateIsIncluded(name, newCaption$name) \n", 
-                        "validateIsSameLength(", property, ", name) \n",
-                        property, "Indices <- match(name, newCaption$name)}")),
+    parse(text = paste0(
+      "if(!is.null(name)){",
+      "validateIsIncluded(name, newCaption$name) \n",
+      "validateIsSameLength(", property, ", name) \n",
+      property, "Indices <- match(name, newCaption$name)}"
+    )),
     parse(text = paste0("newCaption$", property, "[", property, "Indices] <- ", property, " \n")),
-    parse(text = "newPlotObject <- setLegendCaption(plotObject, newCaption)"))
+    parse(text = "newPlotObject <- setLegendCaption(plotObject, newCaption)")
+  )
 }
 
 
-getDefaultCaptionFor <- function(plotName){
+getDefaultCaptionFor <- function(plotName) {
   as.data.frame(tlfEnv$currentTheme$defaultCaption[[plotName]], stringsAsFactors = FALSE)
 }
