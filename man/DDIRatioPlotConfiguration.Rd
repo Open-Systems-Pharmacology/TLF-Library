@@ -6,13 +6,13 @@
 \description{
 R6 class defining the configuration of a \code{ggplot} object for DDI Ratio plots
 }
-\section{Super classes}{
-\code{\link[tlf:LabelConfiguration]{tlf::LabelConfiguration}} -> \code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{DDIRatioPlotConfiguration}
+\section{Super class}{
+\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{DDIRatioPlotConfiguration}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{ddiRatioProperties}}{list of properties for DDI ratio plot specific features}
+\item{\code{ddiRatioCaption}}{list of properties for DDI ratio plot specific features}
 }
 \if{html}{\out{</div>}}
 }
@@ -20,16 +20,12 @@ R6 class defining the configuration of a \code{ggplot} object for DDI Ratio plot
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{DDIRatioPlotConfiguration$new()}}
-\item \href{#method-addDDIRatioLines}{\code{DDIRatioPlotConfiguration$addDDIRatioLines()}}
-\item \href{#method-addGuestLines}{\code{DDIRatioPlotConfiguration$addGuestLines()}}
-\item \href{#method-addDDIRatios}{\code{DDIRatioPlotConfiguration$addDDIRatios()}}
 \item \href{#method-clone}{\code{DDIRatioPlotConfiguration$clone()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="LabelConfiguration" data-id="setPlotLabels">}\href{../../tlf/html/LabelConfiguration.html#method-setPlotLabels}{\code{tlf::LabelConfiguration$setPlotLabels()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="print">}\href{../../tlf/html/PlotConfiguration.html#method-print}{\code{tlf::PlotConfiguration$print()}}\out{</span>}
 }
 \out{</details>}
@@ -37,12 +33,10 @@ R6 class defining the configuration of a \code{ggplot} object for DDI Ratio plot
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
-Create a new \code{BoxWhiskerPlotConfiguration} object
+Create a new \code{DDIRatioPlotConfiguration} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DDIRatioPlotConfiguration$new(
-  ddiRatioProperties = tlfEnv$currentTheme$ddiRatio,
-  title = "DDI Ratio Plot",
-  subtitle = paste("Date:", format(Sys.Date(), "\%y-\%m-\%d")),
+  ddiRatioCaption = getDefaultCaptionFor("ddiRatio"),
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -50,127 +44,14 @@ Create a new \code{BoxWhiskerPlotConfiguration} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{ddiRatioProperties}}{list of properties for DDI ratio plot specific features}
-
-\item{\code{title}}{R6 class \code{Label} object}
-
-\item{\code{subtitle}}{R6 class \code{Label} object}
+\item{\code{ddiRatioCaption}}{list of properties for DDI ratio plot specific features}
 
 \item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
-
-\item{\code{xlabel}}{R6 class \code{Label} object}
-
-\item{\code{ylabel}}{R6 class \code{Label} object}
-
-\item{\code{legend}}{R6 class \code{LegendConfiguration} object defining legend properties}
-
-\item{\code{legendTitles}}{List of legend titles}
-
-\item{\code{xAxis}}{R6 class \code{XAxisConfiguration} object defining X-axis properties}
-
-\item{\code{xScale}}{character defining X-axis scale. Use enum \code{Scaling} to access predefined scales.}
-
-\item{\code{xLimits}}{numeric vector of X-axis limits}
-
-\item{\code{yAxis}}{R6 class \code{YAxisConfiguration} object defining X-axis properties}
-
-\item{\code{yScale}}{character defining Y-axis scale. Use enum \code{Scaling} to access predefined scales.}
-
-\item{\code{yLimits}}{numeric vector of Y-axis limits}
-
-\item{\code{background}}{R6 class \code{BackgroundConfiguration} defining background properties}
-
-\item{\code{watermark}}{R6 class \code{Label} object defining watermark background}
-
-\item{\code{saveConfiguration}}{R6 class \code{SaveConfiguration} defining saving properties}
-
-\item{\code{filename}}{character defining the name of the file to be saved}
-
-\item{\code{width}}{numeric values defining the width in \code{units} of the plot dimensions after saving}
-
-\item{\code{height}}{numeric values defining the height in \code{units} of the plot dimensions after saving}
-
-\item{\code{units}}{character defining the unit of the saving dimension}
-
-\item{\code{data}}{data.frame used by \code{smartMapping}}
-
-\item{\code{metaData}}{list of information on \code{data}}
-
-\item{\code{dataMapping}}{R6 class or subclass \code{XYDataMapping}}
-
-\item{\code{theme}}{R6 class \code{Theme}}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new \code{BoxWhiskerPlotConfiguration} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addDDIRatioLines"></a>}}
-\subsection{Method \code{addDDIRatioLines()}}{
-Add DDI ratio limits as line layer to a \code{ggplot} object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DDIRatioPlotConfiguration$addDDIRatioLines(plotObject, dataMapping)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{\code{ggplot} object}
-
-\item{\code{dataMapping}}{R6 class \code{DDIRatioDataMapping}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{ggplot} object with DDI ratio limits
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addGuestLines"></a>}}
-\subsection{Method \code{addGuestLines()}}{
-Add Guest et al ratio limits as line layer to a \code{ggplot} object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DDIRatioPlotConfiguration$addGuestLines(plotObject, dataMapping)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{\code{ggplot} object}
-
-\item{\code{dataMapping}}{R6 class \code{DDIRatioDataMapping}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{ggplot} object with Guest et al ratio limits
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addDDIRatios"></a>}}
-\subsection{Method \code{addDDIRatios()}}{
-Add DDI ratios as scatter layer to a \code{ggplot} object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DDIRatioPlotConfiguration$addDDIRatios(plotObject, data, metaData, dataMapping)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{\code{ggplot} object}
-
-\item{\code{data}}{data.frame}
-
-\item{\code{metaData}}{list of information on \code{data}}
-
-\item{\code{dataMapping}}{R6 class \code{DDIRatioDataMapping}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{ggplot} object DDI ratios
+A new \code{DDIRatioPlotConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}

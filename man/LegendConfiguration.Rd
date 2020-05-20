@@ -31,7 +31,7 @@ R6 class defining the legend configuration of a \code{ggplot} object
 Create a new \code{LegendConfiguration} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LegendConfiguration$new(
-  position = LegendPositions$outsideRight,
+  position = tlfEnv$defaultLegendPosition,
   title = NULL,
   caption = NULL
 )}\if{html}{\out{</div>}}

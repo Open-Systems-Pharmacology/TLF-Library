@@ -12,13 +12,13 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{obsVsPred
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{obsVsPredLines}}{numeric vector of limits to plot}
+\item{\code{obsVsPredValues}}{numeric vector of limits to plot}
+
+\item{\code{lloq}}{numeric value of lower limit of quantification}
 
 \item{\code{smoother}}{regression function name}
 
-\item{\code{xmin}}{numeric value xmin of \code{obsVsPredLines}}
-
-\item{\code{xmax}}{numeric value xmax of \code{obsVsPredLines}}
+\item{\code{range}}{2 elements vector of x limits}
 }
 \if{html}{\out{</div>}}
 }
@@ -43,9 +43,9 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{obsVsPred
 Create a new \code{ObsVsPredDataMapping} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ObsVsPredDataMapping$new(
-  obsVsPredLines = 1,
-  xmin = NULL,
-  xmax = NULL,
+  obsVsPredValues = DefaultDataMappingValues$obsVsPred,
+  lloq = NULL,
+  range = NULL,
   smoother = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -54,11 +54,11 @@ Create a new \code{ObsVsPredDataMapping} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{obsVsPredLines}}{numeric vector of limits to plot}
+\item{\code{obsVsPredValues}}{list of values for obs vs pred plot}
 
-\item{\code{xmin}}{numeric value xmin for of \code{obsVsPredLines}}
+\item{\code{lloq}}{numeric value of lower limit of quantification}
 
-\item{\code{xmax}}{numeric value xmax for of \code{obsVsPredLines}}
+\item{\code{range}}{2 elements vector of x limits}
 
 \item{\code{smoother}}{smoother function or parameter
 To map a loess smoother to the plot, use \code{smoother}="loess"}

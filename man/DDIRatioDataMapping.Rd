@@ -16,9 +16,7 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{ddiRatioL
 
 \item{\code{deltaGuest}}{numeric value of Guest et al ratio limits}
 
-\item{\code{xmin}}{numeric value xmin for ratio and Guest et al limits}
-
-\item{\code{xmax}}{numeric value xmax for ratio and Guest et al limits}
+\item{\code{range}}{2 elements vector of x limits}
 }
 \if{html}{\out{</div>}}
 }
@@ -44,10 +42,8 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{ddiRatioL
 Create a new \code{DDIRatioDataMapping} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DDIRatioDataMapping$new(
-  ddiRatioLines = c(1, 2, 1/2),
-  deltaGuest = 1,
-  xmin = 0.1,
-  xmax = 10,
+  ddiRatioValues = DefaultDataMappingValues$ddiRatio,
+  range = c(0.01, 100),
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -55,13 +51,9 @@ Create a new \code{DDIRatioDataMapping} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{ddiRatioLines}}{numeric vector of ratio limits to plot}
+\item{\code{ddiRatioValues}}{list of values for ratio and guest limits to plot}
 
-\item{\code{deltaGuest}}{numeric value of Guest et al ratio limits}
-
-\item{\code{xmin}}{numeric value xmin for ratio and Guest et al limits}
-
-\item{\code{xmax}}{numeric value xmax for ratio and Guest et al limits}
+\item{\code{range}}{2 elements vector of x limits}
 
 \item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
 }

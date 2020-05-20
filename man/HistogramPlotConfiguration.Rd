@@ -6,8 +6,8 @@
 \description{
 R6 class defining the configuration of a \code{ggplot} object for histograms
 }
-\section{Super classes}{
-\code{\link[tlf:LabelConfiguration]{tlf::LabelConfiguration}} -> \code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{HistogramPlotConfiguration}
+\section{Super class}{
+\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{HistogramPlotConfiguration}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -17,8 +17,6 @@ R6 class defining the configuration of a \code{ggplot} object for histograms
 \item{\code{bins}}{numeric vector of bin edges}
 
 \item{\code{binWidth}}{numeric value of bin width}
-
-\item{\code{histogramProperties}}{list of properties for histogram specific features}
 }
 \if{html}{\out{</div>}}
 }
@@ -34,7 +32,6 @@ R6 class defining the configuration of a \code{ggplot} object for histograms
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="LabelConfiguration" data-id="setPlotLabels">}\href{../../tlf/html/LabelConfiguration.html#method-setPlotLabels}{\code{tlf::LabelConfiguration$setPlotLabels()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="print">}\href{../../tlf/html/PlotConfiguration.html#method-print}{\code{tlf::PlotConfiguration$print()}}\out{</span>}
 }
 \out{</details>}
@@ -44,72 +41,17 @@ R6 class defining the configuration of a \code{ggplot} object for histograms
 \subsection{Method \code{new()}}{
 Create a new \code{TimeProfilePlotConfiguration} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{HistogramPlotConfiguration$new(
-  title = "Histogram",
-  subtitle = paste("Date:", format(Sys.Date(), "\%y-\%m-\%d")),
-  binWidth = NULL,
-  bins = NULL,
-  histogramProperties = tlfEnv$currentTheme$histogram,
-  ...
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{HistogramPlotConfiguration$new(binWidth = NULL, bins = NULL, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{title}}{R6 class \code{Label} object}
-
-\item{\code{subtitle}}{R6 class \code{Label} object}
-
 \item{\code{binWidth}}{numeric value of bin width}
 
 \item{\code{bins}}{numeric vector of bin edges}
 
-\item{\code{histogramProperties}}{list of properties for PK ratio plot specific features}
-
 \item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
-
-\item{\code{xlabel}}{R6 class \code{Label} object}
-
-\item{\code{ylabel}}{R6 class \code{Label} object}
-
-\item{\code{legend}}{R6 class \code{LegendConfiguration} object defining legend properties}
-
-\item{\code{legendTitles}}{List of legend titles}
-
-\item{\code{xAxis}}{R6 class \code{XAxisConfiguration} object defining X-axis properties}
-
-\item{\code{xScale}}{character defining X-axis scale. Use enum \code{Scaling} to access predefined scales.}
-
-\item{\code{xLimits}}{numeric vector of X-axis limits}
-
-\item{\code{yAxis}}{R6 class \code{YAxisConfiguration} object defining X-axis properties}
-
-\item{\code{yScale}}{character defining Y-axis scale. Use enum \code{Scaling} to access predefined scales.}
-
-\item{\code{yLimits}}{numeric vector of Y-axis limits}
-
-\item{\code{background}}{R6 class \code{BackgroundConfiguration} defining background properties}
-
-\item{\code{watermark}}{R6 class \code{Label} object defining watermark background}
-
-\item{\code{saveConfiguration}}{R6 class \code{SaveConfiguration} defining saving properties}
-
-\item{\code{filename}}{character defining the name of the file to be saved}
-
-\item{\code{width}}{numeric values defining the width in \code{units} of the plot dimensions after saving}
-
-\item{\code{height}}{numeric values defining the height in \code{units} of the plot dimensions after saving}
-
-\item{\code{units}}{character defining the unit of the saving dimension}
-
-\item{\code{data}}{data.frame used by \code{smartMapping}}
-
-\item{\code{metaData}}{list of information on \code{data}}
-
-\item{\code{dataMapping}}{R6 class or subclass \code{XYGDataMapping}}
-
-\item{\code{theme}}{R6 class \code{Theme}}
 }
 \if{html}{\out{</div>}}
 }

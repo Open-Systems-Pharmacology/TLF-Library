@@ -8,23 +8,20 @@ plotTimeProfile(
   data,
   metaData = NULL,
   dataMapping = NULL,
+  observedData = NULL,
+  dataMappingForObserved = NULL,
   plotConfiguration = NULL,
   plotObject = NULL
 )
 }
 \arguments{
-\item{data}{list of data.frames (or list of data.frames? TO BE DISCUSSED)
-containing the data to be used for the plot}
+\item{data}{data.frame containing the data to be used for the plot}
 
-\item{metaData}{list of lists (structure TO BE DISCUSSED)
-containing complementary information to data (e.g. unit)}
+\item{metaData}{list containing complementary information to data (e.g. unit)}
 
-\item{dataMapping}{R6 class TimeProfileDataMapping
-mapping of which data is observation, which data is simulation
-x, y axes + mapping of colorGrouping, sizeGrouping, shapeGrouping}
+\item{dataMapping}{\code{TimeProfileDataMapping} object}
 
-\item{plotConfiguration}{R6 class PKRatioPlotConfiguration
-Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend}
+\item{plotConfiguration}{\code{TimeProfilePlotConfiguration} object}
 
 \item{plotObject}{ggplot object, if null creates new plot, if not add time profile layers to ggplot}
 }
@@ -33,7 +30,4 @@ a ggplot graphical object
 }
 \description{
 plotTimeProfile(data, metaData = NULL, dataMapping = NULL, plotConfiguration = NULL, plotObject = NULL)
-}
-\details{
-Create a Time Profile plot
 }

@@ -12,7 +12,7 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{pkRatioLi
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{pkRatioLines}}{numeric vector of ratio limits to plot}
+\item{\code{pkRatioValues}}{numeric vector of ratio limits to plot}
 }
 \if{html}{\out{</div>}}
 }
@@ -35,13 +35,13 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{pkRatioLi
 \subsection{Method \code{new()}}{
 Create a new \code{PKRatioDataMapping} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PKRatioDataMapping$new(pkRatioLines = c(1, 1.5, 1/1.5, 2, 1/2), ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PKRatioDataMapping$new(pkRatioValues = DefaultDataMappingValues$pkRatio, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{pkRatioLines}}{numeric vector of ratio limits to plot}
+\item{\code{pkRatioValues}}{numeric vector of ratio limits to plot}
 
 \item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
 }

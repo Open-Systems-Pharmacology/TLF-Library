@@ -36,7 +36,8 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 2.1.0),
-    pander
+    pander,
+    gridExtra
 VignetteBuilder: knitr
 Collate: 
     'enum.R'
@@ -51,6 +52,7 @@ Collate:
     'datamapping-histogram.R'
     'datamapping-obs-vs-pred.R'
     'datamapping-pkratio.R'
+    'datamapping-range.R'
     'datamapping-timeprofile.R'
     'datamapping-xy.R'
     'datamapping-xygroup.R'
@@ -85,6 +87,7 @@ Collate:
     'tlf-env.R'
     'utilities-axis.R'
     'utilities-background.R'
+    'utilities-export.R'
     'utilities-label.R'
     'utilities-legend.R'
     'utilities-mapping.R'

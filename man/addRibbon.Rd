@@ -42,6 +42,15 @@ In case there is no \code{ymin} mapping, a value of 0 is assumed for \code{ymin}
 \item{caption}{vector of character strings defining the legend captions.
 This parameter is optional: default value is NULL.}
 
+\item{color}{vector of character strings defining the color of the scatter points.
+This parameter is optional: default value \code{NULL} will choose colors according to the current theme.}
+
+\item{size}{vector of numerical defining the sizes of the scatter points.
+This parameter is optional: default value \code{NULL} will choose sizes according to the current theme.}
+
+\item{linetype}{vector of character strings defining the linetype linking the scatter points.
+This parameter is optional: default value \code{NULL} won't provide lines.}
+
 \item{alpha}{transparency of the ribbon.
 Numeric value between 0 and 1. Value of 0, the plot is transparent. Value of 1, the plot is opaque.
 Default value for \code{alpha} is 0.8.}
@@ -53,6 +62,9 @@ mapping x, y and aesthetic variables to the variable names of \code{data}.}
 
 \item{plotObject}{\code{ggplot} graphical object to which the line layer is added
 This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided}
+
+\item{shape}{vector of character strings or numerical defining the shapes of the scatter points.
+This parameter is optional: default value \code{NULL} will choose shapes according to the current theme.}
 }
 \value{
 A \code{ggplot} graphical object
@@ -65,10 +77,10 @@ aesthetic properties defined in \code{plotConfiguration} will apply across all l
 }
 \examples{
 # Add a horizontal ribbon to a previous plot
-p <- ggplot2::ggplot()
-pmin <- addRibbon(ymin = -5, plotObject = p)
-pmax <- addRibbon(ymax = 5, plotObject = p)
+p <- addRibbon(ymin = -5, ymax = 5)
 
+# Add a horizontal ribbon to a previous plot
+p <- addLine(x = c(1, 2), y = c(0, 0))
 p <- addRibbon(ymin = -5, ymax = 5, plotObject = p)
 
 # Add a custom ribbon

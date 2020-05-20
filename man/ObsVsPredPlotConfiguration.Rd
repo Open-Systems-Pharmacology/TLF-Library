@@ -6,13 +6,13 @@
 \description{
 R6 class defining the configuration of a \code{ggplot} object for Obs vs Pred plots
 }
-\section{Super classes}{
-\code{\link[tlf:LabelConfiguration]{tlf::LabelConfiguration}} -> \code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{ObsVsPredPlotConfiguration}
+\section{Super class}{
+\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{ObsVsPredPlotConfiguration}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{obsVsPredProperties}}{list of properties for obs vs pred plot specific features}
+\item{\code{obsVsPredCaption}}{list of properties for obs vs pred plot specific features}
 }
 \if{html}{\out{</div>}}
 }
@@ -20,7 +20,6 @@ R6 class defining the configuration of a \code{ggplot} object for Obs vs Pred pl
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{ObsVsPredPlotConfiguration$new()}}
-\item \href{#method-addObsVsPredLines}{\code{ObsVsPredPlotConfiguration$addObsVsPredLines()}}
 \item \href{#method-addSmoother}{\code{ObsVsPredPlotConfiguration$addSmoother()}}
 \item \href{#method-addObsVsPred}{\code{ObsVsPredPlotConfiguration$addObsVsPred()}}
 \item \href{#method-clone}{\code{ObsVsPredPlotConfiguration$clone()}}
@@ -29,7 +28,6 @@ R6 class defining the configuration of a \code{ggplot} object for Obs vs Pred pl
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="LabelConfiguration" data-id="setPlotLabels">}\href{../../tlf/html/LabelConfiguration.html#method-setPlotLabels}{\code{tlf::LabelConfiguration$setPlotLabels()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="print">}\href{../../tlf/html/PlotConfiguration.html#method-print}{\code{tlf::PlotConfiguration$print()}}\out{</span>}
 }
 \out{</details>}
@@ -40,9 +38,7 @@ R6 class defining the configuration of a \code{ggplot} object for Obs vs Pred pl
 Create a new \code{ObsVsPredPlotConfiguration} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ObsVsPredPlotConfiguration$new(
-  obsVsPredProperties = tlfEnv$currentTheme$obsVsPred,
-  title = "Obs vs Pred Plot",
-  subtitle = paste("Date:", format(Sys.Date(), "\%y-\%m-\%d")),
+  obsVsPredCaption = getDefaultCaptionFor("obsVsPred"),
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -50,83 +46,14 @@ Create a new \code{ObsVsPredPlotConfiguration} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{obsVsPredProperties}}{list of properties for DDI ratio plot specific features}
-
-\item{\code{title}}{R6 class \code{Label} object}
-
-\item{\code{subtitle}}{R6 class \code{Label} object}
+\item{\code{obsVsPredCaption}}{list of properties for DDI ratio plot specific features}
 
 \item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
-
-\item{\code{xlabel}}{R6 class \code{Label} object}
-
-\item{\code{ylabel}}{R6 class \code{Label} object}
-
-\item{\code{legend}}{R6 class \code{LegendConfiguration} object defining legend properties}
-
-\item{\code{legendTitles}}{List of legend titles}
-
-\item{\code{xAxis}}{R6 class \code{XAxisConfiguration} object defining X-axis properties}
-
-\item{\code{xScale}}{character defining X-axis scale. Use enum \code{Scaling} to access predefined scales.}
-
-\item{\code{xLimits}}{numeric vector of X-axis limits}
-
-\item{\code{yAxis}}{R6 class \code{YAxisConfiguration} object defining X-axis properties}
-
-\item{\code{yScale}}{character defining Y-axis scale. Use enum \code{Scaling} to access predefined scales.}
-
-\item{\code{yLimits}}{numeric vector of Y-axis limits}
-
-\item{\code{background}}{R6 class \code{BackgroundConfiguration} defining background properties}
-
-\item{\code{watermark}}{R6 class \code{Label} object defining watermark background}
-
-\item{\code{saveConfiguration}}{R6 class \code{SaveConfiguration} defining saving properties}
-
-\item{\code{filename}}{character defining the name of the file to be saved}
-
-\item{\code{width}}{numeric values defining the width in \code{units} of the plot dimensions after saving}
-
-\item{\code{height}}{numeric values defining the height in \code{units} of the plot dimensions after saving}
-
-\item{\code{units}}{character defining the unit of the saving dimension}
-
-\item{\code{data}}{data.frame used by \code{smartMapping}}
-
-\item{\code{metaData}}{list of information on \code{data}}
-
-\item{\code{dataMapping}}{R6 class or subclass \code{XYGDataMapping}}
-
-\item{\code{theme}}{R6 class \code{Theme}}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 A new \code{obsVsPredProperties} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addObsVsPredLines"></a>}}
-\subsection{Method \code{addObsVsPredLines()}}{
-Add identity as line layer to a \code{ggplot} object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ObsVsPredPlotConfiguration$addObsVsPredLines(plotObject, data, dataMapping)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{\code{ggplot} object}
-
-\item{\code{data}}{data.frame}
-
-\item{\code{dataMapping}}{R6 class \code{ObsVsPredDataMapping}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{ggplot} object
 }
 }
 \if{html}{\out{<hr>}}

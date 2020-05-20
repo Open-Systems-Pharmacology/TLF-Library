@@ -6,9 +6,6 @@
 \description{
 R6 class defining the configuration of a \code{ggplot} object
 }
-\section{Super class}{
-\code{\link[tlf:LabelConfiguration]{tlf::LabelConfiguration}} -> \code{PlotConfiguration}
-}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -22,7 +19,7 @@ R6 class defining the configuration of a \code{ggplot} object
 
 \item{\code{background}}{R6 class \code{BackgroundConfiguration} defining background properties}
 
-\item{\code{saveConfiguration}}{R6 class \code{SaveConfiguration} defining saving properties}
+\item{\code{export}}{R6 class \code{ExportConfiguration} defining export properties}
 
 \item{\code{theme}}{\code{Theme} R6 class defining theme aesthetic properties}
 }
@@ -36,13 +33,6 @@ R6 class defining the configuration of a \code{ggplot} object
 \item \href{#method-clone}{\code{PlotConfiguration$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="LabelConfiguration" data-id="setPlotLabels">}\href{../../tlf/html/LabelConfiguration.html#method-setPlotLabels}{\code{tlf::LabelConfiguration$setPlotLabels()}}\out{</span>}
-}
-\out{</details>}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
@@ -54,7 +44,8 @@ Create a new \code{PlotConfiguration} object
   xlabel = NULL,
   ylabel = NULL,
   legend = NULL,
-  legendTitles = NULL,
+  legendTitle = NULL,
+  legendPosition = NULL,
   xAxis = NULL,
   xScale = NULL,
   xLimits = NULL,
@@ -63,16 +54,15 @@ Create a new \code{PlotConfiguration} object
   yLimits = NULL,
   background = NULL,
   watermark = NULL,
-  saveConfiguration = NULL,
-  filename = NULL,
+  export = NULL,
+  format = NULL,
   width = NULL,
   height = NULL,
   units = NULL,
   data = NULL,
   metaData = NULL,
   dataMapping = NULL,
-  theme = tlfEnv$currentTheme,
-  ...
+  theme = tlfEnv$currentTheme
 )}\if{html}{\out{</div>}}
 }
 
@@ -89,7 +79,10 @@ Create a new \code{PlotConfiguration} object
 
 \item{\code{legend}}{R6 class \code{LegendConfiguration} object defining legend properties}
 
-\item{\code{legendTitles}}{List of legend titles}
+\item{\code{legendTitle}}{character legend title}
+
+\item{\code{legendPosition}}{character legend position.
+Use Enum \code{LegendPositions} to get a list of available to legend positions.}
 
 \item{\code{xAxis}}{R6 class \code{XAxisConfiguration} object defining X-axis properties}
 
@@ -107,9 +100,9 @@ Create a new \code{PlotConfiguration} object
 
 \item{\code{watermark}}{R6 class \code{Label} object defining watermark background}
 
-\item{\code{saveConfiguration}}{R6 class \code{SaveConfiguration} defining saving properties}
+\item{\code{export}}{R6 class \code{SaveConfiguration} defining saving properties}
 
-\item{\code{filename}}{character defining the name of the file to be saved}
+\item{\code{format}}{character defining the format of the file to be saved}
 
 \item{\code{width}}{numeric values defining the width in \code{units} of the plot dimensions after saving}
 
@@ -124,8 +117,6 @@ Create a new \code{PlotConfiguration} object
 \item{\code{dataMapping}}{R6 class or subclass \code{XYDataMapping}}
 
 \item{\code{theme}}{R6 class \code{Theme}}
-
-\item{\code{...}}{parameters inherited from R6 class \code{LabelConfiguration}}
 }
 \if{html}{\out{</div>}}
 }
