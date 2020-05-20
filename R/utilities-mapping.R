@@ -243,5 +243,58 @@ DefaultDataMappingValues <- list(
     ddiRatio1 = 1,
     ddiRatio2 = c(2, 1 / 2),
     guestLine = 1
-  )
+  ),
+  obsVsPred = list("y=x" = 1)
 )
+
+getAggregatedData <- function(data,
+                              xParameterName,
+                              yParameterName,
+                              xParameterBreaks = NULL) {
+  xParameterBreaks <- xParameterBreaks %||% tlfEnv$defaultAggregation$bins
+  xParameterBins <- cut(data[, xParameterName], breaks = xParameterBreaks)
+
+  xData <- stats::aggregate(
+    x = data[, xParameterName],
+    by = list(
+      Bins = xParameterBins,
+      Groups = data[, "legendLabels"]
+    ),
+    FUN = tlfEnv$defaultAggregation$functions$y
+  )
+
+  medianData <- stats::aggregate(
+    x = data[, yParameterName],
+    by = list(
+      Bins = xParameterBins,
+      Groups = data[, "legendLabels"]
+    ),
+    FUN = tlfEnv$defaultAggregation$functions$y
+  )
+
+  lowPercData <- stats::aggregate(
+    x = data[, yParameterName],
+    by = list(
+      Bins = xParameterBins,
+      Groups = data[, "legendLabels"]
+    ),
+    FUN = tlfEnv$defaultAggregation$functions$ymin
+  )
+
+  highPercData <- stats::aggregate(
+    x = data[, yParameterName],
+    by = list(
+      Bins = xParameterBins,
+      Groups = data[, "legendLabels"]
+    ),
+    FUN = tlfEnv$defaultAggregation$functions$ymax
+  )
+
+  aggregatedData <- cbind.data.frame(xData,
+    y = medianData$x,
+    ymin = lowPercData$x,
+    ymax = highPercData$x
+  )
+
+  return(aggregatedData)
+}

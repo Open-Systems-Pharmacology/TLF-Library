@@ -75,3 +75,64 @@ setDefaultExportName <- function(name) {
   validateIsString(name)
   tlfEnv$defaultExportName$name <- name
 }
+
+tlfEnv$defaultAggregation <- list(
+  functions = list(
+    y = median,
+    ymin = function(x) {
+      as.numeric(stats::quantile(x, probs = 5 / 100))
+    },
+    ymax = function(x) {
+      as.numeric(stats::quantile(x, probs = 95 / 100))
+    }
+  ),
+  labels = list(
+    y = "median",
+    range = "[5th-95th] percentiles"
+  ),
+  bins = 10
+)
+
+#' @title setDefaultAggregationFunctions
+#' @description Set default aggregation functions of tlf environment
+#' @param y function or its name as median aggregation
+#' @param ymin function or its name as min aggregation
+#' @param ymax function or its name as max aggregation
+#' @export
+setDefaultAggregationFunctions <- function(y = NULL, ymin = NULL, ymax = NULL) {
+  validateIsOfType(c(y, ymin, ymax), c("function", "character"), nullAllowed = TRUE)
+
+  if (isOfType(y, "character")) {
+    y <- match.fun(y)
+  }
+  if (isOfType(ymin, "character")) {
+    ymin <- match.fun(ymin)
+  }
+  if (isOfType(ymax, "character")) {
+    ymax <- match.fun(ymax)
+  }
+
+  tlfEnv$defaultAggregation$functions$y <- y %||% tlfEnv$defaultAggregation$functions$y
+  tlfEnv$defaultAggregation$functions$ymin <- ymin %||% tlfEnv$defaultAggregation$functions$ymin
+  tlfEnv$defaultAggregation$functions$ymax <- ymax %||% tlfEnv$defaultAggregation$functions$ymax
+}
+
+#' @title setDefaultAggregationLabels
+#' @description Set default aggregation labels of tlf environment
+#' @param y label for median aggregation
+#' @param range label for range aggregation
+#' @export
+setDefaultAggregationLabels <- function(y = NULL, range = NULL) {
+  validateIsString(c(y, range), nullAllowed = TRUE)
+
+  tlfEnv$defaultAggregation$labels$y <- y %||% tlfEnv$defaultAggregation$labels$y
+  tlfEnv$defaultAggregation$labels$range <- range %||% tlfEnv$defaultAggregation$labels$range
+}
+
+#' @title setDefaultAggregationBins
+#' @description Set default aggregation bins of tlf environment
+#' @param bins number of bins if value, edges if vector or binning function if function
+#' @export
+setDefaultAggregationBins <- function(bins = NULL) {
+  tlfEnv$defaultAggregation$bins <- bins %||% tlfEnv$defaultAggregation$bins
+}
