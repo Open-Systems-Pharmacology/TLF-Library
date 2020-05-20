@@ -26,7 +26,7 @@ PlotConfiguration <- R6::R6Class(
     #' @param ylabel R6 class \code{Label} object
     #' @param legend R6 class \code{LegendConfiguration} object defining legend properties
     #' @param legendTitle character legend title
-    #' @param legendPosition character legend position. 
+    #' @param legendPosition character legend position.
     #' Use Enum `LegendPositions` to get a list of available to legend positions.
     #' @param xAxis R6 class \code{XAxisConfiguration} object defining X-axis properties
     #' @param xScale character defining X-axis scale. Use enum `Scaling` to access predefined scales.
@@ -78,10 +78,11 @@ PlotConfiguration <- R6::R6Class(
                               dataMapping = NULL,
                               # Theme
                               theme = tlfEnv$currentTheme) {
-      
-      self$labels<-LabelConfiguration$new(title=title,subtitle=subtitle,
-                                          xlabel=xlabel,ylabel=ylabel,
-                                          theme=theme)
+      self$labels <- LabelConfiguration$new(
+        title = title, subtitle = subtitle,
+        xlabel = xlabel, ylabel = ylabel,
+        theme = theme
+      )
 
       # Smart configuration if xlabel and ylabel
       # 1) If xlabel and ylabel provided: use as is.

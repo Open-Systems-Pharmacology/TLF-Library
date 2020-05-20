@@ -9,7 +9,7 @@ RangeDataMapping <- R6::R6Class(
     ymin = NULL,
     #' @field ymax Name of ymax variable to map
     ymax = NULL,
-    
+
     #' @description Create a new \code{RangeDataMapping} object
     #' @param x Name of x variable to map
     #' @param ymin Name of ymin variable to map
@@ -23,26 +23,28 @@ RangeDataMapping <- R6::R6Class(
     #' @param data data.frame to map used by \code{smartMapping}
     #' @return A new \code{RangeDataMapping} object
     initialize = function(x = NULL,
-                          ymin = NULL,
-                          ymax = NULL,
-                          groupMapping = NULL,
-                          color = NULL,
-                          fill = NULL,
-                          linetype = NULL,
-                          shape = NULL,
-                          size = NULL,
-                          data = NULL) {
-      
+                              ymin = NULL,
+                              ymax = NULL,
+                              groupMapping = NULL,
+                              color = NULL,
+                              fill = NULL,
+                              linetype = NULL,
+                              shape = NULL,
+                              size = NULL,
+                              data = NULL) {
+
       # smartMapping is available in utilities-mapping.R
       smartMap <- smartMapping(data)
-      super$initialize(x %||% smartMap$x, y = NULL,
-                       groupMapping = groupMapping, color = color, fill = fill,
-                       linetype = linetype, shape = shape, size = size)
-      
+      super$initialize(x %||% smartMap$x,
+        y = NULL,
+        groupMapping = groupMapping, color = color, fill = fill,
+        linetype = linetype, shape = shape, size = size
+      )
+
       self$ymin <- ymin %||% smartMap$ymin
       self$ymax <- ymax %||% smartMap$ymax
     },
-    
+
     #' @description Check that \code{data} variables include map variables
     #' @param data data.frame to check
     #' @param metaData list containing information on \code{data}
@@ -56,16 +58,16 @@ RangeDataMapping <- R6::R6Class(
       if (isOfType(self$ymax, "character")) {
         validateMapping(self$ymax, data)
       }
-      
+
       # Drop option simplify data.frame into vectors
       # False enforces data to stay as data.frame if x or y is empty
       self$data <- data[, c(self$x, self$ymin, self$ymax), drop = FALSE]
-      
+
       # All possible Groupings are listed in the enum LegendTypes
       for (groupType in LegendTypes) {
         if (!is.null(self$groupMapping[[groupType]]$group)) {
           grouping <- self$groupMapping[[groupType]]
-          
+
           groupVariables <- grouping$group
           if (isOfType(groupVariables, "data.frame")) {
             # Last group variable is the label in group data.frames
@@ -84,7 +86,7 @@ RangeDataMapping <- R6::R6Class(
           )
         }
       }
-      
+
       if (is.null(self$data$legendLabels)) {
         self$data$legendLabels <- factor("")
       }

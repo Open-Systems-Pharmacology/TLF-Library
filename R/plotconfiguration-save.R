@@ -23,10 +23,9 @@ ExportConfiguration <- R6::R6Class(
                               width = tlfEnv$defaultExportParameters$width,
                               height = tlfEnv$defaultExportParameters$height,
                               units = tlfEnv$defaultExportParameters$units) {
-      
       validateIsString(c(format, units))
       validateIsNumeric(c(width, height))
-      
+
       self$format <- format
       self$height <- height
       self$width <- width

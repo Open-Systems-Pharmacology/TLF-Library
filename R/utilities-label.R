@@ -58,7 +58,7 @@ asLabel <- function(text = "", font = NULL) {
   # Check input
   validateIsOfType(text, c("Label", "character"), nullAllowed = TRUE)
   validateIsOfType(font, Font, nullAllowed = TRUE)
-  
+
   # Ensure Label class
   if (!isOfType(text, "Label")) {
     text <- Label$new(text)

@@ -12,7 +12,7 @@ LabelConfiguration <- R6::R6Class(
     xlabel = NULL,
     #' @field ylabel R6 class \code{Label} object
     ylabel = NULL,
-    
+
     #' @description Create a new \code{LabelConfiguration} object
     #' @param title R6 class \code{Label} object
     #' @param subtitle R6 class \code{Label} object
@@ -25,16 +25,17 @@ LabelConfiguration <- R6::R6Class(
                               xlabel = NULL,
                               ylabel = NULL,
                               theme = tlfEnv$currentTheme) {
-      
       inputs <- c("title", "subtitle", "xlabel", "ylabel")
       validateExpressions <- parse(text = paste0("validateIsOfType(", inputs, ', c("Label", "character"), nullAllowed =TRUE)'))
       eval(validateExpressions)
-      
-      enforceLabelExpressions <- parse(text = paste0('if(isOfType(', inputs, ',"character")){',
-                                                     inputs, '<- asLabel(text = ', inputs, ', font = theme$', inputs, 'Font)}'))
+
+      enforceLabelExpressions <- parse(text = paste0(
+        "if(isOfType(", inputs, ',"character")){',
+        inputs, "<- asLabel(text = ", inputs, ", font = theme$", inputs, "Font)}"
+      ))
       eval(enforceLabelExpressions)
-      
-      associateExpressions <- parse(text = paste0('self$', inputs, ' <- asLabel(', inputs, ')'))
+
+      associateExpressions <- parse(text = paste0("self$", inputs, " <- asLabel(", inputs, ")"))
       eval(associateExpressions)
     },
 

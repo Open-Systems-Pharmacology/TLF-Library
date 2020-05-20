@@ -103,7 +103,7 @@ Theme <- R6::R6Class(
     aesProperties = NULL,
     #' @field defaultCaption aesthetic properties for specific plots
     defaultCaption = NULL,
-    
+
     #' @description Create a new \code{Theme} object
     #' @param themesProperties list of aesthetic properties
     #' @param labelColors list of colors for each label
@@ -119,7 +119,7 @@ Theme <- R6::R6Class(
                               background = NULL,
                               watermark = NULL,
                               aesProperties = NULL,
-                          defaultCaption = NULL) {
+                              defaultCaption = NULL) {
       super$initialize(
         labelColors = labelColors %||% themesProperties$labelColors,
         labelBaseSize = labelBaseSize
