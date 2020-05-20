@@ -105,18 +105,18 @@ PlotConfiguration <- R6::R6Class(
       # Smart configuration if legend is not defined,
       self$legend <- legend %||% LegendConfiguration$new()
       self$legend$title <- legendTitle %||% self$legend$title
-      validateIsIncluded(legendPosition, "LegendPositions", nullAllowed = TRUE)
+      validateIsIncluded(legendPosition, LegendPositions, nullAllowed = TRUE)
       self$legend$position <- legendPosition %||% self$legend$position
 
       # Define X-Axis configuration, overwrite properties only if they are defined
-      self$xAxis <- xAxis %||% XAxisConfiguration$new()
+      self$xAxis <- xAxis %||% XAxisConfiguration$new(scale = xAxisDefaultScale(self))
       self$xAxis$limits <- xLimits %||% self$xAxis$limits
       self$xAxis$scale <- xScale %||% self$xAxis$scale
 
       # Define Y-Axis configuration, overwrite properties only if they are defined
-      self$yAxis <- yAxis %||% YAxisConfiguration$new()
-      self$yAxis$limits <- yLimits %||% self$xAxis$limits
-      self$yAxis$scale <- yScale %||% self$xAxis$scale
+      self$yAxis <- yAxis %||% YAxisConfiguration$new(scale = yAxisDefaultScale(self))
+      self$yAxis$limits <- yLimits %||% self$yAxis$limits
+      self$yAxis$scale <- yScale %||% self$yAxis$scale
 
       # Set background properties
       self$background <- background %||% BackgroundConfiguration$new(

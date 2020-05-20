@@ -99,3 +99,20 @@ setYAxis <- function(plotObject,
 
   return(newPlotObject)
 }
+
+xAxisDefaultScale <- function(plotConfiguration) {
+  if (isOfType(plotConfiguration, c("DDIRatioPlotConfiguration"))) {
+    return(Scaling$log10)
+  }
+  if (isOfType(plotConfiguration, c("BoxWhiskerPlotConfiguration"))) {
+    return(Scaling$discrete)
+  }
+  return(Scaling$lin)
+}
+
+yAxisDefaultScale <- function(plotConfiguration) {
+  if (isOfType(plotConfiguration, c("PKRatioPlotConfiguration", "DDIRatioPlotConfiguration"))) {
+    return(Scaling$log10)
+  }
+  return(Scaling$lin)
+}
