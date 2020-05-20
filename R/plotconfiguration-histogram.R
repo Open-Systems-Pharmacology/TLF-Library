@@ -12,54 +12,19 @@ HistogramPlotConfiguration <- R6::R6Class(
     bins = NULL,
     #' @field binWidth numeric value of bin width
     binWidth = NULL,
-    #' @field histogramProperties list of properties for histogram specific features
-    histogramProperties = NULL,
-
+    
     #' @description Create a new \code{TimeProfilePlotConfiguration} object
     #' @param bins numeric vector of bin edges
     #' @param binWidth numeric value of bin width
-    #' @param histogramProperties list of properties for PK ratio plot specific features
-    #' @param title R6 class \code{Label} object
-    #' @param subtitle R6 class \code{Label} object
-    #' @param xlabel R6 class \code{Label} object
-    #' @param ylabel R6 class \code{Label} object
-    #' @param legend R6 class \code{LegendConfiguration} object defining legend properties
-    #' @param legendTitles List of legend titles
-    #' @param xAxis R6 class \code{XAxisConfiguration} object defining X-axis properties
-    #' @param xScale character defining X-axis scale. Use enum `Scaling` to access predefined scales.
-    #' @param xLimits numeric vector of X-axis limits
-    #' @param yAxis R6 class \code{YAxisConfiguration} object defining X-axis properties
-    #' @param yScale character defining Y-axis scale. Use enum `Scaling` to access predefined scales.
-    #' @param yLimits numeric vector of Y-axis limits
-    #' @param background R6 class \code{BackgroundConfiguration} defining background properties
-    #' @param watermark R6 class \code{Label} object defining watermark background
-    #' @param saveConfiguration R6 class \code{SaveConfiguration} defining saving properties
-    #' @param filename character defining the name of the file to be saved
-    #' @param width numeric values defining the width in `units` of the plot dimensions after saving
-    #' @param height numeric values defining the height in `units` of the plot dimensions after saving
-    #' @param units character defining the unit of the saving dimension
-    #' @param data data.frame used by \code{smartMapping}
-    #' @param metaData list of information on \code{data}
-    #' @param dataMapping R6 class or subclass \code{XYGDataMapping}
-    #' @param theme R6 class \code{Theme}
     #' @param ... parameters inherited from \code{PlotConfiguration}
     #' @return A new \code{TimeProfilePlotConfiguration} object
-    initialize = function(title = "Histogram",
-                              subtitle = paste("Date:", format(Sys.Date(), "%y-%m-%d")),
-                              binWidth = NULL,
+    initialize = function(binWidth = NULL,
                               bins = NULL,
-                              histogramProperties = tlfEnv$currentTheme$histogram,
                               ...) {
-      super$initialize(
-        title = title,
-        subtitle = subtitle,
-        ...
-      )
+      super$initialize(...)
 
       self$binWidth <- binWidth
-      self$bins <- bins
-
-      self$histogramProperties <- histogramProperties
+      self$bins <- bins %||% tlfEnv$defaultAggregation$bins
     },
 
     #' @description Add histogram as histogram layer to a \code{ggplot} object
@@ -75,8 +40,8 @@ HistogramPlotConfiguration <- R6::R6Class(
                                  metaData = NULL,
                                  dataMapping,
                                  binWidth = NULL, bins = NULL) {
-      binWidth <- ifnotnull(binWidth, binWidth, self$binWidth)
-      bins <- ifnotnull(bins, bins, self$bins)
+      binWidth <- binWidth %||% self$binWidth
+      bins <- bins %||% self$bins
 
       mapData <- dataMapping$checkMapData(data, metaData)
 
@@ -85,7 +50,7 @@ HistogramPlotConfiguration <- R6::R6Class(
 
       plotObject <- plotObject + ggplot2::geom_histogram(
         data = mapData,
-        mapping = aes_string(x = mapLabels$x, fill = mapLabels$fill),
+        mapping = ggplot2::aes_string(x = mapLabels$x, fill = mapLabels$fill, color = mapLabels$fill),
         show.legend = TRUE,
         binwidth = binWidth,
         bins = bins,
@@ -94,7 +59,7 @@ HistogramPlotConfiguration <- R6::R6Class(
 
       # If no mapping defined, remove dummy aesthetic label from the legend
       plotObject <- plotObject +
-        ifEqual("defaultAes", mapLabels$fill, guides(fill = "none"))
+        ifEqual("legendLabels", mapLabels$fill, guides(fill = "none", color="none"))
 
       return(plotObject)
     },

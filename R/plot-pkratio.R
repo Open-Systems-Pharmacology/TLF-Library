@@ -24,19 +24,21 @@ plotPKRatio <- function(data,
                         dataMapping = NULL,
                         plotConfiguration = NULL,
                         plotObject = NULL) {
-  dataMapping <- dataMapping %||% PKRatioDataMapping$new(data=data)
-  plotConfiguration <- plotConfiguration %||% PKRatioPlotConfiguration$new(data=data, metaData=metaData, dataMapping=dataMapping)
+  dataMapping <- dataMapping %||% PKRatioDataMapping$new(data = data)
+  plotConfiguration <- plotConfiguration %||% PKRatioPlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
 
   validateIsOfType(dataMapping, PKRatioDataMapping)
   validateIsOfType(plotConfiguration, PKRatioPlotConfiguration)
 
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
   for (lineIndex in seq_along(dataMapping$pkRatioValues)) {
-    plotObject <- addLine(y = dataMapping$pkRatioValues[[lineIndex]], 
-                          caption = paste0("pkRatio", lineIndex),
-                          plotObject = plotObject)
+    plotObject <- addLine(
+      y = dataMapping$pkRatioValues[[lineIndex]],
+      caption = paste0("pkRatio", lineIndex),
+      plotObject = plotObject
+    )
   }
   plotObject <- setLegendCaption(plotObject, plotConfiguration$pkRatioCaption)
-  plotObject <- addScatter(data=data, dataMapping=dataMapping, plotObject=plotObject)
+  plotObject <- addScatter(data = data, dataMapping = dataMapping, plotObject = plotObject)
   return(plotObject)
 }
