@@ -22,9 +22,10 @@ plotDDIRatio <- function(data,
   validateIsOfType(dataMapping, DDIRatioDataMapping)
   validateIsOfType(plotConfiguration, DDIRatioPlotConfiguration)
 
-  plotObject <- plotObject %||% initializePlot(plotConfiguration)
   ratioData <- dataMapping$getDDIRatioLines()
   guestData <- dataMapping$getGuestLines()
+
+  plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
   plotObject <- addLine(x = ratioData$x, y = ratioData$y, caption = "ddiRatioLine1", plotObject = plotObject)
   plotObject <- addLine(x = ratioData$x, y = ratioData$ymin, caption = "ddiRatioLine2", plotObject = plotObject)
