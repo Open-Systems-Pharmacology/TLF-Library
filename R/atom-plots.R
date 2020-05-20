@@ -188,6 +188,14 @@ addScatter <- function(data = NULL,
 #' mapping x, y and aesthetic variables to the variable names of \code{data}.
 #' @param caption vector of character strings defining the legend captions.
 #' This parameter is optional: default value is NULL.
+#' @param color vector of character strings defining the color of the scatter points.
+#' This parameter is optional: default value `NULL` will choose colors according to the current theme.
+#' @param shape vector of character strings or numerical defining the shapes of the scatter points.
+#' This parameter is optional: default value `NULL` will choose shapes according to the current theme.
+#' @param size vector of numerical defining the sizes of the scatter points.
+#' This parameter is optional: default value `NULL` will choose sizes according to the current theme.
+#' @param linetype vector of character strings defining the linetype linking the scatter points.
+#' This parameter is optional: default value `NULL` won't provide lines.
 #' @param plotConfiguration \code{PlotConfiguration} object defining the label and background properties of the plot.
 #' @param plotObject \code{ggplot} graphical object to which the line layer is added
 #' This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided
@@ -362,6 +370,14 @@ addLine <- function(data = NULL,
 #' mapping x, y and aesthetic variables to the variable names of \code{data}.
 #' @param caption vector of character strings defining the legend captions.
 #' This parameter is optional: default value is NULL.
+#' @param color vector of character strings defining the color of the scatter points.
+#' This parameter is optional: default value `NULL` will choose colors according to the current theme.
+#' @param shape vector of character strings or numerical defining the shapes of the scatter points.
+#' This parameter is optional: default value `NULL` will choose shapes according to the current theme.
+#' @param size vector of numerical defining the sizes of the scatter points.
+#' This parameter is optional: default value `NULL` will choose sizes according to the current theme.
+#' @param linetype vector of character strings defining the linetype linking the scatter points.
+#' This parameter is optional: default value `NULL` won't provide lines.
 #' @param alpha transparency of the ribbon.
 #' Numeric value between 0 and 1. Value of 0, the plot is transparent. Value of 1, the plot is opaque.
 #' Default value for \code{alpha} is 0.8.
@@ -377,10 +393,10 @@ addLine <- function(data = NULL,
 #' @export
 #' @examples
 #' # Add a horizontal ribbon to a previous plot
-#' p <- ggplot2::ggplot()
-#' pmin <- addRibbon(ymin = -5, plotObject = p)
-#' pmax <- addRibbon(ymax = 5, plotObject = p)
+#' p <- addRibbon(ymin = -5, ymax = 5)
 #'
+#' # Add a horizontal ribbon to a previous plot
+#' p <- addLine(x = c(1, 2), y = c(0, 0))
 #' p <- addRibbon(ymin = -5, ymax = 5, plotObject = p)
 #'
 #' # Add a custom ribbon
@@ -544,30 +560,6 @@ addRibbon <- function(data = NULL,
 #' If caption is the same as a previous scatter plot layer, the legend will merge their caption and aesthetic properties
 #' @return A \code{ggplot} graphical object
 #' @export
-#' @examples
-#' # Add errorbar using x, ymin and ymax
-#' p <- addErrorbar(x = c(1, 2, 1, 2, 3), ymax = c(5, 0, 2, 3, 4), ymin = c(2, -1, 1.5, 0, 0.3))
-#'
-#' # Add a custom scatter
-#' time <- seq(0, 10, 0.1)
-#' customData <- data.frame(x = time, y = cos(time), ymin = (cos(time) - 0.2 * cos(time)), ymax = cos(time) + 0.2 * cos(time))
-#'
-#' p <- addErrorbar(
-#'   data = customData,
-#'   dataMapping = RangeDataMapping$new(x = "x", ymin = "ymin", ymax = "ymax")
-#' )
-#'
-#' # Or for simple cases a smart mapping will get directly x, ymin and ymax from data
-#' p <- addErrorbar(data = customData)
-#'
-#' # Add an errorbar with caption
-#' pe <- addErrorbar(data = customData, caption = "My plot with error bars")
-#'
-#' # Add a scatter to the errorbar
-#' pScatter <- addScatter(data = customData, caption = "My plot with error bars", plotObject = pe)
-#'
-#' # Add a scatter to the errorbar
-#' pLine <- addLine(data = customData, caption = "My plot with error bars", plotObject = pe)
 addErrorbar <- function(data = NULL,
                         metaData = NULL,
                         x = NULL,
