@@ -90,12 +90,16 @@ XAxisConfiguration <- R6::R6Class(
     #' @return A \code{ggplot} object with updated axis properties
     setPlotAxis = function(plotObject) {
       if (self$scale %in% "discrete") {
-        plotObject <- plotObject +
-          scale_x_discrete(limits = self$limits, breaks = self$ticks, labels = self$ticklabels)
+        suppressMessages(
+          plotObject <- plotObject +
+            scale_x_discrete(limits = self$limits, breaks = self$ticks, labels = self$ticklabels)
+        )
         return(plotObject)
       }
-      plotObject <- plotObject +
-        scale_x_continuous(trans = self$scale, limits = self$limits, breaks = self$ticks, labels = self$ticklabels)
+      suppressMessages(
+        plotObject <- plotObject +
+          scale_x_continuous(trans = self$scale, limits = self$limits, breaks = self$ticks, labels = self$ticklabels)
+      )
       return(plotObject)
     }
   )
@@ -115,8 +119,10 @@ YAxisConfiguration <- R6::R6Class(
     #' @param plotObject \code{ggplot} object
     #' @return A \code{ggplot} object with updated axis properties
     setPlotAxis = function(plotObject) {
-      plotObject <- plotObject +
-        scale_y_continuous(trans = self$scale, limits = self$limits, breaks = self$ticks, labels = self$ticklabels)
+      suppressMessages(
+        plotObject <- plotObject +
+          scale_y_continuous(trans = self$scale, limits = self$limits, breaks = self$ticks, labels = self$ticklabels)
+      )
       return(plotObject)
     }
   )
