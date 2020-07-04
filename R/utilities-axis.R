@@ -32,14 +32,14 @@ setXAxis <- function(plotObject,
   if (xAxis$scale %in% "lin") {
     xAxis$scale <- "identity"
   }
-  if (length(xAxis$ticks) > 0) {
-    if (xAxis$ticks %in% "default") {
+  if (!isOfLength(xAxis$ticks, 0)) {
+    if (xAxis$ticks[1] %in% "default") {
       xAxis$ticks <- waiver()
     }
   }
 
-  if (length(xAxis$ticklabels) > 0) {
-    if (xAxis$ticklabels %in% "default") {
+  if (!isOfLength(xAxis$ticks, 0)) {
+    if (xAxis$ticklabels[1] %in% "default") {
       xAxis$ticklabels <- waiver()
     }
   }
@@ -83,14 +83,14 @@ setYAxis <- function(plotObject,
     yAxis$scale <- "identity"
   }
 
-  if (length(yAxis$ticks) > 0) {
-    if (yAxis$ticks %in% "default") {
+  if (!isOfLength(yAxis$ticks, 0)) {
+    if (yAxis$ticks[1] %in% "default") {
       yAxis$ticks <- waiver()
     }
   }
 
-  if (length(yAxis$ticklabels) > 0) {
-    if (yAxis$ticklabels %in% "default") {
+  if (!isOfLength(yAxis$ticks, 0)) {
+    if (yAxis$ticklabels[1] %in% "default") {
       yAxis$ticklabels <- waiver()
     }
   }

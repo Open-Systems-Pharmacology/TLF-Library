@@ -46,12 +46,16 @@ AxisConfiguration <- R6::R6Class(
       }
 
       self$ticks <- ticks
-      if (ticks %in% "default") {
-        self$ticks <- waiver()
+      if (!isOfLength(ticks, 0)) {
+        if (ticks[1] %in% "default") {
+          self$ticks <- waiver()
+        }
       }
       self$ticklabels <- ticklabels
-      if (ticklabels %in% "default") {
-        self$ticklabels <- waiver()
+      if (!isOfLength(ticklabels, 0)) {
+        if (ticklabels[1] %in% "default") {
+          self$ticklabels <- waiver()
+        }
       }
     },
 
