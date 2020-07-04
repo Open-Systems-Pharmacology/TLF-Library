@@ -30,6 +30,11 @@ plotBoxWhisker <- function(data,
   validateIsOfType(plotObject, ggplot, nullAllowed = TRUE)
 
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
+  
+  if(nrow(data)==0){
+    warning("No data to plot in BoxWhiskers")
+    return(plotObject)
+  }
 
   # Add Plot Configuration layers and box whisker plots
   plotObject <- plotConfiguration$addBoxWhisker(plotObject, data, metaData, dataMapping)
