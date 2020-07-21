@@ -136,3 +136,13 @@ setDefaultAggregationLabels <- function(y = NULL, range = NULL) {
 setDefaultAggregationBins <- function(bins = NULL) {
   tlfEnv$defaultAggregation$bins <- bins %||% tlfEnv$defaultAggregation$bins
 }
+
+
+#' @title setDefaultWatermark
+#' @description Set default watermark value for current theme
+#' @param watermark character or Label class object
+#' @export
+setDefaultWatermark <- function(watermark = NULL){
+  validateIsOfType(watermark, c("Label", "character"), nullAllowed = TRUE)
+  tlfEnv$currentTheme$background$watermark <- asLabel(watermark)
+}
