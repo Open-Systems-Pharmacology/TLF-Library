@@ -32,6 +32,7 @@ setLegend <- function(plotObject,
 #' Set the legend caption
 #' @export
 #' @import ggplot2
+#' @import utils
 setLegendCaption <- function(plotObject, caption) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(caption, "data.frame")
@@ -50,9 +51,13 @@ setLegendCaption <- function(plotObject, caption) {
 
   # The next lines need to be looped on every element of LegendTypes
   # Otherwise, there can be a legend per LegendTypes
-  # breaks and values don't need to match,
-  # however values is remapped on ggplot alphabetical order to get the right values
   for (aestype in LegendTypes) {
+    # breaks and values are remapped by alphabetical order on ggplot2 versions <3.3.0
+    # For these versions, the order is reverse engineered
+    aesValues <- legend$caption[legend$caption$order[orderedVisibility], aestype]
+    if(utils::packageVersion("ggplot2") < "3.3.0"){
+      aesValues <- legend$caption[order(legend$caption$name), aestype]
+    }
     # scale_discrete_manual sends warning every time it overwrite something
     # so this line need to be silent
     suppressMessages(
@@ -62,7 +67,7 @@ setLegendCaption <- function(plotObject, caption) {
           name = legend$title,
           breaks = orderedName[orderedVisibility],
           labels = orderedLabel[orderedVisibility],
-          values = legend$caption[order(legend$caption$name), aestype]
+          values = aesValues
         )
     )
   }
