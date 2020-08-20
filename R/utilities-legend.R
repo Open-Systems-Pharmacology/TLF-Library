@@ -54,8 +54,11 @@ setLegendCaption <- function(plotObject, caption) {
   for (aestype in LegendTypes) {
     # breaks and values are remapped by alphabetical order on ggplot2 versions <3.3.0
     # For these versions, the order is reverse engineered
-    aesValues <- legend$caption[legend$caption$order[orderedVisibility], aestype]
-    if(utils::packageVersion("ggplot2") < "3.3.0"){
+    aesValues <- c(
+      legend$caption[legend$caption$order[orderedVisibility], aestype],
+      legend$caption[legend$caption$order[!orderedVisibility], aestype]
+    )
+    if (utils::packageVersion("ggplot2") < "3.3.0") {
       aesValues <- legend$caption[order(legend$caption$name), aestype]
     }
     # scale_discrete_manual sends warning every time it overwrite something
