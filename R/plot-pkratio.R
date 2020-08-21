@@ -34,7 +34,7 @@ plotPKRatio <- function(data,
   for (lineIndex in seq_along(dataMapping$pkRatioValues)) {
     plotObject <- addLine(
       y = dataMapping$pkRatioValues[[lineIndex]],
-      caption = paste0("pkRatio", lineIndex),
+      caption = paste0("pkRatioLine", lineIndex),
       plotObject = plotObject
     )
   }
