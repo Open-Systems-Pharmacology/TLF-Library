@@ -1,0 +1,255 @@
+---
+title: "PK Ratio plots"
+author: "OSPSuiteR 2019"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{pk-ratio-vignette}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(tlf)
+```
+
+# 1. Introduction
+## 1.1. Objectives
+The following vignette aims at documenting and illustrating workflows for producing PK ratio plots using the `tlf`-Library.
+
+## 1.2. Prerequisite
+This vignette focuses PK ratio plots examples. Detailed documentation on typical `tlf` workflow, use of `AgregationSummary`, `DataMapping`, `PlotConfiguration` and `Theme` can be found in `vignette("tlf-workflow")`.
+
+# 2. Illustration of basic PK ratio plots
+## 2.1. Data
+To illustrate the workflow leading to performing PK ratio plots. The `pkRatioDataExample.RData` example can be loaded from the `data` folder. 
+It includes the dataset `pkRatioData` and its metaData `pkRatioMetaData`.
+
+```{r, results='asis'}
+# Load example
+load("../data/pkRatioDataExample.RData")
+
+# pkRatioData
+knitr::kable(utils::head(pkRatioData), digits = 2)
+
+# pkRatioMetaData is a list of variables contianing a lists with unit, dimension and lloq for each
+# Unit and dimension of pkRatioData are consequently the following:
+knitr::kable(data.frame(unit = t(rbind(sapply(pkRatioMetaData, function(x){x$unit}))),
+                        dimension = t(rbind(sapply(pkRatioMetaData, function(x){x$dimension})))))
+```
+
+
+## 2.2. `plotPKRatio`
+The function plotting PK ratios is: `plotPKRatio`. 
+Basic documentation of the function can be found using: `?plotPKRatio`.
+The typical usage of this function is: `plotPKRatio(data, metaData = NULL, dataMapping = NULL, plotConfiguration = NULL)`.
+The output of the function is a `ggplot` object.
+It can be seen from this usage that only `data` is a necessary input.
+Default set ups are used for `metaData`, `dataMapping` and `plotConfiguration` within the call of `plotPKRatio`.
+For instance, if `dataMapping` is not provided, a smart mapping will be tested checking if data contains a `"x"` and a `"y"` named column.
+If the `data` has only two columns not named `"x"` and `"y"`, it will assume the first one should be plot in x-axis and the second in y-axis.
+Then, `PKRatioPlotConfiguration` is initialized if not provided, defining a standard configuration with `PK Ratio Plot` as title, the current date as subtitle and using predifned fonts as defined by the current theme.
+
+## 2.3. Minimal example
+The minimal example can work using directly the function `plotPKRatio(data = pkRatioData[, c("Age", "Ratio")])`.
+```{r, fig.height=5, fig.width=7.5}
+plotPKRatio(data = pkRatioData[,c("Age", "Ratio")])
+```
+
+## 2.4. Examples with `dataMapping`
+For PK ratio, the `dataMapping` class `PKRatioDataMapping` includes 4 fields: `x`, `y`, `groupMapping` and `pkRatioLines`.
+`x` and `y` define which variables from the data will be plotted in X- and Y-axes, `groupMapping` is a class mapping which aesthtic property will split which variables, and `pkRatioLines` defines horizontal lines performed in PK ratio plots.
+
+### 2.4.1 `groupMapping`
+The `groupMapping` input is assumed a `GroupMapping` class, meaning it should be initialized prior the dataMapping.
+To simplify this process, `groupMapping` input can directly be initilized within the `dataMapping`.
+Consequently, The following examples are identical:
+```{r}
+# Two-step process
+colorMapping <- GroupMapping$new(color = "Gender")
+dataMappingA <- PKRatioDataMapping$new(x = "Age", 
+                                      y = "Ratio", 
+                                      groupMapping = colorMapping)
+
+print(dataMappingA$groupMapping$color$label)
+
+# One-step process
+dataMappingB <- PKRatioDataMapping$new(x = "Age", 
+                                      y = "Ratio", 
+                                      color = "Gender")
+
+print(dataMappingB$groupMapping$color$label)
+
+```
+
+Then, in this example, `plotPKRatio` can use the groupMapping to split the data by "Gender" and associate different colors to each "Gender":
+```{r, fig.height=5, fig.width=7.5}
+plotPKRatio(data = pkRatioData, 
+            dataMapping = dataMappingB)
+```
+
+Multiple groupMappings can be performed for PK ratio: data can be regrouped by `color`, `shape` and/or `size`.
+The next example uses 2 groups in the groupMapping:
+One group splits "Gender" by `color`, the other splits `shape` by "Amount" and "Compound".
+```{r, fig.height=5, fig.width=7.5}
+dataMapping2groups <- PKRatioDataMapping$new(x = "Age",
+                                             y = "Ratio",
+                                             color = "Gender",
+                                             shape = c("Dose", "Compound"))
+plotPKRatio(data = pkRatioData, 
+            dataMapping = dataMapping2groups)
+```
+
+The last examples uses another feature available in the `groupMapping` class. The class can be initilized using a `data.frame` where the last column of the data.frame will be used to split the data. In the following example, the data.frame is the following:
+
+```{r, echo=FALSE, results='asis'}
+groupDataFrame <- data.frame(Dose = c(50, 100, 50, 100, 50, 100, 50, 100), 
+                             Compound = c("Aspirin", "Aspirin", "Vancomycin", "Vancomycin", "Aspirin", "Aspirin", "Vancomycin", "Vancomycin"),
+                             Gender = c("M", "M", "M", "M", "F", "F", "F", "F"),
+                             Group = c("Males infused with 50mg of Aspirin", "Males infused with 100mg of Aspirin", 
+                                       "Males infused with 50mg of Vancomycin", "Males infused with 100mg of Vancomycin",
+                                       "Females infused with 50mg of Aspirin",  "Females infused with 100mg of Aspirin", 
+                                       "Females infused with 50mg of Vancomycin", "Females infused with 100mg of Vancomycin"))
+knitr::kable(groupDataFrame)
+```
+
+The `dataMapping` introduced below will split the `color` and `shape` using the data frame.
+```{r, fig.height=5, fig.width=7.5}
+dataMappingDF <- PKRatioDataMapping$new(x = "Age",
+                                             y = "Ratio",
+                                             color = groupDataFrame,
+                                             shape = groupDataFrame)
+plotPKRatio(data = pkRatioData, 
+            dataMapping = dataMappingDF)
+```
+
+
+### 2.4.2 `pkRatioValues`
+In PK ratio examples, usually horizontal lines are added allowing to flag values in and out of the [0.67-1.5] as well as [0.5-2.0] ranges.
+The value mapping these horizontal lines was predifined as a list: "pkRatioLine1" is 1, "pkRatioLine2" is c(0.67, 1.5) and "pkRatioLine3" is c(0.5, 2).
+Consequently, for any default `PKRatioDataMapping`, you have:
+```{r}
+linesMapping <- PKRatioDataMapping$new()
+linesMapping$pkRatioValues
+```
+
+Overwriting these value is possible by updating the value either when initializing the mapping or afterwards.
+For instance:
+```{r, fig.height=5, fig.width=7.5}
+linesMapping <- PKRatioDataMapping$new(pkRatioValues = list(pkRatioLine1 = 1, pkRatioLine2 = c(0.2, 5)),
+                                       x = "Age", 
+                                       y = "Ratio",
+                                       color = "Gender")
+plotPKRatio(data = pkRatioData, 
+            dataMapping = linesMapping)
+
+```
+
+## 2.5. Plot Configuration
+
+To configure the plot properties, `PlotConfiguration` objects derived from `R6Class` can be used.
+They associate the following features:
+
+* `LabelConfiguration`, inherited `R6Class` defining the labels of the plot (title, subtitles, x axis, y axis)
+* `LegendConfiguration`, `R6Class` defining the legend properties of the plot
+* `BackgroundConfiguration`, `R6Class` defining the background properties of the plot (color, grid and watermark)
+* `xAxisConfiguration`, `R6Class` defining the properties of the X axis (scale, limits, printed values)
+* `yAxisConfiguration`, `R6Class` defining the properties of the Y axis (scale, limits, printed values)
+
+Plot configuration uses default properties from theme but can be overwritten (either by indicating the updated input or by redifing the value after the creation of the object).
+
+## 2.5.1 Themes
+
+Plot configuration uses default properties from an `R6 class` Theme. 
+Currently, 3 main themes are predefined and available. However, it is possible to create one's own theme by initiliazing the `Theme` class.
+
+To set theme, use function `useTheme` as introduced in the following example:
+```{r, fig.height=5, fig.width=7.5}
+useTheme(bwTheme)
+plotPKRatio(data = pkRatioData[,c("Age", "Ratio")])
+```
+```{r, fig.height=5, fig.width=7.5}
+useTheme(tlfTheme)
+plotPKRatio(data = pkRatioData[,c("Age", "Ratio")])
+```
+
+
+## 2.5.2 Labels
+Default labels are implemented for titles and axes. 
+The default title is the type of the plot here "PK Ratio Plot", the default subtitle is the current date, as for the axes metaData are searched and the `dimension [unit]` of the metaData is provided as default.
+However, it is possible to overwrite the text using the follwong example:
+```{r, fig.height=5, fig.width=7.5}
+labelConfiguration <- PKRatioPlotConfiguration$new(title = "New Title",
+                                                   subtitle = "New subtitle",
+                                                   xlabel = "New X-axis",
+                                                   ylabel = "New Y-axis")
+plotPKRatio(data = pkRatioData[,c("Age", "Ratio")],
+            plotConfiguration = labelConfiguration)
+```
+
+If needed, it is also possible to update the font properties either by using a `Label` class as input or by updating the `Label` output of the plotConfiguration.
+For instance, the 2 following examples are equivalent:
+```{r, fig.height=5, fig.width=7.5}
+labelConfiguration1 <- PKRatioPlotConfiguration$new(title = Label$new(text = "Title as Label", 
+                                                                     font = Font$new(color = "red")))
+labelConfiguration2 <- PKRatioPlotConfiguration$new(title = "Title as Label")
+labelConfiguration2$labels$title$font$color <- "red"
+
+isTRUE(labelConfiguration1$labels$title$font$color == labelConfiguration2$labels$title$font$color)
+```
+
+# 3. Qualification of PK Ratios
+The qualification of the PK Ratios can be performed using `getPKRatioMeasure`.
+This function return a `data.frame` with the PK ratios within specific ranges.
+As a default, these ranges are within 1.5 and 2 folds. However, they can be updated using the option `ratioLimits =` when running the function.
+
+```{r, results='asis'}
+# Test of getPKRatioMeasure
+PKRatioMeasure <- getPKRatioMeasure(data = pkRatioData[,c("Age", "Ratio")])
+
+knitr::kable(x = PKRatioMeasure,
+             caption = "Qualification of PK Ratios")
+```
+
+# 4. Going further: DDI Ratio plot examples
+PK ratio plots and DDI ratio plots are very similar in their structure. 
+The difference is the plotting of diagonal lines and limits as defined by the Guest et al. equation.
+These plots introduce 4 new fields in the method: `xmin`, `xmax`, `ddiRatioLines`, `deltaGuest`.
+`xmin` and `xmax` defining the range where the diagonal lines and Guest limits should be plotted, the default range is [0.1-10].
+`ddiRatioLines` the values of the ratios (similar as `pkRatioLines` the dfault is `c(1,2,0.5)`). 
+`deltaGuest` is the value of `delta` used in the Guest equation (default set as 1).
+
+The definition of such lines and limits is pre-defined within the dataMapping class for DDI ratios: `DDIRatioDataMapping`, as shown below:
+```{r}
+linesMapping <- DDIRatioDataMapping$new()
+```
+
+Then, keeping the workflow as provided in the PK ratio examples, DDI ratio plot can be performed in very few steps:
+```{r, fig.height=5, fig.width=7.5}
+useTheme(tlfTheme)
+
+# Process data
+pkRatioData$Observed <- pkRatioData$Observed/10
+pkRatioData$Simulated <- pkRatioData$Simulated/10
+
+# Define Mapping
+ddiMapping <- DDIRatioDataMapping$new(x = "Observed",
+                                      y = "Simulated",
+                                      color = "Gender",
+                                      shape = c("Dose", "Compound"))
+# Define configuration
+ddiConfiguration <- DDIRatioPlotConfiguration$new(xlabel = "Obs",
+                                                  ylabel = "Pred",
+                                                  data = pkRatioData,
+                                                  metaData = pkRatioMetaData,
+                                                  dataMapping = ddiMapping)
+# Plot
+plotDDIRatio(data = pkRatioData,
+             metaData = pkRatioMetaData,
+             dataMapping = ddiMapping,
+             plotConfiguration = ddiConfiguration)
+```

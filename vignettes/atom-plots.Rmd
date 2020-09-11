@@ -1,0 +1,203 @@
+---
+title: "Atom plots"
+output: 
+  rmarkdown::html_vignette:
+    number_sections: true
+vignette: >
+  %\VignetteIndexEntry{atom-plots}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(tlf)
+```
+
+This vignette tackles how to use atom plots to perform simple to more complex plots with the `tlf`-library.
+
+# Introduction to atom plots
+
+Atom plots correspond to simple plots that can be used independently or in combination to form a final plot, often more complex, that will be referred as molecule plot.
+In the sequel, the following atoms are detailed:
+
+- *initializePlot*
+- *addScatter*
+- *addLine*
+- *addRibbon*
+- *addErrorbar*
+
+# Initialize a plot object: *initializePlot*
+
+The `tlf` method *initializePlot* aims at creating an empty plot with properties defined by a  *PlotConfiguration* R6 class or subclass object.
+The output plot is a regular `ggplot` object to which a *plotConfiguration* field is implanted.
+Since this method is at the core of every atom and molecule plots, any plot generated using the `tlf`-library will include such a *plotConfiguration*.
+
+If no *plotConfiguration* is provided to the method *initializePlot*, the default configuration from the current theme will be used.
+
+Below are a few examples of use case of *initializePlot*:
+```{r}
+# No specific configuration
+emptyPlot <- initializePlot()
+
+# PlotConfiguration
+myConfiguration <- PlotConfiguration$new(title = "My empty plot",
+                                         xlabel = "X",
+                                         ylabel = "Y")
+emptyPlotWithLabels <- initializePlot(myConfiguration)
+
+# Smart PlotConfiguration
+time <- seq(0,20, 0.1)
+myData <- data.frame(x = time,
+                     y = 2*cos(time))
+myMetaData <- list(x = list(dimension = "Time",
+                            unit = "min"),
+                   y = list(dimension = "Amplitude",
+                            unit = "cm"))
+myMapping <- XYGDataMapping$new(x = "x",
+                                y = "y")
+
+mySmartConfiguration <- PlotConfiguration$new(title = "My smart plot",
+                                              data = myData,
+                                              metaData = myMetaData,
+                                              dataMapping = myMapping)
+
+smartEmptyPlot <- initializePlot(mySmartConfiguration)
+
+# Using another theme to change default
+useTheme(tlfTheme)
+myNewSmartConfiguration <- PlotConfiguration$new(title = "My smart plot",
+                                              data = myData,
+                                              metaData = myMetaData,
+                                              dataMapping = myMapping)
+smartEmptyPlotNewTheme <- initializePlot(myNewSmartConfiguration)
+```
+
+```{r, echo=FALSE}
+useTheme(defaultTheme)
+```
+
+```{r, echo=FALSE, fig.cap="top left: emptyPlot; top right: emptyPlotWithLabels; bottom left: smartEmptyPlot; bottom right: ", fig.width=7.5}
+gridExtra::grid.arrange(emptyPlot, emptyPlotWithLabels, smartEmptyPlot, smartEmptyPlotNewTheme, ncol=2)
+```
+
+# Add scatter or lines to a plot object: *addScatter*, *addLine*
+
+The functions *addScatter* and *addLines* can be used to add scatter and line layers.
+They can be used directly, in which case the function *initializePlot* will be called from within these functions. Or they can be added on top of a previous plot object using the parameter *plotObject*.
+
+The following data will be used as an example in the next section:
+```{r}
+myCosData <- rbind.data.frame(data.frame(x = time,
+                                         y = 2*cos(time),
+                                         type = "cosinus"),
+                              data.frame(x = time,
+                                         y = 2*sin(time),
+                                         type = "sinus"),
+                              data.frame(x = time,
+                                         y = round(2*sin(time)),
+                                         type = "stairs"))
+```
+
+## *addScatter*
+
+The primary input parameter of function *addScatter* is *data* and can be used along with its *metaData* and *dataMapping*.
+However, it is also possible to directly use the input parameters *x* and *y* instead to plot directly *y* as a function of *x*.
+
+```{r}
+# Naive mapping on x and y
+myMapping <- XYGDataMapping$new(x = "x",
+                                y = "y")
+
+# Mapping on x and y, while grouping the data by type
+myGroupMapping <- XYGDataMapping$new(x = "x",
+                                     y = "y",
+                                     color = "type")
+# Using the naive mapping
+pNaive <- addScatter(data = myCosData,
+                     metaData = myMetaData,
+                     dataMapping = myMapping)
+
+# Using tlf smart mapping (same as naive)
+pSmart <- addScatter(data = myCosData,
+                     metaData = myMetaData)
+
+# Using group in mapping
+pGroup <- addScatter(data = myCosData,
+                metaData = myMetaData,
+                dataMapping = myGroupMapping)
+
+# Using x and y (same as naive but without metaData, no label)
+pXY <- addScatter(x = myCosData$x,
+                  y = myCosData$y)
+```
+
+```{r, echo=FALSE, fig.cap="top left: pNaive; top right: pSmart; bottom left: pGroup; bottom right: pXY", fig.width=7.5}
+gridExtra::grid.arrange(pNaive, pSmart, pGroup, pXY, ncol=2)
+```
+
+In the other input parameters, *plotConfiguration* or a previous *plotObject* can be used to define the either which will be the plot configuration or on top of which previous plot the scatter layer should be added.
+
+```{r}
+# Using x and y
+pScatter1 <- addScatter(x = myCosData$x[myCosData$type %in% "cosinus"],
+                  y = myCosData$y[myCosData$type %in% "cosinus"])
+
+
+```
+
+```{r, echo=FALSE, fig.cap="top left: pNaive; top right: pSmart; bottom left: pGroup; bottom right: pXY", fig.width=7.5}
+gridExtra::grid.arrange(pScatter1, pScatter1, pScatter1, pScatter1, ncol=2)
+```
+
+Finally, the last input parameters include *caption*, *color*, *size*, *shape* and *linetype*. 
+These parameters are optional and will use the default of the current theme if they are not defined.
+In particular, *dataMapping* also allows to create a legend caption, the input parameter *caption* can overwrtie such legend caption.
+
+## *addLine*
+
+The function *addLine* is almost identical to *addScatter*.
+It differs regarding its default aesthetic properties: lines are replacing the points, even if points can be used.
+It also differs by the possibility of using only *y* input for y-intercepts.
+
+Using the example with *myData*,
+
+```{r}
+
+line1 <- addLine(data = myCosData[myCosData$type %in% "cosinus",],
+                 metaData = myMetaData,
+                 dataMapping = myMapping,
+                 caption = "cosinus")
+# y intercepts
+line2 <- addLine(y = c(-2,0,2),
+                 caption = "y-intercepts",
+                 color = "darkblue",
+                 size = 2,
+                 linetype = "longdash",
+                 plotObject = line1)
+
+line3 <- addLine(data = myCosData,
+                 metaData = myMetaData,
+                 dataMapping = myGroupMapping)
+
+line4 <- addLine(x = seq(0, 5*pi, pi),
+                 y = rep(c(-1, 1), 3),
+                 caption = "frame",
+                 color = "brown4",
+                 linetype = "solid",
+                 plotObject = line3)
+
+```
+
+```{r, echo=FALSE, fig.cap="top left: line1; top right: line2; bottom left: line3; bottom right: line4", fig.width=7.5}
+gridExtra::grid.arrange(line1, line2, line3, line4, ncol=2)
+```
+
+# Add ribbon or errorbarsa plot object: *addRibbon*, *addErrorbar*
+

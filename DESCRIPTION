@@ -1,0 +1,93 @@
+Package: tlf
+Type: Package
+Title: TLF Library
+Version: 0.1.0
+Authors@R: 
+    c(person(given = "Open-Systems-Pharmacology Community",
+             role = "cph"),
+      person(given = "Michael",
+             family = "Sevestre",
+             role = c("aut", "cre"),
+             email = "michael@design2code.ca"),
+      person(given = "Pierre",
+             family = "Chelle",
+             role = "aut",
+             email = "chelle.pierre@gmail.com"),
+      person(given = "Abdullah",
+             family = "Hamadeh",
+             role = "aut",
+             email = "aoh123@gmail.com"))
+Description: An implementation of the Table, Listing and Figure concepts in R. This library provides
+    a standardized approach to creating tables and graphs based on conventions over configurations.
+License: GPL-2 | file LICENSE
+URL: https://github.com/open-systems-pharmacology/tlf-library
+BugReports: https://github.com/open-systems-pharmacology/tlf-library/issues
+Imports: 
+    ggplot2 (>= 3.3.0),
+    R6,
+    reshape2
+Depends: 
+    R (>= 3.5)
+Encoding: UTF-8
+RoxygenNote: 7.0.2
+Roxygen: list(markdown = TRUE)
+LazyData: true    
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 2.1.0),
+    pander,
+    gridExtra
+VignetteBuilder: knitr
+Collate: 
+    'enum.R'
+    'aggregation-input.R'
+    'aggregation-summary.R'
+    'atom-plots.R'
+    'boxwhisker-datamapping.R'
+    'boxwhisker-get-measure.R'
+    'boxwhisker-plot.R'
+    'boxwhisker-plotconfiguration.R'
+    'data-description.R'
+    'datamapping-grouping.R'
+    'datamapping-groupmapping.R'
+    'datamapping-range.R'
+    'datamapping-xy.R'
+    'datamapping-xygroup.R'
+    'ddiratio-datamapping.R'
+    'ddiratio-plotconfiguration.R'
+    'error-checks.R'
+    'utils.R'
+    'font.R'
+    'histogram-datamapping.R'
+    'histogram-plotconfiguration.R'
+    'label.R'
+    'messages.R'
+    'metadata-helper.R'
+    'obs-vs-pred-datamapping.R'
+    'obs-vs-pred-plotconfiguration.R'
+    'pkratio-datamapping.R'
+    'pkratio-get-measure.R'
+    'pkratio-plotconfiguration.R'
+    'plot-ddiratio.R'
+    'plot-histogram.R'
+    'plot-obs-vs-pred.R'
+    'plot-pkratio.R'
+    'plot-timeprofile.R'
+    'plotconfiguration-axis.R'
+    'plotconfiguration-background.R'
+    'plotconfiguration-export.R'
+    'plotconfiguration-label.R'
+    'plotconfiguration-legend.R'
+    'plotconfiguration.R'
+    'themes.R'
+    'timeprofile-datamapping.R'
+    'timeprofile-helper.R'
+    'timeprofile-plotconfiguration.R'
+    'tlf-env.R'
+    'utilities-axis.R'
+    'utilities-background.R'
+    'utilities-export.R'
+    'utilities-label.R'
+    'utilities-legend.R'
+    'utilities-mapping.R'
