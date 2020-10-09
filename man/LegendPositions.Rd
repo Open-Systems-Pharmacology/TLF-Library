@@ -4,7 +4,9 @@
 \name{LegendPositions}
 \alias{LegendPositions}
 \title{LegendPositions}
-\format{An object of class \code{list} of length 17.}
+\format{
+An object of class \code{list} of length 17.
+}
 \usage{
 LegendPositions
 }

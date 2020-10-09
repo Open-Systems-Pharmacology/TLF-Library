@@ -32,6 +32,7 @@ R6 class for mapping \code{x}, \code{y} and \code{GroupMapping} variables to \co
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{XYGDataMapping} object
 \subsection{Usage}{
@@ -77,6 +78,7 @@ A new \code{XYGDataMapping} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-checkMapData"></a>}}
+\if{latex}{\out{\hypertarget{method-checkMapData}{}}}
 \subsection{Method \code{checkMapData()}}{
 Check that \code{data} variables include map variables
 \subsection{Usage}{
@@ -99,6 +101,7 @@ Dummy variable \code{defaultAes} is necessary to allow further modification of p
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -27,6 +27,7 @@ R6 class defining the configuration of a \code{ggplot} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{BoxWhiskerPlotConfiguration} object
 \subsection{Usage}{
@@ -46,6 +47,7 @@ A new \code{BoxWhiskerPlotConfiguration} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addBoxWhisker"></a>}}
+\if{latex}{\out{\hypertarget{method-addBoxWhisker}{}}}
 \subsection{Method \code{addBoxWhisker()}}{
 Add a boxplot layer to a \code{ggplot} object
 \subsection{Usage}{
@@ -76,6 +78,7 @@ A \code{ggplot} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addOutliers"></a>}}
+\if{latex}{\out{\hypertarget{method-addOutliers}{}}}
 \subsection{Method \code{addOutliers()}}{
 Add a outlier points layer to a \code{ggplot} object
 \subsection{Usage}{
@@ -106,6 +109,7 @@ A \code{ggplot} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

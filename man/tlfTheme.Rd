@@ -4,7 +4,9 @@
 \name{tlfTheme}
 \alias{tlfTheme}
 \title{tlfTheme}
-\format{An object of class \code{Theme} (inherits from \code{ThemeFont}, \code{R6}) of length 12.}
+\format{
+An object of class \code{Theme} (inherits from \code{ThemeFont}, \code{R6}) of length 12.
+}
 \usage{
 tlfTheme
 }

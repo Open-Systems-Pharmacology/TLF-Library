@@ -4,7 +4,9 @@
 \name{Scaling}
 \alias{Scaling}
 \title{Scaling}
-\format{An object of class \code{list} of length 8.}
+\format{
+An object of class \code{list} of length 8.
+}
 \usage{
 Scaling
 }

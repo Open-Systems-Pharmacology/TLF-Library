@@ -4,7 +4,8 @@
 \name{pkRatioData}
 \alias{pkRatioData}
 \title{Test dataset of PK Ratios for 40 subjects.}
-\format{A data frame with 40 rows and 11 variables:
+\format{
+A data frame with 40 rows and 11 variables:
 \describe{
 \item{IndividualID}{}
 \item{Population}{}
@@ -17,7 +18,8 @@
 \item{Simulated}{}
 \item{Observed}{}
 \item{Ratio}{}
-}}
+}
+}
 \usage{
 pkRatioData
 }
