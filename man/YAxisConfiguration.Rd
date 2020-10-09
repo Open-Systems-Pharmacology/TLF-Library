@@ -33,6 +33,7 @@ R6 class defining the configuration of Y-axis
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-setPlotAxis"></a>}}
+\if{latex}{\out{\hypertarget{method-setPlotAxis}{}}}
 \subsection{Method \code{setPlotAxis()}}{
 Set axis configuration on a \code{ggplot} object
 \subsection{Usage}{
@@ -52,6 +53,7 @@ A \code{ggplot} object with updated axis properties
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

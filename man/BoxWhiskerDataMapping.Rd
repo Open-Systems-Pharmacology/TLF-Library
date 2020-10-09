@@ -38,6 +38,7 @@ calculated on \code{data} to obtain box whiskers}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{BoxWhiskerDataMapping} object
 \subsection{Usage}{
@@ -94,6 +95,7 @@ A new \code{BoxWhiskerDataMapping} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-getBoxWhiskerLimits"></a>}}
+\if{latex}{\out{\hypertarget{method-getBoxWhiskerLimits}{}}}
 \subsection{Method \code{getBoxWhiskerLimits()}}{
 Get a data.frame with box-whisker limit by group
 \subsection{Usage}{
@@ -113,6 +115,7 @@ A data.frame with \code{ymin}, \code{lower}, \code{middle}, \code{upper}, \code{
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-getOutliers"></a>}}
+\if{latex}{\out{\hypertarget{method-getOutliers}{}}}
 \subsection{Method \code{getOutliers()}}{
 Get a data.frame flagging outliers
 \subsection{Usage}{
@@ -133,6 +136,7 @@ Values not flagged are \code{NA} in the outliers variables
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

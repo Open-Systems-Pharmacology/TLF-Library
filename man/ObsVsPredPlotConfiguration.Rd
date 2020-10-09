@@ -34,6 +34,7 @@ R6 class defining the configuration of a \code{ggplot} object for Obs vs Pred pl
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{ObsVsPredPlotConfiguration} object
 \subsection{Usage}{
@@ -58,6 +59,7 @@ A new \code{obsVsPredProperties} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addSmoother"></a>}}
+\if{latex}{\out{\hypertarget{method-addSmoother}{}}}
 \subsection{Method \code{addSmoother()}}{
 Add smoother layer to a \code{ggplot} object
 \subsection{Usage}{
@@ -83,6 +85,7 @@ A \code{ggplot} object with smoother
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addObsVsPred"></a>}}
+\if{latex}{\out{\hypertarget{method-addObsVsPred}{}}}
 \subsection{Method \code{addObsVsPred()}}{
 Add obs vs pred as scatter layer to a \code{ggplot} object
 \subsection{Usage}{
@@ -113,6 +116,7 @@ A \code{ggplot} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

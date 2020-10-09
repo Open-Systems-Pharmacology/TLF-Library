@@ -26,6 +26,7 @@ R6 class defining \code{text} and \code{font} of label
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{Label} object.
 \subsection{Usage}{
@@ -62,6 +63,7 @@ A new \code{Label} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print \code{Label} properties.
 \subsection{Usage}{
@@ -71,6 +73,7 @@ Print \code{Label} properties.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-setFontProperties"></a>}}
+\if{latex}{\out{\hypertarget{method-setFontProperties}{}}}
 \subsection{Method \code{setFontProperties()}}{
 Set font properties of Label
 \subsection{Usage}{
@@ -98,6 +101,7 @@ Set font properties of Label
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -30,6 +30,7 @@ R6 class defining the configuration of the labels of a \code{ggplot} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{LabelConfiguration} object
 \subsection{Usage}{
@@ -63,6 +64,7 @@ A new \code{LabelConfiguration} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-setPlotLabels"></a>}}
+\if{latex}{\out{\hypertarget{method-setPlotLabels}{}}}
 \subsection{Method \code{setPlotLabels()}}{
 Set plot labels properties of a \code{ggplot} object
 \subsection{Usage}{
@@ -82,6 +84,7 @@ A \code{ggplot} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print plot label properties
 \subsection{Usage}{
@@ -94,6 +97,7 @@ Plot label properties
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -38,6 +38,7 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{ddiRatioL
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{DDIRatioDataMapping} object
 \subsection{Usage}{
@@ -65,6 +66,7 @@ A new \code{DDIRatioDataMapping} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-getDDIRatioLines"></a>}}
+\if{latex}{\out{\hypertarget{method-getDDIRatioLines}{}}}
 \subsection{Method \code{getDDIRatioLines()}}{
 Create a data.frame with DDI ratio limits
 This data.frame is necessary in case if log-log plots as
@@ -79,6 +81,7 @@ A data.frame with DDI ratio limits
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-getGuestLines"></a>}}
+\if{latex}{\out{\hypertarget{method-getGuestLines}{}}}
 \subsection{Method \code{getGuestLines()}}{
 Get a data.frame with Guest et al ratio limits
 \subsection{Usage}{
@@ -91,6 +94,7 @@ A data.frame with Guest et al ratio limits
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
