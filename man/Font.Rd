@@ -30,6 +30,7 @@ R6 class defining \code{size}, \code{color}, \code{fontFamily}, \code{fontFace} 
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{Font} object.
 Default font properties are defined directly in the object field,
@@ -57,6 +58,7 @@ A new \code{Font} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print \code{Font} properties.
 \subsection{Usage}{
@@ -66,6 +68,7 @@ Print \code{Font} properties.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-setFont"></a>}}
+\if{latex}{\out{\hypertarget{method-setFont}{}}}
 \subsection{Method \code{setFont()}}{
 Create an \code{element_text} for ggplot with \code{Font} properties.
 \subsection{Usage}{
@@ -78,6 +81,7 @@ An \code{element_text} for ggplot with \code{Font} properties.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

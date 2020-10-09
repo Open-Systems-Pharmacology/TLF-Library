@@ -30,6 +30,7 @@ R6 class defining the configuration of background
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{BackgroundConfiguration} object
 \subsection{Usage}{
@@ -66,6 +67,7 @@ A new \code{BackgroundConfiguration} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print background properties
 \subsection{Usage}{
@@ -78,6 +80,7 @@ Background properties
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-setBackground"></a>}}
+\if{latex}{\out{\hypertarget{method-setBackground}{}}}
 \subsection{Method \code{setBackground()}}{
 Set background properties of a \code{ggplot} object
 \subsection{Usage}{
@@ -97,6 +100,7 @@ A \code{ggplot} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

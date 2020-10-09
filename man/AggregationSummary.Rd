@@ -51,6 +51,7 @@ The summary statistic column name in each data.frame is the same as the name of 
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{AggregationSummary} object
 \subsection{Usage}{
@@ -99,6 +100,7 @@ A new \code{AggregationSummary} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-applyAggregationFunctions"></a>}}
+\if{latex}{\out{\hypertarget{method-applyAggregationFunctions}{}}}
 \subsection{Method \code{applyAggregationFunctions()}}{
 Apply aggregation functions on \code{x}
 \subsection{Usage}{
@@ -118,6 +120,7 @@ A list or vector of aggregated values
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-generateAggregatedValues"></a>}}
+\if{latex}{\out{\hypertarget{method-generateAggregatedValues}{}}}
 \subsection{Method \code{generateAggregatedValues()}}{
 Generate aggregated values
 \subsection{Usage}{
@@ -130,6 +133,7 @@ A list or vector of aggregated values
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

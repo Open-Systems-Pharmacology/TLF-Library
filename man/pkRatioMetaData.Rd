@@ -4,12 +4,14 @@
 \name{pkRatioMetaData}
 \alias{pkRatioMetaData}
 \title{Test metaData for pkRatioData}
-\format{A list of lists for the 11 variables of pkRatioData
+\format{
+A list of lists for the 11 variables of pkRatioData
 Each variable includes:
 \describe{
 \item{unit}{}
 \item{dimension}{}
-}}
+}
+}
 \usage{
 pkRatioMetaData
 }

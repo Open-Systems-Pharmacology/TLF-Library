@@ -25,6 +25,7 @@ R6 class for mapping a \code{group} of variable(s) and their \code{label} to \co
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{Grouping} object
 \subsection{Usage}{
@@ -46,6 +47,7 @@ A new \code{Grouping} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-getCaptions"></a>}}
+\if{latex}{\out{\hypertarget{method-getCaptions}{}}}
 \subsection{Method \code{getCaptions()}}{
 Get the caption associated to each \code{group}
 \subsection{Usage}{
@@ -67,6 +69,7 @@ A vector of characters containing the captions associated to each \code{group} o
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

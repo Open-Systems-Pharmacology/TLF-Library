@@ -38,6 +38,7 @@ R6 class defining the configuration of a \code{ggplot} object for histograms
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{TimeProfilePlotConfiguration} object
 \subsection{Usage}{
@@ -61,6 +62,7 @@ A new \code{TimeProfilePlotConfiguration} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addHistograms"></a>}}
+\if{latex}{\out{\hypertarget{method-addHistograms}{}}}
 \subsection{Method \code{addHistograms()}}{
 Add histogram as histogram layer to a \code{ggplot} object
 \subsection{Usage}{
@@ -97,6 +99,7 @@ A \code{ggplot} object with histogram
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addVerticalLines"></a>}}
+\if{latex}{\out{\hypertarget{method-addVerticalLines}{}}}
 \subsection{Method \code{addVerticalLines()}}{
 Add statistics as line layer to a \code{ggplot} object
 \subsection{Usage}{
@@ -127,6 +130,7 @@ A \code{ggplot} object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

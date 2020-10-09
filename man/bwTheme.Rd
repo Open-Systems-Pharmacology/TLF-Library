@@ -4,7 +4,9 @@
 \name{bwTheme}
 \alias{bwTheme}
 \title{bwTheme}
-\format{An object of class \code{Theme} (inherits from \code{ThemeFont}, \code{R6}) of length 12.}
+\format{
+An object of class \code{Theme} (inherits from \code{ThemeFont}, \code{R6}) of length 12.
+}
 \usage{
 bwTheme
 }
