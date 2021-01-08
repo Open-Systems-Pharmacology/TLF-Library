@@ -244,7 +244,8 @@ DefaultDataMappingValues <- list(
     ddiRatio2 = c(2, 1 / 2),
     guestLine = 1
   ),
-  obsVsPred = list("y=x" = 1)
+  obsVsPred = list("y=x" = 1),
+  tornado = 0
 )
 
 getAggregatedData <- function(data,
