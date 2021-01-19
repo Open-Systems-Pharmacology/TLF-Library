@@ -9,6 +9,7 @@ plotTornado(
   metaData = NULL,
   x = NULL,
   y = NULL,
+  sorted = NULL,
   colorPalette = NULL,
   bar = TRUE,
   dataMapping = NULL,
@@ -28,6 +29,9 @@ If \code{data} is NULL or not input, \code{x} numeric values will be used as is 
 
 \item{y}{Mapping for y (labels of tornado plot)
 If \code{data} is NULL or not input, \code{y} character values will be used as is for the plot.}
+
+\item{sorted}{logical indicating if values should be sorted if \code{dataMapping} is not input.
+By default, values are sorted by their absolute values}
 
 \item{colorPalette}{Define a \code{ggplot2} colorPalette (e.g \code{colorPalette}="Spectral")}
 

@@ -18,12 +18,12 @@ TornadoDataMapping <- R6::R6Class(
     #' @param ... parameters inherited from \code{XYGDataMapping}
     #' @return A new \code{TornadoDataMapping} object
     initialize = function(tornadoValues = DefaultDataMappingValues$tornado,
-                              sorted = TRUE,
+                              sorted = NULL,
                               x = NULL,
                               y = NULL,
                               ...) {
       validateIsNumeric(tornadoValues)
-      validateIsLogical(sorted)
+      validateIsLogical(sorted, nullAllowed = TRUE)
       super$initialize(x = x, y = y, ...)
 
       # The next lines aim at linking some variables in case they are not
@@ -45,7 +45,7 @@ TornadoDataMapping <- R6::R6Class(
       )
 
       self$tornadoValues <- tornadoValues
-      self$sorted <- sorted
+      self$sorted <- sorted %||% TRUE
     }
   )
 )

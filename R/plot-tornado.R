@@ -7,6 +7,8 @@
 #' If \code{data} is NULL or not input, \code{x} numeric values will be used as is for the plot.
 #' @param y Mapping for y (labels of tornado plot)
 #' If \code{data} is NULL or not input, \code{y} character values will be used as is for the plot.
+#' @param sorted logical indicating if values should be sorted if \code{dataMapping} is not input.
+#' By default, values are sorted by their absolute values
 #' @param colorPalette Define a `ggplot2` colorPalette (e.g `colorPalette`="Spectral")
 #' @param bar logical setting tornado as bar plot
 #' @param dataMapping
@@ -29,6 +31,7 @@ plotTornado <- function(data = NULL,
                         metaData = NULL,
                         x = NULL,
                         y = NULL,
+                        sorted = NULL,
                         colorPalette = NULL,
                         bar = TRUE,
                         dataMapping = NULL,
@@ -36,6 +39,7 @@ plotTornado <- function(data = NULL,
                         plotObject = NULL) {
   validateIsOfType(data, "data.frame", nullAllowed = TRUE)
   validateIsString(colorPalette, nullAllowed = TRUE)
+  validateIsLogical(sorted, nullAllowed = TRUE)
   validateIsLogical(bar)
 
   if (is.null(data)) {
@@ -45,13 +49,14 @@ plotTornado <- function(data = NULL,
     data <- data.frame(x = x, y = y)
 
     dataMapping <- dataMapping %||% TornadoDataMapping$new(
+      sorted = sorted,
       x = ifnotnull(x, "x"),
       y = ifnotnull(y, "y"),
       data = data
     )
   }
 
-  dataMapping <- dataMapping %||% TornadoDataMapping$new(data = data)
+  dataMapping <- dataMapping %||% TornadoDataMapping$new(sorted = sorted, data = data)
   plotConfiguration <- plotConfiguration %||% TornadoPlotConfiguration$new(
     bar = bar,
     colorPalette = colorPalette,

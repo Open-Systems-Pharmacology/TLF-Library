@@ -40,7 +40,7 @@ Create a new \code{TornadoDataMapping} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TornadoDataMapping$new(
   tornadoValues = DefaultDataMappingValues$tornado,
-  sorted = TRUE,
+  sorted = NULL,
   x = NULL,
   y = NULL,
   ...
