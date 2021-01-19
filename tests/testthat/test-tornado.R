@@ -45,11 +45,11 @@ test_that("TornadoDataMapping features", {
 
 test_that("Regular tornado plots with their options work properly", {
   # Direct Tornado Plot
-  defaultPlot <- plotTornado(x=tornadoData$sensitivity,y=tornadoData$path)
+  defaultPlot <- plotTornado(x=tornadoMeanData$sensitivity,y=tornadoMeanData$path)
   # Options/Features
-  unsortedPlot <- plotTornado(x=tornadoData$sensitivity,y=tornadoData$path,sorted=FALSE)
-  colorPalettePlot <- plotTornado(x=tornadoData$sensitivity,y=tornadoData$path,colorPalette="Dark2")
-  pointPlot <- plotTornado(x=tornadoData$sensitivity,y=tornadoData$path,bar=FALSE)
+  unsortedPlot <- plotTornado(x=tornadoMeanData$sensitivity,y=tornadoMeanData$path,sorted=FALSE)
+  colorPalettePlot <- plotTornado(x=tornadoMeanData$sensitivity,y=tornadoMeanData$path,colorPalette="Dark2")
+  pointPlot <- plotTornado(x=tornadoMeanData$sensitivity,y=tornadoMeanData$path,bar=FALSE)
   
   # Higher level with dataMapping used in population sensitivity plots
   # bar is an input option that can be directly provided to plotConfig input
