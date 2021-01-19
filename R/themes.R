@@ -175,3 +175,15 @@ bigTheme <- Theme$new(labelBaseSize = 20, watermark = "Big")
 useTheme <- function(theme) {
   tlfEnv$currentTheme <- theme
 }
+
+## -------------------------------------------------
+#' @title runThemeMaker
+#' @description
+#' Run shiny app that allows easy setting of Theme objects.
+#' Theme objects drive default properties of plots
+#' @export
+#'
+runThemeMaker <- function() {
+  appPath <- system.file("theme-maker", package = "tlf")
+  shiny::runApp(appPath)
+}
