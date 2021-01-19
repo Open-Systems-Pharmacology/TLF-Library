@@ -11,6 +11,10 @@ addErrorbar(
   ymin = NULL,
   ymax = NULL,
   caption = NULL,
+  color = NULL,
+  size = NULL,
+  linetype = NULL,
+  includeCap = FALSE,
   dataMapping = NULL,
   plotConfiguration = NULL,
   plotObject = NULL
@@ -33,6 +37,17 @@ If \code{data} is NULL or not input, \code{ymax} numeric values will be used as 
 \item{caption}{vector of character strings defining the legend captions.
 This parameter is optional: default value is NULL.}
 
+\item{color}{vector of character strings defining the color of the scatter points.
+This parameter is optional: default value \code{NULL} will choose colors according to the current theme.}
+
+\item{size}{vector of numerical defining the sizes of the scatter points.
+This parameter is optional: default value \code{NULL} will choose sizes according to the current theme.}
+
+\item{linetype}{vector of character strings defining the linetype linking the scatter points.
+This parameter is optional: default value \code{NULL} won't provide lines.}
+
+\item{includeCap}{logical setting if error bars include caps at their ends.}
+
 \item{dataMapping}{\code{RangeDataMapping} class or subclass
 mapping x, ymin, ymax and aesthetic variables to the variable names of \code{data}.}
 
@@ -40,6 +55,9 @@ mapping x, ymin, ymax and aesthetic variables to the variable names of \code{dat
 
 \item{plotObject}{\code{ggplot} graphical object to which the line layer is added
 This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided}
+
+\item{shape}{vector of character strings or numerical defining the shapes of the scatter points.
+This parameter is optional: default value \code{NULL} will choose shapes according to the current theme.}
 }
 \value{
 A \code{ggplot} graphical object

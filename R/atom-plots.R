@@ -107,7 +107,6 @@ addScatter <- function(data = NULL,
   if (is.null(data)) {
     validateIsSameLength(x, y)
     data <- as.data.frame(cbind(x = x, y = y))
-
     dataMapping <- dataMapping %||% XYGDataMapping$new(x = ifnotnull(x, "x"), y = ifnotnull(y, "y"), data = data)
   }
   # Enforce data to be a data.frame for dataMapping
@@ -545,10 +544,19 @@ addRibbon <- function(data = NULL,
 #' If \code{data} is NULL or not input, \code{ymin} numeric values will be used as is for the plot.
 #' @param ymax Mapping for ymin values.
 #' If \code{data} is NULL or not input, \code{ymax} numeric values will be used as is for the plot.
-#' @param dataMapping \code{RangeDataMapping} class or subclass
-#' mapping x, ymin, ymax and aesthetic variables to the variable names of \code{data}.
 #' @param caption vector of character strings defining the legend captions.
 #' This parameter is optional: default value is NULL.
+#' @param color vector of character strings defining the color of the scatter points.
+#' This parameter is optional: default value `NULL` will choose colors according to the current theme.
+#' @param shape vector of character strings or numerical defining the shapes of the scatter points.
+#' This parameter is optional: default value `NULL` will choose shapes according to the current theme.
+#' @param size vector of numerical defining the sizes of the scatter points.
+#' This parameter is optional: default value `NULL` will choose sizes according to the current theme.
+#' @param linetype vector of character strings defining the linetype linking the scatter points.
+#' This parameter is optional: default value `NULL` won't provide lines.
+#' @param includeCap logical setting if error bars include caps at their ends.
+#' @param dataMapping \code{RangeDataMapping} class or subclass
+#' mapping x, ymin, ymax and aesthetic variables to the variable names of \code{data}.
 #' @param plotConfiguration \code{PlotConfiguration} object defining the label and background properties of the plot.
 #' @param plotObject \code{ggplot} graphical object to which the line layer is added
 #' This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided
@@ -566,45 +574,32 @@ addErrorbar <- function(data = NULL,
                         ymin = NULL,
                         ymax = NULL,
                         caption = NULL,
+                        color = NULL,
+                        size = NULL,
+                        linetype = NULL,
+                        includeCap = FALSE,
                         dataMapping = NULL,
                         plotConfiguration = NULL,
                         plotObject = NULL) {
+  validateIsOfType(dataMapping, RangeDataMapping, nullAllowed = TRUE)
+  validateIsOfType(plotConfiguration, PlotConfiguration, nullAllowed = TRUE)
+  validateIsLogical(includeCap)
 
   # If data is not input
-  # Create new data and its mapping from x and y input
+  # Create new data and its mapping from x, ymin and ymax input
   if (is.null(data)) {
-    data <- as.data.frame(cbind(
-      x = x,
-      ymin = ymin,
-      ymax = ymax
-    ))
+    data <- as.data.frame(cbind(x = x, ymin = ymin %||% 0, ymax = ymax %||% 0))
 
-    dataMapping <- dataMapping %||% RangeDataMapping$new(
-      x = ifnotnull(x, "x"),
-      ymin = ifnotnull(ymin, "ymin"),
-      ymax = ifnotnull(ymax, "ymax"),
-      data = data
-    )
+    dataMapping <- dataMapping %||% RangeDataMapping$new(x = "x", ymin = "ymin", ymax = "ymax", data = data)
   }
   # Enforce data to be a data.frame for dataMapping
   if (!isOfType(data, "data.frame")) {
     data <- data.frame(data, check.names = FALSE)
   }
 
-  dataMapping <- dataMapping %||% RangeDataMapping$new(
-    x = x,
-    ymin = ymin,
-    ymax = ymax,
-    data = data
-  )
-  validateIsOfType(dataMapping, RangeDataMapping)
+  dataMapping <- dataMapping %||% RangeDataMapping$new(x = x, ymin = ymin, ymax = ymax, data = data)
 
-  plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(
-    data = data,
-    metaData = metaData,
-    dataMapping = dataMapping
-  )
-  validateIsOfType(plotConfiguration, PlotConfiguration)
+  plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
 
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
@@ -619,39 +614,75 @@ addErrorbar <- function(data = NULL,
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- getAesStringMapping(dataMapping)
 
-  # Get default legend for legendLabels
-  mapData$legendLabels <- caption %||% getlegendLabelsCaption(plotObject)
-
-  plotObject <- plotObject +
-    ggplot2::geom_errorbar(
-      data = mapData,
-      mapping = aes_string(
-        x = mapLabels$x,
-        ymin = mapLabels$ymin,
-        ymax = mapLabels$ymax,
-        color = "legendLabels",
-        size = "legendLabels"
-      ),
-      show.legend = TRUE
-    )
-
-  # Set the color values from plot configuration or theme
-  legendValues <- plotConfiguration$theme$aesProperties %||% tlfEnv$currentTheme$aesProperties
-
-  # In case a plot object already has a scale for the legend values,
-  # reset scale to prevent warning due to overwriting
-  plotObject$scales$scales <- list()
-
-  for (legendType in LegendTypes) {
-    plotObject <- plotObject + scale_discrete_manual(
-      aesthetics = legendType,
-      values = legendValues[[legendType]]
-    )
+  # If no specific mapping, use default captions
+  if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
+    mapData$legendLabels <- getlegendLabelsCaption(plotObject)
   }
+  mapData$legendLabels <- caption %||% mapData$legendLabels
 
+  # Get mapping and convert labels into characters usable by aes_string
+  mapData <- dataMapping$checkMapData(data)
+  mapLabels <- getAesStringMapping(dataMapping)
+
+  # If no specific mapping, use default captions
+  if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
+    mapData$legendLabels <- getlegendLabelsCaption(plotObject)
+  }
+  mapData$legendLabels <- caption %||% mapData$legendLabels
+
+  if (includeCap) {
+    plotObject <- plotObject +
+      ggplot2::geom_errorbar(
+        data = mapData,
+        mapping = aes_string(
+          x = mapLabels$x,
+          ymin = mapLabels$ymin,
+          ymax = mapLabels$ymax,
+          color = "legendLabels",
+          size = "legendLabels",
+          linetype = "legendLabels"
+        ),
+        show.legend = TRUE
+      )
+  }
+  if (!includeCap) {
+    plotObject <- plotObject +
+      ggplot2::geom_linerange(
+        data = mapData,
+        mapping = aes_string(
+          x = mapLabels$x,
+          ymin = mapLabels$ymin,
+          ymax = mapLabels$ymax,
+          color = "legendLabels",
+          size = "legendLabels",
+          linetype = "legendLabels"
+        ),
+        show.legend = TRUE
+      )
+  }
+  plotObject <- plotObject +
+    ggplot2::geom_blank(
+      data = mapData,
+      mapping = aes_string(shape = "legendLabels", fill = "legendLabels")
+    )
+
+  newLabels <- levels(factor(mapData$legendLabels))
+  legendLength <- nrow(plotObject$plotConfiguration$legend$caption) %||% 0
+  newLegendProperty <- seq(legendLength + 1, legendLength + length(newLabels)) - 1 %% 6 + 1
+
+  # Sample LegendType properties based tlfTheme if not input
+  plotObject <- mergeLegend(plotObject,
+    newLabels = newLabels,
+    color = color %||% tlfEnv$currentTheme$aesProperties$color[newLegendProperty],
+    shape = rep(-2, length(newLabels)),
+    size = size %||% rep(1, length(newLabels)),
+    linetype = linetype %||% tlfEnv$currentTheme$aesProperties$linetype[newLegendProperty],
+    fill = rep(NA, length(newLabels))
+  )
+  try(suppressMessages(plotObject <- plotObject$plotConfiguration$xAxis$setPlotAxis(plotObject)))
+  try(suppressMessages(plotObject <- plotObject$plotConfiguration$yAxis$setPlotAxis(plotObject)))
   return(plotObject)
 }
-
 
 getlegendLabelsCaption <- function(plotObject) {
   legendLabelsCaptionCount <- which(paste0("data ", seq(1, 100)) %in% plotObject$plotConfiguration$legend$caption$label)
