@@ -99,6 +99,7 @@ plotTornado <- function(data = NULL,
     )
   }
   if (!plotConfiguration$bar) {
+    # For tornado with points, their shape will be taken from the theme properties
     plotObject <- plotObject + ggplot2::geom_point(
       data = mapData,
       mapping = ggplot2::aes_string(
@@ -109,19 +110,29 @@ plotTornado <- function(data = NULL,
       ),
       size = plotConfiguration$theme$aesProperties$size[1],
       position = ggplot2::position_dodge(width = plotConfiguration$dodge)
-    )
+    ) + 
+      ggplot2::scale_shape_manual(values = tlfEnv$currentTheme$aesProperties$shape)
   }
 
   # Final plot includes a vertical line in 0
-  # And optional color palette
+  # And optional color palette otherwise use colors from theme
   plotObject <- plotObject + 
       ggplot2::geom_vline(
         xintercept = dataMapping$tornadoValues,
-        color = plotConfiguration$theme$aesProperties$color[1],
-        size = plotConfiguration$theme$aesProperties$size[1],
-        linetype = plotConfiguration$theme$aesProperties$linetype[1]
-      ) + ifnotnull(plotConfiguration$colorPalette, 
-                    ggplot2::scale_fill_brewer(palette = plotConfiguration$colorPalette, 
-                                               aesthetics = c("color", "fill")))
+        color = tlfEnv$currentTheme$aesProperties$color[1],
+        size = tlfEnv$currentTheme$aesProperties$size[1],
+        linetype = tlfEnv$currentTheme$aesProperties$linetype[1]
+      )
+  
+  if(!is.null(plotConfiguration$colorPalette)){
+    plotObject <- plotObject + 
+      ggplot2::scale_fill_brewer(palette = plotConfiguration$colorPalette, 
+                                 aesthetics = c("color", "fill"))
+    return(plotObject)
+  }
+  
+  plotObject <- plotObject + 
+    ggplot2::scale_fill_manual(values = tlfEnv$currentTheme$aesProperties$fill) + 
+    ggplot2::scale_color_manual(values = tlfEnv$currentTheme$aesProperties$color)
   return(plotObject)
 }
