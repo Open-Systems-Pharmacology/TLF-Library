@@ -4,18 +4,29 @@
 \alias{setWatermark}
 \title{setWatermark}
 \usage{
-setWatermark(plotObject, watermark = NULL, angle = 30, alpha = 0.4)
+setWatermark(
+  plotObject,
+  watermark = NULL,
+  color = NULL,
+  size = NULL,
+  angle = NULL,
+  alpha = NULL
+)
 }
 \arguments{
 \item{plotObject}{ggplot object to which the watermark is set}
 
-\item{watermark}{character or Label class object}
+\item{watermark}{Character or \code{Label} object corresponding to the watermark text
+(and its font properties if \code{Label})}
 
-\item{angle}{Angle in degree from horizontal of the watermark label. Default angle is 30 degrees.}
+\item{color}{Color of the watermark label.}
+
+\item{size}{Size of the watermark label.}
+
+\item{angle}{Angle of the watermark label (in degree).}
 
 \item{alpha}{Transparency of the watermark label.
-Alpha is a numeric between 0 and 1: 0 label is totally transparent, 1 label is totally opaque.
-Default alpha is 0.6.}
+Alpha is a numeric between 0 and 1: 0 label is totally transparent, 1 label is totally opaque.}
 }
 \value{
 ggplot object to which the watermark is added.

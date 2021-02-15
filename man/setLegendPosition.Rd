@@ -2,9 +2,9 @@
 % Please edit documentation in R/utilities-legend.R
 \name{setLegendPosition}
 \alias{setLegendPosition}
-\title{setLegendTitle}
+\title{setLegendPosition}
 \usage{
-setLegendPosition(plotObject, position)
+setLegendPosition(plotObject, position = NULL)
 }
 \arguments{
 \item{plotObject}{\code{ggplot} graphical object}

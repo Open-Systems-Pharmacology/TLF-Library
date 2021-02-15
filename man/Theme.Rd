@@ -4,21 +4,18 @@
 \alias{Theme}
 \title{Theme}
 \description{
-R6 class defining theme
+R6 class defining theme properties
 }
-\section{Super class}{
-\code{\link[tlf:ThemeFont]{tlf::ThemeFont}} -> \code{Theme}
-}
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{watermark}}{list of font properties for watermark}
+\item{\code{fonts}}{\code{ThemeFont} object}
 
-\item{\code{background}}{list of aesthetic properties for background configuration}
+\item{\code{background}}{\code{ThemeBackground} object}
 
-\item{\code{aesProperties}}{list of aesthetic properties for plots in general}
+\item{\code{aestheticMaps}}{\code{ThemeAestheticMaps} object}
 
-\item{\code{defaultCaption}}{aesthetic properties for specific plots}
+\item{\code{plotConfigurations}}{\code{ThemePlotConfiguration} object}
 }
 \if{html}{\out{</div>}}
 }
@@ -26,14 +23,9 @@ R6 class defining theme
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{Theme$new()}}
+\item \href{#method-save}{\code{Theme$save()}}
 \item \href{#method-clone}{\code{Theme$clone()}}
 }
-}
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
@@ -42,37 +34,45 @@ R6 class defining theme
 Create a new \code{Theme} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Theme$new(
-  themesProperties = tlfEnvThemesProperties$default,
-  labelColors = NULL,
-  labelBaseSize = 14,
+  fonts = NULL,
   background = NULL,
-  watermark = NULL,
-  aesProperties = NULL,
-  defaultCaption = NULL
+  aestheticMaps = NULL,
+  plotConfigurations = NULL
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{themesProperties}}{list of aesthetic properties}
+\item{\code{fonts}}{\code{ThemeFont} object}
 
-\item{\code{labelColors}}{list of colors for each label}
+\item{\code{background}}{\code{ThemeBackground} object}
 
-\item{\code{labelBaseSize}}{numeric value for theme base size}
+\item{\code{aestheticMaps}}{\code{ThemeAestheticMaps} object}
 
-\item{\code{background}}{list of aesthetic properties for background configuration}
-
-\item{\code{watermark}}{list of font properties for watermark}
-
-\item{\code{aesProperties}}{list of aesthetic properties for plots in general}
-
-\item{\code{defaultCaption}}{list of aesthetic properties for specific plot features}
+\item{\code{plotConfigurations}}{\code{ThemePlotConfiguration} object}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 A new \code{Theme} object
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-save"></a>}}
+\if{latex}{\out{\hypertarget{method-save}{}}}
+\subsection{Method \code{save()}}{
+Save \code{Theme} as a json file
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Theme$save(jsonFile)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{jsonFile}}{name of json file}
+}
+\if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}

@@ -15,16 +15,16 @@ setPlotLabels(
 \arguments{
 \item{plotObject}{ggplot object to set}
 
-\item{title}{character or Label class object}
+\item{title}{character or \code{Label} object}
 
-\item{subtitle}{character or Label class object}
+\item{subtitle}{character or \code{Label} object}
 
-\item{xlabel}{character or Label class object}
+\item{xlabel}{character or \code{Label} object}
 
-\item{ylabel}{character or Label class object}
+\item{ylabel}{character or \code{Label} object}
 }
 \value{
-ggplot object with updated labels
+ggplot object
 }
 \description{
 Set labels properties on a ggplot object

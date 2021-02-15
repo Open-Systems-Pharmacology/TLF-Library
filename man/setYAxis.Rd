@@ -9,7 +9,8 @@ setYAxis(
   scale = NULL,
   limits = NULL,
   ticks = NULL,
-  ticklabels = NULL
+  ticklabels = NULL,
+  font = NULL
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ setYAxis(
 \item{ticks}{Y-axis ticks}
 
 \item{ticklabels}{Y-axis ticklabels}
+
+\item{font}{\code{Font} object  defining font of ticklabels}
 }
 \value{
 ggplot object with updated Y-axis
