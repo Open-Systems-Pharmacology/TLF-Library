@@ -64,3 +64,7 @@ ifIncluded <- function(x, y, outputIfIncluded, outputIfNotIncluded = NULL) {
     outputIfNotIncluded
   }
 }
+
+# Because collate put tlf-env and themes before utils,
+# The curretnTheme is defined here: after the definition of %||%
+tlfEnv$currentTheme <- Theme$new()

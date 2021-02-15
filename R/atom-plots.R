@@ -2,7 +2,7 @@
 
 #' @title initializePlot
 #' @param plotConfiguration
-#' \code{PlotConfiguration} class or subclass defining labels, grid, background and watermark
+#' \code{PlotConfiguration} objecct defining labels, grid, background and watermark
 #' This parameter is optional: the \code{tlf} library provides a default configuration according to the current theme
 #' @description
 #' Initialize a \code{ggplot} object and set the labels, grid, background and watermark
@@ -27,8 +27,10 @@ initializePlot <- function(plotConfiguration = NULL) {
   plotObject$plotConfiguration <- plotConfiguration
 
   plotObject <- setWatermark(plotObject)
-  plotObject <- setBackground(plotObject)
-  plotObject <- setGrid(plotObject)
+  plotObject <- setBackgroundPlotArea(plotObject)
+  plotObject <- setBackgroundPanelArea(plotObject)
+  plotObject <- setXGrid(plotObject)
+  plotObject <- setYGrid(plotObject)
   plotObject <- setPlotLabels(plotObject)
 
   return(plotObject)

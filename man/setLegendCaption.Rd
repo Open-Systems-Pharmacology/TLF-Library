@@ -4,7 +4,7 @@
 \alias{setLegendCaption}
 \title{setLegendCaption}
 \usage{
-setLegendCaption(plotObject, caption)
+setLegendCaption(plotObject, caption = NULL)
 }
 \arguments{
 \item{plotObject}{\code{ggplot} graphical object}

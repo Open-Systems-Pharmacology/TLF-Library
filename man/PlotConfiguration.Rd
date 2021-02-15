@@ -9,19 +9,22 @@ R6 class defining the configuration of a \code{ggplot} object
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{labels}}{R6 class \code{LabelConfiguration} defining labels properties}
-
-\item{\code{legend}}{R6 class \code{LegendConfiguration} defining legend properties}
-
-\item{\code{xAxis}}{R6 class \code{XAxisConfiguration} defining X-axis properties}
-
-\item{\code{yAxis}}{R6 class \code{YAxisConfiguration} defining Y-axis properties}
-
-\item{\code{background}}{R6 class \code{BackgroundConfiguration} defining background properties}
-
 \item{\code{export}}{R6 class \code{ExportConfiguration} defining export properties}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{labels}}{\code{LabelConfiguration} object defining properties of labels}
 
-\item{\code{theme}}{\code{Theme} R6 class defining theme aesthetic properties}
+\item{\code{legend}}{\code{LegendConfiguration} object defining properties of legend}
+
+\item{\code{xAxis}}{\code{XAxisConfiguration} object defining properties of x-axis}
+
+\item{\code{yAxis}}{\code{YAxisConfiguration} object defining properties of x-axis}
+
+\item{\code{background}}{\code{BackgroundConfiguration} object defining properties of x-axis}
 }
 \if{html}{\out{</div>}}
 }
@@ -29,7 +32,6 @@ R6 class defining the configuration of a \code{ggplot} object
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{PlotConfiguration$new()}}
-\item \href{#method-print}{\code{PlotConfiguration$print()}}
 \item \href{#method-clone}{\code{PlotConfiguration$clone()}}
 }
 }
@@ -54,6 +56,10 @@ Create a new \code{PlotConfiguration} object
   yScale = NULL,
   yLimits = NULL,
   background = NULL,
+  plotArea = NULL,
+  panelArea = NULL,
+  xGrid = NULL,
+  yGrid = NULL,
   watermark = NULL,
   export = NULL,
   format = NULL,
@@ -62,44 +68,51 @@ Create a new \code{PlotConfiguration} object
   units = NULL,
   data = NULL,
   metaData = NULL,
-  dataMapping = NULL,
-  theme = tlfEnv$currentTheme
+  dataMapping = NULL
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{title}}{R6 class \code{Label} object}
+\item{\code{title}}{character or \code{Label} object defining plot title}
 
-\item{\code{subtitle}}{R6 class \code{Label} object}
+\item{\code{subtitle}}{character or \code{Label} object defining plot subtitle}
 
-\item{\code{xlabel}}{R6 class \code{Label} object}
+\item{\code{xlabel}}{character or \code{Label} object defining plot xlabel}
 
-\item{\code{ylabel}}{R6 class \code{Label} object}
+\item{\code{ylabel}}{character or \code{Label} object defining plot ylabel}
 
-\item{\code{legend}}{R6 class \code{LegendConfiguration} object defining legend properties}
+\item{\code{legend}}{\code{LegendConfiguration} object defining legend properties}
 
-\item{\code{legendTitle}}{character legend title}
+\item{\code{legendTitle}}{character defining legend title}
 
-\item{\code{legendPosition}}{character legend position.
+\item{\code{legendPosition}}{character defining legend position.
 Use Enum \code{LegendPositions} to get a list of available to legend positions.}
 
-\item{\code{xAxis}}{R6 class \code{XAxisConfiguration} object defining X-axis properties}
+\item{\code{xAxis}}{\code{XAxisConfiguration} object defining x-axis properties}
 
-\item{\code{xScale}}{character defining X-axis scale. Use enum \code{Scaling} to access predefined scales.}
+\item{\code{xScale}}{name of X-axis scale. Use enum \code{Scaling} to access predefined scales.}
 
-\item{\code{xLimits}}{numeric vector of X-axis limits}
+\item{\code{xLimits}}{numeric vector of length 2 defining x-axis limits}
 
-\item{\code{yAxis}}{R6 class \code{YAxisConfiguration} object defining X-axis properties}
+\item{\code{yAxis}}{\code{YAxisConfiguration} object defining y-axis properties}
 
-\item{\code{yScale}}{character defining Y-axis scale. Use enum \code{Scaling} to access predefined scales.}
+\item{\code{yScale}}{name of y-axis scale. Use enum \code{Scaling} to access predefined scales.}
 
-\item{\code{yLimits}}{numeric vector of Y-axis limits}
+\item{\code{yLimits}}{numeric vector of length 2 defining y-axis limits}
 
-\item{\code{background}}{R6 class \code{BackgroundConfiguration} defining background properties}
+\item{\code{background}}{\code{BackgroundConfiguration} object defining background properties}
 
-\item{\code{watermark}}{R6 class \code{Label} object defining watermark background}
+\item{\code{plotArea}}{\code{BackgroundElement} object defining properties of plot area}
+
+\item{\code{panelArea}}{\code{BackgroundElement} object defining properties of panel area}
+
+\item{\code{xGrid}}{\code{LineElement} object defining properties of x-grid background}
+
+\item{\code{yGrid}}{\code{LineElement} object defining properties of y-grid background}
+
+\item{\code{watermark}}{\code{Label} object defining watermark}
 
 \item{\code{export}}{R6 class \code{SaveConfiguration} defining saving properties}
 
@@ -116,26 +129,11 @@ Use Enum \code{LegendPositions} to get a list of available to legend positions.}
 \item{\code{metaData}}{list of information on \code{data}}
 
 \item{\code{dataMapping}}{R6 class or subclass \code{XYDataMapping}}
-
-\item{\code{theme}}{R6 class \code{Theme}}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 A new \code{PlotConfiguration} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
-\subsection{Method \code{print()}}{
-Print plot configuration
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlotConfiguration$print()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-Plot configuration
 }
 }
 \if{html}{\out{<hr>}}
