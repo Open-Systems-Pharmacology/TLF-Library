@@ -48,7 +48,6 @@ Collate:
     'boxwhisker-get-measure.R'
     'boxwhisker-plot.R'
     'boxwhisker-plotconfiguration.R'
-    'data-description.R'
     'datamapping-grouping.R'
     'datamapping-groupmapping.R'
     'datamapping-range.R'
