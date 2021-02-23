@@ -3,28 +3,29 @@
 #' @export
 DDIRatioDataMapping <- R6::R6Class(
   "DDIRatioDataMapping",
-  inherit = XYGDataMapping,
-  public = list(
-    #' @field ddiRatioLines numeric vector of ratio limits to plot
-    ddiRatioLines = NULL,
-    #' @field deltaGuest numeric value of Guest et al ratio limits
-    deltaGuest = NULL,
-    #' @field range 2 elements vector of x limits
-    range = NULL,
+  inherit = PKRatioDataMapping,
 
+  public = list(
+    #' @field comparisonType Options for comparison from enum `MappingComparisonTypes`
+    comparisonType = NULL,
+    #' @field minRange Mininmum range for guest and ratio lines
+    minRange = NULL,
 
     #' @description Create a new \code{DDIRatioDataMapping} object
-    #' @param ddiRatioValues list of values for ratio and guest limits to plot
-    #' @param range 2 elements vector of x limits
-    #' @param ... parameters inherited from \code{XYGDataMapping}
+    #' @param comparisonType Options for comparison from enum `DDIComparisonTypes`
+    #' @param minRange Mininmum range for guest and ratio lines
+    #' @param lines list of ratio and guest limits to plot as horizontal lines
+    #' @param ... parameters inherited from \code{PKRatioDataMapping}
     #' @return A new \code{DDIRatioDataMapping} object
-    initialize = function(ddiRatioValues = DefaultDataMappingValues$ddiRatio,
-                              range = c(1e-2, 1e2),
+    initialize = function(comparisonType = DDIComparisonTypes$obsVsPred,
+                              minRange = c(1e-2, 1e2),
+                              lines = DefaultDataMappingValues$ddiRatio,
                               ...) {
+      validateIsIncluded(comparisonType, MappingComparisonTypes)
       super$initialize(...)
-      self$ddiRatioLines <- c(ddiRatioValues$ddiRatio1, ddiRatioValues$ddiRatio2)
-      self$deltaGuest <- ddiRatioValues$guestLine
-      self$range <- range
+      self$lines <- lines
+      self$comparisonType <- comparisonType
+      self$minRange <- minRange
     },
 
     #' @description Create a data.frame with DDI ratio limits
@@ -37,7 +38,7 @@ DDIRatioDataMapping <- R6::R6Class(
 
       x <- 10^(seq(log10(xmin), log10(xmax), 0.01))
 
-      y <- x * self$ddiRatioLines[1]
+      y <- x * self$lines$ddiRatioLines[1]
       ymax <- x * self$ddiRatioLines[2]
       ymin <- x * self$ddiRatioLines[3]
 

@@ -7,16 +7,14 @@
 R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{ddiRatioLines} variables to \code{data}
 }
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{DDIRatioDataMapping}
+\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{\link[tlf:PKRatioDataMapping]{tlf::PKRatioDataMapping}} -> \code{DDIRatioDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{ddiRatioLines}}{numeric vector of ratio limits to plot}
+\item{\code{comparisonType}}{Options for comparison from enum \code{MappingComparisonTypes}}
 
-\item{\code{deltaGuest}}{numeric value of Guest et al ratio limits}
-
-\item{\code{range}}{2 elements vector of x limits}
+\item{\code{minRange}}{Mininmum range for guest and ratio lines}
 }
 \if{html}{\out{</div>}}
 }
@@ -32,7 +30,7 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{ddiRatioL
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="XYGDataMapping" data-id="checkMapData">}\href{../../tlf/html/XYGDataMapping.html#method-checkMapData}{\code{tlf::XYGDataMapping$checkMapData()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PKRatioDataMapping" data-id="checkMapData">}\href{../../tlf/html/PKRatioDataMapping.html#method-checkMapData}{\code{tlf::PKRatioDataMapping$checkMapData()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -43,8 +41,9 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{ddiRatioL
 Create a new \code{DDIRatioDataMapping} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DDIRatioDataMapping$new(
-  ddiRatioValues = DefaultDataMappingValues$ddiRatio,
-  range = c(0.01, 100),
+  comparisonType = DDIComparisonTypes$obsVsPred,
+  minRange = c(0.01, 100),
+  lines = DefaultDataMappingValues$ddiRatio,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -52,11 +51,13 @@ Create a new \code{DDIRatioDataMapping} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{ddiRatioValues}}{list of values for ratio and guest limits to plot}
+\item{\code{comparisonType}}{Options for comparison from enum \code{DDIComparisonTypes}}
 
-\item{\code{range}}{2 elements vector of x limits}
+\item{\code{minRange}}{Mininmum range for guest and ratio lines}
 
-\item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
+\item{\code{lines}}{list of ratio and guest limits to plot as horizontal lines}
+
+\item{\code{...}}{parameters inherited from \code{PKRatioDataMapping}}
 }
 \if{html}{\out{</div>}}
 }

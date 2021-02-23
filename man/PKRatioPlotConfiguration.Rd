@@ -9,13 +9,6 @@ R6 class defining the configuration of a \code{ggplot} object for PK ratio plots
 \section{Super class}{
 \code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{PKRatioPlotConfiguration}
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{pkRatioCaption}}{list of properties for PK ratio plot specific features}
-}
-\if{html}{\out{</div>}}
-}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -26,7 +19,6 @@ R6 class defining the configuration of a \code{ggplot} object for PK ratio plots
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="print">}\href{../../tlf/html/PlotConfiguration.html#method-print}{\code{tlf::PlotConfiguration$print()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -37,7 +29,9 @@ R6 class defining the configuration of a \code{ggplot} object for PK ratio plots
 Create a new \code{PKRatioPlotConfiguration} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{PKRatioPlotConfiguration$new(
-  pkRatioCaption = getDefaultCaptionFor("pkRatio"),
+  lines = NULL,
+  points = NULL,
+  errorbars = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -45,7 +39,11 @@ Create a new \code{PKRatioPlotConfiguration} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{pkRatioCaption}}{list of properties for PK ratio plot specific features}
+\item{\code{lines}}{\code{ThemeAestheticSelections} object defining properties for PK ratio horizontal lines}
+
+\item{\code{points}}{\code{ThemeAestheticSelections} object defining properties for PK ratio scatter points}
+
+\item{\code{errorbars}}{\code{ThemeAestheticSelections} object defining properties for PK ratio error bars}
 
 \item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
 }
