@@ -6,20 +6,28 @@ TimeProfilePlotConfiguration <- R6::R6Class(
   inherit = PlotConfiguration,
 
   public = list(
-    #' @field timeProfileCaption list of properties for time profile plot specific features
-    timeProfileCaption = NULL,
-
     #' @description Create a new \code{TimeProfilePlotConfiguration} object
-    #' @param timeProfileCaption list of properties for PK ratio plot specific features
+    #' @param lines `ThemeAestheticSelections` defining properties of lines
+    #' @param ribbons `ThemeAestheticSelections` defining properties of ribbons
+    #' @param points `ThemeAestheticSelections` defining properties of points
+    #' @param errorbars `ThemeAestheticSelections` defining properties of error bars
     #' @param ... parameters inherited from \code{PlotConfiguration}
     #' @return A new \code{TimeProfilePlotConfiguration} object
-    initialize = function(timeProfileCaption = getDefaultCaptionFor("timeProfile"),
+    initialize = function(lines = NULL,
+                              ribbons = NULL,
+                              points = NULL,
+                              errorbars = NULL,
                               ...) {
-      validateIsOfType(timeProfileCaption, "data.frame")
-      validateIsIncluded(names(timeProfileCaption), CaptionProperties)
       super$initialize(...)
+      validateIsOfType(lines, "ThemeAestheticSelections", nullAllowed = TRUE)
+      validateIsOfType(ribbons, "ThemeAestheticSelections", nullAllowed = TRUE)
+      validateIsOfType(points, "ThemeAestheticSelections", nullAllowed = TRUE)
+      validateIsOfType(errorbars, "ThemeAestheticSelections", nullAllowed = TRUE)
 
-      self$timeProfileCaption <- timeProfileCaption
+      private$.lines <- lines %||% tlfEnv$currentTheme$plotConfigurations$plotTimeProfile$lines
+      private$.ribbons <- ribbons %||% tlfEnv$currentTheme$plotConfigurations$plotTimeProfile$ribbons
+      private$.points <- points %||% tlfEnv$currentTheme$plotConfigurations$plotTimeProfile$points
+      private$.errorbars <- errorbars %||% tlfEnv$currentTheme$plotConfigurations$plotTimeProfile$errorbars
     }
   )
 )

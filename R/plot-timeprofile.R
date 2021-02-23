@@ -9,48 +9,87 @@
 #' plotTimeProfile(data, metaData = NULL, dataMapping = NULL, plotConfiguration = NULL, plotObject = NULL)
 #' @return a ggplot graphical object
 #' @export
-plotTimeProfile <- function(data,
+plotTimeProfile <- function(data = NULL,
                             metaData = NULL,
                             dataMapping = NULL,
                             observedData = NULL,
-                            dataMappingForObserved = NULL,
+                            observedDataMapping = NULL,
                             plotConfiguration = NULL,
                             plotObject = NULL) {
-  dataMapping <- dataMapping %||% TimeProfileDataMapping$new(data = data)
+  validateIsOfType(data, "data.frame", nullAllowed = TRUE)
+  validateIsOfType(observedData, "data.frame", nullAllowed = TRUE)
+  if (all(isOfLength(data, 0), isOfLength(observedData, 0))) {
+    warning("data and observed data are of length 0. Time profile layer was not added.")
+    return(plotObject)
+  }
+
+  if (!isOfLength(data, 0)) {
+    dataMapping <- dataMapping %||% TimeProfileDataMapping$new(data = data)
+  }
+  if (!isOfLength(observedData, 0)) {
+    observedDataMapping <- observedDataMapping %||% ObservedDataMapping$new(data = data)
+  }
+
   plotConfiguration <- plotConfiguration %||% TimeProfilePlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
 
-  validateIsOfType(data, "data.frame")
-  validateIsOfType(dataMapping, TimeProfileDataMapping)
+  validateIsOfType(dataMapping, TimeProfileDataMapping, nullAllowed = TRUE)
+  validateIsOfType(observedDataMapping, ObservedDataMapping, nullAllowed = TRUE)
   validateIsOfType(plotConfiguration, TimeProfilePlotConfiguration)
-  validateIsOfType(observedData, "data.frame", nullAllowed = TRUE)
-  validateIsOfType(dataMappingForObserved, XYGDataMapping, nullAllowed = TRUE)
 
-  lloq <- dataMapping$lloq
-  isRangeTimeProfile <- dataMapping$isRangeTimeProfile
-
+  # Initialize plot based on plotConfiguration
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
-  if (!is.null(lloq)) {
-    plotObject <- addLine(y = lloq, caption = "lloq", plotObject = plotObject)
-    plotObject <- setLegendCaption(plotObject, plotConfiguration$timeProfileCaption)
-  }
-  if (isRangeTimeProfile) {
-    aggregatedData <- getAggregatedData(dataMapping$checkMapData(data), dataMapping$x, dataMapping$y)
-    rangeData <- aggregatedData
-    rangeData$Groups <- paste(tlfEnv$defaultAggregation$labels$range, aggregatedData$Groups)
-    rangeMapping <- RangeDataMapping$new(x = "x", ymin = "ymin", ymax = "ymax", color = "Groups")
-    plotObject <- addRibbon(data = rangeData, dataMapping = rangeMapping, plotObject = plotObject)
-    lineMapping <- XYGDataMapping$new(x = "x", y = "y", color = "Groups")
-    lineData <- aggregatedData
-    lineData$Groups <- paste(tlfEnv$defaultAggregation$labels$y, aggregatedData$Groups)
-    plotObject <- addLine(data = lineData, dataMapping = lineMapping, plotObject = plotObject)
-  }
-  if (!isRangeTimeProfile) {
-    plotObject <- addLine(data = data, dataMapping = dataMapping, plotObject)
-  }
-  if (!is.null(observedData)) {
-    dataMappingForObserved <- dataMappingForObserved %||% XYGDataMapping$new(data = observedData)
-    plotObject <- addScatter(data = observedData, dataMapping = dataMappingForObserved, plotObject = plotObject)
+
+  # Get transformed data from mapping and convert labels into characters usable by aes_string
+  if (!isOfLength(data, 0)) {
+    mapData <- dataMapping$checkMapData(data)
+    if (!any(isOfLength(dataMapping$ymin, 0), isOfLength(dataMapping$ymax, 0))) {
+      plotObject <- addRibbon(
+        data = mapData,
+        dataMapping = dataMapping,
+        plotConfiguration = plotConfiguration,
+        plotObject = plotObject
+      )
+    }
+    if (!isOfLength(dataMapping$y, 0)) {
+      plotObject <- addLine(
+        data = mapData,
+        dataMapping = dataMapping,
+        plotConfiguration = plotConfiguration,
+        plotObject = plotObject
+      )
+    }
   }
 
+  if (!isOfLength(observedData, 0)) {
+    mapObservedData <- observedDataMapping$checkMapData(observedData)
+    if (!isOfLength(observedDataMapping$uncertainty, 0)) {
+      plotObject <- addErrorbar(
+        data = mapObservedData,
+        dataMapping = observedDataMapping,
+        plotConfiguration = plotConfiguration,
+        plotObject = plotObject
+      )
+    }
+    plotObject <- addScatter(
+      data = mapObservedData,
+      dataMapping = observedDataMapping,
+      plotConfiguration = plotConfiguration,
+      plotObject = plotObject
+    )
+    # LLOQ
+    if (!isOfLength(observedDataMapping$lloq, 0)) {
+      mapObservedData$legendLabels <- paste(mapObservedData$legendLabels, " LLOQ")
+      plotObject <- addLine(
+        data = mapObservedData,
+        dataMapping = XYGDataMapping$new(
+          x = observedDataMapping$x,
+          y = "lloq",
+          color = "legendLabels"
+        ),
+        plotConfiguration = plotConfiguration,
+        plotObject = plotObject
+      )
+    }
+  }
   return(plotObject)
 }

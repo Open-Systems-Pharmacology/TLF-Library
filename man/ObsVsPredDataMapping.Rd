@@ -7,18 +7,16 @@
 R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{obsVsPredLines} variables to \code{data}
 }
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{ObsVsPredDataMapping}
+\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{\link[tlf:ObservedDataMapping]{tlf::ObservedDataMapping}} -> \code{ObsVsPredDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{obsVsPredValues}}{numeric vector of limits to plot}
+\item{\code{lines}}{list of lines to plot}
 
-\item{\code{lloq}}{numeric value of lower limit of quantification}
+\item{\code{minRange}}{Mininmum range for the lines}
 
 \item{\code{smoother}}{regression function name}
-
-\item{\code{range}}{2 elements vector of x limits}
 }
 \if{html}{\out{</div>}}
 }
@@ -26,14 +24,13 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{obsVsPred
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{ObsVsPredDataMapping$new()}}
-\item \href{#method-getObsVsPredLines}{\code{ObsVsPredDataMapping$getObsVsPredLines()}}
 \item \href{#method-clone}{\code{ObsVsPredDataMapping$clone()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="XYGDataMapping" data-id="checkMapData">}\href{../../tlf/html/XYGDataMapping.html#method-checkMapData}{\code{tlf::XYGDataMapping$checkMapData()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="ObservedDataMapping" data-id="checkMapData">}\href{../../tlf/html/ObservedDataMapping.html#method-checkMapData}{\code{tlf::ObservedDataMapping$checkMapData()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -44,9 +41,8 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{obsVsPred
 Create a new \code{ObsVsPredDataMapping} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ObsVsPredDataMapping$new(
-  obsVsPredValues = DefaultDataMappingValues$obsVsPred,
-  lloq = NULL,
-  range = NULL,
+  lines = DefaultDataMappingValues$obsVsPred,
+  minRange = NULL,
   smoother = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -55,11 +51,9 @@ Create a new \code{ObsVsPredDataMapping} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{obsVsPredValues}}{list of values for obs vs pred plot}
+\item{\code{lines}}{list of lines to plot}
 
-\item{\code{lloq}}{numeric value of lower limit of quantification}
-
-\item{\code{range}}{2 elements vector of x limits}
+\item{\code{minRange}}{Mininmum range for guest and ratio lines}
 
 \item{\code{smoother}}{smoother function or parameter
 To map a loess smoother to the plot, use \code{smoother}="loess"}
@@ -70,28 +64,6 @@ To map a loess smoother to the plot, use \code{smoother}="loess"}
 }
 \subsection{Returns}{
 A new \code{ObsVsPredDataMapping} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getObsVsPredLines"></a>}}
-\if{latex}{\out{\hypertarget{method-getObsVsPredLines}{}}}
-\subsection{Method \code{getObsVsPredLines()}}{
-Create a data.frame with of limits to plot
-This data.frame is necessary in case if log-log plots as
-\code{geom_abline} doesn't work properly in log scale
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ObsVsPredDataMapping$getObsVsPredLines(data)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data}}{data.frame of data}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A data.frame
 }
 }
 \if{html}{\out{<hr>}}

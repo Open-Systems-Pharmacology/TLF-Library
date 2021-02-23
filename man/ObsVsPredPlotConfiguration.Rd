@@ -9,26 +9,16 @@ R6 class defining the configuration of a \code{ggplot} object for Obs vs Pred pl
 \section{Super class}{
 \code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{ObsVsPredPlotConfiguration}
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{obsVsPredCaption}}{list of properties for obs vs pred plot specific features}
-}
-\if{html}{\out{</div>}}
-}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{ObsVsPredPlotConfiguration$new()}}
-\item \href{#method-addSmoother}{\code{ObsVsPredPlotConfiguration$addSmoother()}}
-\item \href{#method-addObsVsPred}{\code{ObsVsPredPlotConfiguration$addObsVsPred()}}
 \item \href{#method-clone}{\code{ObsVsPredPlotConfiguration$clone()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="print">}\href{../../tlf/html/PlotConfiguration.html#method-print}{\code{tlf::PlotConfiguration$print()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -39,7 +29,9 @@ R6 class defining the configuration of a \code{ggplot} object for Obs vs Pred pl
 Create a new \code{ObsVsPredPlotConfiguration} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ObsVsPredPlotConfiguration$new(
-  obsVsPredCaption = getDefaultCaptionFor("obsVsPred"),
+  lines = NULL,
+  points = NULL,
+  errorbars = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -47,71 +39,18 @@ Create a new \code{ObsVsPredPlotConfiguration} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{obsVsPredCaption}}{list of properties for DDI ratio plot specific features}
+\item{\code{lines}}{\code{ThemeAestheticSelections} object defining properties for lines}
+
+\item{\code{points}}{\code{ThemeAestheticSelections} object defining properties for scatter points}
+
+\item{\code{errorbars}}{\code{ThemeAestheticSelections} object defining properties for error bars}
 
 \item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new \code{obsVsPredProperties} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addSmoother"></a>}}
-\if{latex}{\out{\hypertarget{method-addSmoother}{}}}
-\subsection{Method \code{addSmoother()}}{
-Add smoother layer to a \code{ggplot} object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ObsVsPredPlotConfiguration$addSmoother(plotObject, data, metaData, dataMapping)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{\code{ggplot} object}
-
-\item{\code{data}}{data.frame}
-
-\item{\code{metaData}}{list of information on \code{data}}
-
-\item{\code{dataMapping}}{R6 class \code{ObsVsPredDataMapping}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{ggplot} object with smoother
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addObsVsPred"></a>}}
-\if{latex}{\out{\hypertarget{method-addObsVsPred}{}}}
-\subsection{Method \code{addObsVsPred()}}{
-Add obs vs pred as scatter layer to a \code{ggplot} object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ObsVsPredPlotConfiguration$addObsVsPred(
-  plotObject,
-  data,
-  metaData,
-  dataMapping
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{\code{ggplot} object}
-
-\item{\code{data}}{data.frame}
-
-\item{\code{metaData}}{list of information on \code{data}}
-
-\item{\code{dataMapping}}{R6 class \code{ObsVsPredDataMapping}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{ggplot} object
+A new \code{ObsVsPredPlotConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}

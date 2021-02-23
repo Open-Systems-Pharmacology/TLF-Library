@@ -48,8 +48,8 @@ RangeDataMapping <- R6::R6Class(
     #' @description Check that \code{data} variables include map variables
     #' @param data data.frame to check
     #' @param metaData list containing information on \code{data}
-    #' @return A data.frame with map and \code{defaultAes} variables.
-    #' Dummy variable \code{defaultAes} is necessary to allow further modification of plots.
+    #' @return A data.frame with map and \code{legendLabels} variables.
+    #' Dummy variable \code{legendLabels} is necessary to allow further modification of plots.
     checkMapData = function(data, metaData = NULL) {
       validateMapping(self$x, data, nullAllowed = TRUE)
       if (isOfType(self$ymin, "character")) {
