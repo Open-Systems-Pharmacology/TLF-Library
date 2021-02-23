@@ -9,22 +9,10 @@ R6 class defining the configuration of a \code{ggplot} object for histograms
 \section{Super class}{
 \code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{HistogramPlotConfiguration}
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{mapData}}{data.frame after dataMapping}
-
-\item{\code{bins}}{numeric vector of bin edges}
-
-\item{\code{binWidth}}{numeric value of bin width}
-}
-\if{html}{\out{</div>}}
-}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{HistogramPlotConfiguration$new()}}
-\item \href{#method-addHistograms}{\code{HistogramPlotConfiguration$addHistograms()}}
 \item \href{#method-addVerticalLines}{\code{HistogramPlotConfiguration$addVerticalLines()}}
 \item \href{#method-clone}{\code{HistogramPlotConfiguration$clone()}}
 }
@@ -32,7 +20,6 @@ R6 class defining the configuration of a \code{ggplot} object for histograms
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="print">}\href{../../tlf/html/PlotConfiguration.html#method-print}{\code{tlf::PlotConfiguration$print()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -40,17 +27,24 @@ R6 class defining the configuration of a \code{ggplot} object for histograms
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create a new \code{TimeProfilePlotConfiguration} object
+Create a new \code{HistogramPlotConfiguration} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{HistogramPlotConfiguration$new(binWidth = NULL, bins = NULL, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{HistogramPlotConfiguration$new(
+  lines = NULL,
+  ribbons = NULL,
+  ylabel = "Count",
+  ...
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{binWidth}}{numeric value of bin width}
+\item{\code{lines}}{\code{ThemeAestheticSelections} object defining properties for vertical lines}
 
-\item{\code{bins}}{numeric vector of bin edges}
+\item{\code{ribbons}}{\code{ThemeAestheticSelections} object defining properties for histogram}
+
+\item{\code{ylabel}}{Histograms default display is "Count"}
 
 \item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
 }
@@ -58,43 +52,6 @@ Create a new \code{TimeProfilePlotConfiguration} object
 }
 \subsection{Returns}{
 A new \code{TimeProfilePlotConfiguration} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addHistograms"></a>}}
-\if{latex}{\out{\hypertarget{method-addHistograms}{}}}
-\subsection{Method \code{addHistograms()}}{
-Add histogram as histogram layer to a \code{ggplot} object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{HistogramPlotConfiguration$addHistograms(
-  plotObject,
-  data,
-  metaData = NULL,
-  dataMapping,
-  binWidth = NULL,
-  bins = NULL
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{\code{ggplot} object}
-
-\item{\code{data}}{data.frame}
-
-\item{\code{metaData}}{list of information on \code{data}}
-
-\item{\code{dataMapping}}{R6 class \code{HistogramDataMapping}}
-
-\item{\code{binWidth}}{numeric value of bin width}
-
-\item{\code{bins}}{numeric vector of bin edges}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{ggplot} object with histogram
 }
 }
 \if{html}{\out{<hr>}}

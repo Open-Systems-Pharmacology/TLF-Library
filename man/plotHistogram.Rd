@@ -8,11 +8,11 @@ plotHistogram(
   data,
   metaData = NULL,
   dataMapping = NULL,
-  plotConfiguration = NULL,
-  binWidth = NULL,
   bins = NULL,
-  verticalLineFunctions = NULL,
-  verticalLineFunctionNames = NULL,
+  stack = NULL,
+  fitNormalDist = NULL,
+  fitDensity = NULL,
+  plotConfiguration = NULL,
   plotObject = NULL
 )
 }
@@ -25,18 +25,18 @@ containing complementary information to data (e.g. unit)}
 \item{dataMapping}{R6 class HistogramDataMapping
 mapping of which data to use for histogram}
 
+\item{bins}{(optional)}
+
 \item{plotConfiguration}{R6 class HistogramPlotConfiguration
 Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend}
 
-\item{binWidth}{(optional)}
+\item{plotObject}{ggplot object, if null creates new plot, if not add time profile layers to ggplot}
 
-\item{bins}{(optional)}
+\item{binWidth}{(optional)}
 
 \item{verticalLineFunctions}{(optional)}
 
 \item{verticalLineFunctionNames}{(optional)}
-
-\item{plotObject}{ggplot object, if null creates new plot, if not add time profile layers to ggplot}
 }
 \value{
 a ggplot graphical object

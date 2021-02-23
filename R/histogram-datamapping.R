@@ -6,31 +6,41 @@ HistogramDataMapping <- R6::R6Class(
   "HistogramDataMapping",
   inherit = XYGDataMapping,
   public = list(
-    #' @field verticalLineGroupings R6 class \code{Grouping} variable
-    verticalLineGroupings = NULL,
-    #' @field verticalLineFunctionNames Vector of function name
-    #' to be indicated in captions of the histogram
-    verticalLineFunctionNames = NULL,
-    #' @field verticalLineFunctions List of functions calculated on \code{data}
-    #' to obtain vertical lines on the histogram
-    verticalLineFunctions = NULL,
+    #' @field stack logical defining if histogram bars should be stacked
+    stack = NULL,
+    #' @field bins number of bins or binning values/methods passed on `ggplot2::geom_histogram`
+    bins = NULL,
+    #' @field lines values or functions to define vertical lines
+    lines = NULL,
+    #' @field fitNormalDist logical defining if a normal distribution should be fitted
+    fitNormalDist = NULL,
+    #' @field fitDensity logical defining if a density distribution function should be fitted
+    fitDensity = NULL,
 
     #' @description Create a new \code{HistogramDataMapping} object
-    #' @param verticalLineGroupings R6 class \code{Grouping} variable
-    #' @param verticalLineFunctionNames Vector of function name to be indicated in captions of the histogram
-    #' Default value uses `mean` and `median`.
-    #' @param verticalLineFunctions List of functions calculated on \code{data}
-    #' Default value uses `mean` and `median`.
+    #' @param stack logical defining if histogram bars should be stacked
+    #' @param bins argument passed on `ggplot2::geom_histogram`
+    #' @param lines values or functions to define vertical lines
+    #' @param fitNormalDist logical defining if a normal distribution should be fitted
+    #' @param fitDensity logical defining if a density distribution should be fitted
     #' @param ... parameters inherited from \code{XYGDataMapping}
     #' @return A new \code{HistogramDataMapping} object
-    initialize = function(verticalLineGroupings = NULL,
-                              verticalLineFunctionNames = c("mean", "median"),
-                              verticalLineFunctions = c(mean, median),
+    initialize = function(stack = FALSE,
+                              bins = NULL,
+                              lines = DefaultDataMappingValues$histogram,
+                              fitNormalDist = FALSE,
+                              fitDensity = FALSE,
                               ...) {
       super$initialize(...)
-      self$verticalLineGroupings <- verticalLineGroupings
-      self$verticalLineFunctionNames <- verticalLineFunctionNames
-      self$verticalLineFunctions <- verticalLineFunctions
+      validateIsLogical(stack)
+      validateIsLogical(fitNormalDist)
+      validateIsLogical(fitDensity)
+      self$stack <- stack
+      self$fitNormalDist <- fitNormalDist
+      self$fitDensity <- fitDensity
+
+      self$bins <- bins
+      self$lines <- lines
     }
   )
 )
