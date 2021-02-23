@@ -9,19 +9,23 @@ R6 class defining the configuration of a \code{ggplot} object
 \section{Super class}{
 \code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{BoxWhiskerPlotConfiguration}
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{outliers}}{logical defining if outliers should be included in boxplot}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{BoxWhiskerPlotConfiguration$new()}}
-\item \href{#method-addBoxWhisker}{\code{BoxWhiskerPlotConfiguration$addBoxWhisker()}}
-\item \href{#method-addOutliers}{\code{BoxWhiskerPlotConfiguration$addOutliers()}}
 \item \href{#method-clone}{\code{BoxWhiskerPlotConfiguration$clone()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="print">}\href{../../tlf/html/PlotConfiguration.html#method-print}{\code{tlf::PlotConfiguration$print()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -29,82 +33,31 @@ R6 class defining the configuration of a \code{ggplot} object
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create a new \code{BoxWhiskerPlotConfiguration} object
+Create a new \code{PKRatioPlotConfiguration} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BoxWhiskerPlotConfiguration$new(...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{BoxWhiskerPlotConfiguration$new(
+  outliers = TRUE,
+  ribbons = NULL,
+  points = NULL,
+  ...
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{outliers}}{logical defining if outliers should be included in boxplot}
+
+\item{\code{ribbons}}{\code{ThemeAestheticSelections} object defining properties for boxes of boxplot}
+
+\item{\code{points}}{\code{ThemeAestheticSelections} object defining properties for outlier scatter points}
+
 \item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new \code{BoxWhiskerPlotConfiguration} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addBoxWhisker"></a>}}
-\if{latex}{\out{\hypertarget{method-addBoxWhisker}{}}}
-\subsection{Method \code{addBoxWhisker()}}{
-Add a boxplot layer to a \code{ggplot} object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BoxWhiskerPlotConfiguration$addBoxWhisker(
-  plotObject,
-  data,
-  metaData,
-  dataMapping
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{a \code{ggplot} object}
-
-\item{\code{data}}{data.frame}
-
-\item{\code{metaData}}{list of information on \code{data}}
-
-\item{\code{dataMapping}}{R6 class \code{BoxWhiskerDataMapping}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{ggplot} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addOutliers"></a>}}
-\if{latex}{\out{\hypertarget{method-addOutliers}{}}}
-\subsection{Method \code{addOutliers()}}{
-Add a outlier points layer to a \code{ggplot} object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BoxWhiskerPlotConfiguration$addOutliers(
-  plotObject,
-  data,
-  metaData,
-  dataMapping
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{a \code{ggplot} object}
-
-\item{\code{data}}{data.frame}
-
-\item{\code{metaData}}{list of information on \code{data}}
-
-\item{\code{dataMapping}}{R6 class \code{BoxWhiskerDataMapping}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{ggplot} object
+A new \code{PKRatioPlotConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
