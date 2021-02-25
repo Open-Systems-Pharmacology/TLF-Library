@@ -244,9 +244,16 @@ DefaultDataMappingValues <- list(
     ddiRatio2 = c(2, 1 / 2),
     guestLine = 1
   ),
-  obsVsPred = list("y=x" = 1),
-  tornado = 0
+  obsVsPred = 1,
+  resVsPred = 0,
+  tornado = 0,
+  histogram = 0
 )
+
+#' @title DDIComparisonTypes
+#' @description Options for comparison: residuals vs pred or obs vs pred
+#' @export
+DDIComparisonTypes <- enum(c("resVsPred", "obsVsPred"))
 
 getAggregatedData <- function(data,
                               xParameterName,
