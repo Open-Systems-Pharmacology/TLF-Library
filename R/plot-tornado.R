@@ -92,11 +92,21 @@ plotTornado <- function(data = NULL,
         fill = mapLabels$fill,
         color = mapLabels$color
       ),
-      alpha = plotConfiguration$theme$aesProperties$alpha[1],
-      size = plotConfiguration$theme$aesProperties$size[1],
-      linetype = plotConfiguration$theme$aesProperties$linetype[1],
+      alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$alpha, position = 0, aesthetic = "alpha"),
+      size = getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$size, position = 0, aesthetic = "size"),
+      linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$linetype, position = 0, aesthetic = "linetype"),
       position = ggplot2::position_dodge(width = plotConfiguration$dodge)
     )
+
+    # Define shapes and colors based on plotConfiguration$points properties
+    fillVariable <- gsub("`", "", mapLabels$fill)
+    colorVariable <- gsub("`", "", mapLabels$color)
+    fillLength <- length(unique(mapData[, fillVariable]))
+    colorLength <- length(unique(mapData[, colorVariable]))
+
+    plotObject <- plotObject +
+      ggplot2::scale_fill_manual(values = getAestheticValues(n = fillLength, selectionKey = plotConfiguration$ribbons$fill, aesthetic = "fill")) +
+      ggplot2::scale_color_manual(values = getAestheticValues(n = colorLength, selectionKey = plotConfiguration$ribbons$color, aesthetic = "color"))
   }
   if (!plotConfiguration$bar) {
     # For tornado with points, their shape will be taken from the theme properties
@@ -108,31 +118,42 @@ plotTornado <- function(data = NULL,
         color = mapLabels$color,
         shape = mapLabels$shape
       ),
-      size = plotConfiguration$theme$aesProperties$size[1],
+      size = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$size, position = 0, aesthetic = "size"),
       position = ggplot2::position_dodge(width = plotConfiguration$dodge)
-    ) + 
-      ggplot2::scale_shape_manual(values = tlfEnv$currentTheme$aesProperties$shape)
+    )
+
+    # Define shapes and colors based on plotConfiguration$points properties
+    shapeVariable <- gsub("`", "", mapLabels$shape)
+    colorVariable <- gsub("`", "", mapLabels$color)
+    shapeLength <- length(unique(mapData[, shapeVariable]))
+    colorLength <- length(unique(mapData[, colorVariable]))
+
+    plotObject <- plotObject +
+      ggplot2::scale_shape_manual(values = getAestheticValues(n = shapeLength, selectionKey = plotConfiguration$points$shape, aesthetic = "shape")) +
+      ggplot2::scale_color_manual(values = getAestheticValues(n = colorLength, selectionKey = plotConfiguration$points$color, aesthetic = "color"))
   }
 
   # Final plot includes a vertical line in 0
   # And optional color palette otherwise use colors from theme
-  plotObject <- plotObject + 
+  if (!isOfLength(dataMapping$lines, 0)) {
+    plotObject <- plotObject +
       ggplot2::geom_vline(
-        xintercept = dataMapping$tornadoValues,
-        color = tlfEnv$currentTheme$aesProperties$color[1],
-        size = tlfEnv$currentTheme$aesProperties$size[1],
-        linetype = tlfEnv$currentTheme$aesProperties$linetype[1]
+        xintercept = dataMapping$lines,
+        color = getAestheticValues(n = length(dataMapping$lines), selectionKey = plotConfiguration$lines$color, position = 0, aesthetic = "color"),
+        size = getAestheticValues(n = length(dataMapping$lines), selectionKey = plotConfiguration$lines$size, position = 0, aesthetic = "size"),
+        linetype = getAestheticValues(n = length(dataMapping$lines), selectionKey = plotConfiguration$lines$linetype, position = 0, aesthetic = "linetype")
       )
-  
-  if(!is.null(plotConfiguration$colorPalette)){
-    plotObject <- plotObject + 
-      ggplot2::scale_fill_brewer(palette = plotConfiguration$colorPalette, 
-                                 aesthetics = c("color", "fill"))
-    return(plotObject)
   }
-  
-  plotObject <- plotObject + 
-    ggplot2::scale_fill_manual(values = tlfEnv$currentTheme$aesProperties$fill) + 
-    ggplot2::scale_color_manual(values = tlfEnv$currentTheme$aesProperties$color)
+
+  if (!isOfLength(plotConfiguration$colorPalette, 0)) {
+    try(suppressMessages(
+      plotObject <- plotObject +
+        ggplot2::scale_fill_brewer(
+          palette = plotConfiguration$colorPalette,
+          aesthetics = c("color", "fill")
+        )
+    ))
+  }
+  try(suppressMessages(plotObject <- setXAxis(plotObject)))
   return(plotObject)
 }
