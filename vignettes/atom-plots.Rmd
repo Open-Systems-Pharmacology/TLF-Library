@@ -1,8 +1,7 @@
 ---
 title: "Atom plots"
-output: 
-  rmarkdown::html_vignette:
-    number_sections: true
+author: "OSPSuiteR 2019"
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{atom-plots}
   %\VignetteEngine{knitr::rmarkdown}
@@ -169,7 +168,7 @@ pScatter3 <- addScatter(x = myTestData$x[females],
                         plotObject = pScatter1)
 ```
 
-```{r, echo=FALSE, fig.cap="Left: pScatter1; Middle: pScatter2; Right: pScatter3", fig.width=7.5}
+```{r show addScatter, echo=FALSE, fig.cap="Left: pScatter1; Middle: pScatter2; Right: pScatter3", fig.width=7.5}
 gridExtra::grid.arrange(pScatter1, pScatter2, pScatter3, ncol=3)
 ```
 
@@ -182,30 +181,6 @@ In particular, *dataMapping* also allows to create a legend caption, the input p
 The function *addLine* is almost identical to *addScatter*.
 It differs regarding its default aesthetic properties: lines are replacing the points, even if points can be used.
 It also differs by the possibility of using *x* or *y* input for x/y-intercepts.
-
-Using a different example,
-
-```{r addLine options}
-# Using x and y
-pLine1 <- addLine(x = seq(1,5,0.1),
-                  y = cos(seq(1,5,0.1)),
-                  color = "blue",
-                  linetype = "solid",
-                  caption = "cosinus")
-pLine2 <- addLine(y = c(-1, 1),
-                  color = "pink",
-                  linetype = "longdash",
-                  caption = "extremes")
-pLine3 <- addLine(y = c(-1, 1),
-                  color = "pink",
-                  linetype = "longdash",
-                  caption = "extremes",
-                  plotObject = pLine1)
-```
-
-```{r show addLine, echo=FALSE, fig.cap="Left: pLine1; Middle: pLine2; Right: pLine3", fig.width=7.5}
-gridExtra::grid.arrange(pLine1, pLine2, pLine3, ncol=3)
-```
 
 # Add ribbon or errorbars to a plot object: *addRibbon*, *addErrorbar*
 
