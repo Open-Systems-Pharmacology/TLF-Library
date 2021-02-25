@@ -3,8 +3,6 @@ context("PK Ratio Plot")
 # Load data of comprehensive examples
 load("pkRatioDataExample.RData")
 
-useTheme(tlfTheme)
-
 test_that("plotPKRatio() function works properly", {
   pkrp <- plotPKRatio(data = data.frame(
     x = c(1, 2, 10, 20, 100),
@@ -34,7 +32,7 @@ test_that("PK Ratio default settings work", {
 
   expect_null(pkRatioMapping$x)
   expect_null(pkRatioMapping$y)
-  expect_equal(pkRatioMapping$pkRatioValues, list(
+  expect_equal(pkRatioMapping$lines, list(
     pkRatio1 = 1,
     pkRatio2 = c(1.5, 1 / 1.5),
     pkRatio3 = c(2, 1 / 2)
@@ -56,11 +54,7 @@ test_that("PK Ratio default settings work", {
 })
 
 test_that("PK Ratio typical test works", {
-
-  # tlf theme
-  useTheme(tlfTheme)
-
-  # Data mapping:
+# Data mapping:
   # x = Age, y = Ratio, color = Gender, shape = c(Dose, Compound)
   pkRatioMap <- PKRatioDataMapping$new(
     x = "Age",

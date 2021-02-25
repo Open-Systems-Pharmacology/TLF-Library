@@ -11,6 +11,7 @@ test_that("Font default works", {
 
   expect_is(defaultFont, "Font")
   expect_is(defaultFont$size, "numeric")
+  expect_is(defaultFont$angle, "numeric")
   expect_is(defaultFont$color, "character")
   expect_is(defaultFont$fontFace, "character")
   expect_is(defaultFont$fontFamily, "character")
@@ -26,8 +27,6 @@ test_that("Label default works", {
 
 test_that("Label gives error when initialized with wrong arguments", {
   expect_error(Label$new(font = ""))
-  expect_error(Label$new(
-    font = Font$new(color = "blue"),
-    color = "red"
-  ))
+  expect_error(Font$new(color = 3))
+  expect_error(Font$new(size = "3"))
 })
