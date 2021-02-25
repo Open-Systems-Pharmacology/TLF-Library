@@ -20,10 +20,6 @@ Initialize a \code{ggplot} object and set the labels, grid, background and water
 # Initialize an empty plot
 p <- initializePlot()
 
-# Use a predifined theme
-useTheme(tlfTheme)
-p <- initializePlot()
-
 # Implement a customized configuration using PlotConfiguration
 config <- PlotConfiguration$new(title = "My Plot", xlabel = "x variable", ylabel = "y variable")
 p <- initializePlot(config)
