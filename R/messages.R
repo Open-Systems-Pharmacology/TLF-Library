@@ -51,5 +51,9 @@ messages <- list(
       "Conflicting inputs provided. Inputs '", paste0(eitherInput, collapse = ", "),
       "' and '", paste0(orInput, collapse = ", "), "' can't be provided at the same time."
     )
+  },
+
+  errorNrowData = function(plotName) {
+    paste0("nrow(data)=0. ", plotName, " layer could not be added.")
   }
 )
