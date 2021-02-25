@@ -19,7 +19,7 @@ setLegend <- function(plotObject,
   validateIsOfType(title, c("character", "Label"), nullAllowed = TRUE)
   validateIsOfType(font, c("Font"), nullAllowed = TRUE)
   validateIsOfType(caption, "data.frame", nullAllowed = TRUE)
-  
+
   plotObject <- setLegendPosition(plotObject, position = position)
   plotObject <- setLegendTitle(plotObject, title = title)
   plotObject <- setLegendFont(plotObject, color = font$color, size = font$size, angle = font$angle, fontFace = font$fontFace)
@@ -37,28 +37,28 @@ setLegend <- function(plotObject,
 #' @description Set legend font properties
 #' @export
 setLegendFont <- function(plotObject,
-                      color = NULL,
-                      size = NULL,
-                      fontFace = NULL,
-                      angle = NULL) {
+                          color = NULL,
+                          size = NULL,
+                          fontFace = NULL,
+                          angle = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsNumeric(size, nullAllowed = TRUE)
   validateIsNumeric(angle, nullAllowed = TRUE)
   validateIsString(color, nullAllowed = TRUE)
   validateIsString(fontFace, nullAllowed = TRUE)
-  
+
   # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
   newPlotObject <- plotObject
   newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
-  
+
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   legend <- newPlotObject$plotConfiguration$legend
   legend$font$color <- color %||% legend$font$color
   legend$font$size <- size %||% legend$font$size
   legend$font$angle <- angle %||% legend$font$angle
   legend$font$fontFace <- fontFace %||% legend$font$fontFace
-  
+
   newPlotObject <- legend$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -74,32 +74,32 @@ setLegendFont <- function(plotObject,
 #' @description Set legend title
 #' @export
 setLegendTitle <- function(plotObject,
-                          title = NULL,
-                          color = NULL,
-                          size = NULL,
-                          fontFace = NULL,
-                          angle = NULL) {
+                           title = NULL,
+                           color = NULL,
+                           size = NULL,
+                           fontFace = NULL,
+                           angle = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(title, c("character", "Label"), nullAllowed = TRUE)
   validateIsNumeric(size, nullAllowed = TRUE)
   validateIsNumeric(angle, nullAllowed = TRUE)
   validateIsString(color, nullAllowed = TRUE)
   validateIsString(fontFace, nullAllowed = TRUE)
-  
+
   # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
   newPlotObject <- plotObject
   newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
-  
+
   # If title is`Label`, reconcile its properties with other inputs
-  if(isOfType(title, "Label")){
+  if (isOfType(title, "Label")) {
     color <- color %||% title$font$color
     size <- size %||% title$font$size
     angle <- angle %||% title$font$angle
     fontFace <- fontFace %||% title$font$fontFace
     title <- title$text
   }
-  
+
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   legend <- newPlotObject$plotConfiguration$legend
   legend$titleFont$color <- color %||% legend$titleFont$color
@@ -107,7 +107,7 @@ setLegendTitle <- function(plotObject,
   legend$titleFont$angle <- angle %||% legend$titleFont$angle
   legend$titleFont$fontFace <- fontFace %||% legend$titleFont$fontFace
   legend$title <- title %||% legend$title
-  
+
   newPlotObject <- legend$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -121,17 +121,17 @@ setLegendTitle <- function(plotObject,
 #' Set the legend position
 #' @export
 #' @import ggplot2
-setLegendPosition <- function(plotObject, 
+setLegendPosition <- function(plotObject,
                               position = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsIncluded(position, LegendPositions, nullAllowed = TRUE)
-  
+
   newPlotObject <- plotObject
   newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
-  
+
   legend <- newPlotObject$plotConfiguration$legend
   legend$position <- position %||% legend$position
-  
+
   newPlotObject <- legend$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -148,12 +148,12 @@ setLegendPosition <- function(plotObject,
 setLegendCaption <- function(plotObject, caption = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(caption, "data.frame", nullAllowed = TRUE)
-  
+
   # Empty or null captions
-  if(isOfLength(caption, 0)){
+  if (isOfLength(caption, 0)) {
     return(plotObject)
   }
-  
+
   validateIsIncluded(names(caption), CaptionProperties)
 
   newPlotObject <- plotObject
@@ -161,12 +161,12 @@ setLegendCaption <- function(plotObject, caption = NULL) {
 
   legend <- newPlotObject$plotConfiguration$legend
   legend$caption <- caption
-  
+
   # Re-order based on order variable
   orderedName <- legend$caption$name[legend$caption$order]
   orderedLabel <- legend$caption$label[legend$caption$order]
   orderedVisibility <- legend$caption$visibility[legend$caption$order]
-  
+
   # The next lines need to be looped on every element of LegendTypes
   # Otherwise, there can be a legend per LegendTypes
   for (aestype in LegendTypes) {
@@ -440,24 +440,24 @@ getLegendPosition <- function(position) {
 #' @description merge legend caption with existing legend caption
 #' @param plotObject ggplot object
 #' @param newLabels labels of caption to merge
-#' @param userDefinedaAesthetics list of aesthetic values defined by the user
 #' @param aestheticSelections `ThemeAestheticSelections` object
-mergeLegend <- function(plotObject, newLabels, userDefinedaAesthetics, aestheticSelections) {
+mergeLegend <- function(plotObject, newLabels, aestheticSelections) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(aestheticSelections, "ThemeAestheticSelections")
 
   oldCaption <- plotObject$plotConfiguration$legend$caption
   oldCaptionLength <- nrow(oldCaption)
   newCaptionLength <- length(newLabels)
-  
+
   # Associate new values of aesthetics based on theme aesthetic selections
   newCaptionExpression <- parse(text = paste0(
     names(AestheticProperties), " <- getAestheticValues(n = newCaptionLength, 
-    selectionKey = userDefinedaAesthetics$", names(AestheticProperties), " %||% aestheticSelections$", names(AestheticProperties), ", 
+    selectionKey = aestheticSelections$", names(AestheticProperties), ", 
     position = oldCaptionLength, 
-    aesthetic = '", names(AestheticProperties),"')"))
+    aesthetic = '", names(AestheticProperties), "')"
+  ))
   eval(newCaptionExpression)
-  
+
   # Create the new caption
   newCaption <- data.frame(
     name = newLabels, label = newLabels,
@@ -467,10 +467,21 @@ mergeLegend <- function(plotObject, newLabels, userDefinedaAesthetics, aesthetic
     stringsAsFactors = FALSE
   )
 
-  # Resolve conflicts between old and new legend caption
-  for(newCaptionName in newCaption$name){
-    oldCaption[oldCaption$name %in% newCaptionName, ] <- newCaption[newCaption$name %in% newCaptionName,]
+  if (oldCaptionLength == 0) {
+    plotObject <- setLegend(plotObject, caption = newCaption)
+    return(plotObject)
   }
+
+  # Resolve conflicts between old and new legend caption for merging
+  # Fill must remain as defined by old (prevent overwriting addRibbon)
+  for (oldCaptionName in oldCaption$name) {
+    oldSelectedCaptions <- oldCaption$name %in% oldCaptionName
+    newSelectedCaptions <- newCaption$name %in% oldCaptionName
+    newCaption$fill[newSelectedCaptions] <- oldCaption$fill[oldSelectedCaptions]
+    newCaption$order[newSelectedCaptions] <- oldCaption$order[oldSelectedCaptions]
+  }
+  # Remove duplicate old captions for merging
+  oldCaption <- oldCaption[!(oldCaption$name %in% newCaption$name), ]
   mergeCaption <- rbind.data.frame(oldCaption, newCaption, stringsAsFactors = FALSE)
   plotObject <- setLegend(plotObject, caption = mergeCaption)
   return(plotObject)

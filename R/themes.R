@@ -239,20 +239,20 @@ ThemeAestheticMaps <- R6::R6Class(
       self$fill <- fill %||% ColorMaps$default
       self$shape <- shape %||% as.numeric(Shapes)
       self$linetype <- linetype %||% as.character(Linetypes)
-      self$size <- size %||% 1
-      self$alpha <- alpha %||% 0.8
+      self$size <- size %||% seq(1, 5)
+      self$alpha <- alpha %||% c(0.75, 0.5, 0.25)
 
       # Checks shapes and linetype according to ggplot2 standards
       self$shape <- asPlotShape(self$shape)
       validateIsIncluded(self$linetype, Linetypes)
     },
-    
+
     #' @description Translate object into a json list
     #' @return A list that can be saved into a json file
     toJson = function() {
       jsonObject <- list()
       fieldNames <- names(AestheticProperties)
-      
+
       setJsonExpression <- parse(text = paste0("jsonObject$", fieldNames, " <- self$", fieldNames))
       eval(setJsonExpression)
       return(jsonObject)
@@ -287,13 +287,13 @@ ThemeAestheticSelections <- R6::R6Class(
       initializeExpression <- parse(text = paste0("self$", names(AestheticProperties), " <- ", names(AestheticProperties), " %||% 'first'"))
       eval(initializeExpression)
     },
-    
+
     #' @description Translate object into a json list
     #' @return A list that can be saved into a json file
     toJson = function() {
       jsonObject <- list()
       fieldNames <- names(AestheticProperties)
-      
+
       setJsonExpression <- parse(text = paste0("jsonObject$", fieldNames, " <- self$", fieldNames))
       eval(setJsonExpression)
       return(jsonObject)
@@ -308,7 +308,12 @@ ThemeAestheticSelections <- R6::R6Class(
 #' @field addRibbon theme properties for `PlotConfiguration` objects as used in function `addRibbon()`
 #' @field addErrorbar theme properties for `PlotConfiguration` objects as used in function `addErrorbar()`
 #' @field plotPKRatio theme properties for `PlotConfiguration` objects as used in function `plotPKRatio()`
+#' @field plotDDIRatio theme properties for `PlotConfiguration` objects as used in function `plotDDIRatio()`
+#' @field plotTimeProfile theme properties for `PlotConfiguration` objects as used in function `plotTimeProfile()`
+#' @field plotObsVsPred theme properties for `PlotConfiguration` objects as used in function `plotObsVsPred()`
 #' @field plotBoxWhisker theme properties for `PlotConfiguration` objects as used in function `plotBoxWhisker()`
+#' @field plotTornado theme properties for `PlotConfiguration` objects as used in function `plotTornado()`
+#' @field plotHistogram theme properties for `PlotConfiguration` objects as used in function `plotHistogram()`
 #' @export
 ThemePlotConfigurations <- R6::R6Class(
   "ThemePlotConfigurations",
@@ -319,7 +324,12 @@ ThemePlotConfigurations <- R6::R6Class(
     addRibbon = NULL,
     addErrorbar = NULL,
     plotPKRatio = NULL,
+    plotDDIRatio = NULL,
+    plotTimeProfile = NULL,
+    plotObsVsPred = NULL,
     plotBoxWhisker = NULL,
+    plotTornado = NULL,
+    plotHistogram = NULL,
 
     #' @description Create a new \code{ThemePlotConfigurations} object
     #' @param addScatter theme properties for `PlotConfiguration` objects as used in function `addScatter()`
@@ -327,47 +337,83 @@ ThemePlotConfigurations <- R6::R6Class(
     #' @param addRibbon theme properties for `PlotConfiguration` objects as used in function `addRibbon()`
     #' @param addErrorbar theme properties for `PlotConfiguration` objects as used in function `addErrorbar()`
     #' @param plotPKRatio theme properties for `PlotConfiguration` objects as used in function `plotPKRatio()`
+    #' @param plotDDIRatio theme properties for `PlotConfiguration` objects as used in function `plotDDIRatio()`
+    #' @param plotTimeProfile theme properties for `PlotConfiguration` objects as used in function `plotTimeProfile()`
+    #' @param plotObsVsPred theme properties for `PlotConfiguration` objects as used in function `plotObsVsPred()`
     #' @param plotBoxWhisker theme properties for `PlotConfiguration` objects as used in function `plotBoxWhisker()`
-    #' @return A new \code{ThemeAestheticMaps} object
+    #' @param plotTornado theme properties for `PlotConfiguration` objects as used in function `plotTornado()`
+    #' @param plotHistogram theme properties for `PlotConfiguration` objects as used in function `plotHistogram()`
+    #' @return A new \code{ThemePlotConfigurations} object
     initialize = function(addScatter = NULL,
                               addLine = NULL,
                               addRibbon = NULL,
-                          addErrorbar = NULL,
+                              addErrorbar = NULL,
                               plotPKRatio = NULL,
-                              plotBoxWhisker = NULL) {
+                              plotDDIRatio = NULL,
+                              plotTimeProfile = NULL,
+                              plotObsVsPred = NULL,
+                              plotBoxWhisker = NULL,
+                              plotTornado = NULL,
+                              plotHistogram = NULL) {
 
       # Validate necessary input
-      validateIsOfType(addScatter, "ThemeAestheticSelections", nullAllowed = TRUE)
-      validateIsOfType(addLine, "ThemeAestheticSelections", nullAllowed = TRUE)
-      validateIsOfType(addRibbon, "ThemeAestheticSelections", nullAllowed = TRUE)
-      validateIsOfType(addErrorbar, "ThemeAestheticSelections", nullAllowed = TRUE)
+      atomPlotInputs <- c("addScatter", "addLine", "addRibbon", "addErrorbar")
+      moleculePlotInputs <- c("plotPKRatio", "plotDDIRatio", "plotTimeProfile", "plotObsVsPred", "plotBoxWhisker", "plotTornado", "plotHistogram")
 
-      validateIsOfType(c(plotPKRatio), "ThemeAestheticSelections", nullAllowed = TRUE)
-      validateIsOfType(c(plotBoxWhisker), "ThemeAestheticSelections", nullAllowed = TRUE)
+      validateExpressions <- parse(text = paste0("validateIsOfType(", atomPlotInputs, ", 'ThemeAestheticSelections', nullAllowed = TRUE)"))
+      eval(validateExpressions)
+      validateExpressions <- parse(text = paste0("validateIsOfType(c(", moleculePlotInputs, "), 'ThemeAestheticSelections', nullAllowed = TRUE)"))
+      eval(validateExpressions)
 
-      # Default aesthetic maps
+      # Default aesthetic for atom plots
       self$addScatter <- addScatter %||% ThemeAestheticSelections$new(color = "next", fill = NA, shape = "next", linetype = "blank", size = "first", alpha = 1)
       self$addLine <- addLine %||% ThemeAestheticSelections$new(color = "next", fill = NA, shape = "blank", linetype = "reset", size = "first", alpha = 1)
       self$addRibbon <- addRibbon %||% ThemeAestheticSelections$new(color = "next", fill = "next", shape = "blank", linetype = "first", size = "same", alpha = 1)
       self$addErrorbar <- addErrorbar %||% ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "blank", linetype = "first", size = "same", alpha = 1)
 
-      #
+      # Default aesthetic for molecule plots
       self$plotPKRatio <- plotPKRatio %||% list(
-        addLine = ThemeAestheticSelections$new(color = c("#000000", "#0078D7", "#D83B01"), fill = NA, shape = -2, linetype = "same", size = 0.5, alpha = 1),
-        addScatter = ThemeAestheticSelections$new(color = "next", fill = "next", shape = "blank", linetype = "same", size = "same", alpha = 1)
+        lines = ThemeAestheticSelections$new(color = c("#000000", "#0078D7", "#D83B01"), linetype = c("longdash", "longdash", "longdash"), size = 0.5, alpha = 1),
+        points = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "reset", linetype = "blank", size = 3),
+        errorbars = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "blank", linetype = "solid", size = 1)
+      )
+      self$plotDDIRatio <- plotDDIRatio %||% list(
+        lines = ThemeAestheticSelections$new(color = c("#000000", "#0078D7", "#D83B01"), linetype = c("longdash", "longdash", "longdash"), size = 0.5, alpha = 1),
+        points = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "reset", linetype = "blank", size = 3),
+        errorbars = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "blank", linetype = "solid", size = 1)
+      )
+      self$plotTimeProfile <- plotTimeProfile %||% list(
+        lines = ThemeAestheticSelections$new(color = "reset", fill = "reset", shape = "blank", linetype = "reset", size = 1),
+        ribbons = ThemeAestheticSelections$new(color = "reset", fill = "reset", shape = "blank", linetype = "blank", size = 1, alpha = "first"),
+        points = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "reset", linetype = "blank", size = 3),
+        errorbars = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "blank", linetype = "solid", size = 1)
+      )
+      self$plotObsVsPred <- plotObsVsPred %||% list(
+        lines = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "blank", linetype = "reset", size = 1),
+        points = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "reset", linetype = "blank", size = 3),
+        errorbars = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "blank", linetype = "solid", size = 1)
       )
       self$plotBoxWhisker <- plotBoxWhisker %||% list(
-        addRibbon = ThemeAestheticSelections$new(color = "#000000", fill = "next", shape = -2, linetype = "same", size = "same", alpha = 1),
-        addScatter = ThemeAestheticSelections$new(color = "#000000", fill = NA, shape = "first", linetype = "same", size = "first", alpha = 1)
+        ribbons = ThemeAestheticSelections$new(color = "#000000", fill = "next", linetype = "solid", size = 1, alpha = "first"),
+        points = ThemeAestheticSelections$new(color = "#000000", shape = "first", linetype = "blank", size = 1)
+      )
+      self$plotTornado <- plotTornado %||% list(
+        lines = ThemeAestheticSelections$new(color = "#000000", fill = NA, shape = "blank", linetype = "longdash", size = 1),
+        ribbons = ThemeAestheticSelections$new(color = "reset", fill = "reset", shape = "blank", linetype = "solid", size = 1, alpha = "first"),
+        points = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "reset", linetype = "blank", size = 3)
+      )
+      self$plotHistogram <- plotHistogram %||% list(
+        lines = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "blank", linetype = "reset", size = 1),
+        ribbons = ThemeAestheticSelections$new(color = "#000000", fill = "reset", shape = "blank", linetype = "solid", size = 0.5, alpha = "first")
       )
     },
-    
+
     #' @description Translate object into a json list
     #' @return A list that can be saved into a json file
     toJson = function() {
       jsonObject <- list()
-      fieldNames <- c("addScatter", "addLine", "addRibbon")
-      
+      fieldNames <- c("addScatter", "addLine", "addRibbon", "addErrorbar")
+
       setJsonExpression <- parse(text = paste0("jsonObject$", fieldNames, " <- self$", fieldNames, "$toJson()"))
       eval(setJsonExpression)
       return(jsonObject)
@@ -518,8 +564,10 @@ saveThemeToJson <- function(jsonFile, theme = NULL) {
   # Check that theme is a Theme
   validateIsOfType(theme, "Theme", nullAllowed = TRUE)
   validateIsString(jsonFile)
-  
-  if(isOfLength(theme, 0)){theme <- tlfEnv$currentTheme}
+
+  if (isOfLength(theme, 0)) {
+    theme <- tlfEnv$currentTheme
+  }
   theme$save(jsonFile)
   return(invisible())
 }
@@ -543,7 +591,6 @@ useTheme <- function(theme) {
 #' Run shiny app that allows easy setting of Theme objects.
 #' Theme objects drive default properties of plots
 #' @export
-#'
 runThemeMaker <- function() {
   appPath <- system.file("theme-maker", package = "tlf")
   shiny::runApp(appPath)

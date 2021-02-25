@@ -25,6 +25,14 @@ R6 class defining the configuration of a \code{ggplot} object
 \item{\code{yAxis}}{\code{YAxisConfiguration} object defining properties of x-axis}
 
 \item{\code{background}}{\code{BackgroundConfiguration} object defining properties of x-axis}
+
+\item{\code{lines}}{\code{ThemeAestheticSelections} defining properties of lines}
+
+\item{\code{ribbons}}{\code{ThemeAestheticSelections} defining properties of ribbons}
+
+\item{\code{points}}{\code{ThemeAestheticSelections} defining properties of points}
+
+\item{\code{errorbars}}{\code{ThemeAestheticSelections} defining properties of error bars}
 }
 \if{html}{\out{</div>}}
 }

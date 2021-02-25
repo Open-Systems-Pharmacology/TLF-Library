@@ -19,7 +19,17 @@ R6 class defining theme of plot configuration objects
 
 \item{\code{plotPKRatio}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotPKRatio()}}
 
+\item{\code{plotDDIRatio}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotDDIRatio()}}
+
+\item{\code{plotTimeProfile}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotTimeProfile()}}
+
+\item{\code{plotObsVsPred}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotObsVsPred()}}
+
 \item{\code{plotBoxWhisker}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotBoxWhisker()}}
+
+\item{\code{plotTornado}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotTornado()}}
+
+\item{\code{plotHistogram}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotHistogram()}}
 }
 \if{html}{\out{</div>}}
 }
@@ -42,7 +52,12 @@ Create a new \code{ThemePlotConfigurations} object
   addRibbon = NULL,
   addErrorbar = NULL,
   plotPKRatio = NULL,
-  plotBoxWhisker = NULL
+  plotDDIRatio = NULL,
+  plotTimeProfile = NULL,
+  plotObsVsPred = NULL,
+  plotBoxWhisker = NULL,
+  plotTornado = NULL,
+  plotHistogram = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -59,12 +74,22 @@ Create a new \code{ThemePlotConfigurations} object
 
 \item{\code{plotPKRatio}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotPKRatio()}}
 
+\item{\code{plotDDIRatio}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotDDIRatio()}}
+
+\item{\code{plotTimeProfile}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotTimeProfile()}}
+
+\item{\code{plotObsVsPred}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotObsVsPred()}}
+
 \item{\code{plotBoxWhisker}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotBoxWhisker()}}
+
+\item{\code{plotTornado}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotTornado()}}
+
+\item{\code{plotHistogram}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotHistogram()}}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new \code{ThemeAestheticMaps} object
+A new \code{ThemePlotConfigurations} object
 }
 }
 \if{html}{\out{<hr>}}

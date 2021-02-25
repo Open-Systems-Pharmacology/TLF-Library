@@ -50,6 +50,18 @@ asPlotShape <- function(shapes) {
   return(ggplotShapes)
 }
 
+asThemeAestheticSelections <- function(themeSelectionObject) {
+  if (isOfType(themeSelectionObject, "ThemeAestheticSelections")) {
+    return(themeSelectionObject)
+  }
+  newThemeAestheticSelections <- ThemeAestheticSelections$new()
+  setNewThemeSelectionExpression <- parse(text = paste0(
+    "newThemeAestheticSelections$", names(themeSelectionObject), "<- themeSelectionObject$", names(themeSelectionObject)
+  ))
+  eval(setNewThemeSelectionExpression)
+  return(newThemeAestheticSelections)
+}
+
 #' @title ColorMaps
 #' @description List with some color maps for `Theme` object
 #' @export
@@ -96,12 +108,13 @@ getAestheticValues <- function(n, selectionKey = NA, position = 0, aesthetic = "
   # TO DO: Add wrappers for validation
   # which could translate some selection keys for ggplot 2
   if (isIncluded(aesthetic, AestheticProperties$shape)) {
-    return(asPlotShape(getSpecificAestheticValues(n, selectionKey)))
+    return(asPlotShape(getNextAestheticValues(n, position = position, map = selectionKey)))
   }
   if (isIncluded(aesthetic, c(AestheticProperties$size, AestheticProperties$alpha))) {
-    return(as.numeric(getSpecificAestheticValues(n, selectionKey)))
+    return(as.numeric(getNextAestheticValues(n, position = position, map = selectionKey)))
   }
-  return(getSpecificAestheticValues(n, selectionKey))
+  # If selection key is a specific value/set of values, it becomes the map
+  return(getNextAestheticValues(n, position = position, map = selectionKey))
 }
 
 #' @title getNextAestheticValues
@@ -156,15 +169,4 @@ getResetAestheticvalues <- function(n, map) {
 #' @return Vector of aesthetics
 getFirstAestheticValues <- function(n, map) {
   return(getSameAestheticValues(n, position = 0, map))
-}
-
-#' @title getSpecificAestheticValues
-#' @description Get specific aesthetic values (e.g color, shape, linetype)
-#' @param n integer defining size of returned aesthetic vector
-#' @param values values of the aesthetic to be returned
-#' @return Vector of aesthetics
-getSpecificAestheticValues <- function(n, values) {
-  # Ensure that enough aesthetics are defined in case values is a vector
-  aesValues <- rep(values, n)
-  return(aesValues[1:n])
 }

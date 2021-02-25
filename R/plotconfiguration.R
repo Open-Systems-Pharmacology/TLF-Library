@@ -131,6 +131,12 @@ PlotConfiguration <- R6::R6Class(
       private$.background$yGrid <- yGrid %||% private$.background$yGrid
       private$.background$watermark <- watermark %||% private$.background$watermark
 
+      # Define atom behaviour from theme
+      private$.lines <- tlfEnv$currentTheme$plotConfigurations$addLine
+      private$.ribbons <- tlfEnv$currentTheme$plotConfigurations$addRibbon
+      private$.points <- tlfEnv$currentTheme$plotConfigurations$addScatter
+      private$.errorbars <- tlfEnv$currentTheme$plotConfigurations$addErrorbar
+
       # Define export configuration, overwrite properties only if they are defined
       self$export <- export %||% ExportConfiguration$new()
       self$export$format <- format %||% self$export$format
@@ -184,6 +190,42 @@ PlotConfiguration <- R6::R6Class(
       validateIsOfType(value, "BackgroundConfiguration", nullAllowed = TRUE)
       private$.background <- value %||% private$.background
       return(invisible())
+    },
+    #' @field lines `ThemeAestheticSelections` defining properties of lines
+    lines = function(value) {
+      if (missing(value)) {
+        return(private$.lines)
+      }
+      validateIsOfType(value, "ThemeAestheticSelections", nullAllowed = TRUE)
+      private$.lines <- value %||% private$.lines
+      return(invisible())
+    },
+    #' @field ribbons `ThemeAestheticSelections` defining properties of ribbons
+    ribbons = function(value) {
+      if (missing(value)) {
+        return(private$.ribbons)
+      }
+      validateIsOfType(value, "ThemeAestheticSelections", nullAllowed = TRUE)
+      private$.ribbons <- value %||% private$.ribbons
+      return(invisible())
+    },
+    #' @field points `ThemeAestheticSelections` defining properties of points
+    points = function(value) {
+      if (missing(value)) {
+        return(private$.points)
+      }
+      validateIsOfType(value, "ThemeAestheticSelections", nullAllowed = TRUE)
+      private$.points <- value %||% private$.points
+      return(invisible())
+    },
+    #' @field errorbars `ThemeAestheticSelections` defining properties of error bars
+    errorbars = function(value) {
+      if (missing(value)) {
+        return(private$.errorbars)
+      }
+      validateIsOfType(value, "ThemeAestheticSelections", nullAllowed = TRUE)
+      private$.errorbars <- value %||% private$.errorbars
+      return(invisible())
     }
   ),
   private = list(
@@ -191,7 +233,11 @@ PlotConfiguration <- R6::R6Class(
     .legend = NULL,
     .xAxis = NULL,
     .yAxis = NULL,
-    .background = NULL
+    .background = NULL,
+    .lines = NULL,
+    .ribbons = NULL,
+    .points = NULL,
+    .errorbars = NULL
   )
 )
 

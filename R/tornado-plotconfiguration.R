@@ -5,8 +5,6 @@ TornadoPlotConfiguration <- R6::R6Class(
   "TornadoPlotConfiguration",
   inherit = PlotConfiguration,
   public = list(
-    #' @field tornadoCaption list of properties for tornado plot specific features
-    tornadoCaption = NULL,
     #' @field bar logical setting if tornado is uses a bar plot instead of regular points
     bar = NULL,
     #' @field colorPalette color palette property from `ggplot2`
@@ -16,29 +14,37 @@ TornadoPlotConfiguration <- R6::R6Class(
 
 
     #' @description Create a new \code{TornadoPlotConfiguration} object
-    #' @param tornadoCaption list of properties for tornado plot specific features
     #' @param bar logical setting if tornado is uses a bar plot instead of regular points
     #' @param colorPalette color palette property from `ggplot2`
     #' @param dodge space between the bars/points
+    #' @param lines `ThemeAestheticSelections` object defining properties for Tornado vertical lines
+    #' @param points `ThemeAestheticSelections` object defining properties for scatter points
+    #' @param ribbons `ThemeAestheticSelections` object defining properties for bars
     #' @param ... parameters inherited from \code{PlotConfiguration}
     #' @return A new \code{TornadoPlotConfiguration} object
-    initialize = function(tornadoCaption = getDefaultCaptionFor("tornado"),
-                              bar = TRUE,
+    initialize = function(bar = TRUE,
                               colorPalette = NULL,
                               dodge = 0.5,
+                              lines = NULL,
+                              points = NULL,
+                              ribbons = NULL,
                               ...) {
-      validateIsOfType(tornadoCaption, "data.frame")
-      #validateIsIncluded(names(tornadoCaption), CaptionProperties)
-      # Currently the properties from tornadoCaption are not defined in the theme snapshot
       validateIsLogical(bar)
       validateIsString(colorPalette, nullAllowed = TRUE)
       validateIsNumeric(dodge)
+      validateIsOfType(lines, "ThemeAestheticSelections", nullAllowed = TRUE)
+      validateIsOfType(points, "ThemeAestheticSelections", nullAllowed = TRUE)
+      validateIsOfType(ribbons, "ThemeAestheticSelections", nullAllowed = TRUE)
 
       super$initialize(...)
+
+      private$.lines <- lines %||% tlfEnv$currentTheme$plotConfigurations$plotTornado$lines
+      private$.points <- points %||% tlfEnv$currentTheme$plotConfigurations$plotTornado$points
+      private$.ribbons <- ribbons %||% tlfEnv$currentTheme$plotConfigurations$plotTornado$ribbons
+
       self$bar <- bar
       self$colorPalette <- colorPalette
       self$dodge <- dodge
-      self$tornadoCaption <- tornadoCaption
     }
   )
 )

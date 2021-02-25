@@ -343,9 +343,9 @@ setWatermark <- function(plotObject,
 
   # Using initializePlot, watermark will always be as first layer
   dummyPlot <- addWatermark(ggplot2::ggplot(),
-                            watermark = watermarkConfiguration,
-                            alpha = alpha
-                            )
+    watermark = watermarkConfiguration,
+    alpha = alpha
+  )
   newPlotObject$layers[[1]] <- dummyPlot$layer[[1]]
   return(newPlotObject)
 }

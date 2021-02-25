@@ -19,8 +19,8 @@ BoxWhiskerPlotConfiguration <- R6::R6Class(
 
       validateIsOfType(ribbons, "ThemeAestheticSelections", nullAllowed = TRUE)
       validateIsOfType(points, "ThemeAestheticSelections", nullAllowed = TRUE)
-      private$.ribbons <- ribbons %||% tlfEnv$currentTheme$plotConfigurations$plotBoxWhisker$ribbons
-      private$.points <- points %||% tlfEnv$currentTheme$plotConfigurations$plotBoxWhisker$points
+      private$.ribbons <- ribbons %||% asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations$plotBoxWhisker$ribbons)
+      private$.points <- points %||% asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations$plotBoxWhisker$points)
 
       validateIsLogical(outliers)
       private$.outliers <- outliers

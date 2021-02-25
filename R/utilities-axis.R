@@ -18,7 +18,7 @@ setXAxis <- function(plotObject,
   validateIsIncluded(scale, Scaling, nullAllowed = TRUE)
   validateIsNumeric(limits, nullAllowed = TRUE)
   validateIsOfType(font, "Font", nullAllowed = TRUE)
-  
+
   # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
   newPlotObject <- plotObject
