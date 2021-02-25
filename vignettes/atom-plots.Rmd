@@ -17,9 +17,13 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(tlf)
+require(tlf)
 ```
 
+```{r load theme, echo=FALSE}
+vignetteTheme <- loadThemeFromJson(system.file("extdata", "template-theme.json", package = "tlf"))
+useTheme(vignetteTheme)
+```
 This vignette tackles how to use atom plots to perform simple to more complex plots with the `tlf`-library.
 
 # Introduction to atom plots
@@ -35,27 +39,33 @@ In the sequel, the following atoms are detailed:
 
 # Initialize a plot object: *initializePlot*
 
-The `tlf` method *initializePlot* aims at creating an empty plot with properties defined by a  *PlotConfiguration* R6 class or subclass object.
-The output plot is a regular `ggplot` object to which a *plotConfiguration* field is implanted.
-Since this method is at the core of every atom and molecule plots, any plot generated using the `tlf`-library will include such a *plotConfiguration*.
+The `tlf` method *initializePlot* aims at creating an empty plot with properties defined by a *PlotConfiguration* R6 class or subclass object.
+More details on *PlotConfiguration* objects are available in a separate vignette.
+The default option for *initializePlot()* does not require a *plotConfiguration* object to be specifically input by the user; 
+in which case, *plotConfiguration* will be derived automatically from the current theme.
 
-If no *plotConfiguration* is provided to the method *initializePlot*, the default configuration from the current theme will be used.
+The output plot from *initializePlot()* is a regular `ggplot` object to which a *plotConfiguration* field is inclduded.
+Since this method is at the core of every atom and molecule plots of the `tlf`-library, any plot generated using this package will include a *plotConfiguration* field.
 
 Below are a few examples of use case of *initializePlot*:
-```{r}
-# No specific configuration
+```{r initializePlot}
+# Inintialize an empty plot without specific configuration, use the current theme
 emptyPlot <- initializePlot()
 
-# PlotConfiguration
+# Create a PlotConfiguration object with some specifications
 myConfiguration <- PlotConfiguration$new(title = "My empty plot",
                                          xlabel = "X",
                                          ylabel = "Y")
+# Use the specification to create the plot
 emptyPlotWithLabels <- initializePlot(myConfiguration)
 
-# Smart PlotConfiguration
+# PlotConfiguration class has a smart mapping feature,
+# directly deriving labels from data and its metaData and its dataMapping
 time <- seq(0,20, 0.1)
 myData <- data.frame(x = time,
                      y = 2*cos(time))
+# If metaData includes dimension and unit, 
+# they can be use by the smart configuration to generate labels as "dimension [unit]"
 myMetaData <- list(x = list(dimension = "Time",
                             unit = "min"),
                    y = list(dimension = "Amplitude",
@@ -63,46 +73,36 @@ myMetaData <- list(x = list(dimension = "Time",
 myMapping <- XYGDataMapping$new(x = "x",
                                 y = "y")
 
+# In this example, the configuration will use the x/y mapping from dataMapping
+# to fetch dimension and unit from metaData
 mySmartConfiguration <- PlotConfiguration$new(title = "My smart plot",
                                               data = myData,
                                               metaData = myMetaData,
                                               dataMapping = myMapping)
 
 smartEmptyPlot <- initializePlot(mySmartConfiguration)
-
-# Using another theme to change default
-useTheme(tlfTheme)
-myNewSmartConfiguration <- PlotConfiguration$new(title = "My smart plot",
-                                              data = myData,
-                                              metaData = myMetaData,
-                                              dataMapping = myMapping)
-smartEmptyPlotNewTheme <- initializePlot(myNewSmartConfiguration)
 ```
 
-```{r, echo=FALSE}
-useTheme(defaultTheme)
-```
-
-```{r, echo=FALSE, fig.cap="top left: emptyPlot; top right: emptyPlotWithLabels; bottom left: smartEmptyPlot; bottom right: ", fig.width=7.5}
-gridExtra::grid.arrange(emptyPlot, emptyPlotWithLabels, smartEmptyPlot, smartEmptyPlotNewTheme, ncol=2)
+```{r initializePlot output, echo=FALSE, fig.cap="Left: emptyPlot; Middle: emptyPlotWithLabels; Right: smartEmptyPlot", fig.width=7.5}
+gridExtra::grid.arrange(emptyPlot, emptyPlotWithLabels, smartEmptyPlot, ncol=3)
 ```
 
 # Add scatter or lines to a plot object: *addScatter*, *addLine*
 
-The functions *addScatter* and *addLines* can be used to add scatter and line layers.
-They can be used directly, in which case the function *initializePlot* will be called from within these functions. Or they can be added on top of a previous plot object using the parameter *plotObject*.
+The functions *addScatter* and *addLine* aims at providing an easy interface to add points or lines to a plot object.
+If a plot object is specified in *plotObject* input, then the layer will be added on top of the previous plot.
+In the case the input is `NULL` (default value), the function *initializePlot* is called internally.
 
 The following data will be used as an example in the next section:
-```{r}
-myCosData <- rbind.data.frame(data.frame(x = time,
-                                         y = 2*cos(time),
-                                         type = "cosinus"),
-                              data.frame(x = time,
-                                         y = 2*sin(time),
-                                         type = "sinus"),
-                              data.frame(x = time,
-                                         y = round(2*sin(time)),
-                                         type = "stairs"))
+```{r get ExampleData, echo=FALSE}
+myTestData <- read.csv(system.file("extdata", "test-data.csv", package = "tlf"), stringsAsFactors = FALSE)
+myTestData <- data.frame(x = myTestData$Obs, 
+                         y = myTestData$Pred,
+                         type = myTestData$Sex,
+                         country = myTestData$Country) 
+```
+```{r show ExampleData, results='asis'}
+knitr::kable(utils::head(myTestData)) 
 ```
 
 ## *addScatter*
@@ -110,7 +110,7 @@ myCosData <- rbind.data.frame(data.frame(x = time,
 The primary input parameter of function *addScatter* is *data* and can be used along with its *metaData* and *dataMapping*.
 However, it is also possible to directly use the input parameters *x* and *y* instead to plot directly *y* as a function of *x*.
 
-```{r}
+```{r scatter mapping}
 # Naive mapping on x and y
 myMapping <- XYGDataMapping$new(x = "x",
                                 y = "y")
@@ -120,40 +120,57 @@ myGroupMapping <- XYGDataMapping$new(x = "x",
                                      y = "y",
                                      color = "type")
 # Using the naive mapping
-pNaive <- addScatter(data = myCosData,
+pNaive <- addScatter(data = myTestData,
                      metaData = myMetaData,
                      dataMapping = myMapping)
 
 # Using tlf smart mapping (same as naive)
-pSmart <- addScatter(data = myCosData,
+pSmart <- addScatter(data = myTestData,
                      metaData = myMetaData)
 
 # Using group in mapping
-pGroup <- addScatter(data = myCosData,
+pGroup <- addScatter(data = myTestData,
                 metaData = myMetaData,
                 dataMapping = myGroupMapping)
 
 # Using x and y (same as naive but without metaData, no label)
-pXY <- addScatter(x = myCosData$x,
-                  y = myCosData$y)
+pXY <- addScatter(x = myTestData$x,
+                  y = myTestData$y)
 ```
 
-```{r, echo=FALSE, fig.cap="top left: pNaive; top right: pSmart; bottom left: pGroup; bottom right: pXY", fig.width=7.5}
+```{r show scatter mapping, echo=FALSE, fig.cap="top left: pNaive; top right: pSmart; bottom left: pGroup; bottom right: pXY", fig.width=7.5}
 gridExtra::grid.arrange(pNaive, pSmart, pGroup, pXY, ncol=2)
 ```
 
-In the other input parameters, *plotConfiguration* or a previous *plotObject* can be used to define the either which will be the plot configuration or on top of which previous plot the scatter layer should be added.
+Input parameters of *addScatter* also include *plotConfiguration* and *plotObject* as previously described.
+Input parameters *caption*, *color*, *size*, *shape* and *linetype* can overwrite the default aesthetic and legend values defined by *plotConfiguration*.
+These parameters are optional and will be `NULL` by default, which will lead to use aesthetic from the current theme.
+In particular, *dataMapping* also allows to create a legend caption, the input parameter *caption* can overwrtie such legend caption.
 
-```{r}
+```{r addScatter options}
+males <- myTestData$type %in% "Male"
+females <- myTestData$type %in% "Female"
 # Using x and y
-pScatter1 <- addScatter(x = myCosData$x[myCosData$type %in% "cosinus"],
-                  y = myCosData$y[myCosData$type %in% "cosinus"])
-
-
+pScatter1 <- addScatter(x = myTestData$x[males],
+                        y = myTestData$y[males],
+                        color = "blue",
+                        size = 3,
+                        caption = "Male")
+pScatter2 <- addScatter(x = myTestData$x[females],
+                        y = myTestData$y[females],
+                        color = "pink", 
+                        size = 3,
+                        caption = "Female")
+pScatter3 <- addScatter(x = myTestData$x[females],
+                        y = myTestData$y[females],
+                        color = "pink", 
+                        size = 3,
+                        caption = "Female",
+                        plotObject = pScatter1)
 ```
 
-```{r, echo=FALSE, fig.cap="top left: pNaive; top right: pSmart; bottom left: pGroup; bottom right: pXY", fig.width=7.5}
-gridExtra::grid.arrange(pScatter1, pScatter1, pScatter1, pScatter1, ncol=2)
+```{r, echo=FALSE, fig.cap="Left: pScatter1; Middle: pScatter2; Right: pScatter3", fig.width=7.5}
+gridExtra::grid.arrange(pScatter1, pScatter2, pScatter3, ncol=3)
 ```
 
 Finally, the last input parameters include *caption*, *color*, *size*, *shape* and *linetype*. 
@@ -164,40 +181,37 @@ In particular, *dataMapping* also allows to create a legend caption, the input p
 
 The function *addLine* is almost identical to *addScatter*.
 It differs regarding its default aesthetic properties: lines are replacing the points, even if points can be used.
-It also differs by the possibility of using only *y* input for y-intercepts.
+It also differs by the possibility of using *x* or *y* input for x/y-intercepts.
 
-Using the example with *myData*,
+Using a different example,
 
-```{r}
-
-line1 <- addLine(data = myCosData[myCosData$type %in% "cosinus",],
-                 metaData = myMetaData,
-                 dataMapping = myMapping,
-                 caption = "cosinus")
-# y intercepts
-line2 <- addLine(y = c(-2,0,2),
-                 caption = "y-intercepts",
-                 color = "darkblue",
-                 size = 2,
-                 linetype = "longdash",
-                 plotObject = line1)
-
-line3 <- addLine(data = myCosData,
-                 metaData = myMetaData,
-                 dataMapping = myGroupMapping)
-
-line4 <- addLine(x = seq(0, 5*pi, pi),
-                 y = rep(c(-1, 1), 3),
-                 caption = "frame",
-                 color = "brown4",
-                 linetype = "solid",
-                 plotObject = line3)
-
+```{r addLine options}
+# Using x and y
+pLine1 <- addLine(x = seq(1,5,0.1),
+                  y = cos(seq(1,5,0.1)),
+                  color = "blue",
+                  linetype = "solid",
+                  caption = "cosinus")
+pLine2 <- addLine(y = c(-1, 1),
+                  color = "pink",
+                  linetype = "longdash",
+                  caption = "extremes")
+pLine3 <- addLine(y = c(-1, 1),
+                  color = "pink",
+                  linetype = "longdash",
+                  caption = "extremes",
+                  plotObject = pLine1)
 ```
 
-```{r, echo=FALSE, fig.cap="top left: line1; top right: line2; bottom left: line3; bottom right: line4", fig.width=7.5}
-gridExtra::grid.arrange(line1, line2, line3, line4, ncol=2)
+```{r show addLine, echo=FALSE, fig.cap="Left: pLine1; Middle: pLine2; Right: pLine3", fig.width=7.5}
+gridExtra::grid.arrange(pLine1, pLine2, pLine3, ncol=3)
 ```
 
-# Add ribbon or errorbarsa plot object: *addRibbon*, *addErrorbar*
+# Add ribbon or errorbars to a plot object: *addRibbon*, *addErrorbar*
+
+These 2 atoms work in a similar fashion to *addScatter* and *addLine* but they use a different mapping that require *ymin* and *ymax* insteada of *y*.
+
+## *addRibbon*
+
+## *addErrorbar*
 
