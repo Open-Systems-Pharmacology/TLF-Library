@@ -21,7 +21,7 @@ BackgroundConfiguration <- R6::R6Class(
                               xGrid = NULL,
                               yGrid = NULL) {
       validateIsOfType(watermark, c("character", "Label"), nullAllowed = TRUE)
-      watermark <- watermark %||% as.character(tlfEnv$currentTheme$background$watermark)
+      watermark <- watermark %||% tlfEnv$currentTheme$background$watermark#as.character(tlfEnv$currentTheme$background$watermark)
       # Enforce watermark as Label with value
       if (isOfType(watermark, "character")) {
         watermark <- asLabel(text = watermark, font = tlfEnv$currentTheme$fonts$watermark)
