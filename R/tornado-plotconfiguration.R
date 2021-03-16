@@ -38,9 +38,10 @@ TornadoPlotConfiguration <- R6::R6Class(
 
       super$initialize(...)
 
-      private$.lines <- lines %||% tlfEnv$currentTheme$plotConfigurations$plotTornado$lines
-      private$.points <- points %||% tlfEnv$currentTheme$plotConfigurations$plotTornado$points
-      private$.ribbons <- ribbons %||% tlfEnv$currentTheme$plotConfigurations$plotTornado$ribbons
+      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
+      private$.lines <- lines %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotTornado$lines)
+      private$.points <- points %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotTornado$points)
+      private$.ribbons <- ribbons %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotTornado$ribbons)
 
       self$bar <- bar
       self$colorPalette <- colorPalette

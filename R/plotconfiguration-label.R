@@ -18,9 +18,10 @@ LabelConfiguration <- R6::R6Class(
       validateExpressions <- parse(text = paste0("validateIsOfType(", inputs, ', c("Label", "character"), nullAllowed =TRUE)'))
       eval(validateExpressions)
 
+      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
       enforceLabelExpressions <- parse(text = paste0(
         "if(!isOfType(", inputs, ',"Label")){',
-        inputs, "<- asLabel(text = ", inputs, ", font = tlfEnv$currentTheme$fonts$", inputs, ")}"
+        inputs, "<- asLabel(text = ", inputs, ", font = currentTheme$fonts$", inputs, ")}"
       ))
       eval(enforceLabelExpressions)
 

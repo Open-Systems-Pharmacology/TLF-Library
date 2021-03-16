@@ -132,10 +132,11 @@ PlotConfiguration <- R6::R6Class(
       private$.background$watermark <- watermark %||% private$.background$watermark
 
       # Define atom behaviour from theme
-      private$.lines <- tlfEnv$currentTheme$plotConfigurations$addLine
-      private$.ribbons <- tlfEnv$currentTheme$plotConfigurations$addRibbon
-      private$.points <- tlfEnv$currentTheme$plotConfigurations$addScatter
-      private$.errorbars <- tlfEnv$currentTheme$plotConfigurations$addErrorbar
+      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
+      private$.lines <- asThemeAestheticSelections(currentTheme$plotConfigurations$addLine)
+      private$.ribbons <- asThemeAestheticSelections(currentTheme$plotConfigurations$addRibbon)
+      private$.points <- asThemeAestheticSelections(currentTheme$plotConfigurations$addScatter)
+      private$.errorbars <- asThemeAestheticSelections(currentTheme$plotConfigurations$addErrorbar)
 
       # Define export configuration, overwrite properties only if they are defined
       self$export <- export %||% ExportConfiguration$new()

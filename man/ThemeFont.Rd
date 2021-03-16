@@ -34,6 +34,7 @@ R6 class defining theme font properties
 \itemize{
 \item \href{#method-new}{\code{ThemeFont$new()}}
 \item \href{#method-toJson}{\code{ThemeFont$toJson()}}
+\item \href{#method-clone}{\code{ThemeFont$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -108,6 +109,23 @@ Translate object into a json list
 
 \subsection{Returns}{
 A list that can be saved into a json file
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ThemeFont$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
 }
 }
 }

@@ -21,9 +21,10 @@ PKRatioPlotConfiguration <- R6::R6Class(
       validateIsOfType(lines, "ThemeAestheticSelections", nullAllowed = TRUE)
       validateIsOfType(points, "ThemeAestheticSelections", nullAllowed = TRUE)
       validateIsOfType(errorbars, "ThemeAestheticSelections", nullAllowed = TRUE)
-      private$.lines <- lines %||% asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations$plotPKRatio$lines)
-      private$.points <- points %||% asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations$plotPKRatio$points)
-      private$.errorbars <- errorbars %||% asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations$plotPKRatio$errorbars)
+      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
+      private$.lines <- lines %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotPKRatio$lines)
+      private$.points <- points %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotPKRatio$points)
+      private$.errorbars <- errorbars %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotPKRatio$errorbars)
     }
   )
 )

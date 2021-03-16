@@ -77,11 +77,12 @@ AxisConfiguration <- R6::R6Class(
 
       # Default axis font will use theme
       defaultFont <- Font$new()
+      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
       if (isOfType(self, "XAxisConfiguration")) {
-        defaultFont <- tlfEnv$currentTheme$fonts$xAxis
+        defaultFont <- currentTheme$fonts$xAxis
       }
       if (isOfType(self, "YAxisConfiguration")) {
-        defaultFont <- tlfEnv$currentTheme$fonts$yAxis
+        defaultFont <- currentTheme$fonts$yAxis
       }
       private$.font <- font %||% defaultFont
     }
@@ -136,11 +137,12 @@ AxisConfiguration <- R6::R6Class(
       validateIsOfType(value, "Font", nullAllowed = TRUE)
       # Default axis font will use theme
       defaultFont <- Font$new()
+      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
       if (isOfType(self, "XAxisConfiguration")) {
-        defaultFont <- tlfEnv$currentTheme$fonts$xAxis
+        defaultFont <- currentTheme$fonts$xAxis
       }
       if (isOfType(self, "YAxisConfiguration")) {
-        defaultFont <- tlfEnv$currentTheme$fonts$yAxis
+        defaultFont <- currentTheme$fonts$yAxis
       }
       private$.font <- value %||% defaultFont
       return(invisible())

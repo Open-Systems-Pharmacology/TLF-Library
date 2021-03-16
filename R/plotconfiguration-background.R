@@ -21,10 +21,11 @@ BackgroundConfiguration <- R6::R6Class(
                               xGrid = NULL,
                               yGrid = NULL) {
       validateIsOfType(watermark, c("character", "Label"), nullAllowed = TRUE)
-      watermark <- watermark %||% tlfEnv$currentTheme$background$watermark#as.character(tlfEnv$currentTheme$background$watermark)
+      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
+      watermark <- watermark %||% currentTheme$background$watermark
       # Enforce watermark as Label with value
       if (isOfType(watermark, "character")) {
-        watermark <- asLabel(text = watermark, font = tlfEnv$currentTheme$fonts$watermark)
+        watermark <- asLabel(text = watermark, font = currentTheme$fonts$watermark)
       }
       private$.watermark <- watermark
 
@@ -36,8 +37,8 @@ BackgroundConfiguration <- R6::R6Class(
       eval(validateAreaExpression)
       eval(validateLineExpression)
 
-      setAreaExpression <- parse(text = paste0("private$.", areaFieldNames, " <- ", areaFieldNames, " %||% tlfEnv$currentTheme$background$", areaFieldNames))
-      setLineExpression <- parse(text = paste0("private$.", lineFieldNames, " <- ", lineFieldNames, " %||% tlfEnv$currentTheme$background$", lineFieldNames))
+      setAreaExpression <- parse(text = paste0("private$.", areaFieldNames, " <- ", areaFieldNames, " %||% currentTheme$background$", areaFieldNames))
+      setLineExpression <- parse(text = paste0("private$.", lineFieldNames, " <- ", lineFieldNames, " %||% currentTheme$background$", lineFieldNames))
       eval(setAreaExpression)
       eval(setLineExpression)
     },

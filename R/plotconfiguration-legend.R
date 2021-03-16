@@ -12,22 +12,23 @@ LegendConfiguration <- R6::R6Class(
     #' @param font \code{Font} object defining the font of the legend caption
     #' @param background \code{BackgroundElement} object defining the background of the legend
     #' @return A new \code{LegendConfiguration} object
-    initialize = function(position = tlfEnv$currentTheme$background$legendPosition,
+    initialize = function(position = NULL,
                               caption = NULL,
                               title = NULL,
                               titleFont = NULL,
                               font = NULL,
                               background = NULL) {
-      validateIsIncluded(position, LegendPositions)
+      validateIsIncluded(position, LegendPositions, nullAllowed = TRUE)
       validateIsString(title, nullAllowed = TRUE)
       validateIsOfType(titleFont, "Font", nullAllowed = TRUE)
       validateIsOfType(font, "Font", nullAllowed = TRUE)
       validateIsOfType(background, "BackgroundElement", nullAllowed = TRUE)
 
-      private$.position <- position
-      private$.font <- font %||% tlfEnv$currentTheme$fonts$legend
-      private$.titleFont <- titleFont %||% tlfEnv$currentTheme$fonts$legendTitle
-      private$.background <- background %||% tlfEnv$currentTheme$background$legend
+      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
+      private$.position <- position %||% currentTheme$background$legendPosition
+      private$.font <- font %||% currentTheme$fonts$legend
+      private$.titleFont <- titleFont %||% currentTheme$fonts$legendTitle
+      private$.background <- background %||% currentTheme$background$legend
 
       private$.title <- title
       private$.caption <- caption %||% data.frame()
@@ -86,7 +87,8 @@ LegendConfiguration <- R6::R6Class(
         return(private$.font)
       }
       validateIsOfType(value, "Font", nullAllowed = TRUE)
-      private$.font <- value %||% tlfEnv$currentTheme$fonts$legend
+      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
+      private$.font <- value %||% currentTheme$fonts$legend
       return(invisible())
     },
     #' @field titleFont \code{Font} object defining the font of the legend title
@@ -95,7 +97,8 @@ LegendConfiguration <- R6::R6Class(
         return(private$.titleFont)
       }
       validateIsOfType(value, "Font", nullAllowed = TRUE)
-      private$.titleFont <- value %||% tlfEnv$currentTheme$fonts$legendTitle
+      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
+      private$.titleFont <- value %||% currentTheme$fonts$legendTitle
       return(invisible())
     },
     #' @field background \code{Background} object defining the background of the legend
@@ -104,7 +107,8 @@ LegendConfiguration <- R6::R6Class(
         return(private$.background)
       }
       validateIsOfType(value, "BackgroundElement", nullAllowed = TRUE)
-      private$.background <- value %||% tlfEnv$currentTheme$background$legend
+      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
+      private$.background <- value %||% currentTheme$background$legend
       return(invisible())
     },
     #' @field title character defining title of the legend

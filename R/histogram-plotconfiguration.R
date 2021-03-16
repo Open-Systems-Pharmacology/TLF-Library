@@ -21,8 +21,9 @@ HistogramPlotConfiguration <- R6::R6Class(
 
       validateIsOfType(lines, "ThemeAestheticSelections", nullAllowed = TRUE)
       validateIsOfType(ribbons, "ThemeAestheticSelections", nullAllowed = TRUE)
-      private$.lines <- lines %||% asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations$plotHistogram$lines)
-      private$.ribbons <- ribbons %||% asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations$plotHistogram$ribbons)
+      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
+      private$.lines <- lines %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotHistogram$lines)
+      private$.ribbons <- ribbons %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotHistogram$ribbons)
     },
 
     #' @description Add statistics as line layer to a \code{ggplot} object

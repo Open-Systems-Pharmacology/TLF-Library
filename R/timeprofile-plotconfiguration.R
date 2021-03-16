@@ -23,11 +23,11 @@ TimeProfilePlotConfiguration <- R6::R6Class(
       validateIsOfType(ribbons, "ThemeAestheticSelections", nullAllowed = TRUE)
       validateIsOfType(points, "ThemeAestheticSelections", nullAllowed = TRUE)
       validateIsOfType(errorbars, "ThemeAestheticSelections", nullAllowed = TRUE)
-
-      private$.lines <- lines %||% asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations$plotTimeProfile$lines)
-      private$.ribbons <- ribbons %||% asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations$plotTimeProfile$ribbons)
-      private$.points <- points %||% asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations$plotTimeProfile$points)
-      private$.errorbars <- errorbars %||% asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations$plotTimeProfile$errorbars)
+      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
+      private$.lines <- lines %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotTimeProfile$lines)
+      private$.ribbons <- ribbons %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotTimeProfile$ribbons)
+      private$.points <- points %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotTimeProfile$points)
+      private$.errorbars <- errorbars %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotTimeProfile$errorbars)
     }
   )
 )
