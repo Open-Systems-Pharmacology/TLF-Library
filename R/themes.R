@@ -513,6 +513,7 @@ Theme <- R6::R6Class(
 #' @param jsonFile path of json file
 #' @return A \code{Theme} object
 #' @export
+#' @import jsonlite
 loadThemeFromJson <- function(jsonFile) {
   # Get the content of json file and define lists of its properties
   themeContent <- jsonlite::fromJSON(jsonFile)
