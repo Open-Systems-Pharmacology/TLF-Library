@@ -4,68 +4,69 @@
 Label <- R6::R6Class(
   "Label",
   public = list(
-    #' @field text character text of label
-    text = NULL,
-    #' @field font R6 class \code{Font} object
-    font = NULL,
-
     #' @description Create a new \code{Label} object.
-    #' @param text character text of label
-    #' @param font R6 class \code{Font} object
-    #' @param size numeric size of font
-    #' @param color character color of font
-    #' @param fontFamily character family of font
-    #' @param fontFace character face of font
+    #' @param text character text of the \code{Label} object
+    #' @param font \code{Font} object defining the font of the `Label` object
+    #' @param size numeric defining the size of the `Label` object
+    #' @param color character defining the color of the `Label` object
+    #' @param fontFamily character defining the font family of the `Label` object
+    #' @param fontFace character defining the font face of the `Label` object
+    #' @param angle numeric defining the angle of the `Label` object
     #' @return A new \code{Label} object
     initialize = function(text = "",
                               font = NULL,
                               color = NULL,
                               size = NULL,
                               fontFace = NULL,
-                              fontFamily = NULL) {
+                              fontFamily = NULL,
+                              angle = NULL) {
+      validateIsNumeric(c(as.numeric(angle), as.numeric(size)), nullAllowed = TRUE)
+      validateIsString(c(color, fontFace, fontFamily), nullAllowed = TRUE)
+      validateIsOfType(font, "Font", nullAllowed = TRUE)
+
       self$text <- text
-      validateEitherOrNullInput(
-        list("font" = font),
-        list(
-          "color" = color,
-          "size" = size,
-          "fontFace" = fontFace,
-          "fontFamily" = fontFamily
-        )
-      )
+      self$font <- font %||% Font$new()
 
-      self$font <- font %||% Font$new(
-        color = color,
-        size = size,
-        fontFace = fontFace,
-        fontFamily = fontFamily
-      )
-      validateIsOfType(self$font, Font)
+      # If font properties are explicitely written, they will overwrite the properties of input Font
+      fieldNames <- c("size", "color", "fontFace", "fontFamily", "angle")
+      setFontExpression <- parse(text = paste0("self$font$", fieldNames, " <- ", fieldNames, " %||% self$font$", fieldNames))
+      eval(setFontExpression)
     },
 
-    #' @description Print \code{Label} properties.
-    print = function() {
-      cat("text:", self$text, "\n", sep = " ")
-      cat("font color:", self$font$color, "\n", sep = " ")
-      cat("font size:", self$font$size, "\n", sep = " ")
-      cat("font family:", self$font$fontFamily, "\n", sep = " ")
-      cat("font face:", self$font$fontFace, "\n", sep = " ")
-      invisible(self)
-    },
-
-    #' @description Set font properties of Label
-    #' @param size numeric size of font
-    #' @param color character color of font
-    #' @param fontFamily character family of font
-    #' @param fontFace character face of font
-    setFontProperties = function(color = self$font$color,
-                                     size = self$font$size,
-                                     fontFamily = self$font$fontFamily,
-                                     fontFace = self$font$fontFace) {
-      self$font$color <- color
-      self$font$size <- size
-      self$font$fontFamily <- fontFamily
-      self$font$fontFace <- fontFace
+    #' @description Create a `ggplot2::element_text` directly convertible by `ggplot2::theme`.
+    #' @return An `element_text` or `element_blank`object.
+    createPlotFont = function() {
+      if (isOfLength(self$text, 0)) {
+        return(ggplot2::element_blank())
+      }
+      return(self$font$createPlotFont())
     }
+  ),
+  active = list(
+    #' @field text character text of the label
+    text = function(value) {
+      if (missing(value)) {
+        return(private$.text)
+      }
+      validateIsString(value, nullAllowed = TRUE)
+      private$.text <- value
+      return(invisible())
+    },
+    #' @field font \code{Font} object
+    font = function(value) {
+      if (missing(value)) {
+        return(private$.font)
+      }
+      validateIsOfType(value, "Font", nullAllowed = TRUE)
+      private$.font <- value %||% Font$new()
+      # Ensures that size and angle are numeric
+      private$.font$size <- as.numeric(private$.font$size)
+      private$.font$angle <- as.numeric(private$.font$angle)
+      return(invisible())
+    }
+  ),
+  private = list(
+    .text = NULL,
+    .font = NULL
   )
 )

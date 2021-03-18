@@ -4,16 +4,29 @@
 \alias{setLegendTitle}
 \title{setLegendTitle}
 \usage{
-setLegendTitle(plotObject, title)
+setLegendTitle(
+  plotObject,
+  title = NULL,
+  color = NULL,
+  size = NULL,
+  fontFace = NULL,
+  angle = NULL
+)
 }
 \arguments{
-\item{plotObject}{\code{ggplot} graphical object}
+\item{plotObject}{ggplot object}
 
-\item{title}{title of legend}
+\item{title}{character or \code{Label} object}
+
+\item{color}{color of legend font}
+
+\item{size}{size of legend font}
+
+\item{fontFace}{color of legend font}
 }
 \value{
-A \code{ggplot} graphical object
+A ggplot object
 }
 \description{
-Set the legend title
+Set legend title
 }

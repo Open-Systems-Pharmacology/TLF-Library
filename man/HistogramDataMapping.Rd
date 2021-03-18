@@ -13,13 +13,15 @@ R6 class for mapping \code{x}, \code{verticalLineGroupings},
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{verticalLineGroupings}}{R6 class \code{Grouping} variable}
+\item{\code{stack}}{logical defining if histogram bars should be stacked}
 
-\item{\code{verticalLineFunctionNames}}{Vector of function name
-to be indicated in captions of the histogram}
+\item{\code{bins}}{number of bins or binning values/methods passed on \code{ggplot2::geom_histogram}}
 
-\item{\code{verticalLineFunctions}}{List of functions calculated on \code{data}
-to obtain vertical lines on the histogram}
+\item{\code{lines}}{values or functions to define vertical lines}
+
+\item{\code{fitNormalDist}}{logical defining if a normal distribution should be fitted}
+
+\item{\code{fitDensity}}{logical defining if a density distribution function should be fitted}
 }
 \if{html}{\out{</div>}}
 }
@@ -44,9 +46,11 @@ to obtain vertical lines on the histogram}
 Create a new \code{HistogramDataMapping} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{HistogramDataMapping$new(
-  verticalLineGroupings = NULL,
-  verticalLineFunctionNames = c("mean", "median"),
-  verticalLineFunctions = c(mean, median),
+  stack = FALSE,
+  bins = NULL,
+  lines = DefaultDataMappingValues$histogram,
+  fitNormalDist = FALSE,
+  fitDensity = FALSE,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -54,13 +58,15 @@ Create a new \code{HistogramDataMapping} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{verticalLineGroupings}}{R6 class \code{Grouping} variable}
+\item{\code{stack}}{logical defining if histogram bars should be stacked}
 
-\item{\code{verticalLineFunctionNames}}{Vector of function name to be indicated in captions of the histogram
-Default value uses \code{mean} and \code{median}.}
+\item{\code{bins}}{argument passed on \code{ggplot2::geom_histogram}}
 
-\item{\code{verticalLineFunctions}}{List of functions calculated on \code{data}
-Default value uses \code{mean} and \code{median}.}
+\item{\code{lines}}{values or functions to define vertical lines}
+
+\item{\code{fitNormalDist}}{logical defining if a normal distribution should be fitted}
+
+\item{\code{fitDensity}}{logical defining if a density distribution should be fitted}
 
 \item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
 }

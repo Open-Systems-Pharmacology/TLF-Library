@@ -12,7 +12,7 @@ R6 class for mapping \code{values}, \code{labels} to \code{data}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{tornadoValues}}{numeric vector of limits to plot}
+\item{\code{lines}}{numeric vector of limits to plot}
 
 \item{\code{sorted}}{logical indicating if values should be sorted}
 }
@@ -39,7 +39,7 @@ R6 class for mapping \code{values}, \code{labels} to \code{data}
 Create a new \code{TornadoDataMapping} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TornadoDataMapping$new(
-  tornadoValues = DefaultDataMappingValues$tornado,
+  lines = DefaultDataMappingValues$tornado,
   sorted = NULL,
   x = NULL,
   y = NULL,
@@ -50,7 +50,7 @@ Create a new \code{TornadoDataMapping} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{tornadoValues}}{numeric vector of ratio limits to plot}
+\item{\code{lines}}{numeric vector of limits to plot}
 
 \item{\code{sorted}}{logical indicating if values should be sorted}
 

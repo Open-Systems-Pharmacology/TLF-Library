@@ -2,7 +2,7 @@
 
 #' @title initializePlot
 #' @param plotConfiguration
-#' \code{PlotConfiguration} class or subclass defining labels, grid, background and watermark
+#' \code{PlotConfiguration} objecct defining labels, grid, background and watermark
 #' This parameter is optional: the \code{tlf} library provides a default configuration according to the current theme
 #' @description
 #' Initialize a \code{ggplot} object and set the labels, grid, background and watermark
@@ -10,10 +10,6 @@
 #' @export
 #' @examples
 #' # Initialize an empty plot
-#' p <- initializePlot()
-#'
-#' # Use a predifined theme
-#' useTheme(tlfTheme)
 #' p <- initializePlot()
 #'
 #' # Implement a customized configuration using PlotConfiguration
@@ -27,8 +23,10 @@ initializePlot <- function(plotConfiguration = NULL) {
   plotObject$plotConfiguration <- plotConfiguration
 
   plotObject <- setWatermark(plotObject)
-  plotObject <- setBackground(plotObject)
-  plotObject <- setGrid(plotObject)
+  plotObject <- setBackgroundPlotArea(plotObject)
+  plotObject <- setBackgroundPanelArea(plotObject)
+  plotObject <- setXGrid(plotObject)
+  plotObject <- setYGrid(plotObject)
   plotObject <- setPlotLabels(plotObject)
 
   return(plotObject)
@@ -102,9 +100,8 @@ addScatter <- function(data = NULL,
   validateIsOfType(dataMapping, XYGDataMapping, nullAllowed = TRUE)
   validateIsOfType(plotConfiguration, PlotConfiguration, nullAllowed = TRUE)
 
-  # If data is not input
-  # Create new data and its mapping from x and y input
-  if (is.null(data)) {
+  # If data is not input, creates data from x and y inputs
+  if (isOfLength(data, 0)) {
     validateIsSameLength(x, y)
     data <- as.data.frame(cbind(x = x, y = y))
     dataMapping <- dataMapping %||% XYGDataMapping$new(x = ifnotnull(x, "x"), y = ifnotnull(y, "y"), data = data)
@@ -115,15 +112,21 @@ addScatter <- function(data = NULL,
   }
 
   dataMapping <- dataMapping %||% XYGDataMapping$new(x = x, y = y, data = data)
-
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
+  # Update plotConfiguration if user defined aesthetics
+  aestheticInputs <- c("color", "shape", "linetype", "size")
+  aestheticInputsExpression <- parse(text = paste0(
+    "plotConfiguration$points$", aestheticInputs,
+    " <- ", aestheticInputs, " %||% plotConfiguration$points$", aestheticInputs
+  ))
+  eval(aestheticInputsExpression)
 
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
   # If no mapping, nor x or y, return plotObject
-  if (is.null(dataMapping$x) || is.null(dataMapping$y)) {
-    warning("No mapping found for x or y, scatter layer was not added")
+  if (any(isOfLength(dataMapping$x, 0), isOfLength(dataMapping$y, 0))) {
+    warning("No mapping found for x nor y, scatter layer was not added")
     return(plotObject)
   }
 
@@ -143,7 +146,7 @@ addScatter <- function(data = NULL,
       mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, shape = "legendLabels", color = "legendLabels", size = "legendLabels"),
       show.legend = TRUE
     ) +
-    ggplot2::geom_line(
+    ggplot2::geom_path(
       data = mapData,
       mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
       show.legend = TRUE
@@ -151,26 +154,21 @@ addScatter <- function(data = NULL,
     ggplot2::geom_ribbon(
       data = mapData,
       mapping = ggplot2::aes_string(x = mapLabels$x, ymin = mapLabels$y, ymax = mapLabels$y, fill = "legendLabels"),
+      # alpha is 0 so that line can be seen in legend
+      alpha = 0,
       show.legend = TRUE
     )
 
   # Prepare data for merging previous and current legend
-  # TO DO: base modulo of newLegendProperty on theme aesProperties lengths
   newLabels <- levels(factor(mapData$legendLabels))
-  legendLength <- nrow(plotObject$plotConfiguration$legend$caption) %||% 0
-  newLegendProperty <- seq(legendLength + 1, legendLength + length(newLabels)) - 1 %% 6 + 1
-
-  # Sample LegendType properties based tlfTheme if not input
-  plotObject <- mergeLegend(plotObject,
+  # Sample LegendType properties based Theme if not input
+  try(plotObject <- mergeLegend(plotObject,
     newLabels = newLabels,
-    color = color %||% tlfEnv$currentTheme$aesProperties$color[newLegendProperty],
-    shape = shape %||% tlfEnv$currentTheme$aesProperties$shape[newLegendProperty],
-    size = size %||% rep(1, length(newLabels)),
-    linetype = linetype %||% rep("blank", length(newLabels)),
-    fill = rep(NA, length(newLabels))
-  )
-  try(suppressMessages(plotObject <- plotObject$plotConfiguration$xAxis$setPlotAxis(plotObject)))
-  try(suppressMessages(plotObject <- plotObject$plotConfiguration$yAxis$setPlotAxis(plotObject)))
+    aestheticSelections = plotConfiguration$points
+  ))
+  # Try is used to prevent crashes in the final plot due to ggplot2 peculiarities regarding scale functions
+  try(suppressMessages(plotObject <- setXAxis(plotObject)))
+  try(suppressMessages(plotObject <- setYAxis(plotObject)))
   return(plotObject)
 }
 
@@ -249,9 +247,8 @@ addLine <- function(data = NULL,
   validateIsOfType(dataMapping, XYGDataMapping, nullAllowed = TRUE)
   validateIsOfType(plotConfiguration, PlotConfiguration, nullAllowed = TRUE)
 
-  # If data is not input
-  # Create new data and its mapping from x and y input
-  if (is.null(data)) {
+  # If data is not input,  creates new data and its mapping from x and y input
+  if (isOfLength(data, 0)) {
     data <- as.data.frame(cbind(x = x, y = y))
 
     dataMapping <- dataMapping %||% XYGDataMapping$new(x = ifnotnull(x, "x"), y = ifnotnull(y, "y"), data = data)
@@ -263,15 +260,22 @@ addLine <- function(data = NULL,
   }
 
   dataMapping <- dataMapping %||% XYGDataMapping$new(x = x, y = y, data = data)
-
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
+  # Update plotConfiguration if user defined aesthetics
+  aestheticInputs <- c("color", "shape", "linetype", "size")
+  aestheticInputsExpression <- parse(text = paste0(
+    "plotConfiguration$lines$", aestheticInputs,
+    " <- ", aestheticInputs, " %||% plotConfiguration$lines$", aestheticInputs
+  ))
+  eval(aestheticInputsExpression)
+
 
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
   # If no mapping, return plot
-  if (is.null(dataMapping$x) && is.null(dataMapping$y)) {
-    warning("No mapping found, line layer was not added")
+  if (all(isOfLength(dataMapping$x, 0), isOfLength(dataMapping$y, 0))) {
+    warning("No mapping found for both x and y, line layer was not added")
     return(plotObject)
   }
 
@@ -288,67 +292,74 @@ addLine <- function(data = NULL,
   # y-intercept
   # geom_blank is used to fill the missing aes properties
   # This prevents messing up the legend
-  if (is.null(dataMapping$x) && !is.null(dataMapping$y)) {
+  if (isOfLength(dataMapping$x, 0) && !isOfLength(dataMapping$y, 0)) {
     plotObject <- plotObject +
       ggplot2::geom_hline(
         data = mapData,
-        mapping = aes_string(yintercept = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
+        mapping = ggplot2::aes_string(yintercept = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
         show.legend = TRUE
       ) +
       ggplot2::geom_blank(
         data = mapData,
-        mapping = aes_string(shape = "legendLabels", fill = "legendLabels")
+        mapping = ggplot2::aes_string(
+          shape = "legendLabels",
+          fill = "legendLabels"
+        ),
+        show.legend = TRUE
       )
   }
 
   # x-intercept
-  if (is.null(dataMapping$y) && !is.null(dataMapping$x)) {
+  if (isOfLength(dataMapping$y, 0) && !isOfLength(dataMapping$x, 0)) {
     plotObject <- plotObject +
       ggplot2::geom_vline(
         data = mapData,
-        mapping = aes_string(xintercept = mapLabels$x, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
+        mapping = ggplot2::aes_string(xintercept = mapLabels$x, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
         show.legend = TRUE
       ) +
       ggplot2::geom_blank(
         data = mapData,
-        mapping = aes_string(shape = "legendLabels", fill = "legendLabels")
+        mapping = ggplot2::aes_string(
+          shape = "legendLabels",
+          fill = "legendLabels"
+        ),
+        show.legend = TRUE
       )
   }
 
-  if (!is.null(dataMapping$x) && !is.null(dataMapping$y)) {
+  # Case of a line defined by x and y
+  # geom_path is used instead of geom_line,
+  # consequently values are connected by their order of appearance and not according to x values
+  if (all(!isOfLength(dataMapping$x, 0), !isOfLength(dataMapping$y, 0))) {
     plotObject <- plotObject +
       ggplot2::geom_point(
         data = mapData,
-        mapping = aes_string(x = mapLabels$x, y = mapLabels$y, shape = "legendLabels", color = "legendLabels", size = "legendLabels"),
+        mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, shape = "legendLabels", color = "legendLabels", size = "legendLabels"),
         show.legend = TRUE
       ) +
-      ggplot2::geom_line(
+      ggplot2::geom_path(
         data = mapData,
-        mapping = aes_string(x = mapLabels$x, y = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
+        mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
         show.legend = TRUE
       ) +
       ggplot2::geom_ribbon(
         data = mapData,
-        mapping = aes_string(x = mapLabels$x, ymin = mapLabels$y, ymax = mapLabels$y, fill = "legendLabels"),
+        mapping = ggplot2::aes_string(x = mapLabels$x, ymin = mapLabels$y, ymax = mapLabels$y, fill = "legendLabels"),
+        # alpha is 0 so that line can be seen in legend
+        alpha = 0,
         show.legend = TRUE
       )
   }
 
+  # Prepare data for merging previous and current legend
   newLabels <- levels(factor(mapData$legendLabels))
-  legendLength <- nrow(plotObject$plotConfiguration$legend$caption) %||% 0
-  newLegendProperty <- seq(legendLength + 1, legendLength + length(newLabels)) - 1 %% 6 + 1
-
-  # Sample LegendType properties based tlfTheme if not input
-  plotObject <- mergeLegend(plotObject,
+  # Sample LegendType properties based Theme if not input
+  try(plotObject <- mergeLegend(plotObject,
     newLabels = newLabels,
-    color = color %||% tlfEnv$currentTheme$aesProperties$color[newLegendProperty],
-    shape = shape %||% rep(-2, length(newLabels)),
-    size = size %||% rep(1, length(newLabels)),
-    linetype = linetype %||% tlfEnv$currentTheme$aesProperties$linetype[newLegendProperty],
-    fill = rep(NA, length(newLabels))
-  )
-  try(suppressMessages(plotObject <- plotObject$plotConfiguration$xAxis$setPlotAxis(plotObject)))
-  try(suppressMessages(plotObject <- plotObject$plotConfiguration$yAxis$setPlotAxis(plotObject)))
+    aestheticSelections = plotConfiguration$lines
+  ))
+  try(suppressMessages(plotObject <- setXAxis(plotObject)))
+  try(suppressMessages(plotObject <- setYAxis(plotObject)))
   return(plotObject)
 }
 
@@ -438,13 +449,12 @@ addRibbon <- function(data = NULL,
   validateIsOfType(dataMapping, RangeDataMapping, nullAllowed = TRUE)
   validateIsOfType(plotConfiguration, PlotConfiguration, nullAllowed = TRUE)
 
-  # If data is not input
-  # Create new data and its mapping from x, ymin and ymax input
-  if (is.null(data)) {
+  # If data is not input, creates data and its mapping from x, ymin and ymax input
+  if (isOfLength(data, 0)) {
     data <- as.data.frame(cbind(x = x, ymin = ymin %||% 0, ymax = ymax %||% 0))
 
     # y-intercept ribbon
-    if (is.null(x)) {
+    if (isOfLength(x, 0)) {
       # Redefine data.frame for y-intercept ribbon
       data <- rbind.data.frame(cbind.data.frame(x = -Inf, data), cbind.data.frame(x = Inf, data))
     }
@@ -456,15 +466,22 @@ addRibbon <- function(data = NULL,
   }
 
   dataMapping <- dataMapping %||% RangeDataMapping$new(x = x, ymin = ymin, ymax = ymax, data = data)
-
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
+
+  # Update plotConfiguration if user defined aesthetics
+  aestheticInputs <- c("color", "fill", "linetype", "size", "alpha")
+  aestheticInputsExpression <- parse(text = paste0(
+    "plotConfiguration$ribbons$", aestheticInputs,
+    " <- ", aestheticInputs, " %||% plotConfiguration$ribbons$", aestheticInputs
+  ))
+  eval(aestheticInputsExpression)
 
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
   # If no mapping, return plot
-  if (is.null(dataMapping$x) && is.null(dataMapping$ymin) && is.null(dataMapping$ymax)) {
-    warning("No mapping found, ribbon layer was not added")
+  if (all(isOfLength(dataMapping$x, 0), isOfLength(dataMapping$ymin, 0), isOfLength(dataMapping$ymax, 0))) {
+    warning("No mapping found for x, ymin and ymax, ribbon layer was not added")
     return(plotObject)
   }
 
@@ -478,7 +495,6 @@ addRibbon <- function(data = NULL,
   }
   mapData$legendLabels <- caption %||% mapData$legendLabels
 
-
   # Get mapping and convert labels into characters usable by aes_string
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- getAesStringMapping(dataMapping)
@@ -490,50 +506,29 @@ addRibbon <- function(data = NULL,
   mapData$legendLabels <- caption %||% mapData$legendLabels
 
   # y-intercept
-  if (max(is.infinite(mapData[, dataMapping$x])) == 1) {
-    plotObject <- plotObject +
-      ggplot2::geom_ribbon(
-        data = mapData,
-        mapping = ggplot2::aes_string(x = mapLabels$x, ymin = mapLabels$ymin, ymax = mapLabels$ymax, fill = "legendLabels", color = "legendLabels", size = "legendLabels", linetype = "legendLabels"),
-        alpha = alpha,
-        show.legend = TRUE
-      ) +
-      ggplot2::geom_blank(
-        data = mapData,
-        mapping = aes_string(shape = "legendLabels")
-      )
-  } else {
-    plotObject <- plotObject +
-      ggplot2::geom_ribbon(
-        data = mapData,
-        mapping = ggplot2::aes_string(x = mapLabels$x, ymin = mapLabels$ymin, ymax = mapLabels$ymax, fill = "legendLabels", color = "legendLabels", size = "legendLabels", linetype = "legendLabels"),
-        alpha = alpha,
-        show.legend = TRUE
-      ) +
-      ggplot2::geom_blank(
-        data = mapData,
-        mapping = aes_string(shape = "legendLabels")
-      )
-  }
+  plotObject <- plotObject +
+    ggplot2::geom_ribbon(
+      data = mapData,
+      mapping = ggplot2::aes_string(x = mapLabels$x, ymin = mapLabels$ymin, ymax = mapLabels$ymax, fill = "legendLabels"),
+      alpha = alpha,
+      show.legend = TRUE
+    ) +
+    ggplot2::geom_blank(
+      data = mapData,
+      mapping = aes_string(shape = "legendLabels", color = "legendLabels", size = "legendLabels", linetype = "legendLabels")
+    )
 
+  # Prepare data for merging previous and current legend
   newLabels <- levels(factor(mapData$legendLabels))
-  legendLength <- nrow(plotObject$plotConfiguration$legend$caption) %||% 0
-  newLegendProperty <- seq(legendLength + 1, legendLength + length(newLabels)) - 1 %% 6 + 1
-
-  # Sample LegendType properties based tlfTheme if not input
-  plotObject <- mergeLegend(plotObject,
+  # Sample LegendType properties based Theme if not input
+  try(plotObject <- mergeLegend(plotObject,
     newLabels = newLabels,
-    color = color %||% tlfEnv$currentTheme$aesProperties$color[newLegendProperty],
-    shape = rep(-2, length(newLabels)),
-    size = size %||% rep(1, length(newLabels)),
-    linetype = linetype %||% rep("blank", length(newLabels)),
-    fill = fill %||% tlfEnv$currentTheme$aesProperties$fill[newLegendProperty]
-  )
-  try(suppressMessages(plotObject <- plotObject$plotConfiguration$xAxis$setPlotAxis(plotObject)))
-  try(suppressMessages(plotObject <- plotObject$plotConfiguration$yAxis$setPlotAxis(plotObject)))
+    aestheticSelections = plotConfiguration$ribbons
+  ))
+  try(suppressMessages(plotObject <- setXAxis(plotObject)))
+  try(suppressMessages(plotObject <- setYAxis(plotObject)))
   return(plotObject)
 }
-
 
 #' @title addErrorbar
 #' @param data data.frame containing the errorbar endpoints to be plotted
@@ -581,15 +576,14 @@ addErrorbar <- function(data = NULL,
                         dataMapping = NULL,
                         plotConfiguration = NULL,
                         plotObject = NULL) {
-  validateIsOfType(dataMapping, RangeDataMapping, nullAllowed = TRUE)
+  validateIsOfType(dataMapping, c("RangeDataMapping", "ObservedDataMapping"), nullAllowed = TRUE)
   validateIsOfType(plotConfiguration, PlotConfiguration, nullAllowed = TRUE)
   validateIsLogical(includeCap)
+  # validateIsIncluded(barLinetype, Linetypes, nullAllowed = TRUE)
 
-  # If data is not input
-  # Create new data and its mapping from x, ymin and ymax input
-  if (is.null(data)) {
+  # If data is not input, creates data and its mapping from x, ymin and ymax input
+  if (isOfLength(data, 0)) {
     data <- as.data.frame(cbind(x = x, ymin = ymin %||% 0, ymax = ymax %||% 0))
-
     dataMapping <- dataMapping %||% RangeDataMapping$new(x = "x", ymin = "ymin", ymax = "ymax", data = data)
   }
   # Enforce data to be a data.frame for dataMapping
@@ -598,15 +592,22 @@ addErrorbar <- function(data = NULL,
   }
 
   dataMapping <- dataMapping %||% RangeDataMapping$new(x = x, ymin = ymin, ymax = ymax, data = data)
-
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
+
+  # Update plotConfiguration if user defined aesthetics
+  aestheticInputs <- c("color", "linetype", "size")
+  aestheticInputsExpression <- parse(text = paste0(
+    "plotConfiguration$errorbars$", aestheticInputs,
+    " <- ", aestheticInputs, " %||% plotConfiguration$errorbars$", aestheticInputs
+  ))
+  eval(aestheticInputsExpression)
 
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
   # If no mapping, return plot
-  if (is.null(dataMapping$x) || is.null(dataMapping$ymin) || is.null(dataMapping$ymax)) {
-    warning("No mapping found for x, ymin or ymax, errorbar layer was not added")
+  if (all(isOfLength(dataMapping$x, 0), isOfLength(dataMapping$ymin, 0), isOfLength(dataMapping$ymax, 0))) {
+    warning("No mapping found for x, ymin and ymax, error bar layer was not added")
     return(plotObject)
   }
 
@@ -629,58 +630,74 @@ addErrorbar <- function(data = NULL,
     mapData$legendLabels <- getlegendLabelsCaption(plotObject)
   }
   mapData$legendLabels <- caption %||% mapData$legendLabels
+  legendLength <- length(unique(mapData$legendLabels))
 
+  # Option caps allows to add an horizontal bar at the edges of the error bars
   if (includeCap) {
     plotObject <- plotObject +
       ggplot2::geom_errorbar(
         data = mapData,
-        mapping = aes_string(
+        mapping = ggplot2::aes_string(
           x = mapLabels$x,
           ymin = mapLabels$ymin,
           ymax = mapLabels$ymax,
           color = "legendLabels",
-          size = "legendLabels",
-          linetype = "legendLabels"
         ),
-        show.legend = TRUE
+        size = size %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, aesthetic = "size"),
+        linetype = linetype %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype")
       )
   }
   if (!includeCap) {
     plotObject <- plotObject +
       ggplot2::geom_linerange(
         data = mapData,
-        mapping = aes_string(
+        mapping = ggplot2::aes_string(
           x = mapLabels$x,
           ymin = mapLabels$ymin,
           ymax = mapLabels$ymax,
           color = "legendLabels",
-          size = "legendLabels",
-          linetype = "legendLabels"
         ),
-        show.legend = TRUE
+        size = size %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, aesthetic = "size"),
+        linetype = linetype %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype")
       )
   }
   plotObject <- plotObject +
+    ggplot2::geom_ribbon(
+      data = mapData,
+      mapping = ggplot2::aes_string(
+        x = mapLabels$x,
+        ymin = mapLabels$ymin,
+        ymax = mapLabels$ymax,
+        fill = "legendLabels",
+      ),
+      alpha = 0,
+      show.legend = TRUE
+    )
+  # Add blank lines, points and ribbon to the plot
+  plotObject <- plotObject +
     ggplot2::geom_blank(
       data = mapData,
-      mapping = aes_string(shape = "legendLabels", fill = "legendLabels")
+      mapping = ggplot2::aes_string(
+        x = mapLabels$x,
+        y = mapLabels$ymax,
+        shape = "legendLabels",
+        color = "legendLabels",
+        fill = "legendLabels",
+        size = "legendLabels",
+        linetype = "legendLabels"
+      )
     )
 
+  # Prepare data for merging previous and current legend
   newLabels <- levels(factor(mapData$legendLabels))
-  legendLength <- nrow(plotObject$plotConfiguration$legend$caption) %||% 0
-  newLegendProperty <- seq(legendLength + 1, legendLength + length(newLabels)) - 1 %% 6 + 1
-
-  # Sample LegendType properties based tlfTheme if not input
-  plotObject <- mergeLegend(plotObject,
+  # Sample LegendType properties based Theme if not input
+  try(plotObject <- mergeLegend(plotObject,
     newLabels = newLabels,
-    color = color %||% tlfEnv$currentTheme$aesProperties$color[newLegendProperty],
-    shape = rep(-2, length(newLabels)),
-    size = size %||% rep(1, length(newLabels)),
-    linetype = linetype %||% tlfEnv$currentTheme$aesProperties$linetype[newLegendProperty],
-    fill = rep(NA, length(newLabels))
-  )
-  try(suppressMessages(plotObject <- plotObject$plotConfiguration$xAxis$setPlotAxis(plotObject)))
-  try(suppressMessages(plotObject <- plotObject$plotConfiguration$yAxis$setPlotAxis(plotObject)))
+    aestheticSelections = plotConfiguration$errorbars
+  ))
+  # Try is used to prevent crashes in the final plot due to ggplot2 peculiarities regarding scale functions
+  try(suppressMessages(plotObject <- setXAxis(plotObject)))
+  try(suppressMessages(plotObject <- setYAxis(plotObject)))
   return(plotObject)
 }
 

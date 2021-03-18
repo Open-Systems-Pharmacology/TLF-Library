@@ -9,13 +9,6 @@ R6 class defining the configuration of a \code{ggplot} object for time profile p
 \section{Super class}{
 \code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{TimeProfilePlotConfiguration}
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{timeProfileCaption}}{list of properties for time profile plot specific features}
-}
-\if{html}{\out{</div>}}
-}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -26,7 +19,6 @@ R6 class defining the configuration of a \code{ggplot} object for time profile p
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="print">}\href{../../tlf/html/PlotConfiguration.html#method-print}{\code{tlf::PlotConfiguration$print()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -37,7 +29,10 @@ R6 class defining the configuration of a \code{ggplot} object for time profile p
 Create a new \code{TimeProfilePlotConfiguration} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TimeProfilePlotConfiguration$new(
-  timeProfileCaption = getDefaultCaptionFor("timeProfile"),
+  lines = NULL,
+  ribbons = NULL,
+  points = NULL,
+  errorbars = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -45,7 +40,13 @@ Create a new \code{TimeProfilePlotConfiguration} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{timeProfileCaption}}{list of properties for PK ratio plot specific features}
+\item{\code{lines}}{\code{ThemeAestheticSelections} defining properties of lines}
+
+\item{\code{ribbons}}{\code{ThemeAestheticSelections} defining properties of ribbons}
+
+\item{\code{points}}{\code{ThemeAestheticSelections} defining properties of points}
+
+\item{\code{errorbars}}{\code{ThemeAestheticSelections} defining properties of error bars}
 
 \item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
 }

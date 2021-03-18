@@ -12,7 +12,7 @@ R6 class defining the configuration of X-axis
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-setPlotAxis}{\code{XAxisConfiguration$setPlotAxis()}}
+\item \href{#method-updatePlot}{\code{XAxisConfiguration$updatePlot()}}
 \item \href{#method-clone}{\code{XAxisConfiguration$clone()}}
 }
 }
@@ -20,17 +20,16 @@ R6 class defining the configuration of X-axis
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="initialize">}\href{../../tlf/html/AxisConfiguration.html#method-initialize}{\code{tlf::AxisConfiguration$initialize()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="print">}\href{../../tlf/html/AxisConfiguration.html#method-print}{\code{tlf::AxisConfiguration$print()}}\out{</span>}
 }
 \out{</details>}
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setPlotAxis"></a>}}
-\if{latex}{\out{\hypertarget{method-setPlotAxis}{}}}
-\subsection{Method \code{setPlotAxis()}}{
-Set axis configuration on a \code{ggplot} object
+\if{html}{\out{<a id="method-updatePlot"></a>}}
+\if{latex}{\out{\hypertarget{method-updatePlot}{}}}
+\subsection{Method \code{updatePlot()}}{
+Update axis configuration on a \code{ggplot} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{XAxisConfiguration$setPlotAxis(plotObject)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{XAxisConfiguration$updatePlot(plotObject)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

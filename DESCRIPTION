@@ -1,7 +1,7 @@
 Package: tlf
 Type: Package
 Title: TLF Library
-Version: 1.1.0
+Version: 1.2.0
 Authors@R: 
     c(person(given = "Open-Systems-Pharmacology Community",
              role = "cph"),
@@ -25,7 +25,8 @@ BugReports: https://github.com/open-systems-pharmacology/tlf-library/issues
 Imports: 
     ggplot2 (>= 3.3.0),
     R6,
-    reshape2
+    reshape2,
+    jsonlite
 Depends: 
     R (>= 3.5)
 Encoding: UTF-8
@@ -46,9 +47,7 @@ Collate:
     'atom-plots.R'
     'boxwhisker-datamapping.R'
     'boxwhisker-get-measure.R'
-    'boxwhisker-plot.R'
     'boxwhisker-plotconfiguration.R'
-    'data-description.R'
     'datamapping-grouping.R'
     'datamapping-groupmapping.R'
     'datamapping-range.R'
@@ -57,7 +56,6 @@ Collate:
     'ddiratio-datamapping.R'
     'ddiratio-plotconfiguration.R'
     'error-checks.R'
-    'utils.R'
     'font.R'
     'histogram-datamapping.R'
     'histogram-plotconfiguration.R'
@@ -66,9 +64,11 @@ Collate:
     'metadata-helper.R'
     'obs-vs-pred-datamapping.R'
     'obs-vs-pred-plotconfiguration.R'
+    'observed-data-mapping.R'
     'pkratio-datamapping.R'
     'pkratio-get-measure.R'
     'pkratio-plotconfiguration.R'
+    'plot-boxwhisker.R'
     'plot-ddiratio.R'
     'plot-histogram.R'
     'plot-obs-vs-pred.R'
@@ -88,9 +88,11 @@ Collate:
     'tlf-env.R'
     'tornado-datamapping.R'
     'tornado-plotconfiguration.R'
+    'utilities-aesthetics.R'
     'utilities-axis.R'
     'utilities-background.R'
     'utilities-export.R'
     'utilities-label.R'
     'utilities-legend.R'
     'utilities-mapping.R'
+    'utils.R'

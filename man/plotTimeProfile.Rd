@@ -5,11 +5,11 @@
 \title{plotTimeProfile}
 \usage{
 plotTimeProfile(
-  data,
+  data = NULL,
   metaData = NULL,
   dataMapping = NULL,
   observedData = NULL,
-  dataMappingForObserved = NULL,
+  observedDataMapping = NULL,
   plotConfiguration = NULL,
   plotObject = NULL
 )

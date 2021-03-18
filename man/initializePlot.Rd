@@ -7,7 +7,7 @@
 initializePlot(plotConfiguration = NULL)
 }
 \arguments{
-\item{plotConfiguration}{\code{PlotConfiguration} class or subclass defining labels, grid, background and watermark
+\item{plotConfiguration}{\code{PlotConfiguration} objecct defining labels, grid, background and watermark
 This parameter is optional: the \code{tlf} library provides a default configuration according to the current theme}
 }
 \value{
@@ -18,10 +18,6 @@ Initialize a \code{ggplot} object and set the labels, grid, background and water
 }
 \examples{
 # Initialize an empty plot
-p <- initializePlot()
-
-# Use a predifined theme
-useTheme(tlfTheme)
 p <- initializePlot()
 
 # Implement a customized configuration using PlotConfiguration

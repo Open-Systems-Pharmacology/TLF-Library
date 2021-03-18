@@ -100,8 +100,8 @@ Check that \code{data} variables include map variables
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A data.frame with map and \code{defaultAes} variables.
-Dummy variable \code{defaultAes} is necessary to allow further modification of plots.
+A data.frame with map and \code{legendLabels} variables.
+Dummy variable \code{legendLabels} is necessary to allow further modification of plots.
 }
 }
 \if{html}{\out{<hr>}}

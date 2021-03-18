@@ -9,8 +9,7 @@ setBackground(
   fill = NULL,
   color = NULL,
   linetype = NULL,
-  size = NULL,
-  outerBackgroundFill = NULL
+  size = NULL
 )
 }
 \arguments{
@@ -23,11 +22,9 @@ setBackground(
 \item{linetype}{character linetype of the background frame}
 
 \item{size}{numeric size of the background frame}
-
-\item{outerBackgroundFill}{character color fill of the outerBackground}
 }
 \value{
-ggplot object with updated Y-axis
+ggplot object
 }
 \description{
 Set background properties on a ggplot object

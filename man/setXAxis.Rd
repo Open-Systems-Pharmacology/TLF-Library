@@ -9,7 +9,8 @@ setXAxis(
   scale = NULL,
   limits = NULL,
   ticks = NULL,
-  ticklabels = NULL
+  ticklabels = NULL,
+  font = NULL
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ setXAxis(
 \item{ticks}{X-axis ticks}
 
 \item{ticklabels}{X-axis ticklabels}
+
+\item{font}{\code{Font} object  defining font of ticklabels}
 }
 \value{
 ggplot object with updated X-axis

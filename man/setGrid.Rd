@@ -16,8 +16,8 @@ setGrid(plotObject, color = NULL, linetype = NULL, size = NULL)
 \item{size}{numeric size of the grid lines}
 }
 \value{
-ggplot object with updated Y-axis
+ggplot object
 }
 \description{
-Set grid properties on a ggplot object
+Set x and y grid properties on a ggplot object
 }

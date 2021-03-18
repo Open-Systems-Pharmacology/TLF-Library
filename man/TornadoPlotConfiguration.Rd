@@ -12,8 +12,6 @@ R6 class defining the configuration of a \code{ggplot} object for tornado plots
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{tornadoCaption}}{list of properties for tornado plot specific features}
-
 \item{\code{bar}}{logical setting if tornado is uses a bar plot instead of regular points}
 
 \item{\code{colorPalette}}{color palette property from \code{ggplot2}}
@@ -32,7 +30,6 @@ R6 class defining the configuration of a \code{ggplot} object for tornado plots
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="print">}\href{../../tlf/html/PlotConfiguration.html#method-print}{\code{tlf::PlotConfiguration$print()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -43,10 +40,12 @@ R6 class defining the configuration of a \code{ggplot} object for tornado plots
 Create a new \code{TornadoPlotConfiguration} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TornadoPlotConfiguration$new(
-  tornadoCaption = getDefaultCaptionFor("tornado"),
   bar = TRUE,
   colorPalette = NULL,
   dodge = 0.5,
+  lines = NULL,
+  points = NULL,
+  ribbons = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -54,13 +53,17 @@ Create a new \code{TornadoPlotConfiguration} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{tornadoCaption}}{list of properties for tornado plot specific features}
-
 \item{\code{bar}}{logical setting if tornado is uses a bar plot instead of regular points}
 
 \item{\code{colorPalette}}{color palette property from \code{ggplot2}}
 
 \item{\code{dodge}}{space between the bars/points}
+
+\item{\code{lines}}{\code{ThemeAestheticSelections} object defining properties for Tornado vertical lines}
+
+\item{\code{points}}{\code{ThemeAestheticSelections} object defining properties for scatter points}
+
+\item{\code{ribbons}}{\code{ThemeAestheticSelections} object defining properties for bars}
 
 \item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
 }

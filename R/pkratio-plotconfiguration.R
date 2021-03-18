@@ -5,20 +5,26 @@ PKRatioPlotConfiguration <- R6::R6Class(
   "PKRatioPlotConfiguration",
   inherit = PlotConfiguration,
   public = list(
-    #' @field pkRatioCaption list of properties for PK ratio plot specific features
-    pkRatioCaption = NULL,
 
     #' @description Create a new \code{PKRatioPlotConfiguration} object
-    #' @param pkRatioCaption list of properties for PK ratio plot specific features
+    #' @param lines `ThemeAestheticSelections` object defining properties for PK ratio horizontal lines
+    #' @param points `ThemeAestheticSelections` object defining properties for PK ratio scatter points
+    #' @param errorbars `ThemeAestheticSelections` object defining properties for PK ratio error bars
     #' @param ... parameters inherited from \code{PlotConfiguration}
     #' @return A new \code{PKRatioPlotConfiguration} object
-    initialize = function(pkRatioCaption = getDefaultCaptionFor("pkRatio"),
+    initialize = function(lines = NULL,
+                              points = NULL,
+                              errorbars = NULL,
                               ...) {
-      validateIsOfType(pkRatioCaption, "data.frame")
-      validateIsIncluded(names(pkRatioCaption), CaptionProperties)
       super$initialize(...)
 
-      self$pkRatioCaption <- pkRatioCaption
+      validateIsOfType(lines, "ThemeAestheticSelections", nullAllowed = TRUE)
+      validateIsOfType(points, "ThemeAestheticSelections", nullAllowed = TRUE)
+      validateIsOfType(errorbars, "ThemeAestheticSelections", nullAllowed = TRUE)
+      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
+      private$.lines <- lines %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotPKRatio$lines)
+      private$.points <- points %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotPKRatio$points)
+      private$.errorbars <- errorbars %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotPKRatio$errorbars)
     }
   )
 )

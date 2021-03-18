@@ -43,8 +43,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
                               maxOutlierLimit = tlfStatFunctions$`Percentile75%+1.5IQR`,
                               ...) {
       super$initialize(x = x, y = y, ...)
-
-      super$groupMapping$color <- super$groupMapping$color %||% super$groupMapping$fill
+      self$groupMapping$color <- self$groupMapping$color %||% self$groupMapping$fill
 
       self$boxWhiskerLimits <- c(ymin, lower, middle, upper, ymax)
       self$outlierLimits <- c(minOutlierLimit, maxOutlierLimit)
@@ -55,7 +54,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
     #' @return A data.frame with `ymin`, `lower`, `middle`, `upper`, `ymax` variables.
     getBoxWhiskerLimits = function(data) {
       # Dummy silent variable if x is NULL
-      if (is.null(self$x)) {
+      if (isOfLength(self$x, 0)) {
         data$legendLabels <- factor("")
       }
 
@@ -87,7 +86,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
     getOutliers = function(data) {
       data <- self$checkMapData(data)
       # Dummy silent variable if x is NULL
-      if (is.null(self$x)) {
+      if (isOfLength(self$x, 0)) {
         data$legendLabels <- factor("")
       }
 

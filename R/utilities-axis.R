@@ -5,47 +5,35 @@
 #' @param limits X-axis limits
 #' @param ticks X-axis ticks
 #' @param ticklabels X-axis ticklabels
+#' @param font `Font` object  defining font of ticklabels
 #' @return ggplot object with updated X-axis
 #' @export
 setXAxis <- function(plotObject,
                      scale = NULL,
                      limits = NULL,
                      ticks = NULL,
-                     ticklabels = NULL) {
+                     ticklabels = NULL,
+                     font = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsIncluded(scale, Scaling, nullAllowed = TRUE)
+  validateIsNumeric(limits, nullAllowed = TRUE)
+  validateIsOfType(font, "Font", nullAllowed = TRUE)
 
   # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
   newPlotObject <- plotObject
   newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
 
-  # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$yAxis
+  # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$xAxis
   xAxis <- newPlotObject$plotConfiguration$xAxis
 
-  xAxis <- plotObject$plotConfiguration$xAxis$clone()
   xAxis$limits <- limits %||% xAxis$limits
   xAxis$scale <- scale %||% xAxis$scale
   xAxis$ticks <- ticks %||% xAxis$ticks
   xAxis$ticklabels <- ticklabels %||% xAxis$ticklabels
+  xAxis$font <- font %||% xAxis$font
 
-  if (xAxis$scale %in% "lin") {
-    xAxis$scale <- "identity"
-  }
-  if (!isOfLength(xAxis$ticks, 0)) {
-    if (xAxis$ticks[1] %in% "default") {
-      xAxis$ticks <- waiver()
-    }
-  }
-
-  if (!isOfLength(xAxis$ticks, 0)) {
-    if (xAxis$ticklabels[1] %in% "default") {
-      xAxis$ticklabels <- waiver()
-    }
-  }
-
-  newPlotObject <- xAxis$setPlotAxis(newPlotObject)
-
+  newPlotObject <- xAxis$updatePlot(newPlotObject)
   return(newPlotObject)
 }
 
@@ -56,15 +44,19 @@ setXAxis <- function(plotObject,
 #' @param limits Y-axis limits
 #' @param ticks Y-axis ticks
 #' @param ticklabels Y-axis ticklabels
+#' @param font `Font` object  defining font of ticklabels
 #' @return ggplot object with updated Y-axis
 #' @export
 setYAxis <- function(plotObject,
                      scale = NULL,
                      limits = NULL,
                      ticks = NULL,
-                     ticklabels = NULL) {
+                     ticklabels = NULL,
+                     font = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsIncluded(scale, Scaling, nullAllowed = TRUE)
+  validateIsNumeric(limits, nullAllowed = TRUE)
+  validateIsOfType(font, "Font", nullAllowed = TRUE)
 
   # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
@@ -78,25 +70,9 @@ setYAxis <- function(plotObject,
   yAxis$scale <- scale %||% yAxis$scale
   yAxis$ticks <- ticks %||% yAxis$ticks
   yAxis$ticklabels <- ticklabels %||% yAxis$ticklabels
+  yAxis$font <- font %||% yAxis$font
 
-  if (yAxis$scale %in% "lin") {
-    yAxis$scale <- "identity"
-  }
-
-  if (!isOfLength(yAxis$ticks, 0)) {
-    if (yAxis$ticks[1] %in% "default") {
-      yAxis$ticks <- waiver()
-    }
-  }
-
-  if (!isOfLength(yAxis$ticks, 0)) {
-    if (yAxis$ticklabels[1] %in% "default") {
-      yAxis$ticklabels <- waiver()
-    }
-  }
-
-  newPlotObject <- yAxis$setPlotAxis(newPlotObject)
-
+  newPlotObject <- yAxis$updatePlot(newPlotObject)
   return(newPlotObject)
 }
 

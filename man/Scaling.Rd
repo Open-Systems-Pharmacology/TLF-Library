@@ -5,13 +5,13 @@
 \alias{Scaling}
 \title{Scaling}
 \format{
-An object of class \code{list} of length 8.
+An object of class \code{list} of length 7.
 }
 \usage{
 Scaling
 }
 \description{
 Pre-defined transformation of axes
-Not that built-in transformations from ggplot2 includes more transformations
+Not that built-in transformations from \code{ggplot2} includes more transformations
 }
 \keyword{datasets}

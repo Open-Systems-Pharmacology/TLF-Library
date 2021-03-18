@@ -6,54 +6,21 @@
 \description{
 R6 class defining the configuration of a \code{ggplot} object for DDI Ratio plots
 }
-\section{Super class}{
-\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{DDIRatioPlotConfiguration}
-}
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{ddiRatioCaption}}{list of properties for DDI ratio plot specific features}
-}
-\if{html}{\out{</div>}}
+\section{Super classes}{
+\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{\link[tlf:PKRatioPlotConfiguration]{tlf::PKRatioPlotConfiguration}} -> \code{DDIRatioPlotConfiguration}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{DDIRatioPlotConfiguration$new()}}
 \item \href{#method-clone}{\code{DDIRatioPlotConfiguration$clone()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="print">}\href{../../tlf/html/PlotConfiguration.html#method-print}{\code{tlf::PlotConfiguration$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PKRatioPlotConfiguration" data-id="initialize">}\href{../../tlf/html/PKRatioPlotConfiguration.html#method-initialize}{\code{tlf::PKRatioPlotConfiguration$initialize()}}\out{</span>}
 }
 \out{</details>}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
-\subsection{Method \code{new()}}{
-Create a new \code{DDIRatioPlotConfiguration} object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DDIRatioPlotConfiguration$new(
-  ddiRatioCaption = getDefaultCaptionFor("ddiRatio"),
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{ddiRatioCaption}}{list of properties for DDI ratio plot specific features}
-
-\item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new \code{DDIRatioPlotConfiguration} object
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

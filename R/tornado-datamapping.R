@@ -5,24 +5,24 @@ TornadoDataMapping <- R6::R6Class(
   "TornadoDataMapping",
   inherit = XYGDataMapping,
   public = list(
-    #' @field tornadoValues numeric vector of limits to plot
-    tornadoValues = NULL,
+    #' @field lines numeric vector of limits to plot
+    lines = NULL,
     #' @field sorted logical indicating if values should be sorted
     sorted = NULL,
 
     #' @description Create a new \code{TornadoDataMapping} object
-    #' @param tornadoValues numeric vector of ratio limits to plot
+    #' @param lines numeric vector of limits to plot
     #' @param sorted logical indicating if values should be sorted
     #' @param x Variable including the values of tornado plot
     #' @param y Variable including the labels of tornado plot
     #' @param ... parameters inherited from \code{XYGDataMapping}
     #' @return A new \code{TornadoDataMapping} object
-    initialize = function(tornadoValues = DefaultDataMappingValues$tornado,
+    initialize = function(lines = DefaultDataMappingValues$tornado,
                               sorted = NULL,
                               x = NULL,
                               y = NULL,
                               ...) {
-      validateIsNumeric(tornadoValues)
+      validateIsNumeric(lines, nullAllowed = TRUE)
       validateIsLogical(sorted, nullAllowed = TRUE)
       super$initialize(x = x, y = y, ...)
 
@@ -44,7 +44,7 @@ TornadoDataMapping <- R6::R6Class(
         self$groupMapping$color
       )
 
-      self$tornadoValues <- tornadoValues
+      self$lines <- lines
       self$sorted <- sorted %||% TRUE
     }
   )

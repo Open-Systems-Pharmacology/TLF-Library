@@ -4,7 +4,7 @@
 \alias{PKRatioDataMapping}
 \title{PKRatioDataMapping}
 \description{
-R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{pkRatioLines} variables to \code{data}
+R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and pkRatio \code{lines} variables to \code{data}
 }
 \section{Super classes}{
 \code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{PKRatioDataMapping}
@@ -12,7 +12,9 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{pkRatioLi
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{pkRatioValues}}{numeric vector of ratio limits to plot}
+\item{\code{lines}}{list of ratio limits to plot as horizontal lines}
+
+\item{\code{uncertainty}}{mapping error bars around scatter points}
 }
 \if{html}{\out{</div>}}
 }
@@ -20,13 +22,13 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{pkRatioLi
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{PKRatioDataMapping$new()}}
+\item \href{#method-checkMapData}{\code{PKRatioDataMapping$checkMapData()}}
 \item \href{#method-clone}{\code{PKRatioDataMapping$clone()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="XYGDataMapping" data-id="checkMapData">}\href{../../tlf/html/XYGDataMapping.html#method-checkMapData}{\code{tlf::XYGDataMapping$checkMapData()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -36,13 +38,19 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{pkRatioLi
 \subsection{Method \code{new()}}{
 Create a new \code{PKRatioDataMapping} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PKRatioDataMapping$new(pkRatioValues = DefaultDataMappingValues$pkRatio, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PKRatioDataMapping$new(
+  lines = DefaultDataMappingValues$pkRatio,
+  uncertainty = NULL,
+  ...
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{pkRatioValues}}{numeric vector of ratio limits to plot}
+\item{\code{lines}}{list of ratio limits to plot as horizontal lines}
+
+\item{\code{uncertainty}}{mapping error bars around scatter points}
 
 \item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
 }
@@ -50,6 +58,29 @@ Create a new \code{PKRatioDataMapping} object
 }
 \subsection{Returns}{
 A new \code{PKRatioDataMapping} object
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-checkMapData"></a>}}
+\if{latex}{\out{\hypertarget{method-checkMapData}{}}}
+\subsection{Method \code{checkMapData()}}{
+Check that \code{data} variables include map variables
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PKRatioDataMapping$checkMapData(data, metaData = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data}}{data.frame to check}
+
+\item{\code{metaData}}{list containing information on \code{data}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A data.frame with map and \code{defaultAes} variables.
+Dummy variable \code{defaultAes} is necessary to allow further modification of plots.
 }
 }
 \if{html}{\out{<hr>}}

@@ -6,16 +6,20 @@
 \description{
 R6 class defining the configuration of axis
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{limits}}{numeric vector of axis limits}
+\item{\code{limits}}{numeric vector of length 2 defining limits of axis.
+A value of \code{NULL} is allowed and lead to default \code{ggplot2} behaviour}
 
-\item{\code{scale}}{character defining axis scale}
+\item{\code{scale}}{name of axis scale from Enum \code{Scaling}
+A value of \code{NULL} is allowed and will lead to a default linear scale}
 
-\item{\code{ticks}}{numeric vector or function defining where to position axis ticks}
+\item{\code{ticks}}{function or values defining where axis ticks are placed}
 
-\item{\code{ticklabels}}{character vector or function defining what to print on axis ticks}
+\item{\code{ticklabels}}{function or values defining the axis tick labels}
+
+\item{\code{font}}{\code{Font} object defining the font of the ticklabels}
 }
 \if{html}{\out{</div>}}
 }
@@ -23,7 +27,6 @@ R6 class defining the configuration of axis
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{AxisConfiguration$new()}}
-\item \href{#method-print}{\code{AxisConfiguration$print()}}
 \item \href{#method-clone}{\code{AxisConfiguration$clone()}}
 }
 }
@@ -36,8 +39,9 @@ Create a new \code{AxisConfiguration} object
 \if{html}{\out{<div class="r">}}\preformatted{AxisConfiguration$new(
   limits = NULL,
   scale = Scaling$lin,
-  ticks = "default",
-  ticklabels = "default"
+  ticks = NULL,
+  ticklabels = NULL,
+  font = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -52,24 +56,13 @@ Use enum \code{Scaling} to access predefined scales.}
 \item{\code{ticks}}{numeric vector or function defining where to position axis ticks}
 
 \item{\code{ticklabels}}{character vector or function defining what to print on axis ticks}
+
+\item{\code{font}}{\code{Font} object defining the font of ticklabels}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 A new \code{AxisConfiguration} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
-\subsection{Method \code{print()}}{
-Print axis properties
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AxisConfiguration$print()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-Axis properties
 }
 }
 \if{html}{\out{<hr>}}

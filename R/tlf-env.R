@@ -5,9 +5,6 @@ tlfEnv <- new.env(parent = emptyenv())
 # name of the package. This will be used to retrieve information on the package at run time
 tlfEnv$packageName <- "tlf"
 
-# Set the current theme of the tlf plot configurations
-tlfEnv$currentTheme <- defaultTheme
-
 #' @title LegendPositions
 #' @include enum.R
 #' @export
@@ -42,7 +39,9 @@ tlfEnv$defaultLegendPosition <- LegendPositions$outsideRight
 #' @export
 setDefaultLegendPosition <- function(position) {
   validateIsIncluded(position, LegendPositions)
+  # TO DO: Line to be deprecated
   tlfEnv$defaultLegendPosition <- position
+  tlfEnv$currentTheme$background$legendPosition <- position
 }
 
 tlfEnv$defaultExportParameters <- list(format = "png", width = 16, height = 9, units = "cm")
@@ -142,7 +141,14 @@ setDefaultAggregationBins <- function(bins = NULL) {
 #' @description Set default watermark value for current theme
 #' @param watermark character or Label class object
 #' @export
-setDefaultWatermark <- function(watermark = NULL){
+setDefaultWatermark <- function(watermark = NULL) {
   validateIsOfType(watermark, c("Label", "character"), nullAllowed = TRUE)
-  tlfEnv$currentTheme$background$watermark <- asLabel(watermark)
+  if(isOfType(watermark, "character")){
+    tlfEnv$currentTheme$background$watermark <- watermark
+  }
+  if(isOfType(watermark, "Label")){
+  tlfEnv$currentTheme$background$watermark <- watermark$text
+  tlfEnv$currentTheme$fonts$watermark <- watermark$font
+  }
+  return(invisible())
 }

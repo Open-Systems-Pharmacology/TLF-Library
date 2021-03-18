@@ -4,20 +4,28 @@
 \alias{ThemeFont}
 \title{ThemeFont}
 \description{
-R6 class defining theme fonts
+R6 class defining theme font properties
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{titleFont}}{R6 class \code{Font} object}
+\item{\code{title}}{\code{Font} object for font properties title}
 
-\item{\code{subtitleFont}}{R6 class \code{Font} object}
+\item{\code{subtitle}}{\code{Font} object for font properties of subtitle}
 
-\item{\code{xlabelFont}}{R6 class \code{Font} object}
+\item{\code{xlabel}}{\code{Font} object for font properties of xlabel}
 
-\item{\code{ylabelFont}}{R6 class \code{Font} object}
+\item{\code{ylabel}}{\code{Font} object for font properties of ylabel}
 
-\item{\code{watermarkFont}}{R6 class \code{Font} object}
+\item{\code{watermark}}{\code{Font} object for font properties of watermark}
+
+\item{\code{legendTitle}}{\code{Font} object for font properties of legend title}
+
+\item{\code{legend}}{\code{Font} object for font properties of legend}
+
+\item{\code{xAxis}}{\code{Font} object for font properties of xAxis}
+
+\item{\code{yAxis}}{\code{Font} object for font properties of yAxis}
 }
 \if{html}{\out{</div>}}
 }
@@ -25,6 +33,7 @@ R6 class defining theme fonts
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{ThemeFont$new()}}
+\item \href{#method-toJson}{\code{ThemeFont$toJson()}}
 \item \href{#method-clone}{\code{ThemeFont$clone()}}
 }
 }
@@ -35,22 +44,71 @@ R6 class defining theme fonts
 Create a new \code{ThemeFont} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ThemeFont$new(
-  labelColors = tlfEnvThemesProperties$default$labelColors,
-  labelBaseSize = 14
+  title = NULL,
+  subtitle = NULL,
+  xlabel = NULL,
+  ylabel = NULL,
+  watermark = NULL,
+  legendTitle = NULL,
+  legend = NULL,
+  xAxis = NULL,
+  yAxis = NULL,
+  baseColor = "black",
+  baseSize = 12,
+  baseFace = "plain",
+  baseFamily = "",
+  baseAngle = 0
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{labelColors}}{list of colors for each label}
+\item{\code{title}}{\code{Font} object or list for font properties title}
 
-\item{\code{labelBaseSize}}{numeric value for theme base size}
+\item{\code{subtitle}}{\code{Font} object or list for font properties of subtitle}
+
+\item{\code{xlabel}}{\code{Font} object or list for font properties of xlabel}
+
+\item{\code{ylabel}}{\code{Font} object or list for font properties of ylabel}
+
+\item{\code{watermark}}{\code{Font} object or list for font properties of watermark}
+
+\item{\code{legendTitle}}{\code{Font} object or list for font properties of legend}
+
+\item{\code{legend}}{\code{Font} object or list for font properties of legend}
+
+\item{\code{xAxis}}{\code{Font} object or list for font properties of xAxis}
+
+\item{\code{yAxis}}{\code{Font} object or list for font properties of yAxis}
+
+\item{\code{baseColor}}{name of base color of undefined fonts. Default is black.}
+
+\item{\code{baseSize}}{base size of undefined fonts. Default is 12.}
+
+\item{\code{baseFace}}{name of base face of undefined fonts. Default is "plain".}
+
+\item{\code{baseFamily}}{name of base family of undefined fonts. Default is "".}
+
+\item{\code{baseAngle}}{base angle of undefined fonts. Default is 0 degree.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 A new \code{ThemeFont} object
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-toJson"></a>}}
+\if{latex}{\out{\hypertarget{method-toJson}{}}}
+\subsection{Method \code{toJson()}}{
+Translate object into a json list
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ThemeFont$toJson()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A list that can be saved into a json file
 }
 }
 \if{html}{\out{<hr>}}

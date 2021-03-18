@@ -8,6 +8,7 @@ plotDDIRatio(
   data,
   metaData = NULL,
   dataMapping = NULL,
+  comparisonType = NULL,
   plotConfiguration = NULL,
   plotObject = NULL
 )

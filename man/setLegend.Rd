@@ -4,7 +4,13 @@
 \alias{setLegend}
 \title{setLegend}
 \usage{
-setLegend(plotObject, position, title = NULL, caption = NULL)
+setLegend(
+  plotObject,
+  position = NULL,
+  title = NULL,
+  font = NULL,
+  caption = NULL
+)
 }
 \arguments{
 \item{plotObject}{Graphical object created from ggplot}
@@ -12,13 +18,15 @@ setLegend(plotObject, position, title = NULL, caption = NULL)
 \item{position}{legend position.
 Use enum \code{LegendPositions} to access the list of legend positions.}
 
-\item{title}{title of legend}
+\item{title}{character or \code{Label} object}
+
+\item{font}{\code{Font} object defining legend font}
 
 \item{caption}{data.frame containing the caption properties of the legend}
 }
 \value{
-A \code{ggplot} graphical object
+A \code{ggplot} object
 }
 \description{
-Set legend position, title and/or caption
+Set legend position, title, font and/or caption
 }

@@ -1,11 +1,11 @@
 #' @title setPlotLabels
 #' @description Set labels properties on a ggplot object
 #' @param plotObject ggplot object to set
-#' @param title character or Label class object
-#' @param subtitle character or Label class object
-#' @param xlabel character or Label class object
-#' @param ylabel character or Label class object
-#' @return ggplot object with updated labels
+#' @param title character or `Label` object
+#' @param subtitle character or `Label` object
+#' @param xlabel character or `Label` object
+#' @param ylabel character or `Label` object
+#' @return ggplot object
 #' @export
 setPlotLabels <- function(plotObject,
                           title = NULL,
@@ -13,7 +13,6 @@ setPlotLabels <- function(plotObject,
                           xlabel = NULL,
                           ylabel = NULL) {
   validateIsOfType(plotObject, "ggplot")
-
   # Inputs will undergo the same code, so parse/eval
   # parse/eval of inputs prevent copy paste of code
   inputs <- c("title", "subtitle", "xlabel", "ylabel")
@@ -29,17 +28,15 @@ setPlotLabels <- function(plotObject,
   labels <- newPlotObject$plotConfiguration$labels
 
   char2LabExpressions <- parse(text = paste0(
-    "if(!is.null(", inputs, ")){",
     "if(isOfType(", inputs, ', "character")){',
-    inputs, " <- asLabel(", inputs, ", labels$", inputs, "$font)}}"
+    inputs, " <- asLabel(", inputs, ", font = labels$", inputs, "$font)}"
   ))
   eval(char2LabExpressions)
 
   updateLabelExpressions <- parse(text = paste0("labels$", inputs, " <- ", inputs, " %||% labels$", inputs))
   eval(updateLabelExpressions)
 
-  newPlotObject <- labels$setPlotLabels(newPlotObject)
-
+  newPlotObject <- labels$updatePlot(newPlotObject)
   return(newPlotObject)
 }
 
@@ -68,45 +65,4 @@ asLabel <- function(text = "", font = NULL) {
   text$font <- font %||% text$font
 
   return(text)
-}
-
-#' @title setFontProperties
-#' @param plotObject ggplot object
-#' @param titleFont Font Class for title
-#' @param subtitleFont Font Class for subtitle
-#' @param xAxisFont Font Class for xaxis and ticks
-#' @param yAxisFont Font Class for yaxis and ticks
-#' @param legendFont Font Class for legend
-#' @return plotObject ggplot object with updated fonts
-#' @description
-#' setFontProperties set Font Properties on a ggplot object
-#' @include font.R
-#' @export
-#' @examples
-#' p <- ggplot2::ggplot() + ggplot2::labs(title = "Title")
-#' newFont <- Font$new(color = "blue", size = 20)
-#' p <- setFontProperties(plotObject = p, titleFont = newFont)
-setFontProperties <- function(plotObject,
-                              titleFont = NULL,
-                              subtitleFont = NULL,
-                              xAxisFont = NULL,
-                              yAxisFont = NULL,
-                              legendFont = NULL) {
-  if (!is.null(titleFont)) {
-    plotObject <- plotObject + theme(plot.title = titleFont$setFont())
-  }
-  if (!is.null(subtitleFont)) {
-    plotObject <- plotObject + theme(plot.subtitle = subtitleFont$setFont())
-  }
-  if (!is.null(xAxisFont)) {
-    plotObject <- plotObject + theme(axis.title.x = xAxisFont$setFont(), axis.text.x = xAxisFont$setFont())
-  }
-  if (!is.null(yAxisFont)) {
-    plotObject <- plotObject + theme(axis.title.y = yAxisFont$setFont(), axis.text.y = yAxisFont$setFont())
-  }
-  if (!is.null(legendFont)) {
-    plotObject <- plotObject + theme(legend.text = legendFont$setFont())
-  }
-
-  return(plotObject)
 }
