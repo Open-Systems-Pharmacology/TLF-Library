@@ -6,7 +6,7 @@ DDIRatioDataMapping <- R6::R6Class(
   inherit = PKRatioDataMapping,
 
   public = list(
-    #' @field comparisonType Options for comparison from enum `MappingComparisonTypes`
+    #' @field comparisonType Options for comparison from enum `DDIComparisonTypes`
     comparisonType = NULL,
     #' @field minRange Mininmum range for guest and ratio lines
     minRange = NULL,
@@ -21,7 +21,7 @@ DDIRatioDataMapping <- R6::R6Class(
                               minRange = c(1e-2, 1e2),
                               lines = DefaultDataMappingValues$ddiRatio,
                               ...) {
-      validateIsIncluded(comparisonType, MappingComparisonTypes)
+      validateIsIncluded(comparisonType, DDIComparisonTypes)
       super$initialize(...)
       self$lines <- lines
       self$comparisonType <- comparisonType
