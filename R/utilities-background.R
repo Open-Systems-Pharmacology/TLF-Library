@@ -27,8 +27,8 @@ setGrid <- function(plotObject,
   background$yGrid$color <- color %||% background$yGrid$color
   background$xGrid$linetype <- linetype %||% background$xGrid$linetype
   background$yGrid$linetype <- linetype %||% background$yGrid$linetype
-  background$xGrid$size <- color %||% background$xGrid$size
-  background$yGrid$size <- color %||% background$yGrid$size
+  background$xGrid$size <- size %||% background$xGrid$size
+  background$yGrid$size <- size %||% background$yGrid$size
 
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
@@ -61,7 +61,7 @@ setXGrid <- function(plotObject,
 
   background$xGrid$color <- color %||% background$xGrid$color
   background$xGrid$linetype <- linetype %||% background$xGrid$linetype
-  background$xGrid$size <- color %||% background$xGrid$size
+  background$xGrid$size <- size %||% background$xGrid$size
 
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
@@ -94,7 +94,7 @@ setYGrid <- function(plotObject,
 
   background$yGrid$color <- color %||% background$yGrid$color
   background$yGrid$linetype <- linetype %||% background$yGrid$linetype
-  background$yGrid$size <- color %||% background$yGrid$size
+  background$yGrid$size <- size %||% background$yGrid$size
 
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)

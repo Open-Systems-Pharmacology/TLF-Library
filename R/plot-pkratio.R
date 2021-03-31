@@ -106,12 +106,3 @@ plotPKRatio <- function(data,
   try(suppressMessages(plotObject <- setYAxis(plotObject)))
   return(plotObject)
 }
-
-#' @title runPKRatioPlot
-#' @description
-#' Run shiny app to use `plotPKRatio()` from user interface
-#' @export
-runPKRatioPlot <- function() {
-  appPath <- system.file("pk-ratio", package = "tlf")
-  shiny::runApp(appPath)
-}

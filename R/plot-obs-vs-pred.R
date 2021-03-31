@@ -128,11 +128,3 @@ addObsVsPredLines <- function(data,
   return(plotObject)
 }
 
-#' @title runObsVsPredPlot
-#' @description
-#' Run shiny app to use `plotObsVsPred()` from user interface
-#' @export
-runObsVsPredPlot <- function() {
-  appPath <- system.file("obs-vs-pred", package = "tlf")
-  shiny::runApp(appPath)
-}

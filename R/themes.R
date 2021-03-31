@@ -596,3 +596,13 @@ runThemeMaker <- function() {
   appPath <- system.file("theme-maker", package = "tlf")
   shiny::runApp(appPath)
 }
+
+## -------------------------------------------------
+#' @title runPlotMaker
+#' @description
+#' Run shiny app that allows to easily make plots from user interface.
+#' @export
+runPlotMaker <- function() {
+  appPath <- system.file("plot-maker", package = "tlf")
+  shiny::runApp(appPath)
+}
