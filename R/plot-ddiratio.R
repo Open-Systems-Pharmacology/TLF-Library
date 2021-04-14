@@ -36,7 +36,8 @@ plotDDIRatio <- function(data,
 
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
-  plotObject <- addDDIRatioLines(data,
+  plotObject <- addDDIRatioLines(
+    data,
     metaData,
     dataMapping,
     plotConfiguration = plotConfiguration,
