@@ -7,274 +7,111 @@ require(tlf)
 jsonTheme <- loadThemeFromJson(system.file("extdata", "template-theme.json", package = "tlf"))
 useTheme(jsonTheme)
 
-# Load sample data
+# Load sample data and create variables for sample plot
 testData <- read.csv(system.file("extdata", "test-data.csv", package = "tlf"))
 testData$ymin <- testData$Ratio - testData$SD
 testData$ymax <- testData$Ratio + testData$SD
 
-# Helper: list of available plots
-listOfAvailablePlots <- c("initializePlot", "addScatter", "addLine", "addRibbon", "addErrorbar",
-                          "plotPKRatio", "plotDDIRatio", "plotBoxWhisker", "plotHistogram", 
-                          "plotTimeProfile", "plotTornado", "plotObsVsPred")
-
+# Get the helper functions that simplify the code
+# Option local = TRUE prevents helpers to appear in user workspace
+source("helpers.R", local = TRUE)
 
 #---------- User interface ----------#
 ui <- fluidPage(
   h1("Theme Maker", align = "center"),
   column(
-    5,
+    6,
     tabsetPanel(
       tabPanel(
         "Labels",
-        tabsetPanel(
-          tabPanel("Title",
-                   fluidRow(
-                     textInput("titleColor", label = "Color", value = jsonTheme$fonts$title$color),
-                     sliderInput("titleSize", label = "Size", min = 1, max = 30, value = jsonTheme$fonts$title$size, step = 0.5),
-                     sliderInput("titleAngle", label = "Angle", min = -180, max = 180, value = jsonTheme$fonts$title$angle, step = 5)
-                   )),
-          tabPanel("Subtitle",
-                   fluidRow(
-                     textInput("subtitleColor", label = "Color", value = jsonTheme$fonts$subtitle$color),
-                     sliderInput("subtitleSize", label = "Size", min = 1, max = 30, value = jsonTheme$fonts$subtitle$size, step = 0.5),
-                     sliderInput("subtitleAngle", label = "Angle", min = -180, max = 180, value = jsonTheme$fonts$subtitle$angle, step = 5)
-                   )),
-          tabPanel("X-label",
-                   fluidRow(
-                     textInput("xlabelColor", label = "Color", value = jsonTheme$fonts$xlabel$color),
-                     sliderInput("xlabelSize", label = "Size", min = 1, max = 30, value = jsonTheme$fonts$xlabel$size, step = 0.5),
-                     sliderInput("xlabelAngle", label = "Angle", min = -180, max = 180, value = jsonTheme$fonts$xlabel$angle, step = 5)
-                   )),
-          tabPanel("Y-label",
-                   fluidRow(
-                     textInput("ylabelColor", label = "Color", value = jsonTheme$fonts$ylabel$color),
-                     sliderInput("ylabelSize", label = "Size", min = 1, max = 30, value = jsonTheme$fonts$ylabel$size, step = 0.5),
-                     sliderInput("ylabelAngle", label = "Angle", min = -180, max = 180, value = jsonTheme$fonts$ylabel$angle, step = 5)
-                   ))
-        )),
-      tabPanel(
-        "Watermark",
-        fluidRow(
-          textInput("watermarkText", label = "Content", value = jsonTheme$background$watermark),
-          textInput("watermarkColor", label = "Color", value = jsonTheme$fonts$watermark$color),
-          sliderInput("watermarkSize", label = "Size", min = 1, max = 30, value = jsonTheme$fonts$watermark$size, step = 0.5),
-          sliderInput("watermarkAngle", label = "Angle", min = -180, max = 180, value = jsonTheme$fonts$watermark$angle, step = 5)
-        )
-      ),
+        navlistPanel(
+          labelPanel("Title"),
+          labelPanel("Subtitle"),
+          labelPanel("Xlabel"),
+          labelPanel("Ylabel"),
+          tabPanel("Watermark", 
+                   textInput("watermarkText", label = "Content", value = jsonTheme$background$watermark),
+                   selectizeInput("watermarkColor", label = "Color", choices = grDevices:::colors(), 
+                                  selected = jsonTheme$fonts$watermark$color, options = list(create=TRUE)),
+                   numericInput("watermarkSize", label = "Size", min = 1, max = 48, value = jsonTheme$fonts$watermark$size, step = 0.5),
+                   numericInput("watermarkAngle", label = "Angle", min = -180, max = 180, value = jsonTheme$fonts$watermark$angle, step = 1)
+                   )
+          )
+        ),
       tabPanel(
         "Background",
-        tabsetPanel(
-          tabPanel("Plot Area",
-                   textInput("plotFill", label = "Fill", value = jsonTheme$background$plot$fill),
-                   textInput("plotColor", label = "Color", value = jsonTheme$background$plot$color),
-                   sliderInput("plotSize", label = "Size", min = 0, max = 5, value = jsonTheme$background$plot$size, step = 0.05),
-                   selectInput("plotLinetype", label = "Linetype", choices = Linetypes, selected = jsonTheme$background$plot$linetype)
-                   ),
-          tabPanel("Panel Area",
-                   textInput("panelFill", label = "Fill", value = jsonTheme$background$panel$fill),
-                   textInput("panelColor", label = "Color", value = jsonTheme$background$panel$color),
-                   sliderInput("panelSize", label = "Size", min = 0, max = 5, value = jsonTheme$background$panel$size, step = 0.05),
-                   selectInput("panelLinetype", label = "Linetype", choices = Linetypes, selected = jsonTheme$background$panel$linetype)
-                   )
-          )),
+        navlistPanel(
+          backgroundPanel("Plot Area", "plot", includeFill = TRUE),
+          backgroundPanel("Panel Area", "panel", includeFill = TRUE),
+          backgroundPanel("XGrid", "xGrid", includeFill = FALSE),
+          backgroundPanel("YGrid", "yGrid", includeFill = FALSE)
+          )
+        ),
       tabPanel(
         "Axes",
-        tabsetPanel(
-          tabPanel("X-axis",
-                   textInput("xAxisColor", label = "Color", value = jsonTheme$background$xAxis$color),
-                   sliderInput("xAxisSize", label = "Size", min = 0, max = 5, value = jsonTheme$background$xAxis$size, step = 0.05),
-                   selectInput("xAxisLinetype", label = "Linetype", choices = Linetypes, selected = jsonTheme$background$xAxis$linetype),
-                   h3("Ticks"),
-                   textInput("xAxisTicksColor", label = "Color", value = jsonTheme$fonts$xAxis$color),
-                   sliderInput("xAxisTicksSize", label = "Size", min = 0, max = 30, value = jsonTheme$fonts$xAxis$size, step = 0.5),
-                   sliderInput("xAxisTicksAngle", label = "Angle", min = -180, max = 180, value = jsonTheme$fonts$xAxis$angle, step = 5)
-                   ),
-          tabPanel("Y-axis",
-                   textInput("yAxisColor", label = "Color", value = jsonTheme$background$yAxis$color),
-                   sliderInput("yAxisSize", label = "Size", min = 0, max = 5, value = jsonTheme$background$yAxis$size, step = 0.05),
-                   selectInput("yAxisLinetype", label = "Linetype", choices = Linetypes, selected = jsonTheme$background$yAxis$linetype),
-                   h3("Ticks"),
-                   textInput("yAxisTicksColor", label = "Color", value = jsonTheme$fonts$xAxis$color),
-                   sliderInput("yAxisTicksSize", label = "Size", min = 0, max = 30, value = jsonTheme$fonts$yAxis$size, step = 0.5),
-                   sliderInput("yAxisTicksAngle", label = "Angle", min = -180, max = 180, value = jsonTheme$fonts$yAxis$angle, step = 5)
-                   )
-          )),
-      tabPanel(
-        "Grid",
-        tabsetPanel(
-          tabPanel("X-grid",
-                   textInput("xGridColor", label = "Color", value = jsonTheme$background$xGrid$color),
-                   sliderInput("xGridSize", label = "Size", min = 0, max = 5, value = jsonTheme$background$xGrid$size, step = 0.05),
-                   selectInput("xGridLinetype", label = "Linetype", choices = Linetypes, selected = jsonTheme$background$xGrid$linetype)
-                   ),
-          tabPanel("Y-Grid",
-                   textInput("yGridColor", label = "Color", value = jsonTheme$background$yGrid$color),
-                   sliderInput("yGridSize", label = "Size", min = 0, max = 5, value = jsonTheme$background$yGrid$size, step = 0.05),
-                   selectInput("yGridLinetype", label = "Linetype", choices = Linetypes, selected = jsonTheme$background$yGrid$linetype)
-                   )
-          )),
+        navlistPanel(
+          backgroundPanel("XAxis", "xAxis", includeFill = FALSE),
+          backgroundPanel("YAxis", "yAxis", includeFill = FALSE),
+          labelPanel("XTicks", "xAxis", "xAxisTicks"),
+          labelPanel("YTicks", "yAxis", "yAxisTicks")
+          )
+        ),
       tabPanel(
         "Legend",
         # TO DO: include legend title features in theme
-        # fluidRow(
-        # h4("Title"),
-        #  textInput("legendTitleText", label = h4("text"), value = "TO DO"),
-        #  textInput("legendTitleColor", label = h4("color"), value = jsonTheme$fonts$legendTitle$color),
-        #  sliderInput("legendTitleSize", label = h4("size"), min = 1, max = 30, value = jsonTheme$fonts$legendTitle$size, step = 0.5),
-        #  sliderInput("legendTitleAngle", label = h4("angle"), min = -180, max = 180, value = jsonTheme$fonts$legendTitle$angle, step = 5)
-        # ),
-        tabsetPanel(
+        navlistPanel(
           tabPanel("Position",
-                   selectInput("legendPosition", label = "position", choices = LegendPositions, selected = jsonTheme$background$legendPosition)
+                   selectInput("legendPosition", label = "Position", choices = LegendPositions, selected = jsonTheme$background$legendPosition)
                    ),
-          tabPanel("Font",
-                   textInput("legendFontColor", label = "Color", value = jsonTheme$fonts$legend$color),
-                   sliderInput("legendFontSize", label = "Size", min = 1, max = 30, value = jsonTheme$fonts$legend$size, step = 0.5),
-                   sliderInput("legendFontAngle", label = "Angle", min = -180, max = 180, value = jsonTheme$fonts$legend$angle, step = 5)
-                   ),
-          tabPanel("Background",
-                   textInput("legendFill", label = "Fill", value = jsonTheme$background$legend$fill),
-                   textInput("legendColor", label = "Color", value = jsonTheme$background$legend$color),
-                   sliderInput("legendSize", label = "Size", min = 0, max = 5, value = jsonTheme$background$legend$size, step = 0.05),
-                   selectInput("legendLinetype", label = "Linetype", choices = Linetypes, selected = jsonTheme$background$legend$linetype)
-                   )
-          )),
+          labelPanel("Font", "legend", "legendFont"),
+          backgroundPanel("Background", "legend", includeFill = TRUE)
+          )
+        ),
       tabPanel(
         "Aesthetic Maps",
-        tabsetPanel(
+        navlistPanel(
           tabPanel("Color",
-                   sliderInput("colorMapIndex", label = "Rank", min = 1, max = length(jsonTheme$aestheticMaps$color), value = 1, step = 1),
+                   numericInput("colorMapIndex", label = "Rank", min = 1, max = length(jsonTheme$aestheticMaps$color), value = 1, step = 1),
                    uiOutput("colorMapValue")),
           tabPanel("Fill",
-                   sliderInput("fillMapIndex", label = "Rank", min = 1, max = length(jsonTheme$aestheticMaps$fill), value = 1, step = 1),
+                   numericInput("fillMapIndex", label = "Rank", min = 1, max = length(jsonTheme$aestheticMaps$fill), value = 1, step = 1),
                    uiOutput("fillMapValue")),
           tabPanel("Linetype",
-                   sliderInput("linetypeMapIndex", label = "Rank", min = 1, max = length(jsonTheme$aestheticMaps$linetype), value = 1, step = 1),
+                   numericInput("linetypeMapIndex", label = "Rank", min = 1, max = length(jsonTheme$aestheticMaps$linetype), value = 1, step = 1),
                    uiOutput("linetypeMapValue")),
           tabPanel("Shape",
-                   sliderInput("shapeMapIndex", label = "Rank", min = 1, max = length(jsonTheme$aestheticMaps$shape), value = 1, step = 1),
+                   numericInput("shapeMapIndex", label = "Rank", min = 1, max = length(jsonTheme$aestheticMaps$shape), value = 1, step = 1),
                    uiOutput("shapeMapValue")),
           tabPanel("Size",
-                   sliderInput("sizeMapIndex", label = "Rank", min = 1, max = length(jsonTheme$aestheticMaps$size), value = 1, step = 1),
+                   numericInput("sizeMapIndex", label = "Rank", min = 1, max = length(jsonTheme$aestheticMaps$size), value = 1, step = 1),
                    uiOutput("sizeMapValue")),
           tabPanel("Alpha",
-                   sliderInput("alphaMapIndex", label = "Rank", min = 1, max = length(jsonTheme$aestheticMaps$alpha), value = 1, step = 1),
+                   numericInput("alphaMapIndex", label = "Rank", min = 1, max = length(jsonTheme$aestheticMaps$alpha), value = 1, step = 1),
                    uiOutput("alphaMapValue"))
           )
       ),
       tabPanel(
         "Plot Configurations",
-        tabsetPanel(
-          tabPanel("addScatter",
-                 p("WIP")),
-          tabPanel("addLine",
-                 p("WIP")),
-          tabPanel("addRibbon",
-                 p("WIP")),
-          tabPanel("addErrorbar",
-                 p("WIP")),
-          tabPanel("plotBoxWhisker",
-                   tabsetPanel(
-                     tabPanel("Points",
-                              tabsetPanel(
-                                tabPanel("Color",
-                                         selectInput("plotBoxWhiskerPointsColor", 
-                                                     label = "Selection key",
-                                                     choices = c(other = "other", AestheticSelectionKeys),
-                                                     selected = jsonTheme$plotConfigurations$plotBoxWhisker$points$color),
-                                         conditionalPanel("input.plotBoxWhiskerPointsColor=='other'",
-                                                          textInput("plotBoxWhiskerPointsColor2", label = "", 
-                                                                    value = jsonTheme$plotConfigurations$plotBoxWhisker$points$color))
-                                         ),
-                                tabPanel("Shape",
-                                         selectInput("plotBoxWhiskerPointsShape", 
-                                                     label = "Selection key",
-                                                     choices = c(other = "other", AestheticSelectionKeys),
-                                                     selected = jsonTheme$plotConfigurations$plotBoxWhisker$points$shape),
-                                         conditionalPanel("input.plotBoxWhiskerPointsShape=='other'",
-                                                          selectInput("plotBoxWhiskerPointsShape2", label = "", choices = Shapes, 
-                                                                      selected = jsonTheme$plotConfigurations$plotBoxWhisker$points$shape))
-                                         ),
-                                tabPanel("Size",
-                                         selectInput("plotBoxWhiskerPointsSize", 
-                                                     label = "Selection key",
-                                                     choices = c(other = "other", AestheticSelectionKeys),
-                                                     selected = jsonTheme$plotConfigurations$plotBoxWhisker$points$size),
-                                         conditionalPanel("input.plotBoxWhiskerPointsSize=='other'",
-                                                          sliderInput("plotBoxWhiskerPointsSize2", label = "", min = 0, max = 5, 
-                                                                      value = jsonTheme$plotConfigurations$plotBoxWhisker$points$size, step = 0.05))
-                                         )
-                                )
-                              ),
-                     tabPanel("Ribbons",
-                              tabsetPanel(
-                                tabPanel("Fill",
-                                         selectInput("plotBoxWhiskerRibbonsFill", 
-                                                     label = "Selection key",
-                                                     choices = c(other = "other", AestheticSelectionKeys),
-                                                     selected = jsonTheme$plotConfigurations$plotBoxWhisker$ribbons$fill),
-                                         conditionalPanel("input.plotBoxWhiskerRibbonsFill=='other'",
-                                                          textInput("plotBoxWhiskerRibbonsFill2", label = "",
-                                                                    value = jsonTheme$plotConfigurations$plotBoxWhisker$ribbons$fill))
-                                         ),
-                                tabPanel("Alpha",
-                                         selectInput("plotBoxWhiskerRibbonsAlpha", 
-                                                     label = "Selection key",
-                                                     choices = c(other = "other", AestheticSelectionKeys),
-                                                     selected = jsonTheme$plotConfigurations$plotBoxWhisker$ribbons$alpha),
-                                         conditionalPanel("input.plotBoxWhiskerRibbonsAlpha=='other'",
-                                                          sliderInput("plotBoxWhiskerRibbonsAlpha2", label = "", min = 0, max = 1, 
-                                                                      value = jsonTheme$plotConfigurations$plotBoxWhisker$ribbons$alpha, step = 0.05))
-                                         ),
-                                tabPanel("Color",
-                                         selectInput("plotBoxWhiskerRibbonsColor", 
-                                                     label = "Selection key",
-                                                     choices = c(other = "other", AestheticSelectionKeys),
-                                                     selected = jsonTheme$plotConfigurations$plotBoxWhisker$ribbons$color),
-                                         conditionalPanel("input.plotBoxWhiskerRibbonsColor=='other'",
-                                                          textInput("plotBoxWhiskerRibbonsColor2", label = "",
-                                                                    value = jsonTheme$plotConfigurations$plotBoxWhisker$ribbons$color))
-                                         ),
-                                tabPanel("Linetype",
-                                         selectInput("plotBoxWhiskerRibbonsLinetype", 
-                                                     label = "Selection key",
-                                                     choices = c(other = "other", AestheticSelectionKeys),
-                                                     selected = jsonTheme$plotConfigurations$plotBoxWhisker$ribbons$linetype),
-                                         conditionalPanel("input.plotBoxWhiskerRibbonsLinetype=='other'",
-                                                          selectInput("plotBoxWhiskerRibbonsLinetype2", label = "", choices = Linetypes,
-                                                                      selected = jsonTheme$plotConfigurations$plotBoxWhisker$ribbons$linetype))
-                                         ),
-                                tabPanel("Size",
-                                         selectInput("plotBoxWhiskerRibbonsSize", 
-                                                     label = "Selection key",
-                                                     choices = c(other = "other", AestheticSelectionKeys),
-                                                     selected = jsonTheme$plotConfigurations$plotBoxWhisker$ribbons$size),
-                                         conditionalPanel("input.plotBoxWhiskerRibbonsSize=='other'",
-                                                          sliderInput("plotBoxWhiskerRibbonsSize2", label = "", min = 0, max = 5, 
-                                                                      value = jsonTheme$plotConfigurations$plotBoxWhisker$ribbons$size, step = 0.05))
-                                         )
-                                )
-                              )
-                     )),
-          tabPanel("plotDDIRatio",
-                 p("WIP")),
-          tabPanel("plotHistogram",
-                 p("WIP")),
-          tabPanel("plotObsVsPred",
-                 p("WIP")),
-          tabPanel("plotPKRatio",
-                 p("WIP")),
-          tabPanel("plotTimeProfile",
-                 p("WIP")),
-          tabPanel("plotTornado",
-                 p("WIP"))
+        navlistPanel(
+          tabPlotConfigurationPanel("addScatter"),
+          tabPlotConfigurationPanel("addLine"),
+          tabPlotConfigurationPanel("addRibbon"),
+          tabPlotConfigurationPanel("addErrorbar"),
+          tabPlotConfigurationPanel("plotBoxWhisker"),
+          tabPlotConfigurationPanel("plotDDIRatio"),
+          tabPlotConfigurationPanel("plotHistogram"),
+          tabPlotConfigurationPanel("plotObsVsPred"),
+          tabPlotConfigurationPanel("plotPKRatio"),
+          tabPlotConfigurationPanel("plotTimeProfile"),
+          tabPlotConfigurationPanel("plotTornado")
           )
-      ))
-  ),
+        )
+      )
+    ),
 
   # Plot Column
   column(
-    7,
+    6,
     fluidRow(
       fileInput("loadTheme", "Load a Theme from Json", accept = ".json"),
       downloadButton("downloadJson", "Download theme .json")
@@ -307,10 +144,10 @@ server <- function(input, output) {
   
   output$colorMapValue <- renderUI({textInput("colorMapValue2", "value", getColorMapValue())})
   output$fillMapValue <- renderUI({textInput("fillMapValue2", "value", getFillMapValue())})
-  output$linetypeMapValue <- renderUI({selectInput("linetypeMapValue2", "value", choices = Linetypes, selected = getLinetypeMapValue())})
-  output$shapeMapValue <- renderUI({selectInput("shapeMapValue2", "value", choices = Shapes, selected = getShapeMapValue())})
-  output$sizeMapValue <- renderUI({numericInput("sizeMapValue2", "value", getSizeMapValue())})
-  output$alphaMapValue <- renderUI({numericInput("alphaMapValue2", "value", getAlphaMapValue())})
+  output$linetypeMapValue <- renderUI({selectInput("linetypeMapValue2", "Value", choices = Linetypes, selected = getLinetypeMapValue())})
+  output$shapeMapValue <- renderUI({selectInput("shapeMapValue2", "Value", choices = Shapes, selected = getShapeMapValue())})
+  output$sizeMapValue <- renderUI({numericInput("sizeMapValue2", "Value", getSizeMapValue())})
+  output$alphaMapValue <- renderUI({numericInput("alphaMapValue2", "Value", getAlphaMapValue())})
   
   #---------- Interactive way of updating plot configurations  ----------#
   
@@ -319,12 +156,13 @@ server <- function(input, output) {
   updateTheme <- reactive({
     #---------- Update Fonts ----------#
     # Each line will look like 'jsonTheme$fonts$title$color <- input$titleColor'
+    inputPlotProperties <- c("title", "subtitle", "xlabel", "ylabel", "watermark", "xAxisTicks", "yAxisTicks", "legendFont")
     plotProperties <- c("title", "subtitle", "xlabel", "ylabel", "watermark", "xAxis", "yAxis", "legend")
     fontProperties <- c("Color", "Size", "Angle")
     updateFontExpression <- parse(text = paste0(
       "jsonTheme$fonts$", rep(plotProperties, each = length(fontProperties)), 
       "$", rep(tolower(fontProperties), length(plotProperties)),
-      " <- input$", rep(plotProperties, each = length(fontProperties)), rep(fontProperties, length(plotProperties))
+      " <- input$", rep(inputPlotProperties, each = length(fontProperties)), rep(fontProperties, length(plotProperties))
     ))
     eval(updateFontExpression)
     
@@ -352,43 +190,75 @@ server <- function(input, output) {
     jsonTheme$background$panel$fill <- input$panelFill
     jsonTheme$background$legend$fill <- input$legendFill
     
-    
     #---------- Aesthetic maps ----------#
-    # Each line will look like 'if(length(input$colorMapValue2)>0){
-    # jsonTheme$aestheticMaps$color[input$colorMapIndex] <- input$colorMapValue2}'
+    # Each line will look like 'jsonTheme$aestheticMaps$color[input$colorMapIndex] <- 
+    # tlfInput(input$colorMapValue2) %||% jsonTheme$aestheticMaps$color[input$colorMapIndex]'
     mapProperties <- c("color", "fill", "linetype", "size", "alpha")
     updateMapExpression <- parse(text = paste0(
-      "if(length(input$", mapProperties, "MapValue2)>0){jsonTheme$aestheticMaps$",
-      mapProperties, "[input$", mapProperties, "MapIndex] <- input$", mapProperties, "MapValue2}"
+      "jsonTheme$aestheticMaps$", mapProperties, "[input$", mapProperties, "MapIndex] <- tlfInput(input$",
+      mapProperties, "MapValue2) %||% jsonTheme$aestheticMaps$", mapProperties, "[input$", mapProperties, "MapIndex]"
     ))
     eval(updateMapExpression)
+    
     # Update remaining field not covered by expressions (as.numeric enforced)
-    if(length(input$shapeMapValue2)>0){
-      jsonTheme$aestheticMaps$shape[input$shapeMapIndex] <- as.numeric(input$shapeMapValue2)}
+    jsonTheme$aestheticMaps$shape[input$shapeMapIndex] <- tlfInput(as.numeric(input$shapeMapValue2)) %||% jsonTheme$aestheticMaps$shape[input$shapeMapIndex]
     
     #---------- Plot configurations ----------#
-    selectionProperties <- c("Color", "Fill", "Size", "Linetype", "Alpha")
+    #----- Atom plots
+    jsonTheme$plotConfigurations$addScatter$color <- selectInputFromKey(input$addScatterColor, input$addScatterColor2) 
+    jsonTheme$plotConfigurations$addScatter$shape <- selectInputFromKey(input$addScatterShape, input$addScatterShape2) 
+    jsonTheme$plotConfigurations$addScatter$size <- selectInputFromKey(input$addScatterSize, input$addScatterSize2)
+    
+    jsonTheme$plotConfigurations$addLine$color <- selectInputFromKey(input$addLineColor, input$addLineColor2) 
+    jsonTheme$plotConfigurations$addLine$linetype <- selectInputFromKey(input$addLineLinetype, input$addLineLinetype2) 
+    jsonTheme$plotConfigurations$addLine$size <- selectInputFromKey(input$addLineSize, input$addLineSize2)
+    
+    jsonTheme$plotConfigurations$addRibbon$fill <- selectInputFromKey(input$addRibbonFill, input$addRibbonFill2) 
+    jsonTheme$plotConfigurations$addRibbon$alpha <- selectInputFromKey(input$addRibbonAlpha, input$addRibbonAlpha2)
+    jsonTheme$plotConfigurations$addRibbon$color <- selectInputFromKey(input$addRibbonColor, input$addRibbonColor2) 
+    jsonTheme$plotConfigurations$addRibbon$linetype <- selectInputFromKey(input$addRibbonLinetype, input$addRibbonLinetype2) 
+    jsonTheme$plotConfigurations$addRibbon$size <- selectInputFromKey(input$addRibbonSize, input$addRibbonSize2)
+    
+    jsonTheme$plotConfigurations$addErrorbar$color <- selectInputFromKey(input$addErrorbarColor, input$addErrorbarColor2) 
+    jsonTheme$plotConfigurations$addErrorbar$linetype <- selectInputFromKey(input$addErrorbarLinetype, input$addErrorbarLinetype2) 
+    jsonTheme$plotConfigurations$addErrorbar$size <- selectInputFromKey(input$addErrorbarSize, input$addErrorbarSize2)
+    
+    #----- Molecule plots by property using expression
+    #--- Points
+    plotNames <- rep(c("plotBoxWhisker", "plotDDIRatio", "plotObsVsPred", "plotPKRatio", "plotTimeProfile", "plotTornado"), each = 3)
+    selectionProperties <- rep(c("Color", "Shape", "Size"), 6)
     updateConfigurationExpression <- parse(text = paste0(
-      "if(length(input$plotBoxWhiskerPoints", selectionProperties, ")>0){",
-      "jsonTheme$plotConfigurations$plotBoxWhisker$ribbons$", tolower(selectionProperties), 
-      " <- switch(input$plotBoxWhiskerRibbons", selectionProperties, ", ",
-      "other = input$plotBoxWhiskerRibbons", selectionProperties, "2, ",
-      "input$plotBoxWhiskerRibbons", selectionProperties, ")}"
-      ))
+      "jsonTheme$plotConfigurations$", plotNames, "$points$", tolower(selectionProperties), 
+      " <- selectInputFromKey(input$", plotNames, "Points", selectionProperties, ", input$", plotNames, "Points", selectionProperties, "2)"
+    ))
     eval(updateConfigurationExpression)
     
-    if(length(input$plotBoxWhiskerPointsSize)>0){
-      jsonTheme$plotConfigurations$plotBoxWhisker$points$size <- switch(input$plotBoxWhiskerPointsSize,
-                                                                        other = input$plotBoxWhiskerPointsSize2,
-                                                                        input$plotBoxWhiskerPointsSize)}
-    if(length(input$plotBoxWhiskerPointsColor)>0){
-      jsonTheme$plotConfigurations$plotBoxWhisker$points$color <- switch(input$plotBoxWhiskerPointsColor,
-                                                                         other = input$plotBoxWhiskerPointsColor2,
-                                                                         input$plotBoxWhiskerPointsColor)}
-    if(length(input$plotBoxWhiskerPointsShape)>0){
-      jsonTheme$plotConfigurations$plotBoxWhisker$points$shape <- switch(input$plotBoxWhiskerPointsShape,
-                                                                         other = as.numeric(input$plotBoxWhiskerPointsShape2),
-                                                                         input$plotBoxWhiskerPointsShape)}
+    #--- Lines
+    plotNames <- rep(c("plotDDIRatio", "plotHistogram", "plotObsVsPred", "plotPKRatio", "plotTimeProfile", "plotTornado"), each = 3)
+    selectionProperties <- rep(c("Color", "Linetype", "Size"), 6)
+    updateConfigurationExpression <- parse(text = paste0(
+      "jsonTheme$plotConfigurations$", plotNames, "$lines$", tolower(selectionProperties), 
+      " <- selectInputFromKey(input$", plotNames, "Lines", selectionProperties, ", input$", plotNames, "Lines", selectionProperties, "2)"
+    ))
+    eval(updateConfigurationExpression)
+    
+    #--- Ribbons
+    plotNames <- rep(c("plotBoxWhisker", "plotHistogram", "plotTimeProfile", "plotTornado"), each = 5)
+    selectionProperties <- rep(c("Fill", "Alpha", "Color", "Linetype", "Size"), 4)
+    updateConfigurationExpression <- parse(text = paste0(
+      "jsonTheme$plotConfigurations$", plotNames, "$ribbons$", tolower(selectionProperties), 
+      " <- selectInputFromKey(input$", plotNames, "Ribbons", selectionProperties, ", input$", plotNames, "Ribbons", selectionProperties, "2)"
+    ))
+    eval(updateConfigurationExpression)
+    
+    #--- Errorbars
+    plotNames <- rep(c("plotDDIRatio", "plotObsVsPred", "plotPKRatio", "plotTimeProfile"), each = 3)
+    selectionProperties <- rep(c("Color", "Linetype", "Size"), 4)
+    updateConfigurationExpression <- parse(text = paste0(
+      "jsonTheme$plotConfigurations$", plotNames, "$errorbars$", tolower(selectionProperties), 
+      " <- selectInputFromKey(input$", plotNames, "Errorbars", selectionProperties, ", input$", plotNames, "Errorbars", selectionProperties, "2)"
+    ))
+    eval(updateConfigurationExpression)
     
     #---------- Use theme for sample plots ----------#
     # This also set theme as current: after using app, current theme is changed
@@ -405,15 +275,15 @@ server <- function(input, output) {
     dataMapping <- switch(input$selectedSamplePlot,
                           initializePlot = NULL,
                           addScatter = XYGDataMapping$new(x = "Age", y = "Ratio", color = "Sex", shape = "Country"),
-                          addLine = XYGDataMapping$new(x = "Age", y = "Ratio", color = "Sex", linetype = "Country"),
-                          addRibbon = RangeDataMapping$new(x = "Age", ymin = "Obs", ymax = "Pred", fill = "Sex"),
+                          addLine = XYGDataMapping$new(x = "ID", y = "Ratio", color = "Sex", linetype = "Country"),
+                          addRibbon = RangeDataMapping$new(x = "ID", ymin = "Obs", ymax = "Pred", fill = "Sex"),
                           addErrorbar = RangeDataMapping$new(x = "Age", ymin = "Obs", ymax = "Pred", color = "Sex", linetype = "Country"),
                           plotBoxWhisker = BoxWhiskerDataMapping$new(x = "AgeBin", y = "Ratio", fill = "Sex"),
                           plotDDIRatio = DDIRatioDataMapping$new(x = "Obs", y = "Pred", color = "Sex", shape = "Country"),
                           plotHistogram = HistogramDataMapping$new(x = "Ratio", fill = "Sex"),
                           plotObsVsPred = ObsVsPredDataMapping$new(x = "Obs", y = "Pred", color = "Sex", shape = "Country"),
                           plotPKRatio = PKRatioDataMapping$new(x = "Age", y = "Ratio", color = "Sex", shape = "Country"),
-                          plotTimeProfile = TimeProfileDataMapping$new(x = "Age", y = "Ratio", ymin = "ymin", ymax = "ymax", fill = "Sex", color = "Sex", linetype = "Country"),
+                          plotTimeProfile = TimeProfileDataMapping$new(x = "ID", y = "Ratio", ymin = "ymin", ymax = "ymax", fill = "Sex", color = "Sex", linetype = "Country"),
                           plotTornado = TornadoDataMapping$new(x = "Ratio", y = "ID")
                           )
     
@@ -426,10 +296,10 @@ server <- function(input, output) {
                                 addRibbon = plotConfiguration,
                                 addErrorbar = plotConfiguration,
                                 plotBoxWhisker = BoxWhiskerPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel"),
-                                plotDDIRatio = DDIRatioPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel"),
+                                plotDDIRatio = DDIRatioPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel", xScale = Scaling$log, yScale = Scaling$log),
                                 plotHistogram = HistogramPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel"),
                                 plotObsVsPred = ObsVsPredPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel"),
-                                plotPKRatio = PKRatioPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel"),
+                                plotPKRatio = PKRatioPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel", yScale = Scaling$log),
                                 plotTimeProfile = TimeProfilePlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel"),
                                 plotTornado = TornadoPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel")
                                 )
@@ -446,7 +316,7 @@ server <- function(input, output) {
                          plotHistogram = plotHistogram(data = testData, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
                          plotObsVsPred = plotObsVsPred(data = testData, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
                          plotPKRatio = plotPKRatio(data = testData, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
-                         plotTimeProfile = plotObsVsPred(data = testData, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
+                         plotTimeProfile = plotTimeProfile(data = testData, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
                          # use only 6 first values for the tornado plot
                          plotTornado = plotTornado(data = testData[1:6,], dataMapping = dataMapping, plotConfiguration = plotConfiguration)
                          )
