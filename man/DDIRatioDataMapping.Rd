@@ -12,7 +12,7 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{ddiRatioL
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{comparisonType}}{Options for comparison from enum \code{MappingComparisonTypes}}
+\item{\code{comparisonType}}{Options for comparison from enum \code{DDIComparisonTypes}}
 
 \item{\code{minRange}}{Mininmum range for guest and ratio lines}
 }

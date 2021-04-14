@@ -297,29 +297,3 @@ updateLegendCaption <- function(captionData, newCaption = NULL, which = NULL) {
   ifnotnull(which, levels(captionData)[which] <- newCaption %||% levels(captionData)[which])
   return(captionData)
 }
-
-
-setAesPropertiesToLegend <- function(parameter = NULL, aesProperties = NULL) {
-  ifnotnull(
-    aesProperties,
-    stopifnot(aesProperties %in% c("color", "colour", "size", "shape", "linetype")),
-    return(NULL)
-  )
-
-  if (!is.null(parameter)) {
-    if (is.list(parameter)) {
-      if (min(names(parameter) %in% aesProperties) == 1) {
-        names(parameter) <- aesProperties
-      }
-    }
-    # Case where legends are provided as characters only
-    if (is.character(parameter)) {
-      parameter2 <- parameter
-      parameter <- enum(aesProperties)
-      for (property in aesProperties) {
-        parameter[[property]] <- parameter2
-      }
-    }
-  }
-  return(parameter)
-}

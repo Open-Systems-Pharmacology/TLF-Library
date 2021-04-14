@@ -242,7 +242,7 @@ DefaultDataMappingValues <- list(
   ddiRatio = list(
     ddiRatio1 = 1,
     ddiRatio2 = c(2, 1 / 2),
-    guestLine = 1
+    guestRatio = 1
   ),
   obsVsPred = 1,
   resVsPred = 0,

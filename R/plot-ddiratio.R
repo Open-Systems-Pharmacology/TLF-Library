@@ -36,7 +36,8 @@ plotDDIRatio <- function(data,
 
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
-  plotObject <- addDDIRatioLines(data,
+  plotObject <- addDDIRatioLines(
+    data,
     metaData,
     dataMapping,
     plotConfiguration = plotConfiguration,
@@ -189,13 +190,4 @@ getGuestValues <- function(x, delta = 1) {
 
   guestLines <- data.frame(x, ymin, ymax)
   return(guestLines)
-}
-
-#' @title runDDIRatioPlot
-#' @description
-#' Run shiny app to use `plotDDIRatio()` from user interface
-#' @export
-runDDIRatioPlot <- function() {
-  appPath <- system.file("ddi-ratio", package = "tlf")
-  shiny::runApp(appPath)
 }
