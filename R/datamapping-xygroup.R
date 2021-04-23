@@ -83,7 +83,7 @@ XYGDataMapping <- R6::R6Class(
           legendLabels <- self$data$legendLabels %||% grouping$getCaptions(data, metaData)
           
           # Prevent duplication of legend if groupings are the same
-          if(all(as.character(legendLabels) == as.character(grouping$getCaptions(data, metaData)))){
+          if(isTRUE(all.equal(legendLabels, grouping$getCaptions(data, metaData)))){
             self$data$legendLabels <- legendLabels
             next
           }
