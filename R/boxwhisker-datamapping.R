@@ -57,7 +57,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
       if (isOfLength(self$x, 0)) {
         data$legendLabels <- factor("")
       }
-
+      
       # Transform names into functions for aggregation summary
       boxWhiskerLimitsFunctions <- sapply(self$boxWhiskerLimits, match.fun)
 
@@ -75,6 +75,9 @@ BoxWhiskerDataMapping <- R6::R6Class(
 
       # Dummy variable for aesthetics
       boxWhiskerLimits$legendLabels <- factor("")
+      if(!isOfLength(self$x, 0)){
+        boxWhiskerLimits[,self$x] <- as.factor(boxWhiskerLimits[,self$x])
+        }
 
       return(boxWhiskerLimits)
     },
@@ -89,7 +92,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
       if (isOfLength(self$x, 0)) {
         data$legendLabels <- factor("")
       }
-
+      
       # Transform names into functions for aggregation summary
       outlierLimitsFunctions <- sapply(self$outlierLimits, match.fun)
 
@@ -120,6 +123,9 @@ BoxWhiskerDataMapping <- R6::R6Class(
 
       # Dummy variable for aesthetics
       outliers$legendLabels <- factor("")
+      if(!isOfLength(self$x, 0)){
+        outliers[,self$x] <- as.factor(outliers[,self$x])
+      }
 
       return(outliers)
     }
