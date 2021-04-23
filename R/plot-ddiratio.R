@@ -22,11 +22,11 @@ plotDDIRatio <- function(data,
   plotConfiguration <- plotConfiguration %||% DDIRatioPlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
 
   validateIsOfType(dataMapping, "DDIRatioDataMapping")
-  validateIsOfType(plotConfiguration, "PKRatioPlotConfiguration")
+  validateIsOfType(plotConfiguration, "DDIRatioPlotConfiguration")
   validateIsOfType(plotObject, "ggplot", nullAllowed = TRUE)
 
   if (nrow(data) == 0) {
-    warning(messages$errorNrowData("PK ratio plot"))
+    warning(messages$errorNrowData("DDI ratio plot"))
     return(plotObject)
   }
 
@@ -116,7 +116,7 @@ addDDIRatioLines <- function(data,
                              plotConfiguration = NULL,
                              plotObject = NULL) {
   validateIsOfType(dataMapping, "DDIRatioDataMapping")
-  validateIsOfType(plotConfiguration, "PKRatioPlotConfiguration")
+  validateIsOfType(plotConfiguration, "DDIRatioPlotConfiguration")
   validateIsOfType(plotObject, "ggplot", nullAllowed = TRUE)
   validateIsIncluded(comparisonType, DDIComparisonTypes, nullAllowed = TRUE)
 
