@@ -22,13 +22,13 @@ R6 class for mapping \code{values}, \code{labels} to \code{data}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{TornadoDataMapping$new()}}
+\item \href{#method-checkMapData}{\code{TornadoDataMapping$checkMapData()}}
 \item \href{#method-clone}{\code{TornadoDataMapping$clone()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="XYGDataMapping" data-id="checkMapData">}\href{../../tlf/html/XYGDataMapping.html#method-checkMapData}{\code{tlf::XYGDataMapping$checkMapData()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -64,6 +64,29 @@ Create a new \code{TornadoDataMapping} object
 }
 \subsection{Returns}{
 A new \code{TornadoDataMapping} object
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-checkMapData"></a>}}
+\if{latex}{\out{\hypertarget{method-checkMapData}{}}}
+\subsection{Method \code{checkMapData()}}{
+Check that \code{data} variables include map variables
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TornadoDataMapping$checkMapData(data, metaData = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data}}{data.frame to check}
+
+\item{\code{metaData}}{list containing information on \code{data}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A data.frame with map and \code{defaultAes} variables.
+Dummy variable \code{defaultAes} is necessary to allow further modification of plots.
 }
 }
 \if{html}{\out{<hr>}}

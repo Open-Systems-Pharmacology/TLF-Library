@@ -46,6 +46,20 @@ TornadoDataMapping <- R6::R6Class(
 
       self$lines <- lines
       self$sorted <- sorted %||% TRUE
+    },
+    
+    #' @description Check that \code{data} variables include map variables
+    #' @param data data.frame to check
+    #' @param metaData list containing information on \code{data}
+    #' @return A data.frame with map and \code{defaultAes} variables.
+    #' Dummy variable \code{defaultAes} is necessary to allow further modification of plots.
+    checkMapData = function(data, metaData = NULL) {
+      mapData <- super$checkMapData(data, metaData)
+      # Enforce y to be a discrete variable preventing crashes from numerical values
+      if(!isOfLength(self$y, 0)){
+        mapData[,self$y] <- as.factor(mapData[,self$y])
+      }
+      return(mapData)
     }
   )
 )

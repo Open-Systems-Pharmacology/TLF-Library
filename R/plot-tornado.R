@@ -155,5 +155,6 @@ plotTornado <- function(data = NULL,
     ))
   }
   try(suppressMessages(plotObject <- setXAxis(plotObject)))
+  try(suppressMessages(plotObject <- setYAxis(plotObject)))
   return(plotObject)
 }

@@ -65,7 +65,7 @@ XYGDataMapping <- R6::R6Class(
 
       # All possible Groupings are listed in the enum LegendTypes
       for (groupType in LegendTypes) {
-        if (!is.null(self$groupMapping[[groupType]]$group)) {
+        if (isOfLength(self$groupMapping[[groupType]]$group, 0)) {next}
           grouping <- self$groupMapping[[groupType]]
 
           groupVariables <- grouping$group
@@ -76,15 +76,20 @@ XYGDataMapping <- R6::R6Class(
             groupVariables <- utils::head(groupVariables, -1)
           }
           validateMapping(groupVariables, data)
-          self$data[, grouping$label] <- grouping$getCaptions(data, metaData)
-          # Dummy variable for default aesthetics
-          # Will be used to define legend labels
-          self$data$legendLabels <- ifnotnull(
-            self$data$legendLabels,
-            paste(self$data$legendLabels, grouping$getCaptions(data, metaData), sep = "-"),
-            grouping$getCaptions(data, metaData)
-          )
-        }
+          # Enforce grouping variables to be factors
+          self$data[, grouping$label] <- as.factor(grouping$getCaptions(data, metaData))
+          
+          # Dummy variable for default aesthetics that will be used to define legend labels
+          legendLabels <- self$data$legendLabels %||% grouping$getCaptions(data, metaData)
+          
+          # Prevent duplication of legend if groupings are the same
+          if(isTRUE(all.equal(legendLabels, grouping$getCaptions(data, metaData)))){
+            self$data$legendLabels <- legendLabels
+            next
+          }
+          self$data$legendLabels <- as.factor(paste(as.character(self$data$legendLabels), 
+                                                    as.character(grouping$getCaptions(data, metaData)), 
+                                                    sep = "-"))
       }
 
       if (is.null(self$data$legendLabels)) {

@@ -140,13 +140,13 @@ plotPKRatio(data = pkRatioData,
 The last examples uses another feature available in the `groupMapping` class. The class can be initilized using a `data.frame` where the last column of the data.frame will be used to split the data. In the following example, the data.frame is the following:
 
 ```{r, echo=FALSE, results='asis'}
-groupDataFrame <- data.frame(AgeBin = c(50, 100, 50, 100, 50, 100, 50, 100), 
-                             Country = c("Aspirin", "Aspirin", "Vancomycin", "Vancomycin", "Aspirin", "Aspirin", "Vancomycin", "Vancomycin"),
-                             Sex = c("M", "M", "M", "M", "F", "F", "F", "F"),
-                             Group = c("Males infused with 50mg of Aspirin", "Males infused with 100mg of Aspirin", 
-                                       "Males infused with 50mg of Vancomycin", "Males infused with 100mg of Vancomycin",
-                                       "Females infused with 50mg of Aspirin",  "Females infused with 100mg of Aspirin", 
-                                       "Females infused with 50mg of Vancomycin", "Females infused with 100mg of Vancomycin"))
+groupDataFrame <- data.frame(AgeBin = c("Peds", "Adults", "Peds", "Adults", "Peds", "Adults", "Peds", "Adults"), 
+                             Country = c("Canada", "Canada", "Germany", "Germany", "Canada", "Canada", "Germany", "Germany"),
+                             Sex = c("Male", "Male", "Male", "Male", "Female", "Female", "Female", "Female"),
+                             Group = c("Young Canadian Males", "Old Canadian Males",
+                                       "Young German Males", "Old German Males",
+                                       "Young Canadian Females", "Old Canadian Females",
+                                       "Young German Females", "Old German Females"))
 knitr::kable(groupDataFrame)
 ```
 

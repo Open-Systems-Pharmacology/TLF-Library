@@ -25,14 +25,27 @@ ui <- fluidPage(
             ),
           conditionalPanel(
             condition = "input.dataType == 'file'",
-            fileInput("dataFromFile", label = "Select a .csv file", accept = ".csv")
+            fileInput("dataFromFile", label = "Select a file")
             )
           ),
           fluidRow(
             tableOutput("dataTable"),
             style = "overflow-x: scroll"
+            ),
+        conditionalPanel(
+          condition = "input.dataType == 'file'",
+          br(),
+          actionButton("fileOptions", label = "Options"),
+          # the result of the action button needs to be called for conditionalPanel to get it
+          # the print is the same color as background to hide it
+          fluidRow(textOutput("showFileOptions"), style = "color: white"),
+          conditionalPanel(
+            condition = "output.showFileOptions != 0",
+            numericInput("skipOption", "lines to skip", 0, min = 0, step = 1),
+            selectInput("sepOption", "column separator", choices = list(unknown = "", comma = ",", semicolumn = ";", space = " ", tab = "\t"), selectize = FALSE)
             )
-      ),
+          )
+        ),
       tabPanel(
         "Data Mapping",
         uiOutput("xVariableNames"),
@@ -43,17 +56,6 @@ ui <- fluidPage(
         uiOutput("fillVariableNames"),
         uiOutput("shapeVariableNames"),
         uiOutput("linetypeVariableNames")
-        ),
-      tabPanel(
-        "Analysis",
-        conditionalPanel(
-          condition = "input.selectedPlot == 'plotBoxWhisker'",
-          fluidRow(tableOutput("summaryTable"), style = "overflow-x: scroll")
-        ),
-        conditionalPanel(
-          condition = "input.selectedPlot == 'plotPKRatio'",
-          fluidRow(tableOutput("pkRatioTable"), align = 'center')
-        )
         ),
       tabPanel("Labels",
                navlistPanel(
@@ -96,7 +98,7 @@ ui <- fluidPage(
                  )
                ),
       tabPanel("Theme", fileInput("loadTheme", label = "Use theme from .json", accept = ".json")),
-      tabPanel("Display",
+      tabPanel("Aesthetics",
                p("This panel aims at setting how points, lines, ribbons and errorbars are displayed."),
                p("Users can type the name of the color, shape or linetype they want to display"),
                p("Users can also type the key of the selection method from the theme: 'next', 'first', 'reset'."),
@@ -121,6 +123,11 @@ ui <- fluidPage(
                           uiOutput("errorbarsSize")
                           )
                  )
+               ),
+      tabPanel("Export", 
+               numericInput("plotHeight", "height (cm)", value = 9),
+               numericInput("plotWidth", "width (cm)", value = 16),
+               downloadButton("savedPlot", "Save Plot")
                )
       )
     ),
@@ -132,8 +139,18 @@ ui <- fluidPage(
     selectInput("selectedPlot", label = "Select a plot", choices = listOfAvailablePlots),
     br(),
     plotOutput(outputId = "displayPlot"),
-    br(),
-    downloadButton("savedPlot", "Save Plot"),
+    tabPanel(
+      "Analysis",
+      conditionalPanel(
+        condition = "input.selectedPlot == 'plotBoxWhisker'",
+        fluidRow(tableOutput("summaryTable"), style = "overflow-x: scroll")
+      ),
+      conditionalPanel(
+        condition = "input.selectedPlot == 'plotPKRatio'",
+        fluidRow(tableOutput("pkRatioTable"), align = 'center')
+      )
+    ),
+    
     align = "center"
   )
 )
@@ -141,6 +158,10 @@ ui <- fluidPage(
 #---------- Server ----------#
 server <- function(input, output) {
 #---------- Reactive helpers  ----------#  
+  # Action buttons input is the count of clicks
+  # Even count -> switch panel off
+  # Odd count -> switch panel on
+  output$showFileOptions <- renderText({input$fileOptions %% 2})
   #---------- Data ----------#  
   getData <- reactive({
     data <- data.frame(`No data` = NULL)
@@ -154,7 +175,9 @@ server <- function(input, output) {
     }
     if (isIncluded(input$dataType, "file")) {
       if (!isOfLength(input$dataFromFile,0)) {
-        data <- read.csv(input$dataFromFile$datapath, stringsAsFactors = FALSE, check.names = FALSE)
+        data <- read.table(file = input$dataFromFile$datapath,
+                           sep = input$sepOption, skip = input$skipOption,
+                           header = TRUE, stringsAsFactors = FALSE, check.names = FALSE)
       }
     }
     return(data)
@@ -658,6 +681,7 @@ server <- function(input, output) {
   
   #---------- Display Plot ----------#
   # Plot displayed after update
+  plotWidth <- reactive(input$plotWidth)
   output$displayPlot <- renderPlot({
     displayPlot <- getDisplayPlot()
     return(displayPlot)
@@ -683,7 +707,7 @@ server <- function(input, output) {
     filename = "savedPlot.png",
     content = function(file) {
       displayPlot <- getUpdatedPlot()
-      ggsave(filename = file, plot = displayPlot)
+      ggsave(filename = file, plot = displayPlot, width = input$plotWidth, height = input$plotHeight, units = "cm")
     }
   )
 }

@@ -48,6 +48,8 @@ plotBoxWhisker <- function(data,
   if (plotConfiguration$outliers) {
     plotObject <- addOutliers(data, metaData, dataMapping, plotConfiguration, plotObject)
   }
+  try(suppressMessages(plotObject <- setXAxis(plotObject)))
+  try(suppressMessages(plotObject <- setYAxis(plotObject)))
   return(plotObject)
 }
 
