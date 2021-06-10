@@ -139,18 +139,21 @@ ui <- fluidPage(
     selectInput("selectedPlot", label = "Select a plot", choices = listOfAvailablePlots),
     br(),
     plotOutput(outputId = "displayPlot"),
-    tabPanel(
-      "Analysis",
-      conditionalPanel(
-        condition = "input.selectedPlot == 'plotBoxWhisker'",
-        fluidRow(tableOutput("summaryTable"), style = "overflow-x: scroll")
-      ),
-      conditionalPanel(
-        condition = "input.selectedPlot == 'plotPKRatio'",
-        fluidRow(tableOutput("pkRatioTable"), align = 'center')
-      )
+    br(),
+    #----- Plot Dependent output of interest -----#
+    conditionalPanel(
+      condition = "input.selectedPlot == 'plotBoxWhisker'",
+      fluidRow(tableOutput("summaryTable"), style = "overflow-x: scroll")
     ),
-    
+    conditionalPanel(
+      condition = "input.selectedPlot == 'plotPKRatio'",
+      fluidRow(tableOutput("pkRatioTable"), align = 'center')
+    ),
+    conditionalPanel(
+      condition = "input.selectedPlot == 'plotTornado'",
+      selectInput("barTornado", label = "Use bars", choices = list("Yes" = TRUE, "No" = FALSE), selected = "Yes"),
+      selectInput("sortTornado", label = "Sort by x variable", choices = list("Yes" = TRUE, "No" = FALSE), selected = "Yes")
+    ),
     align = "center"
   )
 )
@@ -209,7 +212,7 @@ server <- function(input, output) {
     selectInput("ymaxVariableNames2", "ymax variable", getVariableNames(), selected = input$ymaxVariableNames2)
   })
   output$colorVariableNames <- renderUI({
-    if(isIncluded(input$selectedPlot, c("addRibbon","plotHistogram","plotBoxWhisker","plotTornado"))){return()}
+    if(isIncluded(input$selectedPlot, c("addRibbon","plotHistogram","plotBoxWhisker"))){return()}
     selectInput("colorVariableNames2", "color variable", getVariableNames(), selected = input$colorVariableNames2)
   })
   output$fillVariableNames <- renderUI({
@@ -217,7 +220,7 @@ server <- function(input, output) {
     selectInput("fillVariableNames2", "fill variable", getVariableNames(), selected = input$fillVariableNames2)
   })
   output$shapeVariableNames <- renderUI({
-    if(isIncluded(input$selectedPlot, c("addLine", "addRibbon", "addErrorbar","plotHistogram","plotBoxWhisker","plotTornado"))){return()}
+    if(isIncluded(input$selectedPlot, c("addLine", "addRibbon", "addErrorbar","plotHistogram","plotBoxWhisker"))){return()}
     selectInput("shapeVariableNames2", "shape variable", getVariableNames(), selected = input$shapeVariableNames2)
   })
   output$linetypeVariableNames <- renderUI({
@@ -235,14 +238,17 @@ server <- function(input, output) {
     dataMapping <- switch(input$selectedPlot,
                           addScatter = XYGDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable),
                           addLine = XYGDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,linetype=linetypeVariable),
-                          addRibbon = RangeDataMapping$new(x=xVariable,ymin=yVariable,ymax=yVariable,fill=fillVariable),
-                          addErrorbar = RangeDataMapping$new(x=xVariable,ymin=yVariable,ymax=yVariable,color=colorVariable),
+                          addRibbon = RangeDataMapping$new(x=xVariable,ymin=yminVariable,ymax=ymaxVariable,fill=fillVariable),
+                          addErrorbar = RangeDataMapping$new(x=xVariable,ymin=yminVariable,ymax=ymaxVariable,color=colorVariable),
                           plotPKRatio = PKRatioDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable),
                           plotDDIRatio = DDIRatioDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable),
                           plotBoxWhisker = BoxWhiskerDataMapping$new(x=xVariable,y=yVariable,fill=fillVariable),
                           plotHistogram = HistogramDataMapping$new(x=xVariable,y=yVariable,fill=fillVariable),
-                          plotTimeProfile = TimeProfileDataMapping$new(x=xVariable,y=yVariable),
-                          plotTornado = TornadoDataMapping$new(x=xVariable,y=yVariable,fill=fillVariable),
+                          plotTimeProfile = TimeProfileDataMapping$new(x=xVariable,y=yVariable,ymin=yminVariable,ymax=ymaxVariable,
+                                                                       color=colorVariable,linetype=linetypeVariable,fill=fillVariable),
+                          plotTornado = switch(input$barTornado, 
+                                               "TRUE" = TornadoDataMapping$new(x=xVariable,y=yVariable,fill=fillVariable,sorted=as.logical(input$sortTornado)),
+                                               "FALSE" = TornadoDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable,sorted=as.logical(input$sortTornado))),
                           plotObsVsPred = ObsVsPredDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable),
                           NULL)
     return(dataMapping)
@@ -271,7 +277,7 @@ server <- function(input, output) {
                                 plotBoxWhisker = BoxWhiskerPlotConfiguration$new(data = data, dataMapping = dataMapping),
                                 plotHistogram = HistogramPlotConfiguration$new(data = data, dataMapping = dataMapping),
                                 plotTimeProfile = TimeProfilePlotConfiguration$new(data = data, dataMapping = dataMapping),
-                                plotTornado = TornadoPlotConfiguration$new(data = data, dataMapping = dataMapping),
+                                plotTornado = TornadoPlotConfiguration$new(data = data, dataMapping = dataMapping, bar = as.logical(input$barTornado)),
                                 plotObsVsPred = ObsVsPredPlotConfiguration$new(data = data, dataMapping = dataMapping),
                                 PlotConfiguration$new(data = data, dataMapping = dataMapping))
     return(plotConfiguration)
@@ -696,6 +702,7 @@ server <- function(input, output) {
   rownames = TRUE)
   
   output$summaryTable <- renderTable({
+    if(!isIncluded(input$selectedPlot, "plotBoxWhisker")){return()}
     data <- getData()
     dataMapping <- getDataMapping()
     getBoxWhiskerMeasure(data = data, dataMapping = dataMapping)
@@ -706,7 +713,7 @@ server <- function(input, output) {
   output$savedPlot <- downloadHandler(
     filename = "savedPlot.png",
     content = function(file) {
-      displayPlot <- getUpdatedPlot()
+      displayPlot <- getDisplayPlot()
       ggsave(filename = file, plot = displayPlot, width = input$plotWidth, height = input$plotHeight, units = "cm")
     }
   )
