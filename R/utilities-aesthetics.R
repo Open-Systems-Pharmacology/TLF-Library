@@ -34,7 +34,7 @@ Shapes <- list(
   "plus" = 3,
   "cross" = 4,
   "triangle" = 17,
-  "blank" = -2
+  "blank" = 32
 )
 
 asPlotShape <- function(shapes) {
