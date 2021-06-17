@@ -28,8 +28,12 @@ ui <- fluidPage(
             fileInput("dataFromFile", label = "Select a file")
             )
           ),
-          fluidRow(
-            tableOutput("dataTable"),
+        fluidRow(
+          textInput("dataSelection", "Data Selection", value = ""),
+          helpText("If data selection requires variables from data.frame,\nplease refer to them using 'data$' (e.g. data$id == 1)")
+          ),
+        fluidRow(
+          tableOutput("dataTable"),
             style = "overflow-x: scroll"
             ),
         conditionalPanel(
@@ -182,6 +186,7 @@ server <- function(input, output) {
                            header = TRUE, stringsAsFactors = FALSE, check.names = FALSE)
       }
     }
+    eval(parse(text = paste0("data <- data[", input$dataSelection, ",]")))
     return(data)
   })
   
