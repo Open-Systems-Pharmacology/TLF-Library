@@ -36,15 +36,12 @@ ui <- fluidPage(
           condition = "input.dataType == 'file'",
           br(),
           actionButton("fileOptions", label = "Options"),
-          # the result of the action button needs to be called for conditionalPanel to get it
-          # the print is the same color as background to hide it
-          fluidRow(textOutput("showFileOptions"), style = "color: white"),
           conditionalPanel(
-            condition = "output.showFileOptions != 0",
+            condition = "input.fileOptions%2 != 0",
             numericInput("skipOption", "lines to skip", 0, min = 0, step = 1),
-            selectInput("sepOption", "column separator", choices = list(unknown = "", comma = ",", semicolumn = ";", space = " ", tab = "\t"), selectize = FALSE)
+            uiOutput("displayedSepOption")
             )
-          )
+        )
         ),
       tabPanel(
         "Data Mapping",
@@ -161,10 +158,6 @@ ui <- fluidPage(
 #---------- Server ----------#
 server <- function(input, output) {
 #---------- Reactive helpers  ----------#  
-  # Action buttons input is the count of clicks
-  # Even count -> switch panel off
-  # Odd count -> switch panel on
-  output$showFileOptions <- renderText({input$fileOptions %% 2})
   #---------- Data ----------#  
   getData <- reactive({
     data <- data.frame(`No data` = NULL)
@@ -179,11 +172,32 @@ server <- function(input, output) {
     if (isIncluded(input$dataType, "file")) {
       if (!isOfLength(input$dataFromFile,0)) {
         data <- read.table(file = input$dataFromFile$datapath,
-                           sep = input$sepOption, skip = input$skipOption,
+                           sep = getFileSep(), skip = input$skipOption,
                            header = TRUE, stringsAsFactors = FALSE, check.names = FALSE)
       }
     }
     return(data)
+  })
+  
+  getFileSep <- reactive({
+    if(input$fileOptions != 0){
+      return(input$sepOption)
+    }
+    # Default separator for csv will use "," otherwise ""
+    if(!isOfLength(input$dataFromFile$datapath, 0)){
+      ex <- strsplit(basename(input$dataFromFile$datapath), split = "\\.")[[1]]
+      ex <- utils::tail(ex, 1)
+      if(ex %in% "csv"){
+        return(",")
+      }
+    }
+    return("")
+  })
+  
+  output$displayedSepOption <- renderUI({
+    selectInput("sepOption", "column separator", 
+                choices = list(unknown = "", comma = ",", semicolumn = ";", space = " ", tab = "\t"),
+                selectize = FALSE)
   })
   
   output$dataTable <- renderTable({
