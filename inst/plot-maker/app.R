@@ -97,8 +97,9 @@ ui <- fluidPage(
       tabPanel("Theme", fileInput("loadTheme", label = "Use theme from .json", accept = ".json")),
       tabPanel("Aesthetics",
                p("This panel aims at setting how points, lines, ribbons and errorbars are displayed."),
-               p("Users can type the name of the color, shape or linetype they want to display"),
-               p("Users can also type the key of the selection method from the theme: 'next', 'first', 'reset'."),
+               helpText(paste("Selection keys: 'next', 'first', 'same' and 'reset'",
+                               "indicates how to use the aesthetic map defined in the current theme.",
+                               "Any other value will be used as is for the display.")),
                navlistPanel(
                  tabPanel("Points",
                           uiOutput("pointsColor"),
