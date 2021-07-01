@@ -52,7 +52,8 @@ ui <- fluidPage(
         uiOutput("colorVariableNames"),
         uiOutput("fillVariableNames"),
         uiOutput("shapeVariableNames"),
-        uiOutput("linetypeVariableNames")
+        uiOutput("linetypeVariableNames"),
+        uiOutput("uncertaintyVariableNames")
         ),
       tabPanel("Labels",
                navlistPanel(
@@ -152,6 +153,10 @@ ui <- fluidPage(
       selectInput("barTornado", label = "Use bars", choices = list("Yes" = TRUE, "No" = FALSE), selected = "Yes"),
       selectInput("sortTornado", label = "Sort by x variable", choices = list("Yes" = TRUE, "No" = FALSE), selected = "Yes")
     ),
+    conditionalPanel(
+      condition = "input.selectedPlot == 'plotObsVsPred'",
+      selectInput("smootherObsVsPred", label = "Regression", choices = list("none" = "none", "loess" = "loess", "lm" = "lm"), selected = "None")
+    ),
     align = "center"
   )
 )
@@ -240,11 +245,15 @@ server <- function(input, output) {
   })
   output$linetypeVariableNames <- renderUI({
     if(!isIncluded(input$selectedPlot, c("addLine", "addErrorbar","plotTimeProfile"))){return()}
-    selectInput("shapeVariableNames2", "linetype variable", getVariableNames(), selected = input$linetypeVariableNames2)
+    selectInput("linetypeVariableNames2", "linetype variable", getVariableNames(), selected = input$linetypeVariableNames2)
+  })
+  output$uncertaintyVariableNames <- renderUI({
+    if(!isIncluded(input$selectedPlot, c("plotPKRatio", "plotDDIRatio", "plotObsVsPred"))){return()}
+    selectInput("uncertaintyVariableNames2", "uncertainty variable", getVariableNames(), selected = input$uncertaintyVariableNames2)
   })
   
   getDataMapping <- reactive({
-    mappingVariables <- c("x", "y", "ymin", "ymax", "color", "fill", "shape", "linetype")
+    mappingVariables <- c("x", "y", "ymin", "ymax", "color", "fill", "shape", "linetype", "uncertainty")
     mappingExpression <- parse(text = paste0(
       mappingVariables, "Variable <- tlfInput(input$", mappingVariables, "VariableNames2)"
     ))
@@ -255,8 +264,8 @@ server <- function(input, output) {
                           addLine = XYGDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,linetype=linetypeVariable),
                           addRibbon = RangeDataMapping$new(x=xVariable,ymin=yminVariable,ymax=ymaxVariable,fill=fillVariable),
                           addErrorbar = RangeDataMapping$new(x=xVariable,ymin=yminVariable,ymax=ymaxVariable,color=colorVariable),
-                          plotPKRatio = PKRatioDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable),
-                          plotDDIRatio = DDIRatioDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable),
+                          plotPKRatio = PKRatioDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable,uncertainty=uncertaintyVariable),
+                          plotDDIRatio = DDIRatioDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable,uncertainty=uncertaintyVariable),
                           plotBoxWhisker = BoxWhiskerDataMapping$new(x=xVariable,y=yVariable,fill=fillVariable),
                           plotHistogram = HistogramDataMapping$new(x=xVariable,y=yVariable,fill=fillVariable),
                           plotTimeProfile = TimeProfileDataMapping$new(x=xVariable,y=yVariable,ymin=yminVariable,ymax=ymaxVariable,
@@ -264,7 +273,7 @@ server <- function(input, output) {
                           plotTornado = switch(input$barTornado, 
                                                "TRUE" = TornadoDataMapping$new(x=xVariable,y=yVariable,fill=fillVariable,sorted=as.logical(input$sortTornado)),
                                                "FALSE" = TornadoDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable,sorted=as.logical(input$sortTornado))),
-                          plotObsVsPred = ObsVsPredDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable),
+                          plotObsVsPred = ObsVsPredDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable,uncertainty=uncertaintyVariable, smoother = tlfInput(input$smootherObsVsPred)),
                           NULL)
     return(dataMapping)
   })
