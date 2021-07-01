@@ -14,7 +14,6 @@
 #' @export
 ThemeFont <- R6::R6Class(
   "ThemeFont",
-  
   public = list(
     title = NULL,
     subtitle = NULL,
@@ -105,7 +104,6 @@ ThemeFont <- R6::R6Class(
 #' @export
 ThemeBackground <- R6::R6Class(
   "ThemeBackground",
-  
   public = list(
     watermark = NULL,
     legendPosition = NULL,
@@ -200,7 +198,6 @@ ThemeBackground <- R6::R6Class(
 #' @export
 ThemeAestheticMaps <- R6::R6Class(
   "ThemeAestheticMaps",
-  
   public = list(
     color = NULL,
     fill = NULL,
@@ -317,7 +314,6 @@ ThemeAestheticSelections <- R6::R6Class(
 #' @export
 ThemePlotConfigurations <- R6::R6Class(
   "ThemePlotConfigurations",
-  
   public = list(
     addScatter = NULL,
     addLine = NULL,

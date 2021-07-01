@@ -74,8 +74,8 @@ getGuestValuesFromDataMapping <- function(data,
                                           dataMapping) {
   # Create vector of x values
   xData <- data[, dataMapping$x]
-  xmin <- min(dataMapping$minRange, xData[xData>0])
-  xmax <- max(dataMapping$minRange, xData[xData>0])
+  xmin <- min(dataMapping$minRange, xData[xData > 0])
+  xmax <- max(dataMapping$minRange, xData[xData > 0])
   # By default, use 500 points to get enough discretization for the plot
   x <- 10^(seq(log10(xmin), log10(xmax), length.out = 5e2))
   return(getGuestValues(x, delta = dataMapping$deltaGuest))

@@ -143,12 +143,12 @@ setDefaultAggregationBins <- function(bins = NULL) {
 #' @export
 setDefaultWatermark <- function(watermark = NULL) {
   validateIsOfType(watermark, c("Label", "character"), nullAllowed = TRUE)
-  if(isOfType(watermark, "character")){
+  if (isOfType(watermark, "character")) {
     tlfEnv$currentTheme$background$watermark <- watermark
   }
-  if(isOfType(watermark, "Label")){
-  tlfEnv$currentTheme$background$watermark <- watermark$text
-  tlfEnv$currentTheme$fonts$watermark <- watermark$font
+  if (isOfType(watermark, "Label")) {
+    tlfEnv$currentTheme$background$watermark <- watermark$text
+    tlfEnv$currentTheme$fonts$watermark <- watermark$font
   }
   return(invisible())
 }

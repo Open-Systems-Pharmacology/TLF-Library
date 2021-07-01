@@ -243,11 +243,11 @@ DefaultDataMappingValues <- list(
   ),
   ddiRatio = list(
     ddiRatio1 = 1,
-    ddiRatio2 = c(2, 1/2)
-    ),
+    ddiRatio2 = c(2, 1 / 2)
+  ),
   obsVsPred = list(
     obsVsPred1 = 0
-    ),
+  ),
   resVsPred = 0,
   tornado = 0,
   histogram = 0

@@ -563,7 +563,7 @@ addErrorbar <- function(data = NULL,
   dataMapping <- dataMapping %||% RangeDataMapping$new(x = x, ymin = ymin, ymax = ymax, data = data)
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
   # Update plotConfiguration if user defined aesthetics
-  eval(parseVariableToObject("plotConfiguration$errorbars", c("color", "linetype", "size"), keepIfNull = TRUE)) 
+  eval(parseVariableToObject("plotConfiguration$errorbars", c("color", "linetype", "size"), keepIfNull = TRUE))
 
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)

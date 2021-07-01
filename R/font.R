@@ -43,7 +43,7 @@ Font <- R6::R6Class(
         face = self$fontFace,
         # TODO: check why I get the following error messages
         # "font family not found in Windows font database"
-        #family = self$fontFamily,
+        # family = self$fontFamily,
         angle = self$angle
       )
     }

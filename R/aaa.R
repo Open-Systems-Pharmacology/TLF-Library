@@ -5,7 +5,7 @@
 #' @param keepIfNull logical `objectName$variableName <- variableName %||% objectName$variableName`
 #' @return An expression to `eval()`
 parseVariableToObject <- function(objectName, variableName, keepIfNull = FALSE) {
-  if(keepIfNull){
+  if (keepIfNull) {
     return(parse(text = paste0(objectName, "$", variableName, " <- ", variableName, " %||% ", objectName, "$", variableName)))
   }
   return(parse(text = paste0(objectName, "$", variableName, " <- ", variableName)))
@@ -18,7 +18,7 @@ parseVariableToObject <- function(objectName, variableName, keepIfNull = FALSE) 
 #' @param keepIfNull logical `variableName <- objectName$variableName %||% variableName`
 #' @return An expression to `eval()`
 parseVariableFromObject <- function(objectName, variableName, keepIfNull = FALSE) {
-  if(keepIfNull){
+  if (keepIfNull) {
     return(parse(text = paste0(variableName, " <- ", objectName, "$", variableName, " %||% ", variableName)))
   }
   return(parse(text = paste0(variableName, " <- ", objectName, "$", variableName)))
@@ -79,8 +79,8 @@ parseUpdateAestheticProperty <- function(aestheticProperty, plotConfigurationPro
     # Update the property using ggplot `scale` functions
     parse(text = paste0(
       "plotObject <- plotObject + ggplot2::scale_", aestheticProperty, "_manual(",
-      'values=getAestheticValues(n=', aestheticProperty, 'Length,',
-      'selectionKey=plotConfiguration$', plotConfigurationProperty, '$', aestheticProperty,
+      "values=getAestheticValues(n=", aestheticProperty, "Length,",
+      "selectionKey=plotConfiguration$", plotConfigurationProperty, "$", aestheticProperty,
       ',aesthetic = "', aestheticProperty, '"))'
     )),
     # remove the legend of aesthetic if default unmapped aesthetic

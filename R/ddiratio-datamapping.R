@@ -19,12 +19,12 @@ DDIRatioDataMapping <- R6::R6Class(
     #' @param ... parameters inherited from \code{PKRatioDataMapping}
     #' @return A new \code{DDIRatioDataMapping} object
     initialize = function(deltaGuest = 1,
-                          minRange = c(1e-2, 1e2),
-                          lines = DefaultDataMappingValues$ddiRatio,
-                          ...) {
+                              minRange = c(1e-2, 1e2),
+                              lines = DefaultDataMappingValues$ddiRatio,
+                              ...) {
       super$initialize(...)
-      # Apply log10 transformation to lines because 
-      # plot is log scaled in by default and geom_abline 
+      # Apply log10 transformation to lines because
+      # plot is log scaled in by default and geom_abline
       # requires the log transformed values in input of intercept
       self$lines <- lapply(lines, log10)
       self$minRange <- minRange
