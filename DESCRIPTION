@@ -41,6 +41,7 @@ Suggests:
     gridExtra
 VignetteBuilder: knitr
 Collate: 
+    'aaa.R'
     'enum.R'
     'aggregation-input.R'
     'aggregation-summary.R'
