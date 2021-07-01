@@ -8,27 +8,29 @@ plotDDIRatio(
   data,
   metaData = NULL,
   dataMapping = NULL,
-  comparisonType = NULL,
   plotConfiguration = NULL,
   plotObject = NULL
 )
 }
 \arguments{
-\item{data}{data.frame (or list of data.frames? TO BE DISCUSSED)
-containing the data to be used for the plot}
+\item{data}{data.frame containing the data to be used for the plot}
 
-\item{metaData}{list of lists (structure TO BE DISCUSSED)
-containing complementary information to data (e.g. unit)}
+\item{metaData}{list of lists
+containing complementary information to data (e.g. their unit and dimension).
+This parameter is optional.}
 
-\item{dataMapping}{R6 class PKRatioDataMapping
-mapping of x, y axes + mapping of colorGrouping, sizeGrouping, shapeGrouping}
+\item{dataMapping}{A \code{DDIRatioDataMapping} object}
 
-\item{plotConfiguration}{R6 class PKRatioPlotConfiguration
-Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend}
+\item{plotConfiguration}{A \code{DDIRatioPlotConfiguration} object}
+
+\item{plotObject}{\code{ggplot} graphical object to which the PK Ratio plot layer is added
+This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided}
 }
 \value{
-a ggplot graphical object
+A \code{ggplot} graphical object
 }
 \description{
-plotDDIRatio(data, metaData, dataMapping, plotConfiguration)
+Add DDI Ratio plot layers to a \code{ggplot} graphical object.
+Inclcuding Guest et al. limits, DDI Ratio limits as diagonal lines and
+DDI Ratios as a scatter plot.
 }
