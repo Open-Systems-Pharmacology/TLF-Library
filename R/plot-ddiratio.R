@@ -38,6 +38,7 @@ plotDDIRatio <- function(data,
     ggplot2::geom_path(
       data = guestData,
       mapping = ggplot2::aes_string(x = "x", y = "ymin"),
+      na.rm = TRUE,
       color = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex, aesthetic = "color"),
       linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex, aesthetic = "linetype"),
       size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
@@ -45,6 +46,7 @@ plotDDIRatio <- function(data,
     ggplot2::geom_path(
       data = guestData,
       mapping = ggplot2::aes_string(x = "x", y = "ymax"),
+      na.rm = TRUE,
       color = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex, aesthetic = "color"),
       linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex, aesthetic = "linetype"),
       size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
