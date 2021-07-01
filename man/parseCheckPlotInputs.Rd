@@ -5,21 +5,13 @@
 \title{parseCheckPlotInputs}
 \usage{
 parseCheckPlotInputs(plotType)
-
-parseCheckPlotInputs(plotType)
 }
 \arguments{
 \item{plotType}{Type of plot (e.g. "PKRatio" for plotPKRatio)}
-
-\item{plotName}{Name of the plot}
 }
 \value{
 An expression to \code{eval()}
-
-An expression to \code{eval()}
 }
 \description{
-Create an expression that checks usual plot inputs
-
 Create an expression that checks usual plot inputs
 }

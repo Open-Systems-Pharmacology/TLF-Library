@@ -54,11 +54,7 @@ setLegendFont <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   legend <- newPlotObject$plotConfiguration$legend
-  legend$font$color <- color %||% legend$font$color
-  legend$font$size <- size %||% legend$font$size
-  legend$font$angle <- angle %||% legend$font$angle
-  legend$font$fontFace <- fontFace %||% legend$font$fontFace
-
+  eval(parseVariableToObject("legend$font", c("color", "size", "angle", "fontFace"), keepIfNull = TRUE)) 
   newPlotObject <- legend$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -102,12 +98,8 @@ setLegendTitle <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   legend <- newPlotObject$plotConfiguration$legend
-  legend$titleFont$color <- color %||% legend$titleFont$color
-  legend$titleFont$size <- size %||% legend$titleFont$size
-  legend$titleFont$angle <- angle %||% legend$titleFont$angle
-  legend$titleFont$fontFace <- fontFace %||% legend$titleFont$fontFace
+  eval(parseVariableToObject("legend$titleFont", c("color", "size", "angle", "fontFace"), keepIfNull = TRUE)) 
   legend$title <- title %||% legend$title
-
   newPlotObject <- legend$updatePlot(newPlotObject)
   return(newPlotObject)
 }

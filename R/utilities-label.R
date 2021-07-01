@@ -26,16 +26,12 @@ setPlotLabels <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$yAxis
   labels <- newPlotObject$plotConfiguration$labels
-
   char2LabExpressions <- parse(text = paste0(
     "if(isOfType(", inputs, ', "character")){',
     inputs, " <- asLabel(", inputs, ", font = labels$", inputs, "$font)}"
   ))
   eval(char2LabExpressions)
-
-  updateLabelExpressions <- parse(text = paste0("labels$", inputs, " <- ", inputs, " %||% labels$", inputs))
-  eval(updateLabelExpressions)
-
+  eval(parseVariableToObject("labels", inputs, keepIfNull = TRUE))
   newPlotObject <- labels$updatePlot(newPlotObject)
   return(newPlotObject)
 }

@@ -26,13 +26,7 @@ setXAxis <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$xAxis
   xAxis <- newPlotObject$plotConfiguration$xAxis
-
-  xAxis$limits <- limits %||% xAxis$limits
-  xAxis$scale <- scale %||% xAxis$scale
-  xAxis$ticks <- ticks %||% xAxis$ticks
-  xAxis$ticklabels <- ticklabels %||% xAxis$ticklabels
-  xAxis$font <- font %||% xAxis$font
-
+  eval(parseVariableToObject("xAxis", c("limits", "scale", "ticks", "ticklabels", "font"), keepIfNull = TRUE))
   newPlotObject <- xAxis$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -65,13 +59,7 @@ setYAxis <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$yAxis
   yAxis <- newPlotObject$plotConfiguration$yAxis
-
-  yAxis$limits <- limits %||% yAxis$limits
-  yAxis$scale <- scale %||% yAxis$scale
-  yAxis$ticks <- ticks %||% yAxis$ticks
-  yAxis$ticklabels <- ticklabels %||% yAxis$ticklabels
-  yAxis$font <- font %||% yAxis$font
-
+  eval(parseVariableToObject("yAxis", c("limits", "scale", "ticks", "ticklabels", "font"), keepIfNull = TRUE))
   newPlotObject <- yAxis$updatePlot(newPlotObject)
   return(newPlotObject)
 }

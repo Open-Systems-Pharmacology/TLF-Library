@@ -31,10 +31,7 @@ Font <- R6::R6Class(
                               angle = NULL) {
       validateIsString(c(color, fontFamily, fontFace), nullAllowed = TRUE)
       validateIsNumeric(c(size, angle), nullAllowed = TRUE)
-
-      fieldNames <- c("size", "color", "fontFace", "fontFamily", "angle")
-      setFontExpression <- parse(text = paste0("self$", fieldNames, " <- ", fieldNames, " %||% self$", fieldNames))
-      eval(setFontExpression)
+      eval(parseVariableToObject("self", c("size", "color", "fontFace", "fontFamily", "angle"), keepIfNull = TRUE))
     },
 
     #' @description Create a `ggplot2::element_text` directly convertible by `ggplot2::theme`.
@@ -44,7 +41,7 @@ Font <- R6::R6Class(
         colour = self$color,
         size = self$size,
         face = self$fontFace,
-        # TO DO: check why I get the following error messages
+        # TODO: check why I get the following error messages
         # "font family not found in Windows font database"
         #family = self$fontFamily,
         angle = self$angle

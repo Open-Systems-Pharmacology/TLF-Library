@@ -5,10 +5,10 @@
 #' @param keepIfNull logical `objectName$variableName <- variableName %||% objectName$variableName`
 #' @return An expression to `eval()`
 parseVariableToObject <- function(objectName, variableName, keepIfNull = FALSE) {
-  ifelse(keepIfNull,
-    parse(text = paste0(objectName, "$", variableName, " <- ", variableName, " %||% ", objectName, "$", variableName)),
-    parse(text = paste0(objectName, "$", variableName, " <- ", variableName))
-  )
+  if(keepIfNull){
+    return(parse(text = paste0(objectName, "$", variableName, " <- ", variableName, " %||% ", objectName, "$", variableName)))
+  }
+  return(parse(text = paste0(objectName, "$", variableName, " <- ", variableName)))
 }
 
 #' @title parseVariableFromObject
@@ -18,31 +18,12 @@ parseVariableToObject <- function(objectName, variableName, keepIfNull = FALSE) 
 #' @param keepIfNull logical `variableName <- objectName$variableName %||% variableName`
 #' @return An expression to `eval()`
 parseVariableFromObject <- function(objectName, variableName, keepIfNull = FALSE) {
-  ifelse(keepIfNull,
-    parse(text = paste0(variableName, " <- ", objectName, "$", variableName)),
-    parse(text = paste0(variableName, " <- ", objectName, "$", variableName))
-  )
+  if(keepIfNull){
+    return(parse(text = paste0(variableName, " <- ", objectName, "$", variableName, " %||% ", variableName)))
+  }
+  return(parse(text = paste0(variableName, " <- ", objectName, "$", variableName)))
 }
 
-
-#' @title parseCheckPlotInputs
-#' @description Create an expression that checks usual plot inputs
-#' @param plotName Name of the plot
-#' @return An expression to `eval()`
-parseCheckPlotInputs <- function(plotType) {
-  c(
-    expression(validateIsOfType(data, "data.frame")),
-    expression(validateIsOfType(plotObject, "ggplot", nullAllowed = TRUE)),
-    parse(text = paste0('if(nrow(data)==0){warning(messages$errorNrowData("', plotType, ' plot")); return(plotObject)}')),
-    parse(text = paste0("dataMapping <- dataMapping %||% ", plotType, "DataMapping$new(data=data)")),
-    parse(text = paste0(
-      "plotConfiguration <- plotConfiguration %||% ",
-      plotType, "PlotConfiguration$new(data=data, metaData=metaData, dataMapping=dataMapping)"
-    )),
-    parse(text = paste0('validateIsOfType(dataMapping, "', plotType, 'DataMapping")')),
-    parse(text = paste0('validateIsOfType(plotConfiguration, "', plotType, 'PlotConfiguration")'))
-  )
-}
 
 #' @title parseCheckPlotInputs
 #' @description Create an expression that checks usual plot inputs

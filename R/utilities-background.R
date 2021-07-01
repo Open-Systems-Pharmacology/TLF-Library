@@ -22,14 +22,8 @@ setGrid <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   background <- newPlotObject$plotConfiguration$background
-
-  background$xGrid$color <- color %||% background$xGrid$color
-  background$yGrid$color <- color %||% background$yGrid$color
-  background$xGrid$linetype <- linetype %||% background$xGrid$linetype
-  background$yGrid$linetype <- linetype %||% background$yGrid$linetype
-  background$xGrid$size <- size %||% background$xGrid$size
-  background$yGrid$size <- size %||% background$yGrid$size
-
+  eval(parseVariableToObject("background$xGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
+  eval(parseVariableToObject("background$yGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -58,11 +52,7 @@ setXGrid <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   background <- newPlotObject$plotConfiguration$background
-
-  background$xGrid$color <- color %||% background$xGrid$color
-  background$xGrid$linetype <- linetype %||% background$xGrid$linetype
-  background$xGrid$size <- size %||% background$xGrid$size
-
+  eval(parseVariableToObject("background$xGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -91,11 +81,7 @@ setYGrid <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   background <- newPlotObject$plotConfiguration$background
-
-  background$yGrid$color <- color %||% background$yGrid$color
-  background$yGrid$linetype <- linetype %||% background$yGrid$linetype
-  background$yGrid$size <- size %||% background$yGrid$size
-
+  eval(parseVariableToObject("background$yGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -127,17 +113,8 @@ setBackground <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   background <- newPlotObject$plotConfiguration$background
-
-  background$plot$fill <- fill %||% background$plot$fill
-  background$plot$color <- color %||% background$plot$color
-  background$plot$linetype <- linetype %||% background$plot$linetype
-  background$plot$size <- size %||% background$plot$size
-
-  background$panel$fill <- fill %||% background$panel$fill
-  background$panel$color <- color %||% background$panel$color
-  background$panel$linetype <- linetype %||% background$panel$linetype
-  background$panel$size <- size %||% background$panel$size
-
+  eval(parseVariableToObject("background$plot", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
+  eval(parseVariableToObject("background$panel", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -169,12 +146,7 @@ setBackgroundPanelArea <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   background <- newPlotObject$plotConfiguration$background
-
-  background$panel$fill <- fill %||% background$panel$fill
-  background$panel$color <- color %||% background$panel$color
-  background$panel$linetype <- linetype %||% background$panel$linetype
-  background$panel$size <- size %||% background$panel$size
-
+  eval(parseVariableToObject("background$panel", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -206,12 +178,7 @@ setBackgroundPlotArea <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   background <- newPlotObject$plotConfiguration$background
-
-  background$plot$fill <- fill %||% background$plot$fill
-  background$plot$color <- color %||% background$plot$color
-  background$plot$linetype <- linetype %||% background$plot$linetype
-  background$plot$size <- size %||% background$plot$size
-
+  eval(parseVariableToObject("background$plot", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -274,9 +241,7 @@ addWatermark <- function(plotObject,
   if (isOfType(watermark, "character")) {
     watermark <- asLabel(watermark, font = tlfEnv$currentTheme$fonts$watermark)
   }
-  watermark$font$color <- color %||% watermark$font$color
-  watermark$font$size <- size %||% watermark$font$size
-  watermark$font$angle <- angle %||% watermark$font$angle
+  eval(parseVariableToObject("watermark$font", c("color", "size", "angle"), keepIfNull = TRUE))
 
   watermark <- createWatermarkGrob(label = watermark, alpha = alpha)
 
@@ -328,9 +293,7 @@ setWatermark <- function(plotObject,
     watermark <- asLabel(text = watermark, font = watermarkConfiguration$font)
   }
   watermarkConfiguration <- watermark %||% watermarkConfiguration
-  watermarkConfiguration$font$color <- color %||% watermarkConfiguration$font$color
-  watermarkConfiguration$font$size <- size %||% watermarkConfiguration$font$size
-  watermarkConfiguration$font$angle <- angle %||% watermarkConfiguration$font$angle
+  eval(parseVariableToObject("watermarkConfiguration$font", c("color", "size", "angle"), keepIfNull = TRUE))
 
   # If plot is initialized, addWatermark otherwise update watermark
   if (isOfLength(plotObject$layers, 0)) {

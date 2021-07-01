@@ -28,27 +28,12 @@ GroupMapping <- R6::R6Class(
                               shape = NULL,
                               size = NULL) {
       # If mappings are not of type Grouping, they are assumed as Grouping inputs
-      if (!isOfType(color, "Grouping")) {
-        color <- Grouping$new(group = color)
-      }
-      if (!isOfType(fill, "Grouping")) {
-        fill <- Grouping$new(group = fill)
-      }
-      if (!isOfType(linetype, "Grouping")) {
-        linetype <- Grouping$new(group = linetype)
-      }
-      if (!isOfType(shape, "Grouping")) {
-        shape <- Grouping$new(group = shape)
-      }
-      if (!isOfType(size, "Grouping")) {
-        size <- Grouping$new(group = size)
-      }
-
-      self$color <- color
-      self$fill <- fill
-      self$linetype <- linetype
-      self$shape <- shape
-      self$size <- size
+      groupingInputs <- c("color", "fill", "linetype", "shape", "size")
+      eval(parse(text = paste0(
+        "if(!isOfType(", groupingInputs, ", 'Grouping')){",
+        groupingInputs, " <- Grouping$new(group = ", groupingInputs, ")}"
+      )))
+      eval(parseVariableToObject("self", groupingInputs, keepIfNull = FALSE))
     }
   )
 )
