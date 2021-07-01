@@ -658,6 +658,18 @@ server <- function(input, output) {
     plotConfiguration$xAxis$scale <- tlfInput(input$xAxisScale2) %||% plotConfiguration$xAxis$scale
     plotConfiguration$yAxis$scale <- tlfInput(input$yAxisScale2) %||% plotConfiguration$yAxis$scale
     
+    # Axes Limits
+    xmin <- tlfInput(input$xAxisLimitsMin2)
+    xmax <- tlfInput(input$xAxisLimitsMax2)
+    ymin <- tlfInput(input$yAxisLimitsMin2)
+    ymax <- tlfInput(input$yAxisLimitsMax2)
+    if(length(c(xmin, xmax))==2){
+      plotConfiguration$xAxis$limits <- c(xmin, xmax)
+    }
+    if(length(c(ymin, ymax))==2){
+      plotConfiguration$yAxis$limits <- c(ymin, ymax)
+    }
+    
     #--- Legend
     plotConfiguration$legend$position <- tlfInput(input$legendPosition) %||% plotConfiguration$legend$position
     
