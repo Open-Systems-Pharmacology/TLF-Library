@@ -56,7 +56,8 @@ plotTornado <- function(data = NULL,
     )
   }
 
-  dataMapping <- dataMapping %||% TornadoDataMapping$new(sorted = sorted, data = data)
+  dataMapping <- dataMapping %||% TornadoDataMapping$new(data = data) 
+  dataMapping$sorted <- sorted %||% dataMapping$sorted 
   plotConfiguration <- plotConfiguration %||% TornadoPlotConfiguration$new(
     bar = bar,
     colorPalette = colorPalette,
