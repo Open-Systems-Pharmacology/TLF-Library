@@ -126,7 +126,8 @@ addScatter <- function(data = NULL,
   }
 
   # Get mapping and convert labels into characters usable by aes_string
-  eval(parseGetMapDataAndLabels())
+  mapData <- dataMapping$checkMapData(data)
+  mapLabels <- getAesStringMapping(dataMapping)
   # If no specific mapping, use default captions
   if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
     mapData$legendLabels <- getlegendLabelsCaption(plotObject)
@@ -268,7 +269,8 @@ addLine <- function(data = NULL,
   }
 
   # Get mapping and convert labels into characters usable by aes_string
-  eval(parseGetMapDataAndLabels())
+  mapData <- dataMapping$checkMapData(data)
+  mapLabels <- getAesStringMapping(dataMapping)
   # If no specific mapping, use default captions
   if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
     mapData$legendLabels <- getlegendLabelsCaption(plotObject)
@@ -368,10 +370,10 @@ addLine <- function(data = NULL,
 #' mapping x, y and aesthetic variables to the variable names of \code{data}.
 #' @param caption vector of character strings defining the legend captions.
 #' This parameter is optional: default value is NULL.
+#' @param fill vector of character strings defining the color of the scatter points.
+#' This parameter is optional: default value `NULL` will choose colors according to the current theme.
 #' @param color vector of character strings defining the color of the scatter points.
 #' This parameter is optional: default value `NULL` will choose colors according to the current theme.
-#' @param shape vector of character strings or numerical defining the shapes of the scatter points.
-#' This parameter is optional: default value `NULL` will choose shapes according to the current theme.
 #' @param size vector of numerical defining the sizes of the scatter points.
 #' This parameter is optional: default value `NULL` will choose sizes according to the current theme.
 #' @param linetype vector of character strings defining the linetype linking the scatter points.
@@ -468,7 +470,8 @@ addRibbon <- function(data = NULL,
   }
 
   # Get mapping and convert labels into characters usable by aes_string
-  eval(parseGetMapDataAndLabels())
+  mapData <- dataMapping$checkMapData(data)
+  mapLabels <- getAesStringMapping(dataMapping)
   # If no specific mapping, use default captions
   if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
     mapData$legendLabels <- getlegendLabelsCaption(plotObject)
@@ -512,8 +515,6 @@ addRibbon <- function(data = NULL,
 #' This parameter is optional: default value is NULL.
 #' @param color vector of character strings defining the color of the scatter points.
 #' This parameter is optional: default value `NULL` will choose colors according to the current theme.
-#' @param shape vector of character strings or numerical defining the shapes of the scatter points.
-#' This parameter is optional: default value `NULL` will choose shapes according to the current theme.
 #' @param size vector of numerical defining the sizes of the scatter points.
 #' This parameter is optional: default value `NULL` will choose sizes according to the current theme.
 #' @param linetype vector of character strings defining the linetype linking the scatter points.
@@ -575,7 +576,8 @@ addErrorbar <- function(data = NULL,
   }
 
   # Get mapping and convert labels into characters usable by aes_string
-  eval(parseGetMapDataAndLabels())
+  mapData <- dataMapping$checkMapData(data)
+  mapLabels <- getAesStringMapping(dataMapping)
   # If no specific mapping, use default captions
   if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
     mapData$legendLabels <- getlegendLabelsCaption(plotObject)

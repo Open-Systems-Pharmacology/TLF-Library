@@ -55,9 +55,6 @@ mapping x, ymin, ymax and aesthetic variables to the variable names of \code{dat
 
 \item{plotObject}{\code{ggplot} graphical object to which the line layer is added
 This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided}
-
-\item{shape}{vector of character strings or numerical defining the shapes of the scatter points.
-This parameter is optional: default value \code{NULL} will choose shapes according to the current theme.}
 }
 \value{
 A \code{ggplot} graphical object

@@ -87,6 +87,8 @@ AestheticSelectionKeys <- enum(c(
 #' @description Get aesthetic values (e.g color, shape, linetype) based on a selected strategy
 #' @param n integer defining size of returned aesthetic vector
 #' @param selectionKey value of aesthetic to be returned or key function from enum `AestheticSelectionKeys`
+#' @param position integer defining the current position in the aesthetic map
+#' @param aesthetic name of aesthetic property as defined in enum `AestheticProperties`
 #' @return Vector of aesthetics
 getAestheticValues <- function(n, selectionKey = NA, position = 0, aesthetic = "color") {
   validateIsIncluded(aesthetic, AestheticProperties)

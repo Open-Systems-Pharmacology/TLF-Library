@@ -33,6 +33,7 @@ setLegend <- function(plotObject,
 #' @param size size of legend font
 #' @param fontFace color of legend font
 #' @param color color of legend font
+#' @param angle angle of legend font
 #' @return A ggplot object
 #' @description Set legend font properties
 #' @export
@@ -66,6 +67,7 @@ setLegendFont <- function(plotObject,
 #' @param size size of legend font
 #' @param fontFace color of legend font
 #' @param color color of legend font
+#' @param angle angle of legend font
 #' @return A ggplot object
 #' @description Set legend title
 #' @export

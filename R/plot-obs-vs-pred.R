@@ -26,9 +26,10 @@ plotObsVsPred <- function(data,
                           smoother = NULL,
                           plotObject = NULL) {
   eval(parseCheckPlotInputs("ObsVsPred"))
-  eval(parseGetMapDataAndLabels())
   validateIsIncluded(smoother, c("loess", "lm"), nullAllowed = TRUE)
   dataMapping$smoother <- smoother %||% dataMapping$smoother
+  mapData <- dataMapping$checkMapData(data)
+  mapLabels <- getAesStringMapping(dataMapping)
 
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 

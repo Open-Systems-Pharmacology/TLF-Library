@@ -10,6 +10,10 @@ getAestheticValues(n, selectionKey = NA, position = 0, aesthetic = "color")
 \item{n}{integer defining size of returned aesthetic vector}
 
 \item{selectionKey}{value of aesthetic to be returned or key function from enum \code{AestheticSelectionKeys}}
+
+\item{position}{integer defining the current position in the aesthetic map}
+
+\item{aesthetic}{name of aesthetic property as defined in enum \code{AestheticProperties}}
 }
 \value{
 Vector of aesthetics

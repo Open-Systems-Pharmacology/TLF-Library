@@ -25,7 +25,8 @@ plotPKRatio <- function(data,
                         plotConfiguration = NULL,
                         plotObject = NULL) {
   eval(parseCheckPlotInputs("PKRatio"))
-  eval(parseGetMapDataAndLabels())
+  mapData <- dataMapping$checkMapData(data)
+  mapLabels <- getAesStringMapping(dataMapping)
 
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 

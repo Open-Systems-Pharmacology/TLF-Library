@@ -44,17 +44,6 @@ parseCheckPlotInputs <- function(plotType) {
   )
 }
 
-#' @title parseGetMapDataAndLabels
-#' @description Create an expression that gets `mapData` and `mapLabels`
-#' used by all the tlf plot functions
-#' @return An expression to `eval()`
-parseGetMapDataAndLabels <- function() {
-  c(
-    expression(mapData <- dataMapping$checkMapData(data)),
-    expression(mapLabels <- getAesStringMapping(dataMapping))
-  )
-}
-
 #' @title parseUpdateAxes
 #' @description Create an expression that updates the plot axes
 #' @return An expression to `eval()`

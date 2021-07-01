@@ -20,6 +20,8 @@ setLegendFont(
 \item{size}{size of legend font}
 
 \item{fontFace}{color of legend font}
+
+\item{angle}{angle of legend font}
 }
 \value{
 A ggplot object

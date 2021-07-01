@@ -19,7 +19,8 @@ plotDDIRatio <- function(data,
                          plotConfiguration = NULL,
                          plotObject = NULL) {
   eval(parseCheckPlotInputs("DDIRatio"))
-  eval(parseGetMapDataAndLabels())
+  mapData <- dataMapping$checkMapData(data)
+  mapLabels <- getAesStringMapping(dataMapping)
 
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
