@@ -24,85 +24,26 @@ plotPKRatio <- function(data,
                         dataMapping = NULL,
                         plotConfiguration = NULL,
                         plotObject = NULL) {
-  validateIsOfType(data, "data.frame")
-  dataMapping <- dataMapping %||% PKRatioDataMapping$new(data = data)
-  plotConfiguration <- plotConfiguration %||% PKRatioPlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
-
-  validateIsOfType(dataMapping, "PKRatioDataMapping")
-  validateIsOfType(plotConfiguration, "PKRatioPlotConfiguration")
-  validateIsOfType(plotObject, "ggplot", nullAllowed = TRUE)
-
-  if (nrow(data) == 0) {
-    warning(messages$errorNrowData("PK ratio plot"))
-    return(plotObject)
-  }
-
-  # Get transformed data from mapping and convert labels into characters usable by aes_string
-  mapData <- dataMapping$checkMapData(data)
-  mapLabels <- getAesStringMapping(dataMapping)
+  eval(parseCheckPlotInputs("PKRatio"))
+  eval(parseGetMapDataAndLabels())
 
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
+
   # Include horizontal lines
   for (lineIndex in seq_along(dataMapping$lines)) {
     # position correspond to the number of layer lines already added
-    plotObject <- plotObject +
-      ggplot2::geom_hline(
-        yintercept = dataMapping$lines[[lineIndex]],
-        color = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex - 1, aesthetic = "color"),
-        linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex - 1, aesthetic = "linetype"),
-        size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex - 1, aesthetic = "size")
-      )
+    eval(parseAddLineLayer("horizontal", dataMapping$lines[[lineIndex]], lineIndex - 1))
   }
 
   # If uncertainty is defined, add error bars
   if (!isOfLength(dataMapping$uncertainty, 0)) {
-    plotObject <- plotObject +
-      ggplot2::geom_linerange(
-        data = mapData,
-        mapping = aes_string(
-          x = mapLabels$x,
-          ymin = "ymin",
-          ymax = "ymax",
-          color = mapLabels$color
-        ),
-        # Error bar size uses a ratio of 1/4 to match with point size
-        size = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
-        linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
-        show.legend = TRUE
-      )
+    eval(parseAddUncertaintyLayer())
   }
-  plotObject <- plotObject +
-    ggplot2::geom_point(
-      data = mapData,
-      mapping = ggplot2::aes_string(
-        x = mapLabels$x,
-        y = mapLabels$y,
-        color = mapLabels$color,
-        shape = mapLabels$shape
-      ),
-      size = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$size, position = 0, aesthetic = "size"),
-      show.legend = TRUE
-    )
 
+  eval(parseAddScatterLayer())
   # Define shapes and colors based on plotConfiguration$points properties
-  shapeVariable <- gsub("`", "", mapLabels$shape)
-  colorVariable <- gsub("`", "", mapLabels$color)
-  shapeLength <- length(unique(mapData[, shapeVariable]))
-  colorLength <- length(unique(mapData[, colorVariable]))
-
-  plotObject <- plotObject +
-    ggplot2::scale_shape_manual(values = getAestheticValues(n = shapeLength, selectionKey = plotConfiguration$points$shape, aesthetic = "shape")) +
-    ggplot2::scale_color_manual(values = getAestheticValues(n = colorLength, selectionKey = plotConfiguration$points$color, aesthetic = "color"))
-
-  # If variable is legendLabel, remove it from legend
-  if (isIncluded(shapeVariable, "legendLabels")) {
-    plotObject <- plotObject + ggplot2::guides(shape = FALSE)
-  }
-  if (isIncluded(colorVariable, "legendLabels")) {
-    plotObject <- plotObject + ggplot2::guides(color = FALSE)
-  }
-  # Try is used to prevent crashes in the final plot due to ggplot2 peculiarities regarding scale functions
-  try(suppressMessages(plotObject <- setXAxis(plotObject)))
-  try(suppressMessages(plotObject <- setYAxis(plotObject)))
+  eval(parseUpdateAestheticProperty(AestheticProperties$color, "points"))
+  eval(parseUpdateAestheticProperty(AestheticProperties$shape, "points"))
+  eval(parseUpdateAxes())
   return(plotObject)
 }
