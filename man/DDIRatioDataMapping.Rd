@@ -12,9 +12,9 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{ddiRatioL
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{comparisonType}}{Options for comparison from enum \code{DDIComparisonTypes}}
-
 \item{\code{minRange}}{Mininmum range for guest and ratio lines}
+
+\item{\code{deltaGuest}}{Value of \code{delta} in Guest et al. equation}
 }
 \if{html}{\out{</div>}}
 }
@@ -22,8 +22,6 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{ddiRatioL
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{DDIRatioDataMapping$new()}}
-\item \href{#method-getDDIRatioLines}{\code{DDIRatioDataMapping$getDDIRatioLines()}}
-\item \href{#method-getGuestLines}{\code{DDIRatioDataMapping$getGuestLines()}}
 \item \href{#method-clone}{\code{DDIRatioDataMapping$clone()}}
 }
 }
@@ -41,7 +39,7 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{ddiRatioL
 Create a new \code{DDIRatioDataMapping} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DDIRatioDataMapping$new(
-  comparisonType = DDIComparisonTypes$obsVsPred,
+  deltaGuest = 1,
   minRange = c(0.01, 100),
   lines = DefaultDataMappingValues$ddiRatio,
   ...
@@ -51,11 +49,12 @@ Create a new \code{DDIRatioDataMapping} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{comparisonType}}{Options for comparison from enum \code{DDIComparisonTypes}}
+\item{\code{deltaGuest}}{Value of parameter \code{delta} in Guest et al. equation.
+Default value is 1.}
 
-\item{\code{minRange}}{Mininmum range for guest and ratio lines}
+\item{\code{minRange}}{Mininmum range for guest lines}
 
-\item{\code{lines}}{list of ratio and guest limits to plot as horizontal lines}
+\item{\code{lines}}{list of ratio limits to plot as diagonal lines}
 
 \item{\code{...}}{parameters inherited from \code{PKRatioDataMapping}}
 }
@@ -63,34 +62,6 @@ Create a new \code{DDIRatioDataMapping} object
 }
 \subsection{Returns}{
 A new \code{DDIRatioDataMapping} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getDDIRatioLines"></a>}}
-\if{latex}{\out{\hypertarget{method-getDDIRatioLines}{}}}
-\subsection{Method \code{getDDIRatioLines()}}{
-Create a data.frame with DDI ratio limits
-This data.frame is necessary in case if log-log plots as
-\code{geom_abline} doesn't work properly in log scale
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DDIRatioDataMapping$getDDIRatioLines()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A data.frame with DDI ratio limits
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getGuestLines"></a>}}
-\if{latex}{\out{\hypertarget{method-getGuestLines}{}}}
-\subsection{Method \code{getGuestLines()}}{
-Get a data.frame with Guest et al ratio limits
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DDIRatioDataMapping$getGuestLines()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A data.frame with Guest et al ratio limits
 }
 }
 \if{html}{\out{<hr>}}

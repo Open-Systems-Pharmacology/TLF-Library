@@ -21,6 +21,10 @@ plotTimeProfile(
 
 \item{dataMapping}{\code{TimeProfileDataMapping} object}
 
+\item{observedData}{data.frame containing the data to be used for the plot}
+
+\item{observedDataMapping}{\code{ObservedDataMapping} object}
+
 \item{plotConfiguration}{\code{TimeProfilePlotConfiguration} object}
 
 \item{plotObject}{ggplot object, if null creates new plot, if not add time profile layers to ggplot}

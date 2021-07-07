@@ -114,12 +114,7 @@ addScatter <- function(data = NULL,
   dataMapping <- dataMapping %||% XYGDataMapping$new(x = x, y = y, data = data)
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
   # Update plotConfiguration if user defined aesthetics
-  aestheticInputs <- c("color", "shape", "linetype", "size")
-  aestheticInputsExpression <- parse(text = paste0(
-    "plotConfiguration$points$", aestheticInputs,
-    " <- ", aestheticInputs, " %||% plotConfiguration$points$", aestheticInputs
-  ))
-  eval(aestheticInputsExpression)
+  eval(parseVariableToObject("plotConfiguration$points", c("color", "shape", "linetype", "size"), keepIfNull = TRUE))
 
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
@@ -130,10 +125,9 @@ addScatter <- function(data = NULL,
     return(plotObject)
   }
 
-  # Get transformed data from mapping and convert labels into characters usable by aes_string
+  # Get mapping and convert labels into characters usable by aes_string
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- getAesStringMapping(dataMapping)
-
   # If no specific mapping, use default captions
   if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
     mapData$legendLabels <- getlegendLabelsCaption(plotObject)
@@ -144,19 +138,22 @@ addScatter <- function(data = NULL,
     ggplot2::geom_point(
       data = mapData,
       mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, shape = "legendLabels", color = "legendLabels", size = "legendLabels"),
-      show.legend = TRUE
+      show.legend = TRUE,
+      na.rm = TRUE
     ) +
     ggplot2::geom_path(
       data = mapData,
       mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
-      show.legend = TRUE
+      show.legend = TRUE,
+      na.rm = TRUE
     ) +
     ggplot2::geom_ribbon(
       data = mapData,
       mapping = ggplot2::aes_string(x = mapLabels$x, ymin = mapLabels$y, ymax = mapLabels$y, fill = "legendLabels"),
       # alpha is 0 so that line can be seen in legend
       alpha = 0,
-      show.legend = TRUE
+      show.legend = TRUE,
+      na.rm = TRUE
     )
 
   # Prepare data for merging previous and current legend
@@ -166,9 +163,7 @@ addScatter <- function(data = NULL,
     newLabels = newLabels,
     aestheticSelections = plotConfiguration$points
   ))
-  # Try is used to prevent crashes in the final plot due to ggplot2 peculiarities regarding scale functions
-  try(suppressMessages(plotObject <- setXAxis(plotObject)))
-  try(suppressMessages(plotObject <- setYAxis(plotObject)))
+  eval(parseUpdateAxes())
   return(plotObject)
 }
 
@@ -262,13 +257,7 @@ addLine <- function(data = NULL,
   dataMapping <- dataMapping %||% XYGDataMapping$new(x = x, y = y, data = data)
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
   # Update plotConfiguration if user defined aesthetics
-  aestheticInputs <- c("color", "shape", "linetype", "size")
-  aestheticInputsExpression <- parse(text = paste0(
-    "plotConfiguration$lines$", aestheticInputs,
-    " <- ", aestheticInputs, " %||% plotConfiguration$lines$", aestheticInputs
-  ))
-  eval(aestheticInputsExpression)
-
+  eval(parseVariableToObject("plotConfiguration$lines", c("color", "shape", "linetype", "size"), keepIfNull = TRUE))
 
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
@@ -282,7 +271,6 @@ addLine <- function(data = NULL,
   # Get mapping and convert labels into characters usable by aes_string
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- getAesStringMapping(dataMapping)
-
   # If no specific mapping, use default captions
   if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
     mapData$legendLabels <- getlegendLabelsCaption(plotObject)
@@ -335,19 +323,22 @@ addLine <- function(data = NULL,
       ggplot2::geom_point(
         data = mapData,
         mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, shape = "legendLabels", color = "legendLabels", size = "legendLabels"),
-        show.legend = TRUE
+        show.legend = TRUE,
+        na.rm = TRUE
       ) +
       ggplot2::geom_path(
         data = mapData,
         mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
-        show.legend = TRUE
+        show.legend = TRUE,
+        na.rm = TRUE
       ) +
       ggplot2::geom_ribbon(
         data = mapData,
         mapping = ggplot2::aes_string(x = mapLabels$x, ymin = mapLabels$y, ymax = mapLabels$y, fill = "legendLabels"),
         # alpha is 0 so that line can be seen in legend
         alpha = 0,
-        show.legend = TRUE
+        show.legend = TRUE,
+        na.rm = TRUE
       )
   }
 
@@ -358,8 +349,7 @@ addLine <- function(data = NULL,
     newLabels = newLabels,
     aestheticSelections = plotConfiguration$lines
   ))
-  try(suppressMessages(plotObject <- setXAxis(plotObject)))
-  try(suppressMessages(plotObject <- setYAxis(plotObject)))
+  eval(parseUpdateAxes())
   return(plotObject)
 }
 
@@ -380,10 +370,10 @@ addLine <- function(data = NULL,
 #' mapping x, y and aesthetic variables to the variable names of \code{data}.
 #' @param caption vector of character strings defining the legend captions.
 #' This parameter is optional: default value is NULL.
+#' @param fill vector of character strings defining the color of the scatter points.
+#' This parameter is optional: default value `NULL` will choose colors according to the current theme.
 #' @param color vector of character strings defining the color of the scatter points.
 #' This parameter is optional: default value `NULL` will choose colors according to the current theme.
-#' @param shape vector of character strings or numerical defining the shapes of the scatter points.
-#' This parameter is optional: default value `NULL` will choose shapes according to the current theme.
 #' @param size vector of numerical defining the sizes of the scatter points.
 #' This parameter is optional: default value `NULL` will choose sizes according to the current theme.
 #' @param linetype vector of character strings defining the linetype linking the scatter points.
@@ -467,14 +457,8 @@ addRibbon <- function(data = NULL,
 
   dataMapping <- dataMapping %||% RangeDataMapping$new(x = x, ymin = ymin, ymax = ymax, data = data)
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
-
   # Update plotConfiguration if user defined aesthetics
-  aestheticInputs <- c("color", "fill", "linetype", "size", "alpha")
-  aestheticInputsExpression <- parse(text = paste0(
-    "plotConfiguration$ribbons$", aestheticInputs,
-    " <- ", aestheticInputs, " %||% plotConfiguration$ribbons$", aestheticInputs
-  ))
-  eval(aestheticInputsExpression)
+  eval(parseVariableToObject("plotConfiguration$ribbons", c("color", "fill", "linetype", "size", "alpha"), keepIfNull = TRUE))
 
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
@@ -488,30 +472,19 @@ addRibbon <- function(data = NULL,
   # Get mapping and convert labels into characters usable by aes_string
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- getAesStringMapping(dataMapping)
-
   # If no specific mapping, use default captions
   if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
     mapData$legendLabels <- getlegendLabelsCaption(plotObject)
   }
   mapData$legendLabels <- caption %||% mapData$legendLabels
 
-  # Get mapping and convert labels into characters usable by aes_string
-  mapData <- dataMapping$checkMapData(data)
-  mapLabels <- getAesStringMapping(dataMapping)
-
-  # If no specific mapping, use default captions
-  if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
-    mapData$legendLabels <- getlegendLabelsCaption(plotObject)
-  }
-  mapData$legendLabels <- caption %||% mapData$legendLabels
-
-  # y-intercept
   plotObject <- plotObject +
     ggplot2::geom_ribbon(
       data = mapData,
       mapping = ggplot2::aes_string(x = mapLabels$x, ymin = mapLabels$ymin, ymax = mapLabels$ymax, fill = "legendLabels"),
       alpha = alpha,
-      show.legend = TRUE
+      show.legend = TRUE,
+      na.rm = TRUE
     ) +
     ggplot2::geom_blank(
       data = mapData,
@@ -525,8 +498,7 @@ addRibbon <- function(data = NULL,
     newLabels = newLabels,
     aestheticSelections = plotConfiguration$ribbons
   ))
-  try(suppressMessages(plotObject <- setXAxis(plotObject)))
-  try(suppressMessages(plotObject <- setYAxis(plotObject)))
+  eval(parseUpdateAxes())
   return(plotObject)
 }
 
@@ -543,8 +515,6 @@ addRibbon <- function(data = NULL,
 #' This parameter is optional: default value is NULL.
 #' @param color vector of character strings defining the color of the scatter points.
 #' This parameter is optional: default value `NULL` will choose colors according to the current theme.
-#' @param shape vector of character strings or numerical defining the shapes of the scatter points.
-#' This parameter is optional: default value `NULL` will choose shapes according to the current theme.
 #' @param size vector of numerical defining the sizes of the scatter points.
 #' This parameter is optional: default value `NULL` will choose sizes according to the current theme.
 #' @param linetype vector of character strings defining the linetype linking the scatter points.
@@ -593,14 +563,8 @@ addErrorbar <- function(data = NULL,
 
   dataMapping <- dataMapping %||% RangeDataMapping$new(x = x, ymin = ymin, ymax = ymax, data = data)
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
-
   # Update plotConfiguration if user defined aesthetics
-  aestheticInputs <- c("color", "linetype", "size")
-  aestheticInputsExpression <- parse(text = paste0(
-    "plotConfiguration$errorbars$", aestheticInputs,
-    " <- ", aestheticInputs, " %||% plotConfiguration$errorbars$", aestheticInputs
-  ))
-  eval(aestheticInputsExpression)
+  eval(parseVariableToObject("plotConfiguration$errorbars", c("color", "linetype", "size"), keepIfNull = TRUE))
 
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
@@ -614,17 +578,6 @@ addErrorbar <- function(data = NULL,
   # Get mapping and convert labels into characters usable by aes_string
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- getAesStringMapping(dataMapping)
-
-  # If no specific mapping, use default captions
-  if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
-    mapData$legendLabels <- getlegendLabelsCaption(plotObject)
-  }
-  mapData$legendLabels <- caption %||% mapData$legendLabels
-
-  # Get mapping and convert labels into characters usable by aes_string
-  mapData <- dataMapping$checkMapData(data)
-  mapLabels <- getAesStringMapping(dataMapping)
-
   # If no specific mapping, use default captions
   if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
     mapData$legendLabels <- getlegendLabelsCaption(plotObject)
@@ -643,6 +596,7 @@ addErrorbar <- function(data = NULL,
           ymax = mapLabels$ymax,
           color = "legendLabels",
         ),
+        na.rm = TRUE,
         size = size %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, aesthetic = "size"),
         linetype = linetype %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype")
       )
@@ -657,6 +611,7 @@ addErrorbar <- function(data = NULL,
           ymax = mapLabels$ymax,
           color = "legendLabels",
         ),
+        na.rm = TRUE,
         size = size %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, aesthetic = "size"),
         linetype = linetype %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype")
       )
@@ -671,7 +626,8 @@ addErrorbar <- function(data = NULL,
         fill = "legendLabels",
       ),
       alpha = 0,
-      show.legend = TRUE
+      show.legend = TRUE,
+      na.rm = TRUE
     )
   # Add blank lines, points and ribbon to the plot
   plotObject <- plotObject +
@@ -696,8 +652,7 @@ addErrorbar <- function(data = NULL,
     aestheticSelections = plotConfiguration$errorbars
   ))
   # Try is used to prevent crashes in the final plot due to ggplot2 peculiarities regarding scale functions
-  try(suppressMessages(plotObject <- setXAxis(plotObject)))
-  try(suppressMessages(plotObject <- setYAxis(plotObject)))
+  eval(parseUpdateAxes())
   return(plotObject)
 }
 

@@ -11,11 +11,11 @@
 #' @param plotConfiguration
 #' \code{ObsVsPredConfiguration} class or subclass defining labels, grid, background and watermark
 #' This parameter is optional: the \code{tlf} library provides a default configuration according to the current theme
+#' @param smoother smoother Name of smoother function: "loess" or "lm"
 #' @param plotObject \code{ggplot} graphical object to which the Observations vs Predictions plot layer is added
 #' This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided
 #' @description
 #' Add Observations vs Predictions plot layers to a \code{ggplot} graphical object.
-#' Identity line is plotted as a diagonal line (TO DO: integrate fold errors lines).
 #' Observations vs Predictions are plotted as a scatter plot.
 #' @return A \code{ggplot} graphical object
 #' @export
@@ -23,108 +23,58 @@ plotObsVsPred <- function(data,
                           metaData = NULL,
                           dataMapping = NULL,
                           plotConfiguration = NULL,
+                          smoother = NULL,
                           plotObject = NULL) {
-  validateIsOfType(data, "data.frame")
-  dataMapping <- dataMapping %||% ObsVsPredDataMapping$new(data = data)
-  plotConfiguration <- plotConfiguration %||% ObsVsPredPlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
-
-  validateIsOfType(dataMapping, "ObsVsPredDataMapping")
-  validateIsOfType(plotConfiguration, "ObsVsPredPlotConfiguration")
-  validateIsOfType(plotObject, "ggplot", nullAllowed = TRUE)
-
-  if (nrow(data) == 0) {
-    warning(messages$errorNrowData("Obs vs Pred plot"))
-    return(plotObject)
-  }
-
-  # Get error bars for uncertainty
-  if (!isOfLength(dataMapping$uncertainty, 0)) {
-    plotObject <- addErrorbar(
-      data = data,
-      dataMapping = dataMapping,
-      plotConfiguration = plotConfiguration,
-      plotObject = plotObject
-    )
-  }
-  plotObject <- addScatter(
-    data = data,
-    dataMapping = dataMapping,
-    plotConfiguration = plotConfiguration,
-    plotObject = plotObject
-  )
-
-  # Add line of identity depending and smoothing
-  plotObject <- addObsVsPredLines(
-    data = data,
-    metaData,
-    dataMapping,
-    plotConfiguration,
-    plotObject
-  )
-  # LLOQ
-  if (!isOfLength(dataMapping$lloq, 0)) {
-    # Overwrite y mapping temporarily
-    yMapping <- dataMapping$y
-    dataMapping$y <- dataMapping$lloq
-
-    plotObject <- addLine(
-      data = data,
-      dataMapping = dataMapping,
-      caption = dataMapping$lloq,
-      plotConfiguration = plotConfiguration,
-      plotObject = plotObject
-    )
-    dataMapping$y <- yMapping
-  }
-
-  try(suppressMessages(plotObject <- setXAxis(plotObject)))
-  try(suppressMessages(plotObject <- setYAxis(plotObject)))
-  return(plotObject)
-}
-
-#' @title addObsVsPredLines
-#' @param data data.frame containing the data to be used for the plot
-#' @param metaData list of lists
-#' @param dataMapping \code{ObsVsPredDataMapping} object
-#' @param plotConfiguration \code{ObsVsPredConfiguration} object
-#' @param plotObject \code{ggplot} graphical object
-#' @description
-#' Add layers of identity line and smoother
-#' @return A \code{ggplot} graphical object
-addObsVsPredLines <- function(data,
-                              metaData = NULL,
-                              dataMapping = NULL,
-                              plotConfiguration = NULL,
-                              plotObject = NULL) {
-
-  # Get range of x values to plot
-  xmin <- min(dataMapping$minRange, data[, dataMapping$x], data[, dataMapping$y])
-  xmax <- max(dataMapping$minRange, data[, dataMapping$x], data[, dataMapping$y])
-
-  obsVsPredLineData <- data.frame(x = c(xmin, xmax), y = c(xmin, xmax) * dataMapping$lines)
-  plotObject <- plotObject +
-    ggplot2::geom_path(
-      data = obsVsPredLineData,
-      mapping = ggplot2::aes_string(x = "x", y = "y"),
-      color = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = 0, aesthetic = "color"),
-      linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = 0, aesthetic = "linetype"),
-      size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = 0, aesthetic = "size")
-    )
-  # Get mapping and convert labels into characters usable by aes_string
+  eval(parseCheckPlotInputs("ObsVsPred"))
+  validateIsIncluded(smoother, c("loess", "lm"), nullAllowed = TRUE)
+  dataMapping$smoother <- smoother %||% dataMapping$smoother
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- getAesStringMapping(dataMapping)
-  if (!isOfLength(dataMapping$smoother, 0)) {
+
+  plotObject <- plotObject %||% initializePlot(plotConfiguration)
+
+  for (lineIndex in seq_along(dataMapping$lines)) {
+    eval(parseAddLineLayer("diagonal", dataMapping$lines[[lineIndex]], lineIndex - 1))
+  }
+  if (isOfLength(lineIndex, 0)) {
+    lineIndex <- 0
+  }
+  # Add Smoother if defined
+  if (isIncluded(dataMapping$smoother, "loess")) {
+    plotObject <- plotObject +
+      ggplot2::geom_smooth(
+        data = mapData,
+        method = "loess",
+        se = FALSE,
+        formula = "y ~ x",
+        mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y),
+        color = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex, aesthetic = "color"),
+        linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex, aesthetic = "linetype"),
+        size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
+      )
+  }
+  if (isIncluded(dataMapping$smoother, "lm")) {
     plotObject <- plotObject +
       ggplot2::geom_smooth(
         data = mapData,
         mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y),
-        method = dataMapping$smoother,
+        method = "lm",
         se = FALSE,
-        color = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = 1, aesthetic = "color"),
-        linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = 1, aesthetic = "linetype"),
-        size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = 1, aesthetic = "size")
+        formula = "y ~ x",
+        color = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex, aesthetic = "color"),
+        linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex, aesthetic = "linetype"),
+        size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
       )
   }
+
+  # If uncertainty is defined, add error bars
+  if (!isOfLength(dataMapping$uncertainty, 0)) {
+    eval(parseAddUncertaintyLayer())
+  }
+  eval(parseAddScatterLayer())
+  # Define shapes and colors based on plotConfiguration$points properties
+  eval(parseUpdateAestheticProperty(AestheticProperties$color, "points"))
+  eval(parseUpdateAestheticProperty(AestheticProperties$shape, "points"))
+  eval(parseUpdateAxes())
   return(plotObject)
 }
-

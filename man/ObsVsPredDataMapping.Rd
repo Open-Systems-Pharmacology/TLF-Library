@@ -7,15 +7,11 @@
 R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{obsVsPredLines} variables to \code{data}
 }
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{\link[tlf:ObservedDataMapping]{tlf::ObservedDataMapping}} -> \code{ObsVsPredDataMapping}
+\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{\link[tlf:PKRatioDataMapping]{tlf::PKRatioDataMapping}} -> \code{ObsVsPredDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{lines}}{list of lines to plot}
-
-\item{\code{minRange}}{Mininmum range for the lines}
-
 \item{\code{smoother}}{regression function name}
 }
 \if{html}{\out{</div>}}
@@ -30,7 +26,7 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{obsVsPred
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="ObservedDataMapping" data-id="checkMapData">}\href{../../tlf/html/ObservedDataMapping.html#method-checkMapData}{\code{tlf::ObservedDataMapping$checkMapData()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PKRatioDataMapping" data-id="checkMapData">}\href{../../tlf/html/PKRatioDataMapping.html#method-checkMapData}{\code{tlf::PKRatioDataMapping$checkMapData()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -42,7 +38,6 @@ Create a new \code{ObsVsPredDataMapping} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ObsVsPredDataMapping$new(
   lines = DefaultDataMappingValues$obsVsPred,
-  minRange = NULL,
   smoother = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -52,8 +47,6 @@ Create a new \code{ObsVsPredDataMapping} object
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{lines}}{list of lines to plot}
-
-\item{\code{minRange}}{Mininmum range for guest and ratio lines}
 
 \item{\code{smoother}}{smoother function or parameter
 To map a loess smoother to the plot, use \code{smoother}="loess"}

@@ -2,6 +2,8 @@
 #' @param data data.frame containing the data to be used for the plot
 #' @param metaData list containing complementary information to data (e.g. unit)
 #' @param dataMapping `TimeProfileDataMapping` object
+#' @param observedData data.frame containing the data to be used for the plot
+#' @param observedDataMapping `ObservedDataMapping` object
 #' @param plotConfiguration `TimeProfilePlotConfiguration` object
 #' @param plotObject
 #' ggplot object, if null creates new plot, if not add time profile layers to ggplot

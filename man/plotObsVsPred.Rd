@@ -9,6 +9,7 @@ plotObsVsPred(
   metaData = NULL,
   dataMapping = NULL,
   plotConfiguration = NULL,
+  smoother = NULL,
   plotObject = NULL
 )
 }
@@ -27,6 +28,8 @@ and default values of the identity and fold errors lines.}
 \item{plotConfiguration}{\code{ObsVsPredConfiguration} class or subclass defining labels, grid, background and watermark
 This parameter is optional: the \code{tlf} library provides a default configuration according to the current theme}
 
+\item{smoother}{smoother Name of smoother function: "loess" or "lm"}
+
 \item{plotObject}{\code{ggplot} graphical object to which the Observations vs Predictions plot layer is added
 This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided}
 }
@@ -35,6 +38,5 @@ A \code{ggplot} graphical object
 }
 \description{
 Add Observations vs Predictions plot layers to a \code{ggplot} graphical object.
-Identity line is plotted as a diagonal line (TO DO: integrate fold errors lines).
 Observations vs Predictions are plotted as a scatter plot.
 }

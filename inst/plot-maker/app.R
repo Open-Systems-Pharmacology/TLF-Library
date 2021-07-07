@@ -28,23 +28,24 @@ ui <- fluidPage(
             fileInput("dataFromFile", label = "Select a file")
             )
           ),
-          fluidRow(
-            tableOutput("dataTable"),
+        fluidRow(
+          textInput("dataSelection", "Data Selection", value = ""),
+          helpText("If data selection requires variables from data.frame,\nplease refer to them using 'data$' (e.g. data$id == 1)")
+          ),
+        fluidRow(
+          tableOutput("dataTable"),
             style = "overflow-x: scroll"
             ),
         conditionalPanel(
           condition = "input.dataType == 'file'",
           br(),
           actionButton("fileOptions", label = "Options"),
-          # the result of the action button needs to be called for conditionalPanel to get it
-          # the print is the same color as background to hide it
-          fluidRow(textOutput("showFileOptions"), style = "color: white"),
           conditionalPanel(
-            condition = "output.showFileOptions != 0",
+            condition = "input.fileOptions%2 != 0",
             numericInput("skipOption", "lines to skip", 0, min = 0, step = 1),
-            selectInput("sepOption", "column separator", choices = list(unknown = "", comma = ",", semicolumn = ";", space = " ", tab = "\t"), selectize = FALSE)
+            uiOutput("displayedSepOption")
             )
-          )
+        )
         ),
       tabPanel(
         "Data Mapping",
@@ -55,7 +56,8 @@ ui <- fluidPage(
         uiOutput("colorVariableNames"),
         uiOutput("fillVariableNames"),
         uiOutput("shapeVariableNames"),
-        uiOutput("linetypeVariableNames")
+        uiOutput("linetypeVariableNames"),
+        uiOutput("uncertaintyVariableNames")
         ),
       tabPanel("Labels",
                navlistPanel(
@@ -100,8 +102,9 @@ ui <- fluidPage(
       tabPanel("Theme", fileInput("loadTheme", label = "Use theme from .json", accept = ".json")),
       tabPanel("Aesthetics",
                p("This panel aims at setting how points, lines, ribbons and errorbars are displayed."),
-               p("Users can type the name of the color, shape or linetype they want to display"),
-               p("Users can also type the key of the selection method from the theme: 'next', 'first', 'reset'."),
+               helpText(paste("Selection keys: 'next', 'first', 'same' and 'reset'",
+                               "indicates how to use the aesthetic map defined in the current theme.",
+                               "Any other value will be used as is for the display.")),
                navlistPanel(
                  tabPanel("Points",
                           uiOutput("pointsColor"),
@@ -139,18 +142,25 @@ ui <- fluidPage(
     selectInput("selectedPlot", label = "Select a plot", choices = listOfAvailablePlots),
     br(),
     plotOutput(outputId = "displayPlot"),
-    tabPanel(
-      "Analysis",
-      conditionalPanel(
-        condition = "input.selectedPlot == 'plotBoxWhisker'",
-        fluidRow(tableOutput("summaryTable"), style = "overflow-x: scroll")
-      ),
-      conditionalPanel(
-        condition = "input.selectedPlot == 'plotPKRatio'",
-        fluidRow(tableOutput("pkRatioTable"), align = 'center')
-      )
+    br(),
+    #----- Plot Dependent output of interest -----#
+    conditionalPanel(
+      condition = "input.selectedPlot == 'plotBoxWhisker'",
+      fluidRow(tableOutput("summaryTable"), style = "overflow-x: scroll")
     ),
-    
+    conditionalPanel(
+      condition = "input.selectedPlot == 'plotPKRatio'",
+      fluidRow(tableOutput("pkRatioTable"), align = 'center')
+    ),
+    conditionalPanel(
+      condition = "input.selectedPlot == 'plotTornado'",
+      selectInput("barTornado", label = "Use bars", choices = list("Yes" = TRUE, "No" = FALSE), selected = "Yes"),
+      selectInput("sortTornado", label = "Sort by x variable", choices = list("Yes" = TRUE, "No" = FALSE), selected = "Yes")
+    ),
+    conditionalPanel(
+      condition = "input.selectedPlot == 'plotObsVsPred'",
+      selectInput("smootherObsVsPred", label = "Regression", choices = list("none" = "none", "loess" = "loess", "lm" = "lm"), selected = "None")
+    ),
     align = "center"
   )
 )
@@ -158,10 +168,6 @@ ui <- fluidPage(
 #---------- Server ----------#
 server <- function(input, output) {
 #---------- Reactive helpers  ----------#  
-  # Action buttons input is the count of clicks
-  # Even count -> switch panel off
-  # Odd count -> switch panel on
-  output$showFileOptions <- renderText({input$fileOptions %% 2})
   #---------- Data ----------#  
   getData <- reactive({
     data <- data.frame(`No data` = NULL)
@@ -176,11 +182,33 @@ server <- function(input, output) {
     if (isIncluded(input$dataType, "file")) {
       if (!isOfLength(input$dataFromFile,0)) {
         data <- read.table(file = input$dataFromFile$datapath,
-                           sep = input$sepOption, skip = input$skipOption,
+                           sep = getFileSep(), skip = input$skipOption,
                            header = TRUE, stringsAsFactors = FALSE, check.names = FALSE)
       }
     }
+    eval(parse(text = paste0("data <- data[", input$dataSelection, ",]")))
     return(data)
+  })
+  
+  getFileSep <- reactive({
+    if(input$fileOptions != 0){
+      return(input$sepOption)
+    }
+    # Default separator for csv will use "," otherwise ""
+    if(!isOfLength(input$dataFromFile$datapath, 0)){
+      ex <- strsplit(basename(input$dataFromFile$datapath), split = "\\.")[[1]]
+      ex <- utils::tail(ex, 1)
+      if(ex %in% "csv"){
+        return(",")
+      }
+    }
+    return("")
+  })
+  
+  output$displayedSepOption <- renderUI({
+    selectInput("sepOption", "column separator", 
+                choices = list(unknown = "", comma = ",", semicolumn = ";", space = " ", tab = "\t"),
+                selectize = FALSE)
   })
   
   output$dataTable <- renderTable({
@@ -209,7 +237,7 @@ server <- function(input, output) {
     selectInput("ymaxVariableNames2", "ymax variable", getVariableNames(), selected = input$ymaxVariableNames2)
   })
   output$colorVariableNames <- renderUI({
-    if(isIncluded(input$selectedPlot, c("addRibbon","plotHistogram","plotBoxWhisker","plotTornado"))){return()}
+    if(isIncluded(input$selectedPlot, c("addRibbon","plotHistogram","plotBoxWhisker"))){return()}
     selectInput("colorVariableNames2", "color variable", getVariableNames(), selected = input$colorVariableNames2)
   })
   output$fillVariableNames <- renderUI({
@@ -217,16 +245,20 @@ server <- function(input, output) {
     selectInput("fillVariableNames2", "fill variable", getVariableNames(), selected = input$fillVariableNames2)
   })
   output$shapeVariableNames <- renderUI({
-    if(isIncluded(input$selectedPlot, c("addLine", "addRibbon", "addErrorbar","plotHistogram","plotBoxWhisker","plotTornado"))){return()}
+    if(isIncluded(input$selectedPlot, c("addLine", "addRibbon", "addErrorbar","plotHistogram","plotBoxWhisker"))){return()}
     selectInput("shapeVariableNames2", "shape variable", getVariableNames(), selected = input$shapeVariableNames2)
   })
   output$linetypeVariableNames <- renderUI({
     if(!isIncluded(input$selectedPlot, c("addLine", "addErrorbar","plotTimeProfile"))){return()}
-    selectInput("shapeVariableNames2", "linetype variable", getVariableNames(), selected = input$linetypeVariableNames2)
+    selectInput("linetypeVariableNames2", "linetype variable", getVariableNames(), selected = input$linetypeVariableNames2)
+  })
+  output$uncertaintyVariableNames <- renderUI({
+    if(!isIncluded(input$selectedPlot, c("plotPKRatio", "plotDDIRatio", "plotObsVsPred"))){return()}
+    selectInput("uncertaintyVariableNames2", "uncertainty variable", getVariableNames(), selected = input$uncertaintyVariableNames2)
   })
   
   getDataMapping <- reactive({
-    mappingVariables <- c("x", "y", "ymin", "ymax", "color", "fill", "shape", "linetype")
+    mappingVariables <- c("x", "y", "ymin", "ymax", "color", "fill", "shape", "linetype", "uncertainty")
     mappingExpression <- parse(text = paste0(
       mappingVariables, "Variable <- tlfInput(input$", mappingVariables, "VariableNames2)"
     ))
@@ -235,15 +267,18 @@ server <- function(input, output) {
     dataMapping <- switch(input$selectedPlot,
                           addScatter = XYGDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable),
                           addLine = XYGDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,linetype=linetypeVariable),
-                          addRibbon = RangeDataMapping$new(x=xVariable,ymin=yVariable,ymax=yVariable,fill=fillVariable),
-                          addErrorbar = RangeDataMapping$new(x=xVariable,ymin=yVariable,ymax=yVariable,color=colorVariable),
-                          plotPKRatio = PKRatioDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable),
-                          plotDDIRatio = DDIRatioDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable),
+                          addRibbon = RangeDataMapping$new(x=xVariable,ymin=yminVariable,ymax=ymaxVariable,fill=fillVariable),
+                          addErrorbar = RangeDataMapping$new(x=xVariable,ymin=yminVariable,ymax=ymaxVariable,color=colorVariable),
+                          plotPKRatio = PKRatioDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable,uncertainty=uncertaintyVariable),
+                          plotDDIRatio = DDIRatioDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable,uncertainty=uncertaintyVariable),
                           plotBoxWhisker = BoxWhiskerDataMapping$new(x=xVariable,y=yVariable,fill=fillVariable),
                           plotHistogram = HistogramDataMapping$new(x=xVariable,y=yVariable,fill=fillVariable),
-                          plotTimeProfile = TimeProfileDataMapping$new(x=xVariable,y=yVariable),
-                          plotTornado = TornadoDataMapping$new(x=xVariable,y=yVariable,fill=fillVariable),
-                          plotObsVsPred = ObsVsPredDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable),
+                          plotTimeProfile = TimeProfileDataMapping$new(x=xVariable,y=yVariable,ymin=yminVariable,ymax=ymaxVariable,
+                                                                       color=colorVariable,linetype=linetypeVariable,fill=fillVariable),
+                          plotTornado = switch(input$barTornado, 
+                                               "TRUE" = TornadoDataMapping$new(x=xVariable,y=yVariable,fill=fillVariable,sorted=as.logical(input$sortTornado)),
+                                               "FALSE" = TornadoDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable,sorted=as.logical(input$sortTornado))),
+                          plotObsVsPred = ObsVsPredDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable,uncertainty=uncertaintyVariable, smoother = tlfInput(input$smootherObsVsPred)),
                           NULL)
     return(dataMapping)
   })
@@ -271,7 +306,7 @@ server <- function(input, output) {
                                 plotBoxWhisker = BoxWhiskerPlotConfiguration$new(data = data, dataMapping = dataMapping),
                                 plotHistogram = HistogramPlotConfiguration$new(data = data, dataMapping = dataMapping),
                                 plotTimeProfile = TimeProfilePlotConfiguration$new(data = data, dataMapping = dataMapping),
-                                plotTornado = TornadoPlotConfiguration$new(data = data, dataMapping = dataMapping),
+                                plotTornado = TornadoPlotConfiguration$new(data = data, dataMapping = dataMapping, bar = as.logical(input$barTornado)),
                                 plotObsVsPred = ObsVsPredPlotConfiguration$new(data = data, dataMapping = dataMapping),
                                 PlotConfiguration$new(data = data, dataMapping = dataMapping))
     return(plotConfiguration)
@@ -628,6 +663,18 @@ server <- function(input, output) {
     plotConfiguration$xAxis$scale <- tlfInput(input$xAxisScale2) %||% plotConfiguration$xAxis$scale
     plotConfiguration$yAxis$scale <- tlfInput(input$yAxisScale2) %||% plotConfiguration$yAxis$scale
     
+    # Axes Limits
+    xmin <- tlfInput(input$xAxisLimitsMin2)
+    xmax <- tlfInput(input$xAxisLimitsMax2)
+    ymin <- tlfInput(input$yAxisLimitsMin2)
+    ymax <- tlfInput(input$yAxisLimitsMax2)
+    if(length(c(xmin, xmax))==2){
+      plotConfiguration$xAxis$limits <- c(xmin, xmax)
+    }
+    if(length(c(ymin, ymax))==2){
+      plotConfiguration$yAxis$limits <- c(ymin, ymax)
+    }
+    
     #--- Legend
     plotConfiguration$legend$position <- tlfInput(input$legendPosition) %||% plotConfiguration$legend$position
     
@@ -696,6 +743,7 @@ server <- function(input, output) {
   rownames = TRUE)
   
   output$summaryTable <- renderTable({
+    if(!isIncluded(input$selectedPlot, "plotBoxWhisker")){return()}
     data <- getData()
     dataMapping <- getDataMapping()
     getBoxWhiskerMeasure(data = data, dataMapping = dataMapping)
@@ -706,7 +754,7 @@ server <- function(input, output) {
   output$savedPlot <- downloadHandler(
     filename = "savedPlot.png",
     content = function(file) {
-      displayPlot <- getUpdatedPlot()
+      displayPlot <- getDisplayPlot()
       ggsave(filename = file, plot = displayPlot, width = input$plotWidth, height = input$plotHeight, units = "cm")
     }
   )

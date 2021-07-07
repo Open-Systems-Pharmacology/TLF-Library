@@ -46,7 +46,7 @@ XYDataMapping <- R6::R6Class(
       self$data <- data[, c(self$x, self$y), drop = FALSE]
 
       # Dummy variable for default aesthetics
-      self$data$defaultAes <- factor("")
+      self$data$legendLabels <- factor("")
       return(self$data)
     }
   )

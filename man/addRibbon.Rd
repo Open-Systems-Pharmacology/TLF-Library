@@ -42,6 +42,9 @@ In case there is no \code{ymin} mapping, a value of 0 is assumed for \code{ymin}
 \item{caption}{vector of character strings defining the legend captions.
 This parameter is optional: default value is NULL.}
 
+\item{fill}{vector of character strings defining the color of the scatter points.
+This parameter is optional: default value \code{NULL} will choose colors according to the current theme.}
+
 \item{color}{vector of character strings defining the color of the scatter points.
 This parameter is optional: default value \code{NULL} will choose colors according to the current theme.}
 
@@ -62,9 +65,6 @@ mapping x, y and aesthetic variables to the variable names of \code{data}.}
 
 \item{plotObject}{\code{ggplot} graphical object to which the line layer is added
 This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided}
-
-\item{shape}{vector of character strings or numerical defining the shapes of the scatter points.
-This parameter is optional: default value \code{NULL} will choose shapes according to the current theme.}
 }
 \value{
 A \code{ggplot} graphical object

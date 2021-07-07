@@ -12,7 +12,7 @@ getGuestValues(x, delta = 1)
 \item{delta}{parameter of Guest function}
 }
 \value{
-A data.frame with Guest et al. ratio limits as ymin and ymax
+A data.frame with x, ymin and ymax defining Guest et al. limits
 }
 \description{
 Get a data.frame with Guest et al. ratio limits
