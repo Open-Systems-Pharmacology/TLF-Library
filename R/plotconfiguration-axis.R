@@ -171,11 +171,15 @@ XAxisConfiguration <- R6::R6Class(
       validateIsOfType(plotObject, "ggplot")
       # Update font properties
       plotObject <- plotObject + ggplot2::theme(axis.text.x = private$.font$createPlotFont())
+      # Update limits using coor_cartesian to prevent ggplot to remove data and crash
+      suppressMessages(
+        plotObject <- plotObject + ggplot2::coord_cartesian(xlim = private$.limits)
+      )
       # Update scales and ticks
       if (isIncluded(private$.scale, Scaling$discrete)) {
         suppressMessages(
           plotObject <- plotObject +
-            ggplot2::scale_x_discrete(limits = private$.limits, breaks = private$.ticks, labels = private$.ticklabels)
+            ggplot2::scale_x_discrete(breaks = private$.ticks, labels = private$.ticklabels)
         )
         return(plotObject)
       }
@@ -183,7 +187,7 @@ XAxisConfiguration <- R6::R6Class(
       # `try` should be added in cases of scale breaking because all the ggplot object elements are not yet in place
       suppressMessages(
         plotObject <- plotObject +
-          ggplot2::scale_x_continuous(trans = private$.scale, limits = private$.limits, breaks = private$.ticks, labels = private$.ticklabels)
+          ggplot2::scale_x_continuous(trans = private$.scale, breaks = private$.ticks, labels = private$.ticklabels)
       )
       return(plotObject)
     }
@@ -207,11 +211,14 @@ YAxisConfiguration <- R6::R6Class(
       validateIsOfType(plotObject, "ggplot")
       # Update font properties
       plotObject <- plotObject + ggplot2::theme(axis.text.y = private$.font$createPlotFont())
+      suppressMessages(
+        plotObject <- plotObject + ggplot2::coord_cartesian(ylim = private$.limits)
+      )
       # Update scales and ticks
       if (isIncluded(private$.scale, Scaling$discrete)) {
         suppressMessages(
           plotObject <- plotObject +
-            ggplot2::scale_y_discrete(limits = private$.limits, breaks = private$.ticks, labels = private$.ticklabels)
+            ggplot2::scale_y_discrete(breaks = private$.ticks, labels = private$.ticklabels)
         )
         return(plotObject)
       }
@@ -219,7 +226,7 @@ YAxisConfiguration <- R6::R6Class(
       # `try` should be added in cases of scale breaking because all the ggplot object elements are not yet in place
       suppressMessages(
         plotObject <- plotObject +
-          ggplot2::scale_y_continuous(trans = private$.scale, limits = private$.limits, breaks = private$.ticks, labels = private$.ticklabels)
+          ggplot2::scale_y_continuous(trans = private$.scale, breaks = private$.ticks, labels = private$.ticklabels)
       )
       return(plotObject)
     }
