@@ -333,13 +333,16 @@ createWatermarkGrob <- function(label, alpha = NULL) {
     aesthetic = "alpha"
   )
 
+  # Font size is in .pt within annonate and requires a conversion
   watermark <- ggplot2::ggplot() + ggplot2::theme_void() +
     ggplot2::annotate(
       geom = "text",
       x = 0,
       y = 0,
       label = label$text %||% "",
-      color = label$font$color, fontface = label$font$fontFace, size = label$font$size,
+      color = label$font$color, 
+      fontface = label$font$fontFace, 
+      size = label$font$size / ggplot2::.pt,
       angle = label$font$angle, alpha = alpha
     )
   watermark <- ggplot2::ggplotGrob(watermark)
