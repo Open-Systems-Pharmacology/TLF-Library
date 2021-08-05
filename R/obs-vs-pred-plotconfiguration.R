@@ -27,3 +27,11 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
     }
   )
 )
+
+#' @title ResVsPredPlotConfiguration
+#' @description R6 class defining the configuration of a \code{ggplot} object for Res vs Pred/Time plots
+#' @export
+ResVsPredPlotConfiguration <- R6::R6Class(
+  "ResVsPredPlotConfiguration",
+  inherit = ObsVsPredPlotConfiguration
+)

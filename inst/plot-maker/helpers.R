@@ -15,7 +15,8 @@ listOfAvailablePlots <- c(
   "plotHistogram",
   "plotTimeProfile",
   "plotTornado",
-  "plotObsVsPred"
+  "plotObsVsPred",
+  "plotResVsPred"
 )
 
 #' @title parseFieldToObject

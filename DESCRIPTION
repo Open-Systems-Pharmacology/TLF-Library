@@ -74,6 +74,7 @@ Collate:
     'plot-histogram.R'
     'plot-obs-vs-pred.R'
     'plot-pkratio.R'
+    'plot-res-vs-pred.R'
     'plot-timeprofile.R'
     'plot-tornado.R'
     'plotconfiguration-axis.R'
