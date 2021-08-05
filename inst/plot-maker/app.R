@@ -158,7 +158,7 @@ ui <- fluidPage(
       selectInput("sortTornado", label = "Sort by x variable", choices = list("Yes" = TRUE, "No" = FALSE), selected = "Yes")
     ),
     conditionalPanel(
-      condition = "input.selectedPlot == 'plotObsVsPred'",
+      condition = "input.selectedPlot == 'plotObsVsPred' || input.selectedPlot == 'plotResVsPred'",
       selectInput("smootherObsVsPred", label = "Regression", choices = list("none" = "none", "loess" = "loess", "lm" = "lm"), selected = "None")
     ),
     align = "center"
@@ -241,7 +241,7 @@ server <- function(input, output) {
     selectInput("colorVariableNames2", "color variable", getVariableNames(), selected = input$colorVariableNames2)
   })
   output$fillVariableNames <- renderUI({
-    if(isIncluded(input$selectedPlot, c("addScatter", "addLine", "addErrorbar","plotPKRatio","plotDDIRatio","plotObsVsPred"))){return()}
+    if(isIncluded(input$selectedPlot, c("addScatter", "addLine", "addErrorbar","plotPKRatio","plotDDIRatio","plotObsVsPred", "plotResVsPred"))){return()}
     selectInput("fillVariableNames2", "fill variable", getVariableNames(), selected = input$fillVariableNames2)
   })
   output$shapeVariableNames <- renderUI({
@@ -253,7 +253,7 @@ server <- function(input, output) {
     selectInput("linetypeVariableNames2", "linetype variable", getVariableNames(), selected = input$linetypeVariableNames2)
   })
   output$uncertaintyVariableNames <- renderUI({
-    if(!isIncluded(input$selectedPlot, c("plotPKRatio", "plotDDIRatio", "plotObsVsPred"))){return()}
+    if(!isIncluded(input$selectedPlot, c("plotPKRatio", "plotDDIRatio", "plotObsVsPred", "plotResVsPred"))){return()}
     selectInput("uncertaintyVariableNames2", "uncertainty variable", getVariableNames(), selected = input$uncertaintyVariableNames2)
   })
   
@@ -279,6 +279,7 @@ server <- function(input, output) {
                                                "TRUE" = TornadoDataMapping$new(x=xVariable,y=yVariable,fill=fillVariable,sorted=as.logical(input$sortTornado)),
                                                "FALSE" = TornadoDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable,sorted=as.logical(input$sortTornado))),
                           plotObsVsPred = ObsVsPredDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable,uncertainty=uncertaintyVariable, smoother = tlfInput(input$smootherObsVsPred)),
+                          plotResVsPred = ResVsPredDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable,uncertainty=uncertaintyVariable, smoother = tlfInput(input$smootherObsVsPred)),
                           NULL)
     return(dataMapping)
   })
@@ -308,6 +309,7 @@ server <- function(input, output) {
                                 plotTimeProfile = TimeProfilePlotConfiguration$new(data = data, dataMapping = dataMapping),
                                 plotTornado = TornadoPlotConfiguration$new(data = data, dataMapping = dataMapping, bar = as.logical(input$barTornado)),
                                 plotObsVsPred = ObsVsPredPlotConfiguration$new(data = data, dataMapping = dataMapping),
+                                plotResVsPred = ResVsPredPlotConfiguration$new(data = data, dataMapping = dataMapping),
                                 PlotConfiguration$new(data = data, dataMapping = dataMapping))
     return(plotConfiguration)
   })
@@ -721,6 +723,7 @@ server <- function(input, output) {
                           plotTimeProfile = plotTimeProfile(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
                           plotTornado = plotTornado(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
                           plotObsVsPred = plotObsVsPred(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
+                          plotResVsPred = plotResVsPred(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
                           initializePlot(plotConfiguration))
     displayPlot <- setLegendPosition(displayPlot, position = input$legendPosition2)
     return(displayPlot)

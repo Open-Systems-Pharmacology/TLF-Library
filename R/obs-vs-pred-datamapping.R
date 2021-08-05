@@ -1,5 +1,5 @@
 #' @title ObsVsPredDataMapping
-#' @description  R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{obsVsPredLines} variables to \code{data}
+#' @description  Class for mapping variables in observations vs predictions plot
 #' @export
 ObsVsPredDataMapping <- R6::R6Class(
   "ObsVsPredDataMapping",
@@ -24,4 +24,12 @@ ObsVsPredDataMapping <- R6::R6Class(
       self$smoother <- smoother
     }
   )
+)
+
+#' @title ResVsPredDataMapping
+#' @description  Class for mapping variables in residuals vs predictions/time plot
+#' @export
+ResVsPredDataMapping <- R6::R6Class(
+  "ResVsPredDataMapping",
+  inherit = ObsVsPredDataMapping
 )

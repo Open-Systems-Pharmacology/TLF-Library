@@ -4,7 +4,7 @@
 \alias{ObsVsPredDataMapping}
 \title{ObsVsPredDataMapping}
 \description{
-R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{obsVsPredLines} variables to \code{data}
+Class for mapping variables in observations vs predictions plot
 }
 \section{Super classes}{
 \code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{\link[tlf:PKRatioDataMapping]{tlf::PKRatioDataMapping}} -> \code{ObsVsPredDataMapping}
