@@ -13,29 +13,30 @@ ui <- fluidPage(
   column(
     5,
     tabsetPanel(
-      tabPanel("Data",
+      tabPanel(
+        "Data",
         fluidRow(
           selectInput("dataType",
             label = "Location",
             choices = list("environment" = "environment", "file" = "file")
-            ),
+          ),
           conditionalPanel(
             condition = "input.dataType == 'environment'",
             selectInput("dataFromEnv", label = "Variables available in environment", choices = sapply(ls(envir = sys.frame()), identity))
-            ),
+          ),
           conditionalPanel(
             condition = "input.dataType == 'file'",
             fileInput("dataFromFile", label = "Select a file")
-            )
-          ),
+          )
+        ),
         fluidRow(
           textInput("dataSelection", "Data Selection", value = ""),
           helpText("If data selection requires variables from data.frame,\nplease refer to them using 'data$' (e.g. data$id == 1)")
-          ),
+        ),
         fluidRow(
           tableOutput("dataTable"),
-            style = "overflow-x: scroll"
-            ),
+          style = "overflow-x: scroll"
+        ),
         conditionalPanel(
           condition = "input.dataType == 'file'",
           br(),
@@ -44,9 +45,9 @@ ui <- fluidPage(
             condition = "input.fileOptions%2 != 0",
             numericInput("skipOption", "lines to skip", 0, min = 0, step = 1),
             uiOutput("displayedSepOption")
-            )
+          )
         )
-        ),
+      ),
       tabPanel(
         "Data Mapping",
         uiOutput("xVariableNames"),
@@ -58,82 +59,107 @@ ui <- fluidPage(
         uiOutput("shapeVariableNames"),
         uiOutput("linetypeVariableNames"),
         uiOutput("uncertaintyVariableNames")
-        ),
-      tabPanel("Labels",
-               navlistPanel(
-                 labelPanel("Title"),
-                 labelPanel("Subtitle"),
-                 labelPanel("Xlabel"),
-                 labelPanel("Ylabel"),
-                 labelPanel("Watermark")
-                 )
-               ),
-      tabPanel("Background",
-               navlistPanel(
-                 backgroundPanel("Plot Area", "plot", includeFill = TRUE),
-                 backgroundPanel("Panel Area", "panel", includeFill = TRUE),
-                 backgroundPanel("XGrid", "xGrid", includeFill = FALSE),
-                 backgroundPanel("YGrid", "yGrid", includeFill = FALSE)
-                 )
-               ),
-      tabPanel("Axes",
-               navlistPanel(
-                 backgroundPanel("XAxis", "xAxis", includeFill = FALSE),
-                 backgroundPanel("YAxis", "yAxis", includeFill = FALSE),
-                 tabPanel("XScale", 
-                          uiOutput("xAxisScale"),
-                          uiOutput("xAxisLimitsMin"),
-                          uiOutput("xAxisLimitsMax")
-                          ),
-                 tabPanel("YScale", 
-                          uiOutput("yAxisScale"),
-                          uiOutput("yAxisLimitsMin"),
-                          uiOutput("yAxisLimitsMax")
-                          ),
-                 labelPanel("XTicks", "xTicks", includeText = FALSE),
-                 labelPanel("YTicks", "yTicks", includeText = FALSE)
-                 )
-               ),
-      tabPanel("Legend", 
-               navlistPanel(
-                 tabPanel("Position", uiOutput("legendPosition"))
-                 )
-               ),
+      ),
+      tabPanel(
+        "Labels",
+        navlistPanel(
+          labelPanel("Title"),
+          labelPanel("Subtitle"),
+          labelPanel("Xlabel"),
+          labelPanel("Ylabel"),
+          labelPanel("Watermark")
+        )
+      ),
+      tabPanel(
+        "Background",
+        navlistPanel(
+          backgroundPanel("Plot Area", "plot", includeFill = TRUE),
+          backgroundPanel("Panel Area", "panel", includeFill = TRUE),
+          backgroundPanel("XGrid", "xGrid", includeFill = FALSE),
+          backgroundPanel("YGrid", "yGrid", includeFill = FALSE)
+        )
+      ),
+      tabPanel(
+        "Axes",
+        navlistPanel(
+          backgroundPanel("XAxis", "xAxis", includeFill = FALSE),
+          backgroundPanel("YAxis", "yAxis", includeFill = FALSE),
+          tabPanel(
+            "XScale",
+            uiOutput("xAxisScale"),
+            uiOutput("xAxisLimitsMin"),
+            uiOutput("xAxisLimitsMax")
+          ),
+          tabPanel(
+            "YScale",
+            uiOutput("yAxisScale"),
+            uiOutput("yAxisLimitsMin"),
+            uiOutput("yAxisLimitsMax")
+          ),
+          labelPanel("XTicks", "xTicks", includeText = FALSE),
+          labelPanel("YTicks", "yTicks", includeText = FALSE)
+        )
+      ),
+      tabPanel(
+        "Legend",
+        navlistPanel(
+          tabPanel("Position", uiOutput("legendPosition"))
+        )
+      ),
       tabPanel("Theme", fileInput("loadTheme", label = "Use theme from .json", accept = ".json")),
-      tabPanel("Aesthetics",
-               p("This panel aims at setting how points, lines, ribbons and errorbars are displayed."),
-               helpText(paste("Selection keys: 'next', 'first', 'same' and 'reset'",
-                               "indicates how to use the aesthetic map defined in the current theme.",
-                               "Any other value will be used as is for the display.")),
-               navlistPanel(
-                 tabPanel("Points",
-                          uiOutput("pointsColor"),
-                          uiOutput("pointsShape"),
-                          uiOutput("pointsSize")
-                          ),
-                 tabPanel("Lines",
-                          uiOutput("linesColor"),
-                          uiOutput("linesLinetype"),
-                          uiOutput("linesSize")
-                          ),
-                 tabPanel("Ribbons",
-                          uiOutput("ribbonsFill"),
-                          uiOutput("ribbonsAlpha")
-                          ),
-                 tabPanel("Errorbars",
-                          uiOutput("errorbarsColor"),
-                          uiOutput("errorbarsLinetype"),
-                          uiOutput("errorbarsSize")
-                          )
-                 )
-               ),
-      tabPanel("Export", 
-               numericInput("plotHeight", "height (cm)", value = 9),
-               numericInput("plotWidth", "width (cm)", value = 16),
-               downloadButton("savedPlot", "Save Plot")
-               )
+      tabPanel(
+        "Aesthetics",
+        p("This panel aims at setting how points, lines, ribbons and errorbars are displayed."),
+        helpText(paste(
+          "Selection keys: 'next', 'first', 'same' and 'reset'",
+          "indicates how to use the aesthetic map defined in the current theme.",
+          "Any other value will be used as is for the display."
+        )),
+        navlistPanel(
+          tabPanel(
+            "Points",
+            uiOutput("pointsColor"),
+            uiOutput("pointsShape"),
+            uiOutput("pointsSize")
+          ),
+          tabPanel(
+            "Lines",
+            uiOutput("linesColor"),
+            uiOutput("linesLinetype"),
+            uiOutput("linesSize")
+          ),
+          tabPanel(
+            "Ribbons",
+            uiOutput("ribbonsFill"),
+            uiOutput("ribbonsAlpha")
+          ),
+          tabPanel(
+            "Errorbars",
+            uiOutput("errorbarsColor"),
+            uiOutput("errorbarsLinetype"),
+            uiOutput("errorbarsSize")
+          )
+        )
+      ),
+      tabPanel(
+        "Export",
+        fluidRow(
+          numericInput("plotHeight", "height (cm)", value = 9),
+          numericInput("plotWidth", "width (cm)", value = 16),
+          downloadButton("savedPlot", "Save Plot")
+        ),
+        br(),
+        fluidRow(
+          verbatimTextOutput("plotConfigurationCode"),
+          tags$head(tags$style("#plotConfigurationCode{overflow-y:scroll; max-height: 300px;}"))
+        ),
+        fluidRow(
+          actionButton("copyPlotConfiguration", "Copy", icon = icon("copy")),
+          downloadButton("savePlotConfiguration", "Save")
+        )
       )
-    ),
+    )
+  ),
 
   # Plot Column
   column(
@@ -150,7 +176,7 @@ ui <- fluidPage(
     ),
     conditionalPanel(
       condition = "input.selectedPlot == 'plotPKRatio'",
-      fluidRow(tableOutput("pkRatioTable"), align = 'center')
+      fluidRow(tableOutput("pkRatioTable"), align = "center")
     ),
     conditionalPanel(
       condition = "input.selectedPlot == 'plotTornado'",
@@ -167,153 +193,179 @@ ui <- fluidPage(
 
 #---------- Server ----------#
 server <- function(input, output) {
-#---------- Reactive helpers  ----------#  
+  #---------- Reactive helpers  ----------#  
   #---------- Data ----------#  
   getData <- reactive({
     data <- data.frame(`No data` = NULL)
     if (isIncluded(input$dataType, "environment")) {
       if (!isIncluded(input$dataFromEnv, "")) {
         data <- get(input$dataFromEnv, envir = sys.frame())
-        if(!(isOfType(data, "data.frame"))){
+        if (!(isOfType(data, "data.frame"))) {
           data <- data.frame(`Data is not a data.frame` = NULL)
         }
       }
     }
     if (isIncluded(input$dataType, "file")) {
-      if (!isOfLength(input$dataFromFile,0)) {
-        data <- read.table(file = input$dataFromFile$datapath,
-                           sep = getFileSep(), skip = input$skipOption,
-                           header = TRUE, stringsAsFactors = FALSE, check.names = FALSE)
+      if (!isOfLength(input$dataFromFile, 0)) {
+        data <- read.table(
+          file = input$dataFromFile$datapath,
+          sep = getFileSep(), skip = input$skipOption,
+          header = TRUE, stringsAsFactors = FALSE, check.names = FALSE
+        )
       }
     }
     eval(parse(text = paste0("data <- data[", input$dataSelection, ",]")))
     return(data)
   })
-  
+
   getFileSep <- reactive({
-    if(input$fileOptions != 0){
+    if (input$fileOptions != 0) {
       return(input$sepOption)
     }
     # Default separator for csv will use "," otherwise ""
-    if(!isOfLength(input$dataFromFile$datapath, 0)){
+    if (!isOfLength(input$dataFromFile$datapath, 0)) {
       ex <- strsplit(basename(input$dataFromFile$datapath), split = "\\.")[[1]]
       ex <- utils::tail(ex, 1)
-      if(ex %in% "csv"){
+      if (ex %in% "csv") {
         return(",")
       }
     }
     return("")
   })
-  
+
   output$displayedSepOption <- renderUI({
-    selectInput("sepOption", "column separator", 
-                choices = list(unknown = "", comma = ",", semicolumn = ";", space = " ", tab = "\t"),
-                selectize = FALSE)
+    selectInput("sepOption", "column separator",
+      choices = list(unknown = "", comma = ",", semicolumn = ";", space = " ", tab = "\t"),
+      selectize = FALSE
+    )
   })
-  
+
   output$dataTable <- renderTable({
     utils::head(getData())
   })
-  
+
   #---------- Data Mapping ----------#  
   getVariableNames <- reactive({
     data <- getData()
     return(c("none" = "none", sapply(names(data), identity)))
   })
-  
+
   output$xVariableNames <- renderUI({
     selectInput("xVariableNames2", "x variable", getVariableNames(), selected = input$xVariableNames2)
-    })
+  })
   output$yVariableNames <- renderUI({
-    if(isIncluded(input$selectedPlot, c("plotHistogram", "addRibbon", "addErrorbar"))){return()}
+    if (isIncluded(input$selectedPlot, c("plotHistogram", "addRibbon", "addErrorbar"))) {
+      return()
+    }
     selectInput("yVariableNames2", "y variable", getVariableNames(), selected = input$yVariableNames2)
-    })
+  })
   output$yminVariableNames <- renderUI({
-    if(!isIncluded(input$selectedPlot, c("addRibbon", "addErrorbar", "plotTimeProfile"))){return()}
+    if (!isIncluded(input$selectedPlot, c("addRibbon", "addErrorbar", "plotTimeProfile"))) {
+      return()
+    }
     selectInput("yminVariableNames2", "ymin variable", getVariableNames(), selected = input$yminVariableNames2)
   })
   output$ymaxVariableNames <- renderUI({
-    if(!isIncluded(input$selectedPlot, c("addRibbon", "addErrorbar", "plotTimeProfile"))){return()}
+    if (!isIncluded(input$selectedPlot, c("addRibbon", "addErrorbar", "plotTimeProfile"))) {
+      return()
+    }
     selectInput("ymaxVariableNames2", "ymax variable", getVariableNames(), selected = input$ymaxVariableNames2)
   })
   output$colorVariableNames <- renderUI({
-    if(isIncluded(input$selectedPlot, c("addRibbon","plotHistogram","plotBoxWhisker"))){return()}
+    if (isIncluded(input$selectedPlot, c("addRibbon", "plotHistogram", "plotBoxWhisker"))) {
+      return()
+    }
     selectInput("colorVariableNames2", "color variable", getVariableNames(), selected = input$colorVariableNames2)
   })
   output$fillVariableNames <- renderUI({
-    if(isIncluded(input$selectedPlot, c("addScatter", "addLine", "addErrorbar","plotPKRatio","plotDDIRatio","plotObsVsPred", "plotResVsPred"))){return()}
+    if (isIncluded(input$selectedPlot, c("addScatter", "addLine", "addErrorbar", "plotPKRatio", "plotDDIRatio", "plotObsVsPred", "plotResVsPred"))) {
+      return()
+    }
     selectInput("fillVariableNames2", "fill variable", getVariableNames(), selected = input$fillVariableNames2)
   })
   output$shapeVariableNames <- renderUI({
-    if(isIncluded(input$selectedPlot, c("addLine", "addRibbon", "addErrorbar","plotHistogram","plotBoxWhisker"))){return()}
+    if (isIncluded(input$selectedPlot, c("addLine", "addRibbon", "addErrorbar", "plotHistogram", "plotBoxWhisker"))) {
+      return()
+    }
     selectInput("shapeVariableNames2", "shape variable", getVariableNames(), selected = input$shapeVariableNames2)
   })
   output$linetypeVariableNames <- renderUI({
-    if(!isIncluded(input$selectedPlot, c("addLine", "addErrorbar","plotTimeProfile"))){return()}
+    if (!isIncluded(input$selectedPlot, c("addLine", "addErrorbar", "plotTimeProfile"))) {
+      return()
+    }
     selectInput("linetypeVariableNames2", "linetype variable", getVariableNames(), selected = input$linetypeVariableNames2)
   })
   output$uncertaintyVariableNames <- renderUI({
-    if(!isIncluded(input$selectedPlot, c("plotPKRatio", "plotDDIRatio", "plotObsVsPred", "plotResVsPred"))){return()}
+    if (!isIncluded(input$selectedPlot, c("plotPKRatio", "plotDDIRatio", "plotObsVsPred", "plotResVsPred"))) {
+      return()
+    }
     selectInput("uncertaintyVariableNames2", "uncertainty variable", getVariableNames(), selected = input$uncertaintyVariableNames2)
   })
-  
+
   getDataMapping <- reactive({
     mappingVariables <- c("x", "y", "ymin", "ymax", "color", "fill", "shape", "linetype", "uncertainty")
     mappingExpression <- parse(text = paste0(
       mappingVariables, "Variable <- tlfInput(input$", mappingVariables, "VariableNames2)"
     ))
     eval(mappingExpression)
-    
+
     dataMapping <- switch(input$selectedPlot,
-                          addScatter = XYGDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable),
-                          addLine = XYGDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,linetype=linetypeVariable),
-                          addRibbon = RangeDataMapping$new(x=xVariable,ymin=yminVariable,ymax=ymaxVariable,fill=fillVariable),
-                          addErrorbar = RangeDataMapping$new(x=xVariable,ymin=yminVariable,ymax=ymaxVariable,color=colorVariable),
-                          plotPKRatio = PKRatioDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable,uncertainty=uncertaintyVariable),
-                          plotDDIRatio = DDIRatioDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable,uncertainty=uncertaintyVariable),
-                          plotBoxWhisker = BoxWhiskerDataMapping$new(x=xVariable,y=yVariable,fill=fillVariable),
-                          plotHistogram = HistogramDataMapping$new(x=xVariable,y=yVariable,fill=fillVariable),
-                          plotTimeProfile = TimeProfileDataMapping$new(x=xVariable,y=yVariable,ymin=yminVariable,ymax=ymaxVariable,
-                                                                       color=colorVariable,linetype=linetypeVariable,fill=fillVariable),
-                          plotTornado = switch(input$barTornado, 
-                                               "TRUE" = TornadoDataMapping$new(x=xVariable,y=yVariable,fill=fillVariable,sorted=as.logical(input$sortTornado)),
-                                               "FALSE" = TornadoDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable,sorted=as.logical(input$sortTornado))),
-                          plotObsVsPred = ObsVsPredDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable,uncertainty=uncertaintyVariable, smoother = tlfInput(input$smootherObsVsPred)),
-                          plotResVsPred = ResVsPredDataMapping$new(x=xVariable,y=yVariable,color=colorVariable,shape=shapeVariable,uncertainty=uncertaintyVariable, smoother = tlfInput(input$smootherObsVsPred)),
-                          NULL)
+      addScatter = XYGDataMapping$new(x = xVariable, y = yVariable, color = colorVariable, shape = shapeVariable),
+      addLine = XYGDataMapping$new(x = xVariable, y = yVariable, color = colorVariable, linetype = linetypeVariable),
+      addRibbon = RangeDataMapping$new(x = xVariable, ymin = yminVariable, ymax = ymaxVariable, fill = fillVariable),
+      addErrorbar = RangeDataMapping$new(x = xVariable, ymin = yminVariable, ymax = ymaxVariable, color = colorVariable),
+      plotPKRatio = PKRatioDataMapping$new(x = xVariable, y = yVariable, color = colorVariable, shape = shapeVariable, uncertainty = uncertaintyVariable),
+      plotDDIRatio = DDIRatioDataMapping$new(x = xVariable, y = yVariable, color = colorVariable, shape = shapeVariable, uncertainty = uncertaintyVariable),
+      plotBoxWhisker = BoxWhiskerDataMapping$new(x = xVariable, y = yVariable, fill = fillVariable),
+      plotHistogram = HistogramDataMapping$new(x = xVariable, y = yVariable, fill = fillVariable),
+      plotTimeProfile = TimeProfileDataMapping$new(
+        x = xVariable, y = yVariable, ymin = yminVariable, ymax = ymaxVariable,
+        color = colorVariable, linetype = linetypeVariable, fill = fillVariable
+      ),
+      plotTornado = switch(input$barTornado,
+        "TRUE" = TornadoDataMapping$new(x = xVariable, y = yVariable, fill = fillVariable, sorted = as.logical(input$sortTornado)),
+        "FALSE" = TornadoDataMapping$new(x = xVariable, y = yVariable, color = colorVariable, shape = shapeVariable, sorted = as.logical(input$sortTornado))
+      ),
+      plotObsVsPred = ObsVsPredDataMapping$new(x = xVariable, y = yVariable, color = colorVariable, shape = shapeVariable, uncertainty = uncertaintyVariable, smoother = tlfInput(input$smootherObsVsPred)),
+      plotResVsPred = ResVsPredDataMapping$new(x = xVariable, y = yVariable, color = colorVariable, shape = shapeVariable, uncertainty = uncertaintyVariable, smoother = tlfInput(input$smootherObsVsPred)),
+      NULL
+    )
     return(dataMapping)
   })
-  
+
   #---------- Plot Configuration ----------#  
   #----- Use a theme
   updateTheme <- reactive({
-    if (length(input$loadTheme)==0) {return(invisible())}
+    if (length(input$loadTheme) == 0) {
+      return(invisible())
+    }
     useTheme(loadThemeFromJson(input$loadTheme$datapath))
   })
-  
+
   #----- Get initial plotConfiguration
   getPlotConfiguration <- reactive({
     updateTheme()
     data <- getData()
     dataMapping <- getDataMapping()
-    
+
     plotConfiguration <- switch(input$selectedPlot,
-                                addScatter = PlotConfiguration$new(data = data, dataMapping = dataMapping),
-                                addLine = PlotConfiguration$new(data = data, dataMapping = dataMapping),
-                                addRibbon = PlotConfiguration$new(data = data, dataMapping = dataMapping),
-                                addErrorbar = PlotConfiguration$new(data = data, dataMapping = dataMapping),
-                                plotPKRatio = PKRatioPlotConfiguration$new(data = data, dataMapping = dataMapping),
-                                plotDDIRatio = DDIRatioPlotConfiguration$new(data = data, dataMapping = dataMapping),
-                                plotBoxWhisker = BoxWhiskerPlotConfiguration$new(data = data, dataMapping = dataMapping),
-                                plotHistogram = HistogramPlotConfiguration$new(data = data, dataMapping = dataMapping),
-                                plotTimeProfile = TimeProfilePlotConfiguration$new(data = data, dataMapping = dataMapping),
-                                plotTornado = TornadoPlotConfiguration$new(data = data, dataMapping = dataMapping, bar = as.logical(input$barTornado)),
-                                plotObsVsPred = ObsVsPredPlotConfiguration$new(data = data, dataMapping = dataMapping),
-                                plotResVsPred = ResVsPredPlotConfiguration$new(data = data, dataMapping = dataMapping),
-                                PlotConfiguration$new(data = data, dataMapping = dataMapping))
+      addScatter = PlotConfiguration$new(data = data, dataMapping = dataMapping),
+      addLine = PlotConfiguration$new(data = data, dataMapping = dataMapping),
+      addRibbon = PlotConfiguration$new(data = data, dataMapping = dataMapping),
+      addErrorbar = PlotConfiguration$new(data = data, dataMapping = dataMapping),
+      plotPKRatio = PKRatioPlotConfiguration$new(data = data, dataMapping = dataMapping),
+      plotDDIRatio = DDIRatioPlotConfiguration$new(data = data, dataMapping = dataMapping),
+      plotBoxWhisker = BoxWhiskerPlotConfiguration$new(data = data, dataMapping = dataMapping),
+      plotHistogram = HistogramPlotConfiguration$new(data = data, dataMapping = dataMapping),
+      plotTimeProfile = TimeProfilePlotConfiguration$new(data = data, dataMapping = dataMapping),
+      plotTornado = TornadoPlotConfiguration$new(data = data, dataMapping = dataMapping, bar = as.logical(input$barTornado)),
+      plotObsVsPred = ObsVsPredPlotConfiguration$new(data = data, dataMapping = dataMapping),
+      plotResVsPred = ResVsPredPlotConfiguration$new(data = data, dataMapping = dataMapping),
+      PlotConfiguration$new(data = data, dataMapping = dataMapping)
+    )
     return(plotConfiguration)
   })
-  
+
   #----- Get watermark features
   output$watermarkText <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -322,8 +374,10 @@ server <- function(input, output) {
   output$watermarkColor <- renderUI({
     plotConfiguration <- getPlotConfiguration()
     # selectizeInput with option create = TRUE, allows for elements other than choices allowing hexadecimal colors as well
-    selectizeInput("watermarkColor2", label = "color", choices = grDevices:::colors(), 
-                   selected = plotConfiguration$background$watermark$font$color, options = list(create=TRUE))
+    selectizeInput("watermarkColor2",
+      label = "color", choices = grDevices:::colors(),
+      selected = plotConfiguration$background$watermark$font$color, options = list(create = TRUE)
+    )
   })
   output$watermarkSize <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -333,7 +387,7 @@ server <- function(input, output) {
     displayPlot <- getDisplayPlot()
     numericInput("watermarkAngle2", label = "angle", min = -180, max = 180, step = 0.5, value = displayPlot$plotConfiguration$background$watermark$font$angle)
   })
-  
+
   #----- Get title features
   output$titleText <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -341,8 +395,10 @@ server <- function(input, output) {
   })
   output$titleColor <- renderUI({
     plotConfiguration <- getPlotConfiguration()
-    selectizeInput("titleColor2", label = "color", choices = grDevices:::colors(), 
-                   selected = plotConfiguration$labels$title$font$color, options = list(create=TRUE))
+    selectizeInput("titleColor2",
+      label = "color", choices = grDevices:::colors(),
+      selected = plotConfiguration$labels$title$font$color, options = list(create = TRUE)
+    )
   })
   output$titleSize <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -352,7 +408,7 @@ server <- function(input, output) {
     plotConfiguration <- getPlotConfiguration()
     numericInput("titleAngle2", label = "angle", min = -180, max = 180, step = 0.5, value = plotConfiguration$labels$title$font$angle)
   })
-  
+
   #----- Get subtitle features
   output$subtitleText <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -360,8 +416,10 @@ server <- function(input, output) {
   })
   output$subtitleColor <- renderUI({
     plotConfiguration <- getPlotConfiguration()
-    selectizeInput("subtitleColor2", label = "color", choices = grDevices:::colors(), 
-                   selected = plotConfiguration$labels$subtitle$font$color, options = list(create=TRUE))
+    selectizeInput("subtitleColor2",
+      label = "color", choices = grDevices:::colors(),
+      selected = plotConfiguration$labels$subtitle$font$color, options = list(create = TRUE)
+    )
   })
   output$subtitleSize <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -371,7 +429,7 @@ server <- function(input, output) {
     plotConfiguration <- getPlotConfiguration()
     numericInput("subtitleAngle2", label = "angle", min = -180, max = 180, step = 0.5, value = plotConfiguration$labels$subtitle$font$angle)
   })
-  
+
   #----- Get xlabel features
   output$xlabelText <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -379,8 +437,10 @@ server <- function(input, output) {
   })
   output$xlabelColor <- renderUI({
     plotConfiguration <- getPlotConfiguration()
-    selectizeInput("xlabelColor2", label = "color", choices = grDevices:::colors(), 
-                   selected = plotConfiguration$labels$xlabel$font$color, options = list(create=TRUE))
+    selectizeInput("xlabelColor2",
+      label = "color", choices = grDevices:::colors(),
+      selected = plotConfiguration$labels$xlabel$font$color, options = list(create = TRUE)
+    )
   })
   output$xlabelSize <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -390,7 +450,7 @@ server <- function(input, output) {
     plotConfiguration <- getPlotConfiguration()
     numericInput("xlabelAngle2", label = "angle", min = -180, max = 180, step = 0.5, value = plotConfiguration$labels$xlabel$font$angle)
   })
-  
+
   #----- Get ylabel features
   output$ylabelText <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -398,8 +458,10 @@ server <- function(input, output) {
   })
   output$ylabelColor <- renderUI({
     plotConfiguration <- getPlotConfiguration()
-    selectizeInput("ylabelColor2", label = "color", choices = grDevices:::colors(), 
-                   selected = plotConfiguration$labels$ylabel$font$color, options = list(create=TRUE))
+    selectizeInput("ylabelColor2",
+      label = "color", choices = grDevices:::colors(),
+      selected = plotConfiguration$labels$ylabel$font$color, options = list(create = TRUE)
+    )
   })
   output$ylabelSize <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -409,17 +471,21 @@ server <- function(input, output) {
     plotConfiguration <- getPlotConfiguration()
     numericInput("ylabelAngle2", label = "angle", min = -180, max = 180, step = 0.5, value = plotConfiguration$labels$ylabel$font$angle)
   })
-  
+
   #----- Get plot features
   output$plotFill <- renderUI({
     plotConfiguration <- getPlotConfiguration()
-    selectizeInput("plotFill2", label = "fill", choices = grDevices:::colors(), 
-                   selected = plotConfiguration$background$plot$fill, options = list(create=TRUE))
+    selectizeInput("plotFill2",
+      label = "fill", choices = grDevices:::colors(),
+      selected = plotConfiguration$background$plot$fill, options = list(create = TRUE)
+    )
   })
   output$plotColor <- renderUI({
     plotConfiguration <- getPlotConfiguration()
-    selectizeInput("plotColor2", label = "color", choices = grDevices:::colors(), 
-                   selected = plotConfiguration$background$plot$color, options = list(create=TRUE))
+    selectizeInput("plotColor2",
+      label = "color", choices = grDevices:::colors(),
+      selected = plotConfiguration$background$plot$color, options = list(create = TRUE)
+    )
   })
   output$plotSize <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -429,17 +495,21 @@ server <- function(input, output) {
     plotConfiguration <- getPlotConfiguration()
     selectInput("plotLinetype2", label = "linetype", choices = Linetypes, selected = plotConfiguration$background$plot$linetype)
   })
-  
+
   #----- Get panel features
   output$panelFill <- renderUI({
     plotConfiguration <- getPlotConfiguration()
-    selectizeInput("panelFill2", label = "fill", choices = grDevices:::colors(), 
-                   selected = plotConfiguration$background$panel$fill, options = list(create=TRUE))
+    selectizeInput("panelFill2",
+      label = "fill", choices = grDevices:::colors(),
+      selected = plotConfiguration$background$panel$fill, options = list(create = TRUE)
+    )
   })
   output$panelColor <- renderUI({
     plotConfiguration <- getPlotConfiguration()
-    selectizeInput("panelColor2", label = "color", choices = grDevices:::colors(), 
-                   selected = plotConfiguration$background$panel$color, options = list(create=TRUE))
+    selectizeInput("panelColor2",
+      label = "color", choices = grDevices:::colors(),
+      selected = plotConfiguration$background$panel$color, options = list(create = TRUE)
+    )
   })
   output$panelSize <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -449,12 +519,14 @@ server <- function(input, output) {
     plotConfiguration <- getPlotConfiguration()
     selectInput("panelLinetype2", label = "linetype", choices = Linetypes, selected = plotConfiguration$background$panel$linetype)
   })
-  
+
   #----- Get xGrid features
   output$xGridColor <- renderUI({
     plotConfiguration <- getPlotConfiguration()
-    selectizeInput("xGridColor2", label = "color", choices = grDevices:::colors(), 
-                   selected = plotConfiguration$background$xGrid$color, options = list(create=TRUE))
+    selectizeInput("xGridColor2",
+      label = "color", choices = grDevices:::colors(),
+      selected = plotConfiguration$background$xGrid$color, options = list(create = TRUE)
+    )
   })
   output$xGridSize <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -464,12 +536,14 @@ server <- function(input, output) {
     plotConfiguration <- getPlotConfiguration()
     selectInput("xGridLinetype2", label = "linetype", choices = Linetypes, selected = plotConfiguration$background$xGrid$linetype)
   })
-  
+
   #----- Get yGrid features
   output$yGridColor <- renderUI({
     plotConfiguration <- getPlotConfiguration()
-    selectizeInput("yGridColor2", label = "color", choices = grDevices:::colors(), 
-                   selected = plotConfiguration$background$yGrid$color, options = list(create=TRUE))
+    selectizeInput("yGridColor2",
+      label = "color", choices = grDevices:::colors(),
+      selected = plotConfiguration$background$yGrid$color, options = list(create = TRUE)
+    )
   })
   output$yGridSize <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -479,12 +553,14 @@ server <- function(input, output) {
     plotConfiguration <- getPlotConfiguration()
     selectInput("yGridLinetype2", label = "linetype", choices = Linetypes, selected = plotConfiguration$background$yGrid$linetype)
   })
-  
+
   #----- Get xAxis features
   output$xAxisColor <- renderUI({
     plotConfiguration <- getPlotConfiguration()
-    selectizeInput("xAxisColor2", label = "color", choices = grDevices:::colors(), 
-                   selected = plotConfiguration$background$xAxis$color, options = list(create=TRUE))
+    selectizeInput("xAxisColor2",
+      label = "color", choices = grDevices:::colors(),
+      selected = plotConfiguration$background$xAxis$color, options = list(create = TRUE)
+    )
   })
   output$xAxisSize <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -510,8 +586,10 @@ server <- function(input, output) {
   })
   output$xTicksColor <- renderUI({
     plotConfiguration <- getPlotConfiguration()
-    selectizeInput("xTicksColor2", label = "color", choices = grDevices:::colors(), 
-                   selected = plotConfiguration$xAxis$font$color, options = list(create=TRUE))
+    selectizeInput("xTicksColor2",
+      label = "color", choices = grDevices:::colors(),
+      selected = plotConfiguration$xAxis$font$color, options = list(create = TRUE)
+    )
   })
   output$xTicksSize <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -521,12 +599,14 @@ server <- function(input, output) {
     plotConfiguration <- getPlotConfiguration()
     numericInput("xTicksAngle2", label = "angle", min = -180, max = 180, step = 0.5, value = plotConfiguration$xAxis$font$angle)
   })
-  
+
   #----- Get yAxis features
   output$yAxisColor <- renderUI({
     plotConfiguration <- getPlotConfiguration()
-    selectizeInput("yAxisColor2", label = "color", choices = grDevices:::colors(), 
-                   selected = plotConfiguration$background$yAxis$color, options = list(create=TRUE))
+    selectizeInput("yAxisColor2",
+      label = "color", choices = grDevices:::colors(),
+      selected = plotConfiguration$background$yAxis$color, options = list(create = TRUE)
+    )
   })
   output$yAxisSize <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -552,8 +632,10 @@ server <- function(input, output) {
   })
   output$yTicksColor <- renderUI({
     plotConfiguration <- getPlotConfiguration()
-    selectizeInput("yTicksColor2", label = "color", choices = grDevices:::colors(), 
-                   selected = plotConfiguration$yAxis$font$color, options = list(create=TRUE))
+    selectizeInput("yTicksColor2",
+      label = "color", choices = grDevices:::colors(),
+      selected = plotConfiguration$yAxis$font$color, options = list(create = TRUE)
+    )
   })
   output$yTicksSize <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -563,13 +645,13 @@ server <- function(input, output) {
     plotConfiguration <- getPlotConfiguration()
     numericInput("yTicksAngle2", label = "angle", min = -180, max = 180, step = 0.5, value = plotConfiguration$yAxis$font$angle)
   })
-  
+
   #----- Get legend features
   output$legendPosition <- renderUI({
     plotConfiguration <- getPlotConfiguration()
     selectInput("legendPosition2", label = "position", choices = LegendPositions, selected = plotConfiguration$legend$position)
   })
-  
+
   #----- Get aesthetics selection features
   #--- Points
   output$pointsColor <- renderUI({
@@ -584,7 +666,7 @@ server <- function(input, output) {
     plotConfiguration <- getPlotConfiguration()
     textInput("pointsShape2", label = "shape", value = plotConfiguration$points$shape)
   })
-  
+
   #--- Lines
   output$linesColor <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -598,7 +680,7 @@ server <- function(input, output) {
     plotConfiguration <- getPlotConfiguration()
     textInput("linesLinetype2", label = "linetype", value = plotConfiguration$lines$linetype)
   })
-  
+
   #--- Ribbons
   output$ribbonsFill <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -608,7 +690,7 @@ server <- function(input, output) {
     plotConfiguration <- getPlotConfiguration()
     textInput("ribbonsAlpha2", label = "alpha", value = plotConfiguration$ribbons$alpha)
   })
-  
+
   #--- Errorbars
   output$errorbarsColor <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -622,137 +704,150 @@ server <- function(input, output) {
     plotConfiguration <- getPlotConfiguration()
     textInput("errorbarsLinetype2", label = "linetype", value = plotConfiguration$errorbars$linetype)
   })
-  
-  
-  
+
+
+
   #----- Get and updates plot configuration
   getUpdatedPlotConfiguration <- reactive({
     plotConfiguration <- getPlotConfiguration()
-    
+
     #--- Watermark
     plotConfiguration$background$watermark$text <- tlfInput(input$watermarkText2) %||% plotConfiguration$background$watermark$text
     plotConfiguration$background$watermark$font$color <- tlfInput(input$watermarkColor2) %||% plotConfiguration$background$watermark$font$color
     plotConfiguration$background$watermark$font$size <- tlfInput(input$watermarkSize2) %||% plotConfiguration$background$watermark$font$size
     plotConfiguration$background$watermark$font$angle <- tlfInput(input$watermarkAngle2) %||% plotConfiguration$background$watermark$font$angle
-    
+
     #--- Labels (using expressions)
     labels <- rep(c("title", "subtitle", "xlabel", "ylabel"), 4)
     configurationProperties <- rep(c("text", "font$color", "font$size", "font$angle"), each = 4)
     inputProperties <- rep(c("Text", "Color", "Size", "Angle"), each = 4)
-    
-    labelExpression <- parse(text = paste0("plotConfiguration$labels$", labels, "$", configurationProperties, 
-                        "<- tlfInput(input$", labels, inputProperties, "2) %||% plotConfiguration$labels$", labels, "$", configurationProperties))
+
+    labelExpression <- parse(text = paste0(
+      "plotConfiguration$labels$", labels, "$", configurationProperties,
+      "<- tlfInput(input$", labels, inputProperties, "2) %||% plotConfiguration$labels$", labels, "$", configurationProperties
+    ))
     eval(labelExpression)
-    
+
     #--- Background (using expressions and actual code for remaining cases)
     backgroundElements <- rep(c("plot", "panel", "xAxis", "yAxis", "xGrid", "yGrid"), 3)
     inputProperties <- rep(c("Color", "Size", "Linetype"), each = 6)
-    
-    backgroundExpression <- parse(text = paste0("plotConfiguration$background$", backgroundElements, "$", tolower(inputProperties), 
-                                           "<- tlfInput(input$", backgroundElements, inputProperties, "2) %||% plotConfiguration$background$", backgroundElements, "$", tolower(inputProperties)))
+
+    backgroundExpression <- parse(text = paste0(
+      "plotConfiguration$background$", backgroundElements, "$", tolower(inputProperties),
+      "<- tlfInput(input$", backgroundElements, inputProperties, "2) %||% plotConfiguration$background$", backgroundElements, "$", tolower(inputProperties)
+    ))
     eval(backgroundExpression)
     plotConfiguration$background$plot$fill <- tlfInput(input$plotFill2) %||% plotConfiguration$background$plot$fill
     plotConfiguration$background$panel$fill <- tlfInput(input$panelFill2) %||% plotConfiguration$background$panel$fill
-    
+
     #--- Axes
     axes <- rep(c("xAxis", "yAxis"), 3)
     ticks <- rep(c("xTicks", "yTicks"), 3)
     inputProperties <- rep(c("Color", "Size", "Angle"), each = 2)
-    
-    axesExpression <- parse(text = paste0("plotConfiguration$", axes, "$font$", tolower(inputProperties), 
-                                                "<- tlfInput(input$", ticks, inputProperties, "2) %||% plotConfiguration$", axes, "$font$", tolower(inputProperties)))
+
+    axesExpression <- parse(text = paste0(
+      "plotConfiguration$", axes, "$font$", tolower(inputProperties),
+      "<- tlfInput(input$", ticks, inputProperties, "2) %||% plotConfiguration$", axes, "$font$", tolower(inputProperties)
+    ))
     eval(axesExpression)
     plotConfiguration$xAxis$scale <- tlfInput(input$xAxisScale2) %||% plotConfiguration$xAxis$scale
     plotConfiguration$yAxis$scale <- tlfInput(input$yAxisScale2) %||% plotConfiguration$yAxis$scale
-    
+
     # Axes Limits
     xmin <- tlfInput(input$xAxisLimitsMin2)
     xmax <- tlfInput(input$xAxisLimitsMax2)
     ymin <- tlfInput(input$yAxisLimitsMin2)
     ymax <- tlfInput(input$yAxisLimitsMax2)
-    if(length(c(xmin, xmax))==2){
+    if (length(c(xmin, xmax)) == 2) {
       plotConfiguration$xAxis$limits <- c(xmin, xmax)
     }
-    if(length(c(ymin, ymax))==2){
+    if (length(c(ymin, ymax)) == 2) {
       plotConfiguration$yAxis$limits <- c(ymin, ymax)
     }
-    
+
     #--- Legend
     plotConfiguration$legend$position <- tlfInput(input$legendPosition) %||% plotConfiguration$legend$position
-    
+
     #--- Aesthetic Selection
     plotConfiguration$points$color <- tlfInput(input$pointsColor2) %||% plotConfiguration$points$color
     plotConfiguration$points$size <- tlfInput(input$pointsSize2) %||% plotConfiguration$points$size
     plotConfiguration$points$shape <- tlfInput(input$pointsShape2) %||% plotConfiguration$points$shape
-    
+
     plotConfiguration$lines$color <- tlfInput(input$linesColor2) %||% plotConfiguration$lines$color
     plotConfiguration$lines$size <- tlfInput(input$linesSize2) %||% plotConfiguration$lines$size
     plotConfiguration$lines$linetype <- tlfInput(input$linesLinetype2) %||% plotConfiguration$lines$linetype
-    
+
     plotConfiguration$ribbons$fill <- tlfInput(input$ribbonsFill2) %||% plotConfiguration$ribbons$fill
     plotConfiguration$ribbons$alpha <- tlfInput(input$ribbonsAlpha2) %||% plotConfiguration$ribbons$alpha
-    
+
     plotConfiguration$errorbars$color <- tlfInput(input$errorbarsColor2) %||% plotConfiguration$errorbars$color
     plotConfiguration$errorbars$size <- tlfInput(input$errorbarsSize2) %||% plotConfiguration$errorbars$size
     plotConfiguration$errorbars$linetype <- tlfInput(input$errorbarsLinetype2) %||% plotConfiguration$errorbars$linetype
-    
-    
+
+
     #--- Return updated configuration
     return(plotConfiguration)
   })
-  
-  
+
+
   #---------- Update Plot ----------#
   getDisplayPlot <- reactive({
     plotConfiguration <- getUpdatedPlotConfiguration()
     displayPlot <- initializePlot(plotConfiguration)
     data <- getData()
-    if(nrow(data)==0){return(displayPlot)}
+    if (nrow(data) == 0) {
+      return(displayPlot)
+    }
     dataMapping <- getDataMapping()
-    
-    
+
+
     displayPlot <- switch(input$selectedPlot,
-                          addScatter = addScatter(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
-                          addLine = addLine(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
-                          addRibbon = addRibbon(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
-                          addErrorbar = addErrorbar(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
-                          plotPKRatio = plotPKRatio(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
-                          plotDDIRatio = plotDDIRatio(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
-                          plotBoxWhisker = plotBoxWhisker(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
-                          plotHistogram = plotHistogram(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
-                          plotTimeProfile = plotTimeProfile(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
-                          plotTornado = plotTornado(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
-                          plotObsVsPred = plotObsVsPred(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
-                          plotResVsPred = plotResVsPred(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
-                          initializePlot(plotConfiguration))
+      addScatter = addScatter(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
+      addLine = addLine(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
+      addRibbon = addRibbon(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
+      addErrorbar = addErrorbar(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
+      plotPKRatio = plotPKRatio(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
+      plotDDIRatio = plotDDIRatio(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
+      plotBoxWhisker = plotBoxWhisker(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
+      plotHistogram = plotHistogram(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
+      plotTimeProfile = plotTimeProfile(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
+      plotTornado = plotTornado(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
+      plotObsVsPred = plotObsVsPred(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
+      plotResVsPred = plotResVsPred(data = data, dataMapping = dataMapping, plotConfiguration = plotConfiguration),
+      initializePlot(plotConfiguration)
+    )
     displayPlot <- setLegendPosition(displayPlot, position = input$legendPosition2)
     return(displayPlot)
   })
-  
+
   #---------- Display Plot ----------#
   # Plot displayed after update
   plotWidth <- reactive(input$plotWidth)
   output$displayPlot <- renderPlot({
     displayPlot <- getDisplayPlot()
     return(displayPlot)
-    })
-  
+  })
+
   #---------- Analysis ----------#
   output$pkRatioTable <- renderTable({
     data <- getData()
     dataMapping <- getDataMapping()
     getPKRatioMeasure(data = data, dataMapping = dataMapping)
   },
-  rownames = TRUE)
-  
+  rownames = TRUE
+  )
+
   output$summaryTable <- renderTable({
-    if(!isIncluded(input$selectedPlot, "plotBoxWhisker")){return()}
+    if (!isIncluded(input$selectedPlot, "plotBoxWhisker")) {
+      return()
+    }
     data <- getData()
     dataMapping <- getDataMapping()
     getBoxWhiskerMeasure(data = data, dataMapping = dataMapping)
   },
-  rownames = TRUE)
-  
+  rownames = TRUE
+  )
+
   #---------- Save Plot ----------#
   output$savedPlot <- downloadHandler(
     filename = "savedPlot.png",
@@ -761,6 +856,24 @@ server <- function(input, output) {
       ggsave(filename = file, plot = displayPlot, width = input$plotWidth, height = input$plotHeight, units = "cm")
     }
   )
+
+  output$plotConfigurationCode <- renderText({
+    plotConfiguration <- getUpdatedPlotConfiguration()
+    return(paste(exportPlotConfigurationCode(plotConfiguration), collapse = "\n"))
+  })
+
+  output$savePlotConfiguration <- downloadHandler(
+    filename = "plot-configuration.R",
+    content = function(file) {
+      plotConfiguration <- getUpdatedPlotConfiguration()
+      write(exportPlotConfigurationCode(plotConfiguration), file = file)
+    }
+  )
+
+  observeEvent(input$copyPlotConfiguration, {
+    plotConfiguration <- getUpdatedPlotConfiguration()
+    writeClipboard(paste(exportPlotConfigurationCode(plotConfiguration), collapse = "\n"))
+  })
 }
 
 shinyApp(ui = ui, server = server)
