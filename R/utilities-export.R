@@ -105,3 +105,116 @@ getUniqueExportFileName <- function(name, format, uniqueNumber) {
   }
   return(filename)
 }
+
+
+#' @title exportPlotConfigurationCode
+#' @description Export plot configuration as R code
+#' @param plotConfiguration A `PlotConfiguration` object
+#' @return R code to recreate the plot configuration as character
+#' @export
+exportPlotConfigurationCode <- function(plotConfiguration) {
+  validateIsOfType(plotConfiguration, "PlotConfiguration")
+  plotConfigurationClass <- class(plotConfiguration)[1]
+
+  initializationCode <- c(
+    "# Initialize the PlotConfiguration object",
+    paste0("plotConfiguration <- ", plotConfigurationClass, "$new()")
+  )
+
+  labelsCode <- "# Define/Overwrite PlotConfiguration labels properties"
+  for (label in c("title", "subtitle", "xlabel", "ylabel")) {
+    for (property in c("text", "font$color", "font$size", "font$fontFace", "font$angle")) {
+      labelText <- paste0("plotConfiguration$labels$", label, "$", property)
+      labelValue <- eval(parse(text = labelText))
+      labelsCode <- c(
+        labelsCode,
+        as.character(parseValueToObject(labelText, labelValue))
+      )
+    }
+  }
+
+  backgroundCode <- "# Define/Overwrite PlotConfiguration background properties"
+  for (property in c("text", "font$color", "font$size", "font$fontFace", "font$angle")) {
+    labelText <- paste0("plotConfiguration$background$watermark$", property)
+    labelValue <- eval(parse(text = labelText))
+    backgroundCode <- c(
+      backgroundCode,
+      as.character(parseValueToObject(labelText, labelValue))
+    )
+  }
+  for (backgroundElement in c("plot", "panel", "xAxis", "yAxis", "xGrid", "yGrid")) {
+    for (property in c("color", "size", "linetype", "fill")) {
+      backgroundText <- paste0("plotConfiguration$background$", backgroundElement, "$", property)
+      backgroundValue <- eval(parse(text = backgroundText))
+      backgroundCode <- c(
+        backgroundCode,
+        as.character(parseValueToObject(backgroundText, backgroundValue))
+      )
+    }
+  }
+
+  axesCode <- "# Define/Overwrite PlotConfiguration axes properties"
+  for (axisElement in c("xAxis", "yAxis")) {
+    for (property in c("font$color", "font$size", "font$fontFace", "font$angle", "limits", "scale", "ticklabels", "ticks")) {
+      axesText <- paste0("plotConfiguration$", axisElement, "$", property)
+      axesValue <- eval(parse(text = axesText))
+      axesCode <- c(
+        axesCode,
+        as.character(parseValueToObject(axesText, axesValue))
+      )
+    }
+  }
+
+  aestheticSelectionCode <- "# Define/Overwrite PlotConfiguration aesthetics selection properties"
+  for (aestheticElement in c("points", "lines", "ribbons", "errorbars")) {
+    for (property in c("color", "size", "linetype", "shape", "fill", "alpha")) {
+      aestheticText <- paste0("plotConfiguration$", aestheticElement, "$", property)
+      aestheticValue <- eval(parse(text = aestheticText))
+      aestheticSelectionCode <- c(
+        aestheticSelectionCode,
+        as.character(parseValueToObject(aestheticText, aestheticValue))
+      )
+    }
+  }
+
+  legendCode <- "# Define/Overwrite PlotConfiguration legend properties"
+  for (property in c("position", "title", "background$fill", "background$color", "background$size", "background$linetype", "titleFont$color", "titleFont$size", "titleFont$fontFace", "titleFont$angle", "font$color", "font$size", "font$fontFace", "font$angle")) {
+    legendText <- paste0("plotConfiguration$legend$", property)
+    legendValue <- eval(parse(text = legendText))
+    legendCode <- c(
+      legendCode,
+      as.character(parseValueToObject(legendText, legendValue))
+    )
+  }
+  
+  classSpecificCode <- NULL
+  if (plotConfigurationClass %in% "BoxWhiskerPlotConfiguration") {
+    classSpecificCode <- c(
+      "# Define/Overwrite properties specific to BoxWhisker plots",
+      paste0("plotConfiguration$outliers <- ", plotConfiguration$outliers)
+    )
+  }
+  if (plotConfigurationClass %in% "TornadoPlotConfiguration") {
+    classSpecificCode <- "# Define/Overwrite Pproperties specific to Tornado plots"
+    for (property in c("bar", "dodge", "colorPalette")) {
+      classSpecificText <- paste0("plotConfiguration$", property)
+      classSpecificValue <- eval(parse(text = classSpecificText))
+      classSpecificCode <- c(
+        classSpecificCode,
+        as.character(parseValueToObject(classSpecificText, classSpecificValue))
+      )
+    }
+  }
+
+  plotConfigurationCode <- c(
+    initializationCode, "\n",
+    labelsCode, "\n",
+    backgroundCode, "\n",
+    axesCode, "\n",
+    legendCode, "\n",
+    aestheticSelectionCode, "\n",
+    classSpecificCode
+  )
+
+  return(plotConfigurationCode)
+}

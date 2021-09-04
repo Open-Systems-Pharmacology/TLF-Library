@@ -24,6 +24,20 @@ parseVariableFromObject <- function(objectName, variableName, keepIfNull = FALSE
   return(parse(text = paste0(variableName, " <- ", objectName, "$", variableName)))
 }
 
+#' @title parseValueToObject
+#' @description Create an expression of type `objectName <- value`
+#' @param objectName Name of the object to update
+#' @param value Value of the variable `objectName`
+#' @return An expression to `eval()`
+parseValueToObject <- function(objectName, value) {
+  if (isOfLength(value, 0)) {
+    return(parse(text = paste0(objectName, " <- NULL")))
+  }
+  if (isOfType(value, "character")) {
+    return(parse(text = paste0(objectName, ' <- "', value, '"')))
+  }
+  return(parse(text = paste0(objectName, " <- ", value)))
+}
 
 #' @title parseCheckPlotInputs
 #' @description Create an expression that checks usual plot inputs

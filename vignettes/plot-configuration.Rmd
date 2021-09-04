@@ -398,3 +398,19 @@ In order to define a theme as the current default, the function `useTheme(theme)
 A shiny app has been created to tune `Theme` objects live and save them as json files.
 With this app, it becomes quite easy to create one's own theme with a few clicks.
 To call for the shiny app, users only needed to run the function `runThemeMaker()`.
+
+# 7. Export code to re-create a PlotConfiguration object
+
+The function `exportPlotConfigurationCode(plotConfiguration)` creates character strings corresponding to commented R code that allows you to re-create a PlotConfiguration object.
+
+```{r export configuration}
+# Create and export a plot confiugration
+plotConfigurationToExport1 <- PlotConfiguration$new()
+exportPlotConfigurationCode(plotConfigurationToExport1)
+
+# Create, update and export a more advanced plot confiugration
+plotConfigurationToExport2 <- TornadoPlotConfiguration$new(bar = FALSE)
+exportPlotConfigurationCode(plotConfigurationToExport2)
+```
+
+Since `exportPlotConfigurationCode` returns character strings, they can either be saved as a .R script or copied/pasted to be used as is or within a function. It is also possible to turn the strings into and expression to `eval` using `parse(text = exportPlotConfigurationCode(plotConfiguration))`.
