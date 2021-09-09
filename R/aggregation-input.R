@@ -14,17 +14,17 @@ AggregationInput <- R6::R6Class(
     #' @field aggregationDimension dimension of aggregation output
     aggregationDimension = NULL,
 
-    #' @description Create a new \code{AggregationInput} object
+    #' @description Create a new `AggregationInput` object
     #' @param aggregationFunction list of functions to use for aggregation
     #' @param aggregationFunctionName vector of function names
     #' that will be used as variable name of the aggregation
     #' @param aggregationUnit unit of aggregation output
     #' @param aggregationDimension dimension of aggregation output
-    #' @return A new \code{AggregationInput} object
+    #' @return A new `AggregationInput` object
     initialize = function(aggregationFunction = NULL,
-                              aggregationFunctionName = NULL,
-                              aggregationUnit = NULL,
-                              aggregationDimension = NULL) {
+                          aggregationFunctionName = NULL,
+                          aggregationUnit = NULL,
+                          aggregationDimension = NULL) {
       self$aggregationFunction <- aggregationFunction
       self$aggregationFunctionName <- aggregationFunctionName
       self$aggregationUnit <- aggregationUnit

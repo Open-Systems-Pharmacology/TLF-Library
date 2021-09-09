@@ -1,5 +1,5 @@
 #' @title XYDataMapping
-#' @description  R6 class for mapping \code{x} and \code{y} variable to \code{data}
+#' @description  R6 class for mapping `x` and `y` variable to `data`
 #' @export
 XYDataMapping <- R6::R6Class(
   "XYDataMapping",
@@ -11,12 +11,12 @@ XYDataMapping <- R6::R6Class(
     #' @field data data.frame used for mapping
     data = NULL,
 
-    #' @description Create a new \code{XYDataMapping} object
+    #' @description Create a new `XYDataMapping` object
     #' @param x Name of x variable to map
     #' @param y Name of y variable to map
-    #' @return A new \code{XYDataMapping} object
+    #' @return A new `XYDataMapping` object
     initialize = function(x,
-                              y = NULL) {
+                          y = NULL) {
       if (isOfType(x, "numeric")) {
         warning(paste("'x' is a numeric, dataMapping will select the column of indice", x, "in data"))
       }
@@ -28,11 +28,11 @@ XYDataMapping <- R6::R6Class(
       self$y <- y
     },
 
-    #' @description Check that \code{data} variables include map variables
+    #' @description Check that `data` variables include map variables
     #' @param data data.frame to check
-    #' @param metaData list containing information on \code{data}
-    #' @return A data.frame with map and \code{defaultAes} variables.
-    #' Dummy variable \code{defaultAes} is necessary to allow further modification of plots.
+    #' @param metaData list containing information on `data`
+    #' @return A data.frame with map and `defaultAes` variables.
+    #' Dummy variable `defaultAes` is necessary to allow further modification of plots.
     checkMapData = function(data, metaData = NULL) {
       if (isOfType(self$x, "character")) {
         validateMapping(self$x, data)

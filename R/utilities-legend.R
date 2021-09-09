@@ -5,7 +5,7 @@
 #' @param title character or `Label` object
 #' @param font `Font` object defining legend font
 #' @param caption data.frame containing the caption properties of the legend
-#' @return A \code{ggplot} object
+#' @return A `ggplot` object
 #' @description
 #' Set legend position, title, font and/or caption
 #' @export
@@ -107,10 +107,10 @@ setLegendTitle <- function(plotObject,
 }
 
 #' @title setLegendPosition
-#' @param plotObject \code{ggplot} graphical object
+#' @param plotObject `ggplot` graphical object
 #' @param position legend position.
 #' Use enum `LegendPositions` to access the list of legend positions.
-#' @return A \code{ggplot} graphical object
+#' @return A `ggplot` graphical object
 #' @description
 #' Set the legend position
 #' @export
@@ -131,9 +131,9 @@ setLegendPosition <- function(plotObject,
 }
 
 #' @title setLegendCaption
-#' @param plotObject \code{ggplot} graphical object
+#' @param plotObject `ggplot` graphical object
 #' @param caption data.frame containing the caption properties of the legend
-#' @return A \code{ggplot} graphical object
+#' @return A `ggplot` graphical object
 #' @description
 #' Set the legend caption
 #' @export
@@ -190,7 +190,7 @@ setLegendCaption <- function(plotObject, caption = NULL) {
 }
 
 #' @title getLegendCaption
-#' @param plotObject \code{ggplot} graphical object
+#' @param plotObject `ggplot` graphical object
 #' @return A data.frame corresponding to legend caption
 #' @description
 #' Get the legend caption
@@ -208,10 +208,10 @@ getLegendCaption <- function(plotObject) {
 }
 
 #' @title setCaptionLabel
-#' @param plotObject \code{ggplot} graphical object
+#' @param plotObject `ggplot` graphical object
 #' @param label new labels of the legend caption
 #' @param name reference names in caption$name identifying the legend caption lines
-#' @return A \code{ggplot} graphical object
+#' @return A `ggplot` graphical object
 #' @description
 #' Set the legend caption labels
 #' @export
@@ -229,10 +229,10 @@ setCaptionLabels <- function(plotObject, label, name = NULL) {
 }
 
 #' @title setCaptionVisibility
-#' @param plotObject \code{ggplot} graphical object
+#' @param plotObject `ggplot` graphical object
 #' @param visibility logical visibility of the legend caption labels
 #' @param name reference names in caption$name identifying the legend caption lines
-#' @return A \code{ggplot} graphical object
+#' @return A `ggplot` graphical object
 #' @description
 #' Set the visibility of the legend caption labels
 #' @export
@@ -250,10 +250,10 @@ setCaptionVisibility <- function(plotObject, visibility, name = NULL) {
 }
 
 #' @title setCaptionOrder
-#' @param plotObject \code{ggplot} graphical object
+#' @param plotObject `ggplot` graphical object
 #' @param order numeric order of the legend ccaption labels
 #' @param name reference names in caption$name identifying the legend caption lines
-#' @return A \code{ggplot} graphical object
+#' @return A `ggplot` graphical object
 #' @description
 #' Set the order of the legend caption labels
 #' @export
@@ -271,10 +271,10 @@ setCaptionOrder <- function(plotObject, order, name = NULL) {
 }
 
 #' @title setCaptionColor
-#' @param plotObject \code{ggplot} graphical object
+#' @param plotObject `ggplot` graphical object
 #' @param color colors of the data in plot and legend caption
 #' @param name reference names in caption$name identifying the legend caption lines
-#' @return A \code{ggplot} graphical object
+#' @return A `ggplot` graphical object
 #' @description
 #' Set the colors of the data in plot and legend caption
 #' @export
@@ -292,10 +292,10 @@ setCaptionColor <- function(plotObject, color, name = NULL) {
 }
 
 #' @title setCaptionShape
-#' @param plotObject \code{ggplot} graphical object
+#' @param plotObject `ggplot` graphical object
 #' @param shape shapes of the data in plot and legend caption
 #' @param name reference names in caption$name identifying the legend caption lines
-#' @return A \code{ggplot} graphical object
+#' @return A `ggplot` graphical object
 #' @description
 #' Set the shapes of the data in plot and legend caption
 #' @export
@@ -313,10 +313,10 @@ setCaptionShape <- function(plotObject, shape, name = NULL) {
 }
 
 #' @title setCaptionSize
-#' @param plotObject \code{ggplot} graphical object
+#' @param plotObject `ggplot` graphical object
 #' @param size sizes of the data in plot and legend caption
 #' @param name reference names in caption$name identifying the legend caption lines
-#' @return A \code{ggplot} graphical object
+#' @return A `ggplot` graphical object
 #' @description
 #' Set the sizes of the data in plot and legend caption
 #' @export
@@ -334,10 +334,10 @@ setCaptionSize <- function(plotObject, size, name = NULL) {
 }
 
 #' @title setCaptionLinetype
-#' @param plotObject \code{ggplot} graphical object
+#' @param plotObject `ggplot` graphical object
 #' @param linetype linetypes of the data in plot and legend caption
 #' @param name reference names in caption$name identifying the legend caption lines
-#' @return A \code{ggplot} graphical object
+#' @return A `ggplot` graphical object
 #' @description
 #' Set the linetypes of the data in plot and legend caption
 #' @export
@@ -355,10 +355,10 @@ setCaptionLinetype <- function(plotObject, linetype, name = NULL) {
 }
 
 #' @title setCaptionFill
-#' @param plotObject \code{ggplot} graphical object
+#' @param plotObject `ggplot` graphical object
 #' @param fill fills of the data in plot and legend caption
 #' @param name reference names in caption$name identifying the legend caption lines
-#' @return A \code{ggplot} graphical object
+#' @return A `ggplot` graphical object
 #' @description
 #' Set the fills of the data in plot and legend caption
 #' @export
@@ -445,9 +445,9 @@ mergeLegend <- function(plotObject, newLabels, aestheticSelections) {
 
   # Associate new values of aesthetics based on theme aesthetic selections
   newCaptionExpression <- parse(text = paste0(
-    names(AestheticProperties), " <- getAestheticValues(n = newCaptionLength, 
-    selectionKey = aestheticSelections$", names(AestheticProperties), ", 
-    position = oldCaptionLength, 
+    names(AestheticProperties), " <- getAestheticValues(n = newCaptionLength,
+    selectionKey = aestheticSelections$", names(AestheticProperties), ",
+    position = oldCaptionLength,
     aesthetic = '", names(AestheticProperties), "')"
   ))
   eval(newCaptionExpression)

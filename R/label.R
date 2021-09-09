@@ -1,25 +1,25 @@
 #' @title Label
-#' @description  R6 class defining \code{text} and \code{font} of label
+#' @description  R6 class defining `text` and `font` of label
 #' @export
 Label <- R6::R6Class(
   "Label",
   public = list(
-    #' @description Create a new \code{Label} object.
-    #' @param text character text of the \code{Label} object
-    #' @param font \code{Font} object defining the font of the `Label` object
+    #' @description Create a new `Label` object.
+    #' @param text character text of the `Label` object
+    #' @param font `Font` object defining the font of the `Label` object
     #' @param size numeric defining the size of the `Label` object
     #' @param color character defining the color of the `Label` object
     #' @param fontFamily character defining the font family of the `Label` object
     #' @param fontFace character defining the font face of the `Label` object
     #' @param angle numeric defining the angle of the `Label` object
-    #' @return A new \code{Label} object
+    #' @return A new `Label` object
     initialize = function(text = "",
-                              font = NULL,
-                              color = NULL,
-                              size = NULL,
-                              fontFace = NULL,
-                              fontFamily = NULL,
-                              angle = NULL) {
+                          font = NULL,
+                          color = NULL,
+                          size = NULL,
+                          fontFace = NULL,
+                          fontFamily = NULL,
+                          angle = NULL) {
       validateIsNumeric(c(as.numeric(angle), as.numeric(size)), nullAllowed = TRUE)
       validateIsString(c(color, fontFace, fontFamily), nullAllowed = TRUE)
       validateIsOfType(font, "Font", nullAllowed = TRUE)
@@ -49,7 +49,7 @@ Label <- R6::R6Class(
       private$.text <- value
       return(invisible())
     },
-    #' @field font \code{Font} object
+    #' @field font `Font` object
     font = function(value) {
       if (missing(value)) {
         return(private$.font)

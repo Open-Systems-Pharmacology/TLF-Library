@@ -1,6 +1,6 @@
 #' @title HistogramDataMapping
-#' @description  R6 class for mapping \code{x}, \code{verticalLineGroupings},
-#' \code{verticalLineFunctionNames} and \code{verticalLineFunctions} variables to \code{data}
+#' @description  R6 class for mapping `x`, `verticalLineGroupings`,
+#' `verticalLineFunctionNames` and `verticalLineFunctions` variables to `data`
 #' @export
 HistogramDataMapping <- R6::R6Class(
   "HistogramDataMapping",
@@ -17,20 +17,20 @@ HistogramDataMapping <- R6::R6Class(
     #' @field fitDensity logical defining if a density distribution function should be fitted
     fitDensity = NULL,
 
-    #' @description Create a new \code{HistogramDataMapping} object
+    #' @description Create a new `HistogramDataMapping` object
     #' @param stack logical defining if histogram bars should be stacked
     #' @param bins argument passed on `ggplot2::geom_histogram`
     #' @param lines values or functions to define vertical lines
     #' @param fitNormalDist logical defining if a normal distribution should be fitted
     #' @param fitDensity logical defining if a density distribution should be fitted
-    #' @param ... parameters inherited from \code{XYGDataMapping}
-    #' @return A new \code{HistogramDataMapping} object
+    #' @param ... parameters inherited from `XYGDataMapping`
+    #' @return A new `HistogramDataMapping` object
     initialize = function(stack = FALSE,
-                              bins = NULL,
-                              lines = DefaultDataMappingValues$histogram,
-                              fitNormalDist = FALSE,
-                              fitDensity = FALSE,
-                              ...) {
+                          bins = NULL,
+                          lines = DefaultDataMappingValues$histogram,
+                          fitNormalDist = FALSE,
+                          fitDensity = FALSE,
+                          ...) {
       super$initialize(...)
       validateIsLogical(stack)
       validateIsLogical(fitNormalDist)

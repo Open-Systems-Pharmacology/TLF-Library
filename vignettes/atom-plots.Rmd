@@ -1,7 +1,11 @@
 ---
 title: "Atom plots"
 author: "OSPSuiteR 2019"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    fig.align: 'center'
+    dpi: 300
+    toc: true
 vignette: >
   %\VignetteIndexEntry{atom-plots}
   %\VignetteEngine{knitr::rmarkdown}
@@ -19,16 +23,18 @@ knitr::opts_chunk$set(
 require(tlf)
 ```
 
-```{r load theme, echo=FALSE}
+```{r load-theme, echo=FALSE}
 vignetteTheme <- loadThemeFromJson(system.file("extdata", "template-theme.json", package = "tlf"))
 useTheme(vignetteTheme)
 ```
-This vignette tackles how to use atom plots to perform simple to more complex plots with the `tlf`-library.
+
+This vignette tackles how to use atom plots to prepare simple to more complex plots with the `tlf`-library.
 
 # Introduction to atom plots
 
-Atom plots correspond to simple plots that can be used independently or in combination to form a final plot, often more complex, that will be referred as molecule plot.
-In the sequel, the following atoms are detailed:
+An **atom plot** corresponds to a simple plot that can be combined with other atom plots to form a final, often more complex, plot that will be referred to as a **molecule plot**.
+
+Here we outline the following atom plots:
 
 - *initializePlot*
 - *addScatter*
@@ -52,38 +58,52 @@ Below are a few examples of use case of *initializePlot*:
 emptyPlot <- initializePlot()
 
 # Create a PlotConfiguration object with some specifications
-myConfiguration <- PlotConfiguration$new(title = "My empty plot",
-                                         xlabel = "X",
-                                         ylabel = "Y")
+myConfiguration <- PlotConfiguration$new(
+  title = "My empty plot",
+  xlabel = "X",
+  ylabel = "Y"
+)
 # Use the specification to create the plot
 emptyPlotWithLabels <- initializePlot(myConfiguration)
 
 # PlotConfiguration class has a smart mapping feature,
 # directly deriving labels from data and its metaData and its dataMapping
-time <- seq(0,20, 0.1)
-myData <- data.frame(x = time,
-                     y = 2*cos(time))
-# If metaData includes dimension and unit, 
+time <- seq(0, 20, 0.1)
+myData <- data.frame(
+  x = time,
+  y = 2 * cos(time)
+)
+# If metaData includes dimension and unit,
 # they can be use by the smart configuration to generate labels as "dimension [unit]"
-myMetaData <- list(x = list(dimension = "Time",
-                            unit = "min"),
-                   y = list(dimension = "Amplitude",
-                            unit = "cm"))
-myMapping <- XYGDataMapping$new(x = "x",
-                                y = "y")
+myMetaData <- list(
+  x = list(
+    dimension = "Time",
+    unit = "min"
+  ),
+  y = list(
+    dimension = "Amplitude",
+    unit = "cm"
+  )
+)
+myMapping <- XYGDataMapping$new(
+  x = "x",
+  y = "y"
+)
 
 # In this example, the configuration will use the x/y mapping from dataMapping
 # to fetch dimension and unit from metaData
-mySmartConfiguration <- PlotConfiguration$new(title = "My smart plot",
-                                              data = myData,
-                                              metaData = myMetaData,
-                                              dataMapping = myMapping)
+mySmartConfiguration <- PlotConfiguration$new(
+  title = "My smart plot",
+  data = myData,
+  metaData = myMetaData,
+  dataMapping = myMapping
+)
 
 smartEmptyPlot <- initializePlot(mySmartConfiguration)
 ```
 
-```{r initializePlot output, echo=FALSE, fig.cap="Left: emptyPlot; Middle: emptyPlotWithLabels; Right: smartEmptyPlot", fig.width=7.5}
-gridExtra::grid.arrange(emptyPlot, emptyPlotWithLabels, smartEmptyPlot, ncol=3)
+```{r initializePlot-output, echo=FALSE, fig.cap="Left: emptyPlot; Middle: emptyPlotWithLabels; Right: smartEmptyPlot", fig.width=7.5}
+gridExtra::grid.arrange(emptyPlot, emptyPlotWithLabels, smartEmptyPlot, ncol = 3)
 ```
 
 # Add scatter or lines to a plot object: *addScatter*, *addLine*
@@ -93,15 +113,19 @@ If a plot object is specified in *plotObject* input, then the layer will be adde
 In the case the input is `NULL` (default value), the function *initializePlot* is called internally.
 
 The following data will be used as an example in the next section:
-```{r get ExampleData, echo=FALSE}
+
+```{r get-ExampleData, echo=FALSE}
 myTestData <- read.csv(system.file("extdata", "test-data.csv", package = "tlf"), stringsAsFactors = FALSE)
-myTestData <- data.frame(x = myTestData$Obs, 
-                         y = myTestData$Pred,
-                         type = myTestData$Sex,
-                         country = myTestData$Country) 
+myTestData <- data.frame(
+  x = myTestData$Obs,
+  y = myTestData$Pred,
+  type = myTestData$Sex,
+  country = myTestData$Country
+)
 ```
-```{r show ExampleData, results='asis'}
-knitr::kable(utils::head(myTestData)) 
+
+```{r show-ExampleData, results='asis'}
+knitr::kable(utils::head(myTestData))
 ```
 
 ## *addScatter*
@@ -109,36 +133,48 @@ knitr::kable(utils::head(myTestData))
 The primary input parameter of function *addScatter* is *data* and can be used along with its *metaData* and *dataMapping*.
 However, it is also possible to directly use the input parameters *x* and *y* instead to plot directly *y* as a function of *x*.
 
-```{r scatter mapping}
+```{r scatter-mapping}
 # Naive mapping on x and y
-myMapping <- XYGDataMapping$new(x = "x",
-                                y = "y")
+myMapping <- XYGDataMapping$new(
+  x = "x",
+  y = "y"
+)
 
 # Mapping on x and y, while grouping the data by type
-myGroupMapping <- XYGDataMapping$new(x = "x",
-                                     y = "y",
-                                     color = "type")
+myGroupMapping <- XYGDataMapping$new(
+  x = "x",
+  y = "y",
+  color = "type"
+)
 # Using the naive mapping
-pNaive <- addScatter(data = myTestData,
-                     metaData = myMetaData,
-                     dataMapping = myMapping)
+pNaive <- addScatter(
+  data = myTestData,
+  metaData = myMetaData,
+  dataMapping = myMapping
+)
 
 # Using tlf smart mapping (same as naive)
-pSmart <- addScatter(data = myTestData,
-                     metaData = myMetaData)
+pSmart <- addScatter(
+  data = myTestData,
+  metaData = myMetaData
+)
 
 # Using group in mapping
-pGroup <- addScatter(data = myTestData,
-                metaData = myMetaData,
-                dataMapping = myGroupMapping)
+pGroup <- addScatter(
+  data = myTestData,
+  metaData = myMetaData,
+  dataMapping = myGroupMapping
+)
 
 # Using x and y (same as naive but without metaData, no label)
-pXY <- addScatter(x = myTestData$x,
-                  y = myTestData$y)
+pXY <- addScatter(
+  x = myTestData$x,
+  y = myTestData$y
+)
 ```
 
-```{r show scatter mapping, echo=FALSE, fig.cap="top left: pNaive; top right: pSmart; bottom left: pGroup; bottom right: pXY", fig.width=7.5}
-gridExtra::grid.arrange(pNaive, pSmart, pGroup, pXY, ncol=2)
+```{r show-scatter-mapping, echo=FALSE, fig.cap="top left: pNaive; top right: pSmart; bottom left: pGroup; bottom right: pXY", fig.width=7.5}
+gridExtra::grid.arrange(pNaive, pSmart, pGroup, pXY, ncol = 2)
 ```
 
 Input parameters of *addScatter* also include *plotConfiguration* and *plotObject* as previously described.
@@ -146,30 +182,36 @@ Input parameters *caption*, *color*, *size*, *shape* and *linetype* can overwrit
 These parameters are optional and will be `NULL` by default, which will lead to use aesthetic from the current theme.
 In particular, *dataMapping* also allows to create a legend caption, the input parameter *caption* can overwrtie such legend caption.
 
-```{r addScatter options}
+```{r addScatter-options}
 males <- myTestData$type %in% "Male"
 females <- myTestData$type %in% "Female"
 # Using x and y
-pScatter1 <- addScatter(x = myTestData$x[males],
-                        y = myTestData$y[males],
-                        color = "blue",
-                        size = 3,
-                        caption = "Male")
-pScatter2 <- addScatter(x = myTestData$x[females],
-                        y = myTestData$y[females],
-                        color = "pink", 
-                        size = 3,
-                        caption = "Female")
-pScatter3 <- addScatter(x = myTestData$x[females],
-                        y = myTestData$y[females],
-                        color = "pink", 
-                        size = 3,
-                        caption = "Female",
-                        plotObject = pScatter1)
+pScatter1 <- addScatter(
+  x = myTestData$x[males],
+  y = myTestData$y[males],
+  color = "blue",
+  size = 3,
+  caption = "Male"
+)
+pScatter2 <- addScatter(
+  x = myTestData$x[females],
+  y = myTestData$y[females],
+  color = "pink",
+  size = 3,
+  caption = "Female"
+)
+pScatter3 <- addScatter(
+  x = myTestData$x[females],
+  y = myTestData$y[females],
+  color = "pink",
+  size = 3,
+  caption = "Female",
+  plotObject = pScatter1
+)
 ```
 
-```{r show addScatter, echo=FALSE, fig.cap="Left: pScatter1; Middle: pScatter2; Right: pScatter3", fig.width=7.5}
-gridExtra::grid.arrange(pScatter1, pScatter2, pScatter3, ncol=3)
+```{r show-addScatter, echo=FALSE, fig.cap="Left: pScatter1; Middle: pScatter2; Right: pScatter3", fig.width=7.5}
+gridExtra::grid.arrange(pScatter1, pScatter2, pScatter3, ncol = 3)
 ```
 
 Finally, the last input parameters include *caption*, *color*, *size*, *shape* and *linetype*. 
@@ -189,4 +231,3 @@ These 2 atoms work in a similar fashion to *addScatter* and *addLine* but they u
 ## *addRibbon*
 
 ## *addErrorbar*
-

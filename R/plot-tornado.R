@@ -4,28 +4,28 @@
 #' containing complementary information to data (e.g. their unit and dimension).
 #' This parameter is optional.
 #' @param x Mapping for x (values of tornado plot)
-#' If \code{data} is NULL or not input, \code{x} numeric values will be used as is for the plot.
+#' If `data` is NULL or not input, `x` numeric values will be used as is for the plot.
 #' @param y Mapping for y (labels of tornado plot)
-#' If \code{data} is NULL or not input, \code{y} character values will be used as is for the plot.
-#' @param sorted logical indicating if values should be sorted if \code{dataMapping} is not input.
+#' If `data` is NULL or not input, `y` character values will be used as is for the plot.
+#' @param sorted logical indicating if values should be sorted if `dataMapping` is not input.
 #' By default, values are sorted by their absolute values
 #' @param colorPalette Define a `ggplot2` colorPalette (e.g `colorPalette`="Spectral")
 #' @param bar logical setting tornado as bar plot
 #' @param dataMapping
-#' \code{TornadoDataMapping} class or subclass mapping x and y variables to \code{data} variable names.
-#' \code{dataMapping} provides also the values of the PK Ratio limits plotted as horizontal lines.
-#' This parameter is optional: the \code{tlf} library provides a smart mapping if only \code{data} is provided
+#' `TornadoDataMapping` class or subclass mapping x and y variables to `data` variable names.
+#' `dataMapping` provides also the values of the PK Ratio limits plotted as horizontal lines.
+#' This parameter is optional: the `tlf` library provides a smart mapping if only `data` is provided
 #' and default values of the PK Ratio limits.
 #' @param plotConfiguration
-#' \code{TornadoPlotConfiguration} class or subclass defining labels, grid, background and watermark
-#' This parameter is optional: the \code{tlf} library provides a default configuration according to the current theme
-#' @param plotObject \code{ggplot} graphical object to which the tornado plot layer is added
-#' This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided
+#' `TornadoPlotConfiguration` class or subclass defining labels, grid, background and watermark
+#' This parameter is optional: the `tlf` library provides a default configuration according to the current theme
+#' @param plotObject `ggplot` graphical object to which the tornado plot layer is added
+#' This parameter is optional: the `tlf` library will initialize an empty plot if the parameter is NULL or not provided
 #' @description
-#' Add tornado plot layers to a \code{ggplot} graphical object.
+#' Add tornado plot layers to a `ggplot` graphical object.
 #' Tornado limits are plotted as vertical lines.
 #' Tornado values are plotted as horizontal bars or point according to option `bar`
-#' @return A \code{ggplot} graphical object
+#' @return A `ggplot` graphical object
 #' @export
 plotTornado <- function(data = NULL,
                         metaData = NULL,

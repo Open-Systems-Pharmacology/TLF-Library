@@ -4,22 +4,22 @@
 BackgroundConfiguration <- R6::R6Class(
   "BackgroundConfiguration",
   public = list(
-    #' @description Create a new \code{BackgroundConfiguration} object
-    #' @param watermark \code{Label} object defining properties of watermark
-    #' @param plot \code{BackgroundElement} object defining oustide plot background properties
-    #' @param panel \code{BackgroundElement} object defining panel (inside of plot) background properties
-    #' @param xAxis \code{LineElement} object defining properties of x-axis
-    #' @param yAxis \code{LineElement} object defining properties of y-axis
-    #' @param xGrid \code{LineElement} object defining properties of x-grid
-    #' @param yGrid \code{LineElement} object defining properties of y-grid
-    #' @return A new \code{BackgroundConfiguration} object
+    #' @description Create a new `BackgroundConfiguration` object
+    #' @param watermark `Label` object defining properties of watermark
+    #' @param plot `BackgroundElement` object defining oustide plot background properties
+    #' @param panel `BackgroundElement` object defining panel (inside of plot) background properties
+    #' @param xAxis `LineElement` object defining properties of x-axis
+    #' @param yAxis `LineElement` object defining properties of y-axis
+    #' @param xGrid `LineElement` object defining properties of x-grid
+    #' @param yGrid `LineElement` object defining properties of y-grid
+    #' @return A new `BackgroundConfiguration` object
     initialize = function(watermark = NULL,
-                              plot = NULL,
-                              panel = NULL,
-                              xAxis = NULL,
-                              yAxis = NULL,
-                              xGrid = NULL,
-                              yGrid = NULL) {
+                          plot = NULL,
+                          panel = NULL,
+                          xAxis = NULL,
+                          yAxis = NULL,
+                          xGrid = NULL,
+                          yGrid = NULL) {
       validateIsOfType(watermark, c("character", "Label"), nullAllowed = TRUE)
       currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
       watermark <- watermark %||% currentTheme$background$watermark
@@ -43,9 +43,9 @@ BackgroundConfiguration <- R6::R6Class(
       eval(setLineExpression)
     },
 
-    #' @description Update background a \code{ggplot} object from `BackgroundConfiguration` properties
-    #' @param plotObject a \code{ggplot} object
-    #' @return A \code{ggplot} object
+    #' @description Update background a `ggplot` object from `BackgroundConfiguration` properties
+    #' @param plotObject a `ggplot` object
+    #' @return A `ggplot` object
     updatePlot = function(plotObject) {
       plotObject <- plotObject + ggplot2::theme(
         plot.background = private$.plot$createPlotElement(),
@@ -124,16 +124,16 @@ BackgroundElement <- R6::R6Class(
     size = NULL,
     linetype = NULL,
 
-    #' @description Create a new \code{BackgroundElement} object
+    #' @description Create a new `BackgroundElement` object
     #' @param fill character color filling of the background element
     #' @param color character color of the frame of the background element
     #' @param size character size of the frame of the background element
     #' @param linetype character linetype of the frame of the background element
-    #' @return A new \code{BackgroundElement} object
+    #' @return A new `BackgroundElement` object
     initialize = function(fill = NULL,
-                              color = NULL,
-                              size = NULL,
-                              linetype = NULL) {
+                          color = NULL,
+                          size = NULL,
+                          linetype = NULL) {
       validateIsString(c(fill, color, linetype), nullAllowed = TRUE)
       validateIsNumeric(size, nullAllowed = TRUE)
 

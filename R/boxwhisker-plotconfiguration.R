@@ -1,20 +1,20 @@
 #' @title BoxWhiskerPlotConfiguration
-#' @description  R6 class defining the configuration of a \code{ggplot} object
+#' @description  R6 class defining the configuration of a `ggplot` object
 #' @export
 BoxWhiskerPlotConfiguration <- R6::R6Class(
   "BoxWhiskerPlotConfiguration",
   inherit = PlotConfiguration,
   public = list(
-    #' @description Create a new \code{PKRatioPlotConfiguration} object
+    #' @description Create a new `PKRatioPlotConfiguration` object
     #' @param ribbons `ThemeAestheticSelections` object defining properties for boxes of boxplot
     #' @param points `ThemeAestheticSelections` object defining properties for outlier scatter points
     #' @param outliers logical defining if outliers should be included in boxplot
-    #' @param ... parameters inherited from \code{PlotConfiguration}
-    #' @return A new \code{PKRatioPlotConfiguration} object
+    #' @param ... parameters inherited from `PlotConfiguration`
+    #' @return A new `PKRatioPlotConfiguration` object
     initialize = function(outliers = TRUE,
-                              ribbons = NULL,
-                              points = NULL,
-                              ...) {
+                          ribbons = NULL,
+                          points = NULL,
+                          ...) {
       super$initialize(...)
 
       validateIsOfType(ribbons, "ThemeAestheticSelections", nullAllowed = TRUE)

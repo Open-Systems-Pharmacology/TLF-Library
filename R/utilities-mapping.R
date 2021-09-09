@@ -14,14 +14,16 @@ binNumericCol <- function(binLimits, currentDataCol) { # function to iterate thr
   if (!(binLimits[2] > binLimits[1])) { # check that bin limits are in increasing order
     stop("Bin limits must be increasing.")
   }
-  dataPointsInGrp <- sapply(currentDataCol, function(x) return((x >= binLimits[1]) & (x <= binLimits[2])))
+  dataPointsInGrp <- sapply(currentDataCol, function(x) {
+    return((x >= binLimits[1]) & (x <= binLimits[2]))
+  })
   return(dataPointsInGrp)
 }
 
 
 
 findColumnEntriesInGroups <- function(dataDf, groupingDfRow) {
-  groupingDataColumns <- dataDf[ colnames(groupingDfRow) ] # get columns from dataDf corresponding to column headings in groupingDf (excluding the last column heading in groupingDf)
+  groupingDataColumns <- dataDf[colnames(groupingDfRow)] # get columns from dataDf corresponding to column headings in groupingDf (excluding the last column heading in groupingDf)
   logicMatrix <- matrix(rep(FALSE, nrow(dataDf) * ncol(groupingDfRow)), nrow(dataDf))
   for (n in seq(1, ncol(groupingDfRow))) { # for each column of the groupingDf
     if (is.list(groupingDfRow[[n]])) { # case where a list is supplied for binning
@@ -53,18 +55,18 @@ getCustomCaptions <- function(dataDf, groupingDf) {
   }
   newCol <- as.factor(rep(NA, nrow(dataDf))) # add a factor column of NA to the dataframe dataDF.  For rows falling within the grouping, the NA will be modified to that grouping's caption.
   levels(newCol) <- groupingDf[[ncol(groupingDf)]] # Set factor levels of new column to be the captions of the grouping dataframe
-  newCol[ groupingFactorColumn != 0 ] <- groupingDf[[ncol(groupingDf)]][ groupingFactorColumn[groupingFactorColumn != 0 ] ] # Add the appropriate caption to each column entry that correspondinds to a dataDf row that falls within groupings in groupingDf
+  newCol[groupingFactorColumn != 0] <- groupingDf[[ncol(groupingDf)]][groupingFactorColumn[groupingFactorColumn != 0]] # Add the appropriate caption to each column entry that correspondinds to a dataDf row that falls within groupings in groupingDf
   return(newCol)
 }
 
 #' @title getDefaultCaptions
 #' @param data data.frame used for legend caption
-#' @param metaData list of lists containing metaData on \code{data}
+#' @param metaData list of lists containing metaData on `data`
 #' @param variableList ordered vector of variables used for specifying the caption
 #' @param sep characters separating variables in caption
 #' @description
 #' Creates default legend captions by concatenating the values of
-#' the \code{data} and \code{metaData} of \code{variableList} variables from \code{data}.
+#' the `data` and `metaData` of `variableList` variables from `data`.
 #' @return Factor levels corresponding to the legend captions
 #' @export
 #' @examples
@@ -131,14 +133,14 @@ asLegendCaptionSubset <- function(data, metaData) {
 #' @title getAesStringMapping
 #' @param dataMapping DataMapping class or subclass object
 #' @description
-#' Get the \code{dataMapping} elements and convert them into
-#' character string usable by ggplot mapping function \code{aes_string}.
-#' The conversion fixes any issue of special characters by wrapping the string by \code{``}
+#' Get the `dataMapping` elements and convert them into
+#' character string usable by ggplot mapping function `aes_string`.
+#' The conversion fixes any issue of special characters by wrapping the string by ````
 #' if not already used.
 #'
-#' \code{dataMapping} unmapped aesthetic elements (e.g. \code{color}) are associated to
-#' the dummy aesthetic variable \code{"defaultAes"} which allows further modification of the plot aesthetics.
-#' @return A list of mappings that can be used as is by \code{aes_string}.
+#' `dataMapping` unmapped aesthetic elements (e.g. `color`) are associated to
+#' the dummy aesthetic variable `"defaultAes"` which allows further modification of the plot aesthetics.
+#' @return A list of mappings that can be used as is by `aes_string`.
 #' @examples
 #' \dontrun{
 #' dataMapping <- XYGDataMapping$new(x = "Time [h]", y = "Concentration [mol/L]", color = "Dose")
@@ -182,12 +184,12 @@ getAesStringMapping <- function(dataMapping) {
 #' Get the mapping if variable names correspond to usual aesthetic or mapping names.
 #' Else return NULL for the mapping property.
 #'
-#' If data has only one variable, it will be mapped as \code{x}.
-#' If data has only 2 variables, they will be respectively mapped as \code{x} and \code{y}.
+#' If data has only one variable, it will be mapped as `x`.
+#' If data has only 2 variables, they will be respectively mapped as `x` and `y`.
 #'
-#' Recognized names for the mapping are \code{x}, \code{y}, \code{ymin}, \code{ymax},
-#' \code{lower}, \code{middle}, \code{upper}, \code{color}, \code{shape}, \code{linetype},
-#' \code{size} and \code{fill}
+#' Recognized names for the mapping are `x`, `y`, `ymin`, `ymax`,
+#' `lower`, `middle`, `upper`, `color`, `shape`, `linetype`,
+#' `size` and `fill`
 #' @return A list of usual mappings that can be guessed from data
 #' @examples
 #' \dontrun{

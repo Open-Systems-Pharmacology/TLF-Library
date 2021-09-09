@@ -1,22 +1,21 @@
 #' @title HistogramPlotConfiguration
-#' @description R6 class defining the configuration of a \code{ggplot} object for histograms
+#' @description R6 class defining the configuration of a `ggplot` object for histograms
 #' @export
 HistogramPlotConfiguration <- R6::R6Class(
   "HistogramPlotConfiguration",
   inherit = PlotConfiguration,
-
   public = list(
 
-    #' @description Create a new \code{HistogramPlotConfiguration} object
+    #' @description Create a new `HistogramPlotConfiguration` object
     #' @param lines `ThemeAestheticSelections` object defining properties for vertical lines
     #' @param ribbons `ThemeAestheticSelections` object defining properties for histogram
     #' @param ylabel Histograms default display is "Count"
-    #' @param ... parameters inherited from \code{PlotConfiguration}
-    #' @return A new \code{TimeProfilePlotConfiguration} object
+    #' @param ... parameters inherited from `PlotConfiguration`
+    #' @return A new `TimeProfilePlotConfiguration` object
     initialize = function(lines = NULL,
-                              ribbons = NULL,
-                              ylabel = "Count",
-                              ...) {
+                          ribbons = NULL,
+                          ylabel = "Count",
+                          ...) {
       super$initialize(ylabel = ylabel, ...)
 
       validateIsOfType(lines, "ThemeAestheticSelections", nullAllowed = TRUE)
@@ -26,12 +25,12 @@ HistogramPlotConfiguration <- R6::R6Class(
       private$.ribbons <- ribbons %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotHistogram$ribbons)
     },
 
-    #' @description Add statistics as line layer to a \code{ggplot} object
-    #' @param plotObject \code{ggplot} object
+    #' @description Add statistics as line layer to a `ggplot` object
+    #' @param plotObject `ggplot` object
     #' @param data data.frame
-    #' @param metaData list of information on \code{data}
-    #' @param dataMapping R6 class \code{HistogramDataMapping}
-    #' @return A \code{ggplot} object
+    #' @param metaData list of information on `data`
+    #' @param dataMapping R6 class `HistogramDataMapping`
+    #' @return A `ggplot` object
     addVerticalLines = function(plotObject, data, metaData, dataMapping) {
       if (!is.null(dataMapping$verticalLineFunctions)) {
         fillVec <- tlfEnv$currentTheme$aesProperties$fill
@@ -66,7 +65,7 @@ HistogramPlotConfiguration <- R6::R6Class(
           aes_string(xintercept = "value", color = "summaryCaptions", linetype = "summaryCaptions"), size = 1
         ) + scale_colour_manual(
           name = "Summary",
-          values = fillVec[ rep(seq(1, numHistograms), each = numVerticalLineFunctions) ],
+          values = fillVec[rep(seq(1, numHistograms), each = numVerticalLineFunctions)],
           labels = legendLabels
         ) + scale_linetype_manual(
           name = "Summary",

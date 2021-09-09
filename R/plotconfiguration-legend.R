@@ -1,23 +1,23 @@
 #' @title LegendConfiguration
-#' @description R6 class defining the legend configuration of a \code{ggplot} object
+#' @description R6 class defining the legend configuration of a `ggplot` object
 #' @export
 LegendConfiguration <- R6::R6Class(
   "LegendConfiguration",
   public = list(
-    #' @description Create a new \code{LegendConfiguration} object
+    #' @description Create a new `LegendConfiguration` object
     #' @param position position of the legend as defined by enum `LegendPositions`
     #' @param caption data.frame containing the properties of the legend caption
     #' @param title character title of the legend caption. A value of `NULL` removes the title.
-    #' @param titleFont \code{Font} object defining the font of the legend title
-    #' @param font \code{Font} object defining the font of the legend caption
-    #' @param background \code{BackgroundElement} object defining the background of the legend
-    #' @return A new \code{LegendConfiguration} object
+    #' @param titleFont `Font` object defining the font of the legend title
+    #' @param font `Font` object defining the font of the legend caption
+    #' @param background `BackgroundElement` object defining the background of the legend
+    #' @return A new `LegendConfiguration` object
     initialize = function(position = NULL,
-                              caption = NULL,
-                              title = NULL,
-                              titleFont = NULL,
-                              font = NULL,
-                              background = NULL) {
+                          caption = NULL,
+                          title = NULL,
+                          titleFont = NULL,
+                          font = NULL,
+                          background = NULL) {
       validateIsIncluded(position, LegendPositions, nullAllowed = TRUE)
       validateIsString(title, nullAllowed = TRUE)
       validateIsOfType(titleFont, "Font", nullAllowed = TRUE)
@@ -34,9 +34,9 @@ LegendConfiguration <- R6::R6Class(
       private$.caption <- caption %||% data.frame()
     },
 
-    #' @description Update legend configuration on a \code{ggplot} object
-    #' @param plotObject \code{ggplot} object
-    #' @return A \code{ggplot} object with updated axis properties
+    #' @description Update legend configuration on a `ggplot` object
+    #' @param plotObject `ggplot` object
+    #' @return A `ggplot` object with updated axis properties
     updatePlot = function(plotObject) {
       validateIsOfType(plotObject, "ggplot")
       # Update legend background, font and title font
@@ -81,7 +81,7 @@ LegendConfiguration <- R6::R6Class(
       private$.position <- value
       return(invisible())
     },
-    #' @field font \code{Font} object defining the font of the legend
+    #' @field font `Font` object defining the font of the legend
     font = function(value) {
       if (missing(value)) {
         return(private$.font)
@@ -91,7 +91,7 @@ LegendConfiguration <- R6::R6Class(
       private$.font <- value %||% currentTheme$fonts$legend
       return(invisible())
     },
-    #' @field titleFont \code{Font} object defining the font of the legend title
+    #' @field titleFont `Font` object defining the font of the legend title
     titleFont = function(value) {
       if (missing(value)) {
         return(private$.titleFont)
@@ -101,7 +101,7 @@ LegendConfiguration <- R6::R6Class(
       private$.titleFont <- value %||% currentTheme$fonts$legendTitle
       return(invisible())
     },
-    #' @field background \code{Background} object defining the background of the legend
+    #' @field background `Background` object defining the background of the legend
     background = function(value) {
       if (missing(value)) {
         return(private$.background)

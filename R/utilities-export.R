@@ -186,7 +186,7 @@ exportPlotConfigurationCode <- function(plotConfiguration) {
       as.character(parseValueToObject(legendText, legendValue))
     )
   }
-  
+
   classSpecificCode <- NULL
   if (plotConfigurationClass %in% "BoxWhiskerPlotConfiguration") {
     classSpecificCode <- c(

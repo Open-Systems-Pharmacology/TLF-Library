@@ -9,11 +9,11 @@ TimeProfileHelper <- R6::R6Class(
     aggregationFunctionNames = NULL,
     dfHelper = NULL,
     initialize = function(data,
-                              timeColumnName,
-                              groupingColumnNames = NULL,
-                              valuesColumnNames = NULL,
-                              aggregationFunctionsVector = NULL,
-                              aggregationFunctionNames = NULL) {
+                          timeColumnName,
+                          groupingColumnNames = NULL,
+                          valuesColumnNames = NULL,
+                          aggregationFunctionsVector = NULL,
+                          aggregationFunctionNames = NULL) {
       self$data <- data
       self$timeColumnName <- timeColumnName
       self$groupingColumnNames <- groupingColumnNames
@@ -22,7 +22,6 @@ TimeProfileHelper <- R6::R6Class(
       self$aggregationFunctionNames <- aggregationFunctionNames
       self$generateAggregatedValues()
     },
-
     applyAggregationFunctions = function(x) {
       # input the vector of aggregated x into each aggregation function y and return the results in a vector res
       res <- sapply(self$aggregationFunctionsVector, function(y) {
@@ -30,13 +29,12 @@ TimeProfileHelper <- R6::R6Class(
       })
       return(res)
     },
-
     generateAggregatedValues = function() {
       xGroupingColNames <- c(self$timeColumnName, self$groupingColumnNames) # Get names of grouping columns and groups then into a vector xGroupingColNames
       xGroupingCols <- lapply(xGroupingColNames, function(x) {
         self$data[[x]]
       }) # Extract grouping columns from dataframe and group them into a list called xGroupingCols
-      yValuesCol <- self$data[ self$valuesColumnNames ] # Extract column of values from dataframe
+      yValuesCol <- self$data[self$valuesColumnNames] # Extract column of values from dataframe
       dfHelper <- aggregate(yValuesCol, xGroupingCols, function(x) {
         res <- self$applyAggregationFunctions(x)
         return(res)

@@ -30,14 +30,12 @@ Imports:
 Depends: 
     R (>= 3.5)
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
-LazyData: true    
 Suggests: 
     knitr,
     rmarkdown,
     testthat (>= 2.1.0),
-    pander,
     gridExtra
 VignetteBuilder: knitr
 Collate: 

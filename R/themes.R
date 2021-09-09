@@ -2,15 +2,15 @@
 
 #' @title ThemeFont
 #' @description R6 class defining theme font properties
-#' @field title \code{Font} object for font properties title
-#' @field subtitle \code{Font} object for font properties of subtitle
-#' @field xlabel \code{Font} object for font properties of xlabel
-#' @field ylabel \code{Font} object for font properties of ylabel
-#' @field watermark \code{Font} object for font properties of watermark
-#' @field legendTitle \code{Font} object for font properties of legend title
-#' @field legend \code{Font} object for font properties of legend
-#' @field xAxis \code{Font} object for font properties of xAxis
-#' @field yAxis \code{Font} object for font properties of yAxis
+#' @field title `Font` object for font properties title
+#' @field subtitle `Font` object for font properties of subtitle
+#' @field xlabel `Font` object for font properties of xlabel
+#' @field ylabel `Font` object for font properties of ylabel
+#' @field watermark `Font` object for font properties of watermark
+#' @field legendTitle `Font` object for font properties of legend title
+#' @field legend `Font` object for font properties of legend
+#' @field xAxis `Font` object for font properties of xAxis
+#' @field yAxis `Font` object for font properties of yAxis
 #' @export
 ThemeFont <- R6::R6Class(
   "ThemeFont",
@@ -25,36 +25,36 @@ ThemeFont <- R6::R6Class(
     xAxis = NULL,
     yAxis = NULL,
 
-    #' @description Create a new \code{ThemeFont} object
-    #' @param title \code{Font} object or list for font properties title
-    #' @param subtitle \code{Font} object or list for font properties of subtitle
-    #' @param xlabel \code{Font} object or list for font properties of xlabel
-    #' @param ylabel \code{Font} object or list for font properties of ylabel
-    #' @param watermark \code{Font} object or list for font properties of watermark
-    #' @param legendTitle \code{Font} object or list for font properties of legend
-    #' @param legend \code{Font} object or list for font properties of legend
-    #' @param xAxis \code{Font} object or list for font properties of xAxis
-    #' @param yAxis \code{Font} object or list for font properties of yAxis
+    #' @description Create a new `ThemeFont` object
+    #' @param title `Font` object or list for font properties title
+    #' @param subtitle `Font` object or list for font properties of subtitle
+    #' @param xlabel `Font` object or list for font properties of xlabel
+    #' @param ylabel `Font` object or list for font properties of ylabel
+    #' @param watermark `Font` object or list for font properties of watermark
+    #' @param legendTitle `Font` object or list for font properties of legend
+    #' @param legend `Font` object or list for font properties of legend
+    #' @param xAxis `Font` object or list for font properties of xAxis
+    #' @param yAxis `Font` object or list for font properties of yAxis
     #' @param baseColor name of base color of undefined fonts. Default is black.
     #' @param baseSize base size of undefined fonts. Default is 12.
     #' @param baseFace name of base face of undefined fonts. Default is "plain".
     #' @param baseFamily name of base family of undefined fonts. Default is "".
     #' @param baseAngle base angle of undefined fonts. Default is 0 degree.
-    #' @return A new \code{ThemeFont} object
+    #' @return A new `ThemeFont` object
     initialize = function(title = NULL,
-                              subtitle = NULL,
-                              xlabel = NULL,
-                              ylabel = NULL,
-                              watermark = NULL,
-                              legendTitle = NULL,
-                              legend = NULL,
-                              xAxis = NULL,
-                              yAxis = NULL,
-                              baseColor = "black",
-                              baseSize = 12,
-                              baseFace = "plain",
-                              baseFamily = "",
-                              baseAngle = 0) {
+                          subtitle = NULL,
+                          xlabel = NULL,
+                          ylabel = NULL,
+                          watermark = NULL,
+                          legendTitle = NULL,
+                          legend = NULL,
+                          xAxis = NULL,
+                          yAxis = NULL,
+                          baseColor = "black",
+                          baseSize = 12,
+                          baseFace = "plain",
+                          baseFamily = "",
+                          baseAngle = 0) {
       # Validate necessary input
       validateIsString(baseColor)
       validateIsString(baseFace)
@@ -65,10 +65,10 @@ ThemeFont <- R6::R6Class(
       # Create all field properties by parsing and evaluating their expression
       fieldNames <- c("title", "subtitle", "xlabel", "ylabel", "watermark", "legendTitle", "legend", "xAxis", "yAxis")
       setFontExpression <- parse(text = paste0("self$", fieldNames, " <- Font$new(
-                                               color = ", fieldNames, "$color %||% baseColor, 
-                                               size = ", fieldNames, "$size %||% baseSize, 
-                                               fontFace = ", fieldNames, "$fontFace %||% baseFace, 
-                                               fontFamily = ", fieldNames, "$fontFamily %||% baseFamily, 
+                                               color = ", fieldNames, "$color %||% baseColor,
+                                               size = ", fieldNames, "$size %||% baseSize,
+                                               fontFace = ", fieldNames, "$fontFace %||% baseFace,
+                                               fontFamily = ", fieldNames, "$fontFamily %||% baseFamily,
                                                angle = ", fieldNames, "$angle %||% baseAngle)"))
       eval(setFontExpression)
     },
@@ -79,10 +79,10 @@ ThemeFont <- R6::R6Class(
       jsonObject <- list()
       fieldNames <- c("title", "subtitle", "xlabel", "ylabel", "watermark", "legendTitle", "legend", "xAxis", "yAxis")
       setJsonExpression <- parse(text = paste0("jsonObject$", fieldNames, " <- list(
-                                               color = self$", fieldNames, "$color, 
-                                               size = self$", fieldNames, "$size, 
-                                               angle = self$", fieldNames, "$angle, 
-                                               fontFace = self$", fieldNames, "$fontFace, 
+                                               color = self$", fieldNames, "$color,
+                                               size = self$", fieldNames, "$size,
+                                               angle = self$", fieldNames, "$angle,
+                                               fontFace = self$", fieldNames, "$fontFace,
                                                fontFamily = self$", fieldNames, "$fontFamily)"))
       eval(setJsonExpression)
       return(jsonObject)
@@ -94,13 +94,13 @@ ThemeFont <- R6::R6Class(
 #' @description R6 class defining theme background properties
 #' @field watermark character defining content of watermark
 #' @field legendPosition character defining where legend should usually be placed
-#' @field plot \code{BackgroundElement} object for plot area properties (outside of panel)
-#' @field panel \code{BackgroundElement} object for plot area properties (inside of panel)
-#' @field xAxis \code{BackgroundElement} object for x axis properties
-#' @field yAxis \code{BackgroundElement} object for y axis properties
-#' @field xGrid \code{BackgroundElement} object for x grid properties
-#' @field yGrid \code{BackgroundElement} object for y grid properties
-#' @field legend \code{BackgroundElement} object for legend area properties
+#' @field plot `BackgroundElement` object for plot area properties (outside of panel)
+#' @field panel `BackgroundElement` object for plot area properties (inside of panel)
+#' @field xAxis `BackgroundElement` object for x axis properties
+#' @field yAxis `BackgroundElement` object for y axis properties
+#' @field xGrid `BackgroundElement` object for x grid properties
+#' @field yGrid `BackgroundElement` object for y grid properties
+#' @field legend `BackgroundElement` object for legend area properties
 #' @export
 ThemeBackground <- R6::R6Class(
   "ThemeBackground",
@@ -115,34 +115,34 @@ ThemeBackground <- R6::R6Class(
     yGrid = NULL,
     legend = NULL,
 
-    #' @description Create a new \code{ThemeBackground} object
+    #' @description Create a new `ThemeBackground` object
     #' @param watermark character defining content of watermark
     #' @param legendPosition character defining where legend should usually be placed
-    #' @param plot \code{BackgroundElement} object or list for plot area properties (outside of panel)
-    #' @param panel \code{BackgroundElement} object or list for plot area properties (inside of panel)
-    #' @param xAxis \code{BackgroundElement} object or list for x axis properties
-    #' @param yAxis \code{BackgroundElement} object or list for y axis properties
-    #' @param xGrid \code{BackgroundElement} object or list for x grid properties
-    #' @param yGrid \code{BackgroundElement} object or list for y grid properties
-    #' @param legend \code{BackgroundElement} object or list for legend area properties
+    #' @param plot `BackgroundElement` object or list for plot area properties (outside of panel)
+    #' @param panel `BackgroundElement` object or list for plot area properties (inside of panel)
+    #' @param xAxis `BackgroundElement` object or list for x axis properties
+    #' @param yAxis `BackgroundElement` object or list for y axis properties
+    #' @param xGrid `BackgroundElement` object or list for x grid properties
+    #' @param yGrid `BackgroundElement` object or list for y grid properties
+    #' @param legend `BackgroundElement` object or list for legend area properties
     #' @param baseFill name of base color fill of undefined background elements. Default is white.
     #' @param baseColor name of base color of undefined background elements. Default is black.
     #' @param baseSize name of base size of undefined background elements. Default is 0.5.
     #' @param baseLinetype name of base size of undefined background elements. Default is "solid".
-    #' @return A new \code{ThemeFont} object
+    #' @return A new `ThemeFont` object
     initialize = function(watermark = NULL,
-                              legendPosition = NULL,
-                              plot = NULL,
-                              panel = NULL,
-                              xAxis = NULL,
-                              yAxis = NULL,
-                              xGrid = NULL,
-                              yGrid = NULL,
-                              legend = NULL,
-                              baseFill = "white",
-                              baseColor = "black",
-                              baseSize = 0.5,
-                              baseLinetype = "solid") {
+                          legendPosition = NULL,
+                          plot = NULL,
+                          panel = NULL,
+                          xAxis = NULL,
+                          yAxis = NULL,
+                          xGrid = NULL,
+                          yGrid = NULL,
+                          legend = NULL,
+                          baseFill = "white",
+                          baseColor = "black",
+                          baseSize = 0.5,
+                          baseLinetype = "solid") {
       # Validate necessary input
       validateIsString(baseFill)
       validateIsString(baseColor)
@@ -172,13 +172,13 @@ ThemeBackground <- R6::R6Class(
       lineFieldNames <- c("xAxis", "yAxis", "xGrid", "yGrid")
 
       setJsonAreaExpression <- parse(text = paste0("jsonObject$", areaFieldNames, " <- list(
-                                                   fill = self$", areaFieldNames, "$fill, 
-                                                   color = self$", areaFieldNames, "$color, 
-                                                   size = self$", areaFieldNames, "$size, 
+                                                   fill = self$", areaFieldNames, "$fill,
+                                                   color = self$", areaFieldNames, "$color,
+                                                   size = self$", areaFieldNames, "$size,
                                                    linetype = self$", areaFieldNames, "$linetype)"))
       setJsonLineExpression <- parse(text = paste0("jsonObject$", lineFieldNames, " <- list(
-                                                   color = self$", lineFieldNames, "$color, 
-                                                   size = self$", lineFieldNames, "$size, 
+                                                   color = self$", lineFieldNames, "$color,
+                                                   size = self$", lineFieldNames, "$size,
                                                    linetype = self$", lineFieldNames, "$linetype)"))
       eval(setJsonAreaExpression)
       eval(setJsonLineExpression)
@@ -206,20 +206,20 @@ ThemeAestheticMaps <- R6::R6Class(
     linetype = NULL,
     alpha = NULL,
 
-    #' @description Create a new \code{ThemeAestheticMaps} object
+    #' @description Create a new `ThemeAestheticMaps` object
     #' @param color color map as list, character or numeric vector
     #' @param fill fill map as list, character or numeric vector
     #' @param shape shape map as list, character or numeric vector
     #' @param size size  map as list, character or numeric vector
     #' @param linetype linetype map as list, character or numeric vector
     #' @param alpha alpha map as list, character or numeric vector
-    #' @return A new \code{ThemeAestheticMaps} object
+    #' @return A new `ThemeAestheticMaps` object
     initialize = function(color = NULL,
-                              fill = NULL,
-                              shape = NULL,
-                              size = NULL,
-                              linetype = NULL,
-                              alpha = NULL) {
+                          fill = NULL,
+                          shape = NULL,
+                          size = NULL,
+                          linetype = NULL,
+                          alpha = NULL) {
 
       # Validate necessary input
       validateIsString(color, nullAllowed = TRUE)
@@ -265,20 +265,20 @@ ThemeAestheticSelections <- R6::R6Class(
   inherit = ThemeAestheticMaps,
   public = list(
 
-    #' @description Create a new \code{ThemeAestheticSelections} object
+    #' @description Create a new `ThemeAestheticSelections` object
     #' @param color selection key or values for choice of color
     #' @param fill selection key or values for choice of fill
     #' @param shape selection key or values for choice of shape
     #' @param size selection key or values for choice of size
     #' @param linetype selection key or values for choice of linetype
     #' @param alpha selection key or values for choice of alpha
-    #' @return A new \code{ThemeAestheticSelections} object
+    #' @return A new `ThemeAestheticSelections` object
     initialize = function(color = NULL,
-                              fill = NULL,
-                              shape = NULL,
-                              size = NULL,
-                              linetype = NULL,
-                              alpha = NULL) {
+                          fill = NULL,
+                          shape = NULL,
+                          size = NULL,
+                          linetype = NULL,
+                          alpha = NULL) {
 
       # Associate to each field its value
       initializeExpression <- parse(text = paste0("self$", names(AestheticProperties), " <- ", names(AestheticProperties), " %||% 'first'"))
@@ -327,7 +327,7 @@ ThemePlotConfigurations <- R6::R6Class(
     plotTornado = NULL,
     plotHistogram = NULL,
 
-    #' @description Create a new \code{ThemePlotConfigurations} object
+    #' @description Create a new `ThemePlotConfigurations` object
     #' @param addScatter theme properties for `PlotConfiguration` objects as used in function `addScatter()`
     #' @param addLine theme properties for `PlotConfiguration` objects as used in function `addLine()`
     #' @param addRibbon theme properties for `PlotConfiguration` objects as used in function `addRibbon()`
@@ -339,18 +339,18 @@ ThemePlotConfigurations <- R6::R6Class(
     #' @param plotBoxWhisker theme properties for `PlotConfiguration` objects as used in function `plotBoxWhisker()`
     #' @param plotTornado theme properties for `PlotConfiguration` objects as used in function `plotTornado()`
     #' @param plotHistogram theme properties for `PlotConfiguration` objects as used in function `plotHistogram()`
-    #' @return A new \code{ThemePlotConfigurations} object
+    #' @return A new `ThemePlotConfigurations` object
     initialize = function(addScatter = NULL,
-                              addLine = NULL,
-                              addRibbon = NULL,
-                              addErrorbar = NULL,
-                              plotPKRatio = NULL,
-                              plotDDIRatio = NULL,
-                              plotTimeProfile = NULL,
-                              plotObsVsPred = NULL,
-                              plotBoxWhisker = NULL,
-                              plotTornado = NULL,
-                              plotHistogram = NULL) {
+                          addLine = NULL,
+                          addRibbon = NULL,
+                          addErrorbar = NULL,
+                          plotPKRatio = NULL,
+                          plotDDIRatio = NULL,
+                          plotTimeProfile = NULL,
+                          plotObsVsPred = NULL,
+                          plotBoxWhisker = NULL,
+                          plotTornado = NULL,
+                          plotHistogram = NULL) {
 
       # Validate necessary input
       atomPlotInputs <- c("addScatter", "addLine", "addRibbon", "addErrorbar")
@@ -424,16 +424,16 @@ Theme <- R6::R6Class(
   "Theme",
   public = list(
 
-    #' @description Create a new \code{Theme} object
+    #' @description Create a new `Theme` object
     #' @param fonts `ThemeFont` object
     #' @param background `ThemeBackground` object
     #' @param aestheticMaps `ThemeAestheticMaps` object
     #' @param plotConfigurations `ThemePlotConfiguration` object
-    #' @return A new \code{Theme} object
+    #' @return A new `Theme` object
     initialize = function(fonts = NULL,
-                              background = NULL,
-                              aestheticMaps = NULL,
-                              plotConfigurations = NULL) {
+                          background = NULL,
+                          aestheticMaps = NULL,
+                          plotConfigurations = NULL) {
       validateIsOfType(fonts, "ThemeFont", nullAllowed = TRUE)
       validateIsOfType(background, "ThemeBackground", nullAllowed = TRUE)
       validateIsOfType(aestheticMaps, "ThemeAestheticMaps", nullAllowed = TRUE)
@@ -507,7 +507,7 @@ Theme <- R6::R6Class(
 #' @description Load theme object from json file.
 #' A template of a json theme is available at system.file(package= "tlf", "theme-maker","theme-template.json")
 #' @param jsonFile path of json file
-#' @return A \code{Theme} object
+#' @return A `Theme` object
 #' @export
 #' @import jsonlite
 loadThemeFromJson <- function(jsonFile) {

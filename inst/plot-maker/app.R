@@ -193,8 +193,8 @@ ui <- fluidPage(
 
 #---------- Server ----------#
 server <- function(input, output) {
-  #---------- Reactive helpers  ----------#  
-  #---------- Data ----------#  
+  #---------- Reactive helpers  ----------#
+  #---------- Data ----------#
   getData <- reactive({
     data <- data.frame(`No data` = NULL)
     if (isIncluded(input$dataType, "environment")) {
@@ -244,7 +244,7 @@ server <- function(input, output) {
     utils::head(getData())
   })
 
-  #---------- Data Mapping ----------#  
+  #---------- Data Mapping ----------#
   getVariableNames <- reactive({
     data <- getData()
     return(c("none" = "none", sapply(names(data), identity)))
@@ -333,7 +333,7 @@ server <- function(input, output) {
     return(dataMapping)
   })
 
-  #---------- Plot Configuration ----------#  
+  #---------- Plot Configuration ----------#
   #----- Use a theme
   updateTheme <- reactive({
     if (length(input$loadTheme) == 0) {
@@ -829,23 +829,25 @@ server <- function(input, output) {
   })
 
   #---------- Analysis ----------#
-  output$pkRatioTable <- renderTable({
-    data <- getData()
-    dataMapping <- getDataMapping()
-    getPKRatioMeasure(data = data, dataMapping = dataMapping)
-  },
-  rownames = TRUE
+  output$pkRatioTable <- renderTable(
+    {
+      data <- getData()
+      dataMapping <- getDataMapping()
+      getPKRatioMeasure(data = data, dataMapping = dataMapping)
+    },
+    rownames = TRUE
   )
 
-  output$summaryTable <- renderTable({
-    if (!isIncluded(input$selectedPlot, "plotBoxWhisker")) {
-      return()
-    }
-    data <- getData()
-    dataMapping <- getDataMapping()
-    getBoxWhiskerMeasure(data = data, dataMapping = dataMapping)
-  },
-  rownames = TRUE
+  output$summaryTable <- renderTable(
+    {
+      if (!isIncluded(input$selectedPlot, "plotBoxWhisker")) {
+        return()
+      }
+      data <- getData()
+      dataMapping <- getDataMapping()
+      getBoxWhiskerMeasure(data = data, dataMapping = dataMapping)
+    },
+    rownames = TRUE
   )
 
   #---------- Save Plot ----------#

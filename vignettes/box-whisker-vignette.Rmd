@@ -14,24 +14,30 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+
 ```{r setup}
 require(tlf)
 ```
 
-```{r load theme, echo=FALSE}
+```{r load-theme, echo=FALSE}
 vignetteTheme <- loadThemeFromJson(system.file("extdata", "template-theme.json", package = "tlf"))
 useTheme(vignetteTheme)
 ```
 
 # 1. Introduction
+
 ## 1.1. Objectives
+
 The following vignette aims at documenting and illustrating workflows for producing PK ratio plots using the `tlf`-Library.
 
 ## 1.2. Prerequisite
+
 This vignette focuses boxplot examples. Detailed documentation on typical `tlf` workflow, use of `AgregationSummary`, `DataMapping`, `PlotConfiguration` and `Theme` can be found in `vignette("tlf-workflow")`.
 
 # 2. Definition of the boxplot fonctions and classes
+
 ## 2.1. The `plotBoxWhisker` function
+
 The function for plotting box-whiskers is: `plotBoxWhisker`. 
 Basic documentation of the function can be found using: `?plotBoxWhisker`.
 The typical usage of this function is: `plotBoxWhisker(data, metaData = NULL, dataMapping = NULL, plotConfiguration = NULL)`.
@@ -40,7 +46,7 @@ The output of the function is a `ggplot` object.
 ## 2.2. The `BoxWhiskerDataMapping` class
 The `dataMapping` from `plotBoxWhisker` requires a `BoxWhiskerDataMapping` class.
 This class can simply be initialized by `BoxWhiskerDataMapping$new()`, needing `y` variable name input only.
-For boxplots with multiple boxes, `x` variable name or/and `fill` groupMapping can be used. The `x` variable is expected to be factor levels.
+For boxplots with multiple boxes, `x` variable name and/or `fill` groupMapping can be used. The `x` variable is expected to be factor levels.
 Beside these common input, it is possible to overwrite the aggregation functions that plot the edges of the box, the whiskers and the oultying data.
 
 - For the box edges `lower`, `middle` and `upper` use respectively the first quartile, median and third quartile (25th, 50th and 75th percentiles).

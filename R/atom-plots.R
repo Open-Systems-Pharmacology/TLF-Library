@@ -2,11 +2,11 @@
 
 #' @title initializePlot
 #' @param plotConfiguration
-#' \code{PlotConfiguration} objecct defining labels, grid, background and watermark
-#' This parameter is optional: the \code{tlf} library provides a default configuration according to the current theme
+#' `PlotConfiguration` objecct defining labels, grid, background and watermark
+#' This parameter is optional: the `tlf` library provides a default configuration according to the current theme
 #' @description
-#' Initialize a \code{ggplot} object and set the labels, grid, background and watermark
-#' @return A \code{ggplot} graphical object
+#' Initialize a `ggplot` object and set the labels, grid, background and watermark
+#' @return A `ggplot` graphical object
 #' @export
 #' @examples
 #' # Initialize an empty plot
@@ -34,13 +34,13 @@ initializePlot <- function(plotConfiguration = NULL) {
 
 #' @title addScatter
 #' @param data data.frame containing the scatter points to be plotted
-#' @param metaData list of information on \code{data} such as \code{dimension} and \code{unit} of their variables
+#' @param metaData list of information on `data` such as `dimension` and `unit` of their variables
 #' @param x Mapping for x values.
-#' If \code{data} is NULL or not input, \code{x} numeric values will be used as is for the plot.
+#' If `data` is NULL or not input, `x` numeric values will be used as is for the plot.
 #' @param y Mapping for y values.
-#' If \code{data} is NULL or not input, \code{y} numeric values will be used as is for the plot.
-#' @param dataMapping \code{XYGDataMapping} class or subclass object
-#' mapping x, y and aesthetic variables to the variable names of \code{data}.
+#' If `data` is NULL or not input, `y` numeric values will be used as is for the plot.
+#' @param dataMapping `XYGDataMapping` class or subclass object
+#' mapping x, y and aesthetic variables to the variable names of `data`.
 #' @param caption vector of character strings defining the legend captions.
 #' This parameter is optional: default value `NULL` creates caption labels "data 1", "data 2" ...
 #' @param color vector of character strings defining the color of the scatter points.
@@ -51,15 +51,15 @@ initializePlot <- function(plotConfiguration = NULL) {
 #' This parameter is optional: default value `NULL` will choose sizes according to the current theme.
 #' @param linetype vector of character strings defining the linetype linking the scatter points.
 #' This parameter is optional: default value `NULL` won't provide lines.
-#' @param plotConfiguration \code{PlotConfiguration} object defining the labels, axes, background and legend properties of the plot.
-#' @param plotObject \code{ggplot} graphical object to which the line layer is added
-#' This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided
+#' @param plotConfiguration `PlotConfiguration` object defining the labels, axes, background and legend properties of the plot.
+#' @param plotObject `ggplot` graphical object to which the line layer is added
+#' This parameter is optional: the `tlf` library will initialize an empty plot if the parameter is NULL or not provided
 #' @description
-#' Add a scatter plot layer to a \code{ggplot} graphical object.
-#' Use optional argument \code{caption} to set legend caption.
-#' Since \code{ggplot} manage aesthetic properties across all layers,
-#' aesthetic properties defined in \code{plotConfiguration} will apply across all layers.
-#' @return A \code{ggplot} graphical object
+#' Add a scatter plot layer to a `ggplot` graphical object.
+#' Use optional argument `caption` to set legend caption.
+#' Since `ggplot` manage aesthetic properties across all layers,
+#' aesthetic properties defined in `plotConfiguration` will apply across all layers.
+#' @return A `ggplot` graphical object
 #' @export
 #' @examples
 #' # Add scatter using x and y
@@ -169,15 +169,15 @@ addScatter <- function(data = NULL,
 
 #' @title addLine
 #' @param data data.frame containing the line endpoints to be plotted
-#' @param metaData list of information on \code{data} such as \code{dimension} and \code{unit} of their variables
+#' @param metaData list of information on `data` such as `dimension` and `unit` of their variables
 #' @param x Mapping for x values.
-#' If \code{data} is NULL or not input, \code{x} numeric values will be used as is for the plot.
-#' In case there is no \code{y} mapping, \code{x} are the x-values of vertical lines.
+#' If `data` is NULL or not input, `x` numeric values will be used as is for the plot.
+#' In case there is no `y` mapping, `x` are the x-values of vertical lines.
 #' @param y Mapping for y values.
-#' If \code{data} is NULL or not input, \code{y} numeric values will be used as is for the plot.
-#' In case there is no \code{x} mapping, \code{y} are the y-values of horizontal lines.
-#' @param dataMapping \code{XYGDataMapping} class or subclass
-#' mapping x, y and aesthetic variables to the variable names of \code{data}.
+#' If `data` is NULL or not input, `y` numeric values will be used as is for the plot.
+#' In case there is no `x` mapping, `y` are the y-values of horizontal lines.
+#' @param dataMapping `XYGDataMapping` class or subclass
+#' mapping x, y and aesthetic variables to the variable names of `data`.
 #' @param caption vector of character strings defining the legend captions.
 #' This parameter is optional: default value is NULL.
 #' @param color vector of character strings defining the color of the scatter points.
@@ -188,15 +188,15 @@ addScatter <- function(data = NULL,
 #' This parameter is optional: default value `NULL` will choose sizes according to the current theme.
 #' @param linetype vector of character strings defining the linetype linking the scatter points.
 #' This parameter is optional: default value `NULL` won't provide lines.
-#' @param plotConfiguration \code{PlotConfiguration} object defining the label and background properties of the plot.
-#' @param plotObject \code{ggplot} graphical object to which the line layer is added
-#' This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided
+#' @param plotConfiguration `PlotConfiguration` object defining the label and background properties of the plot.
+#' @param plotObject `ggplot` graphical object to which the line layer is added
+#' This parameter is optional: the `tlf` library will initialize an empty plot if the parameter is NULL or not provided
 #' @description
-#' Add a line layer to a \code{ggplot} graphical object.
-#' Use optional argument \code{caption} to set legend caption.
-#' Since \code{ggplot} manage aesthetic properties across all layers,
-#' aesthetic properties defined in \code{plotConfiguration} will apply across all layers.
-#' @return A \code{ggplot} graphical object
+#' Add a line layer to a `ggplot` graphical object.
+#' Use optional argument `caption` to set legend caption.
+#' Since `ggplot` manage aesthetic properties across all layers,
+#' aesthetic properties defined in `plotConfiguration` will apply across all layers.
+#' @return A `ggplot` graphical object
 #' @export
 #' @examples
 #' # Add vertical line at x = 2
@@ -355,19 +355,19 @@ addLine <- function(data = NULL,
 
 #' @title addRibbon
 #' @param data data.frame containing the ribbon endpoints to be plotted.
-#' @param metaData list of information on \code{data} such as \code{dimension} and \code{unit} of their variables
+#' @param metaData list of information on `data` such as `dimension` and `unit` of their variables
 #' @param x Mapping for x values.
-#' If \code{data} is NULL or not input, \code{x} numeric values will be used as is for the plot.
+#' If `data` is NULL or not input, `x` numeric values will be used as is for the plot.
 #' @param ymin Mapping for ymin values.
-#' If \code{data} is NULL or not input, \code{ymin} numeric values will be used as is for the plot.
-#' In case there is no \code{x} mapping, \code{ymin} are the y-values of horizontal lines.
-#' In case there is no \code{ymax} mapping, a value of 0 is assumed for \code{ymax}.
+#' If `data` is NULL or not input, `ymin` numeric values will be used as is for the plot.
+#' In case there is no `x` mapping, `ymin` are the y-values of horizontal lines.
+#' In case there is no `ymax` mapping, a value of 0 is assumed for `ymax`.
 #' @param ymax Mapping for ymax values.
-#' If \code{data} is NULL or not input, \code{ymax} numeric values will be used as is for the plot.
-#' In case there is no \code{x} mapping, \code{ymax} are the y-values of horizontal lines.
-#' In case there is no \code{ymin} mapping, a value of 0 is assumed for \code{ymin}.
-#' @param dataMapping \code{XYGDataMapping} class or subclass
-#' mapping x, y and aesthetic variables to the variable names of \code{data}.
+#' If `data` is NULL or not input, `ymax` numeric values will be used as is for the plot.
+#' In case there is no `x` mapping, `ymax` are the y-values of horizontal lines.
+#' In case there is no `ymin` mapping, a value of 0 is assumed for `ymin`.
+#' @param dataMapping `XYGDataMapping` class or subclass
+#' mapping x, y and aesthetic variables to the variable names of `data`.
 #' @param caption vector of character strings defining the legend captions.
 #' This parameter is optional: default value is NULL.
 #' @param fill vector of character strings defining the color of the scatter points.
@@ -380,16 +380,16 @@ addLine <- function(data = NULL,
 #' This parameter is optional: default value `NULL` won't provide lines.
 #' @param alpha transparency of the ribbon.
 #' Numeric value between 0 and 1. Value of 0, the plot is transparent. Value of 1, the plot is opaque.
-#' Default value for \code{alpha} is 0.8.
-#' @param plotConfiguration \code{PlotConfiguration} object defining the label and background properties of the plot.
-#' @param plotObject \code{ggplot} graphical object to which the line layer is added
-#' This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided
+#' Default value for `alpha` is 0.8.
+#' @param plotConfiguration `PlotConfiguration` object defining the label and background properties of the plot.
+#' @param plotObject `ggplot` graphical object to which the line layer is added
+#' This parameter is optional: the `tlf` library will initialize an empty plot if the parameter is NULL or not provided
 #' @description
-#' Add a ribbon layer to a \code{ggplot} graphical object.
-#' Use optional argument \code{caption} to set legend caption.
-#' Since \code{ggplot} manage aesthetic properties across all layers,
-#' aesthetic properties defined in \code{plotConfiguration} will apply across all layers.
-#' @return A \code{ggplot} graphical object
+#' Add a ribbon layer to a `ggplot` graphical object.
+#' Use optional argument `caption` to set legend caption.
+#' Since `ggplot` manage aesthetic properties across all layers,
+#' aesthetic properties defined in `plotConfiguration` will apply across all layers.
+#' @return A `ggplot` graphical object
 #' @export
 #' @examples
 #' # Add a horizontal ribbon to a previous plot
@@ -504,13 +504,13 @@ addRibbon <- function(data = NULL,
 
 #' @title addErrorbar
 #' @param data data.frame containing the errorbar endpoints to be plotted
-#' @param metaData list of information on \code{data} such as \code{dimension} and \code{unit} of their variables
+#' @param metaData list of information on `data` such as `dimension` and `unit` of their variables
 #' @param x Mapping for x values.
-#' If \code{data} is NULL or not input, \code{x} numeric values will be used as is for the plot.
+#' If `data` is NULL or not input, `x` numeric values will be used as is for the plot.
 #' @param ymin Mapping for ymin values.
-#' If \code{data} is NULL or not input, \code{ymin} numeric values will be used as is for the plot.
+#' If `data` is NULL or not input, `ymin` numeric values will be used as is for the plot.
 #' @param ymax Mapping for ymin values.
-#' If \code{data} is NULL or not input, \code{ymax} numeric values will be used as is for the plot.
+#' If `data` is NULL or not input, `ymax` numeric values will be used as is for the plot.
 #' @param caption vector of character strings defining the legend captions.
 #' This parameter is optional: default value is NULL.
 #' @param color vector of character strings defining the color of the scatter points.
@@ -520,18 +520,18 @@ addRibbon <- function(data = NULL,
 #' @param linetype vector of character strings defining the linetype linking the scatter points.
 #' This parameter is optional: default value `NULL` won't provide lines.
 #' @param includeCap logical setting if error bars include caps at their ends.
-#' @param dataMapping \code{RangeDataMapping} class or subclass
-#' mapping x, ymin, ymax and aesthetic variables to the variable names of \code{data}.
-#' @param plotConfiguration \code{PlotConfiguration} object defining the label and background properties of the plot.
-#' @param plotObject \code{ggplot} graphical object to which the line layer is added
-#' This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided
+#' @param dataMapping `RangeDataMapping` class or subclass
+#' mapping x, ymin, ymax and aesthetic variables to the variable names of `data`.
+#' @param plotConfiguration `PlotConfiguration` object defining the label and background properties of the plot.
+#' @param plotObject `ggplot` graphical object to which the line layer is added
+#' This parameter is optional: the `tlf` library will initialize an empty plot if the parameter is NULL or not provided
 #' @description
-#' Add a errorbar plot layer to a \code{ggplot} graphical object.
-#' Use optional argument \code{caption} to set legend caption.
-#' Since \code{ggplot} manage aesthetic properties across all layers,
-#' aesthetic properties defined in \code{plotConfiguration} will apply across all layers.
+#' Add a errorbar plot layer to a `ggplot` graphical object.
+#' Use optional argument `caption` to set legend caption.
+#' Since `ggplot` manage aesthetic properties across all layers,
+#' aesthetic properties defined in `plotConfiguration` will apply across all layers.
 #' If caption is the same as a previous scatter plot layer, the legend will merge their caption and aesthetic properties
-#' @return A \code{ggplot} graphical object
+#' @return A `ggplot` graphical object
 #' @export
 addErrorbar <- function(data = NULL,
                         metaData = NULL,

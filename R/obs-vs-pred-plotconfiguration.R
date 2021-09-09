@@ -1,20 +1,20 @@
 #' @title ObsVsPredPlotConfiguration
-#' @description R6 class defining the configuration of a \code{ggplot} object for Obs vs Pred plots
+#' @description R6 class defining the configuration of a `ggplot` object for Obs vs Pred plots
 #' @export
 ObsVsPredPlotConfiguration <- R6::R6Class(
   "ObsVsPredPlotConfiguration",
   inherit = PlotConfiguration,
   public = list(
-    #' @description Create a new \code{ObsVsPredPlotConfiguration} object
+    #' @description Create a new `ObsVsPredPlotConfiguration` object
     #' @param lines `ThemeAestheticSelections` object defining properties for lines
     #' @param points `ThemeAestheticSelections` object defining properties for scatter points
     #' @param errorbars `ThemeAestheticSelections` object defining properties for error bars
-    #' @param ... parameters inherited from \code{PlotConfiguration}
-    #' @return A new \code{ObsVsPredPlotConfiguration} object
+    #' @param ... parameters inherited from `PlotConfiguration`
+    #' @return A new `ObsVsPredPlotConfiguration` object
     initialize = function(lines = NULL,
-                              points = NULL,
-                              errorbars = NULL,
-                              ...) {
+                          points = NULL,
+                          errorbars = NULL,
+                          ...) {
       super$initialize(...)
 
       validateIsOfType(lines, "ThemeAestheticSelections", nullAllowed = TRUE)
@@ -29,7 +29,7 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
 )
 
 #' @title ResVsPredPlotConfiguration
-#' @description R6 class defining the configuration of a \code{ggplot} object for Res vs Pred/Time plots
+#' @description R6 class defining the configuration of a `ggplot` object for Res vs Pred/Time plots
 #' @export
 ResVsPredPlotConfiguration <- R6::R6Class(
   "ResVsPredPlotConfiguration",

@@ -54,7 +54,7 @@ test_that("PK Ratio default settings work", {
 })
 
 test_that("PK Ratio typical test works", {
-# Data mapping:
+  # Data mapping:
   # x = Age, y = Ratio, color = Gender, shape = c(Dose, Compound)
   pkRatioMap <- PKRatioDataMapping$new(
     x = "Age",

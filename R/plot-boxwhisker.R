@@ -54,13 +54,13 @@ plotBoxWhisker <- function(data,
 }
 
 #' @title addBoxWhisker
-#' @description Add layer of boxes and whiskers  to a \code{ggplot} object
+#' @description Add layer of boxes and whiskers  to a `ggplot` object
 #' @param data data.frame
-#' @param metaData list of information on \code{data}
-#' @param dataMapping \code{BoxWhiskerDataMapping} object
-#' @param plotConfiguration \code{BoxWhiskerPlotConfiguration} object
-#' @param plotObject a \code{ggplot} object
-#' @return A \code{ggplot} object
+#' @param metaData list of information on `data`
+#' @param dataMapping `BoxWhiskerDataMapping` object
+#' @param plotConfiguration `BoxWhiskerPlotConfiguration` object
+#' @param plotObject a `ggplot` object
+#' @return A `ggplot` object
 addBoxWhisker <- function(data, metaData, dataMapping, plotConfiguration, plotObject) {
 
   # Get the box plot quantiles from dataMapping
@@ -109,13 +109,13 @@ addBoxWhisker <- function(data, metaData, dataMapping, plotConfiguration, plotOb
 }
 
 #' @title addOutliers
-#' @description Add a outlier points layer to a \code{ggplot} object
+#' @description Add a outlier points layer to a `ggplot` object
 #' @param data data.frame
-#' @param metaData list of information on \code{data}
-#' @param dataMapping \code{BoxWhiskerDataMapping} object
-#' @param plotConfiguration \code{BoxWhiskerPlotConfiguration} object
-#' @param plotObject a \code{ggplot} object
-#' @return A \code{ggplot} object
+#' @param metaData list of information on `data`
+#' @param dataMapping `BoxWhiskerDataMapping` object
+#' @param plotConfiguration `BoxWhiskerPlotConfiguration` object
+#' @param plotObject a `ggplot` object
+#' @return A `ggplot` object
 addOutliers <- function(data, metaData, dataMapping, plotConfiguration, plotObject) {
   mapData <- dataMapping$getOutliers(data)
   # Convert the mapping into characters usable by aes_string
