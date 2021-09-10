@@ -1,7 +1,11 @@
 ---
 title: "plot-maker"
 author: "OSPSuiteR 2019"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    fig.align: 'center'
+    dpi: 300
+    toc: true
 vignette: >
   %\VignetteIndexEntry{plot-maker}
   %\VignetteEngine{knitr::rmarkdown}

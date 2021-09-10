@@ -243,17 +243,27 @@ gridExtra::grid.arrange(scatter3, scatter4, ncol=2)
 
 ## 3.1. Background configuration properties
 
-Background configuration defines the configuration of the following Background elements: `plot`, `panel`, `xGrid`, `yGrid`, `xAxis`, `yAxis`, `legendPosition` and `watermark`.
-Except for `watermark` and `legendPosition` which are the text of the watermark and the position of the legend defined as an element of `LegendPositions` enum;
-background fields are `LineElement` and `BackgroundElement` objects which defines the properties of the background element.
+Background configuration defines the configuration of the following Background elements:
+- `plot`
+- `panel`
+- `xGrid`
+- `yGrid`
+- `xAxis`
+- `yAxis`
+- `legendPosition`
+- `watermark`
+
+Except for `watermark` and `legendPosition`, which are the text of the watermark and the position of the legend defined as an element of `LegendPositions` enum, background fields are `LineElement` and `BackgroundElement` objects, which define the properties of the background element.
 
 As for all the `PlotConfiguration` inputs, their default values are defined from the current `Theme`, however this default can be overwritten.
 
 For instance:
 
-```{r background-object, result='as.is'}
+```{r background-object, results='asis'}
 background <- BackgroundConfiguration$new()
+```
 
+```{r show-background-object, results='asis', echo=FALSE}
 knitr::kable(
   data.frame(Property = c("color", "size", "linetype", "fill"),
              plot = c(background$plot$color, background$plot$size, background$plot$linetype, background$plot$fill),
@@ -290,17 +300,17 @@ gridExtra::grid.arrange(pBack1, pBack2, ncol=2)
 
 After creating a plot, it is possible to change its background configuration using the following `tlf` methods:
 
-- *setBackground*, *setBackgroundPanelArea* and *setBackgroundPlotArea*
+- *setBackground*, *setBackgroundPanelArea*, and *setBackgroundPlotArea*
 - *setGrid*, *setXGrid* and *setYGrid*
 - *setWatermark*
 
 ### 3.3.1. Set Background
 
-The methods *setBackground*, *setBackgroundPanelArea* and *setBackgroundPlotArea* require the plot object and which properties to update.
+The methods *setBackground*, *setBackgroundPanelArea*, and *setBackgroundPlotArea* require the plot object and which properties to update.
 
 Using the previous example, *scatter1*, 
 
-```{r-set-plot-background-1, fig.width=7.5}
+```{r set-plot-background-1, fig.width=7.5}
 setBackground(scatter1, fill = "lemonchiffon", color = "darkgreen", linetype = "solid")
 ```
 
@@ -310,11 +320,11 @@ setBackgroundPanelArea(scatter1, fill = "lemonchiffon", color = "darkgreen", lin
 
 ### 3.3.2. Set Grid
 
-The methods *setGrid*, *setXGrid* and *setYGrid* are very similar and requires the plot object and which grid properties to update.
+The methods *setGrid*, *setXGrid*, and *setYGrid* are very similar and require the plot object and the grid properties to be updated.
 
 Using the previous example *scatter1*:
 
-```{r set-plot-grid-1, fig.width=7.5}
+```{r set-plot-grid, fig.width=7.5}
 setGrid(scatter1, linetype = "blank")
 ```
 
@@ -322,12 +332,18 @@ setGrid(scatter1, linetype = "blank")
 setXGrid(scatter1, linetype = "blank")
 ```
 
+```{r set-plot-x-grid, fig.width=7.5}
+setYGrid(scatter1, linetype = "blank")
+```
+
 ### 3.3.3. Set Watermark
 
-The metod *setWatermark* requires the plot object, the watermark and its properties to update.
-Included in the properties, *alpha* is a value between 0 and 1 managing transparency of the watermark.
-The closer to 0, the more transparent the watermark will be. The closer to 1, the more opaque the watermark will be.
-The property *angle*, is the angle of the watermark in degrees.
+The *setWatermark* method requires the plot object, the watermark, and its properties to update.
+
+Among its properties, the following are the few important ones:
+
+- The property *alpha* is a value between 0 and 1 managing transparency of the watermark. The closer to 0, the more transparent the watermark will be. The closer to 1, the more opaque the watermark will be.
+- The property *angle*, is the angle of the watermark in degrees.
 
 Using the previous example *scatter1*: 
 
@@ -355,12 +371,12 @@ The property *scale* is a character string corresponding the axis scale.
 Available scales are *`r paste0(c('"', paste0(Scaling, collapse = '", "'), '"'), collapse="")`* and can be accessed using the enum *Scaling*.
 The property *limits* is a vector defining the range of the axis. 
 
-Regarding ticks and ticklabels their values are directly be passed on and managed by `ggplot2`.
+Regarding ticks and ticklabels, their values are directly be passed on and managed by `ggplot2`.
 The value *"default"* will leave the management of the limits to R.
 The properties *ticks* and *ticklabels* are vectors defining the plot ticks and their labels. These vectors are required to have the same length.
 The value *"default"* will leave the management of the limits to R.
 
-When initializating a *XAxisConfiguration*, *YAxisConfiguration* or *PlotConfiguration* objects, the axis properties can be passed on.
+When initializing a *XAxisConfiguration*, *YAxisConfiguration*, or *PlotConfiguration* objects, the axis properties can be passed on.
 
 ```{r define-axis}
 myAxisConfiguration <- XAxisConfiguration$new()
