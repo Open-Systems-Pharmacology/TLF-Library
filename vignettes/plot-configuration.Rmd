@@ -3,11 +3,9 @@ title: "Introduction to PlotConfiguration objects"
 author: "OSPSuiteR 2019"
 output:
   rmarkdown::html_vignette:
-    fig.align: 'center'
-    dpi: 300
     toc: true
 vignette: >
-  %\VignetteIndexEntry{plot-configuration}
+  %\VignetteIndexEntry{Introduction to PlotConfiguration objects}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,7 +13,10 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  dpi = 300,
+  fig.align = "center",
+  out.width = "100%"
 )
 ```
 

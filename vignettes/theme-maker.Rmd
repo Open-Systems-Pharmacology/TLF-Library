@@ -3,10 +3,7 @@ title: "theme-maker"
 author: "OSPSuiteR 2019"
 output:
   rmarkdown::html_vignette:
-    fig.align: 'center'
-    dpi: 300
     toc: true
-    echo: FALSE
 vignette: >
   %\VignetteIndexEntry{theme-maker}
   %\VignetteEngine{knitr::rmarkdown}
@@ -17,7 +14,10 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  out.width = "100%"
+  dpi = 300,
+  fig.align = "center",
+  out.width = "100%",
+  echo = FALSE
 )
 ```
 

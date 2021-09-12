@@ -3,8 +3,6 @@ title: "Introduction to tlf-based workflow"
 author: "OSPSuiteR 2019"
 output:
   rmarkdown::html_vignette:
-    fig.align: 'center'
-    dpi: 300
     toc: true
 vignette: >
   %\VignetteIndexEntry{Introduction to tlf-based workflow}
@@ -15,7 +13,10 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  dpi = 300,
+  fig.align = "center",
+  out.width = "100%"
 )
 ```
 
