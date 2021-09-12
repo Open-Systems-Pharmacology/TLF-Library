@@ -175,7 +175,7 @@ plotBoxWhisker(data = pkRatioData,
 ## 3.4. Boxplot functions
 
 In some cases, 5th and 95th percentiles are not wanted for whiskers for instance when a normal distribution is assumed and mean +/- 1.96 standard deviation would be preferred.
-In these cases, it is easy to overwrite the default functions by specifying either using an home made function or directly using predifined functions as suggested in section 2.2.
+In these cases, it is easy to overwrite the default functions by specifying either using an home made function or directly using predefined functions as suggested in section 2.2.
 
 In the 2 following examples, the boxplot will use the mean for the middle line and mean +/- 1.96 standard deviation for the whiskers:
 

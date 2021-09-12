@@ -36,7 +36,7 @@ AggregationInput <- R6::R6Class(
 predefinedPercentiles <- c(0, 1, 2.5, 5, 10, 15, 20, 25, 50, 75, 80, 85, 90, 95, 97.5, 99, 100)
 #' @title tlfStatFunctions
 #' @description
-#' Bank of predifined functions ready to use by Aggregation methods. Bank defined as Enum.
+#' Bank of predefined functions ready to use by Aggregation methods. Bank defined as Enum.
 #' To access the function from its name, use match.fun: e.g. testFun <- match.fun("mean-1.96sd")
 #' @include enum.R
 #' @export

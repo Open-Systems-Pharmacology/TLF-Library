@@ -94,7 +94,7 @@ It can be seen from this usage that only `data` is a necessary input.
 Default set ups are used for `metaData`, `dataMapping` and `plotConfiguration` within the call of `plotPKRatio`.
 For instance, if `dataMapping` is not provided, a smart mapping will be tested checking if data contains a `"x"` and a `"y"` named column.
 If the `data` has only two columns not named `"x"` and `"y"`, it will assume the first one should be plot in x-axis and the second in y-axis.
-Then, `PKRatioPlotConfiguration` is initialized if not provided, defining a standard configuration with `PK Ratio Plot` as title, the current date as subtitle and using predifned fonts as defined by the current theme.
+Then, `PKRatioPlotConfiguration` is initialized if not provided, defining a standard configuration with `PK Ratio Plot` as title, the current date as subtitle and using predefined fonts as defined by the current theme.
 
 ## 2.3. Minimal example
 
@@ -182,7 +182,7 @@ plotPKRatio(data = pkRatioData,
 ### 2.4.2  PK values defined in `lines`
 
 In PK ratio examples, usually horizontal lines are added allowing to flag values in and out of the [0.67-1.5] as well as [0.5-2.0] ranges.
-The value mapping these horizontal lines was predifined as a list: "pkRatioLine1" is 1, "pkRatioLine2" is c(0.67, 1.5) and "pkRatioLine3" is c(0.5, 2).
+The value mapping these horizontal lines was predefined as a list: "pkRatioLine1" is 1, "pkRatioLine2" is c(0.67, 1.5) and "pkRatioLine3" is c(0.5, 2).
 Consequently, for any default `PKRatioDataMapping`, you have:
 
 ```{r linesMapping}
