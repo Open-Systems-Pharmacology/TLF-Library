@@ -100,10 +100,10 @@ addBoxWhisker <- function(data, metaData, dataMapping, plotConfiguration, plotOb
 
   # If variable is legendLabel, remove it from legend
   if (isIncluded(fillVariable, "legendLabels")) {
-    plotObject <- plotObject + ggplot2::guides(fill = FALSE)
+    plotObject <- plotObject + ggplot2::guides(fill = "none")
   }
   if (isIncluded(colorVariable, "legendLabels")) {
-    plotObject <- plotObject + ggplot2::guides(color = FALSE)
+    plotObject <- plotObject + ggplot2::guides(color = "none")
   }
   return(plotObject)
 }

@@ -87,7 +87,7 @@ parseUpdateAestheticProperty <- function(aestheticProperty, plotConfigurationPro
       ',aesthetic = "', aestheticProperty, '"))'
     )),
     # remove the legend of aesthetic if default unmapped aesthetic
-    parse(text = paste0("if(isIncluded(", aestheticProperty, 'Variable, "legendLabels")){plotObject <- plotObject + ggplot2::guides(', aestheticProperty, " = FALSE)}"))
+    parse(text = paste0("if(isIncluded(", aestheticProperty, 'Variable, "legendLabels")){plotObject <- plotObject + ggplot2::guides(', aestheticProperty, " = 'none')}"))
   )
 }
 
