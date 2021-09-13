@@ -1,6 +1,6 @@
 ---
 title: "PK Ratio plots"
-author: "OSPSuiteR 2019"
+author: "OSPSuiteR 2021"
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -31,28 +31,29 @@ useTheme(vignetteTheme)
 
 # 1. Introduction
 
-## 1.1. Objectives
-
 The following vignette aims at documenting and illustrating workflows for producing PK ratio plots using the `tlf`-Library.
 
-## 1.2. Prerequisite
-
-This vignette focuses PK ratio plots examples. Detailed documentation on typical `tlf` workflow, use of `AgregationSummary`, `DataMapping`, `PlotConfiguration` and `Theme` can be found in `vignette("tlf-workflow")`.
+This vignette focuses PK ratio plots examples. Detailed documentation on typical `tlf` workflow, use of `AgregationSummary`, `DataMapping`, `PlotConfiguration`, and `Theme` can be found in `vignette("tlf-workflow")`.
 
 # 2. Illustration of basic PK ratio plots
 
 ## 2.1. Data
 
 The data showed in the sequel is available at the following path: `system.file("extdata", "test-data.csv", package = "tlf")`.
-In the code below, the data is loaded and will be named `pkRatioData`.
+In the code below, the data is loaded and assigned to `pkRatioData`.
 
 ```{r load-data, results='asis'}
 # Load example
-pkRatioData <- read.csv(system.file("extdata", "test-data.csv", package = "tlf"), stringsAsFactors = FALSE)
+pkRatioData <- read.csv(
+  system.file("extdata", "test-data.csv", package = "tlf"), 
+  stringsAsFactors = FALSE
+)
 
 # pkRatioData
 knitr::kable(utils::head(pkRatioData), digits = 2)
 ```
+
+<!-- TODO: this meta data is not used anywhere in the vignette, should it be removed? -->
 
 A list of information about `pkRatioData` can be provided through `metaData`.
 
@@ -75,14 +76,16 @@ knitr::kable(data.frame(Variable = c("Age", "Obs", "Pred", "Ratio"),
                         Unit = c("yrs", "dL/h/kg", "dL/h/kg", "")))
 ```
 
-## User interface: *runPKRatioPlot()*
+<!-- TODO: uncomment when this function is available -->
 
-A user interface is available using the function `runPKRatioPlot()` and provides an easy way to understand and tune the feature of PK Ratio plots.
+<!-- ## User interface: *runPKRatioPlot()* -->
 
-```{r embedded-app, echo=FALSE}
-#runPKRatioPlot()
-# or knitr::include_app()
-```
+<!-- A user interface is available using the function `runPKRatioPlot()` and provides an easy way to understand and tune the feature of PK Ratio plots. -->
+
+<!-- ```{r embedded-app, echo=FALSE} -->
+<!-- #runPKRatioPlot() -->
+<!-- # or knitr::include_app() -->
+<!-- ``` -->
 
 ## 2.2. `plotPKRatio`
 
@@ -92,7 +95,7 @@ The typical usage of this function is: `plotPKRatio(data, metaData = NULL, dataM
 The output of the function is a `ggplot` object.
 It can be seen from this usage that only `data` is a necessary input.
 Default set ups are used for `metaData`, `dataMapping` and `plotConfiguration` within the call of `plotPKRatio`.
-For instance, if `dataMapping` is not provided, a smart mapping will be tested checking if data contains a `"x"` and a `"y"` named column.
+For instance, if `dataMapping` is not provided, smart mapping will check if data contains `"x"` and `"y"` columns.
 If the `data` has only two columns not named `"x"` and `"y"`, it will assume the first one should be plot in x-axis and the second in y-axis.
 Then, `PKRatioPlotConfiguration` is initialized if not provided, defining a standard configuration with `PK Ratio Plot` as title, the current date as subtitle and using predefined fonts as defined by the current theme.
 
@@ -222,7 +225,7 @@ knitr::kable(x = PKRatioMeasure,
 
 To configure the plot properties, `PKRatioPlotConfiguration` objects can be used.
 They combine multiple features that set the plot properties.
-PK ratio plos consists in *lines* and *points*.
-As illustrated in the vignette related to *PlotConfiguration* objects and *Theme*, you can tune the aesthetic maps and their selections.
+PK ratio plot consists in *lines* and *points*.
+As illustrated in the vignette related to *PlotConfiguration* objects and *Theme*, you can tune the aesthetic maps and their selections (see `vignette("plot-configuration")` and `vignette("theme-maker")`).
 Colors, shapes and size of the PK ratio scatter points can be tuned in the plotConfiguration *points* field.
 Likewise, colors, linetype and size of the PK ratio lines can be tuned in the plotConfiguration *lines* field.

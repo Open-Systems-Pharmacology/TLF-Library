@@ -1,6 +1,6 @@
 ---
 title: "theme-maker"
-author: "OSPSuiteR 2019"
+author: "OSPSuiteR 2021"
 output:
   rmarkdown::html_vignette:
     toc: true
