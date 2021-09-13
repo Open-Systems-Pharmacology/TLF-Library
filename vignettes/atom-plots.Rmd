@@ -64,6 +64,7 @@ myConfiguration <- PlotConfiguration$new(
   xlabel = "X",
   ylabel = "Y"
 )
+
 # Use the specification to create the plot
 emptyPlotWithLabels <- initializePlot(myConfiguration)
 
@@ -74,6 +75,7 @@ myData <- data.frame(
   x = time,
   y = 2 * cos(time)
 )
+
 # If metaData includes dimension and unit,
 # they can be use by the smart configuration to generate labels as "dimension [unit]"
 myMetaData <- list(
@@ -147,6 +149,9 @@ myGroupMapping <- XYGDataMapping$new(
   y = "y",
   color = "type"
 )
+
+# Plots
+
 # Using the naive mapping
 pNaive <- addScatter(
   data = myTestData,
@@ -174,7 +179,7 @@ pXY <- addScatter(
 )
 ```
 
-```{r show-scatter-mapping, echo=FALSE, fig.cap="top left: pNaive; top right: pSmart; bottom left: pGroup; bottom right: pXY", fig.width=7.5}
+```{r show-scatter-mapping, fig.height=7, fig.width=7, echo=FALSE, fig.cap="top left: pNaive; top right: pSmart; bottom left: pGroup; bottom right: pXY", fig.width=7.5}
 gridExtra::grid.arrange(pNaive, pSmart, pGroup, pXY, ncol = 2)
 ```
 
@@ -186,6 +191,7 @@ In particular, *dataMapping* also allows to create a legend caption, the input p
 ```{r addScatter-options}
 males <- myTestData$type %in% "Male"
 females <- myTestData$type %in% "Female"
+
 # Using x and y
 pScatter1 <- addScatter(
   x = myTestData$x[males],
@@ -211,13 +217,13 @@ pScatter3 <- addScatter(
 )
 ```
 
-```{r show-addScatter, echo=FALSE, fig.cap="Left: pScatter1; Middle: pScatter2; Right: pScatter3", fig.width=7.5}
+```{r show-addScatter, echo=FALSE, fig.width=9, fig.cap="Left: pScatter1; Middle: pScatter2; Right: pScatter3"}
 gridExtra::grid.arrange(pScatter1, pScatter2, pScatter3, ncol = 3)
 ```
 
-Finally, the last input parameters include *caption*, *color*, *size*, *shape* and *linetype*. 
-These parameters are optional and will use the default of the current theme if they are not defined.
-In particular, *dataMapping* also allows to create a legend caption, the input parameter *caption* can overwrtie such legend caption.
+Finally, the last input parameters include *caption*, *color*, *size*, *shape*, and *linetype*. 
+These parameters are optional and will use the default of the current theme if they are not specified.
+In particular, *dataMapping* also allows to create a legend caption, the input parameter *caption* can overwrite such legend caption.
 
 ## *addLine*
 
@@ -227,7 +233,7 @@ It also differs by the possibility of using *x* or *y* input for x/y-intercepts.
 
 # Add ribbon or errorbars to a plot object: *addRibbon*, *addErrorbar*
 
-These 2 atoms work in a similar fashion to *addScatter* and *addLine* but they use a different mapping that require *ymin* and *ymax* insteada of *y*.
+These atoms work in a similar fashion to *addScatter* and *addLine* but they use a different mapping that require *ymin* and *ymax* instead of *y*.
 
 ## *addRibbon*
 
