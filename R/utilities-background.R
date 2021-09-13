@@ -192,10 +192,10 @@ setBackgroundPlotArea <- function(plotObject,
 #' @param angle Angle of the watermark label (in degree).
 #' @param alpha Transparency of the watermark label.
 #' Alpha is a numeric between 0 and 1: 0 label is totally transparent, 1 label is totally opaque.
-#' @return \code{plotObject} ggplot object to which the watermark is added.
+#' @return `plotObject` ggplot object to which the watermark is added.
 #' @description
 #' addWatermark creates a ggplot grob based on the label text and its font properties.
-#' Then,  adds the grob to the ggplot object input \code{plotObject} as a new layer using \code{ggplot2::annotation_custom}.
+#' Then,  adds the grob to the ggplot object input `plotObject` as a new layer using `ggplot2::annotation_custom`.
 #' @import  ggplot2
 #' @export
 #' @examples
@@ -334,14 +334,15 @@ createWatermarkGrob <- function(label, alpha = NULL) {
   )
 
   # Font size is in .pt within annonate and requires a conversion
-  watermark <- ggplot2::ggplot() + ggplot2::theme_void() +
+  watermark <- ggplot2::ggplot() +
+    ggplot2::theme_void() +
     ggplot2::annotate(
       geom = "text",
       x = 0,
       y = 0,
       label = label$text %||% "",
-      color = label$font$color, 
-      fontface = label$font$fontFace, 
+      color = label$font$color,
+      fontface = label$font$fontFace,
       size = label$font$size / ggplot2::.pt,
       angle = label$font$angle, alpha = alpha
     )

@@ -53,19 +53,19 @@ createPlotTicks <- function(ticks) {
 AxisConfiguration <- R6::R6Class(
   "AxisConfiguration",
   public = list(
-    #' @description Create a new \code{AxisConfiguration} object
+    #' @description Create a new `AxisConfiguration` object
     #' @param limits numeric vector of axis limits
     #' @param scale character defining axis scale
     #' Use enum `Scaling` to access predefined scales.
     #' @param ticks numeric vector or function defining where to position axis ticks
     #' @param ticklabels character vector or function defining what to print on axis ticks
-    #' @param font \code{Font} object defining the font of ticklabels
-    #' @return A new \code{AxisConfiguration} object
+    #' @param font `Font` object defining the font of ticklabels
+    #' @return A new `AxisConfiguration` object
     initialize = function(limits = NULL,
-                              scale = Scaling$lin,
-                              ticks = NULL,
-                              ticklabels = NULL,
-                              font = NULL) {
+                          scale = Scaling$lin,
+                          ticks = NULL,
+                          ticklabels = NULL,
+                          font = NULL) {
       validateIsNumeric(limits, nullAllowed = TRUE)
       validateIsOfType(font, "Font", nullAllowed = TRUE)
       private$.limits <- limits
@@ -129,7 +129,7 @@ AxisConfiguration <- R6::R6Class(
       private$.ticklabels <- createPlotTicks(value)
       return(invisible())
     },
-    #' @field font \code{Font} object defining the font of the ticklabels
+    #' @field font `Font` object defining the font of the ticklabels
     font = function(value) {
       if (missing(value)) {
         return(private$.font)
@@ -164,9 +164,9 @@ XAxisConfiguration <- R6::R6Class(
   "XAxisConfiguration",
   inherit = AxisConfiguration,
   public = list(
-    #' @description Update axis configuration on a \code{ggplot} object
-    #' @param plotObject \code{ggplot} object
-    #' @return A \code{ggplot} object with updated axis properties
+    #' @description Update axis configuration on a `ggplot` object
+    #' @param plotObject `ggplot` object
+    #' @return A `ggplot` object with updated axis properties
     updatePlot = function(plotObject) {
       validateIsOfType(plotObject, "ggplot")
       # Update font properties
@@ -204,9 +204,9 @@ YAxisConfiguration <- R6::R6Class(
     #' @field position character poistion of the Y-axis
     position = NULL, # TO DO: find a way to include position in y axis, then scale position = "left" or "right"
 
-    #' @description Update axis configuration on a \code{ggplot} object
-    #' @param plotObject \code{ggplot} object
-    #' @return A \code{ggplot} object with updated axis properties
+    #' @description Update axis configuration on a `ggplot` object
+    #' @param plotObject `ggplot` object
+    #' @return A `ggplot` object with updated axis properties
     updatePlot = function(plotObject) {
       validateIsOfType(plotObject, "ggplot")
       # Update font properties

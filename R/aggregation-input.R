@@ -14,17 +14,17 @@ AggregationInput <- R6::R6Class(
     #' @field aggregationDimension dimension of aggregation output
     aggregationDimension = NULL,
 
-    #' @description Create a new \code{AggregationInput} object
+    #' @description Create a new `AggregationInput` object
     #' @param aggregationFunction list of functions to use for aggregation
     #' @param aggregationFunctionName vector of function names
     #' that will be used as variable name of the aggregation
     #' @param aggregationUnit unit of aggregation output
     #' @param aggregationDimension dimension of aggregation output
-    #' @return A new \code{AggregationInput} object
+    #' @return A new `AggregationInput` object
     initialize = function(aggregationFunction = NULL,
-                              aggregationFunctionName = NULL,
-                              aggregationUnit = NULL,
-                              aggregationDimension = NULL) {
+                          aggregationFunctionName = NULL,
+                          aggregationUnit = NULL,
+                          aggregationDimension = NULL) {
       self$aggregationFunction <- aggregationFunction
       self$aggregationFunctionName <- aggregationFunctionName
       self$aggregationUnit <- aggregationUnit
@@ -36,7 +36,7 @@ AggregationInput <- R6::R6Class(
 predefinedPercentiles <- c(0, 1, 2.5, 5, 10, 15, 20, 25, 50, 75, 80, 85, 90, 95, 97.5, 99, 100)
 #' @title tlfStatFunctions
 #' @description
-#' Bank of predifined functions ready to use by Aggregation methods. Bank defined as Enum.
+#' Bank of predefined functions ready to use by Aggregation methods. Bank defined as Enum.
 #' To access the function from its name, use match.fun: e.g. testFun <- match.fun("mean-1.96sd")
 #' @include enum.R
 #' @export

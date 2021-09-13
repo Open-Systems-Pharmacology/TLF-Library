@@ -1,9 +1,9 @@
 #' @title plotResVsPred
 #' @inheritParams plotObsVsPred
 #' @description
-#' Add Residuals vs Predictions / Time plot layers to a \code{ggplot} graphical object.
+#' Add Residuals vs Predictions / Time plot layers to a `ggplot` graphical object.
 #' Residuals vs Predictions are plotted as a scatter plot.
-#' @return A \code{ggplot} graphical object
+#' @return A `ggplot` graphical object
 #' @export
 plotResVsPred <- function(data,
                           metaData = NULL,
@@ -16,9 +16,9 @@ plotResVsPred <- function(data,
   dataMapping$smoother <- smoother %||% dataMapping$smoother
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- getAesStringMapping(dataMapping)
-  
+
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
-  
+
   for (lineIndex in seq_along(dataMapping$lines)) {
     eval(parseAddLineLayer("horizontal", dataMapping$lines[[lineIndex]], lineIndex - 1))
   }
@@ -52,7 +52,7 @@ plotResVsPred <- function(data,
         size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
       )
   }
-  
+
   # If uncertainty is defined, add error bars
   if (!isOfLength(dataMapping$uncertainty, 0)) {
     eval(parseAddUncertaintyLayer())

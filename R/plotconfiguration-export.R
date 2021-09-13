@@ -1,5 +1,5 @@
 #' @title ExportConfiguration
-#' @description R6 class defining the save configuration of a \code{ggplot} object
+#' @description R6 class defining the save configuration of a `ggplot` object
 #' @export
 ExportConfiguration <- R6::R6Class(
   "ExportConfiguration",
@@ -13,16 +13,16 @@ ExportConfiguration <- R6::R6Class(
     #' @field units character defining the unit of the saving dimension
     units = NULL,
 
-    #' @description Create a new \code{ExportConfiguration} object
+    #' @description Create a new `ExportConfiguration` object
     #' @param format character defining the format of the file to be saved.
     #' @param width numeric values defining the width in `units` of the plot dimensions after saving
     #' @param height numeric values defining the height in `units` of the plot dimensions after saving
     #' @param units character defining the unit of the saving dimension
-    #' @return A new \code{ExportConfiguration} object
+    #' @return A new `ExportConfiguration` object
     initialize = function(format = tlfEnv$defaultExportParameters$format,
-                              width = tlfEnv$defaultExportParameters$width,
-                              height = tlfEnv$defaultExportParameters$height,
-                              units = tlfEnv$defaultExportParameters$units) {
+                          width = tlfEnv$defaultExportParameters$width,
+                          height = tlfEnv$defaultExportParameters$height,
+                          units = tlfEnv$defaultExportParameters$units) {
       validateIsString(c(format, units))
       validateIsNumeric(c(width, height))
 

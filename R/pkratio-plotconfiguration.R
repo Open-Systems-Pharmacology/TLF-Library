@@ -1,21 +1,21 @@
 #' @title PKRatioPlotConfiguration
-#' @description R6 class defining the configuration of a \code{ggplot} object for PK ratio plots
+#' @description R6 class defining the configuration of a `ggplot` object for PK ratio plots
 #' @export
 PKRatioPlotConfiguration <- R6::R6Class(
   "PKRatioPlotConfiguration",
   inherit = PlotConfiguration,
   public = list(
 
-    #' @description Create a new \code{PKRatioPlotConfiguration} object
+    #' @description Create a new `PKRatioPlotConfiguration` object
     #' @param lines `ThemeAestheticSelections` object defining properties for PK ratio horizontal lines
     #' @param points `ThemeAestheticSelections` object defining properties for PK ratio scatter points
     #' @param errorbars `ThemeAestheticSelections` object defining properties for PK ratio error bars
-    #' @param ... parameters inherited from \code{PlotConfiguration}
-    #' @return A new \code{PKRatioPlotConfiguration} object
+    #' @param ... parameters inherited from `PlotConfiguration`
+    #' @return A new `PKRatioPlotConfiguration` object
     initialize = function(lines = NULL,
-                              points = NULL,
-                              errorbars = NULL,
-                              ...) {
+                          points = NULL,
+                          errorbars = NULL,
+                          ...) {
       super$initialize(...)
 
       validateIsOfType(lines, "ThemeAestheticSelections", nullAllowed = TRUE)

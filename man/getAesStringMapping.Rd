@@ -15,7 +15,7 @@ A list of mappings that can be used as is by \code{aes_string}.
 \description{
 Get the \code{dataMapping} elements and convert them into
 character string usable by ggplot mapping function \code{aes_string}.
-The conversion fixes any issue of special characters by wrapping the string by \code{``}
+The conversion fixes any issue of special characters by wrapping the string by ````
 if not already used.
 
 \code{dataMapping} unmapped aesthetic elements (e.g. \code{color}) are associated to

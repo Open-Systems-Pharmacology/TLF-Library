@@ -20,26 +20,26 @@ listOfAvailablePlots <- c(
 )
 
 #' @title parseFieldToObject
-#' @description Create expressions to evaluate of type: `objectName$fieldName <- fieldName` 
+#' @description Create expressions to evaluate of type: `objectName$fieldName <- fieldName`
 #' or `objectName$fieldName <- fieldName %||% objectName$fieldName` depending on option ``
 #' @param fieldName Names of the field/variable to associate to the object `objectName`
 #' @param objectName Name of the object on which fields `fieldName` are associated
 #' @param nullCondition logical to use object field in case of null condition
 #' @return Expressions to eval
-parseFieldToObject <- function(fieldName, objectName, nullCondition = FALSE){
-  if(nullCondition){
+parseFieldToObject <- function(fieldName, objectName, nullCondition = FALSE) {
+  if (nullCondition) {
     parse(text = paste0(objectName, "$", fieldName, " <- ", fieldName, " %||% ", objectName, "$", fieldName))
   }
   parse(text = paste0(objectName, "$", fieldName, " <- ", fieldName))
 }
 
 #' @title parseFieldFromObject
-#' @description Create expressions `fieldName <- objectName$fieldName` to evaluate 
+#' @description Create expressions `fieldName <- objectName$fieldName` to evaluate
 #' @param fieldName Names of the field/variable to associate to the object `object`
 #' @param objectName Name of the object on which fields `fieldName` are associated
 #' @return Expressions to eval
-parseFieldFromObject <- function(fieldName, objectName){
-  parse(text = paste0(fieldName," <- ", objectName, "$", fieldName)) 
+parseFieldFromObject <- function(fieldName, objectName) {
+  parse(text = paste0(fieldName, " <- ", objectName, "$", fieldName))
 }
 
 #' @title %||%

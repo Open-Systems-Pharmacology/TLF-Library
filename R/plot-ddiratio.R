@@ -5,13 +5,13 @@
 #' This parameter is optional.
 #' @param dataMapping A `DDIRatioDataMapping` object
 #' @param plotConfiguration A `DDIRatioPlotConfiguration` object
-#' @param plotObject \code{ggplot} graphical object to which the PK Ratio plot layer is added
-#' This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided
+#' @param plotObject `ggplot` graphical object to which the PK Ratio plot layer is added
+#' This parameter is optional: the `tlf` library will initialize an empty plot if the parameter is NULL or not provided
 #' @description
-#' Add DDI Ratio plot layers to a \code{ggplot} graphical object.
+#' Add DDI Ratio plot layers to a `ggplot` graphical object.
 #' Inclcuding Guest et al. limits, DDI Ratio limits as diagonal lines and
 #' DDI Ratios as a scatter plot.
-#' @return A \code{ggplot} graphical object
+#' @return A `ggplot` graphical object
 #' @export
 plotDDIRatio <- function(data,
                          metaData = NULL,

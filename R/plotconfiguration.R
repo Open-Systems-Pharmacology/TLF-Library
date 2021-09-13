@@ -1,76 +1,76 @@
 #' @title PlotConfiguration
-#' @description R6 class defining the configuration of a \code{ggplot} object
-#' @field export R6 class \code{ExportConfiguration} defining export properties
+#' @description R6 class defining the configuration of a `ggplot` object
+#' @field export R6 class `ExportConfiguration` defining export properties
 #' @export
 PlotConfiguration <- R6::R6Class(
   "PlotConfiguration",
   public = list(
     export = NULL,
 
-    #' @description Create a new \code{PlotConfiguration} object
-    #' @param title character or \code{Label} object defining plot title
-    #' @param subtitle character or \code{Label} object defining plot subtitle
-    #' @param xlabel character or \code{Label} object defining plot xlabel
-    #' @param ylabel character or \code{Label} object defining plot ylabel
-    #' @param legend \code{LegendConfiguration} object defining legend properties
+    #' @description Create a new `PlotConfiguration` object
+    #' @param title character or `Label` object defining plot title
+    #' @param subtitle character or `Label` object defining plot subtitle
+    #' @param xlabel character or `Label` object defining plot xlabel
+    #' @param ylabel character or `Label` object defining plot ylabel
+    #' @param legend `LegendConfiguration` object defining legend properties
     #' @param legendTitle character defining legend title
     #' @param legendPosition character defining legend position.
     #' Use Enum `LegendPositions` to get a list of available to legend positions.
-    #' @param xAxis \code{XAxisConfiguration} object defining x-axis properties
+    #' @param xAxis `XAxisConfiguration` object defining x-axis properties
     #' @param xScale name of X-axis scale. Use enum `Scaling` to access predefined scales.
     #' @param xLimits numeric vector of length 2 defining x-axis limits
-    #' @param yAxis \code{YAxisConfiguration} object defining y-axis properties
+    #' @param yAxis `YAxisConfiguration` object defining y-axis properties
     #' @param yScale name of y-axis scale. Use enum `Scaling` to access predefined scales.
     #' @param yLimits numeric vector of length 2 defining y-axis limits
-    #' @param background \code{BackgroundConfiguration} object defining background properties
-    #' @param plotArea \code{BackgroundElement} object defining properties of plot area
-    #' @param panelArea \code{BackgroundElement} object defining properties of panel area
-    #' @param xGrid \code{LineElement} object defining properties of x-grid background
-    #' @param yGrid \code{LineElement} object defining properties of y-grid background
-    #' @param watermark \code{Label} object defining watermark
-    #' @param export R6 class \code{SaveConfiguration} defining saving properties
+    #' @param background `BackgroundConfiguration` object defining background properties
+    #' @param plotArea `BackgroundElement` object defining properties of plot area
+    #' @param panelArea `BackgroundElement` object defining properties of panel area
+    #' @param xGrid `LineElement` object defining properties of x-grid background
+    #' @param yGrid `LineElement` object defining properties of y-grid background
+    #' @param watermark `Label` object defining watermark
+    #' @param export R6 class `SaveConfiguration` defining saving properties
     #' @param format character defining the format of the file to be saved
     #' @param width numeric values defining the width in `units` of the plot dimensions after saving
     #' @param height numeric values defining the height in `units` of the plot dimensions after saving
     #' @param units character defining the unit of the saving dimension
-    #' @param data data.frame used by \code{smartMapping}
-    #' @param metaData list of information on \code{data}
-    #' @param dataMapping R6 class or subclass \code{XYDataMapping}
-    #' @return A new \code{PlotConfiguration} object
+    #' @param data data.frame used by `smartMapping`
+    #' @param metaData list of information on `data`
+    #' @param dataMapping R6 class or subclass `XYDataMapping`
+    #' @return A new `PlotConfiguration` object
     initialize = function( # Label configuration
-                              title = NULL,
-                              subtitle = NULL,
-                              xlabel = NULL,
-                              ylabel = NULL,
-                              # Legend Configuration
-                              legend = NULL,
-                              legendTitle = NULL,
-                              legendPosition = NULL,
-                              # X-Axis configuration
-                              xAxis = NULL,
-                              xScale = NULL,
-                              xLimits = NULL,
-                              # Y-Axis configuration
-                              yAxis = NULL,
-                              yScale = NULL,
-                              yLimits = NULL,
-                              # Background configuration
-                              background = NULL,
-                              plotArea = NULL,
-                              panelArea = NULL,
-                              xGrid = NULL,
-                              yGrid = NULL,
-                              watermark = NULL,
-                              # Export configuration
-                              export = NULL,
-                              format = NULL,
-                              width = NULL,
-                              height = NULL,
-                              units = NULL,
-                              # Smart configuration using metaData
-                              data = NULL,
-                              metaData = NULL,
-                              dataMapping = NULL) {
+                          title = NULL,
+                          subtitle = NULL,
+                          xlabel = NULL,
+                          ylabel = NULL,
+                          # Legend Configuration
+                          legend = NULL,
+                          legendTitle = NULL,
+                          legendPosition = NULL,
+                          # X-Axis configuration
+                          xAxis = NULL,
+                          xScale = NULL,
+                          xLimits = NULL,
+                          # Y-Axis configuration
+                          yAxis = NULL,
+                          yScale = NULL,
+                          yLimits = NULL,
+                          # Background configuration
+                          background = NULL,
+                          plotArea = NULL,
+                          panelArea = NULL,
+                          xGrid = NULL,
+                          yGrid = NULL,
+                          watermark = NULL,
+                          # Export configuration
+                          export = NULL,
+                          format = NULL,
+                          width = NULL,
+                          height = NULL,
+                          units = NULL,
+                          # Smart configuration using metaData
+                          data = NULL,
+                          metaData = NULL,
+                          dataMapping = NULL) {
 
       # Label configuration
       # validation of the input is done within the creation of the object
@@ -147,7 +147,7 @@ PlotConfiguration <- R6::R6Class(
     }
   ),
   active = list(
-    #' @field labels \code{LabelConfiguration} object defining properties of labels
+    #' @field labels `LabelConfiguration` object defining properties of labels
     labels = function(value) {
       if (missing(value)) {
         return(private$.labels)
@@ -156,7 +156,7 @@ PlotConfiguration <- R6::R6Class(
       private$.labels <- value %||% private$.labels
       return(invisible())
     },
-    #' @field legend \code{LegendConfiguration} object defining properties of legend
+    #' @field legend `LegendConfiguration` object defining properties of legend
     legend = function(value) {
       if (missing(value)) {
         return(private$.legend)
@@ -165,7 +165,7 @@ PlotConfiguration <- R6::R6Class(
       private$.legend <- value %||% private$.legend
       return(invisible())
     },
-    #' @field xAxis \code{XAxisConfiguration} object defining properties of x-axis
+    #' @field xAxis `XAxisConfiguration` object defining properties of x-axis
     xAxis = function(value) {
       if (missing(value)) {
         return(private$.xAxis)
@@ -174,7 +174,7 @@ PlotConfiguration <- R6::R6Class(
       private$.xAxis <- value %||% private$.xAxis
       return(invisible())
     },
-    #' @field yAxis \code{YAxisConfiguration} object defining properties of x-axis
+    #' @field yAxis `YAxisConfiguration` object defining properties of x-axis
     yAxis = function(value) {
       if (missing(value)) {
         return(private$.yAxis)
@@ -183,7 +183,7 @@ PlotConfiguration <- R6::R6Class(
       private$.yAxis <- value %||% private$.yAxis
       return(invisible())
     },
-    #' @field background \code{BackgroundConfiguration} object defining properties of x-axis
+    #' @field background `BackgroundConfiguration` object defining properties of x-axis
     background = function(value) {
       if (missing(value)) {
         return(private$.background)

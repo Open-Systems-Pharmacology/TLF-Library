@@ -115,7 +115,7 @@ plotHistogram <- function(data,
 
   # If variable is legendLabel, remove it from legend
   if (isIncluded(fillVariable, "legendLabels")) {
-    plotObject <- plotObject + ggplot2::guides(fill = FALSE)
+    plotObject <- plotObject + ggplot2::guides(fill = "none")
   }
   # dataMapping$smoother
   return(plotObject)

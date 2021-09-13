@@ -1,5 +1,5 @@
 #' @title PKRatioDataMapping
-#' @description  R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and pkRatio \code{lines} variables to \code{data}
+#' @description  R6 class for mapping `x`, `y`, `GroupMapping` and pkRatio `lines` variables to `data`
 #' @export
 PKRatioDataMapping <- R6::R6Class(
   "PKRatioDataMapping",
@@ -10,25 +10,25 @@ PKRatioDataMapping <- R6::R6Class(
     #' @field uncertainty mapping error bars around scatter points
     uncertainty = NULL,
 
-    #' @description Create a new \code{PKRatioDataMapping} object
+    #' @description Create a new `PKRatioDataMapping` object
     #' @param lines list of ratio limits to plot as horizontal lines
     #' @param uncertainty mapping error bars around scatter points
-    #' @param ... parameters inherited from \code{XYGDataMapping}
-    #' @return A new \code{PKRatioDataMapping} object
+    #' @param ... parameters inherited from `XYGDataMapping`
+    #' @return A new `PKRatioDataMapping` object
     initialize = function(lines = DefaultDataMappingValues$pkRatio,
-                              uncertainty = NULL,
-                              ...) {
+                          uncertainty = NULL,
+                          ...) {
       validateIsString(uncertainty, nullAllowed = TRUE)
       super$initialize(...)
       self$lines <- lines
       self$uncertainty <- uncertainty
     },
 
-    #' @description Check that \code{data} variables include map variables
+    #' @description Check that `data` variables include map variables
     #' @param data data.frame to check
-    #' @param metaData list containing information on \code{data}
-    #' @return A data.frame with map and \code{defaultAes} variables.
-    #' Dummy variable \code{defaultAes} is necessary to allow further modification of plots.
+    #' @param metaData list containing information on `data`
+    #' @return A data.frame with map and `defaultAes` variables.
+    #' Dummy variable `defaultAes` is necessary to allow further modification of plots.
     checkMapData = function(data, metaData = NULL) {
       validateIsOfType(data, "data.frame")
       validateMapping(self$uncertainty, data, nullAllowed = TRUE)

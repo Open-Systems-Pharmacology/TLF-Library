@@ -1,5 +1,5 @@
 #' @title ObservedDataMapping
-#' @description  R6 class for mapping \code{x}, \code{y}, of observed data for a time profile plot
+#' @description  R6 class for mapping `x`, `y`, of observed data for a time profile plot
 #' @export
 ObservedDataMapping <- R6::R6Class(
   "ObservedDataMapping",
@@ -16,16 +16,16 @@ ObservedDataMapping <- R6::R6Class(
     #' @field ymax mapping error bars around scatter points
     ymax = "ymax",
 
-    #' @description Create a new \code{PKRatioDataMapping} object
+    #' @description Create a new `PKRatioDataMapping` object
     #' @param lloq mapping lower limit of quantitation variable
     #' @param uncertainty mapping error bars around scatter points
     #' @param mdv mapping missing dependent variable
-    #' @param ... parameters inherited from \code{XYGDataMapping}
-    #' @return A new \code{PKRatioDataMapping} object
+    #' @param ... parameters inherited from `XYGDataMapping`
+    #' @return A new `PKRatioDataMapping` object
     initialize = function(lloq = NULL,
-                              uncertainty = NULL,
-                              mdv = NULL,
-                              ...) {
+                          uncertainty = NULL,
+                          mdv = NULL,
+                          ...) {
       validateIsString(lloq, nullAllowed = TRUE)
       validateIsString(uncertainty, nullAllowed = TRUE)
       validateIsString(mdv, nullAllowed = TRUE)
@@ -35,11 +35,11 @@ ObservedDataMapping <- R6::R6Class(
       self$mdv <- mdv
     },
 
-    #' @description Check that \code{data} variables include map variables
+    #' @description Check that `data` variables include map variables
     #' @param data data.frame to check
-    #' @param metaData list containing information on \code{data}
-    #' @return A data.frame with map and \code{defaultAes} variables.
-    #' Dummy variable \code{defaultAes} is necessary to allow further modification of plots.
+    #' @param metaData list containing information on `data`
+    #' @return A data.frame with map and `defaultAes` variables.
+    #' Dummy variable `defaultAes` is necessary to allow further modification of plots.
     checkMapData = function(data, metaData = NULL) {
       validateIsOfType(data, "data.frame")
       validateIsIncluded(self$uncertainty, names(data), nullAllowed = TRUE)

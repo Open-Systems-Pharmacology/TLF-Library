@@ -15,7 +15,7 @@ Font <- R6::R6Class(
     fontFace = "plain",
     angle = 0,
 
-    #' @description Create a new \code{Font} object.
+    #' @description Create a new `Font` object.
     #' Default font properties are defined directly in the object field,
     #' so `NULL` input is allowed will lead to default properties.
     #' @param size numeric defining the size of font
@@ -23,12 +23,12 @@ Font <- R6::R6Class(
     #' @param fontFamily character defining the family of font
     #' @param fontFace character defining the face of font
     #' @param angle numeric defining the angle of font
-    #' @return A new \code{Font} object
+    #' @return A new `Font` object
     initialize = function(size = NULL,
-                              color = NULL,
-                              fontFamily = NULL,
-                              fontFace = NULL,
-                              angle = NULL) {
+                          color = NULL,
+                          fontFamily = NULL,
+                          fontFace = NULL,
+                          angle = NULL) {
       validateIsString(c(color, fontFamily, fontFace), nullAllowed = TRUE)
       validateIsNumeric(c(size, angle), nullAllowed = TRUE)
       eval(parseVariableToObject("self", c("size", "color", "fontFace", "fontFamily", "angle"), keepIfNull = TRUE))

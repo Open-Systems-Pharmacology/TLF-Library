@@ -1,19 +1,19 @@
 #' @title LabelConfiguration
-#' @description R6 class defining the configuration of the labels of a \code{ggplot} object
+#' @description R6 class defining the configuration of the labels of a `ggplot` object
 #' @export
 LabelConfiguration <- R6::R6Class(
   "LabelConfiguration",
   public = list(
-    #' @description Create a new \code{LabelConfiguration} object
-    #' @param title character or \code{Label} object defining title
-    #' @param subtitle character or \code{Label} object defining subtitle
-    #' @param xlabel character or \code{Label} object defining xlabel
-    #' @param ylabel character or \code{Label} object defining ylabel
-    #' @return A new \code{LabelConfiguration} object
+    #' @description Create a new `LabelConfiguration` object
+    #' @param title character or `Label` object defining title
+    #' @param subtitle character or `Label` object defining subtitle
+    #' @param xlabel character or `Label` object defining xlabel
+    #' @param ylabel character or `Label` object defining ylabel
+    #' @return A new `LabelConfiguration` object
     initialize = function(title = NULL,
-                              subtitle = NULL,
-                              xlabel = NULL,
-                              ylabel = NULL) {
+                          subtitle = NULL,
+                          xlabel = NULL,
+                          ylabel = NULL) {
       inputs <- c("title", "subtitle", "xlabel", "ylabel")
       validateExpressions <- parse(text = paste0("validateIsOfType(", inputs, ', c("Label", "character"), nullAllowed =TRUE)'))
       eval(validateExpressions)
@@ -29,9 +29,9 @@ LabelConfiguration <- R6::R6Class(
       eval(associateExpressions)
     },
 
-    #' @description Update labels of a \code{ggplot} object and their properties
-    #' @param plotObject a \code{ggplot} object
-    #' @return A \code{ggplot} object
+    #' @description Update labels of a `ggplot` object and their properties
+    #' @param plotObject a `ggplot` object
+    #' @return A `ggplot` object
     updatePlot = function(plotObject) {
       validateIsOfType(plotObject, "ggplot")
       # Update titles and axes labels
@@ -51,7 +51,7 @@ LabelConfiguration <- R6::R6Class(
     }
   ),
   active = list(
-    #' @field title \code{Label} object defining the title of the plot
+    #' @field title `Label` object defining the title of the plot
     title = function(value) {
       if (missing(value)) {
         return(private$.title)
@@ -60,7 +60,7 @@ LabelConfiguration <- R6::R6Class(
       private$.title <- asLabel(value)
       return(invisible())
     },
-    #' @field subtitle \code{Label} object defining the subtitle of the plot
+    #' @field subtitle `Label` object defining the subtitle of the plot
     subtitle = function(value) {
       if (missing(value)) {
         return(private$.subtitle)
@@ -69,7 +69,7 @@ LabelConfiguration <- R6::R6Class(
       private$.subtitle <- asLabel(value)
       return(invisible())
     },
-    #' @field xlabel \code{Label} object defining the xlabel of the plot
+    #' @field xlabel `Label` object defining the xlabel of the plot
     xlabel = function(value) {
       if (missing(value)) {
         return(private$.xlabel)
@@ -78,7 +78,7 @@ LabelConfiguration <- R6::R6Class(
       private$.xlabel <- asLabel(value)
       return(invisible())
     },
-    #' @field ylabel \code{Label} object defining the ylabel of the plot
+    #' @field ylabel `Label` object defining the ylabel of the plot
     ylabel = function(value) {
       if (missing(value)) {
         return(private$.ylabel)
