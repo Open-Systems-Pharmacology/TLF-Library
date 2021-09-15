@@ -31,11 +31,13 @@ Depends:
     R (>= 3.5)
 Encoding: UTF-8
 RoxygenNote: 7.1.2
+Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
     rmarkdown,
-    testthat (>= 2.1.0),
+    testthat (>= 3.0.0),
+    vdiffr (>= 1.0.0),
     gridExtra
 VignetteBuilder: knitr
 Collate: 

@@ -27,12 +27,12 @@ TornadoDataMapping <- R6::R6Class(
       super$initialize(x = x, y = y, ...)
 
       # The next lines aim at linking some variables in case they are not
-      # explicitely defined by users, this leads to nice plot legends in the end
+      # explicitly defined by users, this leads to nice plot legends in the end
 
-      # Link color to labels (y) if color is not explicitely mapped
+      # Link color to labels (y) if color is not explicitly mapped
       self$groupMapping$color$label <- self$groupMapping$color$label %||% y
       self$groupMapping$color$group <- self$groupMapping$color$group %||% y
-      # Link fill/shape to color if they are not explicitely mapped
+      # Link fill/shape to color if they are not explicitly mapped
       self$groupMapping$fill <- ifnotnull(
         self$groupMapping$fill$label,
         self$groupMapping$fill,

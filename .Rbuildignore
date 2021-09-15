@@ -7,3 +7,5 @@
 ^\.covrignore$
 ^doc$
 ^Meta$
+^scripts$
+^rakefile\.rb$
