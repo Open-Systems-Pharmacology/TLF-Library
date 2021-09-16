@@ -54,7 +54,6 @@ test_that("TornadoDataMapping features", {
 test_that("Regular tornado plots with their options work properly", {
   skip_on_cran()
   skip_if_not_installed("vdiffr")
-  skip_if_not(.Platform$OS.type == "windows")
   skip_if_not(getRversion() >= "4.1")
 
   # Direct Tornado Plot
