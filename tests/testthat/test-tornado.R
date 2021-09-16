@@ -51,57 +51,57 @@ test_that("TornadoDataMapping features", {
   expect_equal(dataMappingShape$groupMapping$shape$group, "quantile")
 })
 
-if (getRversion() >= "4.1") {
-  test_that("Regular tornado plots with their options work properly", {
-    skip_on_cran()
-    skip_if_not_installed("vdiffr")
+test_that("Regular tornado plots with their options work properly", {
+  skip_on_cran()
+  skip_if_not_installed("vdiffr")
+  skip_if_not(.Platform$OS.type == "windows")
+  skip_if_not(getRversion() >= "4.1")
 
-    # Direct Tornado Plot
-    set.seed(123)
-    defaultPlot <- plotTornado(x = tornadoMeanData$sensitivity, y = tornadoMeanData$path)
-    vdiffr::expect_doppelganger(
-      title = "defaultPlot",
-      fig = defaultPlot
-    )
+  # Direct Tornado Plot
+  set.seed(123)
+  defaultPlot <- plotTornado(x = tornadoMeanData$sensitivity, y = tornadoMeanData$path)
+  vdiffr::expect_doppelganger(
+    title = "defaultPlot",
+    fig = defaultPlot
+  )
 
-    # Options/Features
-    set.seed(123)
-    unsortedPlot <- plotTornado(x = tornadoMeanData$sensitivity, y = tornadoMeanData$path, sorted = FALSE)
-    vdiffr::expect_doppelganger(
-      title = "unsortedPlot",
-      fig = unsortedPlot
-    )
+  # Options/Features
+  set.seed(123)
+  unsortedPlot <- plotTornado(x = tornadoMeanData$sensitivity, y = tornadoMeanData$path, sorted = FALSE)
+  vdiffr::expect_doppelganger(
+    title = "unsortedPlot",
+    fig = unsortedPlot
+  )
 
-    set.seed(123)
-    colorPalettePlot <- plotTornado(x = tornadoMeanData$sensitivity, y = tornadoMeanData$path, colorPalette = "Dark2")
-    vdiffr::expect_doppelganger(
-      title = "colorPalettePlot",
-      fig = colorPalettePlot
-    )
+  set.seed(123)
+  colorPalettePlot <- plotTornado(x = tornadoMeanData$sensitivity, y = tornadoMeanData$path, colorPalette = "Dark2")
+  vdiffr::expect_doppelganger(
+    title = "colorPalettePlot",
+    fig = colorPalettePlot
+  )
 
-    set.seed(123)
-    pointPlot <- plotTornado(x = tornadoMeanData$sensitivity, y = tornadoMeanData$path, bar = FALSE)
-    vdiffr::expect_doppelganger(
-      title = "pointPlot",
-      fig = pointPlot
-    )
+  set.seed(123)
+  pointPlot <- plotTornado(x = tornadoMeanData$sensitivity, y = tornadoMeanData$path, bar = FALSE)
+  vdiffr::expect_doppelganger(
+    title = "pointPlot",
+    fig = pointPlot
+  )
 
-    # Higher level with dataMapping used in population sensitivity plots
-    # bar is an input option that can be directly provided to plotConfig input
-    set.seed(123)
-    popSensitivityPlot <- plotTornado(
-      data = tornadoPopData,
-      bar = FALSE,
-      dataMapping = TornadoDataMapping$new(
-        x = "sensitivity",
-        y = "path",
-        color = "quantile",
-        shape = "population"
-      )
+  # Higher level with dataMapping used in population sensitivity plots
+  # bar is an input option that can be directly provided to plotConfig input
+  set.seed(123)
+  popSensitivityPlot <- plotTornado(
+    data = tornadoPopData,
+    bar = FALSE,
+    dataMapping = TornadoDataMapping$new(
+      x = "sensitivity",
+      y = "path",
+      color = "quantile",
+      shape = "population"
     )
-    vdiffr::expect_doppelganger(
-      title = "popSensitivityPlot",
-      fig = popSensitivityPlot
-    )
-  })
-}
+  )
+  vdiffr::expect_doppelganger(
+    title = "popSensitivityPlot",
+    fig = popSensitivityPlot
+  )
+})

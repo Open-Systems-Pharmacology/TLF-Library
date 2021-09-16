@@ -18,6 +18,7 @@ environment:
   - R_VERSION: devel
     GCC_PATH: mingw_64
   - R_VERSION: release
+  - R_VERSION: oldrel
   R_ARCH: x64
   KEEP_VIGNETTES: true
   NOT_CRAN: true
