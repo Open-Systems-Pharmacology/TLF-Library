@@ -450,7 +450,7 @@ Theme <- R6::R6Class(
     save = function(jsonFile) {
       validateIsString(jsonFile)
       themeContent <- list(
-        font = private$.fonts$toJson(),
+        fonts = private$.fonts$toJson(),
         background = private$.background$toJson(),
         aestheticMaps = private$.aestheticMaps$toJson(),
         plotConfigurations = private$.plotConfigurations$toJson()
