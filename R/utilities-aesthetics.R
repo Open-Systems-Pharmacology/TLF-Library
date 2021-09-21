@@ -26,23 +26,51 @@ Linetypes <- enum(c(
 #' @description List of some `ggplot2` shapes
 #' @export
 Shapes <- list(
-  "square" = 15,
-  "dot" = 20,
-  "circle" = 19,
-  "diamond" = 18,
-  "star" = 8,
-  "plus" = 3,
-  "cross" = 4,
-  "triangle" = 17,
-  "blank" = 32
+  "circle" = "circle",
+  "square" = 'square',
+  "diamond" = "diamond",
+  "triangle" = "triangle",
+  "triangleDown" = "triangle down filled",
+  "cross" = "cross",
+  "plus" = "plus",
+  "asterisk" = "asterisk",
+  "blank" = ' ',
+  "dot" = "bullet",
+  "hollowCircle" = "circle open",
+  "hollowSquare" = "square open",
+  "hollowDiamond" = "diamond open",
+  "hollowTriangle" = "triangle open",
+  "hollowTriangleDown" = "triangle down open",
+  "pentagram" = "\u2605",
+  "hollowPentagram" = "\u2606",
+  "cardsDiamond" = "\u2666",
+  "cardsHeart" = "\u2665",
+  "cardsSpade" = "\u2660",
+  "cardsClover" = "\u2663",
+  "cardsHollowDiamond" = "\u2662",
+  "cardsHollowHeart" = "\u2661",
+  "cardsHollowSpade" = "\u2664",
+  "cardsHollowClover" = "\u2667",
+  "skull" = "\u2620",
+  "hazard" = "\u2622",
+  "male" = "\u2642",
+  "female" = "\u2640",
+  "sun" = "\u2600",
+  "cloud" = "\u2601",
+  "smiley" = "\u263a",
+  "musicKey" = "\u266a",
+  "hollowFlag" = "\u263a",
+  "arrowLeft" = "\u2190",
+  "arrowRight" = "\u2193",
+  "arrowUp" = "\u2191",
+  "arrowDown" = "\u2193"
 )
 
 asPlotShape <- function(shapes) {
   ggplotShapes <- NULL
   for (shape in shapes) {
-    ggplotShape <- shape
-    if (isOfType(shape, "character")) {
-      validateIsIncluded(shape, names(Shapes))
+    ggplotShape <- as.character(shape)
+    if(isIncluded(ggplotShape, names(Shapes))){
       ggplotShape <- Shapes[[shape]]
     }
     ggplotShapes <- c(ggplotShapes, ggplotShape)
@@ -94,6 +122,9 @@ getAestheticValues <- function(n, selectionKey = NA, position = 0, aesthetic = "
   validateIsIncluded(aesthetic, AestheticProperties)
   # Load aesthetics from current `Theme` object
   map <- tlfEnv$currentTheme$aestheticMaps[[aesthetic]]
+  if (isIncluded(aesthetic, AestheticProperties$shape)) {
+    map <- asPlotShape(map)
+  }
   # next is necessary as `next` otherwise R crashes
   if (isIncluded(selectionKey, AestheticSelectionKeys$`next`)) {
     return(getNextAestheticValues(n, position, map))

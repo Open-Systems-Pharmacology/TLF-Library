@@ -234,7 +234,7 @@ ThemeAestheticMaps <- R6::R6Class(
       # Default aesthetic maps
       self$color <- color %||% ColorMaps$default
       self$fill <- fill %||% ColorMaps$default
-      self$shape <- shape %||% as.numeric(Shapes)
+      self$shape <- shape %||% names(Shapes)
       self$linetype <- linetype %||% as.character(Linetypes)
       self$size <- size %||% seq(1, 5)
       self$alpha <- alpha %||% c(0.75, 0.5, 0.25)
