@@ -16,7 +16,7 @@ ObservedDataMapping <- R6::R6Class(
     #' @field ymax mapping error bars around scatter points
     ymax = "ymax",
 
-    #' @description Create a new `PKRatioDataMapping` object
+    #' @description Create a new `ObservedDataMapping` object
     #' @param lloq mapping lower limit of quantitation variable
     #' @param uncertainty mapping error bars around scatter points
     #' @param mdv mapping missing dependent variable

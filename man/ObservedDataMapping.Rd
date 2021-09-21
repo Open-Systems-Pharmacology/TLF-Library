@@ -42,7 +42,7 @@ R6 class for mapping \code{x}, \code{y}, of observed data for a time profile plo
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create a new \code{PKRatioDataMapping} object
+Create a new \code{ObservedDataMapping} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ObservedDataMapping$new(lloq = NULL, uncertainty = NULL, mdv = NULL, ...)}\if{html}{\out{</div>}}
 }
