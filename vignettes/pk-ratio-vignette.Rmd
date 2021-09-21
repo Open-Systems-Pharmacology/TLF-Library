@@ -160,13 +160,13 @@ plotPKRatio(data = pkRatioData,
 The last examples uses another feature available in the `groupMapping` class. The class can be initilized using a `data.frame` where the last column of the data.frame will be used to split the data. In the following example, the data.frame is the following:
 
 ```{r, echo=FALSE, results='asis'}
-groupDataFrame <- data.frame(AgeBin = c("Peds", "Adults", "Peds", "Adults", "Peds", "Adults", "Peds", "Adults"), 
-                             Country = c("Canada", "Canada", "Germany", "Germany", "Canada", "Canada", "Germany", "Germany"),
-                             Sex = c("Male", "Male", "Male", "Male", "Female", "Female", "Female", "Female"),
-                             Group = c("Young Canadian Males", "Old Canadian Males",
-                                       "Young German Males", "Old German Males",
-                                       "Young Canadian Females", "Old Canadian Females",
-                                       "Young German Females", "Old German Females"))
+groupDataFrame <- data.frame(
+  AgeBin = rep(c("Peds", "Adults"), 6),
+  Country = rep(rep(c("Canada", "Germany", "France"), each = 2), 2),
+  Sex = rep(c("Male", "Female"), each = 6),
+  Group = paste(rep(c("Young", "Old"), 6), rep(rep(c("Canadian", "German", "French"), each = 2), 2), rep(c("Males", "Females"), each = 6))
+)
+
 knitr::kable(groupDataFrame)
 ```
 
@@ -177,7 +177,7 @@ dataMappingDF <- PKRatioDataMapping$new(x = "Age",
                                         y = "Ratio",
                                         color = groupDataFrame,
                                         shape = groupDataFrame)
-plotPKRatio(data = pkRatioData, 
+plotPKRatio(data = pkRatioData[!(pkRatioData$Country %in% "France"), ], 
             dataMapping = dataMappingDF)
 ```
 
