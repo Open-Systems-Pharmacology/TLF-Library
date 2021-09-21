@@ -234,7 +234,7 @@ ThemeAestheticMaps <- R6::R6Class(
       # Default aesthetic maps
       self$color <- color %||% ColorMaps$default
       self$fill <- fill %||% ColorMaps$default
-      self$shape <- shape %||% as.numeric(Shapes)
+      self$shape <- shape %||% names(Shapes)
       self$linetype <- linetype %||% as.character(Linetypes)
       self$size <- size %||% seq(1, 5)
       self$alpha <- alpha %||% c(0.75, 0.5, 0.25)
@@ -450,7 +450,7 @@ Theme <- R6::R6Class(
     save = function(jsonFile) {
       validateIsString(jsonFile)
       themeContent <- list(
-        font = private$.fonts$toJson(),
+        fonts = private$.fonts$toJson(),
         background = private$.background$toJson(),
         aestheticMaps = private$.aestheticMaps$toJson(),
         plotConfigurations = private$.plotConfigurations$toJson()
@@ -527,6 +527,12 @@ loadThemeFromJson <- function(jsonFile) {
     }
     propertyFields <- names(themeContent[[themeProperty]])
     for (propertyField in propertyFields) {
+      if(isIncluded(themeProperty, "aestheticMaps")){
+        propertyExpression <- parse(text = paste0(
+          themeProperty, "$", propertyField, " <- themeContent$", themeProperty, "$", propertyField
+        ))
+        eval(propertyExpression)
+      }
       inputs <- names(themeContent[[themeProperty]][[propertyField]])
       if (isOfLength(inputs, 0)) {
         next
@@ -543,6 +549,7 @@ loadThemeFromJson <- function(jsonFile) {
     background$watermark <- themeContent$background$watermark
     background$legendPosition <- themeContent$background$legendPosition
   }
+  
   return(Theme$new(
     fonts = fonts,
     background = background,
