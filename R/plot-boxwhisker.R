@@ -48,6 +48,8 @@ plotBoxWhisker <- function(data,
   if (plotConfiguration$outliers) {
     plotObject <- addOutliers(data, metaData, dataMapping, plotConfiguration, plotObject)
   }
+  plotObject <- setLegendPosition(plotObject)
+  plotObject <- setLegendFont(plotObject)
   try(suppressMessages(plotObject <- setXAxis(plotObject)))
   try(suppressMessages(plotObject <- setYAxis(plotObject)))
   return(plotObject)
@@ -158,7 +160,5 @@ addOutliers <- function(data, metaData, dataMapping, plotConfiguration, plotObje
       na.rm = TRUE,
       position = position_dodge(width = 0.9)
     )
-  plotObject <- setLegendPosition(plotObject)
-  plotObject <- setLegendFont(plotObject)
   return(plotObject)
 }
