@@ -155,6 +155,8 @@ plotTornado <- function(data = NULL,
         )
     ))
   }
+  plotObject <- setLegendPosition(plotObject)
+  plotObject <- setLegendFont(plotObject)
   try(suppressMessages(plotObject <- setXAxis(plotObject)))
   try(suppressMessages(plotObject <- setYAxis(plotObject)))
   return(plotObject)
