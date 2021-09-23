@@ -118,5 +118,7 @@ plotHistogram <- function(data,
     plotObject <- plotObject + ggplot2::guides(fill = "none")
   }
   # dataMapping$smoother
+  plotObject <- setLegendPosition(plotObject)
+  plotObject <- setLegendFont(plotObject)
   return(plotObject)
 }

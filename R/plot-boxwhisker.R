@@ -158,5 +158,7 @@ addOutliers <- function(data, metaData, dataMapping, plotConfiguration, plotObje
       na.rm = TRUE,
       position = position_dodge(width = 0.9)
     )
+  plotObject <- setLegendPosition(plotObject)
+  plotObject <- setLegendFont(plotObject)
   return(plotObject)
 }
