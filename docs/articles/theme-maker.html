@@ -118,34 +118,34 @@
 <h1 class="hasAnchor">
 <a href="#how-to-start" class="anchor" aria-hidden="true"></a>2. How to start</h1>
 <p>Use the function <code><a href="../reference/runThemeMaker.html">runThemeMaker()</a></code> to start the theme-maker User Interface. The function will load <code>shiny</code> required for the UI and set the current theme defined by the UI.</p>
-<p><img src="theme-maker/start-theme-maker.PNG" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="../man/figures/theme-maker/start-theme-maker.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div id="how-to-update-theme-properties" class="section level1">
 <h1 class="hasAnchor">
 <a href="#how-to-update-theme-properties" class="anchor" aria-hidden="true"></a>3. How to update theme properties</h1>
 <p>On the upper left side of the UI, a navigation bar indicates the main properties that can be updated in the theme: <strong>Labels</strong>, <strong>Background</strong>, <strong>Axes</strong>, <strong>Legend</strong>, <strong>Aesthetic Maps</strong> and <strong>Plot Configurations</strong>.</p>
 <p>In the <strong>Labels</strong> navigation bar (already available when starting the UI), font properties of the most common labels are available. The font properties of ticks and legend are available in the properties <strong>Axes</strong> and <strong>Legend</strong>. Note that <em>Color</em> properties use a predefined list of available colors as illustrated in the figure below, however, users can type and add their own colors (e.g. hex colors).</p>
-<p><img src="theme-maker/labels.PNG" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="../man/figures/theme-maker/labels.png" width="100%" style="display: block; margin: auto;"></p>
 <p>Properties of the watermark are available in the <strong>Labels</strong> navigation bar, and include the field <em>Content</em> which allows to define the content of the watermark (in this example the content is <em>template</em>).</p>
 <p>The <strong>Background</strong> navigation bar includes the properties of the colors, sizes, and linetypes for each background elements (illustrated below).</p>
-<p><img src="theme-maker/background.PNG" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="../man/figures/theme-maker/background.png" width="100%" style="display: block; margin: auto;"></p>
 <p>The <strong>Axes</strong> navigation bar includes the properties of the axes lines (colors, sizes and linetypes) as well as the font properties of their ticks (illustrated below).</p>
-<p><img src="theme-maker/axes.PNG" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="../man/figures/theme-maker/axes.png" width="100%" style="display: block; margin: auto;"></p>
 <p>The <strong>Legend</strong> navigation bar includes the properties of the position, fonts, and background of the legend (illustrated below).</p>
-<p><img src="theme-maker/legend.PNG" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="../man/figures/theme-maker/legend.png" width="100%" style="display: block; margin: auto;"></p>
 <p>The <strong>Aesthetic Maps</strong> navigation bar defines the maps of aesthetic properties (color, fill, linetype, shape, size and alpha). Such maps can be used by <code>PlotConfiguration</code> objects to define how they will plot <strong>points</strong>, <strong>lines</strong>, <strong>ribbons</strong>, and <strong>errorbars</strong>. Consequently, these properties are paired with the <strong>Plot Configurations</strong> navigation bar.</p>
 <p>The <strong>Plot Configurations</strong> navigation bar defines the default aesthetic selection properties for each type of <code>PlotConfiguration</code> objects: it defines how to plot <strong>points</strong>, <strong>lines</strong>, <strong>ribbons</strong>, and <strong>errorbars</strong> for each type of atom or molecule plot available in the <code>tlf</code> package.</p>
 <p>To illustrate these properties, the example below will update these properties for a PK ratio plots</p>
 <p>First, select <em>plotPKRatio</em> in the list of sample plots to check the current features of the theme. The list of sample plots available in the UI corresponds to all the atom and molecule plot functions defined in the <code>tlf</code> package.</p>
-<p><img src="theme-maker/sample-plots.PNG" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="../man/figures/theme-maker/sample-plots.png" width="100%" style="display: block; margin: auto;"></p>
 <p>Then, the <strong>Aesthetic Maps</strong> indicates for each aesthetic property pairs of rank-value for the aesthetic map. The current color map defines <em>30078D7</em> (blue color).</p>
-<p><img src="theme-maker/aes-map.PNG" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="../man/figures/theme-maker/aes-map.png" width="100%" style="display: block; margin: auto;"></p>
 <p>The values can be changed as illustrated below where color ranked 1 was set as <em>salmon</em> and color ranked 2 was set as <em>dodgerblue</em>.</p>
-<p><img src="theme-maker/aes-map-set.PNG" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="../man/figures/theme-maker/aes-map-set.png" width="100%" style="display: block; margin: auto;"></p>
 <p>On the <strong>Plot Configurations</strong> navigation bar, select the <em>plotPKRatio</em> (figure below). Three selection keys are available for this plot as it includes points, lines and optionally error bars. The current selection key is <strong>reset</strong> which resets and uses in sequence the values of the color map.</p>
-<p><img src="theme-maker/pk-ratio-color.PNG" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="../man/figures/theme-maker/pk-ratio-color.png" width="100%" style="display: block; margin: auto;"></p>
 <p>The example below updates how the lines are drawn in the PK ratio plots. Currently, the selection key is defined as <strong>Other</strong> and the corresponding value has <em>longdash</em> which is translated as the PK ratio lines are all plotted as long dashes:</p>
-<p><img src="theme-maker/pk-ratio-linetype.PNG" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="../man/figures/theme-maker/pk-ratio-linetype.png" width="100%" style="display: block; margin: auto;"></p>
 <p>To update how lines are drawn in PK ratio plots, you can use a default linetype in the selection key <strong>Other</strong> or use the linetype map defined in the <strong>Aesthetic Maps</strong> navigation bar. Different keys are available when using the map:</p>
 <ul>
 <li>
@@ -159,18 +159,18 @@
 <li>
 <strong>other</strong> allows you to specify a user defined lineytpe(s) not related to the map</li>
 </ul>
-<p><img src="theme-maker/pk-ratio-selection-key.PNG" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="../man/figures/theme-maker/pk-ratio-selection-key.png" width="100%" style="display: block; margin: auto;"></p>
 <p>By selecting <em>next</em>, the PK ratio plot uses the next value in the linetype map every time a line is added. In this example, this leads to draw the ratio of 1 as a solid line, the ratio of 1.5 as a longdash line and the ratio of 2 as a dotted line.</p>
-<p><img src="theme-maker/pk-ratio-linetype-next.PNG" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="../man/figures/theme-maker/pk-ratio-linetype-next.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div id="how-to-export-and-re-use-a-theme" class="section level1">
 <h1 class="hasAnchor">
 <a href="#how-to-export-and-re-use-a-theme" class="anchor" aria-hidden="true"></a>4. How to export and re-use a theme</h1>
 <p>The theme-maker UI allows an easy way to save your theme properties as a json file. This file can be reloaded when needed using the function <code>loadThemeFromJson(jsonFile)</code> and can be used as the current theme with the function <code>useTheme(theme)</code>.</p>
 <p>To save your current theme using the UI, click on <strong>Download theme .json</strong> as illustrated in the figure below and indicate the location/name for saving the theme file. Please remember to specify the <strong>.json</strong> file extension while saving the theme to a file.</p>
-<p><img src="theme-maker/save-theme.PNG" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="../man/figures/theme-maker/save-theme.png" width="100%" style="display: block; margin: auto;"></p>
 <p>The UI also allows you to load a previously saved theme in <code>.json</code> file using the button <strong>Load a Theme from Json</strong> as illustrated in the figure below.</p>
-<p><img src="theme-maker/use-saved-theme.PNG" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="../man/figures/theme-maker/use-saved-theme.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
   </div>
 
