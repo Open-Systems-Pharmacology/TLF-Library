@@ -44,6 +44,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -55,9 +57,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -71,19 +79,13 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tlf</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -146,57 +148,49 @@
 
     <div id="tlf-120" class="section level1">
 <h1 class="page-header" data-toc-text="1.2.0">
-<a href="#tlf-120" class="anchor"></a>tlf 1.2.0</h1>
+<a href="#tlf-120" class="anchor" aria-hidden="true"></a>tlf 1.2.0</h1>
 <div id="new-features" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features" class="anchor"></a>New features</h2>
-<ul>
-<li>The concept of <code>Theme</code> objects was updated and themes can be loaded and saved through json files.</li>
+<a href="#new-features" class="anchor" aria-hidden="true"></a>New features</h2>
+<ul><li>The concept of <code>Theme</code> objects was updated and themes can be loaded and saved through json files.</li>
 <li>New plot, <code>plotTornado</code>, added to available plots</li>
 <li>Update of <code>plotTimeProfile</code> splitting input data to pair <em>data</em> with <em>observedData</em>
 </li>
 <li>Creation of two shiny apps:
-<ul>
-<li>
+<ul><li>
 <code><a href="../reference/runThemeMaker.html">runThemeMaker()</a></code>: create and save <code>Theme</code> objects</li>
 <li>
 <code><a href="../reference/runPlotMaker.html">runPlotMaker()</a></code>: import your data, create and edit their plot</li>
-</ul>
-</li>
-</ul>
-</div>
+</ul></li>
+</ul></div>
 <div id="minor-improvements-and-bug-fixes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-improvements-and-bug-fixes" class="anchor"></a>Minor improvements and bug fixes</h2>
-<ul>
-<li>Creation of enum objects providing shortkeys for plot properties: <code>Shapes</code>, <code>Linetypes</code>, <code>Scaling</code>, <code>LegendPositions</code>
+<a href="#minor-improvements-and-bug-fixes" class="anchor" aria-hidden="true"></a>Minor improvements and bug fixes</h2>
+<ul><li>Creation of enum objects providing shortkeys for plot properties: <code>Shapes</code>, <code>Linetypes</code>, <code>Scaling</code>, <code>LegendPositions</code>
 </li>
-</ul>
-</div>
+<li>
+<a href="https://github.com/open-systems-pharmacology/tlf-library" class="external-link">tlf</a> now encourages using <a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a> package to create a grid of plots instead of <code>{gridExtra}</code>.</li>
+</ul></div>
 </div>
     <div id="tlf-110" class="section level1">
 <h1 class="page-header" data-toc-text="1.1.0">
-<a href="#tlf-110" class="anchor"></a>tlf 1.1.0</h1>
+<a href="#tlf-110" class="anchor" aria-hidden="true"></a>tlf 1.1.0</h1>
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
+<a href="#overview" class="anchor" aria-hidden="true"></a>Overview</h2>
 <p>The <code>tlf</code> library is an R package compatible with the <code>ospsuite</code> package. <code>tlf</code> provides an environment to create standardized plots and tables out of output extracted from the <code>ospsuite</code>. The following release notes aim at presenting the features of the <code>tlf</code> library alpha release and how to report feedback.</p>
 </div>
 <div id="new-features-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-1" class="anchor"></a>New features</h2>
-<ul>
-<li>New plots available:
-<ul>
-<li>PK Ratio Plots: Users can plot PK Ratios associated with the predefined ratio limits through the function <code>plotPKRatio</code>. They can also get the measure of how many of these ratios were in the predefined ratio limits through the function <code>getPKRatioMeasure</code>.</li>
+<a href="#new-features-1" class="anchor" aria-hidden="true"></a>New features</h2>
+<ul><li>New plots available:
+<ul><li>PK Ratio Plots: Users can plot PK Ratios associated with the predefined ratio limits through the function <code>plotPKRatio</code>. They can also get the measure of how many of these ratios were in the predefined ratio limits through the function <code>getPKRatioMeasure</code>.</li>
 <li>Users can plot time profiles through the function <code>plotTimeProfile</code>.</li>
 <li>Histograms: Users can plot histograms through the function <code>plotHistogram</code>.</li>
 <li>Box Whiskers: Users can plot box whiskers through the function <code>plotBoxWhisker</code>.</li>
-</ul>
-</li>
+</ul></li>
 <li>Plot Configuration: Users can create and use standardized plots by setting their configuration using <code>Theme</code> and <code>PlotConfiguration</code>. These configurations allows easy definitions of labels, background and axes properties.</li>
-</ul>
-</div>
+</ul></div>
 </div>
   </div>
 
@@ -211,11 +205,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael Sevestre, Pierre Chelle, Abdullah Hamadeh.</p>
+  <p><p>Developed by Michael Sevestre, Pierre Chelle, Abdullah Hamadeh.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p></p>
 </div>
 
       </footer>
@@ -223,6 +217,8 @@
 
   
 
+
+  
 
   </body>
 </html>

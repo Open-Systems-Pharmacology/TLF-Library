@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tlf</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -82,7 +78,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/open-systems-pharmacology/tlf-library/">
+  <a href="https://github.com/open-systems-pharmacology/tlf-library/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -97,14 +93,14 @@
 
       
 
-      </header><script src="theme-maker_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>theme-maker</h1>
-                        <h4 class="author">OSPSuiteR 2021</h4>
+                        <h4 data-toc-skip class="author">OSPSuiteR 2021</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/tlf-library/blob/master/vignettes/theme-maker.Rmd"><code>vignettes/theme-maker.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/tlf-library/blob/master/vignettes/theme-maker.Rmd" class="external-link"><code>vignettes/theme-maker.Rmd</code></a></small>
       <div class="hidden name"><code>theme-maker.Rmd</code></div>
 
     </div>
@@ -114,19 +110,19 @@
 <pre><code>#&gt; Loading required package: tlf</code></pre>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>1. Introduction</h1>
+<a href="#introduction" class="anchor" aria-hidden="true"></a>1. Introduction</h1>
 <p>The aim of this vignette is to document how to create, update, and save <code>Theme</code> objects using the <code>tlf</code> user interface (UI) called by <strong><code><a href="../reference/runThemeMaker.html">runThemeMaker()</a></code></strong>.</p>
 <p><code>Theme</code> objects define the default values and methods of <code>PlotConfiguration</code> objects, which themselves describe the properties of a plot (such as colors, fonts, etc.).</p>
 </div>
 <div id="how-to-start" class="section level1">
 <h1 class="hasAnchor">
-<a href="#how-to-start" class="anchor"></a>2. How to start</h1>
+<a href="#how-to-start" class="anchor" aria-hidden="true"></a>2. How to start</h1>
 <p>Use the function <code><a href="../reference/runThemeMaker.html">runThemeMaker()</a></code> to start the theme-maker User Interface. The function will load <code>shiny</code> required for the UI and set the current theme defined by the UI.</p>
 <p><img src="theme-maker/start-theme-maker.PNG" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div id="how-to-update-theme-properties" class="section level1">
 <h1 class="hasAnchor">
-<a href="#how-to-update-theme-properties" class="anchor"></a>3. How to update theme properties</h1>
+<a href="#how-to-update-theme-properties" class="anchor" aria-hidden="true"></a>3. How to update theme properties</h1>
 <p>On the upper left side of the UI, a navigation bar indicates the main properties that can be updated in the theme: <strong>Labels</strong>, <strong>Background</strong>, <strong>Axes</strong>, <strong>Legend</strong>, <strong>Aesthetic Maps</strong> and <strong>Plot Configurations</strong>.</p>
 <p>In the <strong>Labels</strong> navigation bar (already available when starting the UI), font properties of the most common labels are available. The font properties of ticks and legend are available in the properties <strong>Axes</strong> and <strong>Legend</strong>. Note that <em>Color</em> properties use a predefined list of available colors as illustrated in the figure below, however, users can type and add their own colors (e.g. hex colors).</p>
 <p><img src="theme-maker/labels.PNG" width="100%" style="display: block; margin: auto;"></p>
@@ -169,8 +165,8 @@
 </div>
 <div id="how-to-export-and-re-use-a-theme" class="section level1">
 <h1 class="hasAnchor">
-<a href="#how-to-export-and-re-use-a-theme" class="anchor"></a>4. How to export and re-use a theme</h1>
-<p>The theme-maker UI allows an easy way to save your theme properties as a json file. This file can be reloaded when needed using the function <code><a href="../reference/loadThemeFromJson.html">loadThemeFromJson(jsonFile)</a></code> and can be used as the current theme with the function <code><a href="../reference/useTheme.html">useTheme(theme)</a></code>.</p>
+<a href="#how-to-export-and-re-use-a-theme" class="anchor" aria-hidden="true"></a>4. How to export and re-use a theme</h1>
+<p>The theme-maker UI allows an easy way to save your theme properties as a json file. This file can be reloaded when needed using the function <code>loadThemeFromJson(jsonFile)</code> and can be used as the current theme with the function <code>useTheme(theme)</code>.</p>
 <p>To save your current theme using the UI, click on <strong>Download theme .json</strong> as illustrated in the figure below and indicate the location/name for saving the theme file. Please remember to specify the <strong>.json</strong> file extension while saving the theme to a file.</p>
 <p><img src="theme-maker/save-theme.PNG" width="100%" style="display: block; margin: auto;"></p>
 <p>The UI also allows you to load a previously saved theme in <code>.json</code> file using the button <strong>Load a Theme from Json</strong> as illustrated in the figure below.</p>
@@ -189,11 +185,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Sevestre, Pierre Chelle, Abdullah Hamadeh.</p>
+  <p></p>
+<p>Developed by Michael Sevestre, Pierre Chelle, Abdullah Hamadeh.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
@@ -201,6 +199,8 @@
 
   
 
+
+  
 
   </body>
 </html>

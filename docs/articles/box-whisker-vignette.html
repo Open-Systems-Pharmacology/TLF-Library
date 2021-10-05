@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tlf</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -82,7 +78,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/open-systems-pharmacology/tlf-library/">
+  <a href="https://github.com/open-systems-pharmacology/tlf-library/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -97,14 +93,14 @@
 
       
 
-      </header><script src="box-whisker-vignette_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Box-whisker plots</h1>
-                        <h4 class="author">OSPSuiteR 2021</h4>
+                        <h4 data-toc-skip class="author">OSPSuiteR 2021</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/tlf-library/blob/master/vignettes/box-whisker-vignette.Rmd"><code>vignettes/box-whisker-vignette.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/tlf-library/blob/master/vignettes/box-whisker-vignette.Rmd" class="external-link"><code>vignettes/box-whisker-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>box-whisker-vignette.Rmd</code></div>
 
     </div>
@@ -112,25 +108,25 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/tlf-library">tlf</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/tlf-library" class="external-link">tlf</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: tlf</span></code></pre></div>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>1. Introduction</h1>
+<a href="#introduction" class="anchor" aria-hidden="true"></a>1. Introduction</h1>
 <p>The following vignette aims at documenting and illustrating workflows for producing box-and-whisker plots using the <code>tlf</code>-Library.</p>
 <p>This vignette focuses boxplot examples. Detailed documentation on typical <code>tlf</code> workflow, use of <code>AgregationSummary</code>, <code>DataMapping</code>, <code>PlotConfiguration</code> and <code>Theme</code> can be found in <code><a href="../articles/tlf-workflow.html">vignette("tlf-workflow")</a></code>.</p>
 </div>
 <div id="definition-of-the-boxplot-fonctions-and-classes" class="section level1">
 <h1 class="hasAnchor">
-<a href="#definition-of-the-boxplot-fonctions-and-classes" class="anchor"></a>2. Definition of the boxplot fonctions and classes</h1>
+<a href="#definition-of-the-boxplot-fonctions-and-classes" class="anchor" aria-hidden="true"></a>2. Definition of the boxplot fonctions and classes</h1>
 <div id="the-plotboxwhisker-function" class="section level2">
 <h2 class="hasAnchor">
-<a href="#the-plotboxwhisker-function" class="anchor"></a>2.1. The <code>plotBoxWhisker</code> function</h2>
-<p>The function for plotting box-whiskers is: <code>plotBoxWhisker</code>. Basic documentation of the function can be found using: <code><a href="../reference/plotBoxWhisker.html">?plotBoxWhisker</a></code>. The typical usage of this function is: <code><a href="../reference/plotBoxWhisker.html">plotBoxWhisker(data, metaData = NULL, dataMapping = NULL, plotConfiguration = NULL)</a></code>. The output of the function is a <code>ggplot</code> object.</p>
+<a href="#the-plotboxwhisker-function" class="anchor" aria-hidden="true"></a>2.1. The <code>plotBoxWhisker</code> function</h2>
+<p>The function for plotting box-whiskers is: <code>plotBoxWhisker</code>. Basic documentation of the function can be found using: <code><a href="../reference/plotBoxWhisker.html">?plotBoxWhisker</a></code>. The typical usage of this function is: <code>plotBoxWhisker(data, metaData = NULL, dataMapping = NULL, plotConfiguration = NULL)</code>. The output of the function is a <code>ggplot</code> object.</p>
 </div>
 <div id="the-boxwhiskerdatamapping-class" class="section level2">
 <h2 class="hasAnchor">
-<a href="#the-boxwhiskerdatamapping-class" class="anchor"></a>2.2. The <code>BoxWhiskerDataMapping</code> class</h2>
+<a href="#the-boxwhiskerdatamapping-class" class="anchor" aria-hidden="true"></a>2.2. The <code>BoxWhiskerDataMapping</code> class</h2>
 <p>The <code>dataMapping</code> from <code>plotBoxWhisker</code> requires a <code>BoxWhiskerDataMapping</code> class. This class can simply be initialized by <code>BoxWhiskerDataMapping$new()</code>, needing <code>y</code> variable name input only. For boxplots with multiple boxes, <code>x</code> variable name and/or <code>fill</code> groupMapping can be used. The <code>x</code> variable is expected to be factor levels. Beside these common input, it is possible to overwrite the aggregation functions that plot the edges of the box, the whiskers and the oultying data.</p>
 <ul>
 <li>For the box edges <code>lower</code>, <code>middle</code>, and <code>upper</code> correspond to the first quartile, median, and the third quartile (25th, 50th, and 75th percentiles), respectively.</li>
@@ -142,21 +138,21 @@
 </div>
 <div id="examples" class="section level1">
 <h1 class="hasAnchor">
-<a href="#examples" class="anchor"></a>3. Examples</h1>
+<a href="#examples" class="anchor" aria-hidden="true"></a>3. Examples</h1>
 <div id="data" class="section level2">
 <h2 class="hasAnchor">
-<a href="#data" class="anchor"></a>3.1. Data</h2>
+<a href="#data" class="anchor" aria-hidden="true"></a>3.1. Data</h2>
 <p>To illustrate the workflow to produce boxplots, let’s use the <code>pkRatioDataExample.RData</code> example data from the <code>extdata</code> folder.</p>
 <p>It includes the dataset <code>pkRatioData</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load example</span>
-<span class="va">pkRatioData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"test-data.csv"</span>, package <span class="op">=</span> <span class="st">"tlf"</span><span class="op">)</span>, 
+<span class="va">pkRatioData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"test-data.csv"</span>, package <span class="op">=</span> <span class="st">"tlf"</span><span class="op">)</span>, 
   stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span>
 
 <span class="co"># pkRatioData</span>
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">pkRatioData</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pkRatioData</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">ID</th>
@@ -241,19 +237,19 @@
 <p>We will also need to prepare a corresponding metaData <code>pkRatioMetaData</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load example</span>
-<span class="va">pkRatioMetaData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>Age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>dimension <span class="op">=</span> <span class="st">"Age"</span>,
+<span class="va">pkRatioMetaData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dimension <span class="op">=</span> <span class="st">"Age"</span>,
                                    unit <span class="op">=</span> <span class="st">"yrs"</span><span class="op">)</span>,
-                        Obs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>dimension <span class="op">=</span> <span class="st">"Clearance"</span>,
+                        Obs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dimension <span class="op">=</span> <span class="st">"Clearance"</span>,
                                    unit <span class="op">=</span> <span class="st">"dL/h/kg"</span><span class="op">)</span>,
-                        Pred <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>dimension <span class="op">=</span> <span class="st">"Clearance"</span>,
+                        Pred <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dimension <span class="op">=</span> <span class="st">"Clearance"</span>,
                                     unit <span class="op">=</span> <span class="st">"dL/h/kg"</span><span class="op">)</span>,
-                        Ratio <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>dimension <span class="op">=</span> <span class="st">"Ratio"</span>,
+                        Ratio <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dimension <span class="op">=</span> <span class="st">"Ratio"</span>,
                                      unit <span class="op">=</span> <span class="st">""</span><span class="op">)</span>
                         <span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>Variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Age"</span>, <span class="st">"Obs"</span>, <span class="st">"Pred"</span>, <span class="st">"Ratio"</span><span class="op">)</span>,
-                        Dimension <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Age"</span>, <span class="st">"Clearance"</span>, <span class="st">"Clearance"</span>, <span class="st">"Ratio"</span><span class="op">)</span>,
-                        Unit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"yrs"</span>, <span class="st">"dL/h/kg"</span>, <span class="st">"dL/h/kg"</span>, <span class="st">""</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Age"</span>, <span class="st">"Obs"</span>, <span class="st">"Pred"</span>, <span class="st">"Ratio"</span><span class="op">)</span>,
+                        Dimension <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Age"</span>, <span class="st">"Clearance"</span>, <span class="st">"Clearance"</span>, <span class="st">"Ratio"</span><span class="op">)</span>,
+                        Unit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"yrs"</span>, <span class="st">"dL/h/kg"</span>, <span class="st">"dL/h/kg"</span>, <span class="st">""</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Variable</th>
@@ -286,7 +282,7 @@
 </div>
 <div id="minimal-example" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minimal-example" class="anchor"></a>3.2. Minimal example</h2>
+<a href="#minimal-example" class="anchor" aria-hidden="true"></a>3.2. Minimal example</h2>
 <p>In the minimal example, only the basic <code>y</code> variable name is indicated. Here, <code>"Age"</code> was chosen for the boxplot.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">minMap</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/BoxWhiskerDataMapping.html">BoxWhiskerDataMapping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Age"</span><span class="op">)</span>
@@ -299,7 +295,7 @@
 </div>
 <div id="difference-x-vs-fill-input" class="section level2">
 <h2 class="hasAnchor">
-<a href="#difference-x-vs-fill-input" class="anchor"></a>3.3. Difference <code>x</code> vs <code>fill</code> input</h2>
+<a href="#difference-x-vs-fill-input" class="anchor" aria-hidden="true"></a>3.3. Difference <code>x</code> vs <code>fill</code> input</h2>
 <p>In this plot, <code>x</code> and/or <code>fill</code> can be provided. If only <code>x</code> is provided, the plot will use the <code>x</code> variable for aggregation and the boxplots will be displayed according to <code>x</code>. If providing <code>fill</code>, the plot will use the <code>fill</code> groupMapping for aggregation and the boxplots will be displayed around the same <code>x</code> but comparing the color filling. Consequently, the <code>fill</code> variable is useful when performing a double comparison.</p>
 <p>In the example below, <code>"Country"</code> and <code>"Sex"</code> can both be used for comparison of <code>"Age"</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -379,11 +375,12 @@ Boxplot mapping Sex as x and Country as fill
 </div>
 <div id="boxplot-functions" class="section level2">
 <h2 class="hasAnchor">
-<a href="#boxplot-functions" class="anchor"></a>3.4. Boxplot functions</h2>
+<a href="#boxplot-functions" class="anchor" aria-hidden="true"></a>3.4. Boxplot functions</h2>
 <p>In some cases, displaying 5th and 95th percentiles is not necessary. For instance, when a normal distribution is assumed, mean +/- 1.96 standard deviation would be preferred. In these cases, it is easy to overwrite the default functions by specifying either using a home made function or directly using predefined functions as suggested in section 2.2.</p>
 <p>In the following examples, the boxplot will use the mean for the middle line and mean +/- 1.96 standard deviation for the whiskers:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">normMap</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/BoxWhiskerDataMapping.html">BoxWhiskerDataMapping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Country"</span>,
+<code class="sourceCode R">
+<span class="va">normMap</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/BoxWhiskerDataMapping.html">BoxWhiskerDataMapping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Country"</span>,
                                      y <span class="op">=</span> <span class="st">"Age"</span>,
                                      fill <span class="op">=</span> <span class="st">"Sex"</span>,
                                      ymin <span class="op">=</span> <span class="va">tlfStatFunctions</span><span class="op">$</span><span class="va">`mean-1.96sd`</span>,
@@ -401,7 +398,8 @@ Boxplot mapping Country as x, Sex as fill and assuming normal distribution
 </div>
 <p>In this example, the boxplot use also mean +/- standard deviation for the box edges</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">normMap2</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/BoxWhiskerDataMapping.html">BoxWhiskerDataMapping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Country"</span>,
+<code class="sourceCode R">
+<span class="va">normMap2</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/BoxWhiskerDataMapping.html">BoxWhiskerDataMapping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Country"</span>,
                                      y <span class="op">=</span> <span class="st">"Age"</span>,
                                      fill <span class="op">=</span> <span class="st">"Sex"</span>,
                                      ymin <span class="op">=</span> <span class="va">tlfStatFunctions</span><span class="op">$</span><span class="va">`mean-1.96sd`</span>,
@@ -423,11 +421,12 @@ Boxplot mapping Country as x, Sex as fill and assuming normal distribution
 </div>
 <div id="outlier-functions" class="section level2">
 <h2 class="hasAnchor">
-<a href="#outlier-functions" class="anchor"></a>3.5. Outlier functions</h2>
+<a href="#outlier-functions" class="anchor" aria-hidden="true"></a>3.5. Outlier functions</h2>
 <p>Default outliers are flagged when outside the range from 25th percentiles - 1.5 x IQR to 75th percentiles + 1.5 x IQR, as suggested by McGill and implemented by the current boxplot functions from ggplot (<code>geom_boxplot</code>). However, these default can also be overridden.</p>
 <p>In the following example, outliers will be flagged when values are out of the 10th-90th percentiles, while whiskers will go until these same percentiles:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">outlierMap</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/BoxWhiskerDataMapping.html">BoxWhiskerDataMapping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Country"</span>,
+<code class="sourceCode R">
+<span class="va">outlierMap</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/BoxWhiskerDataMapping.html">BoxWhiskerDataMapping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Country"</span>,
                                         y <span class="op">=</span> <span class="st">"Age"</span>,
                                         fill <span class="op">=</span> <span class="st">"Sex"</span>,
                                         ymin <span class="op">=</span> <span class="va">tlfStatFunctions</span><span class="op">$</span><span class="va">`Percentile10%`</span>,
@@ -447,7 +446,7 @@ Boxplot mapping Country as x, Sex as fill and assuming normal distribution
 </div>
 <div id="plotconfiguration-of-boxplots-boxwhiskerplotconfiguration" class="section level2">
 <h2 class="hasAnchor">
-<a href="#plotconfiguration-of-boxplots-boxwhiskerplotconfiguration" class="anchor"></a>3.4. plotConfiguration of boxplots: <code>BoxWhiskerPlotConfiguration</code>
+<a href="#plotconfiguration-of-boxplots-boxwhiskerplotconfiguration" class="anchor" aria-hidden="true"></a>3.4. plotConfiguration of boxplots: <code>BoxWhiskerPlotConfiguration</code>
 </h2>
 <p>To define the properties of the boxes and points of the box whisker plots, a <em>BoxWhiskerPlotConfiguration</em> object can be defined to overwrite the default properties. The <em>ribbons</em> and <em>points</em> fields will define how the boxes and outliers will be handled.</p>
 <p>Using the previous example where country was defined in <code>x</code> and gender as <code>color</code>.</p>
@@ -458,7 +457,7 @@ Boxplot mapping Country as x, Sex as fill and assuming normal distribution
                                                         dataMapping <span class="op">=</span> <span class="va">xPopFillSexMap</span><span class="op">)</span>
 
 <span class="co"># Change the properties of the box colors</span>
-<span class="va">boxplotConfiguration</span><span class="op">$</span><span class="va">ribbons</span><span class="op">$</span><span class="va">fill</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pink"</span>, <span class="st">"dodgerblue"</span><span class="op">)</span>
+<span class="va">boxplotConfiguration</span><span class="op">$</span><span class="va">ribbons</span><span class="op">$</span><span class="va">fill</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pink"</span>, <span class="st">"dodgerblue"</span><span class="op">)</span>
 <span class="va">boxplotConfiguration</span><span class="op">$</span><span class="va">ribbons</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="st">"orange"</span>
 
 <span class="co"># Change the properties of the points (outliers)</span>
@@ -478,14 +477,14 @@ Boxplot with updated plot configuration
 </div>
 <div id="further-utility-of-boxwhiskerdatamapping" class="section level1">
 <h1 class="hasAnchor">
-<a href="#further-utility-of-boxwhiskerdatamapping" class="anchor"></a>4. Further utility of <code>BoxWhiskerDataMapping</code>
+<a href="#further-utility-of-boxwhiskerdatamapping" class="anchor" aria-hidden="true"></a>4. Further utility of <code>BoxWhiskerDataMapping</code>
 </h1>
 <p>Since the boxplot data mapping performs an aggregation of the data, it possible to get directly the resulting aggregated statistic as a table using <code>getBoxWhiskerLimits()</code>. Similarly, it can be used to flag any values out of a certain range using <code>getOutliers()</code>.</p>
 <p>For instance, using the example from section 3.5, one can get the following results</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">boxplotSummary</span> <span class="op">&lt;-</span> <span class="va">outlierMap</span><span class="op">$</span><span class="fu">getBoxWhiskerLimits</span><span class="op">(</span><span class="va">pkRatioData</span><span class="op">)</span>
 
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">boxplotSummary</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">boxplotSummary</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Country</th>
@@ -542,9 +541,9 @@ Boxplot with updated plot configuration
 </table>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">outliers</span> <span class="op">&lt;-</span> <span class="va">outlierMap</span><span class="op">$</span><span class="fu">getOutliers</span><span class="op">(</span><span class="va">pkRatioData</span><span class="op">)</span>
-<span class="va">outliers</span> <span class="op">&lt;-</span> <span class="va">outliers</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Age"</span>, <span class="st">"minOutlierLimit"</span>, <span class="st">"maxOutlierLimit"</span>, <span class="st">"minOutliers"</span>, <span class="st">"maxOutliers"</span><span class="op">)</span><span class="op">]</span>
+<span class="va">outliers</span> <span class="op">&lt;-</span> <span class="va">outliers</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Age"</span>, <span class="st">"minOutlierLimit"</span>, <span class="st">"maxOutlierLimit"</span>, <span class="st">"minOutliers"</span>, <span class="st">"maxOutliers"</span><span class="op">)</span><span class="op">]</span>
 
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">outliers</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">outliers</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">Age</th>
@@ -612,11 +611,13 @@ Boxplot with updated plot configuration
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Sevestre, Pierre Chelle, Abdullah Hamadeh.</p>
+  <p></p>
+<p>Developed by Michael Sevestre, Pierre Chelle, Abdullah Hamadeh.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
@@ -624,6 +625,8 @@ Boxplot with updated plot configuration
 
   
 
+
+  
 
   </body>
 </html>

@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tlf</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -82,7 +78,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/open-systems-pharmacology/tlf-library/">
+  <a href="https://github.com/open-systems-pharmacology/tlf-library/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -97,14 +93,14 @@
 
       
 
-      </header><script src="plot-configuration_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to PlotConfiguration objects</h1>
-                        <h4 class="author">OSPSuiteR 2021</h4>
+                        <h4 data-toc-skip class="author">OSPSuiteR 2021</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/tlf-library/blob/master/vignettes/plot-configuration.Rmd"><code>vignettes/plot-configuration.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/tlf-library/blob/master/vignettes/plot-configuration.Rmd" class="external-link"><code>vignettes/plot-configuration.Rmd</code></a></small>
       <div class="hidden name"><code>plot-configuration.Rmd</code></div>
 
     </div>
@@ -112,12 +108,12 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/tlf-library">tlf</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/tlf-library" class="external-link">tlf</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: tlf</span></code></pre></div>
 <p>This vignette tackles about <em>PlotConfiguration</em> objects and their implementation within the <code>tlf</code>-library.</p>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>1. Introduction</h1>
+<a href="#introduction" class="anchor" aria-hidden="true"></a>1. Introduction</h1>
 <p><em>PlotConfiguration</em> objects are R6 class objects that define plot properties.</p>
 <p>To create such an object, the method <em>new()</em> is required. Multiple arguments can be passed on the method in order to directly define the properties. The properties default values can be handled and managed using the concept of themes.</p>
 <p>As the example below illustrates, the following properties are accounted for by the <em>PlotConfiguration</em> class. Each of these properties is managed by a different R6 class object detailed in the next sections:</p>
@@ -152,11 +148,11 @@ left: emptyPlot; right: myEmptyPlot
 </div>
 <div id="label-configuration-labels" class="section level1">
 <h1 class="hasAnchor">
-<a href="#label-configuration-labels" class="anchor"></a>2. Label configuration: <em>labels</em>
+<a href="#label-configuration-labels" class="anchor" aria-hidden="true"></a>2. Label configuration: <em>labels</em>
 </h1>
 <div id="label-and-label-configuration-objects" class="section level2">
 <h2 class="hasAnchor">
-<a href="#label-and-label-configuration-objects" class="anchor"></a>2.1. Label and Label configuration objects</h2>
+<a href="#label-and-label-configuration-objects" class="anchor" aria-hidden="true"></a>2.1. Label and Label configuration objects</h2>
 <p>The field <em>labels</em> from the <em>PlotConfiguration</em> object is a <em>LabelConfiguration</em> object. It defines the label properties of the following plot captions:</p>
 <ul>
 <li>title</li>
@@ -248,7 +244,7 @@ left: emptyPlot; right: myEmptyPlot
 </div>
 <div id="label-configuration-in-plots" class="section level2">
 <h2 class="hasAnchor">
-<a href="#label-configuration-in-plots" class="anchor"></a>2.2. Label configuration in plots</h2>
+<a href="#label-configuration-in-plots" class="anchor" aria-hidden="true"></a>2.2. Label configuration in plots</h2>
 <p>The effect of label configuration in plots is straightforward:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">plotConfigurationLabel1</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlotConfiguration.html">PlotConfiguration</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Title"</span>,
@@ -272,7 +268,7 @@ left: pLab1; right: pLab2
 </div>
 <div id="changing-plot-labels" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changing-plot-labels" class="anchor"></a>2.3. Changing plot labels</h2>
+<a href="#changing-plot-labels" class="anchor" aria-hidden="true"></a>2.3. Changing plot labels</h2>
 <p>After creating a plot, it is possible to change its label configuration using the <code>tlf</code> method <em>setPlotLabels</em>. The method requires the plot object and which label property to update.</p>
 <p>Similar to the construction of the Label configuration, <em>Label</em> and/or <em>character</em> objects can be passed on.</p>
 <p>Using the previous example, <em>pLab2</em>,</p>
@@ -285,18 +281,18 @@ left: pLab1; right: pLab2
 </div>
 <div id="smart-plot-configurations" class="section level2">
 <h2 class="hasAnchor">
-<a href="#smart-plot-configurations" class="anchor"></a>2.4. Smart plot configurations</h2>
+<a href="#smart-plot-configurations" class="anchor" aria-hidden="true"></a>2.4. Smart plot configurations</h2>
 <p>Smart plot labels are available for initializing <em>PlotConfiguration</em> objects. The principle is to provide in advance the <em>data</em> that will be used within the plot. As a consequence, three optional arguments can be passed on <em>PlotConfiguration</em> initialization: <em>data</em>, <em>metaData</em> and <em>dataMapping</em>.</p>
 <p>If no label is specifically defined, the smart configuration will fetch <code>x</code> and <code>y</code> labels within <em>data</em> and <em>metaData</em> names based on the <em>dataMapping</em>. <em>dataMapping</em> also uses smart functions that will check the input data frame - if not specifically initialized - and will use variables named “x” and “y” as <code>x</code> and <code>y</code>.</p>
 <p>The four examples below illustrate the smart configurations:</p>
 <p><em>pSmart1</em> and <em>pSmart2</em> will turn out the same, while <em>pSmart3</em> will use the information from <em>metaData</em> to write the x and y labels. <em>pSmart4</em> will overwrite the y label and title based on the input.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">20</span>, <span class="fl">0.1</span><span class="op">)</span>
-<span class="va">myData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">time</span>,
-                     y <span class="op">=</span> <span class="fl">2</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span><span class="op">)</span>
-<span class="va">myMetaData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>dimension <span class="op">=</span> <span class="st">"Time"</span>,
+<code class="sourceCode R"><span class="va">time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">20</span>, <span class="fl">0.1</span><span class="op">)</span>
+<span class="va">myData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">time</span>,
+                     y <span class="op">=</span> <span class="fl">2</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span><span class="op">)</span>
+<span class="va">myMetaData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dimension <span class="op">=</span> <span class="st">"Time"</span>,
                             unit <span class="op">=</span> <span class="st">"min"</span><span class="op">)</span>,
-                   y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>dimension <span class="op">=</span> <span class="st">"Amplitude"</span>,
+                   y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dimension <span class="op">=</span> <span class="st">"Amplitude"</span>,
                             unit <span class="op">=</span> <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">myMapping</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XYGDataMapping.html">XYGDataMapping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"x"</span>,
                                 y <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span>
@@ -351,11 +347,11 @@ left: scatter3; right: scatter4
 </div>
 <div id="background-configuration-background" class="section level1">
 <h1 class="hasAnchor">
-<a href="#background-configuration-background" class="anchor"></a>3. Background configuration: <em>background</em>
+<a href="#background-configuration-background" class="anchor" aria-hidden="true"></a>3. Background configuration: <em>background</em>
 </h1>
 <div id="background-configuration-properties" class="section level2">
 <h2 class="hasAnchor">
-<a href="#background-configuration-properties" class="anchor"></a>3.1. Background configuration properties</h2>
+<a href="#background-configuration-properties" class="anchor" aria-hidden="true"></a>3.1. Background configuration properties</h2>
 <p>Background configuration defines the configuration of the following Background elements: - <code>plot</code> - <code>panel</code> - <code>xGrid</code> - <code>yGrid</code> - <code>xAxis</code> - <code>yAxis</code> - <code>legendPosition</code> - <code>watermark</code></p>
 <p>Except for <code>watermark</code> and <code>legendPosition</code>, which are the text of the watermark and the position of the legend defined as an element of <code>LegendPositions</code> enum, background fields are <code>LineElement</code> and <code>BackgroundElement</code> objects, which define the properties of the background element.</p>
 <p>As for all the <code>PlotConfiguration</code> inputs, their default values are defined from the current <code>Theme</code>, however this default can be overwritten.</p>
@@ -414,7 +410,7 @@ left: scatter3; right: scatter4
 </div>
 <div id="background-configuration-in-plots" class="section level2">
 <h2 class="hasAnchor">
-<a href="#background-configuration-in-plots" class="anchor"></a>3.2. Background configuration in plots</h2>
+<a href="#background-configuration-in-plots" class="anchor" aria-hidden="true"></a>3.2. Background configuration in plots</h2>
 <p>The effect of background configuration in plots is also quite straightforward:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">plotConfigurationBackground1</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlotConfiguration.html">PlotConfiguration</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>watermark <span class="op">=</span> <span class="st">"My Watermark"</span><span class="op">)</span>
@@ -433,7 +429,7 @@ left: pBack1; right: pBack2
 </div>
 <div id="changing-background-properties" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changing-background-properties" class="anchor"></a>3.3. Changing background properties</h2>
+<a href="#changing-background-properties" class="anchor" aria-hidden="true"></a>3.3. Changing background properties</h2>
 <p>After creating a plot, it is possible to change its background configuration using the following <code>tlf</code> methods:</p>
 <ul>
 <li>
@@ -446,7 +442,7 @@ left: pBack1; right: pBack2
 </ul>
 <div id="set-background" class="section level3">
 <h3 class="hasAnchor">
-<a href="#set-background" class="anchor"></a>3.3.1. Set Background</h3>
+<a href="#set-background" class="anchor" aria-hidden="true"></a>3.3.1. Set Background</h3>
 <p>The methods <em>setBackground</em>, <em>setBackgroundPanelArea</em>, and <em>setBackgroundPlotArea</em> require the plot object and which properties to update.</p>
 <p>Using the previous example, <em>scatter1</em>,</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -458,7 +454,7 @@ left: pBack1; right: pBack2
 </div>
 <div id="set-grid" class="section level3">
 <h3 class="hasAnchor">
-<a href="#set-grid" class="anchor"></a>3.3.2. Set Grid</h3>
+<a href="#set-grid" class="anchor" aria-hidden="true"></a>3.3.2. Set Grid</h3>
 <p>The methods <em>setGrid</em>, <em>setXGrid</em>, and <em>setYGrid</em> are very similar and require the plot object and the grid properties to be updated.</p>
 <p>Using the previous example <em>scatter1</em>:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
@@ -473,7 +469,7 @@ left: pBack1; right: pBack2
 </div>
 <div id="set-watermark" class="section level3">
 <h3 class="hasAnchor">
-<a href="#set-watermark" class="anchor"></a>3.3.3. Set Watermark</h3>
+<a href="#set-watermark" class="anchor" aria-hidden="true"></a>3.3.3. Set Watermark</h3>
 <p>The <em>setWatermark</em> method requires the plot object, the watermark, and its properties to update.</p>
 <p>Among its properties, the following are the few important ones:</p>
 <ul>
@@ -492,7 +488,7 @@ left: pBack1; right: pBack2
 </div>
 <div id="xy-axes-configurations-xaxisyaxis" class="section level1">
 <h1 class="hasAnchor">
-<a href="#xy-axes-configurations-xaxisyaxis" class="anchor"></a>4. X/Y axes configurations: <em>xAxis</em>/<em>yAxis</em>
+<a href="#xy-axes-configurations-xaxisyaxis" class="anchor" aria-hidden="true"></a>4. X/Y axes configurations: <em>xAxis</em>/<em>yAxis</em>
 </h1>
 <p>The fields <em>xAxis</em> and <em>yAxis</em> from the <em>PlotConfiguration</em> object are a <em>XAxisConfiguration</em> and <em>YAxisConfiguration</em> R6 class objects. They define the following plot properties:</p>
 <ul>
@@ -516,27 +512,27 @@ left: pBack1; right: pBack2
 <span class="co">#&gt; [1] "waiver"</span></code></pre></div>
 <div id="axis-configuration-in-plots" class="section level2">
 <h2 class="hasAnchor">
-<a href="#axis-configuration-in-plots" class="anchor"></a>4.1. Axis configuration in plots</h2>
+<a href="#axis-configuration-in-plots" class="anchor" aria-hidden="true"></a>4.1. Axis configuration in plots</h2>
 </div>
 <div id="changing-axis-properties" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changing-axis-properties" class="anchor"></a>Changing axis properties</h2>
+<a href="#changing-axis-properties" class="anchor" aria-hidden="true"></a>Changing axis properties</h2>
 <p>The methods <em>setXAxis</em> and <em>setYAxis</em> require the plot object, and the axis properties to update. Using the previous example, <em>scatter1</em>:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/setXAxis.html">setXAxis</a></span><span class="op">(</span><span class="va">scatter1</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">20</span><span class="op">)</span>, scale <span class="op">=</span> <span class="va">Scaling</span><span class="op">$</span><span class="va">sqrt</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/setXAxis.html">setXAxis</a></span><span class="op">(</span><span class="va">scatter1</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">20</span><span class="op">)</span>, scale <span class="op">=</span> <span class="va">Scaling</span><span class="op">$</span><span class="va">sqrt</span><span class="op">)</span></code></pre></div>
 <p><img src="plot-configuration_files/figure-html/set-x-axis-1.png" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/setXAxis.html">setXAxis</a></span><span class="op">(</span><span class="va">scatter1</span>, 
-         limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">6</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span>,
-         ticks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">6</span><span class="op">*</span><span class="va">pi</span>, <span class="va">pi</span><span class="op">)</span>,
-         ticklabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"pi"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">6</span><span class="op">)</span>, <span class="st">"*pi"</span><span class="op">)</span><span class="op">)</span>,
+         limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">6</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span>,
+         ticks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">6</span><span class="op">*</span><span class="va">pi</span>, <span class="va">pi</span><span class="op">)</span>,
+         ticklabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"pi"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">6</span><span class="op">)</span>, <span class="st">"*pi"</span><span class="op">)</span><span class="op">)</span>,
          font <span class="op">=</span> <span class="va"><a href="../reference/Font.html">Font</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="plot-configuration_files/figure-html/set-x-axis-ticks-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="legend-configuration-legend" class="section level1">
 <h1 class="hasAnchor">
-<a href="#legend-configuration-legend" class="anchor"></a>5. Legend configuration: <em>legend</em>
+<a href="#legend-configuration-legend" class="anchor" aria-hidden="true"></a>5. Legend configuration: <em>legend</em>
 </h1>
 <p>The field <em>legend</em> from the <em>PlotConfiguration</em> object is a <em>LegendConfiguration</em> R6 class object. It defines the following plot properties:</p>
 <ul>
@@ -549,7 +545,7 @@ left: pBack1; right: pBack2
 <code class="sourceCode R"><span class="va">myLegend</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LegendConfiguration.html">LegendConfiguration</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>position <span class="op">=</span> <span class="va">LegendPositions</span><span class="op">$</span><span class="va">insideTopRight</span><span class="op">)</span></code></pre></div>
 <div id="legend-configuration-in-plots" class="section level2">
 <h2 class="hasAnchor">
-<a href="#legend-configuration-in-plots" class="anchor"></a>5.1. Legend configuration in plots</h2>
+<a href="#legend-configuration-in-plots" class="anchor" aria-hidden="true"></a>5.1. Legend configuration in plots</h2>
 <p>Legend position can be modified using the function <code>setLegendPosition</code> The methods <em>setLegendPosition</em> requires the plot object, and the position as defined by the elements of the enum <em>LegendPositions</em> Using the previous example, <em>scatter1</em>:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/setLegendPosition.html">setLegendPosition</a></span><span class="op">(</span><span class="va">scatter1</span>, <span class="va">LegendPositions</span><span class="op">$</span><span class="va">insideTopLeft</span><span class="op">)</span></code></pre></div>
@@ -558,14 +554,14 @@ left: pBack1; right: pBack2
 </div>
 <div id="default-plot-configuration-theme-objects" class="section level1">
 <h1 class="hasAnchor">
-<a href="#default-plot-configuration-theme-objects" class="anchor"></a>6. Default plot configuration: <code>Theme</code> objects</h1>
-<p>The class <code>Theme</code> allows a user-friendly way to set many default plot settings. To allow a smooth way to set and update themes, themes snapshots can be saved to json files using the function <code><a href="../reference/saveThemeToJson.html">saveThemeToJson(theme)</a></code> and can be loaded from json files using the function <code><a href="../reference/loadThemeFromJson.html">loadThemeFromJson(jsonFile)</a></code>. In order to define a theme as the current default, the function <code><a href="../reference/useTheme.html">useTheme(theme)</a></code> needs to be called.</p>
+<a href="#default-plot-configuration-theme-objects" class="anchor" aria-hidden="true"></a>6. Default plot configuration: <code>Theme</code> objects</h1>
+<p>The class <code>Theme</code> allows a user-friendly way to set many default plot settings. To allow a smooth way to set and update themes, themes snapshots can be saved to json files using the function <code>saveThemeToJson(theme)</code> and can be loaded from json files using the function <code>loadThemeFromJson(jsonFile)</code>. In order to define a theme as the current default, the function <code>useTheme(theme)</code> needs to be called.</p>
 <p>A shiny app has been created to tune <code>Theme</code> objects live and save them as json files. With this app, it becomes quite easy to create one’s own theme with a few clicks. To call for the shiny app, users only needed to run the function <code><a href="../reference/runThemeMaker.html">runThemeMaker()</a></code>.</p>
 </div>
 <div id="export-code-to-re-create-a-plotconfiguration-object" class="section level1">
 <h1 class="hasAnchor">
-<a href="#export-code-to-re-create-a-plotconfiguration-object" class="anchor"></a>7. Export code to re-create a PlotConfiguration object</h1>
-<p>The function <code><a href="../reference/exportPlotConfigurationCode.html">exportPlotConfigurationCode(plotConfiguration)</a></code> creates character strings corresponding to commented R code that allows you to re-create a PlotConfiguration object.</p>
+<a href="#export-code-to-re-create-a-plotconfiguration-object" class="anchor" aria-hidden="true"></a>7. Export code to re-create a PlotConfiguration object</h1>
+<p>The function <code>exportPlotConfigurationCode(plotConfiguration)</code> creates character strings corresponding to commented R code that allows you to re-create a PlotConfiguration object.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create and export a plot confiugration</span>
 <span class="va">plotConfigurationToExport1</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlotConfiguration.html">PlotConfiguration</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
@@ -686,6 +682,7 @@ left: pBack1; right: pBack2
 <span class="co">#&gt; [114] "plotConfiguration$errorbars$fill &lt;- \"NA\""                          </span>
 <span class="co">#&gt; [115] "plotConfiguration$errorbars$alpha &lt;- 1"                              </span>
 <span class="co">#&gt; [116] "\n"</span>
+
 <span class="co"># Create, update and export a more advanced plot confiugration</span>
 <span class="va">plotConfigurationToExport2</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/TornadoPlotConfiguration.html">TornadoPlotConfiguration</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>bar <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu"><a href="../reference/exportPlotConfigurationCode.html">exportPlotConfigurationCode</a></span><span class="op">(</span><span class="va">plotConfigurationToExport2</span><span class="op">)</span>
@@ -809,7 +806,7 @@ left: pBack1; right: pBack2
 <span class="co">#&gt; [118] "plotConfiguration$bar &lt;- FALSE"                                      </span>
 <span class="co">#&gt; [119] "plotConfiguration$dodge &lt;- 0.5"                                      </span>
 <span class="co">#&gt; [120] "plotConfiguration$colorPalette &lt;- NULL"</span></code></pre></div>
-<p>Since <code>exportPlotConfigurationCode</code> returns character strings, they can either be saved as a .R script or copied/pasted to be used as is or within a function. It is also possible to turn the strings into and expression to <code>eval</code> using <code><a href="https://rdrr.io/r/base/parse.html">parse(text = exportPlotConfigurationCode(plotConfiguration))</a></code>.</p>
+<p>Since <code>exportPlotConfigurationCode</code> returns character strings, they can either be saved as a .R script or copied/pasted to be used as is or within a function. It is also possible to turn the strings into and expression to <code>eval</code> using <code>parse(text = exportPlotConfigurationCode(plotConfiguration))</code>.</p>
 </div>
   </div>
 
@@ -824,11 +821,13 @@ left: pBack1; right: pBack2
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Sevestre, Pierre Chelle, Abdullah Hamadeh.</p>
+  <p></p>
+<p>Developed by Michael Sevestre, Pierre Chelle, Abdullah Hamadeh.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
@@ -836,6 +835,8 @@ left: pBack1; right: pBack2
 
   
 
+
+  
 
   </body>
 </html>

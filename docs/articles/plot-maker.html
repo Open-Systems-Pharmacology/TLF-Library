@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tlf</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -82,7 +78,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/open-systems-pharmacology/tlf-library/">
+  <a href="https://github.com/open-systems-pharmacology/tlf-library/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -97,14 +93,14 @@
 
       
 
-      </header><script src="plot-maker_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>plot-maker</h1>
-                        <h4 class="author">OSPSuiteR 2021</h4>
+                        <h4 data-toc-skip class="author">OSPSuiteR 2021</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/tlf-library/blob/master/vignettes/plot-maker.Rmd"><code>vignettes/plot-maker.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/tlf-library/blob/master/vignettes/plot-maker.Rmd" class="external-link"><code>vignettes/plot-maker.Rmd</code></a></small>
       <div class="hidden name"><code>plot-maker.Rmd</code></div>
 
     </div>
@@ -112,22 +108,22 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/tlf-library">tlf</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/tlf-library" class="external-link">tlf</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: tlf</span></code></pre></div>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>1. Introduction</h1>
+<a href="#introduction" class="anchor" aria-hidden="true"></a>1. Introduction</h1>
 <p>The aim of this vignette is to document how to create plots using the <code>tlf</code> user interface (UI) called by <strong><code><a href="../reference/runPlotMaker.html">runPlotMaker()</a></code></strong>.</p>
 </div>
 <div id="how-to-start" class="section level1">
 <h1 class="hasAnchor">
-<a href="#how-to-start" class="anchor"></a>2. How to start</h1>
+<a href="#how-to-start" class="anchor" aria-hidden="true"></a>2. How to start</h1>
 <p>Use the function <code><a href="../reference/runPlotMaker.html">runPlotMaker()</a></code> to start the User Interface. The function will load <code>shiny</code> required for the UI.</p>
 <p><img src="plot-maker/start-plot-maker.PNG" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div id="how-to-import-data" class="section level1">
 <h1 class="hasAnchor">
-<a href="#how-to-import-data" class="anchor"></a>3. How to import data</h1>
+<a href="#how-to-import-data" class="anchor" aria-hidden="true"></a>3. How to import data</h1>
 <p>In the navigation bar <strong>Data</strong>, the first field named <strong>Location</strong> allows two ways of importing data: <em>environment</em> and <em>file</em>.</p>
 <p>Data can be directly taken from the global environment if the field <strong>Location</strong> uses <em>environment</em>. In the figure below, a variable named <em>myDataset</em> was created in the global environment and is listed in the field <strong>Variables available in environment</strong>. Note that such variables are required as data.frame if you want to create a plot.</p>
 <p><img src="plot-maker/import-env-data.PNG" width="100%" style="display: block; margin: auto;"></p>
@@ -139,11 +135,11 @@
 </div>
 <div id="how-to-plot-the-imported-data" class="section level1">
 <h1 class="hasAnchor">
-<a href="#how-to-plot-the-imported-data" class="anchor"></a>4. How to plot the imported data</h1>
+<a href="#how-to-plot-the-imported-data" class="anchor" aria-hidden="true"></a>4. How to plot the imported data</h1>
 <p>This section will use the data imported from the dataset “test-data.csv” as an example and will show the workflow to create a PK Ratio plot using the UI.</p>
 <div id="select-the-plot-and-its-variables" class="section level2">
 <h2 class="hasAnchor">
-<a href="#select-the-plot-and-its-variables" class="anchor"></a>4.1. Select the plot and its variables</h2>
+<a href="#select-the-plot-and-its-variables" class="anchor" aria-hidden="true"></a>4.1. Select the plot and its variables</h2>
 <p>The first steps to plot the data is to select which plot and variables are plotted. This is the role of the <strong>Data Mapping</strong> navigation bar (figure below).</p>
 <p><img src="plot-maker/data-mapping.PNG" width="100%" style="display: block; margin: auto;"></p>
 <p>In the navigation bar <strong>Data Mapping</strong>, users can select from the variable names available in the dataset which should be plotted in <em>x</em>, <em>y</em> or used to split the data by <em>color</em>, <em>shape</em>, <em>linetype</em>, and <em>fill</em> as illustrated below. Some mappings are not used by all the plots and won’t be available if the corresponding plot is currently selected. Note that if no mapping is wanted for a variable, the corresponding field can be set as <strong>none</strong>.</p>
@@ -155,7 +151,7 @@
 </div>
 <div id="update-plot-properties" class="section level2">
 <h2 class="hasAnchor">
-<a href="#update-plot-properties" class="anchor"></a>4.2. Update plot properties</h2>
+<a href="#update-plot-properties" class="anchor" aria-hidden="true"></a>4.2. Update plot properties</h2>
 <p>Some plot properties can be updated using the navigation bars <strong>Labels</strong>, <strong>Background</strong>, <strong>Axes</strong>, <strong>Legend</strong>, <strong>Theme</strong> and <strong>Aesthetics</strong>. The examples below illustrate briefly how to update such properties.</p>
 <p>In the <strong>Labels</strong> navigation bar, font properties and content of the most common labels are available. For font properties of ticks and legend are available in the properties <strong>Axes</strong> and <strong>Legend</strong>. The example below highlights the updates of the properties of the watermark which indicates “watermark” instead of “template” written bigger in “goldenrod” color.</p>
 <p><img src="plot-maker/plot-labels.PNG" width="100%" style="display: block; margin: auto;"></p>
@@ -171,23 +167,23 @@
 </div>
 <div id="saveexport-a-plot" class="section level1">
 <h1 class="hasAnchor">
-<a href="#saveexport-a-plot" class="anchor"></a>5. Save/export a plot</h1>
+<a href="#saveexport-a-plot" class="anchor" aria-hidden="true"></a>5. Save/export a plot</h1>
 <p>The navigation bar <strong>Export</strong> allows to save the current plot as a file by clicking on <strong>Save Plot</strong> (figure below). Note that you need to include the extension of the file at the end of the filename.</p>
 <p>Additionally, the plot configuration mainly corresponding to the properties updated in section 4.2. is available as a <code>PlotConfiguration</code> object. The R code to re-create such an object with the same properties is available in the navigation bar <strong>Export</strong>. Users can either copy/paste or save such R code.</p>
 <p><img src="plot-maker/plot-export.PNG" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div id="plot-specific-properties" class="section level1">
 <h1 class="hasAnchor">
-<a href="#plot-specific-properties" class="anchor"></a>6. Plot-specific properties</h1>
+<a href="#plot-specific-properties" class="anchor" aria-hidden="true"></a>6. Plot-specific properties</h1>
 <div id="add-a-regression-line" class="section level2">
 <h2 class="hasAnchor">
-<a href="#add-a-regression-line" class="anchor"></a>6.1. Add a regression line</h2>
+<a href="#add-a-regression-line" class="anchor" aria-hidden="true"></a>6.1. Add a regression line</h2>
 <p>If <em>plotObsVsPred</em> or <em>plotResVsPred</em> is selected in <strong>Select a plot</strong>, you can perform and add a regression to your plot by clicking on the optional field <strong>Regression</strong> available below the plot (figure below). The regression <em>lm</em> stands for <em>linear model</em> and will add a linear regression to the plot; while <em>loess</em> will perform and add a loess regression to the plot.</p>
 <p><img src="plot-maker/plot-regression.PNG" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div id="tornado-plot" class="section level2">
 <h2 class="hasAnchor">
-<a href="#tornado-plot" class="anchor"></a>6.1. Tornado plot</h2>
+<a href="#tornado-plot" class="anchor" aria-hidden="true"></a>6.1. Tornado plot</h2>
 <p>If <em>plotTornado</em> is selected in <strong>Select a plot</strong>, two optional fields are available below the plot (figure below).</p>
 <ul>
 <li>The field <strong>Use bars</strong> allows you to switch from a tornado plot with horizontal bars to dots instead.</li>
@@ -209,11 +205,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Sevestre, Pierre Chelle, Abdullah Hamadeh.</p>
+  <p></p>
+<p>Developed by Michael Sevestre, Pierre Chelle, Abdullah Hamadeh.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
@@ -221,6 +219,8 @@
 
   
 
+
+  
 
   </body>
 </html>

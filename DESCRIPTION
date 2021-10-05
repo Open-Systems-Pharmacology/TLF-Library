@@ -36,7 +36,7 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 2.1.0),
-    gridExtra
+    patchwork
 VignetteBuilder: knitr
 Collate: 
     'aaa-utilities.R'

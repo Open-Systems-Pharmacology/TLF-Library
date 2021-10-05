@@ -70,7 +70,7 @@ myEmptyPlot <- initializePlot(myConfiguration)
 ```
 
 ```{r show-empty-plots, echo=FALSE, fig.cap="left: emptyPlot; right: myEmptyPlot", fig.width=7.5}
-gridExtra::grid.arrange(emptyPlot, myEmptyPlot, ncol=2)
+patchwork::wrap_plots(emptyPlot, myEmptyPlot, ncol=2)
 ```
 
 # 2. Label configuration: *labels*
@@ -149,7 +149,7 @@ pLab2 <- initializePlot(plotConfigurationLabel2)
 ```
 
 ```{r show-label-in-plot-configuration, echo=FALSE, fig.cap="left: pLab1; right: pLab2", fig.width=7.5}
-gridExtra::grid.arrange(pLab1, pLab2, ncol=2)
+patchwork::wrap_plots(pLab1, pLab2, ncol=2)
 ```
 
 ## 2.3. Changing plot labels
@@ -209,11 +209,11 @@ pSmart4 <- initializePlot(smartConfig4)
 ```
 
 ```{r show-smart-example-1, echo=FALSE, fig.cap="left: pSmart1; right: pSmart2", fig.width=7.5}
-gridExtra::grid.arrange(pSmart1, pSmart2, ncol=2)
+patchwork::wrap_plots(pSmart1, pSmart2, ncol=2)
 ```
 
 ```{r show-smart-example-2, echo=FALSE, fig.cap="left: pSmart3; right: pSmart4", fig.width=7.5}
-gridExtra::grid.arrange(pSmart3, pSmart4, ncol=2)
+patchwork::wrap_plots(pSmart3, pSmart4, ncol=2)
 ```
 
 Since all of the `tlf` plots are internally using *initializePlot*, if a previous plot is not provided, the smart configurations can directly be used through the plot functions. Consequently, if *scatter1* will provide simple x and y labels, *scatter2* will name these labels after the metaData properties.
@@ -233,11 +233,11 @@ scatter4 <- addScatter(data = myData,
 ```
 
 ```{r show-smart-scatter 1, echo=FALSE, fig.cap="left: scatter1; right: scatter2", fig.width=7.5}
-gridExtra::grid.arrange(scatter1, scatter2, ncol=2)
+patchwork::wrap_plots(scatter1, scatter2, ncol=2)
 ```
 
 ```{r show-smart-scatter 2, echo=FALSE, fig.cap="left: scatter3; right: scatter4", fig.width=7.5}
-gridExtra::grid.arrange(scatter3, scatter4, ncol=2)
+patchwork::wrap_plots(scatter3, scatter4, ncol=2)
 ```
 
 # 3. Background configuration: *background*
@@ -294,7 +294,7 @@ pBack2 <- initializePlot(plotConfigurationBackground1)
 ```
 
 ```{r show-background-in-plot-configuration, echo=FALSE, fig.cap="left: pBack1; right: pBack2", fig.width=7.5}
-gridExtra::grid.arrange(pBack1, pBack2, ncol=2)
+patchwork::wrap_plots(pBack1, pBack2, ncol=2)
 ```
 
 ## 3.3. Changing background properties
