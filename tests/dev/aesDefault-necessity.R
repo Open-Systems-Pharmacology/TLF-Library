@@ -46,5 +46,5 @@ plot3a <- ggplot() +
 plot3b <- plot3a + scale_color_manual(values = "blue") + labs(title = "3B")
 
 # To make subplots
-# install.packages("gridExtra")
-gridExtra::grid.arrange(plot1a, plot2a, plot3a, plot1b, plot2b, plot3b, nrow = 2, ncol = 3)
+# install.packages("patchwork")
+patchwork::wrap_plots(plot1a, plot2a, plot3a, plot1b, plot2b, plot3b, nrow = 2, ncol = 3)

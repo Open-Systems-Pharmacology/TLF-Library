@@ -12,6 +12,7 @@
 ## Minor improvements and bug fixes
 
 * Creation of enum objects providing shortkeys for plot properties: `Shapes`, `Linetypes`, `Scaling`, `LegendPositions`
+* `{tlf}` now encourages using `{patchwork}` package to create a grid of plots instead of `{gridExtra}`.
 
 # tlf 1.1.0
 

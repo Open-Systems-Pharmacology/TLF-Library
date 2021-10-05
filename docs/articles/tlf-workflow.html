@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tlf</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -82,7 +78,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/open-systems-pharmacology/tlf-library/">
+  <a href="https://github.com/open-systems-pharmacology/tlf-library/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -97,14 +93,14 @@
 
       
 
-      </header><script src="tlf-workflow_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to tlf-based workflow</h1>
-                        <h4 class="author">OSPSuiteR 2021</h4>
+                        <h4 data-toc-skip class="author">OSPSuiteR 2021</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/tlf-library/blob/master/vignettes/tlf-workflow.Rmd"><code>vignettes/tlf-workflow.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/tlf-library/blob/master/vignettes/tlf-workflow.Rmd" class="external-link"><code>vignettes/tlf-workflow.Rmd</code></a></small>
       <div class="hidden name"><code>tlf-workflow.Rmd</code></div>
 
     </div>
@@ -112,24 +108,24 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/tlf-library">tlf</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/tlf-library" class="external-link">tlf</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: tlf</span></code></pre></div>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>1. Introduction</h1>
+<a href="#introduction" class="anchor" aria-hidden="true"></a>1. Introduction</h1>
 <div id="objectives" class="section level2">
 <h2 class="hasAnchor">
-<a href="#objectives" class="anchor"></a>1.1. Objectives</h2>
+<a href="#objectives" class="anchor" aria-hidden="true"></a>1.1. Objectives</h2>
 <p>The aim of this vignette is to document and illustrate the typical workflow needed for the production of plots using the <code>tlf</code>-library.</p>
 </div>
 <div id="libraries" class="section level2">
 <h2 class="hasAnchor">
-<a href="#libraries" class="anchor"></a>1.2. Libraries</h2>
+<a href="#libraries" class="anchor" aria-hidden="true"></a>1.2. Libraries</h2>
 <p>The main purpose of the <code>tlf</code>-library is to standardize the production of <code>ggplot</code> objects from data produced by the <code>OSPSuiteR</code> package. As such, <code>tlf</code>-library requires that the <code>ggplot2</code> package be installed.</p>
 </div>
 <div id="tlf-typical-workflow" class="section level2">
 <h2 class="hasAnchor">
-<a href="#tlf-typical-workflow" class="anchor"></a>1.3. <code>tlf</code> typical workflow</h2>
+<a href="#tlf-typical-workflow" class="anchor" aria-hidden="true"></a>1.3. <code>tlf</code> typical workflow</h2>
 <p>The suggested workflow for producing any kind of plot with the <code>tlf</code>-library is illustrated in the figure below.</p>
 <p><img src="workflow.png" width="100%" style="display: block; margin: auto;"></p>
 <p>The standard workflow then proceeds as follows:</p>
@@ -143,7 +139,7 @@
 </div>
 <div id="naming-conventions" class="section level2">
 <h2 class="hasAnchor">
-<a href="#naming-conventions" class="anchor"></a>1.4. Naming Conventions</h2>
+<a href="#naming-conventions" class="anchor" aria-hidden="true"></a>1.4. Naming Conventions</h2>
 <p>In this package, it was chosen to use specific names for functions and classes referring to specific plots. The naming convention for classes is <code>&lt;Plot Name&gt;&lt;Class&gt;</code> and for function <code>&lt;function&gt;&lt;Plot Name&gt;</code>. Below presents the table of specific classes and functions that are created using this convention:</p>
 <table class="table">
 <colgroup>
@@ -201,11 +197,11 @@
 </div>
 <div id="data-pre-processing-aggregationsummary-class" class="section level1">
 <h1 class="hasAnchor">
-<a href="#data-pre-processing-aggregationsummary-class" class="anchor"></a>2. Data pre-processing: <code>AggregationSummary</code> class</h1>
+<a href="#data-pre-processing-aggregationsummary-class" class="anchor" aria-hidden="true"></a>2. Data pre-processing: <code>AggregationSummary</code> class</h1>
 <div id="data-format" class="section level2">
 <h2 class="hasAnchor">
-<a href="#data-format" class="anchor"></a>2.1. Data format</h2>
-<p>The workflow assumes that the data to be plotted has been gathered in the form of a <a href="https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html"><em>tidy</em></a> dataframe. In a tidy format dataframe, each <em>measurement</em>, such as a simulation result or an experimental observation, is described entirely in one row. The columns of the data.frame are limited to no more than the <em>independent variable</em> columns of the measurement (for example, <em>time</em> and <em>IndividualId</em>) and the <em>dependent variable</em> columns (in this case <em>Organism|VenousBlood|Volume</em>), which hold the value of the measurement. Since no additional columns are allowed, two dependent variables that have differing sets of independent variables should each have their own tidy dataframes.</p>
+<a href="#data-format" class="anchor" aria-hidden="true"></a>2.1. Data format</h2>
+<p>The workflow assumes that the data to be plotted has been gathered in the form of a <a href="https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html" class="external-link"><em>tidy</em></a> dataframe. In a tidy format dataframe, each <em>measurement</em>, such as a simulation result or an experimental observation, is described entirely in one row. The columns of the data.frame are limited to no more than the <em>independent variable</em> columns of the measurement (for example, <em>time</em> and <em>IndividualId</em>) and the <em>dependent variable</em> columns (in this case <em>Organism|VenousBlood|Volume</em>), which hold the value of the measurement. Since no additional columns are allowed, two dependent variables that have differing sets of independent variables should each have their own tidy dataframes.</p>
 <p>In the sequel, we will use a dataset derived from the <code>OSPSuiteR</code> package: <code>testData</code>. Let’s look at a few rows to get a sense of the data:</p>
 <table class="table">
 <thead><tr class="header">
@@ -270,7 +266,7 @@
 </div>
 <div id="metadata" class="section level2">
 <h2 class="hasAnchor">
-<a href="#metadata" class="anchor"></a>2.2. MetaData</h2>
+<a href="#metadata" class="anchor" aria-hidden="true"></a>2.2. MetaData</h2>
 <p>A <code>metaData</code> variable associated with the data can be used to define additional information such as the <code>dimension</code> and <code>unit</code> of each column in the <code>data.frame</code>. The lower limit of quantification of a IndividualId profile can also be stored in the <code>metaData</code>. The format of metaData is currently expected to be a list on each variable of lists showing unit and dimension.</p>
 <table class="table">
 <thead><tr class="header">
@@ -369,7 +365,7 @@
 </div>
 <div id="aggregation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#aggregation" class="anchor"></a>2.3. Aggregation</h2>
+<a href="#aggregation" class="anchor" aria-hidden="true"></a>2.3. Aggregation</h2>
 <p>A common processing of the data is its aggregation. The aggregation consists in splitting the data into subsets, then computing summary statistics for each, and returning the result in a convenient form. Visual predictive checks are typical plots where such method is useful.</p>
 <p>The <code>AggregationSummary</code> class is a helper class that simplifies the use of aggregation methods on the data. The <code>R6</code> class <code>AggregationSummary</code> automates the computation of multiple summary statistics of the raw data produced at <strong>Step 0</strong>. The output of this optional data pre-processing step is a dataframe with a column for each summary statistic. This dataframe can be input into the subsequent steps of the workflow. The user also has the option of generating <code>metaData</code> for each of the summary statistics evaluated.</p>
 <p>To illustrate the functions of this class for the example of the dataframe <code>testData</code>, let’s suppose that for each individual in the <em>IndividualId</em> column, the <em>minimum</em> and the <em>mean</em> value of the simulated <em>Organism|VenousBlood|Volume</em> column is to be computed for each gender in the <em>Gender</em> column. The <code>AggregationSummary</code> class works in 3 steps:</p>
@@ -385,15 +381,15 @@
                                      xColumnNames <span class="op">=</span> <span class="st">"IndividualId"</span>,
                                      groupingColumnNames <span class="op">=</span> <span class="st">"Gender"</span>,
                                      yColumnNames <span class="op">=</span> <span class="st">"Organism|VenousBlood|Volume"</span>,
-                                     aggregationFunctionsVector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">min</span>,<span class="va">mean</span><span class="op">)</span>,
-                                     aggregationFunctionNames <span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Simulated Min"</span>,
+                                     aggregationFunctionsVector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">min</span>,<span class="va">mean</span><span class="op">)</span>,
+                                     aggregationFunctionNames <span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Simulated Min"</span>,
                                                                  <span class="st">"Simulated Mean"</span><span class="op">)</span>,
-                                     aggregationUnitsVector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"l"</span>,<span class="st">"l"</span><span class="op">)</span>,
-                                     aggregationDimensionsVector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Volume"</span>,
+                                     aggregationUnitsVector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"l"</span>,<span class="st">"l"</span><span class="op">)</span>,
+                                     aggregationDimensionsVector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Volume"</span>,
                                                                      <span class="st">"Volume"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>The dataframe that holds the summary statistics of the aggregated rows is stored in the <code>dfHelper</code> property of the resulting <code>aggSummary</code> object. Since two functions (<code>min</code> and <code>mean</code>) were specified in <code>aggregationFunctionsVector</code>, the dataframe <code>aggSummary$dfHelper</code> has, in addition to the <code>xColumnNames</code>and <code>groupingColumnNames</code> columns, two additional columns named <code>Simulated Min</code> and <code>Simulated Mean</code>, which were the names specified in <code>aggregationFunctionNames</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">aggSummary</span><span class="op">$</span><span class="va">dfHelper</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">aggSummary</span><span class="op">$</span><span class="va">dfHelper</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">IndividualId</th>
@@ -444,10 +440,10 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Currently issue with metaData of Gender</span>
 <span class="va">aggSummary</span><span class="op">$</span><span class="va">metaDataHelper</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
-<span class="va">aggMetaData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"unit"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">aggSummary</span><span class="op">$</span><span class="va">metaDataHelper</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="va">x</span><span class="op">$</span><span class="va">unit</span><span class="op">}</span><span class="op">)</span>,
-                          <span class="st">"dimension"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">aggSummary</span><span class="op">$</span><span class="va">metaDataHelper</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="va">x</span><span class="op">$</span><span class="va">dimension</span><span class="op">}</span><span class="op">)</span><span class="op">)</span>
+<span class="va">aggMetaData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"unit"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">aggSummary</span><span class="op">$</span><span class="va">metaDataHelper</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="va">x</span><span class="op">$</span><span class="va">unit</span><span class="op">}</span><span class="op">)</span>,
+                          <span class="st">"dimension"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">aggSummary</span><span class="op">$</span><span class="va">metaDataHelper</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="va">x</span><span class="op">$</span><span class="va">dimension</span><span class="op">}</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">aggMetaData</span><span class="op">)</span></code></pre></div>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">aggMetaData</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>
@@ -476,34 +472,34 @@
 </div>
 <div id="mapping-and-grouping-of-data-datamapping-class" class="section level1">
 <h1 class="hasAnchor">
-<a href="#mapping-and-grouping-of-data-datamapping-class" class="anchor"></a>3. Mapping and grouping of data: <code>DataMapping</code> class</h1>
+<a href="#mapping-and-grouping-of-data-datamapping-class" class="anchor" aria-hidden="true"></a>3. Mapping and grouping of data: <code>DataMapping</code> class</h1>
 <p>The role of the <code>DataMapping</code> class is to provide a user-friendly interface to indicate what data should be plotted. In most cases, this class needs to be initialized to map what variables are <code>x</code> and <code>y</code>, and which IndividualIds variable(s) will group the data. Thus, the most common input are <code>x</code> and <code>y</code>; however, for more advanced plots, input such as <code>groupMapping</code> may be used often. For advanced plots, subclasses are derived from <code>DataMapping</code>, they use unique input and default related to the advanced plot to make it easier to use them.</p>
 <div id="groupmapping" class="section level2">
 <h2 class="hasAnchor">
-<a href="#groupmapping" class="anchor"></a>3.1. GroupMapping</h2>
+<a href="#groupmapping" class="anchor" aria-hidden="true"></a>3.1. GroupMapping</h2>
 <div id="grouping-class" class="section level3">
 <h3 class="hasAnchor">
-<a href="#grouping-class" class="anchor"></a>3.1.1. Grouping class</h3>
+<a href="#grouping-class" class="anchor" aria-hidden="true"></a>3.1.1. Grouping class</h3>
 <p>An <code>R6</code> class called <code>Grouping</code> can be used to group the data into subsets that, in the final plots, are to be distinguished both aesthetically and in legend captions. In addition, these subsets can be listed under descriptive legend titles.</p>
 <p>As an example, a <code>Grouping</code> object called <code>grouping1</code> can be used to specify that the data in a <em>tidy</em> data.frame should be grouped by both “Compound” and “Dose”:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Grouping by variable names:</span>
-<span class="va">grouping1</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Grouping.html">Grouping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Compound"</span>,<span class="st">"Dose"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">grouping1</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Grouping.html">Grouping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Compound"</span>,<span class="st">"Dose"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>With this minimal input, a legend associated with this grouping will have the default title “Compound-Dose”. On the other hand, a custom title for this grouping and its legend can be supplied by the user with the optional <code>label</code> input:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Grouping by variable names and overwriting the default label:</span>
-<span class="va">grouping2</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Grouping.html">Grouping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Compound"</span>,<span class="st">"Dose"</span><span class="op">)</span>, label <span class="op">=</span> <span class="st">"Compound &amp; Dose"</span><span class="op">)</span></code></pre></div>
+<span class="va">grouping2</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Grouping.html">Grouping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Compound"</span>,<span class="st">"Dose"</span><span class="op">)</span>, label <span class="op">=</span> <span class="st">"Compound &amp; Dose"</span><span class="op">)</span></code></pre></div>
 <p>In the above two examples, default captions are constructed by hyphenating the compound type and the dose amount for each row. Alternatively, the captions can be customized by the user by supplying a dataframe with the custom captions to the <code>group</code> input of the <code>Grouping</code> object constructor. The format of this dataframe is such that the rightmost column contains the desired captions, the name of this rightmost column is the default legend title for this grouping, and the remaining columns define the combinations of row entries that are to receive each caption in the rightmost column. To illustrate this method, the following dataframe <code>mappingDataFrame</code> is used to assign captions based on entries in the “Dose” and “Compound” columns. For example, the caption “6mg of Aspirin” is assigned to any row in which the “Dose” entry is 6 and the “Compound” entry is “Aspirin”.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Grouping using a data.frame:</span>
-<span class="va">mappingDataFrame</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>Compound <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Aspirin"</span>,<span class="st">"Aspirin"</span>,<span class="st">"Sugar"</span>,<span class="st">"Sugar"</span><span class="op">)</span>,
-                               Dose <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">3</span>,<span class="fl">6</span>,<span class="fl">3</span><span class="op">)</span>,  
-                               <span class="st">"Compound &amp; Dose"</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"6mg of Aspirin"</span>,
+<span class="va">mappingDataFrame</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Compound <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Aspirin"</span>,<span class="st">"Aspirin"</span>,<span class="st">"Sugar"</span>,<span class="st">"Sugar"</span><span class="op">)</span>,
+                               Dose <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">3</span>,<span class="fl">6</span>,<span class="fl">3</span><span class="op">)</span>,  
+                               <span class="st">"Compound &amp; Dose"</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"6mg of Aspirin"</span>,
                                                       <span class="st">"3mg of Aspirin"</span>,
                                                       <span class="st">"6mg of Sugar"</span>,
                                                       <span class="st">"3mg of Sugar"</span><span class="op">)</span>,
                                check.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">mappingDataFrame</span><span class="op">)</span></code></pre></div>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">mappingDataFrame</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Compound</th>
@@ -539,18 +535,18 @@
 <p>The three <code>Grouping</code> objects, <code>grouping1</code>, <code>grouping2</code>, and <code>grouping3</code> respectively yield the last three columns of the following dataframe:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Apply the mapping to get the grouping captions:</span>
-<span class="va">groupingsDataFrame</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">testData</span><span class="op">$</span><span class="va">IndividualId</span>,
+<span class="va">groupingsDataFrame</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">testData</span><span class="op">$</span><span class="va">IndividualId</span>,
                                  <span class="va">testData</span><span class="op">$</span><span class="va">Dose</span>,
                                  <span class="va">testData</span><span class="op">$</span><span class="va">Compound</span>,
                                  <span class="va">grouping1</span><span class="op">$</span><span class="fu">getCaptions</span><span class="op">(</span><span class="va">testData</span><span class="op">)</span>,
                                  <span class="va">grouping2</span><span class="op">$</span><span class="fu">getCaptions</span><span class="op">(</span><span class="va">testData</span><span class="op">)</span>,
                                  <span class="va">grouping3</span><span class="op">$</span><span class="fu">getCaptions</span><span class="op">(</span><span class="va">testData</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">groupingsDataFrame</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"IndividualId"</span>, <span class="st">"Dose"</span>, <span class="st">"Compound"</span>,
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">groupingsDataFrame</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IndividualId"</span>, <span class="st">"Dose"</span>, <span class="st">"Compound"</span>,
                                <span class="va">grouping1</span><span class="op">$</span><span class="va">label</span>, <span class="va">grouping2</span><span class="op">$</span><span class="va">label</span>, <span class="va">grouping3</span><span class="op">$</span><span class="va">label</span><span class="op">)</span>
 
 <span class="co"># Show results for all groupings:</span>
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">groupingsDataFrame</span><span class="op">)</span></code></pre></div>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">groupingsDataFrame</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">IndividualId</th>
@@ -646,8 +642,8 @@
 <p>A dataframe can also be used to create a <code>Grouping</code> object that subsets the data based on whether a numeric grouping variable satisfies an specific inequality. For example, individuals in <code>testData</code> can be grouped according to whether or not their age exceeds 6 years by first defining the following dataframe:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Grouping using a data.frame:</span>
-<span class="va">binningDataFrame</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>Age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">6</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">7</span>,<span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span>, 
-                               <span class="st">"Age Range"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Age 6 or lower"</span>,
+<span class="va">binningDataFrame</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">6</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>,<span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span>, 
+                               <span class="st">"Age Range"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Age 6 or lower"</span>,
                                                <span class="st">"Above age 6"</span><span class="op">)</span>,
                                check.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Then creating a new grouping:</p>
@@ -657,14 +653,14 @@
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Apply the mapping to get the grouping captions:</span>
 <span class="va">testData</span><span class="op">$</span><span class="va">Age</span> <span class="op">&lt;-</span> <span class="va">testData</span><span class="op">$</span><span class="va">`Organism|Age`</span>
-<span class="va">binnedGroupingsDataFrame</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">testData</span><span class="op">$</span><span class="va">IndividualId</span>,
+<span class="va">binnedGroupingsDataFrame</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">testData</span><span class="op">$</span><span class="va">IndividualId</span>,
                                        <span class="va">testData</span><span class="op">$</span><span class="va">Age</span>,
                                        <span class="va">grouping4</span><span class="op">$</span><span class="fu">getCaptions</span><span class="op">(</span><span class="va">testData</span><span class="op">)</span><span class="op">)</span> 
 
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">binnedGroupingsDataFrame</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"IndividualId"</span>, <span class="st">"Age"</span>, <span class="va">grouping4</span><span class="op">$</span><span class="va">label</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">binnedGroupingsDataFrame</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IndividualId"</span>, <span class="st">"Age"</span>, <span class="va">grouping4</span><span class="op">$</span><span class="va">label</span><span class="op">)</span>
 
 <span class="co"># Show results for all groupings:</span>
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">binnedGroupingsDataFrame</span><span class="op">)</span></code></pre></div>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">binnedGroupingsDataFrame</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">IndividualId</th>
@@ -727,7 +723,7 @@
 </div>
 <div id="groupmapping-class" class="section level3">
 <h3 class="hasAnchor">
-<a href="#groupmapping-class" class="anchor"></a>3.1.2. GroupMapping class</h3>
+<a href="#groupmapping-class" class="anchor" aria-hidden="true"></a>3.1.2. GroupMapping class</h3>
 <p>An additional <code>R6</code> class called <code>GroupMapping</code> maps <code>Grouping</code> objects to aesthetic parameters such as <code>color</code> or <code>linetype</code>. To distinguish between “Compound” and “Dose” groups by color and to use the captions and legend title specified in <code>grouping2</code>, the following groupings object <code>groups1</code> is constructed:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Map groups to aesthtic properties</span>
@@ -735,22 +731,22 @@
 <p>A <code>GroupMapping</code> object <code>groups2</code> can also be constructed more quickly by directly associating an aesthetic, such as <code>color</code>, to a vector of dataframe column names:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Map groups to aesthtic properties</span>
-<span class="va">groups2</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/GroupMapping.html">GroupMapping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Compound"</span>, <span class="st">"Dose"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">groups2</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/GroupMapping.html">GroupMapping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Compound"</span>, <span class="st">"Dose"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>or to a <code>Grouping</code> object directly:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Map groups to aesthetic properties</span>
-<span class="va">groups3</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/GroupMapping.html">GroupMapping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>color <span class="op">=</span> <span class="va"><a href="../reference/Grouping.html">Grouping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Compound"</span>, <span class="st">"Dose"</span><span class="op">)</span>,
-                                                  label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Compound &amp; Dose"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">groups3</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/GroupMapping.html">GroupMapping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>color <span class="op">=</span> <span class="va"><a href="../reference/Grouping.html">Grouping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Compound"</span>, <span class="st">"Dose"</span><span class="op">)</span>,
+                                                  label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Compound &amp; Dose"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div id="datamapping" class="section level2">
 <h2 class="hasAnchor">
-<a href="#datamapping" class="anchor"></a>3.2. DataMapping</h2>
+<a href="#datamapping" class="anchor" aria-hidden="true"></a>3.2. DataMapping</h2>
 <p>The <code>R6</code> class <code>XYGDataMapping</code> extracts the maps the x, y, and grouping variables of data according to the aesthetics specified in an input <code>GroupMapping</code> object. This mapping is carried out by an internal function of this class named <code>checkMapData</code> which checks if the variables indicated the <code>GroupMapping</code> are included in the data. This method then returns a simplified dataframe with the variables defined by the dataMapping.</p>
 <p>When no <code>GroupMapping</code> object is supplied upon construction of a <code>XYGDataMapping</code> object, the function <code>checkMapData</code> returns a dataframe with <code>x</code> and <code>y</code>. A dummy variable named <code>aesDefault</code> is added to the data.frame, its sole purpose is to allow modifications of aesthetic properties after the creation of the ggplot object (not possible otherwise).</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tpMapping</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XYGDataMapping.html">XYGDataMapping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>x<span class="op">=</span><span class="st">"IndividualId"</span>, y<span class="op">=</span><span class="st">"Organism|VenousBlood|Volume"</span><span class="op">)</span>
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">tpMapping</span><span class="op">$</span><span class="fu">checkMapData</span><span class="op">(</span>data <span class="op">=</span> <span class="va">testData</span>,
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">tpMapping</span><span class="op">$</span><span class="fu">checkMapData</span><span class="op">(</span>data <span class="op">=</span> <span class="va">testData</span>,
                                             metaData <span class="op">=</span> <span class="va">IndividualIdProfileMetaData</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -817,7 +813,7 @@
 <span class="va">tpMapping</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XYGDataMapping.html">XYGDataMapping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>x<span class="op">=</span><span class="st">"IndividualId"</span>, y<span class="op">=</span><span class="st">"Organism|VenousBlood|Volume"</span>, 
                                         groupMapping <span class="op">=</span> <span class="va">groups1</span><span class="op">)</span>
 
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">tpMapping</span><span class="op">$</span><span class="fu">checkMapData</span><span class="op">(</span>data <span class="op">=</span> <span class="va">testData</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">tpMapping</span><span class="op">$</span><span class="fu">checkMapData</span><span class="op">(</span>data <span class="op">=</span> <span class="va">testData</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">IndividualId</th>
@@ -904,11 +900,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Sevestre, Pierre Chelle, Abdullah Hamadeh.</p>
+  <p></p>
+<p>Developed by Michael Sevestre, Pierre Chelle, Abdullah Hamadeh.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
@@ -916,6 +914,8 @@
 
   
 
+
+  
 
   </body>
 </html>

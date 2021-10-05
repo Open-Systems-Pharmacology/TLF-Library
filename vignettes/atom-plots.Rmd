@@ -106,7 +106,7 @@ smartEmptyPlot <- initializePlot(mySmartConfiguration)
 ```
 
 ```{r initializePlot-output, echo=FALSE, fig.cap="Left: emptyPlot; Middle: emptyPlotWithLabels; Right: smartEmptyPlot", fig.width=7.5}
-gridExtra::grid.arrange(emptyPlot, emptyPlotWithLabels, smartEmptyPlot, ncol = 3)
+patchwork::wrap_plots(emptyPlot, emptyPlotWithLabels, smartEmptyPlot, ncol = 3)
 ```
 
 # Add scatter or lines to a plot object: *addScatter*, *addLine*
@@ -180,7 +180,7 @@ pXY <- addScatter(
 ```
 
 ```{r show-scatter-mapping, fig.height=7, fig.width=7, echo=FALSE, fig.cap="top left: pNaive; top right: pSmart; bottom left: pGroup; bottom right: pXY", fig.width=7.5}
-gridExtra::grid.arrange(pNaive, pSmart, pGroup, pXY, ncol = 2)
+patchwork::wrap_plots(pNaive, pSmart, pGroup, pXY, ncol = 2)
 ```
 
 Input parameters of *addScatter* also include *plotConfiguration* and *plotObject* as previously described.
@@ -218,7 +218,7 @@ pScatter3 <- addScatter(
 ```
 
 ```{r show-addScatter, echo=FALSE, fig.width=9, fig.cap="Left: pScatter1; Middle: pScatter2; Right: pScatter3"}
-gridExtra::grid.arrange(pScatter1, pScatter2, pScatter3, ncol = 3)
+patchwork::wrap_plots(pScatter1, pScatter2, pScatter3, ncol = 3)
 ```
 
 Finally, the last input parameters include *caption*, *color*, *size*, *shape*, and *linetype*. 
