@@ -15,6 +15,8 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{ddiRatioL
 \item{\code{minRange}}{Mininmum range for guest and ratio lines}
 
 \item{\code{deltaGuest}}{Value of \code{delta} in Guest et al. equation}
+
+\item{\code{residualsVsObserved}}{if true, returns a mapping for generating a residuals (predicted/observed) vs observed DDI ratio plot.  If false (default) returns a mapping for predicted vs observed DDI ratio plot.}
 }
 \if{html}{\out{</div>}}
 }
@@ -42,6 +44,7 @@ Create a new \code{DDIRatioDataMapping} object
   deltaGuest = 1,
   minRange = c(0.01, 100),
   lines = DefaultDataMappingValues$ddiRatio,
+  residualsVsObserved = FALSE,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -55,6 +58,8 @@ Default value is 1.}
 \item{\code{minRange}}{Mininmum range for guest lines}
 
 \item{\code{lines}}{list of ratio limits to plot as diagonal lines}
+
+\item{\code{residualsVsObserved}}{if true, returns a mapping for generating a residuals (predicted/observed) vs observed DDI ratio plot.  If false (default) returns a mapping for predicted vs observed DDI ratio plot.}
 
 \item{\code{...}}{parameters inherited from \code{PKRatioDataMapping}}
 }
