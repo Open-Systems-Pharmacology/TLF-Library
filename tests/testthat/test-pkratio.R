@@ -33,9 +33,9 @@ test_that("PK Ratio default settings work", {
   expect_null(pkRatioMapping$x)
   expect_null(pkRatioMapping$y)
   expect_equal(pkRatioMapping$lines, list(
-    pkRatio1 = 1,
-    pkRatio2 = c(1.5, 1 / 1.5),
-    pkRatio3 = c(2, 1 / 2)
+    pkRatio1 = log10(1),
+    pkRatio2 = log10(c(1.5, 1 / 1.5)),
+    pkRatio3 = log10(c(2, 1 / 2))
   ))
 
   expect_is(pkRatioConfig$labels$title, "Label")
