@@ -20,7 +20,11 @@ PKRatioDataMapping <- R6::R6Class(
                           ...) {
       validateIsString(uncertainty, nullAllowed = TRUE)
       super$initialize(...)
-      self$lines <- lines
+
+      # Apply log10 transformation to lines because
+      # plot is log scaled in by default and geom_abline
+      # requires the log transformed values in input of intercept
+      self$lines <- lapply(lines, log10)
       self$uncertainty <- uncertainty
     },
 
