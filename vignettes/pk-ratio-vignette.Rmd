@@ -45,7 +45,7 @@ In the code below, the data is loaded and assigned to `pkRatioData`.
 ```{r load-data, results='asis'}
 # Load example
 pkRatioData <- read.csv(
-  system.file("extdata", "test-data.csv", package = "tlf"), 
+  system.file("extdata", "test-data.csv", package = "tlf"),
   stringsAsFactors = FALSE
 )
 
@@ -59,21 +59,32 @@ A list of information about `pkRatioData` can be provided through `metaData`.
 
 ```{r load-metadata, echo=FALSE}
 # Load example
-pkRatioMetaData <- list(Age = list(dimension = "Age",
-                                   unit = "yrs"),
-                        Obs = list(dimension = "Clearance",
-                                   unit = "dL/h/kg"),
-                        Pred = list(dimension = "Clearance",
-                                    unit = "dL/h/kg"),
-                        Ratio = list(dimension = "Ratio",
-                                     unit = "")
-                        )
+pkRatioMetaData <- list(
+  Age = list(
+    dimension = "Age",
+    unit = "yrs"
+  ),
+  Obs = list(
+    dimension = "Clearance",
+    unit = "dL/h/kg"
+  ),
+  Pred = list(
+    dimension = "Clearance",
+    unit = "dL/h/kg"
+  ),
+  Ratio = list(
+    dimension = "Ratio",
+    unit = ""
+  )
+)
 ```
 
 ```{r show-metadata, results='asis'}
-knitr::kable(data.frame(Variable = c("Age", "Obs", "Pred", "Ratio"),
-                        Dimension = c("Age", "Clearance", "Clearance", "Ratio"),
-                        Unit = c("yrs", "dL/h/kg", "dL/h/kg", "")))
+knitr::kable(data.frame(
+  Variable = c("Age", "Obs", "Pred", "Ratio"),
+  Dimension = c("Age", "Clearance", "Clearance", "Ratio"),
+  Unit = c("yrs", "dL/h/kg", "dL/h/kg", "")
+))
 ```
 
 <!-- TODO: uncomment when this function is available -->
@@ -104,7 +115,7 @@ Then, `PKRatioPlotConfiguration` is initialized if not provided, defining a stan
 The minimal example can work using directly the function `plotPKRatio(data = pkRatioData[, c("Age", "Ratio")])`.
 
 ```{r minimal-example, fig.height=5, fig.width=7.5}
-plotPKRatio(data = pkRatioData[,c("Age", "Ratio")])
+plotPKRatio(data = pkRatioData[, c("Age", "Ratio")])
 ```
 
 ## 2.4. Examples with `dataMapping`
@@ -122,26 +133,31 @@ Consequently, the following examples are identical:
 ```{r group-mapping}
 # Two-step process
 colorMapping <- GroupMapping$new(color = "Sex")
-dataMappingA <- PKRatioDataMapping$new(x = "Age",
-                                       y = "Ratio", 
-                                       groupMapping = colorMapping)
+dataMappingA <- PKRatioDataMapping$new(
+  x = "Age",
+  y = "Ratio",
+  groupMapping = colorMapping
+)
 
 print(dataMappingA$groupMapping$color$label)
 
 # One-step process
-dataMappingB <- PKRatioDataMapping$new(x = "Age", 
-                                       y = "Ratio", 
-                                       color = "Sex")
+dataMappingB <- PKRatioDataMapping$new(
+  x = "Age",
+  y = "Ratio",
+  color = "Sex"
+)
 
 print(dataMappingB$groupMapping$color$label)
-
 ```
 
 Then, in this example, `plotPKRatio` can use the groupMapping to split the data by "Gender" and associate different colors to each "Gender":
 
 ```{r dataMappingB, fig.height=5, fig.width=7.5}
-plotPKRatio(data = pkRatioData, 
-            dataMapping = dataMappingB)
+plotPKRatio(
+  data = pkRatioData,
+  dataMapping = dataMappingB
+)
 ```
 
 Multiple groupMappings can be performed for PK ratio: data can be regrouped by `color`, `shape` and/or `size`.
@@ -149,12 +165,16 @@ The next example uses 2 groups in the groupMapping:
 One group splits "Gender" by `color`, the other splits `shape` by "Amount" and "Compound".
 
 ```{r dataMapping2groups, fig.height=5, fig.width=7.5}
-dataMapping2groups <- PKRatioDataMapping$new(x = "Age",
-                                             y = "Ratio",
-                                             color = "Sex",
-                                             shape = c("Country", "AgeBin"))
-plotPKRatio(data = pkRatioData, 
-            dataMapping = dataMapping2groups)
+dataMapping2groups <- PKRatioDataMapping$new(
+  x = "Age",
+  y = "Ratio",
+  color = "Sex",
+  shape = c("Country", "AgeBin")
+)
+plotPKRatio(
+  data = pkRatioData,
+  dataMapping = dataMapping2groups
+)
 ```
 
 The last examples uses another feature available in the `groupMapping` class. The class can be initilized using a `data.frame` where the last column of the data.frame will be used to split the data. In the following example, the data.frame is the following:
@@ -173,12 +193,16 @@ knitr::kable(groupDataFrame)
 The `dataMapping` introduced below will split the `color` and `shape` using the data frame.
 
 ```{r dataMappingDF, fig.height=5, fig.width=7.5}
-dataMappingDF <- PKRatioDataMapping$new(x = "Age",
-                                        y = "Ratio",
-                                        color = groupDataFrame,
-                                        shape = groupDataFrame)
-plotPKRatio(data = pkRatioData[!(pkRatioData$Country %in% "France"), ], 
-            dataMapping = dataMappingDF)
+dataMappingDF <- PKRatioDataMapping$new(
+  x = "Age",
+  y = "Ratio",
+  color = groupDataFrame,
+  shape = groupDataFrame
+)
+plotPKRatio(
+  data = pkRatioData[!(pkRatioData$Country %in% "France"), ],
+  dataMapping = dataMappingDF
+)
 ```
 
 
@@ -197,13 +221,16 @@ Overwriting these value is possible by updating the value either when initializi
 For instance:
 
 ```{r linesMapping-plot, fig.height=5, fig.width=7.5}
-linesMapping <- PKRatioDataMapping$new(lines = list(pkRatio1 = 1, pkRatio2 = c(0.2, 5)),
-                                       x = "Age", 
-                                       y = "Ratio",
-                                       color = "Sex")
-plotPKRatio(data = pkRatioData, 
-            dataMapping = linesMapping)
-
+linesMapping <- PKRatioDataMapping$new(
+  lines = list(pkRatio1 = 1, pkRatio2 = c(0.2, 5)),
+  x = "Age",
+  y = "Ratio",
+  color = "Sex"
+)
+plotPKRatio(
+  data = pkRatioData,
+  dataMapping = linesMapping
+)
 ```
 
 ## 2.5. Qualification of PK Ratios
@@ -214,10 +241,12 @@ As a default, these ranges are within 1.5 and 2 folds. However, they can be upda
 
 ```{r, results='asis'}
 # Test of getPKRatioMeasure
-PKRatioMeasure <- getPKRatioMeasure(data = pkRatioData[,c("Age", "Ratio")])
+PKRatioMeasure <- getPKRatioMeasure(data = pkRatioData[, c("Age", "Ratio")])
 
-knitr::kable(x = PKRatioMeasure,
-             caption = "Qualification of PK Ratios")
+knitr::kable(
+  x = PKRatioMeasure,
+  caption = "Qualification of PK Ratios"
+)
 ```
 
 

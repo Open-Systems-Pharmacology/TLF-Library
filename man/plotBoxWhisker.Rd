@@ -14,10 +14,10 @@ plotBoxWhisker(
 )
 }
 \arguments{
-\item{data}{data.frame (or list of data.frames? TO BE DISCUSSED)
+\item{data}{A data.frame (or list of data.frames? TO BE DISCUSSED)
 containing the data to be used for the plot}
 
-\item{metaData}{list of lists (structure TO BE DISCUSSED)
+\item{metaData}{A list of lists (structure TO BE DISCUSSED)
 containing complementary information to data (e.g. unit)}
 
 \item{outliers}{logical defining if outliers should be included in boxplot}
@@ -25,7 +25,7 @@ containing complementary information to data (e.g. unit)}
 \item{dataMapping}{\code{BoxWhiskerDataMapping} object
 mapping of x, y axes + mapping of colorGrouping, sizeGrouping, shapeGrouping}
 
-\item{plotConfiguration}{\code{BoxWhiskerConfiguration} object
+\item{plotConfiguration}{A \code{BoxWhiskerConfiguration} object
 Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend}
 
 \item{plotObject}{ggplot object, if null creates new plot, if not add time profile layers to ggplot}
@@ -34,5 +34,9 @@ Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legen
 a ggplot graphical object
 }
 \description{
-plotBoxWhisker(data, metaData, dataMapping, plotConfiguration)
+Producing box-and-whisker plots
+}
+\references{
+For examples, see:
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/box-whisker-vignette.html}
 }

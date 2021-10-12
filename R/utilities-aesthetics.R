@@ -27,14 +27,14 @@ Linetypes <- enum(c(
 #' @export
 Shapes <- list(
   "circle" = "circle",
-  "square" = 'square',
+  "square" = "square",
   "diamond" = "diamond",
   "triangle" = "triangle",
   "triangleDown" = "triangle down filled",
   "cross" = "cross",
   "plus" = "plus",
   "asterisk" = "asterisk",
-  "blank" = ' ',
+  "blank" = " ",
   "dot" = "bullet",
   "hollowCircle" = "circle open",
   "hollowSquare" = "square open",
@@ -70,7 +70,7 @@ asPlotShape <- function(shapes) {
   ggplotShapes <- NULL
   for (shape in shapes) {
     ggplotShape <- as.character(shape)
-    if(isIncluded(ggplotShape, names(Shapes))){
+    if (isIncluded(ggplotShape, names(Shapes))) {
       ggplotShape <- Shapes[[shape]]
     }
     ggplotShapes <- c(ggplotShapes, ggplotShape)

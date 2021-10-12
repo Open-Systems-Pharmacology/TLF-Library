@@ -54,6 +54,7 @@ The output plot from *initializePlot()* is a regular `ggplot` object to which a 
 Since this method is at the core of every atom and molecule plots of the `tlf`-library, any plot generated using this package will include a *plotConfiguration* field.
 
 Below are a few examples of use case of *initializePlot*:
+
 ```{r initializePlot}
 # Inintialize an empty plot without specific configuration, use the current theme
 emptyPlot <- initializePlot()

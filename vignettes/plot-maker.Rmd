@@ -15,7 +15,11 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  out.width = "100%",
+  include = TRUE,
+  fig.align = "center",
+  echo = FALSE
 )
 ```
 
@@ -31,7 +35,7 @@ The aim of this vignette is to document how to create plots using the `tlf` user
 
 Use the function `runPlotMaker()` to start the User Interface. The function will load `shiny` required for the UI.
 
-```{r start-plot-maker, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
+```{r start-plot-maker}
 knitr::include_graphics("../man/figures/plot-maker/start-plot-maker.png")
 ```
 
@@ -42,7 +46,7 @@ In the navigation bar **Data**, the first field named **Location** allows two wa
 Data can be directly taken from the global environment if the field **Location** uses *environment*. In the figure below, a variable named *myDataset* was created in the global environment and is listed in the field **Variables available in environment**.
 Note that such variables are required as data.frame if you want to create a plot.
 
-```{r import-env-data, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
+```{r import-env-data}
 knitr::include_graphics("../man/figures/plot-maker/import-env-data.png")
 ```
 
@@ -51,7 +55,7 @@ When a file is loaded, it will be read using the function "read.csv" if the file
 Note that it is possible to use options and skip the first lines of your file and/or choose a specific column separator as illustrated in the figure below.
 In the figure below, a variable named *myDataset* was created in the global environment and is listed in the field **Variables available in environment**.
 
-```{r import-file-data, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
+```{r import-file-data}
 knitr::include_graphics("../man/figures/plot-maker/import-file-data.png")
 ```
 
@@ -61,7 +65,7 @@ The field **Data Selection** allows users to enter expressions to select subsets
 The only requirement to use that field is to name the imported data "data".
 For instance, if only male adults are selected in the example below, the field **Data Selection** should include *data$AgeBin %in% "Adults" & data$Sex %in% "Male"*.
 
-```{r imported-data, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
+```{r imported-data}
 knitr::include_graphics("../man/figures/plot-maker/imported-data.png")
 ```
 
@@ -74,7 +78,7 @@ This section will use the data imported from the dataset "test-data.csv" as an e
 The first steps to plot the data is to select which plot and variables are plotted.
 This is the role of the **Data Mapping** navigation bar (figure below).
 
-```{r data-mapping, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
+```{r data-mapping}
 knitr::include_graphics("../man/figures/plot-maker/data-mapping.png")
 ```
 
@@ -82,14 +86,14 @@ In the navigation bar **Data Mapping**, users can select from the variable names
 Some mappings are not used by all the plots and won't be available if the corresponding plot is currently selected.
 Note that if no mapping is wanted for a variable, the corresponding field can be set as **none**. 
 
-```{r data-mapping-x, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
+```{r data-mapping-x}
 knitr::include_graphics("../man/figures/plot-maker/data-mapping-x.png")
 ```
 
 In parallel the field **Select a plot** allows users to choose the advanced plot they want to perform (figure below).
 In the list of available plots, the names were chosen as the names of the `tlf` functions used to perform the same plots.
 
-```{r plot-selection, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
+```{r plot-selection}
 knitr::include_graphics("../man/figures/plot-maker/plot-selection.png")
 ```
 
@@ -97,7 +101,7 @@ The corresponding plot is shown below.
 An additional table is added below the PK Ratio plot and shows the measure of number of points within 1.5- and 2-fold errors.
 Other plots, such as box-whisker plots, may show similar additional results below the plots.
 
-```{r pk-ratio-plot, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
+```{r pk-ratio-plot}
 knitr::include_graphics("../man/figures/plot-maker/pk-ratio-plot.png")
 ```
 
@@ -109,14 +113,14 @@ The examples below illustrate briefly how to update such properties.
 In the **Labels** navigation bar, font properties and content of the most common labels are available. For font properties of ticks and legend are available in the properties **Axes** and **Legend**.
 The example below highlights the updates of the properties of the watermark which indicates "watermark" instead of "template" written bigger in "goldenrod" color.
 
-```{r plot-labels, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
+```{r plot-labels}
 knitr::include_graphics("../man/figures/plot-maker/plot-labels.png")
 ```
 
 The **Background** navigation bar includes the properties of the fill, colors, sizes and linetypes for each background elements. 
 The example below highlights the updates of the properties of the plot area (area around the panel) which was filled with "aliceblue" color and uses a "solid" and "black" border. 
 
-```{r plot-background, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
+```{r plot-background}
 knitr::include_graphics("../man/figures/plot-maker/plot-background.png")
 ```
 
@@ -124,14 +128,14 @@ The **Axes** navigation bar includes the properties of the axes lines (colors, s
 The example below highlights the updates of Y-axis scale in which new limits were defined as `ymin=0.1` and `ymax=10`. 
 Note that limits are taken into account only if both `ymin` and `ymax` values are used.
 
-```{r plot-axes, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
+```{r plot-axes}
 knitr::include_graphics("../man/figures/plot-maker/plot-axes.png")
 ```
 
 The **Legend** navigation bar includes the properties of the position of the legend (figure below).
 Fonts and background are not yet accounted for in the current version of `runPlotMaker()`. 
 
-```{r plot-legend, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
+```{r plot-legend}
 knitr::include_graphics("../man/figures/plot-maker/plot-legend.png")
 ```
 
@@ -140,7 +144,7 @@ As indicated by the help text, using one of the predefined selection keys (**nex
 Any other value will be used as is to define how **points**, **lines**, **ribbons** and **errorbars** are plotted.
 The example below highlights the updates of how lines are plotted in this PK Ratio plot. Lines are now all in "#000000" (black) color using the concept of theme for their linetype (theme map for linetype is solid, then longdash, then dotted line...).
 
-```{r plot-aesthetics, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
+```{r plot-aesthetics}
 knitr::include_graphics("../man/figures/plot-maker/plot-aesthetics.png")
 ```
 
@@ -153,7 +157,7 @@ Additionally, the plot configuration mainly corresponding to the properties upda
 The R code to re-create such an object with the same properties is available in the navigation bar **Export**.
 Users can either copy/paste or save such R code.
 
-```{r plot-export, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
+```{r plot-export}
 knitr::include_graphics("../man/figures/plot-maker/plot-export.png")
 ```
 
@@ -164,7 +168,7 @@ knitr::include_graphics("../man/figures/plot-maker/plot-export.png")
 If *plotObsVsPred* or *plotResVsPred* is selected in **Select a plot**, you can perform and add a regression to your plot by clicking on the optional field **Regression** available below the plot (figure below).
 The regression *lm* stands for *linear model* and will add a linear regression to the plot; while *loess* will perform and add a loess regression to the plot.
 
-```{r plot-regression, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
+```{r plot-regression}
 knitr::include_graphics("../man/figures/plot-maker/plot-regression.png")
 ```
 
@@ -175,6 +179,6 @@ If *plotTornado* is selected in **Select a plot**, two optional fields are avail
 - The field **Use bars** allows you to switch from a tornado plot with horizontal bars to dots instead.
 - The field **Sort by x variable** allows you to choose if the values should be sorted by the absolute value of *x* or used as is.
 
-```{r plot-tornado, out.width="100%", include=TRUE, fig.align="center", echo=FALSE}
+```{r plot-tornado}
 knitr::include_graphics("../man/figures/plot-maker/plot-tornado.png")
 ```

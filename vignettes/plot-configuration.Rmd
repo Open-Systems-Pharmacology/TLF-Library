@@ -52,8 +52,10 @@ Each of these properties is managed by a different R6 class object detailed in t
 myConfiguration <- PlotConfiguration$new()
 # myConfiguration$print()
 
-myConfiguration <- PlotConfiguration$new(title = "my title",
-                                         watermark = "my watermark")
+myConfiguration <- PlotConfiguration$new(
+  title = "my title",
+  watermark = "my watermark"
+)
 # myConfiguration$print()
 ```
 
@@ -70,7 +72,7 @@ myEmptyPlot <- initializePlot(myConfiguration)
 ```
 
 ```{r show-empty-plots, echo=FALSE, fig.cap="left: emptyPlot; right: myEmptyPlot", fig.width=7.5}
-patchwork::wrap_plots(emptyPlot, myEmptyPlot, ncol=2)
+patchwork::wrap_plots(emptyPlot, myEmptyPlot, ncol = 2)
 ```
 
 # 2. Label configuration: *labels*
@@ -88,19 +90,24 @@ It defines the label properties of the following plot captions:
 Each field is a *Label* object that associate a text with font properties:
 
 ```{r label-example}
-title <- Label$new(text = "This is a title text",
-                   font = Font$new(color = "red",
-                                   size = 12))
+title <- Label$new(
+  text = "This is a title text",
+  font = Font$new(
+    color = "red",
+    size = 12
+  )
+)
 ```
 
 ```{r show-label-example, results='asis', echo=FALSE}
-knitr::kable(data.frame("text" = title$text, 
-           "color" = title$font$color,
-           "size" = title$font$size,
-           "face" = title$font$fontFace,
-           "family" = title$font$fontFamily,
-           "angle" = title$font$angle
-           ))
+knitr::kable(data.frame(
+  "text" = title$text,
+  "color" = title$font$color,
+  "size" = title$font$size,
+  "face" = title$font$fontFace,
+  "family" = title$font$fontFamily,
+  "angle" = title$font$angle
+))
 ```
 
 When initializing a *LabelConfiguration* or *PlotConfiguration* object, *Label* and/or *character* objects can be passed on.
@@ -108,24 +115,34 @@ When initializing a *LabelConfiguration* or *PlotConfiguration* object, *Label* 
 *Character* objects will be converted into *Label* objects internally using the current theme.
 
 ```{r label-configuration}
-myRedPlotLabel <- LabelConfiguration$new(title = Label$new(text = "my title", 
-                                                           color = "red"))
+myRedPlotLabel <- LabelConfiguration$new(title = Label$new(
+  text = "my title",
+  color = "red"
+))
 ```
 
 ```{r show-label-configuration, results='asis', echo=FALSE}
 knitr::kable(
   data.frame(
     Property = c("text", "color", "size", "angle", "fontFace", "fontFamily"),
-    title = c(myRedPlotLabel$title$text, myRedPlotLabel$title$font$color, myRedPlotLabel$title$font$size, 
-              myRedPlotLabel$title$font$angle, myRedPlotLabel$title$font$fontFace, myRedPlotLabel$title$font$fontFamily),
-    subtitle = c("", myRedPlotLabel$subtitle$font$color, myRedPlotLabel$subtitle$font$size, 
-                 myRedPlotLabel$subtitle$font$angle, myRedPlotLabel$subtitle$font$fontFace, myRedPlotLabel$subtitle$font$fontFamily),
-    xlabel = c("", myRedPlotLabel$xlabel$font$color, myRedPlotLabel$xlabel$font$size, 
-               myRedPlotLabel$xlabel$font$angle, myRedPlotLabel$xlabel$font$fontFace, myRedPlotLabel$xlabel$font$fontFamily),
-    ylabel = c("", myRedPlotLabel$ylabel$font$color, myRedPlotLabel$ylabel$font$size, 
-               myRedPlotLabel$ylabel$font$angle, myRedPlotLabel$ylabel$font$fontFace, myRedPlotLabel$ylabel$font$fontFamily)
+    title = c(
+      myRedPlotLabel$title$text, myRedPlotLabel$title$font$color, myRedPlotLabel$title$font$size,
+      myRedPlotLabel$title$font$angle, myRedPlotLabel$title$font$fontFace, myRedPlotLabel$title$font$fontFamily
+    ),
+    subtitle = c(
+      "", myRedPlotLabel$subtitle$font$color, myRedPlotLabel$subtitle$font$size,
+      myRedPlotLabel$subtitle$font$angle, myRedPlotLabel$subtitle$font$fontFace, myRedPlotLabel$subtitle$font$fontFamily
+    ),
+    xlabel = c(
+      "", myRedPlotLabel$xlabel$font$color, myRedPlotLabel$xlabel$font$size,
+      myRedPlotLabel$xlabel$font$angle, myRedPlotLabel$xlabel$font$fontFace, myRedPlotLabel$xlabel$font$fontFamily
+    ),
+    ylabel = c(
+      "", myRedPlotLabel$ylabel$font$color, myRedPlotLabel$ylabel$font$size,
+      myRedPlotLabel$ylabel$font$angle, myRedPlotLabel$ylabel$font$fontFace, myRedPlotLabel$ylabel$font$fontFamily
     )
   )
+)
 ```
 
 ## 2.2. Label configuration in plots
@@ -133,23 +150,27 @@ knitr::kable(
 The effect of label configuration in plots is straightforward:
 
 ```{r label-in-plot-configuration}
-plotConfigurationLabel1 <- PlotConfiguration$new(title = "Title",
-                                                     subtitle = "Subtitle",
-                                                     xlabel = "x label",
-                                                     ylabel = "y label")
+plotConfigurationLabel1 <- PlotConfiguration$new(
+  title = "Title",
+  subtitle = "Subtitle",
+  xlabel = "x label",
+  ylabel = "y label"
+)
 
 pLab1 <- initializePlot(plotConfigurationLabel1)
 
-plotConfigurationLabel2 <- PlotConfiguration$new(title = Label$new(text = "Title", size = 12, color = "deepskyblue4"),
-                                                 subtitle = Label$new(text = "Subtitle", size = 11, color = "steelblue"),
-                                                 xlabel = Label$new(text = "x label", size = 10, color = "dodgerblue2"),
-                                                 ylabel = Label$new(text = "y label", size = 10, color = "dodgerblue2"))
+plotConfigurationLabel2 <- PlotConfiguration$new(
+  title = Label$new(text = "Title", size = 12, color = "deepskyblue4"),
+  subtitle = Label$new(text = "Subtitle", size = 11, color = "steelblue"),
+  xlabel = Label$new(text = "x label", size = 10, color = "dodgerblue2"),
+  ylabel = Label$new(text = "y label", size = 10, color = "dodgerblue2")
+)
 
 pLab2 <- initializePlot(plotConfigurationLabel2)
 ```
 
 ```{r show-label-in-plot-configuration, echo=FALSE, fig.cap="left: pLab1; right: pLab2", fig.width=7.5}
-patchwork::wrap_plots(pLab1, pLab2, ncol=2)
+patchwork::wrap_plots(pLab1, pLab2, ncol = 2)
 ```
 
 ## 2.3. Changing plot labels
@@ -182,38 +203,54 @@ The four examples below illustrate the smart configurations:
 *pSmart1* and *pSmart2* will turn out the same, while *pSmart3* will use the information from *metaData* to write the x and y labels. *pSmart4* will overwrite the y label and title based on the input.
 
 ```{r smart-example}
-time <- seq(0,20, 0.1)
-myData <- data.frame(x = time,
-                     y = 2*cos(time))
-myMetaData <- list(x = list(dimension = "Time",
-                            unit = "min"),
-                   y = list(dimension = "Amplitude",
-                            unit = "cm"))
-myMapping <- XYGDataMapping$new(x = "x",
-                                y = "y")
+time <- seq(0, 20, 0.1)
+myData <- data.frame(
+  x = time,
+  y = 2 * cos(time)
+)
+myMetaData <- list(
+  x = list(
+    dimension = "Time",
+    unit = "min"
+  ),
+  y = list(
+    dimension = "Amplitude",
+    unit = "cm"
+  )
+)
+myMapping <- XYGDataMapping$new(
+  x = "x",
+  y = "y"
+)
 
 smartConfig1 <- PlotConfiguration$new(data = myData)
-smartConfig2 <- PlotConfiguration$new(data = myData,
-                                      dataMapping = myMapping)
-smartConfig3 <- PlotConfiguration$new(data = myData,
-                                      metaData = myMetaData)
-smartConfig4 <- PlotConfiguration$new(title = Label$new(text = "Cosinus", size = 14),
-                                      ylabel = "Variations",
-                                      data = myData,
-                                      metaData = myMetaData)
+smartConfig2 <- PlotConfiguration$new(
+  data = myData,
+  dataMapping = myMapping
+)
+smartConfig3 <- PlotConfiguration$new(
+  data = myData,
+  metaData = myMetaData
+)
+smartConfig4 <- PlotConfiguration$new(
+  title = Label$new(text = "Cosinus", size = 14),
+  ylabel = "Variations",
+  data = myData,
+  metaData = myMetaData
+)
 
-pSmart1 <- initializePlot(smartConfig1) 
-pSmart2 <- initializePlot(smartConfig2) 
-pSmart3 <- initializePlot(smartConfig3) 
-pSmart4 <- initializePlot(smartConfig4) 
+pSmart1 <- initializePlot(smartConfig1)
+pSmart2 <- initializePlot(smartConfig2)
+pSmart3 <- initializePlot(smartConfig3)
+pSmart4 <- initializePlot(smartConfig4)
 ```
 
 ```{r show-smart-example-1, echo=FALSE, fig.cap="left: pSmart1; right: pSmart2", fig.width=7.5}
-patchwork::wrap_plots(pSmart1, pSmart2, ncol=2)
+patchwork::wrap_plots(pSmart1, pSmart2, ncol = 2)
 ```
 
 ```{r show-smart-example-2, echo=FALSE, fig.cap="left: pSmart3; right: pSmart4", fig.width=7.5}
-patchwork::wrap_plots(pSmart3, pSmart4, ncol=2)
+patchwork::wrap_plots(pSmart3, pSmart4, ncol = 2)
 ```
 
 Since all of the `tlf` plots are internally using *initializePlot*, if a previous plot is not provided, the smart configurations can directly be used through the plot functions. Consequently, if *scatter1* will provide simple x and y labels, *scatter2* will name these labels after the metaData properties.
@@ -221,23 +258,29 @@ Since all of the `tlf` plots are internally using *initializePlot*, if a previou
 As for *scatter3* and *scatter4*, they will use the plotConfiguration defined by *smartConfig4* and lead to the exact same plot.
 
 ```{r smart-scatter}
-scatter1 <-  addScatter(data = myData)
-scatter2 <-  addScatter(data = myData,
-                        metaData = myMetaData)
+scatter1 <- addScatter(data = myData)
+scatter2 <- addScatter(
+  data = myData,
+  metaData = myMetaData
+)
 
-scatter3 <-  addScatter(data = myData,
-                        plotConfiguration = smartConfig4)
+scatter3 <- addScatter(
+  data = myData,
+  plotConfiguration = smartConfig4
+)
 scatter4 <- initializePlot(smartConfig4)
-scatter4 <- addScatter(data = myData,
-                       plotObject = scatter4)
+scatter4 <- addScatter(
+  data = myData,
+  plotObject = scatter4
+)
 ```
 
 ```{r show-smart-scatter 1, echo=FALSE, fig.cap="left: scatter1; right: scatter2", fig.width=7.5}
-patchwork::wrap_plots(scatter1, scatter2, ncol=2)
+patchwork::wrap_plots(scatter1, scatter2, ncol = 2)
 ```
 
 ```{r show-smart-scatter 2, echo=FALSE, fig.cap="left: scatter3; right: scatter4", fig.width=7.5}
-patchwork::wrap_plots(scatter3, scatter4, ncol=2)
+patchwork::wrap_plots(scatter3, scatter4, ncol = 2)
 ```
 
 # 3. Background configuration: *background*
@@ -266,16 +309,16 @@ background <- BackgroundConfiguration$new()
 
 ```{r show-background-object, results='asis', echo=FALSE}
 knitr::kable(
-  data.frame(Property = c("color", "size", "linetype", "fill"),
-             plot = c(background$plot$color, background$plot$size, background$plot$linetype, background$plot$fill),
-             panel = c(background$panel$color, background$panel$size, background$panel$linetype, background$panel$fill),
-             xGrid = c(background$xGrid$color, background$xGrid$size, background$xGrid$linetype, ""),
-             yGrid = c(background$yGrid$color, background$yGrid$size, background$yGrid$linetype, ""),
-             xAxis = c(background$xAxis$color, background$xAxis$size, background$xAxis$linetype, ""),
-             yAxis = c(background$yAxis$color, background$yAxis$size, background$yAxis$linetype, "")
-             )
+  data.frame(
+    Property = c("color", "size", "linetype", "fill"),
+    plot = c(background$plot$color, background$plot$size, background$plot$linetype, background$plot$fill),
+    panel = c(background$panel$color, background$panel$size, background$panel$linetype, background$panel$fill),
+    xGrid = c(background$xGrid$color, background$xGrid$size, background$xGrid$linetype, ""),
+    yGrid = c(background$yGrid$color, background$yGrid$size, background$yGrid$linetype, ""),
+    xAxis = c(background$xAxis$color, background$xAxis$size, background$xAxis$linetype, ""),
+    yAxis = c(background$yAxis$color, background$yAxis$size, background$yAxis$linetype, "")
   )
-
+)
 ```
 
 ## 3.2. Background configuration in plots
@@ -294,7 +337,7 @@ pBack2 <- initializePlot(plotConfigurationBackground1)
 ```
 
 ```{r show-background-in-plot-configuration, echo=FALSE, fig.cap="left: pBack1; right: pBack2", fig.width=7.5}
-patchwork::wrap_plots(pBack1, pBack2, ncol=2)
+patchwork::wrap_plots(pBack1, pBack2, ncol = 2)
 ```
 
 ## 3.3. Changing background properties
@@ -398,11 +441,12 @@ setXAxis(scatter1, limits = c(0.5, 20), scale = Scaling$sqrt)
 ```
 
 ```{r set-x-axis-ticks, fig.width=7.5}
-setXAxis(scatter1, 
-         limits = c(0, 6*pi),
-         ticks = seq(0, 6*pi, pi),
-         ticklabels = c("0", "pi", paste0(seq(2, 6), "*pi")),
-         font = Font$new(color = "dodgerblue"))
+setXAxis(scatter1,
+  limits = c(0, 6 * pi),
+  ticks = seq(0, 6 * pi, pi),
+  ticklabels = c("0", "pi", paste0(seq(2, 6), "*pi")),
+  font = Font$new(color = "dodgerblue")
+)
 ```
 
 # 5. Legend configuration: *legend*

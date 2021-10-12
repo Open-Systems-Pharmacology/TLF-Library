@@ -15,20 +15,23 @@ plotPKRatio(
 \arguments{
 \item{data}{data.frame containing the data to be used for the plot}
 
-\item{metaData}{list of lists
-containing complementary information to data (e.g. their unit and dimension).
-This parameter is optional.}
+\item{metaData}{list of lists containing complementary information to data
+(e.g. their unit and dimension). This parameter is optional.}
 
-\item{dataMapping}{\code{PKRatioDataMapping} class or subclass mapping x and y variables to \code{data} variable names.
-\code{dataMapping} provides also the values of the PK Ratio limits plotted as horizontal lines.
-This parameter is optional: the \code{tlf} library provides a smart mapping if only \code{data} is provided
-and default values of the PK Ratio limits.}
+\item{dataMapping}{A \code{PKRatioDataMapping} class or subclass mapping x and y
+variables to \code{data} variable names. \code{dataMapping} provides also the values
+of the PK Ratio limits plotted as horizontal lines. This parameter is
+optional: the \code{tlf} library provides a smart mapping if only \code{data} is
+provided and default values of the PK Ratio limits.}
 
-\item{plotConfiguration}{\code{PKRatioPlotConfiguration} class or subclass defining labels, grid, background and watermark
-This parameter is optional: the \code{tlf} library provides a default configuration according to the current theme}
+\item{plotConfiguration}{A \code{PKRatioPlotConfiguration} class or subclass
+defining labels, grid, background and watermark This parameter is optional:
+the \code{tlf} library provides a default configuration according to the current
+theme}
 
-\item{plotObject}{\code{ggplot} graphical object to which the PK Ratio plot layer is added
-This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided}
+\item{plotObject}{\code{ggplot} graphical object to which the PK Ratio plot layer
+is added This parameter is optional: the \code{tlf} library will initialize an
+empty plot if the parameter is \code{NULL} or not provided.}
 }
 \value{
 A \code{ggplot} graphical object
@@ -37,4 +40,8 @@ A \code{ggplot} graphical object
 Add PK Ratio plot layers to a \code{ggplot} graphical object.
 PK Ratio limits are plotted as horizontal lines.
 PK Ratios are plotted as a scatter plot.
+}
+\references{
+For examples, see:
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio-vignette.html}
 }
