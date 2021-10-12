@@ -1,18 +1,25 @@
 #' @title plotBoxWhisker
-#' @param data data.frame (or list of data.frames? TO BE DISCUSSED)
+#'
+#' @param data A data.frame (or list of data.frames? TO BE DISCUSSED)
 #' containing the data to be used for the plot
-#' @param metaData list of lists (structure TO BE DISCUSSED)
+#' @param metaData A list of lists (structure TO BE DISCUSSED)
 #' containing complementary information to data (e.g. unit)
 #' @param outliers logical defining if outliers should be included in boxplot
 #' @param dataMapping `BoxWhiskerDataMapping` object
 #' mapping of x, y axes + mapping of colorGrouping, sizeGrouping, shapeGrouping
-#' @param plotConfiguration `BoxWhiskerConfiguration` object
+#' @param plotConfiguration A `BoxWhiskerConfiguration` object
 #' Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend
 #' @param plotObject
 #' ggplot object, if null creates new plot, if not add time profile layers to ggplot
+#'
 #' @description
-#' plotBoxWhisker(data, metaData, dataMapping, plotConfiguration)
+#' Producing box-and-whisker plots
+#'
 #' @return a ggplot graphical object
+#'
+#' @references For examples, see:
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/box-whisker-vignette.html>
+#'
 #' @export
 plotBoxWhisker <- function(data,
                            metaData = NULL,

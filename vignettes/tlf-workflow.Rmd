@@ -44,7 +44,7 @@ As such, `tlf`-library requires that the `ggplot2` package be installed.
 
 The suggested workflow for producing any kind of plot with the `tlf`-library is illustrated in the figure below. 
 
-```{r workflow-illustration, out.width="100%", fig.align="center", echo=FALSE}
+```{r workflow-illustration, echo=FALSE}
 knitr::include_graphics("workflow.png")
 ```
 
@@ -77,9 +77,14 @@ plotNames <- c("PKRatio", "DDIRatio", "IndividualIdProfile", "ObsVsPred", "Histo
 classesNames <- c("DataMapping", "PlotConfiguration")
 functionNames <- c("plot")
 
-conventionTable <- data.frame(sapply(classesNames, function(x){paste0(plotNames, x)}), 
-           sapply(functionNames, function(x){paste0(x, plotNames)}),
-           row.names = plotNames)
+conventionTable <- data.frame(sapply(classesNames, function(x) {
+  paste0(plotNames, x)
+}),
+sapply(functionNames, function(x) {
+  paste0(x, plotNames)
+}),
+row.names = plotNames
+)
 
 
 knitr::kable(conventionTable)
@@ -98,12 +103,12 @@ In the sequel, we will use a dataset derived from the `OSPSuiteR` package: `test
 
 ```{r get-test-data, echo=FALSE, results='asis'}
 testData <- read.csv(
-    system.file("extdata", "ospsuite-data.csv", package = "tlf"),
-    check.names = FALSE,
-    stringsAsFactors = FALSE
-  )
+  system.file("extdata", "ospsuite-data.csv", package = "tlf"),
+  check.names = FALSE,
+  stringsAsFactors = FALSE
+)
 
-knitr::kable(head(testData[,1:6])) #For aesthetics of the table align='c', digits =2)
+knitr::kable(head(testData[, 1:6])) # For aesthetics of the table align='c', digits =2)
 ```
 
 ## 2.2. MetaData
@@ -112,19 +117,21 @@ A `metaData` variable associated with the data can be used to define additional 
 
 ```{r get-test-metadata, results='asis', echo=FALSE}
 metaDataTable <- read.csv(
-    system.file("extdata", "ospsuite-metadata.csv", package = "tlf"),
-    check.names = FALSE,
-    stringsAsFactors = FALSE
-  )
+  system.file("extdata", "ospsuite-metadata.csv", package = "tlf"),
+  check.names = FALSE,
+  stringsAsFactors = FALSE
+)
 
 knitr::kable(metaDataTable)
 ```
 
 ```{r get-test-metadata-as-list, include=FALSE}
 testMetaData <- list()
-for(variableIndex in 1:nrow(metaDataTable)){
-  testMetaData[[metaDataTable$Variable[variableIndex]]] <- list(dimension = metaDataTable$Dimension[variableIndex],
-                                                                unit = metaDataTable$Unit[variableIndex])
+for (variableIndex in 1:nrow(metaDataTable)) {
+  testMetaData[[metaDataTable$Variable[variableIndex]]] <- list(
+    dimension = metaDataTable$Dimension[variableIndex],
+    unit = metaDataTable$Unit[variableIndex]
+  )
 }
 ```
 
@@ -147,17 +154,23 @@ To illustrate the functions of this class for the example of the dataframe `test
 For this example, the `AggregationSummary` object `aggSummary` is instantiated as follows:
 
 ```{r aggregate-example, results='asis'}
-aggSummary <- AggregationSummary$new(data = testData , 
-                                     metaData = testMetaData,
-                                     xColumnNames = "IndividualId",
-                                     groupingColumnNames = "Gender",
-                                     yColumnNames = "Organism|VenousBlood|Volume",
-                                     aggregationFunctionsVector = c(min,mean),
-                                     aggregationFunctionNames =c("Simulated Min",
-                                                                 "Simulated Mean"),
-                                     aggregationUnitsVector = c("l","l"),
-                                     aggregationDimensionsVector = c("Volume",
-                                                                     "Volume"))
+aggSummary <- AggregationSummary$new(
+  data = testData,
+  metaData = testMetaData,
+  xColumnNames = "IndividualId",
+  groupingColumnNames = "Gender",
+  yColumnNames = "Organism|VenousBlood|Volume",
+  aggregationFunctionsVector = c(min, mean),
+  aggregationFunctionNames = c(
+    "Simulated Min",
+    "Simulated Mean"
+  ),
+  aggregationUnitsVector = c("l", "l"),
+  aggregationDimensionsVector = c(
+    "Volume",
+    "Volume"
+  )
+)
 ```
 
 The dataframe that holds the summary statistics of the aggregated rows is stored in the `dfHelper` property of the resulting `aggSummary` object. Since two functions (`min` and `mean`) were specified in `aggregationFunctionsVector`, the dataframe `aggSummary$dfHelper` has, in addition to the `xColumnNames`and `groupingColumnNames` columns, two additional columns named `Simulated Min` and `Simulated Mean`, which were the names specified in `aggregationFunctionNames`.
@@ -167,7 +180,7 @@ head(aggSummary$dfHelper)
 ```
 
 ```{r show-aggregation-summary, echo=FALSE, results='asis'}
-knitr::kable(head(aggSummary$dfHelper, digits=2))
+knitr::kable(head(aggSummary$dfHelper, digits = 2))
 ```
 
 The `metaData` corresponding to the columns of the resulting dataframes are lists that are stored together in a list with the `metaData` of the `xColumnNames`and `groupingColumnNames` columns.  The `metaData` for the new `aggSummary$dfHelper` dataframe is stored as the `metaDataHelper` property of the `aggSummary` object. For this example, the two `metaData` lists corresponding to the `Simulated Min` and `Simulated Mean` columns are also are labeled `Simulated Min` and `Simulated Mean`. The contents of the list `aggSummary$metaDataHelper` are:
@@ -175,8 +188,14 @@ The `metaData` corresponding to the columns of the resulting dataframes are list
 ```{r show-meta-data-of-aggregation, results='asis'}
 # Currently issue with metaData of Gender
 aggSummary$metaDataHelper[[2]] <- NULL
-aggMetaData <- data.frame("unit" = sapply(aggSummary$metaDataHelper, function(x){x$unit}),
-                          "dimension" = sapply(aggSummary$metaDataHelper, function(x){x$dimension}))
+aggMetaData <- data.frame(
+  "unit" = sapply(aggSummary$metaDataHelper, function(x) {
+    x$unit
+  }),
+  "dimension" = sapply(aggSummary$metaDataHelper, function(x) {
+    x$dimension
+  })
+)
 
 knitr::kable(aggMetaData)
 ``` 
@@ -198,27 +217,31 @@ As an example, a `Grouping` object called `grouping1` can be used to specify tha
 
 ```{r grouping-2-variables, results='asis'}
 # Grouping by variable names:
-grouping1 <- Grouping$new(c("Compound","Dose"))
+grouping1 <- Grouping$new(c("Compound", "Dose"))
 ```
 
 With this minimal input, a legend associated with this grouping will have the default title "Compound-Dose". On the other hand, a custom title for this grouping and its legend can be supplied by the user with the optional `label` input:
 
 ```{r grouping-2-variable-with-label, results='asis'}
 # Grouping by variable names and overwriting the default label:
-grouping2 <- Grouping$new(group = c("Compound","Dose"), label = "Compound & Dose")
+grouping2 <- Grouping$new(group = c("Compound", "Dose"), label = "Compound & Dose")
 ```
 
 In the above two examples, default captions are constructed by hyphenating the compound type and the dose amount for each row.  Alternatively, the captions can be customized by the user by supplying a dataframe with the custom captions to the `group` input of the `Grouping` object constructor.  The format of this dataframe is such that the rightmost column contains the desired captions, the name of this rightmost column is the default legend title for this grouping, and the remaining columns define the combinations of row entries that are to receive each caption in the rightmost column.  To illustrate this method, the following dataframe `mappingDataFrame` is used to assign captions based on entries in the "Dose" and "Compound" columns.  For example, the caption "6mg of Aspirin" is assigned to any row in which the "Dose" entry is 6 and the "Compound" entry is "Aspirin". 
 
 ```{r grouping-using-dataframe, results='asis'}
 # Grouping using a data.frame:
-mappingDataFrame <- data.frame(Compound = c("Aspirin","Aspirin","Sugar","Sugar"),
-                               Dose = c(6,3,6,3),  
-                               "Compound & Dose"  = c("6mg of Aspirin",
-                                                      "3mg of Aspirin",
-                                                      "6mg of Sugar",
-                                                      "3mg of Sugar"),
-                               check.names = FALSE)
+mappingDataFrame <- data.frame(
+  Compound = c("Aspirin", "Aspirin", "Sugar", "Sugar"),
+  Dose = c(6, 3, 6, 3),
+  "Compound & Dose" = c(
+    "6mg of Aspirin",
+    "3mg of Aspirin",
+    "6mg of Sugar",
+    "3mg of Sugar"
+  ),
+  check.names = FALSE
+)
 knitr::kable(mappingDataFrame)
 grouping3 <- Grouping$new(group = mappingDataFrame)
 ```
@@ -229,15 +252,19 @@ The three `Grouping` objects, `grouping1`, `grouping2`, and `grouping3` respecti
 
 ```{r grouping-show-captions, results='asis'}
 # Apply the mapping to get the grouping captions:
-groupingsDataFrame <- data.frame(testData$IndividualId,
-                                 testData$Dose,
-                                 testData$Compound,
-                                 grouping1$getCaptions(testData),
-                                 grouping2$getCaptions(testData),
-                                 grouping3$getCaptions(testData))
+groupingsDataFrame <- data.frame(
+  testData$IndividualId,
+  testData$Dose,
+  testData$Compound,
+  grouping1$getCaptions(testData),
+  grouping2$getCaptions(testData),
+  grouping3$getCaptions(testData)
+)
 
-names(groupingsDataFrame) <- c("IndividualId", "Dose", "Compound",
-                               grouping1$label, grouping2$label, grouping3$label)
+names(groupingsDataFrame) <- c(
+  "IndividualId", "Dose", "Compound",
+  grouping1$label, grouping2$label, grouping3$label
+)
 
 # Show results for all groupings:
 knitr::kable(groupingsDataFrame)
@@ -247,10 +274,14 @@ A dataframe can also be used to create a `Grouping` object that subsets the data
 
 ```{r binning-age, results='asis'}
 # Grouping using a data.frame:
-binningDataFrame <- data.frame(Age = I( list(c(0,6),c(7,100)) ), 
-                               "Age Range" = c("Age 6 or lower",
-                                               "Above age 6"),
-                               check.names = FALSE)
+binningDataFrame <- data.frame(
+  Age = I(list(c(0, 6), c(7, 100))),
+  "Age Range" = c(
+    "Age 6 or lower",
+    "Above age 6"
+  ),
+  check.names = FALSE
+)
 ```
 
 Then creating a new grouping:
@@ -264,9 +295,11 @@ This new `Grouping` object `grouping4` yields the following captions
 ```{r show-grouping-with-age-bins, results='asis'}
 # Apply the mapping to get the grouping captions:
 testData$Age <- testData$`Organism|Age`
-binnedGroupingsDataFrame <- data.frame(testData$IndividualId,
-                                       testData$Age,
-                                       grouping4$getCaptions(testData)) 
+binnedGroupingsDataFrame <- data.frame(
+  testData$IndividualId,
+  testData$Age,
+  grouping4$getCaptions(testData)
+)
 
 names(binnedGroupingsDataFrame) <- c("IndividualId", "Age", grouping4$label)
 
@@ -280,7 +313,7 @@ An additional `R6` class called `GroupMapping` maps `Grouping` objects to aesthe
 
 ```{r group-mapping-class, results='asis'}
 # Map groups to aesthtic properties
-groups1 <- GroupMapping$new(color =  grouping2 )
+groups1 <- GroupMapping$new(color = grouping2)
 ```
 
 A `GroupMapping` object `groups2` can also be constructed more quickly by directly associating an aesthetic, such as `color`, to a vector of dataframe column names:
@@ -294,8 +327,10 @@ or to a `Grouping` object directly:
 
 ```{r, results='asis'}
 # Map groups to aesthetic properties
-groups3 <- GroupMapping$new(color = Grouping$new(group = c("Compound", "Dose"),
-                                                  label = c("Compound & Dose")))
+groups3 <- GroupMapping$new(color = Grouping$new(
+  group = c("Compound", "Dose"),
+  label = c("Compound & Dose")
+))
 ```
 
 ## 3.2. DataMapping
@@ -306,17 +341,21 @@ When no `GroupMapping` object is supplied upon construction of a `XYGDataMapping
 A dummy variable named `aesDefault` is added to the data.frame, its sole purpose is to allow modifications of aesthetic properties after the creation of the ggplot object (not possible otherwise).
 
 ```{r data-mapping, results='asis'}
-tpMapping <- XYGDataMapping$new(x="IndividualId", y="Organism|VenousBlood|Volume")
-knitr::kable(tpMapping$checkMapData(data = testData,
-                                            metaData = IndividualIdProfileMetaData))
+tpMapping <- XYGDataMapping$new(x = "IndividualId", y = "Organism|VenousBlood|Volume")
+knitr::kable(tpMapping$checkMapData(
+  data = testData,
+  metaData = IndividualIdProfileMetaData
+))
 ```
 
 When a `GroupMapping` object is supplied upon construction of the `XYGDataMapping` object, each `x`,`y` pair is associated with a group that can be used to distinguish the pair aesthetically in the final plot:
 
 ```{r data-mapping-groups-1, results='asis'}
 # Re-use the variable groups previously defined
-tpMapping <- XYGDataMapping$new(x="IndividualId", y="Organism|VenousBlood|Volume", 
-                                        groupMapping = groups1)
+tpMapping <- XYGDataMapping$new(
+  x = "IndividualId", y = "Organism|VenousBlood|Volume",
+  groupMapping = groups1
+)
 
 knitr::kable(tpMapping$checkMapData(data = testData))
 ```

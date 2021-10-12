@@ -527,7 +527,7 @@ loadThemeFromJson <- function(jsonFile) {
     }
     propertyFields <- names(themeContent[[themeProperty]])
     for (propertyField in propertyFields) {
-      if(isIncluded(themeProperty, "aestheticMaps")){
+      if (isIncluded(themeProperty, "aestheticMaps")) {
         propertyExpression <- parse(text = paste0(
           themeProperty, "$", propertyField, " <- themeContent$", themeProperty, "$", propertyField
         ))
@@ -549,7 +549,7 @@ loadThemeFromJson <- function(jsonFile) {
     background$watermark <- themeContent$background$watermark
     background$legendPosition <- themeContent$background$legendPosition
   }
-  
+
   return(Theme$new(
     fonts = fonts,
     background = background,

@@ -1,23 +1,32 @@
 #' @title plotPKRatio
+#'
 #' @param data data.frame containing the data to be used for the plot
-#' @param metaData list of lists
-#' containing complementary information to data (e.g. their unit and dimension).
-#' This parameter is optional.
-#' @param dataMapping
-#' `PKRatioDataMapping` class or subclass mapping x and y variables to `data` variable names.
-#' `dataMapping` provides also the values of the PK Ratio limits plotted as horizontal lines.
-#' This parameter is optional: the `tlf` library provides a smart mapping if only `data` is provided
-#' and default values of the PK Ratio limits.
-#' @param plotConfiguration
-#' `PKRatioPlotConfiguration` class or subclass defining labels, grid, background and watermark
-#' This parameter is optional: the `tlf` library provides a default configuration according to the current theme
-#' @param plotObject `ggplot` graphical object to which the PK Ratio plot layer is added
-#' This parameter is optional: the `tlf` library will initialize an empty plot if the parameter is NULL or not provided
+#' @param metaData list of lists containing complementary information to data
+#'   (e.g. their unit and dimension). This parameter is optional.
+#' @param dataMapping A `PKRatioDataMapping` class or subclass mapping x and y
+#'   variables to `data` variable names. `dataMapping` provides also the values
+#'   of the PK Ratio limits plotted as horizontal lines. This parameter is
+#'   optional: the `tlf` library provides a smart mapping if only `data` is
+#'   provided and default values of the PK Ratio limits.
+#' @param plotConfiguration A `PKRatioPlotConfiguration` class or subclass
+#'   defining labels, grid, background and watermark This parameter is optional:
+#'   the `tlf` library provides a default configuration according to the current
+#'   theme
+#' @param plotObject `ggplot` graphical object to which the PK Ratio plot layer
+#'   is added This parameter is optional: the `tlf` library will initialize an
+#'   empty plot if the parameter is `NULL` or not provided.
+#'
 #' @description
+#'
 #' Add PK Ratio plot layers to a `ggplot` graphical object.
 #' PK Ratio limits are plotted as horizontal lines.
 #' PK Ratios are plotted as a scatter plot.
+#'
 #' @return A `ggplot` graphical object
+#'
+#' @references For examples, see:
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio-vignette.html>
+#'
 #' @export
 plotPKRatio <- function(data,
                         metaData = NULL,
