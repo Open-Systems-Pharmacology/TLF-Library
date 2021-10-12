@@ -23,3 +23,4 @@ An expression to \code{eval()}
 \description{
 Create an expression that adds scatter plot layer
 }
+\keyword{internal}

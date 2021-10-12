@@ -16,3 +16,4 @@ name of the \code{ggplot2} scale
 Translate ticks and ticklabels into a value directly usable by \code{ggplot2}
 to give more flexibilty in the next functions
 }
+\keyword{internal}

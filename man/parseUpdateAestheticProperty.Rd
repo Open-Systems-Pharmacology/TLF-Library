@@ -18,3 +18,4 @@ An expression to \code{eval()}
 Create an expression that updates the aesthetic properties based on
 the information of \code{PlotConfiguration}
 }
+\keyword{internal}

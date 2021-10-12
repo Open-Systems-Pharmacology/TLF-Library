@@ -10,6 +10,7 @@ tlfEnv$packageName <- "tlf"
 #' @export
 #' @description
 #' List of all available legend positions
+#' @keywords internal
 LegendPositions <- enum(c(
   "none",
   "insideTop",

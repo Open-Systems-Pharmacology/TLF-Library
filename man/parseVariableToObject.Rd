@@ -19,3 +19,4 @@ An expression to \code{eval()}
 \description{
 Create an expression of type \code{objectName$variableName <- variableName}
 }
+\keyword{internal}

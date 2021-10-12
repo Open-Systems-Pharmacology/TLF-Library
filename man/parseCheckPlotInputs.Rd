@@ -15,3 +15,4 @@ An expression to \code{eval()}
 \description{
 Create an expression that checks usual plot inputs
 }
+\keyword{internal}

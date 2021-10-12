@@ -1,5 +1,6 @@
 #' @title AestheticProperties
 #' @description Enum of aesthetic property names of `ggplot2`
+#' @export
 AestheticProperties <- enum(c(
   "color",
   "fill",
@@ -118,6 +119,7 @@ AestheticSelectionKeys <- enum(c(
 #' @param position integer defining the current position in the aesthetic map
 #' @param aesthetic name of aesthetic property as defined in enum `AestheticProperties`
 #' @return Vector of aesthetics
+#' @keywords internal
 getAestheticValues <- function(n, selectionKey = NA, position = 0, aesthetic = "color") {
   validateIsIncluded(aesthetic, AestheticProperties)
   # Load aesthetics from current `Theme` object
@@ -156,6 +158,7 @@ getAestheticValues <- function(n, selectionKey = NA, position = 0, aesthetic = "
 #' @param position integer defining at which position to look for aesthetic vector
 #' @param map Aesthetic (e.g. color, shape, linetype) map from `Theme` object.
 #' @return Vector of aesthetics
+#' @keywords internal
 getNextAestheticValues <- function(n, position = 0, map) {
   # Get the map indices of aesthtic values to be output
   aesPositions <- seq(position + 1, position + n)
@@ -173,6 +176,7 @@ getNextAestheticValues <- function(n, position = 0, map) {
 #' @param position integer defining at which position to look for aesthetic vector
 #' @param map Aesthetic (e.g. color, shape, linetype) map from `Theme` object.
 #' @return Vector of aesthetics
+#' @keywords internal
 getSameAestheticValues <- function(n, position = 0, map) {
   # In case the map is not long enough to get the indices in position
   # the indices have to go start back from 1 using modelu function
@@ -190,6 +194,7 @@ getSameAestheticValues <- function(n, position = 0, map) {
 #' @param n integer defining size of returned aesthetic vector
 #' @param map Aesthetic (e.g. color, shape, linetype) map from `Theme` object.
 #' @return Vector of aesthetics
+#' @keywords internal
 getResetAestheticvalues <- function(n, map) {
   return(getNextAestheticValues(n, position = 0, map))
 }
@@ -200,6 +205,7 @@ getResetAestheticvalues <- function(n, map) {
 #' @param position integer defining at which position to look for aesthetic vector
 #' @param map Aesthetic (e.g. color, shape, linetype) map from `Theme` object.
 #' @return Vector of aesthetics
+#' @keywords internal
 getFirstAestheticValues <- function(n, map) {
   return(getSameAestheticValues(n, position = 0, map))
 }

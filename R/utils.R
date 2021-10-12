@@ -17,6 +17,7 @@
 #' @description
 #' Check if inputToCheck is not null, if so output outputIfNotNull,
 #' otherwise, output outputIfNull
+#' @keywords internal
 ifnotnull <- function(inputToCheck, outputIfNotNull, outputIfNull = NULL) {
   if (!is.null(inputToCheck)) {
     outputIfNotNull
@@ -37,6 +38,7 @@ ifnotnull <- function(inputToCheck, outputIfNotNull, outputIfNull = NULL) {
 #' @description
 #' Check if x=y, if so output outputIfEqual,
 #' otherwise, output outputIfNotEqual
+#' @keywords internal
 ifEqual <- function(x, y, outputIfEqual, outputIfNotEqual = NULL) {
   if (x == y) {
     outputIfEqual
@@ -57,6 +59,7 @@ ifEqual <- function(x, y, outputIfEqual, outputIfNotEqual = NULL) {
 #' @description
 #' Check if x is in y, if so output outputIfIncluded,
 #' otherwise, output outputIfNotIncluded
+#' @keywords internal
 ifIncluded <- function(x, y, outputIfIncluded, outputIfNotIncluded = NULL) {
   if (isIncluded(x, y)) {
     outputIfIncluded

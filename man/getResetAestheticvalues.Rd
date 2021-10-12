@@ -18,3 +18,4 @@ Vector of aesthetics
 Get the aesthetic values (e.g color, shape, linetype) from an aesthetic map defined in \code{Theme}.
 Reset the value every time it is used.
 }
+\keyword{internal}

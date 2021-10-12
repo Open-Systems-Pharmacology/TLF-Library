@@ -27,3 +27,4 @@ Symbol <- enum(c(Diamond = 1, Triangle = 2, Circle = 2))
 mySymbol <- Symbol$Diamond
 }
 }
+\keyword{internal}

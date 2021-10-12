@@ -13,4 +13,4 @@ LegendPositions
 \description{
 List of all available legend positions
 }
-\keyword{datasets}
+\keyword{internal}

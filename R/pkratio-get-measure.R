@@ -13,7 +13,7 @@
 #' that are within specific limits
 #' @return a data.frame reporting the PK Ratio Qualification Measure
 #' @export
-#'
+
 getPKRatioMeasure <- function(data, dataMapping = NULL, ratioLimits = c(1.5, 2)) {
   if (is.numeric(data)) {
     PKratios <- data[!is.na(data)]

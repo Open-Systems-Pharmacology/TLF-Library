@@ -435,6 +435,7 @@ getLegendPosition <- function(position) {
 #' @param plotObject ggplot object
 #' @param newLabels labels of caption to merge
 #' @param aestheticSelections `ThemeAestheticSelections` object
+#' @keywords internal
 mergeLegend <- function(plotObject, newLabels, aestheticSelections) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(aestheticSelections, "ThemeAestheticSelections")

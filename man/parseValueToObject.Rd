@@ -17,3 +17,4 @@ An expression to \code{eval()}
 \description{
 Create an expression of type \code{objectName <- value}
 }
+\keyword{internal}

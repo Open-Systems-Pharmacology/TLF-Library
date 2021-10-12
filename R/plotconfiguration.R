@@ -252,6 +252,7 @@ PlotConfiguration <- R6::R6Class(
 #' @return label character of variable with its unit
 #' @description
 #' dataMappingLabel create an axis label with unit if available
+#' @keywords internal
 dataMappingLabel <- function(mapping = NULL, metaData = NULL) {
   label <- NULL
   ifnotnull(mapping, label <- getLabelWithUnit(metaData[[mapping]]$dimension, metaData[[mapping]]$unit))

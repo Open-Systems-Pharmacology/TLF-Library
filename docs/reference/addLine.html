@@ -118,6 +118,9 @@ aesthetic properties defined in plotConfiguration will apply across all layers."
     <li>
       <a href="../articles/tlf-workflow.html">Introduction to tlf-based workflow</a>
     </li>
+    <li>
+      <a href="../articles/visual-dictionary.html">Visual dictionary</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -240,36 +243,38 @@ This parameter is optional: the <code>tlf</code> library will initialize an empt
     <p>A <code>ggplot</code> graphical object</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Add vertical line at x = 2</span>
-<span class='fu'>addLine</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>geom_path: Each group consists of only one observation. Do you need to adjust</span>
-#&gt; <span class='message'>the group aesthetic?</span></div><div class='img'><img src='addLine-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Add vertical line at x = 2 to a previous plot</span>
-<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='initializePlot.html'>initializePlot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>
-    data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>6</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>,
-    mapping <span class='op'>=</span> <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_.html'>aes_string</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"x"</span>, y <span class='op'>=</span> <span class='st'>"y"</span><span class='op'>)</span>
-  <span class='op'>)</span>
-<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>addLine</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>2</span>, plotObject <span class='op'>=</span> <span class='va'>p</span><span class='op'>)</span>
-
-<span class='co'># Add horizontal line at y = 5 to a previous plot</span>
-<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>addLine</span><span class='op'>(</span>y <span class='op'>=</span> <span class='fl'>5</span>, plotObject <span class='op'>=</span> <span class='va'>p</span><span class='op'>)</span>
-
-<span class='co'># Add a custom line</span>
-<span class='va'>time</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>30</span>, <span class='fl'>0.01</span><span class='op'>)</span>
-<span class='va'>customLineData</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>time</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span><span class='op'>(</span><span class='va'>time</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>addLine</span><span class='op'>(</span>
-  data <span class='op'>=</span> <span class='va'>customLineData</span>,
-  dataMapping <span class='op'>=</span> <span class='va'><a href='XYGDataMapping.html'>XYGDataMapping</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"x"</span>, y <span class='op'>=</span> <span class='st'>"y"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='co'># Or for simple cases a smart mapping will get directly x and y from data</span>
-<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>addLine</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>customLineData</span><span class='op'>)</span>
-
-<span class='co'># Add a line with caption</span>
-<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>addLine</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>customLineData</span>, caption <span class='op'>=</span> <span class='st'>"My line"</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Add vertical line at x = 2</span></span>
+<span class='r-in'><span class='fu'>addLine</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> geom_path: Each group consists of only one observation. Do you need to adjust</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> the group aesthetic?</span>
+<span class='r-plt'><img src='addLine-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Add vertical line at x = 2 to a previous plot</span></span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='initializePlot.html'>initializePlot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>  <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span></span>
+<span class='r-in'>    data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>6</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>    mapping <span class='op'>=</span> <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_.html'>aes_string</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"x"</span>, y <span class='op'>=</span> <span class='st'>"y"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>addLine</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>2</span>, plotObject <span class='op'>=</span> <span class='va'>p</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Add horizontal line at y = 5 to a previous plot</span></span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>addLine</span><span class='op'>(</span>y <span class='op'>=</span> <span class='fl'>5</span>, plotObject <span class='op'>=</span> <span class='va'>p</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Add a custom line</span></span>
+<span class='r-in'><span class='va'>time</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>30</span>, <span class='fl'>0.01</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>customLineData</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>time</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span><span class='op'>(</span><span class='va'>time</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>addLine</span><span class='op'>(</span></span>
+<span class='r-in'>  data <span class='op'>=</span> <span class='va'>customLineData</span>,</span>
+<span class='r-in'>  dataMapping <span class='op'>=</span> <span class='va'><a href='XYGDataMapping.html'>XYGDataMapping</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"x"</span>, y <span class='op'>=</span> <span class='st'>"y"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Or for simple cases a smart mapping will get directly x and y from data</span></span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>addLine</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>customLineData</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Add a line with caption</span></span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>addLine</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>customLineData</span>, caption <span class='op'>=</span> <span class='st'>"My line"</span><span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -174,6 +174,7 @@ LineElement <- R6::R6Class(
   )
 )
 
+#' @keywords internal
 requestOnElement <- function(field, value) {
   if (missing(value)) {
     return(field)

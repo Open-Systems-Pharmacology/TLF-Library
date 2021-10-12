@@ -14,5 +14,6 @@ name of the \code{ggplot2} scale
 }
 \description{
 Translate scale into a value directly usable by \code{ggplot2}
-to give more flexibilty in the next functions
+to give more flexibility in the next functions
 }
+\keyword{internal}
