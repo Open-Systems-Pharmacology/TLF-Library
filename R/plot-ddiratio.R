@@ -7,6 +7,9 @@
 #' @param plotConfiguration A `DDIRatioPlotConfiguration` object
 #' @param plotObject `ggplot` graphical object to which the PK Ratio plot layer is added
 #' This parameter is optional: the `tlf` library will initialize an empty plot if the parameter is NULL or not provided
+#' @param residualsVsObserved if `TRUE`, lines of constant residuals are drawn horizontally, as for a residuals vs observations
+#' DDI ratio plot.  Otherwise, these lines are drawn diagonally, as for a predictions vs observations DDI ratio plot.
+#' This input is overidden by `dataMapping$residualsVsObserved`.
 #' @description
 #' Add DDI Ratio plot layers to a `ggplot` graphical object.
 #' Inclcuding Guest et al. limits, DDI Ratio limits as diagonal lines and
@@ -17,15 +20,20 @@ plotDDIRatio <- function(data,
                          metaData = NULL,
                          dataMapping = NULL,
                          plotConfiguration = NULL,
-                         plotObject = NULL) {
+                         plotObject = NULL,
+                         residualsVsObserved = FALSE) {
   eval(parseCheckPlotInputs("DDIRatio"))
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- getAesStringMapping(dataMapping)
 
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
+
+  residualsVsObserved <- residualsVsObserved %||% dataMapping$residualsVsObserved
+  validateIsLogical(residualsVsObserved, nullAllowed = FALSE)
+
   lineOrientation <- "diagonal"
-  if(dataMapping$residualsVsObserved){
+  if(residualsVsObserved){
     lineOrientation <- "horizontal"
   }
 
