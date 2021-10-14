@@ -4,12 +4,14 @@
 \alias{getGuestValues}
 \title{getGuestValues}
 \usage{
-getGuestValues(x, delta = 1)
+getGuestValues(x, delta = 1, residualsVsObserved = FALSE)
 }
 \arguments{
 \item{x}{input values of Guest function}
 
 \item{delta}{parameter of Guest function}
+
+\item{residualsVsObserved}{if true, returns a dataframe for a residuals (predicted/observed) vs observed DDI ratio plot}
 }
 \value{
 A data.frame with x, ymin and ymax defining Guest et al. limits

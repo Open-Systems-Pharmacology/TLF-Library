@@ -133,7 +133,7 @@ parseAddLineLayer <- function(type, value, position) {
   parse(text = paste0(
     "plotObject <- plotObject + ",
     switch(type,
-      "horizontal" = paste0("ggplot2::geom_hline(yintercept = ", value, ","),
+      "horizontal" = paste0("ggplot2::geom_abline(slope=0, intercept = ", value, ","),
       "vertical" = paste0("ggplot2::geom_vline(xintercept = ", value, ","),
       "diagonal" = paste0("ggplot2::geom_abline(slope=1, intercept = ", value, ",")
     ),
