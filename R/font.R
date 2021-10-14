@@ -44,7 +44,10 @@ Font <- R6::R6Class(
         # TODO: check why I get the following error messages
         # "font family not found in Windows font database"
         # family = self$fontFamily,
-        angle = self$angle
+        angle = self$angle,
+        # Center the label even with angle
+        vjust = 0.5,
+        hjust = 0.5
       )
     }
   )
