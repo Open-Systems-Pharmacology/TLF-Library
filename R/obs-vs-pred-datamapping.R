@@ -20,11 +20,7 @@ ObsVsPredDataMapping <- R6::R6Class(
       validateIsIncluded(smoother, c("lm", "loess"), nullAllowed = TRUE)
 
       super$initialize(...)
-
-      # Apply log10 transformation to lines because
-      # plot is log scaled in by default and geom_abline
-      # requires the log transformed values in input of intercept
-      self$lines <- lapply(lines, log10)
+      self$lines <- lines
       self$smoother <- smoother
     }
   )
