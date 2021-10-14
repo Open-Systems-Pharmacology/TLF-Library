@@ -1,3 +1,4 @@
+#' @keywords internal
 isSameLength <- function(...) {
   args <- list(...)
   nrOfLengths <- length(unique(lengths(args)))
@@ -12,10 +13,12 @@ isSameLength <- function(...) {
 #'
 #' @return TRUE if the object or all objects inside the list have nbElements.
 #' Only the first level of the given list is considered.
+#' @keywords internal
 isOfLength <- function(object, nbElements) {
   return(length(object) == nbElements)
 }
 
+#' @keywords internal
 validateIsOfLength <- function(object, nbElements) {
   if (isOfLength(object, nbElements)) {
     return()
@@ -30,6 +33,7 @@ validateIsOfLength <- function(object, nbElements) {
 #'
 #' @return TRUE if the object or all objects inside the list are of the given type.
 #' Only the first level of the given list is considered.
+#' @keywords internal
 isOfType <- function(object, type) {
   if (is.null(object)) {
     return(FALSE)
@@ -47,6 +51,7 @@ isOfType <- function(object, type) {
   all(sapply(object, inheritType))
 }
 
+#' @keywords internal
 validateIsOfType <- function(object, type, nullAllowed = FALSE) {
   if (nullAllowed && is.null(object)) {
     return()
@@ -62,6 +67,7 @@ validateIsOfType <- function(object, type, nullAllowed = FALSE) {
   stop(messages$errorWrongType(objectName, class(object)[1], objectTypes))
 }
 
+#' @keywords internal
 validateEnumValue <- function(enum, value) {
   if (value %in% names(enum)) {
     return()
@@ -70,6 +76,7 @@ validateEnumValue <- function(enum, value) {
   stop(messages$errorValueNotInEnum(enum, value))
 }
 
+#' @keywords internal
 typeNamesFrom <- function(type) {
   if (is.character(type)) {
     return(type)
@@ -78,18 +85,22 @@ typeNamesFrom <- function(type) {
   sapply(type, function(t) t$classname)
 }
 
+#' @keywords internal
 validateIsString <- function(object, nullAllowed = FALSE) {
   validateIsOfType(object, "character", nullAllowed)
 }
 
+#' @keywords internal
 validateIsNumeric <- function(object, nullAllowed = FALSE) {
   validateIsOfType(object, c("numeric", "integer"), nullAllowed)
 }
 
+#' @keywords internal
 validateIsLogical <- function(object, nullAllowed = FALSE) {
   validateIsOfType(object, "logical", nullAllowed)
 }
 
+#' @keywords internal
 validateIsSameLength <- function(...) {
   if (isSameLength(...)) {
     return()
@@ -110,6 +121,7 @@ validateIsSameLength <- function(...) {
 #' @param parentValues Vector of values
 #'
 #' @return TRUE if the values are inside the parent values.
+#' @keywords internal
 isIncluded <- function(values, parentValues) {
   if (is.null(values)) {
     return(FALSE)
@@ -118,6 +130,7 @@ isIncluded <- function(values, parentValues) {
   return(as.logical(min(values %in% parentValues)))
 }
 
+#' @keywords internal
 validateIsIncluded <- function(values, parentValues, nullAllowed = FALSE) {
   if (nullAllowed && is.null(values)) {
     return()
@@ -130,6 +143,7 @@ validateIsIncluded <- function(values, parentValues, nullAllowed = FALSE) {
   stop(messages$errorNotIncluded(values, parentValues))
 }
 
+#' @keywords internal
 validateMapping <- function(mapping, data, nullAllowed = FALSE) {
   if (nullAllowed && is.null(mapping)) {
     return()
@@ -154,6 +168,7 @@ validateMapping <- function(mapping, data, nullAllowed = FALSE) {
 #'
 #' @param eitherInput Input or list of inputs
 #' @param orInput Input or list of inputs
+#' @keywords internal
 validateEitherOrNullInput <- function(eitherInput, orInput) {
   # Convert input to list of input if not already as list
   if (!isOfType(eitherInput, "list")) {

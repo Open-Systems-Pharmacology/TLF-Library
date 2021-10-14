@@ -16,3 +16,4 @@ mergeLegend(plotObject, newLabels, aestheticSelections)
 \description{
 merge legend caption with existing legend caption
 }
+\keyword{internal}

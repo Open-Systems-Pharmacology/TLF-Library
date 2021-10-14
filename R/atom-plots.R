@@ -7,7 +7,6 @@
 #' @description
 #' Initialize a `ggplot` object and set the labels, grid, background and watermark
 #' @return A `ggplot` graphical object
-#' @export
 #' @examples
 #' # Initialize an empty plot
 #' p <- initializePlot()
@@ -15,6 +14,7 @@
 #' # Implement a customized configuration using PlotConfiguration
 #' config <- PlotConfiguration$new(title = "My Plot", xlabel = "x variable", ylabel = "y variable")
 #' p <- initializePlot(config)
+#' @export
 initializePlot <- function(plotConfiguration = NULL) {
   validateIsOfType(plotConfiguration, "PlotConfiguration", nullAllowed = TRUE)
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new()
@@ -60,7 +60,6 @@ initializePlot <- function(plotConfiguration = NULL) {
 #' Since `ggplot` manage aesthetic properties across all layers,
 #' aesthetic properties defined in `plotConfiguration` will apply across all layers.
 #' @return A `ggplot` graphical object
-#' @export
 #' @examples
 #' # Add scatter using x and y
 #' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
@@ -85,6 +84,7 @@ initializePlot <- function(plotConfiguration = NULL) {
 #'
 #' # Add a scatter with specific properties
 #' pp <- addScatter(x = c(0, 1), y = c(1, 0), color = "red", shape = 20, size = 3, plotObject = p)
+#' @export
 addScatter <- function(data = NULL,
                        metaData = NULL,
                        x = NULL,
@@ -197,7 +197,6 @@ addScatter <- function(data = NULL,
 #' Since `ggplot` manage aesthetic properties across all layers,
 #' aesthetic properties defined in `plotConfiguration` will apply across all layers.
 #' @return A `ggplot` graphical object
-#' @export
 #' @examples
 #' # Add vertical line at x = 2
 #' addLine(x = 2)
@@ -227,6 +226,7 @@ addScatter <- function(data = NULL,
 #'
 #' # Add a line with caption
 #' p <- addLine(data = customLineData, caption = "My line")
+#' @export
 addLine <- function(data = NULL,
                     metaData = NULL,
                     x = NULL,
@@ -390,7 +390,6 @@ addLine <- function(data = NULL,
 #' Since `ggplot` manage aesthetic properties across all layers,
 #' aesthetic properties defined in `plotConfiguration` will apply across all layers.
 #' @return A `ggplot` graphical object
-#' @export
 #' @examples
 #' # Add a horizontal ribbon to a previous plot
 #' p <- addRibbon(ymin = -5, ymax = 5)
@@ -422,6 +421,7 @@ addLine <- function(data = NULL,
 #'
 #' # Add a scatter to the ribbon
 #' pLine <- addLine(data = customData, caption = "My plot with ribbon", plotObject = pr)
+#' @export
 addRibbon <- function(data = NULL,
                       metaData = NULL,
                       x = NULL,
@@ -656,6 +656,7 @@ addErrorbar <- function(data = NULL,
   return(plotObject)
 }
 
+#' @keywords internal
 getlegendLabelsCaption <- function(plotObject) {
   legendLabelsCaptionCount <- which(paste0("data ", seq(1, 100)) %in% plotObject$plotConfiguration$legend$caption$label)
   if (length(legendLabelsCaptionCount) == 0) {

@@ -117,6 +117,9 @@ PK Ratios are plotted as a scatter plot." />
     <li>
       <a href="../articles/tlf-workflow.html">Introduction to tlf-based workflow</a>
     </li>
+    <li>
+      <a href="../articles/visual-dictionary.html">Visual dictionary</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -171,32 +174,39 @@ PK Ratios are plotted as a scatter plot.</p>
     </tr>
     <tr>
       <th>metaData</th>
-      <td><p>list of lists
-containing complementary information to data (e.g. their unit and dimension).
-This parameter is optional.</p></td>
+      <td><p>list of lists containing complementary information to data
+(e.g. their unit and dimension). This parameter is optional.</p></td>
     </tr>
     <tr>
       <th>dataMapping</th>
-      <td><p><code>PKRatioDataMapping</code> class or subclass mapping x and y variables to <code>data</code> variable names.
-<code>dataMapping</code> provides also the values of the PK Ratio limits plotted as horizontal lines.
-This parameter is optional: the <code>tlf</code> library provides a smart mapping if only <code>data</code> is provided
-and default values of the PK Ratio limits.</p></td>
+      <td><p>A <code>PKRatioDataMapping</code> class or subclass mapping x and y
+variables to <code>data</code> variable names. <code>dataMapping</code> provides also the values
+of the PK Ratio limits plotted as horizontal lines. This parameter is
+optional: the <code>tlf</code> library provides a smart mapping if only <code>data</code> is
+provided and default values of the PK Ratio limits.</p></td>
     </tr>
     <tr>
       <th>plotConfiguration</th>
-      <td><p><code>PKRatioPlotConfiguration</code> class or subclass defining labels, grid, background and watermark
-This parameter is optional: the <code>tlf</code> library provides a default configuration according to the current theme</p></td>
+      <td><p>A <code>PKRatioPlotConfiguration</code> class or subclass
+defining labels, grid, background and watermark This parameter is optional:
+the <code>tlf</code> library provides a default configuration according to the current
+theme</p></td>
     </tr>
     <tr>
       <th>plotObject</th>
-      <td><p><code>ggplot</code> graphical object to which the PK Ratio plot layer is added
-This parameter is optional: the <code>tlf</code> library will initialize an empty plot if the parameter is NULL or not provided</p></td>
+      <td><p><code>ggplot</code> graphical object to which the PK Ratio plot layer
+is added This parameter is optional: the <code>tlf</code> library will initialize an
+empty plot if the parameter is <code>NULL</code> or not provided.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>ggplot</code> graphical object</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>For examples, see:
+<a href='https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio-vignette.html'>https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio-vignette.html</a></p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

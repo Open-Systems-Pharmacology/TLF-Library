@@ -19,3 +19,4 @@ Vector of aesthetics
 \description{
 Get the same aesthetic values (e.g color, shape, linetype) from an aesthetic map defined in \code{Theme}
 }
+\keyword{internal}

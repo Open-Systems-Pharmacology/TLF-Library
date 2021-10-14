@@ -26,3 +26,4 @@ otherwise, output outputIfNotEqual
 Shortkey checking if arguments 1 and 2 are equal,
 output argument 3 if equal, or output argument 4 otherwise
 }
+\keyword{internal}

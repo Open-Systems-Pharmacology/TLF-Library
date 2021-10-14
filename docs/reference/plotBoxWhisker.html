@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="plotBoxWhisker — plotBoxWhisker" />
-<meta property="og:description" content="plotBoxWhisker(data, metaData, dataMapping, plotConfiguration)" />
+<meta property="og:description" content="Producing box-and-whisker plots" />
 
 
 
@@ -115,6 +115,9 @@
     <li>
       <a href="../articles/tlf-workflow.html">Introduction to tlf-based workflow</a>
     </li>
+    <li>
+      <a href="../articles/visual-dictionary.html">Visual dictionary</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -147,7 +150,7 @@
     </div>
 
     <div class="ref-description">
-    <p>plotBoxWhisker(data, metaData, dataMapping, plotConfiguration)</p>
+    <p>Producing box-and-whisker plots</p>
     </div>
 
     <pre class="usage"><span class='fu'>plotBoxWhisker</span><span class='op'>(</span>
@@ -164,12 +167,12 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>data.frame (or list of data.frames? TO BE DISCUSSED)
+      <td><p>A data.frame (or list of data.frames? TO BE DISCUSSED)
 containing the data to be used for the plot</p></td>
     </tr>
     <tr>
       <th>metaData</th>
-      <td><p>list of lists (structure TO BE DISCUSSED)
+      <td><p>A list of lists (structure TO BE DISCUSSED)
 containing complementary information to data (e.g. unit)</p></td>
     </tr>
     <tr>
@@ -183,7 +186,7 @@ mapping of x, y axes + mapping of colorGrouping, sizeGrouping, shapeGrouping</p>
     </tr>
     <tr>
       <th>plotConfiguration</th>
-      <td><p><code>BoxWhiskerConfiguration</code> object
+      <td><p>A <code>BoxWhiskerConfiguration</code> object
 Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend</p></td>
     </tr>
     <tr>
@@ -195,6 +198,10 @@ Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legen
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a ggplot graphical object</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>For examples, see:
+<a href='https://www.open-systems-pharmacology.org/TLF-Library/articles/box-whisker-vignette.html'>https://www.open-systems-pharmacology.org/TLF-Library/articles/box-whisker-vignette.html</a></p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

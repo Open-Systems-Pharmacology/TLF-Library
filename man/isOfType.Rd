@@ -18,3 +18,4 @@ Only the first level of the given list is considered.
 \description{
 Check if the provided object is of certain type
 }
+\keyword{internal}

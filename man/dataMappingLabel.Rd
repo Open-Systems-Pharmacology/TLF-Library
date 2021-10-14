@@ -17,3 +17,4 @@ label character of variable with its unit
 \description{
 dataMappingLabel create an axis label with unit if available
 }
+\keyword{internal}

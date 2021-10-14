@@ -4,6 +4,7 @@
 #' @param variableName Name of the variable and field of `objectName`
 #' @param keepIfNull logical `objectName$variableName <- variableName %||% objectName$variableName`
 #' @return An expression to `eval()`
+#' @keywords internal
 parseVariableToObject <- function(objectName, variableName, keepIfNull = FALSE) {
   if (keepIfNull) {
     return(parse(text = paste0(objectName, "$", variableName, " <- ", variableName, " %||% ", objectName, "$", variableName)))
@@ -17,6 +18,7 @@ parseVariableToObject <- function(objectName, variableName, keepIfNull = FALSE) 
 #' @param variableName Name of the variable and field of `objectName`
 #' @param keepIfNull logical `variableName <- objectName$variableName %||% variableName`
 #' @return An expression to `eval()`
+#' @keywords internal
 parseVariableFromObject <- function(objectName, variableName, keepIfNull = FALSE) {
   if (keepIfNull) {
     return(parse(text = paste0(variableName, " <- ", objectName, "$", variableName, " %||% ", variableName)))
@@ -29,6 +31,7 @@ parseVariableFromObject <- function(objectName, variableName, keepIfNull = FALSE
 #' @param objectName Name of the object to update
 #' @param value Value of the variable `objectName`
 #' @return An expression to `eval()`
+#' @keywords internal
 parseValueToObject <- function(objectName, value) {
   if (isOfLength(value, 0)) {
     return(parse(text = paste0(objectName, " <- NULL")))
@@ -43,6 +46,7 @@ parseValueToObject <- function(objectName, value) {
 #' @description Create an expression that checks usual plot inputs
 #' @param plotType Type of plot (e.g. "PKRatio" for plotPKRatio)
 #' @return An expression to `eval()`
+#' @keywords internal
 parseCheckPlotInputs <- function(plotType) {
   c(
     expression(validateIsOfType(data, "data.frame")),
@@ -61,6 +65,7 @@ parseCheckPlotInputs <- function(plotType) {
 #' @title parseUpdateAxes
 #' @description Create an expression that updates the plot axes
 #' @return An expression to `eval()`
+#' @keywords internal
 parseUpdateAxes <- function() {
   # Try is used to prevent crashes in the final plot due to ggplot2 peculiarities regarding scale functions
   c(
@@ -75,6 +80,7 @@ parseUpdateAxes <- function() {
 #' @param aestheticProperty Name of aesthetic property as defined in `AestheticProperties`
 #' @param plotConfigurationProperty Name of PlotConfiguration property as defined in `AestheticProperties`
 #' @return An expression to `eval()`
+#' @keywords internal
 parseUpdateAestheticProperty <- function(aestheticProperty, plotConfigurationProperty) {
   c(
     parse(text = paste0(aestheticProperty, 'Variable <- gsub("`", "", mapLabels$', aestheticProperty, ")")),
@@ -94,6 +100,7 @@ parseUpdateAestheticProperty <- function(aestheticProperty, plotConfigurationPro
 #' @title parseAddScatterLayer
 #' @description Create an expression that adds scatter plot layer
 #' @return An expression to `eval()`
+#' @keywords internal
 parseAddScatterLayer <- function() {
   expression({
     plotObject <- plotObject +
@@ -121,6 +128,7 @@ parseAddScatterLayer <- function() {
 #' @param value value of xintercept or yintercept
 #' @param position line position for aesthetic properties
 #' @return An expression to `eval()`
+#' @keywords internal
 parseAddLineLayer <- function(type, value, position) {
   parse(text = paste0(
     "plotObject <- plotObject + ",
@@ -138,6 +146,7 @@ parseAddLineLayer <- function(type, value, position) {
 #' @title parseAddUncertaintyLayer
 #' @description Create an expression that adds errorbars if uncertainty is included in dataMapping
 #' @return An expression to `eval()`
+#' @keywords internal
 parseAddUncertaintyLayer <- function() {
   expression({
     if (!isOfLength(dataMapping$uncertainty, 0)) {

@@ -14,6 +14,7 @@
 #' Symbol <- enum(c(Diamond = 1, Triangle = 2, Circle = 2))
 #' mySymbol <- Symbol$Diamond
 #' }
+#' @keywords internal
 enum <- function(enumValues) {
   myEnum <- as.list(enumValues)
   enumNames <- names(myEnum)
@@ -25,6 +26,7 @@ enum <- function(enumValues) {
   return(myEnum)
 }
 
+#' @keywords internal
 getEnumKey <- function(enum, value) {
   names(which(enum == value))
 }

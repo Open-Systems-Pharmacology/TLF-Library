@@ -14,4 +14,4 @@ Scaling
 Pre-defined transformation of axes
 Not that built-in transformations from \code{ggplot2} includes more transformations
 }
-\keyword{datasets}
+\keyword{internal}

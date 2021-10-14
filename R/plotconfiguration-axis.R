@@ -4,16 +4,16 @@
 #' @description
 #'  Pre-defined transformation of axes
 #'  Not that built-in transformations from `ggplot2` includes more transformations
-Scaling <- enum(c(
-  "lin", "log", "discrete",
-  "reverse", "sqrt", "time", "date"
-))
+#' @keywords internal
+Scaling <- enum(c("lin", "log", "discrete",
+                  "reverse", "sqrt", "time", "date"))
 
 #' @title createPlotScale
 #' @description Translate scale into a value directly usable by `ggplot2`
-#' to give more flexibilty in the next functions
+#' to give more flexibility in the next functions
 #' @param scale character defining the name of the scale
 #' @return name of the `ggplot2` scale
+#' @keywords internal
 createPlotScale <- function(scale) {
   validateIsString(scale)
   if (isIncluded(tolower(scale), c("identity", "lin", "linear", "default", "normal"))) {
@@ -31,6 +31,7 @@ createPlotScale <- function(scale) {
 #' to give more flexibilty in the next functions
 #' @param ticks character, numeric or function defining the ticks
 #' @return name of the `ggplot2` scale
+#' @keywords internal
 createPlotTicks <- function(ticks) {
   if (isOfLength(ticks, 0)) {
     return(waiver())

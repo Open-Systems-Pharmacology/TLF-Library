@@ -14,3 +14,4 @@ validateEitherOrNullInput(eitherInput, orInput)
 \description{
 Check that 2 conflicting inputs can't be provided at the same time
 }
+\keyword{internal}

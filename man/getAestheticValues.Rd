@@ -21,3 +21,4 @@ Vector of aesthetics
 \description{
 Get aesthetic values (e.g color, shape, linetype) based on a selected strategy
 }
+\keyword{internal}
