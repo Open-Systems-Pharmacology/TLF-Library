@@ -27,7 +27,7 @@ DDIRatioDataMapping <- R6::R6Class(
                           ...) {
       super$initialize(...)
       # Apply log10 transformation to lines because
-      # plot is log scaled in by default and geom_abline
+      # plot is log scaled by default and geom_abline
       # requires the log transformed values in input of intercept
       self$lines <- lapply(lines, log10)
       self$minRange <- minRange
