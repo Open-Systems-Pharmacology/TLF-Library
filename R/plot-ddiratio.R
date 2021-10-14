@@ -20,7 +20,7 @@ plotDDIRatio <- function(data,
                          dataMapping = NULL,
                          plotConfiguration = NULL,
                          plotObject = NULL,
-                         residualsVsObserved = FALSE) {
+                         residualsVsObserved = NULL) {
   eval(parseCheckPlotInputs("DDIRatio"))
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- getAesStringMapping(dataMapping)
@@ -28,7 +28,7 @@ plotDDIRatio <- function(data,
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
 
-  residualsVsObserved <- residualsVsObserved %||% dataMapping$residualsVsObserved
+  residualsVsObserved <- residualsVsObserved %||% dataMapping$residualsVsObserved %||% FALSE
   validateIsLogical(residualsVsObserved, nullAllowed = FALSE)
 
   lineOrientation <- "diagonal"
