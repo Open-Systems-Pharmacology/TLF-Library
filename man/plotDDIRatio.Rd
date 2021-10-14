@@ -9,7 +9,8 @@ plotDDIRatio(
   metaData = NULL,
   dataMapping = NULL,
   plotConfiguration = NULL,
-  plotObject = NULL
+  plotObject = NULL,
+  residualsVsObserved = NULL
 )
 }
 \arguments{
@@ -25,6 +26,9 @@ This parameter is optional.}
 
 \item{plotObject}{\code{ggplot} graphical object to which the PK Ratio plot layer is added
 This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided}
+
+\item{residualsVsObserved}{if \code{TRUE}, lines of constant residuals are drawn horizontally, as for a residuals vs observations
+DDI ratio plot.  Otherwise, these lines are drawn diagonally, as for a predictions vs observations DDI ratio plot.}
 }
 \value{
 A \code{ggplot} graphical object
