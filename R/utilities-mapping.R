@@ -215,8 +215,8 @@ smartMapping <- function(data) {
 
   # Names of data.frame variables
   variableNames <- names(data)
-  # If one column, set as y
-  if (ncol(data) == 1) {
+  # If one column, set as y unless name is "x"
+  if (ncol(data) == 1 & !(variableNames[1] %in% "x")) {
     mapping$y <- variableNames[1]
   }
   # If 2 columns, set as x, y

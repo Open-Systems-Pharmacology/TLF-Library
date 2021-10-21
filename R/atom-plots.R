@@ -111,7 +111,7 @@ addScatter <- function(data = NULL,
     data <- data.frame(data, check.names = FALSE)
   }
 
-  dataMapping <- dataMapping %||% XYGDataMapping$new(x = x, y = y, data = data)
+  dataMapping <- dataMapping %||% XYGDataMapping$new(x = "x", y = "y", data = data)
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
   # Update plotConfiguration if user defined aesthetics
   eval(parseVariableToObject("plotConfiguration$points", c("color", "shape", "linetype", "size"), keepIfNull = TRUE))
@@ -254,7 +254,7 @@ addLine <- function(data = NULL,
     data <- data.frame(data, check.names = FALSE)
   }
 
-  dataMapping <- dataMapping %||% XYGDataMapping$new(x = x, y = y, data = data)
+  dataMapping <- dataMapping %||% XYGDataMapping$new(x = "x", y = "y", data = data)
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
   # Update plotConfiguration if user defined aesthetics
   eval(parseVariableToObject("plotConfiguration$lines", c("color", "shape", "linetype", "size"), keepIfNull = TRUE))
