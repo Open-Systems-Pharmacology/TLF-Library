@@ -27,215 +27,361 @@ require(tlf)
 ```{r load-theme, echo=FALSE}
 vignetteTheme <- loadThemeFromJson(system.file("extdata", "template-theme.json", package = "tlf"))
 useTheme(vignetteTheme)
+
+cosData <- data.frame(time = seq(0, 20, 0.5), cos = cos(seq(0, 20, 0.5)), sin = sin(seq(0, 20, 0.5)))
+testData <- read.csv(system.file("extdata", "test-data.csv", package = "tlf"), stringsAsFactors = FALSE)
 ```
 
 This vignette tackles how to use atom plots to prepare simple to more complex plots with the `tlf`-library.
 
-# Introduction to atom plots
+## Introduction to atom plots
 
-An **atom plot** corresponds to a simple plot that can be combined with other atom plots to form a final, often more complex, plot that will be referred to as a **molecule plot**.
+An **atom plot** corresponds to a simple plot that can be combined with other atom plots to form a final **molecule plot**, often more complex.
 
-Here we outline the following atom plots:
+## `initializePlot`
 
-- *initializePlot*
-- *addScatter*
-- *addLine*
-- *addRibbon*
-- *addErrorbar*
+The `tlf` function **`initializePlot`** creates an empty plot whose properties are defined by a *PlotConfiguration* object.
+The function `initializePlot` is called by every `tlf` plot function if no `plotObject` is provided as input and returns a regular `ggplot` object that includes an additional field named `plotConfiguration` defining its properties as a *PlotConfiguration* object.
 
-# Initialize a plot object: *initializePlot*
+A detailed presentation of *PlotConfiguration* objects is available in the vignette *plot-configuration*.
 
-The `tlf` method *initializePlot* aims at creating an empty plot with properties defined by a *PlotConfiguration* R6 class or subclass object.
-More details on *PlotConfiguration* objects are available in a separate vignette.
-The default option for *initializePlot()* does not require a *plotConfiguration* object to be specifically input by the user; 
-in which case, *plotConfiguration* will be derived automatically from the current theme.
+A few examples that use `initializePlot` are shown below.
 
-The output plot from *initializePlot()* is a regular `ggplot` object to which a *plotConfiguration* field is inclduded.
-Since this method is at the core of every atom and molecule plots of the `tlf`-library, any plot generated using this package will include a *plotConfiguration* field.
+- Initialize an empty plot from the current theme (no `plotConfiguration` input)
 
-Below are a few examples of use case of *initializePlot*:
+```{r initializePlot minimal example}
+initializePlot()
+```
 
-```{r initializePlot}
-# Inintialize an empty plot without specific configuration, use the current theme
-emptyPlot <- initializePlot()
+- Initialize an empty plot with labels defined by `plotConfiguration` input
 
-# Create a PlotConfiguration object with some specifications
+```{r initializePlot with plot configuration}
+# Create a PlotConfiguration object to specify plot properties (here labels)
 myConfiguration <- PlotConfiguration$new(
   title = "My empty plot",
-  xlabel = "X",
-  ylabel = "Y"
+  xlabel = "My X axis",
+  ylabel = "My Y axis"
 )
+# Use the obect to define the plot properties
+initializePlot(plotConfiguration = myConfiguration)
+```
 
-# Use the specification to create the plot
-emptyPlotWithLabels <- initializePlot(myConfiguration)
+- Initialize an empty plot whose `plotConfiguration` input uses `data`, `metaData` and `dataMapping` to fill the plot *x* and *y* labels.
+   - if `metaData` provides dimension and unit, the labels will be `dimension [unit]` by default.
+   - if only `data` is provided, the labels will include the column name by default
+   - if `xlabel` and `ylabel` are used, they will replace those default
 
-# PlotConfiguration class has a smart mapping feature,
-# directly deriving labels from data and its metaData and its dataMapping
-time <- seq(0, 20, 0.1)
-myData <- data.frame(
-  x = time,
-  y = 2 * cos(time)
-)
+```{r show cosData, results='asis'}
+# data.frame for example
+knitr::kable(head(cosData))
+```
 
-# If metaData includes dimension and unit,
-# they can be use by the smart configuration to generate labels as "dimension [unit]"
-myMetaData <- list(
-  x = list(
+```{r show cosMetaData}
+# Define which is x and y variables using dataMapping
+cosMapping <- XYGDataMapping$new(x = "time", y = "cos")
+
+# Define the metaData
+cosMetaData <- list(
+  time = list(
     dimension = "Time",
     unit = "min"
   ),
-  y = list(
-    dimension = "Amplitude",
-    unit = "cm"
+  cos = list(
+    dimension = "Cosinus",
+    unit = ""
   )
 )
-myMapping <- XYGDataMapping$new(
-  x = "x",
-  y = "y"
-)
-
-# In this example, the configuration will use the x/y mapping from dataMapping
-# to fetch dimension and unit from metaData
-mySmartConfiguration <- PlotConfiguration$new(
-  title = "My smart plot",
-  data = myData,
-  metaData = myMetaData,
-  dataMapping = myMapping
-)
-
-smartEmptyPlot <- initializePlot(mySmartConfiguration)
+cosMetaData
 ```
 
-```{r initializePlot-output, echo=FALSE, fig.cap="Left: emptyPlot; Middle: emptyPlotWithLabels; Right: smartEmptyPlot", fig.width=7.5}
-patchwork::wrap_plots(emptyPlot, emptyPlotWithLabels, smartEmptyPlot, ncol = 3)
+```{r initializePlot with smart plot configuration on metaData}
+# Define default Configuration with metaData
+metaDataConfiguration <- PlotConfiguration$new(
+  title = "Cosinus plot",
+  data = cosData,
+  metaData = cosMetaData,
+  dataMapping = cosMapping
+)
+
+initializePlot(plotConfiguration = metaDataConfiguration)
 ```
 
-# Add scatter or lines to a plot object: *addScatter*, *addLine*
-
-The functions *addScatter* and *addLine* aims at providing an easy interface to add points or lines to a plot object.
-If a plot object is specified in *plotObject* input, then the layer will be added on top of the previous plot.
-In the case the input is `NULL` (default value), the function *initializePlot* is called internally.
-
-The following data will be used as an example in the next section:
-
-```{r get-ExampleData, echo=FALSE}
-myTestData <- read.csv(system.file("extdata", "test-data.csv", package = "tlf"), stringsAsFactors = FALSE)
-myTestData <- data.frame(
-  x = myTestData$Obs,
-  y = myTestData$Pred,
-  type = myTestData$Sex,
-  country = myTestData$Country
+```{r initializePlot with smart plot configuration on data}
+# Define default Configuration with metaData
+dataConfiguration <- PlotConfiguration$new(
+  title = "Cosinus plot",
+  data = cosData,
+  dataMapping = cosMapping
 )
+
+initializePlot(plotConfiguration = dataConfiguration)
 ```
 
-```{r show-ExampleData, results='asis'}
-knitr::kable(utils::head(myTestData))
+```{r initializePlot with smart plot configuration overwritten}
+# Define default Configuration with metaData
+overwriteConfiguration <- PlotConfiguration$new(
+  title = "Cosinus plot",
+  ylabel = "new y label",
+  data = cosData,
+  metaData = cosMetaData,
+  dataMapping = cosMapping
+)
+
+initializePlot(plotConfiguration = overwriteConfiguration)
 ```
 
-## *addScatter*
+## `addScatter`
 
-The primary input parameter of function *addScatter* is *data* and can be used along with its *metaData* and *dataMapping*.
-However, it is also possible to directly use the input parameters *x* and *y* instead to plot directly *y* as a function of *x*.
+The function *addScatter* returns a scatter plot.
+Likewise all the `tlf` plot functions, the input argument `data` and its `metaData` can be used to defined what to plot.
 
-```{r scatter-mapping}
-# Naive mapping on x and y
-myMapping <- XYGDataMapping$new(
-  x = "x",
-  y = "y"
-)
-
-# Mapping on x and y, while grouping the data by type
-myGroupMapping <- XYGDataMapping$new(
-  x = "x",
-  y = "y",
-  color = "type"
-)
-
-# Plots
-
-# Using the naive mapping
-pNaive <- addScatter(
-  data = myTestData,
-  metaData = myMetaData,
-  dataMapping = myMapping
-)
-
-# Using tlf smart mapping (same as naive)
-pSmart <- addScatter(
-  data = myTestData,
-  metaData = myMetaData
-)
-
-# Using group in mapping
-pGroup <- addScatter(
-  data = myTestData,
-  metaData = myMetaData,
-  dataMapping = myGroupMapping
-)
-
-# Using x and y (same as naive but without metaData, no label)
-pXY <- addScatter(
-  x = myTestData$x,
-  y = myTestData$y
+```{r addScatter data}
+addScatter(
+  data = cosData,
+  metaData = cosMetaData,
+  dataMapping = cosMapping
 )
 ```
 
-```{r show-scatter-mapping, fig.height=7, fig.width=7, echo=FALSE, fig.cap="top left: pNaive; top right: pSmart; bottom left: pGroup; bottom right: pXY", fig.width=7.5}
-patchwork::wrap_plots(pNaive, pSmart, pGroup, pXY, ncol = 2)
+The argument `plotConfiguration` also works the same way as in `initializePlot`:
+
+```{r addScatter with smart plot configuration overwritten}
+addScatter(
+  data = cosData,
+  metaData = cosMetaData,
+  dataMapping = cosMapping,
+  plotConfiguration = overwriteConfiguration
+)
 ```
 
-Input parameters of *addScatter* also include *plotConfiguration* and *plotObject* as previously described.
-Input parameters *caption*, *color*, *size*, *shape* and *linetype* can overwrite the default aesthetic and legend values defined by *plotConfiguration*.
-These parameters are optional and will be `NULL` by default, which will lead to use aesthetic from the current theme.
-In particular, *dataMapping* also allows to create a legend caption, the input parameter *caption* can overwrtie such legend caption.
+The function `addScatter` also supports `x` and `y` inputs instead of `data` and its `dataMapping`.
+In this case, the function will internally create the data.frame with `x` and `y` column names along with its data mapping.
 
-```{r addScatter-options}
-males <- myTestData$type %in% "Male"
-females <- myTestData$type %in% "Female"
+```{r addScatter xy}
+addScatter(
+  x = cosData$time,
+  y = cosData$cos
+)
+```
 
-# Using x and y
-pScatter1 <- addScatter(
-  x = myTestData$x[males],
-  y = myTestData$y[males],
-  color = "blue",
+It is also possible to prove a `plotConfiguration` to define the properties especially the labels of the plot created by this process.
+
+```{r addScatter xy with plot configuration overwritten}
+addScatter(
+  x = cosData$time,
+  y = cosData$cos,
+  plotConfiguration = overwriteConfiguration
+)
+```
+
+Additionally, optional arguments can be used that will overwrite the default and specific properties of the `plotConfiguration`.
+
+- `color`: color of the scatter points. Note that multiple colors can be provided if `dataMapping` defines multiple groups.
+- `shape`: shape of the scatter points. Note that multiple shapes can be provided if `dataMapping` defines multiple groups.
+- `size`: size of the scatter points. Note that multiple shapes can be provided if `dataMapping` defines multiple groups.
+- `linetype`: linetype of lines connecting the scatter points. Note that multiple linetypes can be provided if `dataMapping` defines multiple groups.
+- `caption`: Name of the legend caption for the scatter points. Note that multiple captions can be provided if `dataMapping` defines multiple groups.
+
+```{r addScatter xy with optional properties}
+addScatter(
+  x = cosData$time,
+  y = cosData$cos,
+  color = "firebrick",
+  shape = Shapes$cardsHeart,
   size = 3,
-  caption = "Male"
-)
-pScatter2 <- addScatter(
-  x = myTestData$x[females],
-  y = myTestData$y[females],
-  color = "pink",
-  size = 3,
-  caption = "Female"
-)
-pScatter3 <- addScatter(
-  x = myTestData$x[females],
-  y = myTestData$y[females],
-  color = "pink",
-  size = 3,
-  caption = "Female",
-  plotObject = pScatter1
+  caption = "heart"
 )
 ```
 
-```{r show-addScatter, echo=FALSE, fig.width=9, fig.cap="Left: pScatter1; Middle: pScatter2; Right: pScatter3"}
-patchwork::wrap_plots(pScatter1, pScatter2, pScatter3, ncol = 3)
+
+If the input argument `plotObject` is used, then the scatter layer is added on top of the input plot and will use the `plotConfiguration` of `plotObject`.
+
+```{r addScatter with plotObject}
+scatterPlot <- addScatter(
+  x = cosData$time,
+  y = cosData$cos,
+  color = "firebrick",
+  shape = Shapes$cardsHeart,
+  size = 3,
+  caption = "heart",
+  plotConfiguration = overwriteConfiguration
+)
+
+scatterPlot
+
+addScatter(
+  x = cosData$time,
+  y = cosData$cos + 2,
+  color = "black",
+  shape = Shapes$cardsSpade,
+  size = 3,
+  caption = "spade",
+  plotObject = scatterPlot
+)
 ```
 
-Finally, the last input parameters include *caption*, *color*, *size*, *shape*, and *linetype*. 
-These parameters are optional and will use the default of the current theme if they are not specified.
-In particular, *dataMapping* also allows to create a legend caption, the input parameter *caption* can overwrite such legend caption.
+## `addLine`
 
-## *addLine*
+The function `addLine` returns a line plot. 
+The same arguments as `addScatter` can be used by `addLine`, only default properties are different.
 
-The function *addLine* is almost identical to *addScatter*.
-It differs regarding its default aesthetic properties: lines are replacing the points, even if points can be used.
-It also differs by the possibility of using *x* or *y* input for x/y-intercepts.
+```{r addLine xy}
+addLine(
+  x = cosData$time,
+  y = cosData$cos
+)
+```
 
-# Add ribbon or errorbars to a plot object: *addRibbon*, *addErrorbar*
+```{r addLine xy with optional properties}
+addLine(
+  x = cosData$time,
+  y = cosData$cos,
+  color = "firebrick",
+  linetype = Linetypes$longdash,
+  size = 1,
+  caption = "line with\nlong dashes"
+)
+```
 
-These atoms work in a similar fashion to *addScatter* and *addLine* but they use a different mapping that require *ymin* and *ymax* instead of *y*.
+Since line plots can inlcude horizontal and vertical lines, `addLine` has the possibility of using *x* or *y* input for x/y-intercepts.
 
-## *addRibbon*
+```{r addLine horizontal lines}
+addLine(
+  y = c(1, 2, 3),
+  caption = "horizontal lines"
+)
+```
 
-## *addErrorbar*
+```{r addLine vertical lines}
+addLine(
+  x = c(1, 2, 3),
+  caption = "vertical lines"
+)
+```
+
+The functions `addScatter` and `addLine` can also be combined:
+
+```{r addLine with plotObject}
+scatterPlot <- addScatter(
+  x = cosData$time,
+  y = cosData$cos,
+  color = "firebrick",
+  shape = Shapes$cardsHeart,
+  size = 3,
+  caption = "heart",
+  plotConfiguration = overwriteConfiguration
+)
+
+scatterPlot
+
+addLine(
+  y = 0.5,
+  color = "dodgerblue",
+  linetype = Linetypes$solid,
+  size = 0.5,
+  caption = "threshold",
+  plotObject = scatterPlot
+)
+```
+
+## `addRibbon`
+
+The function `addRibbon` returns a ribbon plot.
+Ribbons require `ymin` and `ymax` inputs.
+Consequently, a different `dataMapping` of type *RangeDataMapping* is necessary compared to `addLine` and `addScatter` that require *XYGDataMapping*.
+
+```{r addRibbon data}
+sinCosMapping <- RangeDataMapping$new(
+  x = "time",
+  ymin = "sin",
+  ymax = "cos"
+)
+
+addRibbon(
+  data = cosData,
+  metaData = cosMetaData,
+  dataMapping = sinCosMapping
+)
+```
+
+The function `addRibbon` also supports `x`, `ymin` and `ymax` inputs instead of `data` and its `dataMapping`.
+
+```{r addRibbon xy}
+addRibbon(
+  x = cosData$time,
+  ymin = cosData$sin,
+  ymax = cosData$cos
+)
+```
+
+For ribbons, optional inputs include `fill` and `alpha` defining the color and transparency of the ribbon, respectively.
+
+```{r addRibbon optional inputs}
+addRibbon(
+  x = cosData$time,
+  ymin = cosData$sin,
+  ymax = cosData$cos,
+  fill = "firebrick",
+  alpha = 0.5,
+  caption = "ribbon plot"
+)
+```
+
+Note that transparency input, `alpha`, is a value between 0 and 1. 
+The closer to 0, the more transparent the `fill` color is.
+The closer to 1, the more visible the `fill` color is.
+
+## `addErrorbar`
+
+The function `addErrorbar` returns an error bar plot.
+As for ribbons, error bars require `ymin` and `ymax` inputs.
+
+```{r addErrorbar xy}
+addErrorbar(
+  x = cosData$time,
+  ymin = cosData$sin,
+  ymax = cosData$cos
+)
+```
+
+Among its optional inputs, `addErrorbar` proposes `includeCap` a logical that defines if caps are included at the extremities of the error bars.
+
+```{r addErrorbar optional inputs}
+addErrorbar(
+  x = cosData$time,
+  ymin = cosData$sin,
+  ymax = cosData$cos,
+  color = "firebrick",
+  linetype = Linetypes$solid,
+  includeCap = TRUE,
+  size = 0.5,
+  caption = "error bar plot"
+)
+```
+
+Note that optional inputs for `addErrorbar` define the aesthetic of the bars only (and not how to link the bars).
+Thus, two layers are necessary when creating a plot that inlcuded both data and their error bars. 
+
+```{r addErrorbar and Scatter}
+errorPlot <- addErrorbar(
+  x = cosData$time,
+  ymin = cosData$cos - 0.1,
+  ymax = cosData$cos + 0.2,
+  caption = "error",
+  color = "black",
+  size = 0.5,
+  plotConfiguration = overwriteConfiguration
+)
+
+errorPlot
+
+addScatter(
+  x = cosData$time,
+  y = cosData$cos,
+  color = "firebrick",
+  shape = Shapes$cardsHeart,
+  size = 3,
+  caption = "heart",
+  plotObject = errorPlot
+)
+```
