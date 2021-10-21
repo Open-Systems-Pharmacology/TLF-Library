@@ -245,14 +245,14 @@ addLine(
 
 Since line plots can inlcude horizontal and vertical lines, `addLine` has the possibility of using *x* or *y* input for x/y-intercepts.
 
-```{r addLine horizontal lines}
+```{r addLine horizontal lines, eval=FALSE}
 addLine(
   y = c(1, 2, 3),
   caption = "horizontal lines"
 )
 ```
 
-```{r addLine vertical lines}
+```{r addLine vertical lines, eval=FALSE}
 addLine(
   x = c(1, 2, 3),
   caption = "vertical lines"
@@ -261,7 +261,7 @@ addLine(
 
 The functions `addScatter` and `addLine` can also be combined:
 
-```{r addLine with plotObject}
+```{r addLine with plotObject, eval=FALSE}
 scatterPlot <- addScatter(
   x = cosData$time,
   y = cosData$cos,
