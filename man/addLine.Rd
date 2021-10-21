@@ -65,6 +65,7 @@ Since \code{ggplot} manage aesthetic properties across all layers,
 aesthetic properties defined in \code{plotConfiguration} will apply across all layers.
 }
 \examples{
+\dontrun{
 # Add vertical line at x = 2
 addLine(x = 2)
 
@@ -78,7 +79,7 @@ p <- addLine(x = 2, plotObject = p)
 
 # Add horizontal line at y = 5 to a previous plot
 p <- addLine(y = 5, plotObject = p)
-
+}
 # Add a custom line
 time <- seq(0, 30, 0.01)
 customLineData <- data.frame(x = time, y = cos(time))

@@ -111,7 +111,7 @@ addScatter <- function(data = NULL,
     data <- data.frame(data, check.names = FALSE)
   }
 
-  dataMapping <- dataMapping %||% XYGDataMapping$new(x = x, y = y, data = data)
+  dataMapping <- dataMapping %||% XYGDataMapping$new(x = "x", y = "y", data = data)
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
   # Update plotConfiguration if user defined aesthetics
   eval(parseVariableToObject("plotConfiguration$points", c("color", "shape", "linetype", "size"), keepIfNull = TRUE))
@@ -198,6 +198,7 @@ addScatter <- function(data = NULL,
 #' aesthetic properties defined in `plotConfiguration` will apply across all layers.
 #' @return A `ggplot` graphical object
 #' @examples
+#' \dontrun{
 #' # Add vertical line at x = 2
 #' addLine(x = 2)
 #'
@@ -211,7 +212,7 @@ addScatter <- function(data = NULL,
 #'
 #' # Add horizontal line at y = 5 to a previous plot
 #' p <- addLine(y = 5, plotObject = p)
-#'
+#'}
 #' # Add a custom line
 #' time <- seq(0, 30, 0.01)
 #' customLineData <- data.frame(x = time, y = cos(time))
@@ -254,7 +255,7 @@ addLine <- function(data = NULL,
     data <- data.frame(data, check.names = FALSE)
   }
 
-  dataMapping <- dataMapping %||% XYGDataMapping$new(x = x, y = y, data = data)
+  dataMapping <- dataMapping %||% XYGDataMapping$new(x = "x", y = "y", data = data)
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
   # Update plotConfiguration if user defined aesthetics
   eval(parseVariableToObject("plotConfiguration$lines", c("color", "shape", "linetype", "size"), keepIfNull = TRUE))
