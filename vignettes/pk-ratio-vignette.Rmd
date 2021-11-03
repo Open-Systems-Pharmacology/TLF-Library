@@ -31,7 +31,7 @@ useTheme(vignetteTheme)
 
 # 1. Introduction
 
-The following vignette aims at documenting and illustrating workflows for producing PK ratio plots using the function `plotPKRatio` from the `tlf` package.
+The following vignette aims at documenting and illustrating workflows for producing PK ratio plots using the `tlf`-Library.
 
 This vignette focuses PK ratio plots examples. Detailed documentation on typical `tlf` workflow, use of `AgregationSummary`, `DataMapping`, `PlotConfiguration`, and `Theme` can be found in `vignette("tlf-workflow")`.
 

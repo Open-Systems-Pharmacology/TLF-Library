@@ -43,5 +43,5 @@ PK Ratios are plotted as a scatter plot.
 }
 \references{
 For examples, see:
-\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio.html}
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio-vignette.html}
 }

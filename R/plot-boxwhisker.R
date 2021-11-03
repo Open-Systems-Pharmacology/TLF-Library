@@ -18,7 +18,7 @@
 #' @return a ggplot graphical object
 #'
 #' @references For examples, see:
-#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/box-whisker.html>
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/box-whisker-vignette.html>
 #'
 #' @export
 plotBoxWhisker <- function(data,

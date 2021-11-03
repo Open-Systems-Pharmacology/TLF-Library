@@ -25,7 +25,7 @@
 #' @return A `ggplot` graphical object
 #'
 #' @references For examples, see:
-#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio.html>
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio-vignette.html>
 #'
 #' @export
 plotPKRatio <- function(data,

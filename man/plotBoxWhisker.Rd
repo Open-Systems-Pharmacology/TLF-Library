@@ -38,5 +38,5 @@ Producing box-and-whisker plots
 }
 \references{
 For examples, see:
-\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/box-whisker.html}
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/box-whisker-vignette.html}
 }
