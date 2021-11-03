@@ -5,42 +5,62 @@
 \title{plotHistogram}
 \usage{
 plotHistogram(
-  data,
+  data = NULL,
   metaData = NULL,
+  x = NULL,
   dataMapping = NULL,
   bins = NULL,
+  binwidth = NULL,
   stack = NULL,
-  fitNormalDist = NULL,
-  fitDensity = NULL,
+  distribution = NULL,
   plotConfiguration = NULL,
   plotObject = NULL
 )
 }
 \arguments{
-\item{data}{data.frames containing the data to be used for the plot}
+\item{data}{data.frame containing the data to be used for the plot}
 
-\item{metaData}{list of lists (structure TO BE DISCUSSED)
-containing complementary information to data (e.g. unit)}
+\item{metaData}{list of lists containing complementary information to data
+(e.g. their unit and dimension). This parameter is optional.}
 
-\item{dataMapping}{R6 class HistogramDataMapping
-mapping of which data to use for histogram}
+\item{x}{numeric values used in the histogram instead of \code{data}.
+Only use if \code{data} and \code{dataMapping} is NULL or not input.}
 
-\item{bins}{(optional)}
+\item{dataMapping}{A \code{HistogramDataMapping} object mapping x and y
+variables to \code{data} variable names. \code{dataMapping} provides also the values
+of the PK Ratio limits plotted as horizontal lines. This parameter is
+optional: the \code{tlf} library provides a smart mapping if only \code{data} is
+provided and default values of the PK Ratio limits.}
 
-\item{plotConfiguration}{R6 class HistogramPlotConfiguration
-Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend}
+\item{bins}{Number or edges of bins.
+If \code{bins} is provided as a single numeric values, \code{bin} corresponds to number of bins.
+The bin edges are then equally spaced within the range of data.
+If \code{bins} is provided as an array of numeric values, \code{bin} corresponds to their edges.}
 
-\item{plotObject}{ggplot object, if null creates new plot, if not add time profile layers to ggplot}
+\item{binwidth}{Numerical value of defining the width of each bin.
+If defined, \code{binwidth} can overwrite \code{bins} if \code{bins} was not provided or simply provided as a single value.}
 
-\item{binWidth}{(optional)}
+\item{stack}{Logical defining for multiple histograms if their bars are stacked}
 
-\item{verticalLineFunctions}{(optional)}
+\item{distribution}{Name of distribution to fit to the data.
+Only 2 distributions are currently available: \code{"normal"} and \code{"logNormal"}}
 
-\item{verticalLineFunctionNames}{(optional)}
+\item{plotConfiguration}{A \code{HistogramPlotConfiguration} object
+defining labels, grid, background and watermark This parameter is optional:
+the \code{tlf} library provides a default configuration according to the current
+theme}
+
+\item{plotObject}{\code{ggplot} graphical object to which the histogram plot layer
+is added. This parameter is optional: the \code{tlf} library will initialize an
+empty plot if the parameter is \code{NULL} or not provided.}
 }
 \value{
-a ggplot graphical object
+A \code{ggplot} graphical object
 }
 \description{
-plotHistogram(data, metaData, dataMapping, plotConfiguration)
+Add Histogram plot layer to a \code{ggplot} graphical object.
+}
+\references{
+For examples, see:
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/histogram.html}
 }

@@ -185,7 +185,13 @@ ui <- fluidPage(
     ),
     conditionalPanel(
       condition = "input.selectedPlot == 'plotObsVsPred' || input.selectedPlot == 'plotResVsPred'",
-      selectInput("smootherObsVsPred", label = "Regression", choices = list("none" = "none", "loess" = "loess", "lm" = "lm"), selected = "None")
+      selectInput("smootherObsVsPred", label = "Regression", choices = list("none" = "none", "loess" = "loess", "lm" = "lm"), selected = "none")
+    ),
+    conditionalPanel(
+      condition = "input.selectedPlot == 'plotHistogram'",
+      sliderInput("binsHistogram", label = "Bins", value = 7, min = 1, max = 1e2),
+      selectInput("stackHistogram", label = "Stack bars", choices = list("Yes" = TRUE, "No" = FALSE), selected = "Yes"),
+      selectInput("fitHistogram", label = "Fit distribution", choices = list("none" = "none", "normal" = "normal", "logNormal" = "logNormal"), selected = "none")
     ),
     align = "center"
   )
@@ -317,7 +323,10 @@ server <- function(input, output) {
       plotPKRatio = PKRatioDataMapping$new(x = xVariable, y = yVariable, color = colorVariable, shape = shapeVariable, uncertainty = uncertaintyVariable),
       plotDDIRatio = DDIRatioDataMapping$new(x = xVariable, y = yVariable, color = colorVariable, shape = shapeVariable, uncertainty = uncertaintyVariable),
       plotBoxWhisker = BoxWhiskerDataMapping$new(x = xVariable, y = yVariable, fill = fillVariable),
-      plotHistogram = HistogramDataMapping$new(x = xVariable, y = yVariable, fill = fillVariable),
+      plotHistogram = HistogramDataMapping$new(
+        x = xVariable, fill = fillVariable,
+        bins = input$binsHistogram, stack = as.logical(input$stackHistogram), distribution = input$fitHistogram
+        ),
       plotTimeProfile = TimeProfileDataMapping$new(
         x = xVariable, y = yVariable, ymin = yminVariable, ymax = ymaxVariable,
         color = colorVariable, linetype = linetypeVariable, fill = fillVariable

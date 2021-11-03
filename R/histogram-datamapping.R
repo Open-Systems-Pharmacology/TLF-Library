@@ -1,6 +1,5 @@
 #' @title HistogramDataMapping
-#' @description  R6 class for mapping `x`, `verticalLineGroupings`,
-#' `verticalLineFunctionNames` and `verticalLineFunctions` variables to `data`
+#' @description  R6 class for mapping `x`, `bins`, `binwidth`,`stack` and `distribution` to `data`
 #' @export
 HistogramDataMapping <- R6::R6Class(
   "HistogramDataMapping",
@@ -10,37 +9,33 @@ HistogramDataMapping <- R6::R6Class(
     stack = NULL,
     #' @field bins number of bins or binning values/methods passed on `ggplot2::geom_histogram`
     bins = NULL,
-    #' @field lines values or functions to define vertical lines
-    lines = NULL,
-    #' @field fitNormalDist logical defining if a normal distribution should be fitted
-    fitNormalDist = NULL,
-    #' @field fitDensity logical defining if a density distribution function should be fitted
-    fitDensity = NULL,
+    #' @field binwidth width of bins passed on `ggplot2::geom_histogram`. Overwrites `bins`
+    binwidth = NULL,
+    #' @field distribution Name of distribution to fit to the data.
+    #' Only 2 distributions are currently available: `"normal"` and `"logNormal"`
+    distribution = NULL,
 
     #' @description Create a new `HistogramDataMapping` object
     #' @param stack logical defining if histogram bars should be stacked
     #' @param bins argument passed on `ggplot2::geom_histogram`
-    #' @param lines values or functions to define vertical lines
-    #' @param fitNormalDist logical defining if a normal distribution should be fitted
-    #' @param fitDensity logical defining if a density distribution should be fitted
+    #' @param binwidth width of bins passed on `ggplot2::geom_histogram`. Overwrites `bins`
+    #' @param distribution Name of distribution to fit to the data.
+    #' Only 2 distributions are currently available: `"normal"` and `"logNormal"`
     #' @param ... parameters inherited from `XYGDataMapping`
     #' @return A new `HistogramDataMapping` object
     initialize = function(stack = FALSE,
-                          bins = NULL,
-                          lines = DefaultDataMappingValues$histogram,
-                          fitNormalDist = FALSE,
-                          fitDensity = FALSE,
-                          ...) {
+                              bins = NULL,
+                              binwidth = NULL,
+                              distribution = NULL,
+                              ...) {
       super$initialize(...)
       validateIsLogical(stack)
-      validateIsLogical(fitNormalDist)
-      validateIsLogical(fitDensity)
-      self$stack <- stack
-      self$fitNormalDist <- fitNormalDist
-      self$fitDensity <- fitDensity
+      validateIsIncluded(distribution, c("none", "normal", "logNormal"), nullAllowed = TRUE)
 
-      self$bins <- bins
-      self$lines <- lines
+      self$stack <- stack
+      self$bins <- bins %||% tlfEnv$defaultAggregation$bins
+      self$binwidth <- binwidth
+      self$distribution <- distribution %||% "none"
     }
   )
 )
