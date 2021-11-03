@@ -167,14 +167,15 @@ XAxisConfiguration <- R6::R6Class(
   public = list(
     #' @description Update axis configuration on a `ggplot` object
     #' @param plotObject `ggplot` object
+    #' @param ylim limits of `y` axis to prevent `coord_cartesian` to overwrite its properties
     #' @return A `ggplot` object with updated axis properties
-    updatePlot = function(plotObject) {
+    updatePlot = function(plotObject, ylim = NULL) {
       validateIsOfType(plotObject, "ggplot")
       # Update font properties
       plotObject <- plotObject + ggplot2::theme(axis.text.x = private$.font$createPlotFont())
       # Update limits using coor_cartesian to prevent ggplot to remove data and crash
       suppressMessages(
-        plotObject <- plotObject + ggplot2::coord_cartesian(xlim = private$.limits)
+        plotObject <- plotObject + ggplot2::coord_cartesian(xlim = private$.limits, ylim = ylim)
       )
       # Update scales and ticks
       if (isIncluded(private$.scale, Scaling$discrete)) {
@@ -207,13 +208,14 @@ YAxisConfiguration <- R6::R6Class(
 
     #' @description Update axis configuration on a `ggplot` object
     #' @param plotObject `ggplot` object
+    #' @param xlim limits of `x` axis to prevent `coord_cartesian` to overwrite its properties
     #' @return A `ggplot` object with updated axis properties
-    updatePlot = function(plotObject) {
+    updatePlot = function(plotObject, xlim = NULL) {
       validateIsOfType(plotObject, "ggplot")
       # Update font properties
       plotObject <- plotObject + ggplot2::theme(axis.text.y = private$.font$createPlotFont())
       suppressMessages(
-        plotObject <- plotObject + ggplot2::coord_cartesian(ylim = private$.limits)
+        plotObject <- plotObject + ggplot2::coord_cartesian(xlim = xlim, ylim = private$.limits)
       )
       # Update scales and ticks
       if (isIncluded(private$.scale, Scaling$discrete)) {

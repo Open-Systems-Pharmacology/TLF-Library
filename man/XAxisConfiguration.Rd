@@ -29,13 +29,15 @@ R6 class defining the configuration of X-axis
 \subsection{Method \code{updatePlot()}}{
 Update axis configuration on a \code{ggplot} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{XAxisConfiguration$updatePlot(plotObject)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{XAxisConfiguration$updatePlot(plotObject, ylim = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{plotObject}}{\code{ggplot} object}
+
+\item{\code{ylim}}{limits of \code{y} axis to prevent \code{coord_cartesian} to overwrite its properties}
 }
 \if{html}{\out{</div>}}
 }
