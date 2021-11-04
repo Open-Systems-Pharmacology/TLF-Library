@@ -27,7 +27,7 @@ setXAxis <- function(plotObject,
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$xAxis
   xAxis <- newPlotObject$plotConfiguration$xAxis
   eval(parseVariableToObject("xAxis", c("limits", "scale", "ticks", "ticklabels", "font"), keepIfNull = TRUE))
-  newPlotObject <- xAxis$updatePlot(newPlotObject)
+  newPlotObject <- xAxis$updatePlot(newPlotObject, ylim = newPlotObject$plotConfiguration$yAxis$limits)
   return(newPlotObject)
 }
 
@@ -60,7 +60,7 @@ setYAxis <- function(plotObject,
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$yAxis
   yAxis <- newPlotObject$plotConfiguration$yAxis
   eval(parseVariableToObject("yAxis", c("limits", "scale", "ticks", "ticklabels", "font"), keepIfNull = TRUE))
-  newPlotObject <- yAxis$updatePlot(newPlotObject)
+  newPlotObject <- yAxis$updatePlot(newPlotObject, xlim = newPlotObject$plotConfiguration$xAxis$limits)
   return(newPlotObject)
 }
 
