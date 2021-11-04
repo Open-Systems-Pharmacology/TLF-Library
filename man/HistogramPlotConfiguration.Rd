@@ -13,7 +13,6 @@ R6 class defining the configuration of a \code{ggplot} object for histograms
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{HistogramPlotConfiguration$new()}}
-\item \href{#method-addVerticalLines}{\code{HistogramPlotConfiguration$addVerticalLines()}}
 \item \href{#method-clone}{\code{HistogramPlotConfiguration$clone()}}
 }
 }
@@ -52,37 +51,6 @@ Create a new \code{HistogramPlotConfiguration} object
 }
 \subsection{Returns}{
 A new \code{TimeProfilePlotConfiguration} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addVerticalLines"></a>}}
-\if{latex}{\out{\hypertarget{method-addVerticalLines}{}}}
-\subsection{Method \code{addVerticalLines()}}{
-Add statistics as line layer to a \code{ggplot} object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{HistogramPlotConfiguration$addVerticalLines(
-  plotObject,
-  data,
-  metaData,
-  dataMapping
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{\code{ggplot} object}
-
-\item{\code{data}}{data.frame}
-
-\item{\code{metaData}}{list of information on \code{data}}
-
-\item{\code{dataMapping}}{R6 class \code{HistogramDataMapping}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{ggplot} object
 }
 }
 \if{html}{\out{<hr>}}

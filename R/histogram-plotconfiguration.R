@@ -13,9 +13,9 @@ HistogramPlotConfiguration <- R6::R6Class(
     #' @param ... parameters inherited from `PlotConfiguration`
     #' @return A new `TimeProfilePlotConfiguration` object
     initialize = function(lines = NULL,
-                          ribbons = NULL,
-                          ylabel = "Count",
-                          ...) {
+                              ribbons = NULL,
+                              ylabel = "Count",
+                              ...) {
       super$initialize(ylabel = ylabel, ...)
 
       validateIsOfType(lines, "ThemeAestheticSelections", nullAllowed = TRUE)
@@ -23,57 +23,6 @@ HistogramPlotConfiguration <- R6::R6Class(
       currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
       private$.lines <- lines %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotHistogram$lines)
       private$.ribbons <- ribbons %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotHistogram$ribbons)
-    },
-
-    #' @description Add statistics as line layer to a `ggplot` object
-    #' @param plotObject `ggplot` object
-    #' @param data data.frame
-    #' @param metaData list of information on `data`
-    #' @param dataMapping R6 class `HistogramDataMapping`
-    #' @return A `ggplot` object
-    addVerticalLines = function(plotObject, data, metaData, dataMapping) {
-      if (!is.null(dataMapping$verticalLineFunctions)) {
-        fillVec <- tlfEnv$currentTheme$aesProperties$fill
-
-        mapData <- dataMapping$checkMapData(data, metaData)
-
-        aggSummary <- AggregationSummary$new(
-          data = mapData,
-          xColumnNames = NULL,
-          groupingColumnNames = dataMapping$groupMapping$fill$label,
-          yColumnNames = dataMapping$x,
-          aggregationFunctionsVector = dataMapping$verticalLineFunctions,
-          aggregationFunctionNames = dataMapping$verticalLineFunctionNames,
-          aggregationUnitsVector = NULL,
-          aggregationDimensionsVector = NULL
-        )
-
-        numVerticalLineFunctions <- length(dataMapping$verticalLineFunctions)
-
-        # melt reshapes a tidy data.frame with variable names as "variable" and "value"
-        summaryDataFrame <- reshape2::melt(aggSummary$dfHelper)
-        numHistograms <- length(levels(summaryDataFrame[[dataMapping$groupMapping$fill$label]]))
-
-
-        # Left here, in case more refined named are asked for legend
-        summaryDataFrame$summaryCaptions <- getDefaultCaptions(data = summaryDataFrame[, -ncol(summaryDataFrame), drop = FALSE], metaData = NULL)
-
-        legendLabels <- levels(summaryDataFrame$summaryCaptions)
-
-        plotObject <- plotObject + ggplot2::geom_vline(
-          data = summaryDataFrame,
-          aes_string(xintercept = "value", color = "summaryCaptions", linetype = "summaryCaptions"), size = 1
-        ) + scale_colour_manual(
-          name = "Summary",
-          values = fillVec[rep(seq(1, numHistograms), each = numVerticalLineFunctions)],
-          labels = legendLabels
-        ) + scale_linetype_manual(
-          name = "Summary",
-          values = rep(seq(1, numVerticalLineFunctions), numHistograms),
-          labels = legendLabels
-        )
-      }
-      return(plotObject)
     }
   )
 )

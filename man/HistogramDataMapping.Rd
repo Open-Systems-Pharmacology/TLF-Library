@@ -4,8 +4,7 @@
 \alias{HistogramDataMapping}
 \title{HistogramDataMapping}
 \description{
-R6 class for mapping \code{x}, \code{verticalLineGroupings},
-\code{verticalLineFunctionNames} and \code{verticalLineFunctions} variables to \code{data}
+R6 class for mapping \code{x}, \code{bins}, \code{binwidth},\code{stack} and \code{distribution} to \code{data}
 }
 \section{Super classes}{
 \code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{HistogramDataMapping}
@@ -17,11 +16,10 @@ R6 class for mapping \code{x}, \code{verticalLineGroupings},
 
 \item{\code{bins}}{number of bins or binning values/methods passed on \code{ggplot2::geom_histogram}}
 
-\item{\code{lines}}{values or functions to define vertical lines}
+\item{\code{binwidth}}{width of bins passed on \code{ggplot2::geom_histogram}. Overwrites \code{bins}}
 
-\item{\code{fitNormalDist}}{logical defining if a normal distribution should be fitted}
-
-\item{\code{fitDensity}}{logical defining if a density distribution function should be fitted}
+\item{\code{distribution}}{Name of distribution to fit to the data.
+Only 2 distributions are currently available: \code{"normal"} and \code{"logNormal"}}
 }
 \if{html}{\out{</div>}}
 }
@@ -48,9 +46,8 @@ Create a new \code{HistogramDataMapping} object
 \if{html}{\out{<div class="r">}}\preformatted{HistogramDataMapping$new(
   stack = FALSE,
   bins = NULL,
-  lines = DefaultDataMappingValues$histogram,
-  fitNormalDist = FALSE,
-  fitDensity = FALSE,
+  binwidth = NULL,
+  distribution = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -62,11 +59,10 @@ Create a new \code{HistogramDataMapping} object
 
 \item{\code{bins}}{argument passed on \code{ggplot2::geom_histogram}}
 
-\item{\code{lines}}{values or functions to define vertical lines}
+\item{\code{binwidth}}{width of bins passed on \code{ggplot2::geom_histogram}. Overwrites \code{bins}}
 
-\item{\code{fitNormalDist}}{logical defining if a normal distribution should be fitted}
-
-\item{\code{fitDensity}}{logical defining if a density distribution should be fitted}
+\item{\code{distribution}}{Name of distribution to fit to the data.
+Only 2 distributions are currently available: \code{"normal"} and \code{"logNormal"}}
 
 \item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
 }

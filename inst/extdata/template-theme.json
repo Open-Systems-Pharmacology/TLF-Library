@@ -346,7 +346,7 @@
     },
     "plotHistogram": {
       "lines": {
-        "color": "reset",
+        "color": "next",
         "fill": "NA",
         "shape": "blank",
         "linetype": "solid",

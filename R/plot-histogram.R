@@ -1,30 +1,60 @@
 #' @title plotHistogram
-#' @param data data.frames containing the data to be used for the plot
-#' @param metaData list of lists (structure TO BE DISCUSSED)
-#' containing complementary information to data (e.g. unit)
-#' @param dataMapping R6 class HistogramDataMapping
-#' mapping of which data to use for histogram
-#' @param plotConfiguration R6 class HistogramPlotConfiguration
-#' Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend
-#' @param binWidth (optional)
-#' @param bins (optional)
-#' @param verticalLineFunctions (optional)
-#' @param verticalLineFunctionNames (optional)
-#' @param plotObject
-#' ggplot object, if null creates new plot, if not add time profile layers to ggplot
+#' @param data data.frame containing the data to be used for the plot
+#' @param metaData list of lists containing complementary information to data
+#'   (e.g. their unit and dimension). This parameter is optional.
+#' @param x numeric values used in the histogram instead of `data`.
+#' Only use if `data` and `dataMapping` is NULL or not input.
+#' @param dataMapping A `HistogramDataMapping` object mapping x and y
+#'   variables to `data` variable names. `dataMapping` provides also the values
+#'   of the PK Ratio limits plotted as horizontal lines. This parameter is
+#'   optional: the `tlf` library provides a smart mapping if only `data` is
+#'   provided and default values of the PK Ratio limits.
+#' @param plotConfiguration A `HistogramPlotConfiguration` object
+#'   defining labels, grid, background and watermark This parameter is optional:
+#'   the `tlf` library provides a default configuration according to the current
+#'   theme
+#' @param plotObject `ggplot` graphical object to which the histogram plot layer
+#'   is added. This parameter is optional: the `tlf` library will initialize an
+#'   empty plot if the parameter is `NULL` or not provided.
+#' @param bins Number or edges of bins.
+#' If `bins` is provided as a single numeric values, `bin` corresponds to number of bins.
+#' The bin edges are then equally spaced within the range of data.
+#' If `bins` is provided as an array of numeric values, `bin` corresponds to their edges.
+#' @param binwidth Numerical value of defining the width of each bin.
+#' If defined, `binwidth` can overwrite `bins` if `bins` was not provided or simply provided as a single value.
+#' @param stack Logical defining for multiple histograms if their bars are stacked
+#' @param distribution Name of distribution to fit to the data.
+#' Only 2 distributions are currently available: `"normal"` and `"logNormal"`
 #' @description
-#' plotHistogram(data, metaData, dataMapping, plotConfiguration)
-#' @return a ggplot graphical object
+#' Add Histogram plot layer to a `ggplot` graphical object.
+#' @return A `ggplot` graphical object
+#' @references For examples, see:
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/histogram.html>
+#'
 #' @export
-plotHistogram <- function(data,
+plotHistogram <- function(data = NULL,
                           metaData = NULL,
+                          x = NULL,
                           dataMapping = NULL,
                           bins = NULL,
+                          binwidth = NULL,
                           stack = NULL,
-                          fitNormalDist = NULL,
-                          fitDensity = NULL,
+                          distribution = NULL,
                           plotConfiguration = NULL,
                           plotObject = NULL) {
+  validateIsNumeric(bins, nullAllowed = TRUE)
+  validateIsNumeric(binwidth, nullAllowed = TRUE)
+  validateIsLogical(stack, nullAllowed = TRUE)
+  validateIsIncluded(distribution, c("normal", "logNormal", "none"), nullAllowed = TRUE)
+
+  if (is.null(data)) {
+    validateIsNumeric(x)
+    data <- data.frame(x = x)
+    dataMapping <- dataMapping %||% HistogramDataMapping$new(
+      x = ifnotnull(x, "x"),
+      data = data
+    )
+  }
   dataMapping <- dataMapping %||% HistogramDataMapping$new(data = data)
   plotConfiguration <- plotConfiguration %||% HistogramPlotConfiguration$new(
     data = data,
@@ -38,14 +68,11 @@ plotHistogram <- function(data,
   validateIsOfType(plotObject, "ggplot", nullAllowed = TRUE)
 
   # Overwrites plotConfiguration and dataMapping if some inputs are not null
-  validateIsLogical(stack, nullAllowed = TRUE)
-  validateIsLogical(fitNormalDist, nullAllowed = TRUE)
-  validateIsLogical(fitDensity, nullAllowed = TRUE)
   dataMapping$stack <- stack %||% dataMapping$stack
-  dataMapping$fitNormalDist <- fitNormalDist %||% dataMapping$fitNormalDist
-  dataMapping$fitDensity <- fitDensity %||% dataMapping$fitDensity
+  dataMapping$distribution <- distribution %||% dataMapping$distribution
   dataMapping$bins <- bins %||% dataMapping$bins
-
+  dataMapping$binwidth <- binwidth %||% dataMapping$binwidth
+  
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
   if (nrow(data) == 0) {
@@ -61,6 +88,11 @@ plotHistogram <- function(data,
   if (dataMapping$stack) {
     position <- ggplot2::position_stack()
   }
+  
+  edges <- NULL
+  if(length(dataMapping$bins)>1){
+    edges <- dataMapping$bins
+  }
 
   plotObject <- plotObject +
     ggplot2::geom_histogram(
@@ -70,55 +102,156 @@ plotHistogram <- function(data,
         fill = mapLabels$fill
       ),
       position = position,
-      bins = dataMapping$bins %||% tlfEnv$defaultAggregation$bins,
+      bins = dataMapping$bins,
+      binwidth = dataMapping$binwidth,
+      breaks = edges,
       size = getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$size, position = 0, aesthetic = "size"),
       color = getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$color, position = 0, aesthetic = "color"),
       alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$alpha, position = 0, aesthetic = "alpha")
     )
 
-  # Vertical lines defined in dataMapping$lines
-  for (lineIndex in dataMapping$lines) {
+  # If distribution is provided by dataMapping, get median and distribution of the data
+  fitData <- getDistributionFit(mapData, dataMapping)
+  fitMedian <- getDistributionMed(mapData, dataMapping)
+  
+  if(!isOfLength(fitData, 0)){
     plotObject <- plotObject +
-      ggplot2::geom_vline(
-        xintercept = dataMapping$lines[lineIndex],
-        size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex - 1, aesthetic = "size"),
-        color = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex - 1, aesthetic = "color"),
-        linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex - 1, aesthetic = "linetype")
+      ggplot2::geom_line(
+        data = fitData,
+        mapping = ggplot2::aes_string(
+          x = "x",
+          y = "y",
+          color = "legendLabels",
+          linetype = "legendLabels"
+        ),
+        size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = 0, aesthetic = "size")
       )
   }
-  # Lines fitting a normal distribution
-  if (dataMapping$fitNormalDist) {
-    histResult <- graphics::hist(data[, dataMapping$x], breaks = dataMapping$bins %||% tlfEnv$defaultAggregation$bins, plot = FALSE)
-    scalingFactor <- mean(histResult$counts[histResult$counts > 0] / histResult$density[histResult$counts > 0])
-    xmean <- mean(data[, dataMapping$x])
-    xsd <- stats::sd(data[, dataMapping$x], na.rm = TRUE)
-    xDensityData <- seq(xmean - 3 * xsd, xmean + 3 * xsd, 6 * xsd / 100)
-    yDensityData <- scalingFactor * stats::dnorm(xDensityData, mean = xmean, sd = xsd)
-    densityData <- data.frame(x = xDensityData, y = yDensityData)
 
-    plotObject <- plotObject +
-      ggplot2::geom_path(
-        data = densityData,
-        mapping = ggplot2::aes_string(x = "x", y = "y"),
-        size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = 0, aesthetic = "size"),
-        color = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = 0, aesthetic = "color"),
-        linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = 0, aesthetic = "linetype")
-      )
+  # Include vertical lines
+  for (lineIndex in seq_along(fitMedian)) {
+    # position corresponds to the number of layer lines already added
+    eval(parseAddLineLayer("vertical", fitMedian[lineIndex], lineIndex - 1))
   }
 
   # Define fill based on plotConfiguration$points properties
-  fillVariable <- gsub("`", "", mapLabels$fill)
-  fillLength <- length(unique(mapData[, fillVariable]))
-
-  plotObject <- plotObject +
-    ggplot2::scale_fill_manual(values = getAestheticValues(n = fillLength, selectionKey = plotConfiguration$ribbons$fill, aesthetic = "fill"))
-
-  # If variable is legendLabel, remove it from legend
-  if (isIncluded(fillVariable, "legendLabels")) {
-    plotObject <- plotObject + ggplot2::guides(fill = "none")
-  }
-  # dataMapping$smoother
+  eval(parseUpdateAestheticProperty(AestheticProperties$fill, "ribbons"))
+  eval(parseUpdateAestheticProperty(AestheticProperties$color, "lines"))
+  eval(parseUpdateAestheticProperty(AestheticProperties$linetype, "lines"))
   plotObject <- setLegendPosition(plotObject)
   plotObject <- setLegendFont(plotObject)
+  eval(parseUpdateAxes())
   return(plotObject)
+}
+
+
+#' @title getDistributionFit
+#' @description Get a data.frame from the fit of a distribution provided in `dataMapping`
+#' If `normal` distribution is selected, its mean is plotted
+#' If `logNormal` distribution is selected, its mode is plotted
+#' @param data data.frame containing the data to be used for the plot
+#' @param dataMapping A `HistogramDataMapping` object
+#' The object defines the distribution to be fitted and the option `stack`.
+#' If the bars are stacked, the fit will account for the final histogram
+#' @return A data.frame with `x`, `y` and `legendLabels`
+#' @keywords internal
+getDistributionFit <- function(data, dataMapping) {
+  if (isIncluded(dataMapping$distribution, "none")) {
+    return()
+  }
+  x <- data[, dataMapping$x]
+  # Get array of x values
+  xFit <- seq(min(x, na.rm = TRUE), max(x, na.rm = TRUE), length.out = 1e3)
+    #switch(
+    #dataMapping$distribution,
+    #"normal" = seq(-max(abs(x), na.rm = TRUE), max(abs(x), na.rm = TRUE), length.out = 1e3),
+    #"logNormal" = seq(0, max(abs(x), na.rm = TRUE), length.out = 1e3)
+  #)
+
+  # Get binwidth
+  bins <- dataMapping$bins
+  if (length(bins) > 1) {
+    bins <- length(bins) - 1
+  }
+  binwidth <- (max(x, na.rm = TRUE) - min(x, na.rm = TRUE)) / bins
+  binwidth <- dataMapping$binwidth %||% binwidth
+
+  if (dataMapping$stack) {
+    dataFit <- data.frame(
+      x = xFit,
+      y = length(x) * binwidth * switch(
+        dataMapping$distribution,
+        "normal" = stats::dnorm(xFit, mean = mean(x, na.rm = TRUE), sd = stats::sd(x, na.rm = TRUE)),
+        "logNormal" = stats::dlnorm(xFit, meanlog = mean(log(x), na.rm = TRUE), sdlog = stats::sd(log(x), na.rm = TRUE))
+      ),
+      legendLabels = paste0(dataMapping$distribution, " distribution fit")
+    )
+    return(dataFit)
+  }
+
+  dataFit <- NULL
+  for (groupLevel in levels(data$legendLabels)) {
+    selectedGroup <- data$legendLabels %in% groupLevel
+    dataFit <- rbind.data.frame(
+      dataFit,
+      data.frame(
+        x = xFit,
+        y = length(x[selectedGroup]) * binwidth * switch(
+          dataMapping$distribution,
+          "normal" = stats::dnorm(
+            xFit,
+            mean = mean(x[selectedGroup], na.rm = TRUE),
+            sd = stats::sd(x[selectedGroup], na.rm = TRUE)
+          ),
+          "logNormal" = stats::dlnorm(
+            xFit,
+            meanlog = mean(log(x[selectedGroup]), na.rm = TRUE),
+            sdlog = stats::sd(log(x[selectedGroup]), na.rm = TRUE)
+          )
+        ),
+        legendLabels = groupLevel
+      )
+    )
+  }
+  return(dataFit)
+}
+
+#' @title getDistributionMed
+#' @description Get an array of values from the fit of a distribution provided in `dataMapping`
+#' If `normal` distribution is selected, its mean is plotted
+#' If `logNormal` distribution is selected, its mode is plotted
+#' @param data data.frame containing the data to be used for the plot
+#' @param dataMapping A `HistogramDataMapping` object
+#' The object defines the distribution to be fitted and the option `stack`.
+#' If the bars are stacked, the fit will account for the final histogram
+#' @return Numeric values for vertical lines
+#' @keywords internal
+getDistributionMed <- function(data, dataMapping) {
+  if (isIncluded(dataMapping$distribution, "none")) {
+    return()
+  }
+  x <- data[, dataMapping$x]
+  if (dataMapping$stack) {
+    return(
+      switch(
+        dataMapping$distribution,
+        "normal" = mean(x, na.rm = TRUE),
+        "logNormal" = exp(mean(log(x), na.rm = TRUE) - stats::var(log(x), na.rm = TRUE))
+      )
+    )
+  }
+
+  xintercept <- NULL
+  for (groupLevel in levels(data$legendLabels)) {
+    selectedGroup <- data$legendLabels %in% groupLevel
+    xintercept <- c(
+      xintercept,
+      switch(
+        dataMapping$distribution,
+        "normal" = mean(x[selectedGroup], na.rm = TRUE),
+        "logNormal" = exp(mean(log(x[selectedGroup]), na.rm = TRUE) - stats::var(log(x[selectedGroup]), na.rm = TRUE))
+      )
+    )
+  }
+  return(xintercept)
 }
