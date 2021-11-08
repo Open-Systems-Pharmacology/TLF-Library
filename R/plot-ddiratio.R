@@ -33,9 +33,8 @@ plotDDIRatio <- function(data,
 
   lineOrientation <- "diagonal"
   if(residualsVsObserved){
-    lineOrientation <- "horizontal"
+    lineOrientation <- "ddiHorizontal"
   }
-
   # Include horizontal lines
   for (lineIndex in seq_along(dataMapping$lines)) {
     # position correspond to the number of layer lines already added
