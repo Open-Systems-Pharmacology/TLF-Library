@@ -135,7 +135,8 @@ parseAddLineLayer <- function(type, value, position) {
     switch(type,
       "horizontal" = paste0("ggplot2::geom_hline(yintercept = ", value, ","),
       "vertical" = paste0("ggplot2::geom_vline(xintercept = ", value, ","),
-      "diagonal" = paste0("ggplot2::geom_abline(slope=1, intercept = ", value, ",")
+      "diagonal" = paste0("ggplot2::geom_abline(slope=1, intercept = ", value, ","),
+      "ddiHorizontal" = paste0("ggplot2::geom_abline(slope=0, intercept = ", value, ",")
     ),
     "color=getAestheticValues(n=1,selectionKey=plotConfiguration$lines$color,position=", position, ',aesthetic="color"),',
     "linetype=getAestheticValues(n=1,selectionKey=plotConfiguration$lines$linetype,position=", position, ',aesthetic="linetype"),',
