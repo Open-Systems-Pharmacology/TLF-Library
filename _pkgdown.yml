@@ -3,7 +3,7 @@ url: https://www.open-systems-pharmacology.org/TLF-Library/
 # uncomment to turn on dark mode
 template:
   bootstrap: 5
-  bootswatch: cyborg
+  # bootswatch: cyborg
   # theme: arrow-dark
   # bslib:
   #   primary: "#0054AD"
