@@ -10,7 +10,6 @@ tlfEnv$packageName <- "tlf"
 #' @export
 #' @description
 #' List of all available legend positions
-#' @keywords internal
 LegendPositions <- enum(c(
   "none",
   "insideTop",
@@ -137,7 +136,6 @@ setDefaultAggregationBins <- function(bins = NULL) {
   tlfEnv$defaultAggregation$bins <- bins %||% tlfEnv$defaultAggregation$bins
 }
 
-
 #' @title setDefaultWatermark
 #' @description Set default watermark value for current theme
 #' @param watermark character or Label class object
@@ -151,5 +149,17 @@ setDefaultWatermark <- function(watermark = NULL) {
     tlfEnv$currentTheme$background$watermark <- watermark$text
     tlfEnv$currentTheme$fonts$watermark <- watermark$font
   }
+  return(invisible())
+}
+
+tlfEnv$logTicks <- 10^seq(-6,6)
+
+#' @title setDefaultLogTicks
+#' @description Set default values for log ticks
+#' @param ticks numeric values where ticks are placed.
+#' Ensure that the values are positive (they are meant for log scale)
+#' @export
+setDefaultLogTicks <- function(ticks) {
+  tlfEnv$logTicks <- ticks
   return(invisible())
 }

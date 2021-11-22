@@ -1,13 +1,3 @@
-#' @title Scaling
-#' @include enum.R
-#' @export
-#' @description
-#'  Pre-defined transformation of axes
-#'  Not that built-in transformations from `ggplot2` includes more transformations
-#' @keywords internal
-Scaling <- enum(c("lin", "log", "discrete",
-                  "reverse", "sqrt", "time", "date"))
-
 #' @title createPlotScale
 #' @description Translate scale into a value directly usable by `ggplot2`
 #' to give more flexibility in the next functions
@@ -42,7 +32,7 @@ createPlotTicks <- function(ticks) {
   if (isIncluded(ticks, c("none"))) {
     return(NULL)
   }
-  if (isOfType(ticks, c("numeric", "character", "function"))) {
+  if (isOfType(ticks, c("numeric", "character", "function", "expression"))) {
     return(ticks)
   }
 }
@@ -63,10 +53,10 @@ AxisConfiguration <- R6::R6Class(
     #' @param font `Font` object defining the font of ticklabels
     #' @return A new `AxisConfiguration` object
     initialize = function(limits = NULL,
-                          scale = Scaling$lin,
-                          ticks = NULL,
-                          ticklabels = NULL,
-                          font = NULL) {
+                              scale = Scaling$lin,
+                              ticks = NULL,
+                              ticklabels = NULL,
+                              font = NULL) {
       validateIsNumeric(limits, nullAllowed = TRUE)
       validateIsOfType(font, "Font", nullAllowed = TRUE)
       private$.limits <- limits
@@ -177,11 +167,30 @@ XAxisConfiguration <- R6::R6Class(
       suppressMessages(
         plotObject <- plotObject + ggplot2::coord_cartesian(xlim = private$.limits, ylim = ylim)
       )
-      # Update scales and ticks
+      # Update ticks and their labels for discrete scale
       if (isIncluded(private$.scale, Scaling$discrete)) {
         suppressMessages(
           plotObject <- plotObject +
             ggplot2::scale_x_discrete(breaks = private$.ticks, labels = private$.ticklabels)
+        )
+        return(plotObject)
+      }
+      # Add nice logticks and ticklabels as a default for log10 scale
+      if (isIncluded(private$.scale, "log10")) {
+        logTicks <- private$.ticks
+        logLabels <- private$.ticklabels
+        # A waiver is a ggplot2 "flag" object, similar to NULL,
+        # that indicates the calling function should just use the default value
+        if (isOfType(private$.ticks, "waiver")) {
+          logTicks <- tlfEnv$logTicks
+        }
+        if (isOfType(private$.ticklabels, "waiver")) {
+          logLabels <- getLogTickLabels
+        }
+        suppressMessages(
+          plotObject <- plotObject +
+            ggplot2::scale_x_continuous(trans = private$.scale, breaks = logTicks, labels = logLabels) +
+            ggplot2::annotation_logticks(sides = "b", color = private$.font$color)
         )
         return(plotObject)
       }
@@ -191,6 +200,7 @@ XAxisConfiguration <- R6::R6Class(
         plotObject <- plotObject +
           ggplot2::scale_x_continuous(trans = private$.scale, breaks = private$.ticks, labels = private$.ticklabels)
       )
+
       return(plotObject)
     }
   )
@@ -217,11 +227,30 @@ YAxisConfiguration <- R6::R6Class(
       suppressMessages(
         plotObject <- plotObject + ggplot2::coord_cartesian(xlim = xlim, ylim = private$.limits)
       )
-      # Update scales and ticks
+      # Update ticks and their labels for discrete scale
       if (isIncluded(private$.scale, Scaling$discrete)) {
         suppressMessages(
           plotObject <- plotObject +
             ggplot2::scale_y_discrete(breaks = private$.ticks, labels = private$.ticklabels)
+        )
+        return(plotObject)
+      }
+      # Add nice logticks and ticklabels as a default for log10 scale
+      if (isIncluded(private$.scale, "log10")) {
+        logTicks <- private$.ticks
+        logLabels <- private$.ticklabels
+        # A waiver is a ggplot2 "flag" object, similar to NULL,
+        # that indicates the calling function should just use the default value
+        if (isOfType(private$.ticks, "waiver")) {
+          logTicks <- tlfEnv$logTicks
+        }
+        if (isOfType(private$.ticklabels, "waiver")) {
+          logLabels <- getLogTickLabels
+        }
+        suppressMessages(
+          plotObject <- plotObject +
+            ggplot2::scale_y_continuous(trans = private$.scale, breaks = logTicks, labels = logLabels) +
+            ggplot2::annotation_logticks(sides = "l", color = private$.font$color)
         )
         return(plotObject)
       }
