@@ -1,18 +1,7 @@
-#' @title Scaling
-#' @include enum.R
-#' @export
-#' @description
-#'  Pre-defined transformation of axes
-#'  Not that built-in transformations from `ggplot2` includes more transformations
-#' @keywords internal
-Scaling <- enum(c("lin", "log", "discrete",
-                  "reverse", "sqrt", "time", "date"))
-
 #' @title createPlotScale
-#' @description Translate scale into a value directly usable by `ggplot2`
-#' to give more flexibility in the next functions
+#' @description Translate scale into one of the values available in the enum `Scaling`.
 #' @param scale character defining the name of the scale
-#' @return name of the `ggplot2` scale
+#' @return A value available in enum `Scaling`
 #' @keywords internal
 createPlotScale <- function(scale) {
   validateIsString(scale)
@@ -20,7 +9,7 @@ createPlotScale <- function(scale) {
     return("identity")
   }
   if (isIncluded(tolower(scale), c("log", "logarithmic", "log10"))) {
-    return("log10")
+    return(Scaling$log)
   }
   validateIsIncluded(tolower(scale), Scaling)
   return(tolower(scale))
@@ -42,7 +31,7 @@ createPlotTicks <- function(ticks) {
   if (isIncluded(ticks, c("none"))) {
     return(NULL)
   }
-  if (isOfType(ticks, c("numeric", "character", "function"))) {
+  if (isOfType(ticks, c("numeric", "character", "function", "expression"))) {
     return(ticks)
   }
 }
@@ -63,10 +52,10 @@ AxisConfiguration <- R6::R6Class(
     #' @param font `Font` object defining the font of ticklabels
     #' @return A new `AxisConfiguration` object
     initialize = function(limits = NULL,
-                          scale = Scaling$lin,
-                          ticks = NULL,
-                          ticklabels = NULL,
-                          font = NULL) {
+                              scale = Scaling$lin,
+                              ticks = NULL,
+                              ticklabels = NULL,
+                              font = NULL) {
       validateIsNumeric(limits, nullAllowed = TRUE)
       validateIsOfType(font, "Font", nullAllowed = TRUE)
       private$.limits <- limits
@@ -86,6 +75,53 @@ AxisConfiguration <- R6::R6Class(
         defaultFont <- currentTheme$fonts$yAxis
       }
       private$.font <- font %||% defaultFont
+    },
+
+    #' @description Get the `ggplot2` actual `trans` name of scale
+    #' @return A character included in `ggplot2` available `trans` names
+    ggplotScale = function() {
+      switch(
+        private$.scale,
+        "log" = "log10",
+        "ln" = "log",
+        private$.scale
+      )
+    },
+
+    #' @description Get tick values for pretty default log plots
+    #' @return User defined tick values or tlf default ticks
+    prettyTicks = function() {
+      # A waiver is a ggplot2 "flag" object, similar to NULL,
+      # that indicates the calling function should just use the default value
+      if (!isOfType(private$.ticks, "waiver")) {
+        return(private$.ticks)
+      }
+      # Default tick values as a function of scale
+      switch(
+        private$.scale,
+        "log" = tlfEnv$logTicks,
+        "ln" = tlfEnv$lnTicks,
+        private$.ticks
+      )
+    },
+
+    #' @description Get tick labels for pretty default log plots
+    #' @return User defined tick labels or tlf default ticklabels
+    prettyTickLabels = function() {
+      # A waiver is a ggplot2 "flag" object, similar to NULL,
+      # that indicates the calling function should just use the default value
+      if (!isOfType(private$.ticklabels, "waiver")) {
+        return(private$.ticklabels)
+      }
+      # Default tick labels as a function of scale
+      # ggplot2 accepts functions as input for labels
+      switch(
+        private$.scale,
+        "log" = getLogTickLabels,
+        "ln" = getLnTickLabels,
+        "sqrt" = getSqrtTickLabels,
+        private$.ticklabels
+      )
     }
   ),
   active = list(
@@ -177,7 +213,7 @@ XAxisConfiguration <- R6::R6Class(
       suppressMessages(
         plotObject <- plotObject + ggplot2::coord_cartesian(xlim = private$.limits, ylim = ylim)
       )
-      # Update scales and ticks
+      # Update ticks and their labels for discrete scale
       if (isIncluded(private$.scale, Scaling$discrete)) {
         suppressMessages(
           plotObject <- plotObject +
@@ -189,7 +225,16 @@ XAxisConfiguration <- R6::R6Class(
       # `try` should be added in cases of scale breaking because all the ggplot object elements are not yet in place
       suppressMessages(
         plotObject <- plotObject +
-          ggplot2::scale_x_continuous(trans = private$.scale, breaks = private$.ticks, labels = private$.ticklabels)
+          ggplot2::scale_x_continuous(trans = self$ggplotScale(), breaks = self$prettyTicks(), labels = self$prettyTickLabels())
+      )
+      # Add special tick lines for pretty log plots
+      suppressMessages(
+        plotObject <- switch(
+          private$.scale,
+          "log" = plotObject + ggplot2::annotation_logticks(sides = "b", color = private$.font$color),
+          "ln" = plotObject + ggplot2::annotation_logticks(base = exp(1), sides = "b", color = private$.font$color),
+          plotObject
+        )
       )
       return(plotObject)
     }
@@ -217,7 +262,7 @@ YAxisConfiguration <- R6::R6Class(
       suppressMessages(
         plotObject <- plotObject + ggplot2::coord_cartesian(xlim = xlim, ylim = private$.limits)
       )
-      # Update scales and ticks
+      # Update ticks and their labels for discrete scale
       if (isIncluded(private$.scale, Scaling$discrete)) {
         suppressMessages(
           plotObject <- plotObject +
@@ -229,7 +274,16 @@ YAxisConfiguration <- R6::R6Class(
       # `try` should be added in cases of scale breaking because all the ggplot object elements are not yet in place
       suppressMessages(
         plotObject <- plotObject +
-          ggplot2::scale_y_continuous(trans = private$.scale, breaks = private$.ticks, labels = private$.ticklabels)
+          ggplot2::scale_y_continuous(trans = self$ggplotScale(), breaks = self$prettyTicks(), labels = self$prettyTickLabels())
+      )
+      # Add special tick lines for pretty log plots
+      suppressMessages(
+        plotObject <- switch(
+          private$.scale,
+          "log" = plotObject + ggplot2::annotation_logticks(sides = "l", color = private$.font$color),
+          "ln" = plotObject + ggplot2::annotation_logticks(base = exp(1), sides = "l", color = private$.font$color),
+          plotObject
+        )
       )
       return(plotObject)
     }

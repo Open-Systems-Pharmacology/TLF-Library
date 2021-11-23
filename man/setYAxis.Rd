@@ -32,3 +32,18 @@ ggplot object with updated Y-axis
 \description{
 Set Y-axis properties on a ggplot object
 }
+\examples{
+myPlot <- addLine(x = c(1, 2, 3), y = c(10, 50, 100))
+
+# Set y-axis in log scale
+setYAxis(myPlot, scale = Scaling$log)
+
+# Set y-axis ticklabels to Greek letters
+setYAxis(myPlot, ticks = c(10, 50, 100), ticklabels = parse(text = c("alpha", "beta", "gamma")))
+
+# Set y-axis limits
+setYAxis(myPlot, limits = c(10, 75))
+
+# Set y-axis fonts
+setYAxis(myPlot, font = Font$new(color = "blue", size = 14))
+}

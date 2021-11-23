@@ -32,3 +32,18 @@ ggplot object with updated X-axis
 \description{
 Set X-axis properties on a ggplot object
 }
+\examples{
+myPlot <- addLine(x = c(1, 2, 3), y = c(10, 50, 100))
+
+# Set x-axis in log scale
+setXAxis(myPlot, scale = Scaling$log)
+
+# Set x-axis ticklabels to Greek letters
+setXAxis(myPlot, ticks = c(1, 2, 3), ticklabels = parse(text = c("alpha", "beta", "gamma")))
+
+# Set x-axis limits
+setXAxis(myPlot, limits = c(1, 2.5))
+
+# Set x-axis fonts
+setXAxis(myPlot, font = Font$new(color = "blue", size = 14))
+}

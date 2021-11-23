@@ -76,19 +76,6 @@ isIncluded <- function(values, parentValues) {
   return(as.logical(min(values %in% parentValues)))
 }
 
-
-#' @title asScale
-#' @description translate ggplot2 scale into tlf `Scaling` argument
-asScale <- function(scale) {
-  if (isIncluded(scale, "identity")) {
-    return(Scaling$lin)
-  }
-  if (isIncluded(scale, "log10")) {
-    return(Scaling$log)
-  }
-  return(scale)
-}
-
 #' @title tlfInput
 #' @description translate shiny input into tlf argument
 #' replacing "none", "" and NA by NULL

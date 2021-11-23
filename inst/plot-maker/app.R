@@ -581,7 +581,7 @@ server <- function(input, output) {
   })
   output$xAxisScale <- renderUI({
     plotConfiguration <- getPlotConfiguration()
-    selectInput("xAxisScale2", label = "scale", choices = Scaling, selected = asScale(plotConfiguration$xAxis$scale))
+    selectInput("xAxisScale2", label = "scale", choices = Scaling, selected = plotConfiguration$xAxis$scale)
   })
   output$xAxisLimitsMin <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -627,7 +627,7 @@ server <- function(input, output) {
   })
   output$yAxisScale <- renderUI({
     plotConfiguration <- getPlotConfiguration()
-    selectInput("yAxisScale2", label = "scale", choices = Scaling, selected = asScale(plotConfiguration$yAxis$scale))
+    selectInput("yAxisScale2", label = "scale", choices = Scaling, selected = plotConfiguration$yAxis$scale)
   })
   output$yAxisLimitsMin <- renderUI({
     plotConfiguration <- getPlotConfiguration()
