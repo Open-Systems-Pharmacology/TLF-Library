@@ -153,6 +153,7 @@ setDefaultWatermark <- function(watermark = NULL) {
 }
 
 tlfEnv$logTicks <- 10^seq(-6,6)
+tlfEnv$lnTicks <- exp(seq(-6,6))
 
 #' @title setDefaultLogTicks
 #' @description Set default values for log ticks

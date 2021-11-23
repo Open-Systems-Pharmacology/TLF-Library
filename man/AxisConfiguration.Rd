@@ -27,6 +27,9 @@ A value of \code{NULL} is allowed and will lead to a default linear scale}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{AxisConfiguration$new()}}
+\item \href{#method-ggplotScale}{\code{AxisConfiguration$ggplotScale()}}
+\item \href{#method-prettyTicks}{\code{AxisConfiguration$prettyTicks()}}
+\item \href{#method-prettyTickLabels}{\code{AxisConfiguration$prettyTickLabels()}}
 \item \href{#method-clone}{\code{AxisConfiguration$clone()}}
 }
 }
@@ -63,6 +66,45 @@ Use enum \code{Scaling} to access predefined scales.}
 }
 \subsection{Returns}{
 A new \code{AxisConfiguration} object
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ggplotScale"></a>}}
+\if{latex}{\out{\hypertarget{method-ggplotScale}{}}}
+\subsection{Method \code{ggplotScale()}}{
+Get the \code{ggplot2} actual \code{trans} name of scale
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AxisConfiguration$ggplotScale()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A character included in \code{ggplot2} available \code{trans} names
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-prettyTicks"></a>}}
+\if{latex}{\out{\hypertarget{method-prettyTicks}{}}}
+\subsection{Method \code{prettyTicks()}}{
+Get tick values for pretty default log plots
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AxisConfiguration$prettyTicks()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+User defined tick values or tlf default ticks
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-prettyTickLabels"></a>}}
+\if{latex}{\out{\hypertarget{method-prettyTickLabels}{}}}
+\subsection{Method \code{prettyTickLabels()}}{
+Get tick labels for pretty default log plots
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AxisConfiguration$prettyTickLabels()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+User defined tick labels or tlf default ticklabels
 }
 }
 \if{html}{\out{<hr>}}

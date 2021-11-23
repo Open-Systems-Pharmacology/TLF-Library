@@ -2,22 +2,30 @@
 #' @include enum.R
 #' @export
 #' @description
-#'  Pre-defined transformation of axes
-#'  Not that built-in transformations from `ggplot2` includes more transformations
+#'  Helper enum of predefined transformations of axes
+#'  Note that the transformations will be translated internally into `ggplot2` transformations.
+#'  `ggplot2` includes more transformations than what is available in this enum.
 #' @examples
 #' # Continuous linear scale
 #' Scaling$lin
 #' # Continuous log10 scale
 #' Scaling$log
-#' # Discrete scale
+#' # Continuous natural logarithm (ln) scale (base is *e*)
+#' Scaling$ln
+#' # Discrete scale for categrical data such as boxplot and tornado plot data
 #' Scaling$discrete
-#' # Reverse continuous linear scale
+#' # Reverse continuous linear scale to switch end and beginning of linear scale
 #' Scaling$reverse
-#' # Date scale
+#' # Continusous square root scale
+#' Scaling$sqrt
+#' # Time scale for POSIXlt or POSIXct data
+#' Scaling$time
+#' # Date scale for POSIXlt or POSIXct data
 #' Scaling$date
 Scaling <- enum(c(
   "lin",
   "log",
+  "ln",
   "discrete",
   "reverse",
   "sqrt",
@@ -124,7 +132,8 @@ setYAxis <- function(plotObject,
 #' @param plotConfiguration A `PlotConfiguration` object
 #' @return The default scale.
 #' The enum `Scaling` provides a list of available scales.
-#' @examples \dontrun{
+#' @examples
+#' \dontrun{
 #' # Regular plots use continuous linear scale for x-axis
 #' plotConfiguration <- PlotConfiguration$new()
 #' xAxisDefaultScale(plotConfiguration)
@@ -153,7 +162,8 @@ xAxisDefaultScale <- function(plotConfiguration) {
 #' @param plotConfiguration A `PlotConfiguration` object
 #' @return The default scale.
 #' The enum `Scaling` provides a list of available scales.
-#' @examples \dontrun{
+#' @examples
+#' \dontrun{
 #' # Regular plots use continuous linear scale for x-axis
 #' plotConfiguration <- PlotConfiguration$new()
 #' yAxisDefaultScale(plotConfiguration)
@@ -193,4 +203,36 @@ getLogTickLabels <- function(ticks) {
   # For 1 the multiplication is redundant and removed
   prefixValues[prefixValues == "1%.%"] <- ""
   return(parse(text = paste(prefixValues, "10^", exponentValues, sep = "")))
+}
+
+#' @title getLnTickLabels
+#' @description Get ticklabels expressions for ln scale plots
+#' @param ticks numeric values of the ticks
+#' @return Expressions to use in `ticklabels` input parameter of `setXAxis` and `setYAxis` functions
+#' @examples
+#' ticks <- exp(c(1, 5, 10, 50, 100, 500))
+#' getLnTickLabels(ticks)
+#' @export
+getLnTickLabels <- function(ticks) {
+  exponentValues <- floor(log(ticks))
+  # Values to print before 10^ using multiplication dot
+  prefixValues <- ticks * exp(-exponentValues)
+  prefixValues <- paste0(prefixValues, "%.%")
+  # For 1 the multiplication is redundant and removed
+  prefixValues[prefixValues == "1%.%"] <- ""
+  return(parse(text = paste(prefixValues, "e^", exponentValues, sep = "")))
+}
+
+
+#' @title getSqrtTickLabels
+#' @description Get ticklabels expressions for sqrt scale plots
+#' @param ticks numeric values of the ticks
+#' @return Expressions to use in `ticklabels` input parameter of `setXAxis` and `setYAxis` functions
+#' @examples
+#' ticks <- sqrt(c(1, 5, 10, 50, 100, 500))
+#' getSqrtTickLabels(ticks)
+#' @export
+getSqrtTickLabels <- function(ticks) {
+  sqrtValues <- ticks^2
+  return(parse(text = paste("sqrt(", sqrtValues, ")", sep = "")))
 }

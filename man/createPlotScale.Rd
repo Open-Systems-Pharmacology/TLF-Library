@@ -10,10 +10,9 @@ createPlotScale(scale)
 \item{scale}{character defining the name of the scale}
 }
 \value{
-name of the \code{ggplot2} scale
+A value available in enum \code{Scaling}
 }
 \description{
-Translate scale into a value directly usable by \code{ggplot2}
-to give more flexibility in the next functions
+Translate scale into one of the values available in the enum \code{Scaling}.
 }
 \keyword{internal}
