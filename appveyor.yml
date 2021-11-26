@@ -56,10 +56,12 @@ build_script:
 test_script:
   - travis-tool.sh run_tests
 
-on_success:
-  - Rscript -e "covr::codecov()"
+after_test:
   - ps: copy \tlf_*.tar.gz \tlf.tar.gz
   - ps: copy \tlf_*.zip \tlf.zip
+
+on_success:
+  - Rscript -e "covr::codecov()"
 
 on_failure:
   - 7z a failure.zip *.Rcheck\*
