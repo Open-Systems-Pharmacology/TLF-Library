@@ -58,6 +58,8 @@ test_script:
 
 on_success:
   - Rscript -e "covr::codecov()"
+  - ps: copy tlf_*.tar.gz tlf.tar.gz
+  - ps: copy tlf_*.zip tlf.zip
 
 on_failure:
   - 7z a failure.zip *.Rcheck\*
@@ -76,10 +78,10 @@ artifacts:
   - path: '*.Rcheck\**\*.Rout'
     name: Logs
 
-  - path: '\*_*.tar.gz'
+  - path: '\*.tar.gz'
     name: Bits
 
-  - path: '\*_*.zip'
+  - path: '\*.zip'
     name: Bits
 
 notifications:
