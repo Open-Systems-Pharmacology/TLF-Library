@@ -57,8 +57,8 @@ test_script:
   - travis-tool.sh run_tests
 
 after_test:
-  - ps: copy \tlf_*.tar.gz \tlf.tar.gz
-  - ps: copy \tlf_*.zip \tlf.zip
+  - ps: copy tlf_*.tar.gz tlf.tar.gz
+  - ps: copy tlf_*.zip tlf.zip
 
 on_success:
   - Rscript -e "covr::codecov()"
