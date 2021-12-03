@@ -95,15 +95,26 @@ useTemplateTheme <- function() {
   useTheme(loadThemeFromJson(system.file("themes", "template-theme.json", package = "tlf")))
 }
 
-#' @title useRETheme
+#' @title useMatlabTheme
 #' @description
-#' Set default Reporting Engine theme to be used as the current default of the tlf environment
+#' Set default Matlab theme to be used as the current default of the tlf environment
 #' @export
 #' @examples 
-#' useRETheme()
+#' useMatlabTheme()
 #' addScatter(x = seq(1,10), y = rnorm(10))
-useRETheme <- function() {
-  useTheme(loadThemeFromJson(system.file("themes", "re-theme.json", package = "tlf")))
+useMatlabTheme <- function() {
+  useTheme(loadThemeFromJson(system.file("themes", "matlab-theme.json", package = "tlf")))
+}
+
+#' @title useDarkTheme
+#' @description
+#' Set default Matlab theme to be used as the current default of the tlf environment
+#' @export
+#' @examples 
+#' useDarkTheme()
+#' addScatter(x = seq(1,10), y = rnorm(10))
+useDarkTheme <- function() {
+  useTheme(loadThemeFromJson(system.file("themes", "dark-theme.json", package = "tlf")))
 }
 
 #' @title useExcelTheme

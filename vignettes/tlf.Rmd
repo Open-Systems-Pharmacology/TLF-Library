@@ -25,7 +25,7 @@ require(tlf)
 ```
 
 ```{r load-theme, echo=FALSE}
-vignetteTheme <- loadThemeFromJson(system.file("extdata", "template-theme.json", package = "tlf"))
+vignetteTheme <- loadThemeFromJson(system.file("themes", "template-theme.json", package = "tlf"))
 useTheme(vignetteTheme)
 ```
 

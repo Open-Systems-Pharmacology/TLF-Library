@@ -9,49 +9,49 @@
     },
     "subtitle": {
       "color": "black",
-      "size": 12,
+      "size": 11,
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0
     },
     "xlabel": {
       "color": "black",
-      "size": 11,
+      "size": 10,
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0
     },
     "ylabel": {
       "color": "black",
-      "size": 11,
+      "size": 10,
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 90
     },
     "watermark": {
-      "color": "grey",
-      "size": 40,
+      "color": "#8989BC",
+      "size": 18,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 30
+      "angle": 0
     },
     "legend": {
       "color": "black",
-      "size": 9,
+      "size": 8,
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0
     },
     "xAxis": {
       "color": "black",
-      "size": 11,
+      "size": 10,
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0
     },
     "yAxis": {
       "color": "black",
-      "size": 11,
+      "size": 10,
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0
@@ -59,16 +59,16 @@
   },
   "background": {
     "watermark": "",
-    "legendPosition": "outsideTop",
+    "legendPosition": "insideTopRight",
     "plot": {
-      "fill": "white",
-      "color": "black",
+      "fill": "#DDDDDD",
+      "color": "#DDDDDD",
       "size": 0.5,
       "linetype": "blank"
     },
     "panel": {
       "fill": "white",
-      "color": "black",
+      "color": "#AAAAAA",
       "size": "0.5",
       "linetype": "solid"
     },
@@ -83,47 +83,50 @@
       "linetype": "solid"
     },
     "xGrid": {
-      "color": "grey",
-      "size": "0.25",
-      "linetype": "dotted"
+      "color": "#AAAAAA",
+      "size": "0.5",
+      "linetype": "solid"
     },
     "yGrid": {
-      "color": "grey",
-      "size": "0.25",
-      "linetype": "dotted"
+      "color": "#AAAAAA",
+      "size": "0.5",
+      "linetype": "solid"
     },
     "legend": {
       "fill": "white",
-      "color": "white",
+      "color": "black",
       "size": "0.5",
-      "linetype": "blank"
+      "linetype": "solid"
     }
   },
   "aestheticMaps": {
     "color": [
-      "#0078D7",
-      "#D83B01",
-      "#107C10",
-      "#A80000",
-      "#002050",
-      "#B4009E"
+      "#0072BD",
+      "#D95319",
+      "#EDB120",
+      "#7E2F8E",
+      "#77AC30",
+      "#4DBEEE",
+      "#A2142F"
     ],
     "fill": [
-      "#0078D7",
-      "#D83B01",
-      "#107C10",
-      "#A80000",
-      "#002050",
-      "#B4009E"
+      "#0072BD",
+      "#D95319",
+      "#EDB120",
+      "#7E2F8E",
+      "#77AC30",
+      "#4DBEEE",
+      "#A2142F"
     ],
     "shape": [
       "circle",
-      "diamond",
       "square",
+      "diamond",
       "star",
       "plus",
       "cross",
-      "triangle"
+      "triangle",
+      "dot"
     ],
     "linetype": [
       "solid",
@@ -148,90 +151,38 @@
   },
   "plotConfigurations": {
     "addScatter": {
-      "color": "black",
+      "color": "next",
       "fill": "NA",
-      "shape": "circle",
+      "shape": "first",
       "linetype": "blank",
-      "size": 2,
+      "size": "first",
       "alpha": 1
     },
     "addLine": {
-      "color": "black",
+      "color": "next",
       "fill": "NA",
       "shape": "blank",
-      "linetype": "solid",
-      "size": 0.5,
+      "linetype": 0.5,
+      "size": "first",
       "alpha": 1
     },
     "addRibbon": {
-      "color": "#0078D7",
-      "fill": "#0078D7",
+      "color": "next",
+      "fill": "next",
       "shape": "blank",
-      "linetype": "solid",
-      "size": 1,
-      "alpha": 0.5
+      "linetype": "same",
+      "size": "first",
+      "alpha": "first"
     },
     "addErrorbar": {
-      "color": "black",
+      "color": "next",
       "fill": "NA",
       "shape": "blank",
-      "linetype": "solid",
-      "size": 0.5,
+      "linetype": 0.5,
+      "size": "first",
       "alpha": 1
     },
     "plotPKRatio": {
-      "points": {
-        "color": "black",
-        "fill": "NA",
-        "shape": "circle",
-        "linetype": "blank",
-        "size": 2,
-        "alpha": 1
-      },
-      "lines": {
-        "color": ["black", "dodgerblue", "firebrick"],
-        "fill": "NA",
-        "shape": "blank",
-        "linetype": ["solid", "dashed", "dashed"],
-        "size": 0.5,
-        "alpha": 1
-      },
-      "errorbars": {
-        "color": "black",
-        "fill": "NA",
-        "shape": "blank",
-        "linetype": "solid",
-        "size": 0.5,
-        "alpha": 1
-      }
-    },
-    "plotDDIRatio": {
-      "points": {
-        "color": "black",
-        "fill": "NA",
-        "shape": "circle",
-        "linetype": "blank",
-        "size": 2,
-        "alpha": 1
-      },
-      "lines": {
-        "color": "black",
-        "fill": "NA",
-        "shape": "blank",
-        "linetype": ["solid", "dashed", "solid"],
-        "size": 0.5,
-        "alpha": 1
-      },
-      "errorbars": {
-        "color": "black",
-        "fill": "NA",
-        "shape": "blank",
-        "linetype": "solid",
-        "size": 0.5,
-        "alpha": 1
-      }
-    },
-    "plotTimeProfile": {
       "points": {
         "color": "reset",
         "fill": "NA",
@@ -241,10 +192,62 @@
         "alpha": 1
       },
       "lines": {
+        "color": "black",
+        "fill": "NA",
+        "shape": "blank",
+        "linetype": ["solid", "longdash", "dotted"],
+        "size": 0.5,
+        "alpha": 1
+      },
+      "errorbars": {
         "color": "reset",
         "fill": "NA",
         "shape": "blank",
-        "linetype": "reset",
+        "linetype": "solid",
+        "size": 1,
+        "alpha": 1
+      }
+    },
+    "plotDDIRatio": {
+      "points": {
+        "color": "reset",
+        "fill": "NA",
+        "shape": "reset",
+        "linetype": "blank",
+        "size": 1,
+        "alpha": 1
+      },
+      "lines": {
+        "color": "black",
+        "fill": "NA",
+        "shape": "blank",
+        "linetype": ["solid", "dotted", "solid"],
+        "size": 0.5,
+        "alpha": 1
+      },
+      "errorbars": {
+        "color": "reset",
+        "fill": "NA",
+        "shape": "blank",
+        "linetype": "solid",
+        "size": 1,
+        "alpha": 1
+      }
+    },
+    "plotTimeProfile": {
+      "points": {
+        "color": "reset",
+        "fill": "NA",
+        "shape": "first",
+        "linetype": "blank",
+        "size": 1,
+        "alpha": 1
+      },
+      "lines": {
+        "color": "reset",
+        "fill": "NA",
+        "shape": "blank",
+        "linetype": "first",
         "size": 0.5,
         "alpha": 1
       },
@@ -253,7 +256,7 @@
         "fill": "reset",
         "shape": "blank",
         "linetype": "blank",
-        "size": 0.5,
+        "size": 1,
         "alpha": "first"
       },
       "errorbars": {
@@ -261,21 +264,21 @@
         "fill": "NA",
         "shape": "blank",
         "linetype": "solid",
-        "size": 0.5,
+        "size": 1,
         "alpha": 1
       }
     },
     "plotObsVsPred": {
       "points": {
-        "color": "black",
+        "color": "reset",
         "fill": "NA",
-        "shape": "circle",
+        "shape": "first",
         "linetype": "blank",
-        "size": 2,
+        "size": 1,
         "alpha": 1
       },
       "lines": {
-        "color": "black",
+        "color": ["black", "red"],
         "fill": "NA",
         "shape": "blank",
         "linetype": "solid",
@@ -283,7 +286,7 @@
         "alpha": 1
       },
       "errorbars": {
-        "color": "black",
+        "color": "reset",
         "fill": "NA",
         "shape": "blank",
         "linetype": "solid",
@@ -293,9 +296,9 @@
     },
     "plotBoxWhisker": {
       "points": {
-        "color": "black",
+        "color": "red",
         "fill": "NA",
-        "shape": "circle",
+        "shape": "plus",
         "linetype": "blank",
         "size": 1,
         "alpha": 1
@@ -314,20 +317,20 @@
         "color": "black",
         "fill": "NA",
         "shape": "blank",
-        "linetype": "longdash",
+        "linetype": "solid",
         "size": 0.5,
         "alpha": 1
       },
       "points": {
         "color": "reset",
         "fill": "NA",
-        "shape": "reset",
+        "shape": "first",
         "linetype": "blank",
         "size": 1,
         "alpha": 1
       },
       "ribbons": {
-        "color": "reset",
+        "color": "black",
         "fill": "reset",
         "shape": "blank",
         "linetype": "solid",
@@ -337,7 +340,7 @@
     },
     "plotHistogram": {
       "lines": {
-        "color": "black",
+        "color": "next",
         "fill": "NA",
         "shape": "blank",
         "linetype": "solid",
