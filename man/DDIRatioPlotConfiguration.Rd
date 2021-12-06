@@ -12,15 +12,46 @@ R6 class defining the configuration of a \code{ggplot} object for DDI Ratio plot
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
+\item \href{#method-new}{\code{DDIRatioPlotConfiguration$new()}}
 \item \href{#method-clone}{\code{DDIRatioPlotConfiguration$clone()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PKRatioPlotConfiguration" data-id="initialize">}\href{../../tlf/html/PKRatioPlotConfiguration.html#method-initialize}{\code{tlf::PKRatioPlotConfiguration$initialize()}}\out{</span>}
 }
 \out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Create a new \code{DDIRatioPlotConfiguration} object
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DDIRatioPlotConfiguration$new(
+  lines = NULL,
+  points = NULL,
+  errorbars = NULL,
+  ...
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{lines}}{\code{ThemeAestheticSelections} object defining properties for PK ratio horizontal lines}
+
+\item{\code{points}}{\code{ThemeAestheticSelections} object defining properties for PK ratio scatter points}
+
+\item{\code{errorbars}}{\code{ThemeAestheticSelections} object defining properties for PK ratio error bars}
+
+\item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{DDIRatioPlotConfiguration} object
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

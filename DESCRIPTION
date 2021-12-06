@@ -95,4 +95,5 @@ Collate:
     'utilities-label.R'
     'utilities-legend.R'
     'utilities-mapping.R'
+    'utilities-theme.R'
     'utils.R'

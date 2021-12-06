@@ -4,7 +4,7 @@ require(shiny)
 require(tlf)
 
 # Load initial template theme
-jsonTheme <- loadThemeFromJson(system.file("extdata", "template-theme.json", package = "tlf"))
+jsonTheme <- loadThemeFromJson(system.file("themes", "template-theme.json", package = "tlf"))
 useTheme(jsonTheme)
 
 # Load sample data and create variables for sample plot
