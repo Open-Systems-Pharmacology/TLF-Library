@@ -595,11 +595,13 @@ addErrorbar <- function(data = NULL,
           x = mapLabels$x,
           ymin = mapLabels$ymin,
           ymax = mapLabels$ymax,
-          color = "legendLabels",
+          group = "legendLabels"
         ),
         na.rm = TRUE,
+        show.legend = FALSE,
         size = size %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, aesthetic = "size"),
-        linetype = linetype %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype")
+        linetype = linetype %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
+        color = color %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$color, aesthetic = "color")
       )
   }
   if (!includeCap) {
@@ -610,48 +612,15 @@ addErrorbar <- function(data = NULL,
           x = mapLabels$x,
           ymin = mapLabels$ymin,
           ymax = mapLabels$ymax,
-          color = "legendLabels",
+          group = "legendLabels"
         ),
         na.rm = TRUE,
+        show.legend = FALSE,
         size = size %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, aesthetic = "size"),
-        linetype = linetype %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype")
+        linetype = linetype %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
+        color = color %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$color, aesthetic = "color")
       )
   }
-  plotObject <- plotObject +
-    ggplot2::geom_ribbon(
-      data = mapData,
-      mapping = ggplot2::aes_string(
-        x = mapLabels$x,
-        ymin = mapLabels$ymin,
-        ymax = mapLabels$ymax,
-        fill = "legendLabels",
-      ),
-      alpha = 0,
-      show.legend = TRUE,
-      na.rm = TRUE
-    )
-  # Add blank lines, points and ribbon to the plot
-  plotObject <- plotObject +
-    ggplot2::geom_blank(
-      data = mapData,
-      mapping = ggplot2::aes_string(
-        x = mapLabels$x,
-        y = mapLabels$ymax,
-        shape = "legendLabels",
-        color = "legendLabels",
-        fill = "legendLabels",
-        size = "legendLabels",
-        linetype = "legendLabels"
-      )
-    )
-
-  # Prepare data for merging previous and current legend
-  newLabels <- levels(factor(mapData$legendLabels))
-  # Sample LegendType properties based Theme if not input
-  try(plotObject <- mergeLegend(plotObject,
-    newLabels = newLabels,
-    aestheticSelections = plotConfiguration$errorbars
-  ))
   # Try is used to prevent crashes in the final plot due to ggplot2 peculiarities regarding scale functions
   eval(parseUpdateAxes())
   return(plotObject)
