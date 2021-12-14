@@ -92,7 +92,7 @@ plotObject = p
 }
 \references{
 For examples, see:
-\link{https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html}
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html}
 }
 \seealso{
 Other atom plots: 

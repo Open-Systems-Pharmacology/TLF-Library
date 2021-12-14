@@ -11,7 +11,7 @@ Run shiny app that allows to easily make plots from user interface.
 }
 \references{
 For tutorial, see:
-\link{https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-maker.html}
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-maker.html}
 }
 \seealso{
 Other shiny apps: 

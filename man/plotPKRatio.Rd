@@ -38,7 +38,7 @@ plotPKRatio(data = pkData, dataMapping = PKRatioDataMapping$new(x = "x", y = "y"
 }
 \references{
 For examples, see:
-\link{https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio-vignette.html}
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio-vignette.html}
 }
 \seealso{
 Other molecule plots: 

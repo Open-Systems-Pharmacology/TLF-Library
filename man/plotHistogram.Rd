@@ -63,7 +63,7 @@ plotHistogram(x = rlnorm(100), distribution = "normal")
 }
 \references{
 For examples, see:
-\link{https://www.open-systems-pharmacology.org/TLF-Library/articles/histogram.html}
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/histogram.html}
 }
 \seealso{
 Other molecule plots: 

@@ -10,7 +10,7 @@
 #' @return A `ggplot` graphical object
 #' 
 #' @references For examples, see:
-#' \link{https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html}
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
 #' 
 #' @family atom plots
 #' @export
@@ -62,7 +62,7 @@ initializePlot <- function(plotConfiguration = NULL) {
 #' An optional `ggplot` object on which to add the plot layer
 #' @return A `ggplot` object
 #' @references For examples, see:
-#' \link{https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html}
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
 #' 
 #' @family atom plots
 #' @export
@@ -191,7 +191,7 @@ addScatter <- function(data = NULL,
 #' 
 #' @return A `ggplot` object
 #' @references For examples, see:
-#' \link{https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html}
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
 #' 
 #' @family atom plots
 #' @export
@@ -372,7 +372,7 @@ addLine <- function(data = NULL,
 #' The closer to 1, the more opaque the ribbon is.
 #' @return A `ggplot` object
 #' @references For examples, see:
-#' \link{https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html}
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
 #' 
 #' @family atom plots
 #' @export
@@ -499,7 +499,7 @@ addRibbon <- function(data = NULL,
 #' @param includeCap Logical defining if errorbars include caps at their ends.
 #' @return A `ggplot` object
 #' @references For examples, see:
-#' \link{https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html}
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
 #' 
 #' @family atom plots
 #' @export

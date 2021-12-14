@@ -34,5 +34,5 @@ getGuestValues(x = 10^seq(-2,2,0.2), residualsVsObserved = TRUE)
 
 }
 \references{
-\link{https://dmd.aspetjournals.org/content/39/2/170}
+\url{https://dmd.aspetjournals.org/content/39/2/170}
 }

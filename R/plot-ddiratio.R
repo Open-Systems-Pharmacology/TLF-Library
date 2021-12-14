@@ -12,7 +12,7 @@
 #' @return A `ggplot` object
 #'
 #' @references For examples, see:
-#' \link{https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio-vignette.html}
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio-vignette.html>
 #'
 #' @export
 #' @family molecule plots
@@ -126,7 +126,7 @@ getGuestValuesFromDataMapping <- function(data,
 #' if limits are claculated as residuals vs observed, instead of predicted vs observed.
 #' @return A data.frame with `x`, `ymin` and `ymax` defining Guest et al. limits
 #' @references 
-#' \link{https://dmd.aspetjournals.org/content/39/2/170}
+#' <https://dmd.aspetjournals.org/content/39/2/170>
 #' @export
 #' @examples 
 #' # Get predicted vs observed Guest et al. limits

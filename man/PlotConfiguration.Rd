@@ -8,7 +8,7 @@ R6 class defining the configuration of a \code{ggplot} object
 }
 \references{
 For examples, see:
-\link{https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-configuration.html}
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-configuration.html}
 }
 \seealso{
 Other PlotConfiguration classes: 

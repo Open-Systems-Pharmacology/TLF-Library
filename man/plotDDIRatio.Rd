@@ -42,7 +42,7 @@ plotDDIRatio(data = ddiData, dataMapping = DDIRatioDataMapping$new(x = "x", y = 
 }
 \references{
 For examples, see:
-\link{https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio-vignette.html}
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio-vignette.html}
 }
 \seealso{
 Other molecule plots: 

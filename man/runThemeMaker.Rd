@@ -12,7 +12,7 @@ Theme objects drive default properties of plots
 }
 \references{
 For tutorial, see:
-\link{https://www.open-systems-pharmacology.org/TLF-Library/articles/theme-maker.html}
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/theme-maker.html}
 }
 \seealso{
 Other shiny apps: 

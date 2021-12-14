@@ -10,7 +10,7 @@
 #' @return A `ggplot` object
 #'
 #' @references For examples, see:
-#' \link{https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio-vignette.html}
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio-vignette.html>
 #'
 #' @export
 #' @family molecule plots

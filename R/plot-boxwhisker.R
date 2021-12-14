@@ -11,7 +11,7 @@
 #' @return A `ggplot` object
 #'
 #' @references For examples, see:
-#' \link{https://www.open-systems-pharmacology.org/TLF-Library/articles/box-whisker-vignette.html}
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/box-whisker-vignette.html>
 #'
 #' @export
 #' @family molecule plots

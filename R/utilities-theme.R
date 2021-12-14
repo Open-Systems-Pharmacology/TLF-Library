@@ -146,7 +146,7 @@ useHighChartTheme <- function() {
 #' Theme objects drive default properties of plots
 #' @export
 #' @references For tutorial, see:
-#' \link{https://www.open-systems-pharmacology.org/TLF-Library/articles/theme-maker.html}
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/theme-maker.html>
 #' @family shiny apps
 runThemeMaker <- function() {
   appPath <- system.file("theme-maker", package = "tlf")
@@ -159,7 +159,7 @@ runThemeMaker <- function() {
 #' Run shiny app that allows to easily make plots from user interface.
 #' @export
 #' @references For tutorial, see:
-#' \link{https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-maker.html}
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-maker.html>
 #' @family shiny apps
 runPlotMaker <- function() {
   appPath <- system.file("plot-maker", package = "tlf")

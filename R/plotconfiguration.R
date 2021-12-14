@@ -3,7 +3,7 @@
 #' @field export R6 class `ExportConfiguration` defining export properties
 #' @family PlotConfiguration classes
 #' @references For examples, see:
-#' \link{https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-configuration.html}
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-configuration.html>
 #' @export
 PlotConfiguration <- R6::R6Class(
   "PlotConfiguration",

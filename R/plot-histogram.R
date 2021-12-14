@@ -19,7 +19,7 @@
 #' @return A `ggplot` object
 #'
 #' @references For examples, see:
-#' \link{https://www.open-systems-pharmacology.org/TLF-Library/articles/histogram.html}
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/histogram.html>
 #'
 #' @export
 #' @family molecule plots
