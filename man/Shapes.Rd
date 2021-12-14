@@ -18,7 +18,8 @@ Other enum helpers:
 \code{\link{AestheticProperties}},
 \code{\link{LegendPositions}},
 \code{\link{Linetypes}},
-\code{\link{Scaling}}
+\code{\link{Scaling}},
+\code{\link{tlfStatFunctions}}
 }
 \concept{enum helpers}
 \keyword{datasets}
