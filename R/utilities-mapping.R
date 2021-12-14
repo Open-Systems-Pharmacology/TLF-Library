@@ -235,6 +235,20 @@ smartMapping <- function(data) {
   return(mapping)
 }
 
+#' @title dataMappingLabel
+#' @description
+#' Get label with unit based on mapping
+#' @param mapping Variable name in `data` and `metaData` to get label from
+#' @param metaData List of information about `data` including `dimension` and `unit`
+#' @return Label as `dimention [unit]` from the mapping of the variable name
+#' @keywords internal
+dataMappingLabel <- function(mapping = NULL, metaData = NULL) {
+  label <- NULL
+  ifnotnull(mapping, label <- getLabelWithUnit(metaData[[mapping]]$dimension, metaData[[mapping]]$unit))
+  
+  return(label)
+}
+
 #' @title DefaultDataMappingValues
 #' @description List of default values used in dataMapping
 DefaultDataMappingValues <- list(
@@ -311,3 +325,4 @@ getAggregatedData <- function(data,
 
   return(aggregatedData)
 }
+

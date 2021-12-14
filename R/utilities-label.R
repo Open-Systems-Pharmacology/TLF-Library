@@ -71,3 +71,24 @@ asLabel <- function(text = "", font = NULL) {
 
   return(text)
 }
+
+#' @title getLabelWithUnit
+#' @description
+#' Get label with its unit within square brackets when available
+#' @param label text of axis label
+#' @param unit Character value corresponding to unit of `label`
+#' @return 
+#' `label [unit]` or `label` depending if `unit` is `NULL` or `""`
+#' @export
+#' @examples 
+#' getLabelWithUnit("Time", "min")
+#' 
+#' getLabelWithUnit("Label without unit")
+#' 
+getLabelWithUnit <- function(label, unit = NULL) {
+  if (isTRUE(unit %in% "")) {
+    unit <- NULL
+  }
+  ifnotnull(unit, label <- paste(label, " [", unit, "]", sep = ""))
+  return(label)
+}
