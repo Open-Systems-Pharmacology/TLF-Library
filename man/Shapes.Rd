@@ -13,4 +13,12 @@ Shapes
 \description{
 List of some \code{ggplot2} shapes
 }
+\seealso{
+Other enum helpers: 
+\code{\link{AestheticProperties}},
+\code{\link{LegendPositions}},
+\code{\link{Linetypes}},
+\code{\link{Scaling}}
+}
+\concept{enum helpers}
 \keyword{datasets}

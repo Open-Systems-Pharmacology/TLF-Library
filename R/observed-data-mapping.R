@@ -1,6 +1,7 @@
 #' @title ObservedDataMapping
 #' @description  R6 class for mapping `x`, `y`, of observed data for a time profile plot
 #' @export
+#' @family DataMapping classes
 ObservedDataMapping <- R6::R6Class(
   "ObservedDataMapping",
   inherit = XYGDataMapping,

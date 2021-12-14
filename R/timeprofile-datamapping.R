@@ -1,6 +1,7 @@
 #' @title TimeProfileDataMapping
 #' @description  R6 class defining the configuration of a `ggplot` object for time profile plot
 #' @export
+#' @family DataMapping classes
 TimeProfileDataMapping <- R6::R6Class(
   "TimeProfileDataMapping",
   inherit = RangeDataMapping,

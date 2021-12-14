@@ -1,16 +1,39 @@
 #' @title plotTimeProfile
-#' @param data data.frame containing the data to be used for the plot
-#' @param metaData list containing complementary information to data (e.g. unit)
-#' @param dataMapping `TimeProfileDataMapping` object
-#' @param observedData data.frame containing the data to be used for the plot
-#' @param observedDataMapping `ObservedDataMapping` object
-#' @param plotConfiguration `TimeProfilePlotConfiguration` object
-#' @param plotObject
-#' ggplot object, if null creates new plot, if not add time profile layers to ggplot
 #' @description
-#' plotTimeProfile(data, metaData = NULL, dataMapping = NULL, plotConfiguration = NULL, plotObject = NULL)
-#' @return a ggplot graphical object
+#' Producing Time Profile plots
+#'
+#' @inheritParams addScatter
+#' @param dataMapping 
+#' A `TimeProfileDataMapping` object mapping `x`, `y`, `ymin`, `ymax` and aesthetic groups to their variable names of `data`.
+#' @param observedData A data.frame to use for plot.
+#' Unlike `data`, meant for simulated data, plotted as lines and ribbons;
+#' `observedData` is plotted as scatter points and errorbars.
+#' @param observedDataMapping 
+#' An `ObservedDataMapping` object mapping `x`, `y`, `ymin`, `ymax`, `lloq` and aesthetic groups to their variable names of `observedData`.
+#' @param plotConfiguration 
+#' An optional `TimeProfilePlotConfiguration` object defining labels, grid, background and watermark.
+#' @return A `ggplot` object
+#'
 #' @export
+#' @family molecule plots
+#' @examples 
+#' # Produce a Time profile plot with observed and simulated data
+#' obsData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
+#' simTime <- seq(1, 10, 0.1)
+#' simData <- data.frame(
+#' x = simTime, 
+#' y = 10*exp(-simTime),
+#' ymin = 8*exp(-simTime),
+#' ymax = 12*exp(-simTime)
+#' )
+#' 
+#' plotTimeProfile(
+#' data = simData, 
+#' observedData = obsData,
+#' dataMapping = TimeProfileDataMapping$new(x = "x", y = "y", ymin = "ymin", ymax = "ymax"),
+#' observedDataMapping = ObservedDataMapping$new(x = "x", y = "y")
+#' )
+#' 
 plotTimeProfile <- function(data = NULL,
                             metaData = NULL,
                             dataMapping = NULL,

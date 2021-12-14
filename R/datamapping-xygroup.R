@@ -1,6 +1,7 @@
 #' @title XYGDataMapping
 #' @description  R6 class for mapping `x`, `y` and `GroupMapping` variables to `data`
 #' @export
+#' @family DataMapping classes
 XYGDataMapping <- R6::R6Class(
   "XYGDataMapping",
   inherit = XYDataMapping,

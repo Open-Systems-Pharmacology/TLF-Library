@@ -1,12 +1,21 @@
 #' @title setPlotLabels
 #' @description Set labels properties on a ggplot object
-#' @param plotObject ggplot object to set
-#' @param title character or `Label` object
-#' @param subtitle character or `Label` object
-#' @param xlabel character or `Label` object
-#' @param ylabel character or `Label` object
-#' @return ggplot object
+#' @param plotObject A `ggplot` object
+#' @param title A character value or `Label` object
+#' @param subtitle A character value or `Label` object
+#' @param xlabel A character value or `Label` object
+#' @param ylabel A character value or `Label` object
+#' @return A `ggplot` object
 #' @export
+#' @examples 
+#' # Set labels of a scatter plot
+#' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+#' 
+#' setPlotLabels(p, xlabel = "new x label", ylabel = "new y label")
+#' 
+#' # Set labels using Label object
+#' setPlotLabels(p, ylabel = Label$new(text = "red y label", color = "red"))
+#' 
 setPlotLabels <- function(plotObject,
                           title = NULL,
                           subtitle = NULL,
@@ -37,12 +46,12 @@ setPlotLabels <- function(plotObject,
 }
 
 #' @title asLabel
-#' @param text text to be set as label class
-#' @param font font properties of Label
-#' @return Label class object
+#' @param text A character value
+#' @param font A `Font` object definin the font properties of the Label
+#' @return A `Label` object
 #' @description
-#' Set a character string into a Label class associating font properties to input
-#' If text is already a Label class, asLabel can be used to updated the font properties
+#' Set a character string into a `Label` object associating font properties to input
+#' If text is already a `Label` object, `asLabel` can be used to update its font properties
 #' @export
 #' @examples
 #' title <- "Title of Plot"

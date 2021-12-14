@@ -1,6 +1,7 @@
 #' @title HistogramDataMapping
 #' @description  R6 class for mapping `x`, `bins`, `binwidth`,`stack` and `distribution` to `data`
 #' @export
+#' @family DataMapping classes
 HistogramDataMapping <- R6::R6Class(
   "HistogramDataMapping",
   inherit = XYGDataMapping,

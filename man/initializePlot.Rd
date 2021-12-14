@@ -7,14 +7,13 @@
 initializePlot(plotConfiguration = NULL)
 }
 \arguments{
-\item{plotConfiguration}{\code{PlotConfiguration} objecct defining labels, grid, background and watermark
-This parameter is optional: the \code{tlf} library provides a default configuration according to the current theme}
+\item{plotConfiguration}{An optional \code{PlotConfiguration} object defining labels, grid, background and watermark}
 }
 \value{
 A \code{ggplot} graphical object
 }
 \description{
-Initialize a \code{ggplot} object and set the labels, grid, background and watermark
+Initialize a \code{ggplot} object and set its labels, grid, background and watermark
 }
 \examples{
 # Initialize an empty plot
@@ -23,4 +22,17 @@ p <- initializePlot()
 # Implement a customized configuration using PlotConfiguration
 config <- PlotConfiguration$new(title = "My Plot", xlabel = "x variable", ylabel = "y variable")
 p <- initializePlot(config)
+
 }
+\references{
+For examples, see:
+\link{https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html}
+}
+\seealso{
+Other atom plots: 
+\code{\link{addErrorbar}()},
+\code{\link{addLine}()},
+\code{\link{addRibbon}()},
+\code{\link{addScatter}()}
+}
+\concept{atom plots}

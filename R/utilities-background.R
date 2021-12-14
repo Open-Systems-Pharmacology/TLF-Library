@@ -1,11 +1,19 @@
 #' @title setGrid
-#' @description Set x and y grid properties on a ggplot object
-#' @param plotObject ggplot object to set
-#' @param color character color of the grid
-#' @param linetype character linetype of the grid. Use "blank" to remove grid.
-#' @param size numeric size of the grid lines
-#' @return ggplot object
+#' @description Set x and y grid properties of a `ggplot` object
+#' @param plotObject A `ggplot` object
+#' @param color Optional character values defining the color of the grid.
+#' See `grDevices::colors()` to get names of colors
+#' @param linetype Optional character values defining the linetype of the grid.
+#' See enum `Linetypes` to get names of linetype.
+#' @param size Optional numeric values defining the size of the grid.
+#' @return A `ggplot` object
 #' @export
+#' @examples 
+#' # Set grid of a scatter plot
+#' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+#' 
+#' setGrid(p, color = "red", linetype = "dotted")
+#' 
 setGrid <- function(plotObject,
                     color = NULL,
                     linetype = NULL,
@@ -29,13 +37,16 @@ setGrid <- function(plotObject,
 }
 
 #' @title setXGrid
-#' @description Set x-grid properties on a ggplot object
-#' @param plotObject ggplot object to set
-#' @param color character color of the grid
-#' @param linetype character linetype of the grid. Use "blank" to remove grid.
-#' @param size numeric size of the grid lines
-#' @return ggplot object
+#' @description Set x grid properties of a `ggplot` object
+#' @inheritParams setGrid
+#' @return A `ggplot` object
 #' @export
+#' @examples 
+#' # Set x grid of a scatter plot
+#' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+#' 
+#' setXGrid(p, color = "red", linetype = "dotted")
+#' 
 setXGrid <- function(plotObject,
                      color = NULL,
                      linetype = NULL,
@@ -58,13 +69,16 @@ setXGrid <- function(plotObject,
 }
 
 #' @title setYGrid
-#' @description Set x and y grid properties on a ggplot object
-#' @param plotObject ggplot object to set
-#' @param color character color of the grid
-#' @param linetype character linetype of the grid. Use "blank" to remove grid.
-#' @param size numeric size of the grid lines
-#' @return ggplot object
+#' @description Set y grid properties of a `ggplot` object
+#' @inheritParams setGrid
+#' @return A `ggplot` object
 #' @export
+#' @examples 
+#' # Set y grid of a scatter
+#' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+#' 
+#' setYGrid(p, color = "red", linetype = "dotted")
+#' 
 setYGrid <- function(plotObject,
                      color = NULL,
                      linetype = NULL,
@@ -87,14 +101,23 @@ setYGrid <- function(plotObject,
 }
 
 #' @title setBackground
-#' @description Set background properties on a ggplot object
-#' @param plotObject ggplot object to set
-#' @param fill character color fill of the background
-#' @param color character color of the background frame
-#' @param linetype character linetype of the background frame
-#' @param size numeric size of the background frame
-#' @return ggplot object
+#' @description Set background properties of a `ggplot` object
+#' @param plotObject A `ggplot` object
+#' @param fill Optional character values defining the color of the background.
+#' See `grDevices::colors()` to get names of colors
+#' @param color Optional character values defining the color of the background frame.
+#' See `grDevices::colors()` to get names of colors
+#' @param linetype Optional character values defining the linetype of the background frame.
+#' See enum `Linetypes` to get names of linetype.
+#' @param size Optional numeric values defining the size of the background frame.
+#' @return A `ggplot` object
 #' @export
+#' @examples 
+#' # Set background of a scatter plot
+#' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+#' 
+#' setBackground(p, fill = "yellowgreen", color = "red", linetype = "dotted")
+#' 
 setBackground <- function(plotObject,
                           fill = NULL,
                           color = NULL,
@@ -120,14 +143,16 @@ setBackground <- function(plotObject,
 }
 
 #' @title setBackgroundPanelArea
-#' @description Set background panel area properties on a ggplot object
-#' @param plotObject ggplot object to set
-#' @param fill character color fill of the background
-#' @param color character color of the background frame
-#' @param linetype character linetype of the background frame
-#' @param size numeric size of the background frame
-#' @return ggplot object
+#' @description Set background panel area properties of a `ggplot` object
+#' @inheritParams setBackground
+#' @return A `ggplot` object
 #' @export
+#' @examples 
+#' # Set background of a scatter plot
+#' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+#' 
+#' setBackgroundPanelArea(p, fill = "yellowgreen", color = "red", linetype = "dotted")
+#' 
 setBackgroundPanelArea <- function(plotObject,
                                    fill = NULL,
                                    color = NULL,
@@ -152,14 +177,16 @@ setBackgroundPanelArea <- function(plotObject,
 }
 
 #' @title setBackgroundPlotArea
-#' @description Set background plot area properties on a ggplot object
-#' @param plotObject ggplot object to set
-#' @param fill character color fill of the background
-#' @param color character color of the background frame
-#' @param linetype character linetype of the background frame
-#' @param size numeric size of the background frame
-#' @return ggplot object
+#' @description Set background plot area properties of a `ggplot` object
+#' @inheritParams setBackground
+#' @return A `ggplot` object
 #' @export
+#' @examples 
+#' # Set background of a scatter plot
+#' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+#' 
+#' setBackgroundPlotArea(p, fill = "yellowgreen", color = "red", linetype = "dotted")
+#' 
 setBackgroundPlotArea <- function(plotObject,
                                   fill = NULL,
                                   color = NULL,
@@ -184,21 +211,22 @@ setBackgroundPlotArea <- function(plotObject,
 }
 
 #' @title addWatermark
-#' @param plotObject ggplot object to which the watermark is added
-#' @param watermark Character or `Label` object corresponding to the watermark text
-#' (and its font properties if `Label`)
-#' @param color Color of the watermark label.
-#' @param size Size of the watermark label.
-#' @param angle Angle of the watermark label (in degree).
-#' @param alpha Transparency of the watermark label.
-#' Alpha is a numeric between 0 and 1: 0 label is totally transparent, 1 label is totally opaque.
-#' @return `plotObject` ggplot object to which the watermark is added.
 #' @description
-#' addWatermark creates a ggplot grob based on the label text and its font properties.
-#' Then,  adds the grob to the ggplot object input `plotObject` as a new layer using `ggplot2::annotation_custom`.
+#' Creates a `ggplot` grob based on the label text and its font properties.
+#' Then,  adds the grob to the `ggplot` object as a new layer using `ggplot2::annotation_custom`.
+#' @param plotObject A `ggplot` object
+#' @param watermark A character value or a `Label` object
+#' @param color Color of the watermark.
+#' @param size Size of the watermark.
+#' @param angle Angle of the watermark (in degree).
+#' @param alpha Numeric value between 0 and 1 corresponding to transparency of the watermark
+#' The closer to 0, the more transparent the watermark is.
+#' The closer to 1, the more opaque the watermark is.
+#' @return A `ggplot` object
 #' @import  ggplot2
 #' @export
 #' @examples
+#' # Add a watermark to an empty plot
 #' p <- ggplot2::ggplot()
 #' addWatermark(p, "watermark")
 #'
@@ -211,14 +239,11 @@ setBackgroundPlotArea <- function(plotObject,
 #'
 #' # Watermark totally opaque
 #' addWatermark(p, watermarkLabel, alpha = 1)
+#' 
+#' # As multiple layers of watermark: 
+#' p2 <- addWatermark(p, watermarkLabel, alpha = 1)
+#' addWatermark(p2, "other watermark", color = "red", angle = 90)
 #'
-#' # Create a sun as background
-#' for (angle in seq(0, 340, 20)) {
-#'   p <- addWatermark(p,
-#'     watermark = "            >",
-#'     color = "yellow", angle = angle, alpha = 1
-#'   )
-#' }
 addWatermark <- function(plotObject,
                          watermark,
                          color = NULL,
@@ -251,17 +276,28 @@ addWatermark <- function(plotObject,
 }
 
 #' @title setWatermark
-#' @param plotObject ggplot object to which the watermark is set
-#' @param watermark Character or `Label` object corresponding to the watermark text
-#' (and its font properties if `Label`)
-#' @param color Color of the watermark label.
-#' @param size Size of the watermark label.
-#' @param angle Angle of the watermark label (in degree).
-#' @param alpha Transparency of the watermark label.
-#' Alpha is a numeric between 0 and 1: 0 label is totally transparent, 1 label is totally opaque.
-#' @return ggplot object to which the watermark is added.
+#' @description
+#' Set the watermark of a `ggplot` object.
+#' Unlike `addWatermark`, the watermark layer is overridden by `setWatermark`.
+#' @inheritParams addWatermark
+#' @return A `ggplot` object
 #' @import ggplot2
 #' @export
+#' @examples 
+#' # Add a watermark to an empty plot
+#' p <- initializePlot()
+#' setWatermark(p, "watermark")
+#'
+#' # Watermark with font properties
+#' watermarkLabel <- Label$new(text = "watermark", color = "blue")
+#' setWatermark(p, watermarkLabel)
+#'
+#' # Horizontal watermark
+#' setWatermark(p, watermarkLabel, angle = 0)
+#'
+#' # Watermark totally opaque
+#' setWatermark(p, watermarkLabel, alpha = 1)
+#'
 setWatermark <- function(plotObject,
                          watermark = NULL,
                          color = NULL,
@@ -314,14 +350,13 @@ setWatermark <- function(plotObject,
 }
 
 #' @title createWatermarkGrob
-#' @param label Character or Label object corresponding to the watermark text
-#' (and its font properties if Label)
-#' @param alpha Transparency of the watermark label.
-#' Alpha is a numeric between 0 and 1: 0 label is totally transparent, 1 label is totally opaque.
-#' Default alpha is defined from theme aesthetic alpha map
-#' @return Watermark background as a ggplot grob object
 #' @description
-#' createWatermarkGrob creates a ggplot grob based on the label text and its font properties.
+#' Creates a `ggplot` grob based on the label text and its font properties.
+#' @param label A character value or `Label` object
+#' @param alpha Numeric value between 0 and 1 corresponding to transparency of the watermark
+#' The closer to 0, the more transparent the watermark is.
+#' The closer to 1, the more opaque the watermark is.
+#' @return A `ggplot` grob
 #' @export
 createWatermarkGrob <- function(label, alpha = NULL) {
   validateIsNumeric(alpha, nullAllowed = TRUE)

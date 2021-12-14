@@ -6,6 +6,17 @@
 \description{
 R6 class defining the configuration of a \code{ggplot} object for DDI Ratio plots
 }
+\seealso{
+Other PlotConfiguration classes: 
+\code{\link{BoxWhiskerPlotConfiguration}},
+\code{\link{HistogramPlotConfiguration}},
+\code{\link{ObsVsPredPlotConfiguration}},
+\code{\link{PKRatioPlotConfiguration}},
+\code{\link{PlotConfiguration}},
+\code{\link{TimeProfilePlotConfiguration}},
+\code{\link{TornadoPlotConfiguration}}
+}
+\concept{PlotConfiguration classes}
 \section{Super classes}{
 \code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{\link[tlf:PKRatioPlotConfiguration]{tlf::PKRatioPlotConfiguration}} -> \code{DDIRatioPlotConfiguration}
 }

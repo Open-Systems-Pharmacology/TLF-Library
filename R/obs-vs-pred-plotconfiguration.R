@@ -1,6 +1,7 @@
 #' @title ObsVsPredPlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object for Obs vs Pred plots
 #' @export
+#' @family PlotConfiguration classes
 ObsVsPredPlotConfiguration <- R6::R6Class(
   "ObsVsPredPlotConfiguration",
   inherit = PlotConfiguration,

@@ -14,27 +14,44 @@ plotDDIRatio(
 )
 }
 \arguments{
-\item{data}{data.frame containing the data to be used for the plot}
+\item{data}{A data.frame to use for plot.}
 
-\item{metaData}{list of lists
-containing complementary information to data (e.g. their unit and dimension).
-This parameter is optional.}
+\item{metaData}{A named list of information about \code{data} such as the \code{dimension} and \code{unit} of its variables.}
 
-\item{dataMapping}{A \code{DDIRatioDataMapping} object}
+\item{dataMapping}{A \code{DDIRatioDataMapping} object mapping \code{x}, \code{y} and aesthetic groups to their variable names of \code{data}.}
 
-\item{plotConfiguration}{A \code{DDIRatioPlotConfiguration} object}
+\item{plotConfiguration}{An optional \code{DDIRatioPlotConfiguration} object defining labels, grid, background and watermark.}
 
-\item{plotObject}{\code{ggplot} graphical object to which the PK Ratio plot layer is added
-This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided}
+\item{plotObject}{An optional \code{ggplot} object on which to add the plot layer}
 
-\item{residualsVsObserved}{if \code{TRUE}, lines of constant residuals are drawn horizontally, as for a residuals vs observations
-DDI ratio plot.  Otherwise, these lines are drawn diagonally, as for a predictions vs observations DDI ratio plot.}
+\item{residualsVsObserved}{Optional logical value defining
+if DDI Ratio plot is drawn as residuals vs observed, instead of predicted vs observed.}
 }
 \value{
-A \code{ggplot} graphical object
+A \code{ggplot} object
 }
 \description{
-Add DDI Ratio plot layers to a \code{ggplot} graphical object.
-Inclcuding Guest et al. limits, DDI Ratio limits as diagonal lines and
-DDI Ratios as a scatter plot.
+Producing DDI Ratio plots
 }
+\examples{
+# Produce DDI Ratio plot
+ddiData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
+
+plotDDIRatio(data = ddiData, dataMapping = DDIRatioDataMapping$new(x = "x", y = "y"))
+
+}
+\references{
+For examples, see:
+\link{https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio-vignette.html}
+}
+\seealso{
+Other molecule plots: 
+\code{\link{plotBoxWhisker}()},
+\code{\link{plotHistogram}()},
+\code{\link{plotObsVsPred}()},
+\code{\link{plotPKRatio}()},
+\code{\link{plotResVsPred}()},
+\code{\link{plotTimeProfile}()},
+\code{\link{plotTornado}()}
+}
+\concept{molecule plots}

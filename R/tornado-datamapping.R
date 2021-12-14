@@ -1,6 +1,7 @@
 #' @title TornadoDataMapping
 #' @description  R6 class for mapping `values`, `labels` to `data`
 #' @export
+#' @family DataMapping classes
 TornadoDataMapping <- R6::R6Class(
   "TornadoDataMapping",
   inherit = XYGDataMapping,

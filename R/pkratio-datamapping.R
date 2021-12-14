@@ -1,6 +1,7 @@
 #' @title PKRatioDataMapping
 #' @description  R6 class for mapping `x`, `y`, `GroupMapping` and pkRatio `lines` variables to `data`
 #' @export
+#' @family DataMapping classes
 PKRatioDataMapping <- R6::R6Class(
   "PKRatioDataMapping",
   inherit = XYGDataMapping,

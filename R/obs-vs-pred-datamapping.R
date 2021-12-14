@@ -1,6 +1,7 @@
 #' @title ObsVsPredDataMapping
 #' @description  Class for mapping variables in observations vs predictions plot
 #' @export
+#' @family DataMapping classes
 ObsVsPredDataMapping <- R6::R6Class(
   "ObsVsPredDataMapping",
   inherit = PKRatioDataMapping,
@@ -29,6 +30,7 @@ ObsVsPredDataMapping <- R6::R6Class(
 #' @title ResVsPredDataMapping
 #' @description  Class for mapping variables in residuals vs predictions/time plot
 #' @export
+#' @family DataMapping classes
 ResVsPredDataMapping <- R6::R6Class(
   "ResVsPredDataMapping",
   inherit = ObsVsPredDataMapping

@@ -21,48 +21,87 @@ addErrorbar(
 )
 }
 \arguments{
-\item{data}{data.frame containing the errorbar endpoints to be plotted}
+\item{data}{A data.frame to use for plot.}
 
-\item{metaData}{list of information on \code{data} such as \code{dimension} and \code{unit} of their variables}
+\item{metaData}{A named list of information about \code{data} such as the \code{dimension} and \code{unit} of its variables.}
 
-\item{x}{Mapping for x values.
-If \code{data} is NULL or not input, \code{x} numeric values will be used as is for the plot.}
+\item{x}{Numeric values to plot along the \code{x} axis. Only used instead of \code{data} if \code{data} is \code{NULL}.}
 
-\item{ymin}{Mapping for ymin values.
-If \code{data} is NULL or not input, \code{ymin} numeric values will be used as is for the plot.}
+\item{ymin}{Numeric values to plot along the \code{y} axis. Only used instead of \code{data} if \code{data} is \code{NULL}.}
 
-\item{ymax}{Mapping for ymin values.
-If \code{data} is NULL or not input, \code{ymax} numeric values will be used as is for the plot.}
+\item{ymax}{Numeric values to plot along the \code{y} axis. Only used instead of \code{data} if \code{data} is \code{NULL}.}
 
-\item{caption}{vector of character strings defining the legend captions.
-This parameter is optional: default value is NULL.}
+\item{caption}{Optional character values defining the legend captions of the plot.}
 
-\item{color}{vector of character strings defining the color of the scatter points.
-This parameter is optional: default value \code{NULL} will choose colors according to the current theme.}
+\item{color}{Optional character values defining the colors of the plot layer.
+See \code{grDevices::colors()} to get names of colors}
 
-\item{size}{vector of numerical defining the sizes of the scatter points.
-This parameter is optional: default value \code{NULL} will choose sizes according to the current theme.}
+\item{size}{Optional numeric values defining the size of the plot layer.}
 
-\item{linetype}{vector of character strings defining the linetype linking the scatter points.
-This parameter is optional: default value \code{NULL} won't provide lines.}
+\item{linetype}{Optional character values defining the linetype of the plot layer.
+See enum \code{Linetypes} to get names of linetype.}
 
-\item{includeCap}{logical setting if error bars include caps at their ends.}
+\item{includeCap}{Logical defining if errorbars include caps at their ends.}
 
-\item{dataMapping}{\code{RangeDataMapping} class or subclass
-mapping x, ymin, ymax and aesthetic variables to the variable names of \code{data}.}
+\item{dataMapping}{A \code{RangeDataMapping} object mapping \code{x}, \code{ymin}, \code{ymax} and aesthetic groups to their variable names of \code{data}.}
 
-\item{plotConfiguration}{\code{PlotConfiguration} object defining the label and background properties of the plot.}
+\item{plotConfiguration}{An optional \code{PlotConfiguration} object defining labels, grid, background and watermark.}
 
-\item{plotObject}{\code{ggplot} graphical object to which the line layer is added
-This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided}
+\item{plotObject}{An optional \code{ggplot} object on which to add the plot layer}
 }
 \value{
-A \code{ggplot} graphical object
+A \code{ggplot} object
 }
 \description{
-Add a errorbar plot layer to a \code{ggplot} graphical object.
-Use optional argument \code{caption} to set legend caption.
-Since \code{ggplot} manage aesthetic properties across all layers,
-aesthetic properties defined in \code{plotConfiguration} will apply across all layers.
-If caption is the same as a previous scatter plot layer, the legend will merge their caption and aesthetic properties
+Add an errorbar layer to a \code{ggplot} object.
 }
+\examples{
+# Add errorbar using x, ymin and ymax
+addErrorbar(
+x = c(1, 2, 1, 2, 3), 
+ymin = c(5, 0, 2, 3, 4), 
+ymax = c(6, 2, 6, 2.5, 5)
+)
+
+# Add errorbar using a data.frame
+time <- seq(0, 30, 0.5)
+errorbarData <- data.frame(x = time, ymin = cos(time)-1, ymax = cos(time)+1)
+
+addErrorbar(
+  data = errorbarData,
+  dataMapping = RangeDataMapping$new(x = "x", ymin = "ymin", ymax = "ymax")
+)
+
+# Or for simple cases a smart mapping will get directly x, ymin and ymax from data
+addErrorbar(data = errorbarData)
+
+# Add a errorbar with caption
+addErrorbar(data = errorbarData, caption = "My errorbar plot")
+
+# Add a errorbar with specific properties
+addErrorbar(data = errorbarData, color = "blue", size = 0.5, includeCap = TRUE, caption = "My data")
+
+# Add a errorbar with specific properties
+p <- addErrorbar(
+data = errorbarData, 
+color = "blue", size = 0.5, includeCap = TRUE, caption = "My data"
+)
+addScatter(
+x = time, y = cos(time), 
+color = "red", size = 1, caption = "My data", 
+plotObject = p
+)
+
+}
+\references{
+For examples, see:
+\link{https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html}
+}
+\seealso{
+Other atom plots: 
+\code{\link{addLine}()},
+\code{\link{addRibbon}()},
+\code{\link{addScatter}()},
+\code{\link{initializePlot}()}
+}
+\concept{atom plots}

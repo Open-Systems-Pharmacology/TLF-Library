@@ -13,4 +13,12 @@ LegendPositions
 \description{
 List of all available legend positions
 }
-\keyword{internal}
+\seealso{
+Other enum helpers: 
+\code{\link{AestheticProperties}},
+\code{\link{Linetypes}},
+\code{\link{Scaling}},
+\code{\link{Shapes}}
+}
+\concept{enum helpers}
+\keyword{datasets}

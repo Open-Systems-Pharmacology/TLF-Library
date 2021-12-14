@@ -6,6 +6,23 @@
 \description{
 R6 class for mapping \code{x}, \code{y} and \code{GroupMapping} variables to \code{data}
 }
+\seealso{
+Other DataMapping classes: 
+\code{\link{BoxWhiskerDataMapping}},
+\code{\link{DDIRatioDataMapping}},
+\code{\link{GroupMapping}},
+\code{\link{Grouping}},
+\code{\link{HistogramDataMapping}},
+\code{\link{ObsVsPredDataMapping}},
+\code{\link{ObservedDataMapping}},
+\code{\link{PKRatioDataMapping}},
+\code{\link{RangeDataMapping}},
+\code{\link{ResVsPredDataMapping}},
+\code{\link{TimeProfileDataMapping}},
+\code{\link{TornadoDataMapping}},
+\code{\link{XYDataMapping}}
+}
+\concept{DataMapping classes}
 \section{Super class}{
 \code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{XYGDataMapping}
 }

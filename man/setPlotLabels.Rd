@@ -13,19 +13,29 @@ setPlotLabels(
 )
 }
 \arguments{
-\item{plotObject}{ggplot object to set}
+\item{plotObject}{A \code{ggplot} object}
 
-\item{title}{character or \code{Label} object}
+\item{title}{A character value or \code{Label} object}
 
-\item{subtitle}{character or \code{Label} object}
+\item{subtitle}{A character value or \code{Label} object}
 
-\item{xlabel}{character or \code{Label} object}
+\item{xlabel}{A character value or \code{Label} object}
 
-\item{ylabel}{character or \code{Label} object}
+\item{ylabel}{A character value or \code{Label} object}
 }
 \value{
-ggplot object
+A \code{ggplot} object
 }
 \description{
 Set labels properties on a ggplot object
+}
+\examples{
+# Set labels of a scatter plot
+p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+
+setPlotLabels(p, xlabel = "new x label", ylabel = "new y label")
+
+# Set labels using Label object
+setPlotLabels(p, ylabel = Label$new(text = "red y label", color = "red"))
+
 }

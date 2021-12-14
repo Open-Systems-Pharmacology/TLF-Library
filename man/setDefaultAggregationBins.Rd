@@ -7,8 +7,16 @@
 setDefaultAggregationBins(bins = NULL)
 }
 \arguments{
-\item{bins}{number of bins if value, edges if vector or binning function if function}
+\item{bins}{Number of bins if value, edges if vector or binning function if function}
 }
 \description{
 Set default aggregation bins of tlf environment
+}
+\examples{
+# Set default number of bins
+plotHistogram(x = rnorm(1000))
+
+setDefaultAggregationBins(21)
+plotHistogram(x = rnorm(1000))
+
 }

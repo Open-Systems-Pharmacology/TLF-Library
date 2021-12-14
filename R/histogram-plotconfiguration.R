@@ -1,6 +1,7 @@
 #' @title HistogramPlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object for histograms
 #' @export
+#' @family PlotConfiguration classes
 HistogramPlotConfiguration <- R6::R6Class(
   "HistogramPlotConfiguration",
   inherit = PlotConfiguration,

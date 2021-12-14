@@ -9,3 +9,12 @@ runPlotMaker()
 \description{
 Run shiny app that allows to easily make plots from user interface.
 }
+\references{
+For tutorial, see:
+\link{https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-maker.html}
+}
+\seealso{
+Other shiny apps: 
+\code{\link{runThemeMaker}()}
+}
+\concept{shiny apps}

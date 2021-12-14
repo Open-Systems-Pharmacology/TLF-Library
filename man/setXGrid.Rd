@@ -7,17 +7,26 @@
 setXGrid(plotObject, color = NULL, linetype = NULL, size = NULL)
 }
 \arguments{
-\item{plotObject}{ggplot object to set}
+\item{plotObject}{A \code{ggplot} object}
 
-\item{color}{character color of the grid}
+\item{color}{Optional character values defining the color of the grid.
+See \code{grDevices::colors()} to get names of colors}
 
-\item{linetype}{character linetype of the grid. Use "blank" to remove grid.}
+\item{linetype}{Optional character values defining the linetype of the grid.
+See enum \code{Linetypes} to get names of linetype.}
 
-\item{size}{numeric size of the grid lines}
+\item{size}{Optional numeric values defining the size of the grid.}
 }
 \value{
-ggplot object
+A \code{ggplot} object
 }
 \description{
-Set x-grid properties on a ggplot object
+Set x grid properties of a \code{ggplot} object
+}
+\examples{
+# Set x grid of a scatter plot
+p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+
+setXGrid(p, color = "red", linetype = "dotted")
+
 }

@@ -1,20 +1,27 @@
 #' @title plotDDIRatio
-#' @param data data.frame containing the data to be used for the plot
-#' @param metaData list of lists
-#' containing complementary information to data (e.g. their unit and dimension).
-#' This parameter is optional.
-#' @param dataMapping A `DDIRatioDataMapping` object
-#' @param plotConfiguration A `DDIRatioPlotConfiguration` object
-#' @param plotObject `ggplot` graphical object to which the PK Ratio plot layer is added
-#' This parameter is optional: the `tlf` library will initialize an empty plot if the parameter is NULL or not provided
-#' @param residualsVsObserved if `TRUE`, lines of constant residuals are drawn horizontally, as for a residuals vs observations
-#' DDI ratio plot.  Otherwise, these lines are drawn diagonally, as for a predictions vs observations DDI ratio plot.
 #' @description
-#' Add DDI Ratio plot layers to a `ggplot` graphical object.
-#' Inclcuding Guest et al. limits, DDI Ratio limits as diagonal lines and
-#' DDI Ratios as a scatter plot.
-#' @return A `ggplot` graphical object
+#' Producing DDI Ratio plots
+#'
+#' @inheritParams addScatter
+#' @param residualsVsObserved Optional logical value defining 
+#' if DDI Ratio plot is drawn as residuals vs observed, instead of predicted vs observed.
+#' @param dataMapping 
+#' A `DDIRatioDataMapping` object mapping `x`, `y` and aesthetic groups to their variable names of `data`.
+#' @param plotConfiguration 
+#' An optional `DDIRatioPlotConfiguration` object defining labels, grid, background and watermark.
+#' @return A `ggplot` object
+#'
+#' @references For examples, see:
+#' \link{https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio-vignette.html}
+#'
 #' @export
+#' @family molecule plots
+#' @examples 
+#' # Produce DDI Ratio plot
+#' ddiData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
+#' 
+#' plotDDIRatio(data = ddiData, dataMapping = DDIRatioDataMapping$new(x = "x", y = "y"))
+#' 
 plotDDIRatio <- function(data,
                          metaData = NULL,
                          dataMapping = NULL,
@@ -79,11 +86,20 @@ plotDDIRatio <- function(data,
 }
 
 #' @title getGuestValuesFromDataMapping
-#' @description Get a data.frame with Guest et al. ratio limits
-#' @param data data.frame containing the data to be used for the plot
-#' @param dataMapping A `DDIRatioDataMapping` object
-#' @return A data.frame with x, ymin and ymax defining Guest et al. limits
+#' @description 
+#' Get a data.frame with Guest et al. ratio limits from `data` and its `DDIRatioDataMapping`
+#' @inheritParams plotDDIRatio
+#' @return A data.frame with `x`, `ymin` and `ymax` defining Guest et al. limits
 #' @export
+#' @examples 
+#' # Get the data.frame of Guest et al. limits
+#' ddiData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
+#' 
+#' getGuestValuesFromDataMapping(
+#' data = ddiData, 
+#' dataMapping = DDIRatioDataMapping$new(x = "x", y = "y")
+#' )
+#' 
 getGuestValuesFromDataMapping <- function(data,
                                           dataMapping) {
   # Create vector of x values
@@ -96,12 +112,29 @@ getGuestValuesFromDataMapping <- function(data,
 }
 
 #' @title getGuestValues
-#' @description Get a data.frame with Guest et al. ratio limits
-#' @param x input values of Guest function
-#' @param delta parameter of Guest function
-#' @param residualsVsObserved if true, returns a dataframe for a residuals (predicted/observed) vs observed DDI ratio plot
-#' @return A data.frame with x, ymin and ymax defining Guest et al. limits
+#' @description 
+#' Get a data.frame with Guest et al. ratio limits with:
+#' \itemize{
+#' \item `ymax` = `x`.`limit`
+#' \item `ymin` = `x`/`limit`
+#' \item `limit` = (`delta`+2(`x`-1))/`x`
+#' }
+#'  
+#' @param x Numeric values input of Guest function
+#' @param delta Numeric value parameter of Guest function
+#' @param residualsVsObserved Logical value defining 
+#' if limits are claculated as residuals vs observed, instead of predicted vs observed.
+#' @return A data.frame with `x`, `ymin` and `ymax` defining Guest et al. limits
+#' @references 
+#' \link{https://dmd.aspetjournals.org/content/39/2/170}
 #' @export
+#' @examples 
+#' # Get predicted vs observed Guest et al. limits
+#' getGuestValues(x = 10^seq(-2,2,0.2))
+#' 
+#' # Get residuals vs observed Guest et al. limits
+#' getGuestValues(x = 10^seq(-2,2,0.2), residualsVsObserved = TRUE)
+#' 
 getGuestValues <- function(x, delta = 1, residualsVsObserved = FALSE) {
   xSym <- x
   xSym[x < 1] <- 1 / x[x < 1]

@@ -1,10 +1,24 @@
 #' @title plotResVsPred
-#' @inheritParams plotObsVsPred
 #' @description
-#' Add Residuals vs Predictions / Time plot layers to a `ggplot` graphical object.
-#' Residuals vs Predictions are plotted as a scatter plot.
-#' @return A `ggplot` graphical object
+#' Producing residuals vs predicted plots
+#'
+#' @inheritParams plotObsVsPred
+#' @return A `ggplot` object
+#'
 #' @export
+#' @family molecule plots
+#' @examples 
+#' # Produce Obs vs Pred plot
+#' resVsPredData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
+#' 
+#' plotResVsPred(data = resVsPredData, dataMapping = ResVsPredDataMapping$new(x = "x", y = "y"))
+#' 
+#' # Produce Res vs Pred plot with linear regression
+#' plotResVsPred(
+#' data = resVsPredData, 
+#' dataMapping = ResVsPredDataMapping$new(x = "x", y = "y"),
+#' smoother = "lm"
+#' )
 plotResVsPred <- function(data,
                           metaData = NULL,
                           dataMapping = NULL,

@@ -7,19 +7,20 @@
 addOutliers(data, metaData, dataMapping, plotConfiguration, plotObject)
 }
 \arguments{
-\item{data}{data.frame}
+\item{data}{A data.frame to use for plot.}
 
-\item{metaData}{list of information on \code{data}}
+\item{metaData}{A named list of information about \code{data} such as the \code{dimension} and \code{unit} of its variables.}
 
-\item{dataMapping}{\code{BoxWhiskerDataMapping} object}
+\item{dataMapping}{A \code{BoxWhiskerDataMapping} object mapping \code{x}, \code{y} and aesthetic groups to their variable names of \code{data}.}
 
-\item{plotConfiguration}{\code{BoxWhiskerPlotConfiguration} object}
+\item{plotConfiguration}{An optional \code{BoxWhiskerConfiguration} object defining labels, grid, background and watermark.}
 
-\item{plotObject}{a \code{ggplot} object}
+\item{plotObject}{An optional \code{ggplot} object on which to add the plot layer}
 }
 \value{
 A \code{ggplot} object
 }
 \description{
-Add a outlier points layer to a \code{ggplot} object
+Add scatter points for outliers to \code{ggplot} object
 }
+\keyword{internal}

@@ -5,6 +5,7 @@
 #'  Helper enum of predefined transformations of axes
 #'  Note that the transformations will be translated internally into `ggplot2` transformations.
 #'  `ggplot2` includes more transformations than what is available in this enum.
+#' @family enum helpers
 #' @examples
 #' # Continuous linear scale
 #' Scaling$lin
@@ -22,6 +23,7 @@
 #' Scaling$time
 #' # Date scale for POSIXlt or POSIXct data
 #' Scaling$date
+#' 
 Scaling <- enum(c(
   "lin",
   "log",
@@ -34,14 +36,14 @@ Scaling <- enum(c(
 ))
 
 #' @title setXAxis
-#' @description Set X-axis properties on a ggplot object
-#' @param plotObject ggplot object to set X-axis properties
-#' @param scale Scale of X-axis. Use enum `Scaling` to access names of scales.
-#' @param limits X-axis limits
-#' @param ticks X-axis ticks
-#' @param ticklabels X-axis ticklabels
-#' @param font `Font` object  defining font of ticklabels
-#' @return ggplot object with updated X-axis
+#' @description Set X-axis properties of a `ggplot` object
+#' @param plotObject A `ggplot` object to set X-axis properties
+#' @param scale Scale of axis. Use enum `Scaling` to access names of scales.
+#' @param limits Optional numeric values of axis limits
+#' @param ticks Optional values or function for axis ticks
+#' @param ticklabels Optional values or function for axis ticklabels
+#' @param font A `Font` object  defining font of ticklabels
+#' @return A `ggplot` object
 #' @export
 #' @examples
 #' myPlot <- addLine(x = c(1, 2, 3), y = c(10, 50, 100))
@@ -81,14 +83,9 @@ setXAxis <- function(plotObject,
 }
 
 #' @title setYAxis
-#' @description Set Y-axis properties on a ggplot object
-#' @param plotObject ggplot object to set Y-axis properties
-#' @param scale Scale of Y-axis. Use enum `Scaling` to access names of scales.
-#' @param limits Y-axis limits
-#' @param ticks Y-axis ticks
-#' @param ticklabels Y-axis ticklabels
-#' @param font `Font` object  defining font of ticklabels
-#' @return ggplot object with updated Y-axis
+#' @description Set Y-axis properties of a `ggplot` object
+#' @inheritParams setXAxis
+#' @return A `ggplot` object
 #' @export
 #' @examples
 #' myPlot <- addLine(x = c(1, 2, 3), y = c(10, 50, 100))

@@ -10,6 +10,7 @@ tlfEnv$packageName <- "tlf"
 #' @export
 #' @description
 #' List of all available legend positions
+#' @family enum helpers
 LegendPositions <- enum(c(
   "none",
   "insideTop",
@@ -130,16 +131,32 @@ setDefaultAggregationLabels <- function(y = NULL, range = NULL) {
 
 #' @title setDefaultAggregationBins
 #' @description Set default aggregation bins of tlf environment
-#' @param bins number of bins if value, edges if vector or binning function if function
+#' @param bins Number of bins if value, edges if vector or binning function if function
 #' @export
+#' @examples 
+#' # Set default number of bins
+#' plotHistogram(x = rnorm(1000))
+#' 
+#' setDefaultAggregationBins(21)
+#' plotHistogram(x = rnorm(1000))
+#' 
 setDefaultAggregationBins <- function(bins = NULL) {
   tlfEnv$defaultAggregation$bins <- bins %||% tlfEnv$defaultAggregation$bins
 }
 
 #' @title setDefaultWatermark
 #' @description Set default watermark value for current theme
-#' @param watermark character or Label class object
+#' @param watermark A character value or `Label` object
 #' @export
+#' @examples 
+#' # Set default watermark using a character
+#' setDefaultWatermark("Confidential")
+#' addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+#' 
+#' # Set default watermark using a `Label` object
+#' setDefaultWatermark(Label$new(text = "Confidential", color = "red", angle = 30))
+#' addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+#' 
 setDefaultWatermark <- function(watermark = NULL) {
   validateIsOfType(watermark, c("Label", "character"), nullAllowed = TRUE)
   if (isOfType(watermark, "character")) {

@@ -1,6 +1,7 @@
 #' @title DDIRatioDataMapping
-#' @description  R6 class for mapping `x`, `y`, `GroupMapping` and `ddiRatioLines` variables to `data`
+#' @description  R6 class for mapping `x`, `y`, `GroupMapping` and DDI ratio `lines` variables to `data`
 #' @export
+#' @family DataMapping classes
 DDIRatioDataMapping <- R6::R6Class(
   "DDIRatioDataMapping",
   inherit = PKRatioDataMapping,

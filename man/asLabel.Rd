@@ -7,16 +7,16 @@
 asLabel(text = "", font = NULL)
 }
 \arguments{
-\item{text}{text to be set as label class}
+\item{text}{A character value}
 
-\item{font}{font properties of Label}
+\item{font}{A \code{Font} object definin the font properties of the Label}
 }
 \value{
-Label class object
+A \code{Label} object
 }
 \description{
-Set a character string into a Label class associating font properties to input
-If text is already a Label class, asLabel can be used to updated the font properties
+Set a character string into a \code{Label} object associating font properties to input
+If text is already a \code{Label} object, \code{asLabel} can be used to update its font properties
 }
 \examples{
 title <- "Title of Plot"

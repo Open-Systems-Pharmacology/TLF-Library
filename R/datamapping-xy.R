@@ -1,6 +1,7 @@
 #' @title XYDataMapping
 #' @description  R6 class for mapping `x` and `y` variable to `data`
 #' @export
+#' @family DataMapping classes
 XYDataMapping <- R6::R6Class(
   "XYDataMapping",
   public = list(

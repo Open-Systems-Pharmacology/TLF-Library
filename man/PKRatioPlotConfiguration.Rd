@@ -6,6 +6,17 @@
 \description{
 R6 class defining the configuration of a \code{ggplot} object for PK ratio plots
 }
+\seealso{
+Other PlotConfiguration classes: 
+\code{\link{BoxWhiskerPlotConfiguration}},
+\code{\link{DDIRatioPlotConfiguration}},
+\code{\link{HistogramPlotConfiguration}},
+\code{\link{ObsVsPredPlotConfiguration}},
+\code{\link{PlotConfiguration}},
+\code{\link{TimeProfilePlotConfiguration}},
+\code{\link{TornadoPlotConfiguration}}
+}
+\concept{PlotConfiguration classes}
 \section{Super class}{
 \code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{PKRatioPlotConfiguration}
 }

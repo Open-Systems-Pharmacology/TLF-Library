@@ -18,41 +18,51 @@ plotTornado(
 )
 }
 \arguments{
-\item{data}{data.frame containing the data to be used for the plot}
+\item{data}{A data.frame to use for plot.}
 
-\item{metaData}{list of lists
-containing complementary information to data (e.g. their unit and dimension).
-This parameter is optional.}
+\item{metaData}{A named list of information about \code{data} such as the \code{dimension} and \code{unit} of its variables.}
 
-\item{x}{Mapping for x (values of tornado plot)
-If \code{data} is NULL or not input, \code{x} numeric values will be used as is for the plot.}
+\item{x}{Numeric values to plot along the \code{x} axis. Only used instead of \code{data} if \code{data} is \code{NULL}.}
 
-\item{y}{Mapping for y (labels of tornado plot)
-If \code{data} is NULL or not input, \code{y} character values will be used as is for the plot.}
+\item{y}{Character values to plot along the \code{y} axis. Only used instead of \code{data} if \code{data} is \code{NULL}.}
 
-\item{sorted}{logical indicating if values should be sorted if \code{dataMapping} is not input.
-By default, values are sorted by their absolute values}
+\item{sorted}{Optional logical value defining if \code{y} values are sorted by absolute values of \code{x}.}
 
-\item{colorPalette}{Define a \code{ggplot2} colorPalette (e.g \code{colorPalette}="Spectral")}
+\item{colorPalette}{Optional character values defining a \code{ggplot2} colorPalette (e.g. \code{"Spectral"})}
 
-\item{bar}{logical setting tornado as bar plot}
+\item{bar}{Optional logical value setting tornado plot as bar plot instead of scatter plot.}
 
-\item{dataMapping}{\code{TornadoDataMapping} class or subclass mapping x and y variables to \code{data} variable names.
-\code{dataMapping} provides also the values of the PK Ratio limits plotted as horizontal lines.
-This parameter is optional: the \code{tlf} library provides a smart mapping if only \code{data} is provided
-and default values of the PK Ratio limits.}
+\item{dataMapping}{A \code{TornadoDataMapping} object mapping \code{x}, \code{y} and aesthetic groups to their variable names of \code{data}.}
 
-\item{plotConfiguration}{\code{TornadoPlotConfiguration} class or subclass defining labels, grid, background and watermark
-This parameter is optional: the \code{tlf} library provides a default configuration according to the current theme}
+\item{plotConfiguration}{An optional \code{TornadoPlotConfiguration} object defining labels, grid, background and watermark.}
 
-\item{plotObject}{\code{ggplot} graphical object to which the tornado plot layer is added
-This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided}
+\item{plotObject}{An optional \code{ggplot} object on which to add the plot layer}
 }
 \value{
-A \code{ggplot} graphical object
+A \code{ggplot} object
 }
 \description{
-Add tornado plot layers to a \code{ggplot} graphical object.
-Tornado limits are plotted as vertical lines.
-Tornado values are plotted as horizontal bars or point according to option \code{bar}
+Producing tornado plots
 }
+\examples{
+# Produce a tornado plot
+plotTornado(x = c(2, -1, 3), y = c("A", "B", "C"))
+
+# Produce a tornado plot as scatter plot
+plotTornado(x = c(2, -1, 3), y = c("A", "B", "C"), bar = FALSE)
+
+# Produce a tornado plot as is (no sorting)
+plotTornado(x = c(2, -1, 3), y = c("A", "B", "C"), sorted = FALSE)
+
+}
+\seealso{
+Other molecule plots: 
+\code{\link{plotBoxWhisker}()},
+\code{\link{plotDDIRatio}()},
+\code{\link{plotHistogram}()},
+\code{\link{plotObsVsPred}()},
+\code{\link{plotPKRatio}()},
+\code{\link{plotResVsPred}()},
+\code{\link{plotTimeProfile}()}
+}
+\concept{molecule plots}
