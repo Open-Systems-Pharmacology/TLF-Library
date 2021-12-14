@@ -1,6 +1,7 @@
 #' @title TornadoPlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object for tornado plots
 #' @export
+#' @family PlotConfiguration classes
 TornadoPlotConfiguration <- R6::R6Class(
   "TornadoPlotConfiguration",
   inherit = PlotConfiguration,

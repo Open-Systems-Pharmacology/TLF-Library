@@ -13,4 +13,13 @@ Linetypes
 \description{
 Enum of \code{ggplot2} linetypes
 }
+\seealso{
+Other enum helpers: 
+\code{\link{AestheticProperties}},
+\code{\link{LegendPositions}},
+\code{\link{Scaling}},
+\code{\link{Shapes}},
+\code{\link{tlfStatFunctions}}
+}
+\concept{enum helpers}
 \keyword{datasets}

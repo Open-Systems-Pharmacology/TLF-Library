@@ -1,6 +1,7 @@
 #' @title DDIRatioPlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object for DDI Ratio plots
 #' @export
+#' @family PlotConfiguration classes
 DDIRatioPlotConfiguration <- R6::R6Class(
   "DDIRatioPlotConfiguration",
   inherit = PKRatioPlotConfiguration,

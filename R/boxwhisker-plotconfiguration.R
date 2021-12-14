@@ -1,6 +1,7 @@
 #' @title BoxWhiskerPlotConfiguration
 #' @description  R6 class defining the configuration of a `ggplot` object
 #' @export
+#' @family PlotConfiguration classes
 BoxWhiskerPlotConfiguration <- R6::R6Class(
   "BoxWhiskerPlotConfiguration",
   inherit = PlotConfiguration,

@@ -1,6 +1,7 @@
 #' @title TimeProfilePlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object for time profile plots
 #' @export
+#' @family PlotConfiguration classes
 TimeProfilePlotConfiguration <- R6::R6Class(
   "TimeProfilePlotConfiguration",
   inherit = PlotConfiguration,

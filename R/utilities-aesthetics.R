@@ -1,6 +1,7 @@
 #' @title AestheticProperties
 #' @description Enum of aesthetic property names of `ggplot2`
 #' @export
+#' @family enum helpers
 AestheticProperties <- enum(c(
   "color",
   "fill",
@@ -13,6 +14,7 @@ AestheticProperties <- enum(c(
 #' @title Linetypes
 #' @description Enum of `ggplot2` linetypes
 #' @export
+#' @family enum helpers
 Linetypes <- enum(c(
   "solid",
   "longdash",
@@ -26,6 +28,7 @@ Linetypes <- enum(c(
 #' @title Shapes
 #' @description List of some `ggplot2` shapes
 #' @export
+#' @family enum helpers
 Shapes <- list(
   "circle" = "circle",
   "square" = "square",

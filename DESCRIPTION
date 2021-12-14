@@ -60,7 +60,6 @@ Collate:
     'histogram-plotconfiguration.R'
     'label.R'
     'messages.R'
-    'metadata-helper.R'
     'obs-vs-pred-datamapping.R'
     'obs-vs-pred-plotconfiguration.R'
     'observed-data-mapping.R'

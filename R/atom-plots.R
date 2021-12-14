@@ -1,12 +1,19 @@
 # Atom plots
 
 #' @title initializePlot
-#' @param plotConfiguration
-#' `PlotConfiguration` objecct defining labels, grid, background and watermark
-#' This parameter is optional: the `tlf` library provides a default configuration according to the current theme
 #' @description
-#' Initialize a `ggplot` object and set the labels, grid, background and watermark
+#' Initialize a `ggplot` object and set its labels, grid, background and watermark
+#' 
+#' @param plotConfiguration
+#' An optional `PlotConfiguration` object defining labels, grid, background and watermark
+#' 
 #' @return A `ggplot` graphical object
+#' 
+#' @references For examples, see:
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
+#' 
+#' @family atom plots
+#' @export
 #' @examples
 #' # Initialize an empty plot
 #' p <- initializePlot()
@@ -14,7 +21,7 @@
 #' # Implement a customized configuration using PlotConfiguration
 #' config <- PlotConfiguration$new(title = "My Plot", xlabel = "x variable", ylabel = "y variable")
 #' p <- initializePlot(config)
-#' @export
+#' 
 initializePlot <- function(plotConfiguration = NULL) {
   validateIsOfType(plotConfiguration, "PlotConfiguration", nullAllowed = TRUE)
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new()
@@ -33,58 +40,68 @@ initializePlot <- function(plotConfiguration = NULL) {
 }
 
 #' @title addScatter
-#' @param data data.frame containing the scatter points to be plotted
-#' @param metaData list of information on `data` such as `dimension` and `unit` of their variables
-#' @param x Mapping for x values.
-#' If `data` is NULL or not input, `x` numeric values will be used as is for the plot.
-#' @param y Mapping for y values.
-#' If `data` is NULL or not input, `y` numeric values will be used as is for the plot.
-#' @param dataMapping `XYGDataMapping` class or subclass object
-#' mapping x, y and aesthetic variables to the variable names of `data`.
-#' @param caption vector of character strings defining the legend captions.
-#' This parameter is optional: default value `NULL` creates caption labels "data 1", "data 2" ...
-#' @param color vector of character strings defining the color of the scatter points.
-#' This parameter is optional: default value `NULL` will choose colors according to the current theme.
-#' @param shape vector of character strings or numerical defining the shapes of the scatter points.
-#' This parameter is optional: default value `NULL` will choose shapes according to the current theme.
-#' @param size vector of numerical defining the sizes of the scatter points.
-#' This parameter is optional: default value `NULL` will choose sizes according to the current theme.
-#' @param linetype vector of character strings defining the linetype linking the scatter points.
-#' This parameter is optional: default value `NULL` won't provide lines.
-#' @param plotConfiguration `PlotConfiguration` object defining the labels, axes, background and legend properties of the plot.
-#' @param plotObject `ggplot` graphical object to which the line layer is added
-#' This parameter is optional: the `tlf` library will initialize an empty plot if the parameter is NULL or not provided
 #' @description
-#' Add a scatter plot layer to a `ggplot` graphical object.
-#' Use optional argument `caption` to set legend caption.
-#' Since `ggplot` manage aesthetic properties across all layers,
-#' aesthetic properties defined in `plotConfiguration` will apply across all layers.
-#' @return A `ggplot` graphical object
+#' Add a scatter plot layer to a `ggplot` object
+#' 
+#' @param data A data.frame to use for plot.
+#' @param metaData A named list of information about `data` such as the `dimension` and `unit` of its variables.
+#' @param x Numeric values to plot along the `x` axis. Only used instead of `data` if `data` is `NULL`.
+#' @param y Numeric values to plot along the `y` axis. Only used instead of `data` if `data` is `NULL`.
+#' @param dataMapping A `XYGDataMapping` object mapping `x`, `y` and aesthetic groups to their variable names of `data`.
+#' @param caption Optional character values defining the legend captions of the plot.
+#' @param color Optional character values defining the colors of the plot layer.
+#' See `grDevices::colors()` to get names of colors
+#' @param shape Optional character values defining the shapes/symbols of the plot layer.
+#' See enum `Shapes` to get names of shapes.
+#' @param linetype Optional character values defining the linetype of the plot layer.
+#' See enum `Linetypes` to get names of linetype.
+#' @param size Optional numeric values defining the size of the plot layer.
+#' @param plotConfiguration 
+#' An optional `PlotConfiguration` object defining labels, grid, background and watermark.
+#' @param plotObject 
+#' An optional `ggplot` object on which to add the plot layer
+#' @return A `ggplot` object
+#' @references For examples, see:
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
+#' 
+#' @family atom plots
+#' @export
 #' @examples
 #' # Add scatter using x and y
-#' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+#' addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
 #'
-#' # Add a custom scatter
+#' # Add scatter using a data.frame
 #' time <- seq(0, 30, 0.1)
-#' customScatterData <- data.frame(x = time, y = cos(time))
+#' scatterData <- data.frame(x = time, y = cos(time))
 #'
-#' p <- addScatter(
-#'   data = customScatterData,
+#' addScatter(
+#'   data = scatterData,
 #'   dataMapping = XYGDataMapping$new(x = "x", y = "y")
 #' )
 #'
 #' # Or for simple cases a smart mapping will get directly x and y from data
-#' p <- addScatter(data = customScatterData)
+#' addScatter(data = scatterData)
 #'
 #' # Add a scatter with caption
-#' p <- addScatter(data = customScatterData, caption = "My scatter plot")
+#' addScatter(data = scatterData, caption = "My scatter plot")
 #'
 #' # Add a scatter with specific properties
-#' p <- addScatter(data = customScatterData, color = "blue", shape = 19, size = 2, caption = "My data")
+#' addScatter(
+#' data = scatterData, 
+#' color = "blue", shape = "diamond", size = 2, caption = "My data"
+#' )
 #'
 #' # Add a scatter with specific properties
-#' pp <- addScatter(x = c(0, 1), y = c(1, 0), color = "red", shape = 20, size = 3, plotObject = p)
-#' @export
+#' p <- addScatter(
+#' data = scatterData, 
+#' color = "blue", shape = "diamond", size = 2, caption = "My data"
+#' )
+#' addScatter(
+#' x = c(0, 1), y = c(1, 0), 
+#' color = "red", shape = "circle", size = 3, 
+#' plotObject = p
+#' )
+#' 
 addScatter <- function(data = NULL,
                        metaData = NULL,
                        x = NULL,
@@ -168,66 +185,52 @@ addScatter <- function(data = NULL,
 }
 
 #' @title addLine
-#' @param data data.frame containing the line endpoints to be plotted
-#' @param metaData list of information on `data` such as `dimension` and `unit` of their variables
-#' @param x Mapping for x values.
-#' If `data` is NULL or not input, `x` numeric values will be used as is for the plot.
-#' In case there is no `y` mapping, `x` are the x-values of vertical lines.
-#' @param y Mapping for y values.
-#' If `data` is NULL or not input, `y` numeric values will be used as is for the plot.
-#' In case there is no `x` mapping, `y` are the y-values of horizontal lines.
-#' @param dataMapping `XYGDataMapping` class or subclass
-#' mapping x, y and aesthetic variables to the variable names of `data`.
-#' @param caption vector of character strings defining the legend captions.
-#' This parameter is optional: default value is NULL.
-#' @param color vector of character strings defining the color of the scatter points.
-#' This parameter is optional: default value `NULL` will choose colors according to the current theme.
-#' @param shape vector of character strings or numerical defining the shapes of the scatter points.
-#' This parameter is optional: default value `NULL` will choose shapes according to the current theme.
-#' @param size vector of numerical defining the sizes of the scatter points.
-#' This parameter is optional: default value `NULL` will choose sizes according to the current theme.
-#' @param linetype vector of character strings defining the linetype linking the scatter points.
-#' This parameter is optional: default value `NULL` won't provide lines.
-#' @param plotConfiguration `PlotConfiguration` object defining the label and background properties of the plot.
-#' @param plotObject `ggplot` graphical object to which the line layer is added
-#' This parameter is optional: the `tlf` library will initialize an empty plot if the parameter is NULL or not provided
+#' @inheritParams addScatter
 #' @description
-#' Add a line layer to a `ggplot` graphical object.
-#' Use optional argument `caption` to set legend caption.
-#' Since `ggplot` manage aesthetic properties across all layers,
-#' aesthetic properties defined in `plotConfiguration` will apply across all layers.
-#' @return A `ggplot` graphical object
+#' Add a line layer to a `ggplot` object.
+#' 
+#' @return A `ggplot` object
+#' @references For examples, see:
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
+#' 
+#' @family atom plots
+#' @export
 #' @examples
-#' \dontrun{
-#' # Add vertical line at x = 2
-#' addLine(x = 2)
+#' # Add line using x and y
+#' addLine(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
 #'
-#' # Add vertical line at x = 2 to a previous plot
-#' p <- initializePlot() +
-#'   ggplot2::geom_point(
-#'     data = data.frame(x = c(1, 2, 3), y = c(5, 6, 4)),
-#'     mapping = ggplot2::aes_string(x = "x", y = "y")
-#'   )
-#' p <- addLine(x = 2, plotObject = p)
+#' # Add line using a data.frame
+#' time <- seq(0, 30, 0.1)
+#' lineData <- data.frame(x = time, y = cos(time))
 #'
-#' # Add horizontal line at y = 5 to a previous plot
-#' p <- addLine(y = 5, plotObject = p)
-#'}
-#' # Add a custom line
-#' time <- seq(0, 30, 0.01)
-#' customLineData <- data.frame(x = time, y = cos(time))
-#'
-#' p <- addLine(
-#'   data = customLineData,
+#' addLine(
+#'   data = lineData,
 #'   dataMapping = XYGDataMapping$new(x = "x", y = "y")
 #' )
 #'
 #' # Or for simple cases a smart mapping will get directly x and y from data
-#' p <- addLine(data = customLineData)
+#' addLine(data = lineData)
 #'
 #' # Add a line with caption
-#' p <- addLine(data = customLineData, caption = "My line")
-#' @export
+#' addLine(data = lineData, caption = "My line plot")
+#'
+#' # Add a line with specific properties
+#' addLine(
+#' data = lineData, 
+#' color = "blue", linetype = "longdash", size = 0.5, caption = "My data"
+#' )
+#'
+#' # Add a line with specific properties
+#' p <- addLine(
+#' data = lineData, 
+#' color = "blue", linetype = "longdash", size = 0.5, caption = "My data"
+#' )
+#' addLine(
+#' x = c(0, 1), y = c(1, 0), 
+#' color = "red", linetype = "solid", size = 1, 
+#' plotObject = p
+#' )
+#' 
 addLine <- function(data = NULL,
                     metaData = NULL,
                     x = NULL,
@@ -355,74 +358,58 @@ addLine <- function(data = NULL,
 }
 
 #' @title addRibbon
-#' @param data data.frame containing the ribbon endpoints to be plotted.
-#' @param metaData list of information on `data` such as `dimension` and `unit` of their variables
-#' @param x Mapping for x values.
-#' If `data` is NULL or not input, `x` numeric values will be used as is for the plot.
-#' @param ymin Mapping for ymin values.
-#' If `data` is NULL or not input, `ymin` numeric values will be used as is for the plot.
-#' In case there is no `x` mapping, `ymin` are the y-values of horizontal lines.
-#' In case there is no `ymax` mapping, a value of 0 is assumed for `ymax`.
-#' @param ymax Mapping for ymax values.
-#' If `data` is NULL or not input, `ymax` numeric values will be used as is for the plot.
-#' In case there is no `x` mapping, `ymax` are the y-values of horizontal lines.
-#' In case there is no `ymin` mapping, a value of 0 is assumed for `ymin`.
-#' @param dataMapping `XYGDataMapping` class or subclass
-#' mapping x, y and aesthetic variables to the variable names of `data`.
-#' @param caption vector of character strings defining the legend captions.
-#' This parameter is optional: default value is NULL.
-#' @param fill vector of character strings defining the color of the scatter points.
-#' This parameter is optional: default value `NULL` will choose colors according to the current theme.
-#' @param color vector of character strings defining the color of the scatter points.
-#' This parameter is optional: default value `NULL` will choose colors according to the current theme.
-#' @param size vector of numerical defining the sizes of the scatter points.
-#' This parameter is optional: default value `NULL` will choose sizes according to the current theme.
-#' @param linetype vector of character strings defining the linetype linking the scatter points.
-#' This parameter is optional: default value `NULL` won't provide lines.
-#' @param alpha transparency of the ribbon.
-#' Numeric value between 0 and 1. Value of 0, the plot is transparent. Value of 1, the plot is opaque.
-#' Default value for `alpha` is 0.8.
-#' @param plotConfiguration `PlotConfiguration` object defining the label and background properties of the plot.
-#' @param plotObject `ggplot` graphical object to which the line layer is added
-#' This parameter is optional: the `tlf` library will initialize an empty plot if the parameter is NULL or not provided
 #' @description
-#' Add a ribbon layer to a `ggplot` graphical object.
-#' Use optional argument `caption` to set legend caption.
-#' Since `ggplot` manage aesthetic properties across all layers,
-#' aesthetic properties defined in `plotConfiguration` will apply across all layers.
-#' @return A `ggplot` graphical object
+#' Add a ribbon layer to a `ggplot` object.
+#' 
+#' @inheritParams addScatter
+#' @param ymin Numeric values to plot along the `y` axis. Only used instead of `data` if `data` is `NULL`.
+#' @param ymax Numeric values to plot along the `y` axis. Only used instead of `data` if `data` is `NULL`.
+#' @param dataMapping A `RangeDataMapping` object mapping `x`, `ymin`, `ymax` and aesthetic groups to their variable names of `data`.
+#' @param fill Optional character values defining the colors of the plot layer.
+#' See `grDevices::colors()` to get names of colors
+#' @param alpha Numeric value between 0 and 1 corresponding to transparency of the ribbon.
+#' The closer to 0, the more transparent the ribbon is.
+#' The closer to 1, the more opaque the ribbon is.
+#' @return A `ggplot` object
+#' @references For examples, see:
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
+#' 
+#' @family atom plots
+#' @export
 #' @examples
-#' # Add a horizontal ribbon to a previous plot
-#' p <- addRibbon(ymin = -5, ymax = 5)
+#' # Add ribbon using x, ymin and ymax
+#' addRibbon(
+#' x = c(1, 2, 1, 2, 3), 
+#' ymin = c(5, 0, 2, 3, 4), 
+#' ymax = c(6, 2, 6, 2.5, 5)
+#' )
 #'
-#' # Add a horizontal ribbon to a previous plot
-#' p <- addLine(x = c(1, 2), y = c(0, 0))
-#' p <- addRibbon(ymin = -5, ymax = 5, plotObject = p)
+#' # Add ribbon using a data.frame
+#' time <- seq(0, 30, 0.1)
+#' ribbonData <- data.frame(x = time, ymin = cos(time)-1, ymax = cos(time)+1)
 #'
-#' # Add a custom ribbon
-#' time <- seq(0, 30, 0.01)
-#' customData <- data.frame(x = time, y = cos(time), ymin = cos(time) - 0.5, ymax = cos(time) + 0.5)
-#'
-#' p <- addRibbon(
-#'   data = customData,
+#' addRibbon(
+#'   data = ribbonData,
 #'   dataMapping = RangeDataMapping$new(x = "x", ymin = "ymin", ymax = "ymax")
 #' )
 #'
-#' # Or for simple cases a smart mapping will get directly x and y from data
-#' p <- addRibbon(data = customData)
+#' # Or for simple cases a smart mapping will get directly x, ymin and ymax from data
+#' addRibbon(data = ribbonData)
 #'
 #' # Add a ribbon with caption
-#' pr <- addRibbon(data = customData, caption = "My plot with ribbon")
+#' addRibbon(data = ribbonData, caption = "My ribbon plot")
 #'
-#' # Add a ribbon with different transparency
-#' p <- addRibbon(data = customData, alpha = 1)
+#' # Add a ribbon with specific properties
+#' addRibbon(data = ribbonData, fill = "blue", alpha = 0.5, caption = "My data")
 #'
-#' # Add a scatter to the ribbon
-#' pScatter <- addScatter(data = customData, caption = "My plot with ribbon", plotObject = pr)
-#'
-#' # Add a scatter to the ribbon
-#' pLine <- addLine(data = customData, caption = "My plot with ribbon", plotObject = pr)
-#' @export
+#' # Add a ribbon with specific properties
+#' p <- addRibbon(data = ribbonData, fill = "blue", alpha = 0.5, caption = "My data")
+#' addRibbon(
+#' x = c(0, 1), ymin = c(-0.5, -0.5), ymax = c(0.5, 0.5), 
+#' fill = "red", alpha = 1, 
+#' plotObject = p
+#' )
+#' 
 addRibbon <- function(data = NULL,
                       metaData = NULL,
                       x = NULL,
@@ -504,36 +491,55 @@ addRibbon <- function(data = NULL,
 }
 
 #' @title addErrorbar
-#' @param data data.frame containing the errorbar endpoints to be plotted
-#' @param metaData list of information on `data` such as `dimension` and `unit` of their variables
-#' @param x Mapping for x values.
-#' If `data` is NULL or not input, `x` numeric values will be used as is for the plot.
-#' @param ymin Mapping for ymin values.
-#' If `data` is NULL or not input, `ymin` numeric values will be used as is for the plot.
-#' @param ymax Mapping for ymin values.
-#' If `data` is NULL or not input, `ymax` numeric values will be used as is for the plot.
-#' @param caption vector of character strings defining the legend captions.
-#' This parameter is optional: default value is NULL.
-#' @param color vector of character strings defining the color of the scatter points.
-#' This parameter is optional: default value `NULL` will choose colors according to the current theme.
-#' @param size vector of numerical defining the sizes of the scatter points.
-#' This parameter is optional: default value `NULL` will choose sizes according to the current theme.
-#' @param linetype vector of character strings defining the linetype linking the scatter points.
-#' This parameter is optional: default value `NULL` won't provide lines.
-#' @param includeCap logical setting if error bars include caps at their ends.
-#' @param dataMapping `RangeDataMapping` class or subclass
-#' mapping x, ymin, ymax and aesthetic variables to the variable names of `data`.
-#' @param plotConfiguration `PlotConfiguration` object defining the label and background properties of the plot.
-#' @param plotObject `ggplot` graphical object to which the line layer is added
-#' This parameter is optional: the `tlf` library will initialize an empty plot if the parameter is NULL or not provided
 #' @description
-#' Add a errorbar plot layer to a `ggplot` graphical object.
-#' Use optional argument `caption` to set legend caption.
-#' Since `ggplot` manage aesthetic properties across all layers,
-#' aesthetic properties defined in `plotConfiguration` will apply across all layers.
-#' If caption is the same as a previous scatter plot layer, the legend will merge their caption and aesthetic properties
-#' @return A `ggplot` graphical object
+#' Add an errorbar layer to a `ggplot` object.
+#' 
+#' @inheritParams addRibbon
+#' @inheritParams addScatter
+#' @param includeCap Logical defining if errorbars include caps at their ends.
+#' @return A `ggplot` object
+#' @references For examples, see:
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
+#' 
+#' @family atom plots
 #' @export
+#' @examples
+#' # Add errorbar using x, ymin and ymax
+#' addErrorbar(
+#' x = c(1, 2, 1, 2, 3), 
+#' ymin = c(5, 0, 2, 3, 4), 
+#' ymax = c(6, 2, 6, 2.5, 5)
+#' )
+#'
+#' # Add errorbar using a data.frame
+#' time <- seq(0, 30, 0.5)
+#' errorbarData <- data.frame(x = time, ymin = cos(time)-1, ymax = cos(time)+1)
+#'
+#' addErrorbar(
+#'   data = errorbarData,
+#'   dataMapping = RangeDataMapping$new(x = "x", ymin = "ymin", ymax = "ymax")
+#' )
+#'
+#' # Or for simple cases a smart mapping will get directly x, ymin and ymax from data
+#' addErrorbar(data = errorbarData)
+#'
+#' # Add a errorbar with caption
+#' addErrorbar(data = errorbarData, caption = "My errorbar plot")
+#'
+#' # Add a errorbar with specific properties
+#' addErrorbar(data = errorbarData, color = "blue", size = 0.5, includeCap = TRUE, caption = "My data")
+#'
+#' # Add a errorbar with specific properties
+#' p <- addErrorbar(
+#' data = errorbarData, 
+#' color = "blue", size = 0.5, includeCap = TRUE, caption = "My data"
+#' )
+#' addScatter(
+#' x = time, y = cos(time), 
+#' color = "red", size = 1, caption = "My data", 
+#' plotObject = p
+#' )
+#' 
 addErrorbar <- function(data = NULL,
                         metaData = NULL,
                         x = NULL,

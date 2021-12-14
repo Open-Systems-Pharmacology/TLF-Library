@@ -1,6 +1,9 @@
 #' @title PlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object
 #' @field export R6 class `ExportConfiguration` defining export properties
+#' @family PlotConfiguration classes
+#' @references For examples, see:
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-configuration.html>
 #' @export
 PlotConfiguration <- R6::R6Class(
   "PlotConfiguration",
@@ -242,59 +245,3 @@ PlotConfiguration <- R6::R6Class(
   )
 )
 
-
-## -------------------------------------------------------------------
-# List of auxiliary functions used by plotConfiguration
-
-#' @title dataMappingLabel
-#' @param mapping mapping variable on label
-#' @param metaData metaData containing unit of variable
-#' @return label character of variable with its unit
-#' @description
-#' dataMappingLabel create an axis label with unit if available
-#' @keywords internal
-dataMappingLabel <- function(mapping = NULL, metaData = NULL) {
-  label <- NULL
-  ifnotnull(mapping, label <- getLabelWithUnit(metaData[[mapping]]$dimension, metaData[[mapping]]$unit))
-
-  return(label)
-}
-
-#' @title getLabelWithUnit
-#' @param label text of axis label
-#' @param unit metaData containing unit of variable
-#' @return label character of variable with its unit when available
-#' @description
-#' getLabelWithUnit paste unit to label when available
-#' @export
-getLabelWithUnit <- function(label, unit = NULL) {
-  if (isTRUE(unit %in% "")) {
-    unit <- NULL
-  }
-  ifnotnull(unit, label <- paste(label, " [", unit, "]", sep = ""))
-  return(label)
-}
-
-#' @title getLegendCaption
-#' @param captionData data used for legend caption
-#' @param which caption position in the legend
-#' @return legend captions
-#' @description
-#' getLegendCaption return the legend captions or a subset using which
-#' @export
-getLegendCaption <- function(captionData, which = seq(1, length(levels(captionData)))) {
-  return(levels(captionData)[which])
-}
-
-#' @title updateLegendCaption
-#' @param captionData data used for legend caption
-#' @param newCaption new legend caption
-#' @param which caption position in the legend
-#' @return updated caption data
-#' @description
-#' updateLegendCaption return the updated data used for legend caption
-#' @export
-updateLegendCaption <- function(captionData, newCaption = NULL, which = NULL) {
-  ifnotnull(which, levels(captionData)[which] <- newCaption %||% levels(captionData)[which])
-  return(captionData)
-}

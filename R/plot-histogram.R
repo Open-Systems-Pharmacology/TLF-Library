@@ -1,21 +1,8 @@
 #' @title plotHistogram
-#' @param data data.frame containing the data to be used for the plot
-#' @param metaData list of lists containing complementary information to data
-#'   (e.g. their unit and dimension). This parameter is optional.
-#' @param x numeric values used in the histogram instead of `data`.
-#' Only use if `data` and `dataMapping` is NULL or not input.
-#' @param dataMapping A `HistogramDataMapping` object mapping x and y
-#'   variables to `data` variable names. `dataMapping` provides also the values
-#'   of the PK Ratio limits plotted as horizontal lines. This parameter is
-#'   optional: the `tlf` library provides a smart mapping if only `data` is
-#'   provided and default values of the PK Ratio limits.
-#' @param plotConfiguration A `HistogramPlotConfiguration` object
-#'   defining labels, grid, background and watermark This parameter is optional:
-#'   the `tlf` library provides a default configuration according to the current
-#'   theme
-#' @param plotObject `ggplot` graphical object to which the histogram plot layer
-#'   is added. This parameter is optional: the `tlf` library will initialize an
-#'   empty plot if the parameter is `NULL` or not provided.
+#' @description
+#' Producing Histograms
+#'
+#' @inheritParams addScatter
 #' @param bins Number or edges of bins.
 #' If `bins` is provided as a single numeric values, `bin` corresponds to number of bins.
 #' The bin edges are then equally spaced within the range of data.
@@ -25,13 +12,28 @@
 #' @param stack Logical defining for multiple histograms if their bars are stacked
 #' @param distribution Name of distribution to fit to the data.
 #' Only 2 distributions are currently available: `"normal"` and `"logNormal"`
-#' @description
-#' Add Histogram plot layer to a `ggplot` graphical object.
-#' @return A `ggplot` graphical object
+#' @param dataMapping 
+#' A `HistogramDataMapping` object mapping `x` and aesthetic groups to their variable names of `data`.
+#' @param plotConfiguration 
+#' An optional `HistogramPlotConfiguration` object defining labels, grid, background and watermark.
+#' @return A `ggplot` object
+#'
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/histogram.html>
 #'
 #' @export
+#' @family molecule plots
+#' @examples 
+#' # Produce histogram of normally distributed data
+#' plotHistogram(x = rnorm(100))
+#' 
+#' # Produce histogram of normally distributed data with many bins
+#' plotHistogram(x = rlnorm(100), bins = 21)
+#' 
+#' # Produce histogram of fitted normally distributed data
+#' plotHistogram(x = rlnorm(100), distribution = "normal")
+#' 
+#' 
 plotHistogram <- function(data = NULL,
                           metaData = NULL,
                           x = NULL,

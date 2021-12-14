@@ -1,32 +1,30 @@
 #' @title plotTornado
-#' @param data data.frame containing the data to be used for the plot
-#' @param metaData list of lists
-#' containing complementary information to data (e.g. their unit and dimension).
-#' This parameter is optional.
-#' @param x Mapping for x (values of tornado plot)
-#' If `data` is NULL or not input, `x` numeric values will be used as is for the plot.
-#' @param y Mapping for y (labels of tornado plot)
-#' If `data` is NULL or not input, `y` character values will be used as is for the plot.
-#' @param sorted logical indicating if values should be sorted if `dataMapping` is not input.
-#' By default, values are sorted by their absolute values
-#' @param colorPalette Define a `ggplot2` colorPalette (e.g `colorPalette`="Spectral")
-#' @param bar logical setting tornado as bar plot
-#' @param dataMapping
-#' `TornadoDataMapping` class or subclass mapping x and y variables to `data` variable names.
-#' `dataMapping` provides also the values of the PK Ratio limits plotted as horizontal lines.
-#' This parameter is optional: the `tlf` library provides a smart mapping if only `data` is provided
-#' and default values of the PK Ratio limits.
-#' @param plotConfiguration
-#' `TornadoPlotConfiguration` class or subclass defining labels, grid, background and watermark
-#' This parameter is optional: the `tlf` library provides a default configuration according to the current theme
-#' @param plotObject `ggplot` graphical object to which the tornado plot layer is added
-#' This parameter is optional: the `tlf` library will initialize an empty plot if the parameter is NULL or not provided
 #' @description
-#' Add tornado plot layers to a `ggplot` graphical object.
-#' Tornado limits are plotted as vertical lines.
-#' Tornado values are plotted as horizontal bars or point according to option `bar`
-#' @return A `ggplot` graphical object
+#' Producing tornado plots
+#'
+#' @inheritParams addScatter
+#' @param y Character values to plot along the `y` axis. Only used instead of `data` if `data` is `NULL`.
+#' @param sorted Optional logical value defining if `y` values are sorted by absolute values of `x`.
+#' @param colorPalette Optional character values defining a `ggplot2` colorPalette (e.g. `"Spectral"`)
+#' @param bar Optional logical value setting tornado plot as bar plot instead of scatter plot.
+#' @param dataMapping 
+#' A `TornadoDataMapping` object mapping `x`, `y` and aesthetic groups to their variable names of `data`.
+#' @param plotConfiguration 
+#' An optional `TornadoPlotConfiguration` object defining labels, grid, background and watermark.
+#' @return A `ggplot` object
+#'
 #' @export
+#' @family molecule plots
+#' @examples 
+#' # Produce a tornado plot
+#' plotTornado(x = c(2, -1, 3), y = c("A", "B", "C"))
+#' 
+#' # Produce a tornado plot as scatter plot
+#' plotTornado(x = c(2, -1, 3), y = c("A", "B", "C"), bar = FALSE)
+#' 
+#' # Produce a tornado plot as is (no sorting)
+#' plotTornado(x = c(2, -1, 3), y = c("A", "B", "C"), sorted = FALSE)
+#' 
 plotTornado <- function(data = NULL,
                         metaData = NULL,
                         x = NULL,
@@ -79,7 +77,7 @@ plotTornado <- function(data = NULL,
   # An additional options can be added to change the type of sort for later versions
   # (e.g. increasing/decreasing absolute values or actual values...)
   if (dataMapping$sorted) {
-    mapData[, dataMapping$y] <- reorder(mapData[, dataMapping$y], abs(mapData[, dataMapping$x]))
+    mapData[, dataMapping$y] <- stats::reorder(mapData[, dataMapping$y], abs(mapData[, dataMapping$x]))
   }
 
   # If tornado is a bar plot, plot configuration option "bar" is TRUE.

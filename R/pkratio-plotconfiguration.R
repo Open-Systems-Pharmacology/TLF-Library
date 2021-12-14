@@ -1,6 +1,7 @@
 #' @title PKRatioPlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object for PK ratio plots
 #' @export
+#' @family PlotConfiguration classes
 PKRatioPlotConfiguration <- R6::R6Class(
   "PKRatioPlotConfiguration",
   inherit = PlotConfiguration,

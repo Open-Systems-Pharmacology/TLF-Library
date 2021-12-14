@@ -14,29 +14,48 @@ plotBoxWhisker(
 )
 }
 \arguments{
-\item{data}{A data.frame (or list of data.frames? TO BE DISCUSSED)
-containing the data to be used for the plot}
+\item{data}{A data.frame to use for plot.}
 
-\item{metaData}{A list of lists (structure TO BE DISCUSSED)
-containing complementary information to data (e.g. unit)}
+\item{metaData}{A named list of information about \code{data} such as the \code{dimension} and \code{unit} of its variables.}
 
-\item{outliers}{logical defining if outliers should be included in boxplot}
+\item{outliers}{Logical defining if outliers should be included in boxplot}
 
-\item{dataMapping}{\code{BoxWhiskerDataMapping} object
-mapping of x, y axes + mapping of colorGrouping, sizeGrouping, shapeGrouping}
+\item{dataMapping}{A \code{BoxWhiskerDataMapping} object mapping \code{x}, \code{y} and aesthetic groups to their variable names of \code{data}.}
 
-\item{plotConfiguration}{A \code{BoxWhiskerConfiguration} object
-Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend}
+\item{plotConfiguration}{An optional \code{BoxWhiskerConfiguration} object defining labels, grid, background and watermark.}
 
-\item{plotObject}{ggplot object, if null creates new plot, if not add time profile layers to ggplot}
+\item{plotObject}{An optional \code{ggplot} object on which to add the plot layer}
 }
 \value{
-a ggplot graphical object
+A \code{ggplot} object
 }
 \description{
 Producing box-and-whisker plots
+}
+\examples{
+# Produce box-and-whisker plots of log-normal distributed data
+boxData <- data.frame(x = c(rep("A", 500), rep("B",500)), y = rlnorm(1000))
+
+plotBoxWhisker(data = boxData, dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"))
+
+# Remove outliers from boxplot
+plotBoxWhisker(data = boxData, 
+dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"), 
+outliers = FALSE)
+
 }
 \references{
 For examples, see:
 \url{https://www.open-systems-pharmacology.org/TLF-Library/articles/box-whisker-vignette.html}
 }
+\seealso{
+Other molecule plots: 
+\code{\link{plotDDIRatio}()},
+\code{\link{plotHistogram}()},
+\code{\link{plotObsVsPred}()},
+\code{\link{plotPKRatio}()},
+\code{\link{plotResVsPred}()},
+\code{\link{plotTimeProfile}()},
+\code{\link{plotTornado}()}
+}
+\concept{molecule plots}

@@ -1,6 +1,7 @@
 #' @title RangeDataMapping
 #' @description  R6 class for mapping `x`, `ymin` and `ymax` variable to `data`
 #' @export
+#' @family DataMapping classes
 RangeDataMapping <- R6::R6Class(
   "RangeDataMapping",
   inherit = XYGDataMapping,

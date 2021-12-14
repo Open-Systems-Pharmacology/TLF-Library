@@ -7,8 +7,18 @@
 setDefaultWatermark(watermark = NULL)
 }
 \arguments{
-\item{watermark}{character or Label class object}
+\item{watermark}{A character value or \code{Label} object}
 }
 \description{
 Set default watermark value for current theme
+}
+\examples{
+# Set default watermark using a character
+setDefaultWatermark("Confidential")
+addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+
+# Set default watermark using a `Label` object
+setDefaultWatermark(Label$new(text = "Confidential", color = "red", angle = 30))
+addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+
 }

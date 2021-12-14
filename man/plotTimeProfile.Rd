@@ -15,23 +15,55 @@ plotTimeProfile(
 )
 }
 \arguments{
-\item{data}{data.frame containing the data to be used for the plot}
+\item{data}{A data.frame to use for plot.}
 
-\item{metaData}{list containing complementary information to data (e.g. unit)}
+\item{metaData}{A named list of information about \code{data} such as the \code{dimension} and \code{unit} of its variables.}
 
-\item{dataMapping}{\code{TimeProfileDataMapping} object}
+\item{dataMapping}{A \code{TimeProfileDataMapping} object mapping \code{x}, \code{y}, \code{ymin}, \code{ymax} and aesthetic groups to their variable names of \code{data}.}
 
-\item{observedData}{data.frame containing the data to be used for the plot}
+\item{observedData}{A data.frame to use for plot.
+Unlike \code{data}, meant for simulated data, plotted as lines and ribbons;
+\code{observedData} is plotted as scatter points and errorbars.}
 
-\item{observedDataMapping}{\code{ObservedDataMapping} object}
+\item{observedDataMapping}{An \code{ObservedDataMapping} object mapping \code{x}, \code{y}, \code{ymin}, \code{ymax}, \code{lloq} and aesthetic groups to their variable names of \code{observedData}.}
 
-\item{plotConfiguration}{\code{TimeProfilePlotConfiguration} object}
+\item{plotConfiguration}{An optional \code{TimeProfilePlotConfiguration} object defining labels, grid, background and watermark.}
 
-\item{plotObject}{ggplot object, if null creates new plot, if not add time profile layers to ggplot}
+\item{plotObject}{An optional \code{ggplot} object on which to add the plot layer}
 }
 \value{
-a ggplot graphical object
+A \code{ggplot} object
 }
 \description{
-plotTimeProfile(data, metaData = NULL, dataMapping = NULL, plotConfiguration = NULL, plotObject = NULL)
+Producing Time Profile plots
 }
+\examples{
+# Produce a Time profile plot with observed and simulated data
+obsData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
+simTime <- seq(1, 10, 0.1)
+simData <- data.frame(
+x = simTime, 
+y = 10*exp(-simTime),
+ymin = 8*exp(-simTime),
+ymax = 12*exp(-simTime)
+)
+
+plotTimeProfile(
+data = simData, 
+observedData = obsData,
+dataMapping = TimeProfileDataMapping$new(x = "x", y = "y", ymin = "ymin", ymax = "ymax"),
+observedDataMapping = ObservedDataMapping$new(x = "x", y = "y")
+)
+
+}
+\seealso{
+Other molecule plots: 
+\code{\link{plotBoxWhisker}()},
+\code{\link{plotDDIRatio}()},
+\code{\link{plotHistogram}()},
+\code{\link{plotObsVsPred}()},
+\code{\link{plotPKRatio}()},
+\code{\link{plotResVsPred}()},
+\code{\link{plotTornado}()}
+}
+\concept{molecule plots}

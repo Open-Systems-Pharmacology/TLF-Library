@@ -1,6 +1,7 @@
 #' @title BoxWhiskerDataMapping
 #' @description  R6 class for mapping `y`, `GroupMapping`, `boxWhiskerLimits` and `outlierLimits` to `data`
 #' @export
+#' @family DataMapping classes
 BoxWhiskerDataMapping <- R6::R6Class(
   "BoxWhiskerDataMapping",
   inherit = XYGDataMapping,

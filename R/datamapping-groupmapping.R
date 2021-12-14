@@ -1,6 +1,7 @@
 #' @title GroupMapping
 #' @description  R6 class for mapping `Grouping` variables to `data`
 #' @export
+#' @family DataMapping classes
 GroupMapping <- R6::R6Class(
   "GroupMapping",
   public = list(

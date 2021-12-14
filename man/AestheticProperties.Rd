@@ -13,4 +13,13 @@ AestheticProperties
 \description{
 Enum of aesthetic property names of \code{ggplot2}
 }
+\seealso{
+Other enum helpers: 
+\code{\link{LegendPositions}},
+\code{\link{Linetypes}},
+\code{\link{Scaling}},
+\code{\link{Shapes}},
+\code{\link{tlfStatFunctions}}
+}
+\concept{enum helpers}
 \keyword{datasets}

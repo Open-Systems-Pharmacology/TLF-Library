@@ -6,6 +6,17 @@
 \description{
 R6 class defining the configuration of a \code{ggplot} object
 }
+\seealso{
+Other PlotConfiguration classes: 
+\code{\link{DDIRatioPlotConfiguration}},
+\code{\link{HistogramPlotConfiguration}},
+\code{\link{ObsVsPredPlotConfiguration}},
+\code{\link{PKRatioPlotConfiguration}},
+\code{\link{PlotConfiguration}},
+\code{\link{TimeProfilePlotConfiguration}},
+\code{\link{TornadoPlotConfiguration}}
+}
+\concept{PlotConfiguration classes}
 \section{Super class}{
 \code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{BoxWhiskerPlotConfiguration}
 }

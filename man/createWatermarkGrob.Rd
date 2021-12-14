@@ -7,16 +7,15 @@
 createWatermarkGrob(label, alpha = NULL)
 }
 \arguments{
-\item{label}{Character or Label object corresponding to the watermark text
-(and its font properties if Label)}
+\item{label}{A character value or \code{Label} object}
 
-\item{alpha}{Transparency of the watermark label.
-Alpha is a numeric between 0 and 1: 0 label is totally transparent, 1 label is totally opaque.
-Default alpha is defined from theme aesthetic alpha map}
+\item{alpha}{Numeric value between 0 and 1 corresponding to transparency of the watermark
+The closer to 0, the more transparent the watermark is.
+The closer to 1, the more opaque the watermark is.}
 }
 \value{
-Watermark background as a ggplot grob object
+A \code{ggplot} grob
 }
 \description{
-createWatermarkGrob creates a ggplot grob based on the label text and its font properties.
+Creates a \code{ggplot} grob based on the label text and its font properties.
 }

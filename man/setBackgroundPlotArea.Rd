@@ -13,19 +13,29 @@ setBackgroundPlotArea(
 )
 }
 \arguments{
-\item{plotObject}{ggplot object to set}
+\item{plotObject}{A \code{ggplot} object}
 
-\item{fill}{character color fill of the background}
+\item{fill}{Optional character values defining the color of the background.
+See \code{grDevices::colors()} to get names of colors}
 
-\item{color}{character color of the background frame}
+\item{color}{Optional character values defining the color of the background frame.
+See \code{grDevices::colors()} to get names of colors}
 
-\item{linetype}{character linetype of the background frame}
+\item{linetype}{Optional character values defining the linetype of the background frame.
+See enum \code{Linetypes} to get names of linetype.}
 
-\item{size}{numeric size of the background frame}
+\item{size}{Optional numeric values defining the size of the background frame.}
 }
 \value{
-ggplot object
+A \code{ggplot} object
 }
 \description{
-Set background plot area properties on a ggplot object
+Set background plot area properties of a \code{ggplot} object
+}
+\examples{
+# Set background of a scatter plot
+p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+
+setBackgroundPlotArea(p, fill = "yellowgreen", color = "red", linetype = "dotted")
+
 }

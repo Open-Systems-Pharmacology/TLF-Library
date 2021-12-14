@@ -1,24 +1,34 @@
 #' @title plotObsVsPred
-#' @param data data.frame containing the data to be used for the plot
-#' @param metaData list of lists
-#' containing complementary information to data (e.g. their unit and dimension).
-#' This parameter is optional.
-#' @param dataMapping
-#' `ObsVsPredDataMapping` class or subclass mapping x and y variables to `data` variable names.
-#' `dataMapping` provides also the values of the identity and fold errors lines.
-#' This parameter is optional: the `tlf` library provides a smart mapping if only `data` is provided
-#' and default values of the identity and fold errors lines.
-#' @param plotConfiguration
-#' `ObsVsPredConfiguration` class or subclass defining labels, grid, background and watermark
-#' This parameter is optional: the `tlf` library provides a default configuration according to the current theme
-#' @param smoother smoother Name of smoother function: "loess" or "lm"
-#' @param plotObject `ggplot` graphical object to which the Observations vs Predictions plot layer is added
-#' This parameter is optional: the `tlf` library will initialize an empty plot if the parameter is NULL or not provided
 #' @description
-#' Add Observations vs Predictions plot layers to a `ggplot` graphical object.
-#' Observations vs Predictions are plotted as a scatter plot.
-#' @return A `ggplot` graphical object
+#' Producing observed vs predicted plots
+#'
+#' @inheritParams addScatter
+#' @param smoother Optional name of smoother function: 
+#' \itemize{
+#' \item `"loess"` for loess regression
+#' \item `"lm"` for linear regression
+#' }
+#' @param dataMapping 
+#' A `ObsVsPredDataMapping` object mapping `x`, `y` and aesthetic groups to their variable names of `data`.
+#' @param plotConfiguration 
+#' An optional `ObsVsPredConfiguration` object defining labels, grid, background and watermark.
+#' @return A `ggplot` object
+#'
 #' @export
+#' @family molecule plots
+#' @examples 
+#' # Produce Obs vs Pred plot
+#' obsVsPredData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
+#' 
+#' plotObsVsPred(data = obsVsPredData, dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y"))
+#' 
+#' # Produce Obs vs Pred plot with linear regression
+#' plotObsVsPred(
+#' data = obsVsPredData, 
+#' dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y"),
+#' smoother = "lm"
+#' )
+#' 
 plotObsVsPred <- function(data,
                           metaData = NULL,
                           dataMapping = NULL,

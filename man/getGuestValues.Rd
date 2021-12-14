@@ -7,15 +7,32 @@
 getGuestValues(x, delta = 1, residualsVsObserved = FALSE)
 }
 \arguments{
-\item{x}{input values of Guest function}
+\item{x}{Numeric values input of Guest function}
 
-\item{delta}{parameter of Guest function}
+\item{delta}{Numeric value parameter of Guest function}
 
-\item{residualsVsObserved}{if true, returns a dataframe for a residuals (predicted/observed) vs observed DDI ratio plot}
+\item{residualsVsObserved}{Logical value defining
+if limits are claculated as residuals vs observed, instead of predicted vs observed.}
 }
 \value{
-A data.frame with x, ymin and ymax defining Guest et al. limits
+A data.frame with \code{x}, \code{ymin} and \code{ymax} defining Guest et al. limits
 }
 \description{
-Get a data.frame with Guest et al. ratio limits
+Get a data.frame with Guest et al. ratio limits with:
+\itemize{
+\item \code{ymax} = \code{x}.\code{limit}
+\item \code{ymin} = \code{x}/\code{limit}
+\item \code{limit} = (\code{delta}+2(\code{x}-1))/\code{x}
+}
+}
+\examples{
+# Get predicted vs observed Guest et al. limits
+getGuestValues(x = 10^seq(-2,2,0.2))
+
+# Get residuals vs observed Guest et al. limits
+getGuestValues(x = 10^seq(-2,2,0.2), residualsVsObserved = TRUE)
+
+}
+\references{
+\url{https://dmd.aspetjournals.org/content/39/2/170}
 }

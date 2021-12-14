@@ -32,5 +32,15 @@ Scaling$sqrt
 Scaling$time
 # Date scale for POSIXlt or POSIXct data
 Scaling$date
+
 }
+\seealso{
+Other enum helpers: 
+\code{\link{AestheticProperties}},
+\code{\link{LegendPositions}},
+\code{\link{Linetypes}},
+\code{\link{Shapes}},
+\code{\link{tlfStatFunctions}}
+}
+\concept{enum helpers}
 \keyword{datasets}

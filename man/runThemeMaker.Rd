@@ -10,3 +10,12 @@ runThemeMaker()
 Run shiny app that allows easy setting of Theme objects.
 Theme objects drive default properties of plots
 }
+\references{
+For tutorial, see:
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/theme-maker.html}
+}
+\seealso{
+Other shiny apps: 
+\code{\link{runPlotMaker}()}
+}
+\concept{shiny apps}

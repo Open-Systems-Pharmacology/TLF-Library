@@ -7,23 +7,29 @@
 getPKRatioMeasure(data, dataMapping = NULL, ratioLimits = c(1.5, 2))
 }
 \arguments{
-\item{data}{data.frame (or list of data.frames? TO BE DISCUSSED)
-containing the data to be used for the plot}
+\item{data}{A data.frame to use for plot.}
 
-\item{dataMapping}{R6 class PKRatioDataMapping
-mapping of x, y and groupings}
+\item{dataMapping}{A \code{PKRatioDataMapping} object mapping \code{x}, \code{y} and aesthetic groups to their variable names of \code{data}.}
 
-\item{ratioLimits}{vector of numeric
-containing the fold limits of PK ratios
-As default limits are 1.5 and 2 folds}
+\item{ratioLimits}{Numeric positive values limits}
 }
 \value{
-a data.frame reporting the PK Ratio Qualification Measure
+A data.frame of summary of PK Ratio within specific limits
 }
 \description{
-getPKRatioMeasure(data, dataMapping, ratioLimits) get the number of PK ratios
-that are within specific limits
+Get a summary table of PK Ratio within specific limits
 }
-\details{
-get PK-Ratio qualification measure
+\examples{
+# Get summary of usual PK Ratio limits
+pkData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
+
+getPKRatioMeasure(data = pkData, dataMapping = PKRatioDataMapping$new(x = "x", y = "y"))
+
+# Get summary of other PK Ratio limits
+getPKRatioMeasure(
+data = pkData, 
+dataMapping = PKRatioDataMapping$new(x = "x", y = "y"),
+ratioLimits = seq(1.5, 5, 0.5)
+)
+
 }

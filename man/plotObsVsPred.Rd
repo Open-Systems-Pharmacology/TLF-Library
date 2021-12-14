@@ -14,29 +14,50 @@ plotObsVsPred(
 )
 }
 \arguments{
-\item{data}{data.frame containing the data to be used for the plot}
+\item{data}{A data.frame to use for plot.}
 
-\item{metaData}{list of lists
-containing complementary information to data (e.g. their unit and dimension).
-This parameter is optional.}
+\item{metaData}{A named list of information about \code{data} such as the \code{dimension} and \code{unit} of its variables.}
 
-\item{dataMapping}{\code{ObsVsPredDataMapping} class or subclass mapping x and y variables to \code{data} variable names.
-\code{dataMapping} provides also the values of the identity and fold errors lines.
-This parameter is optional: the \code{tlf} library provides a smart mapping if only \code{data} is provided
-and default values of the identity and fold errors lines.}
+\item{dataMapping}{A \code{ObsVsPredDataMapping} object mapping \code{x}, \code{y} and aesthetic groups to their variable names of \code{data}.}
 
-\item{plotConfiguration}{\code{ObsVsPredConfiguration} class or subclass defining labels, grid, background and watermark
-This parameter is optional: the \code{tlf} library provides a default configuration according to the current theme}
+\item{plotConfiguration}{An optional \code{ObsVsPredConfiguration} object defining labels, grid, background and watermark.}
 
-\item{smoother}{smoother Name of smoother function: "loess" or "lm"}
+\item{smoother}{Optional name of smoother function:
+\itemize{
+\item \code{"loess"} for loess regression
+\item \code{"lm"} for linear regression
+}}
 
-\item{plotObject}{\code{ggplot} graphical object to which the Observations vs Predictions plot layer is added
-This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided}
+\item{plotObject}{An optional \code{ggplot} object on which to add the plot layer}
 }
 \value{
-A \code{ggplot} graphical object
+A \code{ggplot} object
 }
 \description{
-Add Observations vs Predictions plot layers to a \code{ggplot} graphical object.
-Observations vs Predictions are plotted as a scatter plot.
+Producing observed vs predicted plots
 }
+\examples{
+# Produce Obs vs Pred plot
+obsVsPredData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
+
+plotObsVsPred(data = obsVsPredData, dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y"))
+
+# Produce Obs vs Pred plot with linear regression
+plotObsVsPred(
+data = obsVsPredData, 
+dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y"),
+smoother = "lm"
+)
+
+}
+\seealso{
+Other molecule plots: 
+\code{\link{plotBoxWhisker}()},
+\code{\link{plotDDIRatio}()},
+\code{\link{plotHistogram}()},
+\code{\link{plotPKRatio}()},
+\code{\link{plotResVsPred}()},
+\code{\link{plotTimeProfile}()},
+\code{\link{plotTornado}()}
+}
+\concept{molecule plots}

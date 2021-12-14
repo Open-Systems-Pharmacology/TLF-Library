@@ -6,6 +6,21 @@
 \description{
 R6 class defining the configuration of a \code{ggplot} object
 }
+\references{
+For examples, see:
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-configuration.html}
+}
+\seealso{
+Other PlotConfiguration classes: 
+\code{\link{BoxWhiskerPlotConfiguration}},
+\code{\link{DDIRatioPlotConfiguration}},
+\code{\link{HistogramPlotConfiguration}},
+\code{\link{ObsVsPredPlotConfiguration}},
+\code{\link{PKRatioPlotConfiguration}},
+\code{\link{TimeProfilePlotConfiguration}},
+\code{\link{TornadoPlotConfiguration}}
+}
+\concept{PlotConfiguration classes}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{

@@ -1,26 +1,31 @@
 #' @title plotBoxWhisker
-#'
-#' @param data A data.frame (or list of data.frames? TO BE DISCUSSED)
-#' containing the data to be used for the plot
-#' @param metaData A list of lists (structure TO BE DISCUSSED)
-#' containing complementary information to data (e.g. unit)
-#' @param outliers logical defining if outliers should be included in boxplot
-#' @param dataMapping `BoxWhiskerDataMapping` object
-#' mapping of x, y axes + mapping of colorGrouping, sizeGrouping, shapeGrouping
-#' @param plotConfiguration A `BoxWhiskerConfiguration` object
-#' Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend
-#' @param plotObject
-#' ggplot object, if null creates new plot, if not add time profile layers to ggplot
-#'
 #' @description
 #' Producing box-and-whisker plots
 #'
-#' @return a ggplot graphical object
+#' @inheritParams addScatter
+#' @param outliers Logical defining if outliers should be included in boxplot
+#' @param dataMapping 
+#' A `BoxWhiskerDataMapping` object mapping `x`, `y` and aesthetic groups to their variable names of `data`.
+#' @param plotConfiguration 
+#' An optional `BoxWhiskerConfiguration` object defining labels, grid, background and watermark.
+#' @return A `ggplot` object
 #'
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/box-whisker-vignette.html>
 #'
 #' @export
+#' @family molecule plots
+#' @examples 
+#' # Produce box-and-whisker plots of log-normal distributed data
+#' boxData <- data.frame(x = c(rep("A", 500), rep("B",500)), y = rlnorm(1000))
+#' 
+#' plotBoxWhisker(data = boxData, dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"))
+#' 
+#' # Remove outliers from boxplot
+#' plotBoxWhisker(data = boxData, 
+#' dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"), 
+#' outliers = FALSE)
+#' 
 plotBoxWhisker <- function(data,
                            metaData = NULL,
                            outliers = NULL,
@@ -63,13 +68,12 @@ plotBoxWhisker <- function(data,
 }
 
 #' @title addBoxWhisker
-#' @description Add layer of boxes and whiskers  to a `ggplot` object
-#' @param data data.frame
-#' @param metaData list of information on `data`
-#' @param dataMapping `BoxWhiskerDataMapping` object
-#' @param plotConfiguration `BoxWhiskerPlotConfiguration` object
-#' @param plotObject a `ggplot` object
+#' @description 
+#' Add a boxplot layer to a `ggplot` object (without outliers)
+#' 
+#' @inheritParams plotBoxWhisker
 #' @return A `ggplot` object
+#' @keywords internal
 addBoxWhisker <- function(data, metaData, dataMapping, plotConfiguration, plotObject) {
 
   # Get the box plot quantiles from dataMapping
@@ -118,13 +122,12 @@ addBoxWhisker <- function(data, metaData, dataMapping, plotConfiguration, plotOb
 }
 
 #' @title addOutliers
-#' @description Add a outlier points layer to a `ggplot` object
-#' @param data data.frame
-#' @param metaData list of information on `data`
-#' @param dataMapping `BoxWhiskerDataMapping` object
-#' @param plotConfiguration `BoxWhiskerPlotConfiguration` object
-#' @param plotObject a `ggplot` object
+#' @description 
+#' Add scatter points for outliers to `ggplot` object
+#' 
+#' @inheritParams plotBoxWhisker
 #' @return A `ggplot` object
+#' @keywords internal
 addOutliers <- function(data, metaData, dataMapping, plotConfiguration, plotObject) {
   mapData <- dataMapping$getOutliers(data)
   # Convert the mapping into characters usable by aes_string

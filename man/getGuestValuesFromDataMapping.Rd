@@ -7,13 +7,23 @@
 getGuestValuesFromDataMapping(data, dataMapping)
 }
 \arguments{
-\item{data}{data.frame containing the data to be used for the plot}
+\item{data}{A data.frame to use for plot.}
 
-\item{dataMapping}{A \code{DDIRatioDataMapping} object}
+\item{dataMapping}{A \code{DDIRatioDataMapping} object mapping \code{x}, \code{y} and aesthetic groups to their variable names of \code{data}.}
 }
 \value{
-A data.frame with x, ymin and ymax defining Guest et al. limits
+A data.frame with \code{x}, \code{ymin} and \code{ymax} defining Guest et al. limits
 }
 \description{
-Get a data.frame with Guest et al. ratio limits
+Get a data.frame with Guest et al. ratio limits from \code{data} and its \code{DDIRatioDataMapping}
+}
+\examples{
+# Get the data.frame of Guest et al. limits
+ddiData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
+
+getGuestValuesFromDataMapping(
+data = ddiData, 
+dataMapping = DDIRatioDataMapping$new(x = "x", y = "y")
+)
+
 }
