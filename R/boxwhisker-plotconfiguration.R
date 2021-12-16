@@ -6,12 +6,12 @@ BoxWhiskerPlotConfiguration <- R6::R6Class(
   "BoxWhiskerPlotConfiguration",
   inherit = PlotConfiguration,
   public = list(
-    #' @description Create a new `PKRatioPlotConfiguration` object
+    #' @description Create a new `BoxWhiskerPlotConfiguration` object
     #' @param ribbons `ThemeAestheticSelections` object defining properties for boxes of boxplot
     #' @param points `ThemeAestheticSelections` object defining properties for outlier scatter points
     #' @param outliers logical defining if outliers should be included in boxplot
     #' @param ... parameters inherited from `PlotConfiguration`
-    #' @return A new `PKRatioPlotConfiguration` object
+    #' @return A new `BoxWhiskerPlotConfiguration` object
     initialize = function(outliers = TRUE,
                           ribbons = NULL,
                           points = NULL,
