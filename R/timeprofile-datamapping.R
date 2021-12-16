@@ -11,24 +11,14 @@ TimeProfileDataMapping <- R6::R6Class(
     #' @param y Name of y variable to map
     #' @param ymin Name of ymin variable to map
     #' @param ymax Name of ymax variable to map
-    #' @param groupMapping R6 class `GroupMapping` object
-    #' @param color R6 class `Grouping` object or its input
-    #' @param fill R6 class `Grouping` object or its input
-    #' @param linetype R6 class `Grouping` object or its input
-    #' @param shape R6 class `Grouping` object or its input
-    #' @param size R6 class `Grouping` object or its input
+    #' @param group R6 class `Grouping` object or its input
     #' @param data data.frame to map used by `smartMapping`
     #' @return A new `RangeDataMapping` object
     initialize = function(x = NULL,
                           y = NULL,
                           ymin = NULL,
                           ymax = NULL,
-                          groupMapping = NULL,
-                          color = NULL,
-                          fill = NULL,
-                          linetype = NULL,
-                          shape = NULL,
-                          size = NULL,
+                          group = NULL,
                           data = NULL) {
 
       # smartMapping is available in utilities-mapping.R
@@ -37,8 +27,7 @@ TimeProfileDataMapping <- R6::R6Class(
         x = x %||% smartMap$x,
         ymin = ymin %||% smartMap$ymin,
         ymax = ymax %||% smartMap$ymax,
-        groupMapping = groupMapping, color = color, fill = fill,
-        linetype = linetype, shape = shape, size = size
+        color = group
       )
       # Since TimeProfileDataMapping inherits from RangeDataMapping
       # super$initialize introduce a self$y which is NULL

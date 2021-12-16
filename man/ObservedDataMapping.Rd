@@ -31,7 +31,7 @@ Other DataMapping classes:
 \describe{
 \item{\code{lloq}}{mapping lower limit of quantitation variable}
 
-\item{\code{uncertainty}}{mapping error bars around scatter points}
+\item{\code{error}}{mapping error bars around scatter points}
 
 \item{\code{mdv}}{mapping missing dependent variable}
 
@@ -61,24 +61,48 @@ Other DataMapping classes:
 \subsection{Method \code{new()}}{
 Create a new \code{ObservedDataMapping} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ObservedDataMapping$new(lloq = NULL, uncertainty = NULL, mdv = NULL, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ObservedDataMapping$new(
+  x,
+  y,
+  uncertainty = NULL,
+  error = NULL,
+  ymin = NULL,
+  ymax = NULL,
+  lloq = NULL,
+  mdv = NULL,
+  group = NULL,
+  data = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{lloq}}{mapping lower limit of quantitation variable}
+\item{\code{x}}{Name of x variable to map}
 
-\item{\code{uncertainty}}{mapping error bars around scatter points}
+\item{\code{y}}{Name of y variable to map}
+
+\item{\code{uncertainty}}{mapping error bars around scatter points.
+Deprecated parameter replaced by \code{error}.}
+
+\item{\code{error}}{mapping error bars around scatter points}
+
+\item{\code{ymin}}{mapping lower end of error bars around scatter points}
+
+\item{\code{ymax}}{mapping upper end of error bars around scatter points}
+
+\item{\code{lloq}}{mapping lower limit of quantitation variable}
 
 \item{\code{mdv}}{mapping missing dependent variable}
 
-\item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
+\item{\code{group}}{R6 class \code{Grouping} object or its input}
+
+\item{\code{data}}{data.frame to map used by \code{smartMapping}}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new \code{PKRatioDataMapping} object
+A new \code{ObservedDataMapping} object
 }
 }
 \if{html}{\out{<hr>}}

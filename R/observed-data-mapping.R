@@ -8,31 +8,53 @@ ObservedDataMapping <- R6::R6Class(
   public = list(
     #' @field lloq mapping lower limit of quantitation variable
     lloq = NULL,
-    #' @field uncertainty mapping error bars around scatter points
-    uncertainty = NULL,
+    #' @field error mapping error bars around scatter points
+    error = NULL,
     #' @field mdv mapping missing dependent variable
     mdv = NULL,
     #' @field ymin mapping error bars around scatter points
-    ymin = "ymin",
+    ymin = NULL,
     #' @field ymax mapping error bars around scatter points
-    ymax = "ymax",
+    ymax = NULL,
 
     #' @description Create a new `ObservedDataMapping` object
+    #' @param x Name of x variable to map
+    #' @param y Name of y variable to map
+    #' @param group R6 class `Grouping` object or its input
+    #' @param data data.frame to map used by `smartMapping`
     #' @param lloq mapping lower limit of quantitation variable
-    #' @param uncertainty mapping error bars around scatter points
+    #' @param uncertainty mapping error bars around scatter points.
+    #' Deprecated parameter replaced by `error`.
+    #' @param error mapping error bars around scatter points
+    #' @param ymin mapping lower end of error bars around scatter points
+    #' @param ymax mapping upper end of error bars around scatter points
     #' @param mdv mapping missing dependent variable
-    #' @param ... parameters inherited from `XYGDataMapping`
-    #' @return A new `PKRatioDataMapping` object
-    initialize = function(lloq = NULL,
+    #' @return A new `ObservedDataMapping` object
+    initialize = function(x,
+                          y,
                           uncertainty = NULL,
+                          error = NULL,
+                          ymin = NULL,
+                          ymax = NULL,
+                          lloq = NULL,
                           mdv = NULL,
-                          ...) {
+                          group = NULL,
+                          data = NULL){
       validateIsString(lloq, nullAllowed = TRUE)
       validateIsString(uncertainty, nullAllowed = TRUE)
+      validateIsString(error, nullAllowed = TRUE)
+      validateIsString(ymin, nullAllowed = TRUE)
+      validateIsString(ymax, nullAllowed = TRUE)
       validateIsString(mdv, nullAllowed = TRUE)
-      super$initialize(...)
+      super$initialize(x = x, y = y, color = group, data = data)
+      
       self$lloq <- lloq
-      self$uncertainty <- uncertainty
+      # If defined, ymin and ymax are used as is
+      # If not, error/uncertainty are used and 
+      # creates ymin and ymax as y +/- error
+      self$error <- error %||% uncertainty
+      self$ymin <- ymin %||% ifnotnull(self$error, "ymin")
+      self$ymax <- ymax %||% ifnotnull(self$error, "ymax")
       self$mdv <- mdv
     },
 
@@ -43,26 +65,36 @@ ObservedDataMapping <- R6::R6Class(
     #' Dummy variable `defaultAes` is necessary to allow further modification of plots.
     checkMapData = function(data, metaData = NULL) {
       validateIsOfType(data, "data.frame")
-      validateIsIncluded(self$uncertainty, names(data), nullAllowed = TRUE)
+      validateIsIncluded(self$error, names(data), nullAllowed = TRUE)
       validateIsIncluded(self$lloq, names(data), nullAllowed = TRUE)
       validateIsIncluded(self$mdv, names(data), nullAllowed = TRUE)
-
+      
+      # Using super method, fetches x, y and groups
       mapData <- super$checkMapData(data, metaData)
       # Add lloq data
       if (!isOfLength(self$lloq, 0)) {
         mapData[, self$lloq] <- data[, self$lloq]
         mapData$lloq <- data[, self$lloq]
       }
-      # ymin and ymax for uncertainty error bars
-      # This may change depending of how we want to include options
-      if (!isOfLength(self$uncertainty, 0)) {
-        mapData[, self$uncertainty] <- data[, self$uncertainty]
-        mapData$ymax <- data[, self$y] + data[, self$uncertainty]
-        mapData$ymin <- data[, self$y] - data[, self$uncertainty]
+      # ymin and ymax for error bars
+      # This section may change depending on how we want to include options
+      if (!isOfLength(self$error, 0)) {
+        mapData[, self$error] <- data[, self$error]
+        # Symetric error bars
+        mapData[, self$ymax] <- data[, self$y] + data[, self$error]
+        mapData[, self$ymin] <- data[, self$y] - data[, self$error]
+      }
+      # Overwrite ymin and ymax if user defined
+      if(isIncluded(self$ymax, names(data))){
+        mapData[, self$ymax] <- data[,self$ymax]
+      }
+      if(isIncluded(self$ymin, names(data))){
+        mapData[, self$ymin] <- data[,self$ymin]
       }
       # MDV is a Nonmem notation in which values with MDV==1 are removed
       if (!isOfLength(self$mdv, 0)) {
-        mapData <- mapData[!as.logical(data[, self$mdv]), ]
+        mapData[, self$mdv] <- as.logical(data[,self$mdv])
+        mapData <- mapData[!mapData[, self$mdv], ]
       }
       return(mapData)
     }

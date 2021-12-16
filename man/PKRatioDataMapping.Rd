@@ -31,7 +31,7 @@ Other DataMapping classes:
 \describe{
 \item{\code{lines}}{list of ratio limits to plot as horizontal lines}
 
-\item{\code{uncertainty}}{mapping error bars around scatter points}
+\item{\code{error}}{mapping error bars around scatter points}
 }
 \if{html}{\out{</div>}}
 }
@@ -58,6 +58,7 @@ Create a new \code{PKRatioDataMapping} object
 \if{html}{\out{<div class="r">}}\preformatted{PKRatioDataMapping$new(
   lines = DefaultDataMappingValues$pkRatio,
   uncertainty = NULL,
+  error = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -67,7 +68,10 @@ Create a new \code{PKRatioDataMapping} object
 \describe{
 \item{\code{lines}}{list of ratio limits to plot as horizontal lines}
 
-\item{\code{uncertainty}}{mapping error bars around scatter points}
+\item{\code{uncertainty}}{mapping error bars around scatter points.
+Deprecated parameter replaced by \code{error}.}
+
+\item{\code{error}}{mapping error bars around scatter points}
 
 \item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
 }
