@@ -17,13 +17,13 @@ HistogramPlotConfiguration <- R6::R6Class(
                               ribbons = NULL,
                               ylabel = "Count",
                               ...) {
+      validateIsOfType(ribbons, "ThemeAestheticSelections", nullAllowed = TRUE)
+      validateIsOfType(lines, "ThemeAestheticSelections", nullAllowed = TRUE)
+
       super$initialize(ylabel = ylabel, ...)
 
-      validateIsOfType(lines, "ThemeAestheticSelections", nullAllowed = TRUE)
-      validateIsOfType(ribbons, "ThemeAestheticSelections", nullAllowed = TRUE)
-      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
-      private$.lines <- lines %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotHistogram$lines)
-      private$.ribbons <- ribbons %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotHistogram$ribbons)
+      private$.ribbons <- ribbons %||% getThemePropertyFor(plotName = "plotHistogram", propertyName = "ribbons")
+      private$.lines <- lines %||% getThemePropertyFor(plotName = "plotHistogram", propertyName = "lines")
     }
   )
 )

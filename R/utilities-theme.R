@@ -71,6 +71,40 @@ saveThemeToJson <- function(jsonFile, theme = NULL) {
   return(invisible())
 }
 
+#' @title asThemeAestheticSelections
+#' @description
+#' Convert a list into a `ThemeAestheticSelections` object
+#' @param themeSelectionObject
+#' A `ThemeAestheticSelections` or a list that include values for selecting aesthetic properties
+#' @keywords internal
+asThemeAestheticSelections <- function(themeSelectionObject) {
+  if (isOfType(themeSelectionObject, "ThemeAestheticSelections")) {
+    return(themeSelectionObject)
+  }
+  newThemeAestheticSelections <- ThemeAestheticSelections$new()
+  setNewThemeSelectionExpression <- parse(text = paste0(
+    "newThemeAestheticSelections$", names(themeSelectionObject), 
+    "<- themeSelectionObject$", names(themeSelectionObject)
+  ))
+  eval(setNewThemeSelectionExpression)
+  return(newThemeAestheticSelections)
+}
+
+#' @title getThemePropertyFor
+#' @description
+#' Clone a theme plot configuration property so the property is not affected in current theme
+#' @param plotName Name of plot as defined in field `plotConfigurations` from theme
+#' @param propertyName Name of property. One `lines`, `points`, `ribbons` or `errorbars`
+#' @keywords internal
+getThemePropertyFor <- function(plotName, propertyName = NULL){
+  if(isOfLength(propertyName,0)){
+    themeProperty <- asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations[[plotName]])
+    return(themeProperty$clone(deep = TRUE))
+  }
+  themeProperty <- asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations[[plotName]][[propertyName]])
+  return(themeProperty$clone(deep = TRUE))
+}
+
 ## -------------------------------------------------
 #' @title useTheme
 #' @param theme

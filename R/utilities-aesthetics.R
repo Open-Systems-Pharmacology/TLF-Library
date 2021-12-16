@@ -82,18 +82,6 @@ asPlotShape <- function(shapes) {
   return(ggplotShapes)
 }
 
-asThemeAestheticSelections <- function(themeSelectionObject) {
-  if (isOfType(themeSelectionObject, "ThemeAestheticSelections")) {
-    return(themeSelectionObject)
-  }
-  newThemeAestheticSelections <- ThemeAestheticSelections$new()
-  setNewThemeSelectionExpression <- parse(text = paste0(
-    "newThemeAestheticSelections$", names(themeSelectionObject), "<- themeSelectionObject$", names(themeSelectionObject)
-  ))
-  eval(setNewThemeSelectionExpression)
-  return(newThemeAestheticSelections)
-}
-
 #' @title ColorMaps
 #' @description List with some color maps for `Theme` object
 #' @export

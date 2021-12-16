@@ -18,16 +18,17 @@ TimeProfilePlotConfiguration <- R6::R6Class(
                           points = NULL,
                           errorbars = NULL,
                           ...) {
-      super$initialize(...)
       validateIsOfType(lines, "ThemeAestheticSelections", nullAllowed = TRUE)
       validateIsOfType(ribbons, "ThemeAestheticSelections", nullAllowed = TRUE)
       validateIsOfType(points, "ThemeAestheticSelections", nullAllowed = TRUE)
       validateIsOfType(errorbars, "ThemeAestheticSelections", nullAllowed = TRUE)
-      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
-      private$.lines <- lines %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotTimeProfile$lines)
-      private$.ribbons <- ribbons %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotTimeProfile$ribbons)
-      private$.points <- points %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotTimeProfile$points)
-      private$.errorbars <- errorbars %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotTimeProfile$errorbars)
+
+      super$initialize(...)
+      
+      private$.lines <- lines %||% getThemePropertyFor(plotName = "plotTimeProfile", propertyName = "lines")
+      private$.ribbons <- ribbons %||% getThemePropertyFor(plotName = "plotTimeProfile", propertyName = "ribbons")
+      private$.points <- points %||% getThemePropertyFor(plotName = "plotTimeProfile", propertyName = "points")
+      private$.errorbars <- errorbars %||% getThemePropertyFor(plotName = "plotTimeProfile", propertyName = "errorbars")
     }
   )
 )

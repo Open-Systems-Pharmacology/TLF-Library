@@ -16,15 +16,15 @@ DDIRatioPlotConfiguration <- R6::R6Class(
                               points = NULL,
                               errorbars = NULL,
                               ...) {
-      super$initialize(...)
-
       validateIsOfType(lines, "ThemeAestheticSelections", nullAllowed = TRUE)
       validateIsOfType(points, "ThemeAestheticSelections", nullAllowed = TRUE)
       validateIsOfType(errorbars, "ThemeAestheticSelections", nullAllowed = TRUE)
-      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
-      private$.lines <- lines %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotDDIRatio$lines)
-      private$.points <- points %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotDDIRatio$points)
-      private$.errorbars <- errorbars %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotDDIRatio$errorbars)
+
+      super$initialize(...)
+
+      private$.lines <- lines %||% getThemePropertyFor(plotName = "plotDDIRatio", propertyName = "lines")
+      private$.points <- points %||% getThemePropertyFor(plotName = "plotDDIRatio", propertyName = "points")
+      private$.errorbars <- errorbars %||% getThemePropertyFor(plotName = "plotDDIRatio", propertyName = "errorbars")
     }
   )
 )
