@@ -34,7 +34,7 @@ useTheme(vignetteTheme)
 
 The following vignette aims at documenting and illustrating workflows for producing histograms using the function `plotHistogram` from the `tlf` package.
 
-# 2. Illustration of basic historams
+# 2. Illustration of basic histograms
 
 ## 2.1. Data
 
