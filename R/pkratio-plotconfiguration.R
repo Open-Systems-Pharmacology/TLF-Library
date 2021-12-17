@@ -17,15 +17,15 @@ PKRatioPlotConfiguration <- R6::R6Class(
                           points = NULL,
                           errorbars = NULL,
                           ...) {
-      super$initialize(...)
-
       validateIsOfType(lines, "ThemeAestheticSelections", nullAllowed = TRUE)
       validateIsOfType(points, "ThemeAestheticSelections", nullAllowed = TRUE)
       validateIsOfType(errorbars, "ThemeAestheticSelections", nullAllowed = TRUE)
-      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
-      private$.lines <- lines %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotPKRatio$lines)
-      private$.points <- points %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotPKRatio$points)
-      private$.errorbars <- errorbars %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotPKRatio$errorbars)
+      
+      super$initialize(...)
+
+      private$.lines <- lines %||% getThemePropertyFor(plotName = "plotPKRatio", propertyName = "lines")
+      private$.points <- points %||% getThemePropertyFor(plotName = "plotPKRatio", propertyName = "points")
+      private$.errorbars <- errorbars %||% getThemePropertyFor(plotName = "plotPKRatio", propertyName = "errorbars")
     }
   )
 )

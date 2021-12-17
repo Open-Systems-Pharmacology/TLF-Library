@@ -87,7 +87,11 @@ plotTimeProfile <- function(data = NULL,
 
   if (!isOfLength(observedData, 0)) {
     mapObservedData <- observedDataMapping$checkMapData(observedData)
-    if (!isOfLength(observedDataMapping$uncertainty, 0)) {
+    if (!all(
+      isOfLength(observedDataMapping$error, 0), 
+      isOfLength(observedDataMapping$ymin, 0),
+      isOfLength(observedDataMapping$ymax, 0)
+    )){
       plotObject <- addErrorbar(
         data = mapObservedData,
         dataMapping = observedDataMapping,

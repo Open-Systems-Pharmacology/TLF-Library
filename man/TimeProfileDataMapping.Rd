@@ -51,12 +51,7 @@ Create a new \code{TimeProfileDataMapping} object
   y = NULL,
   ymin = NULL,
   ymax = NULL,
-  groupMapping = NULL,
-  color = NULL,
-  fill = NULL,
-  linetype = NULL,
-  shape = NULL,
-  size = NULL,
+  group = NULL,
   data = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -72,17 +67,7 @@ Create a new \code{TimeProfileDataMapping} object
 
 \item{\code{ymax}}{Name of ymax variable to map}
 
-\item{\code{groupMapping}}{R6 class \code{GroupMapping} object}
-
-\item{\code{color}}{R6 class \code{Grouping} object or its input}
-
-\item{\code{fill}}{R6 class \code{Grouping} object or its input}
-
-\item{\code{linetype}}{R6 class \code{Grouping} object or its input}
-
-\item{\code{shape}}{R6 class \code{Grouping} object or its input}
-
-\item{\code{size}}{R6 class \code{Grouping} object or its input}
+\item{\code{group}}{R6 class \code{Grouping} object or its input}
 
 \item{\code{data}}{data.frame to map used by \code{smartMapping}}
 }

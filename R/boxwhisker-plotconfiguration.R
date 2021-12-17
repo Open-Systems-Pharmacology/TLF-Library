@@ -6,25 +6,25 @@ BoxWhiskerPlotConfiguration <- R6::R6Class(
   "BoxWhiskerPlotConfiguration",
   inherit = PlotConfiguration,
   public = list(
-    #' @description Create a new `PKRatioPlotConfiguration` object
+    #' @description Create a new `BoxWhiskerPlotConfiguration` object
     #' @param ribbons `ThemeAestheticSelections` object defining properties for boxes of boxplot
     #' @param points `ThemeAestheticSelections` object defining properties for outlier scatter points
     #' @param outliers logical defining if outliers should be included in boxplot
     #' @param ... parameters inherited from `PlotConfiguration`
-    #' @return A new `PKRatioPlotConfiguration` object
+    #' @return A new `BoxWhiskerPlotConfiguration` object
     initialize = function(outliers = TRUE,
                           ribbons = NULL,
                           points = NULL,
                           ...) {
-      super$initialize(...)
-
       validateIsOfType(ribbons, "ThemeAestheticSelections", nullAllowed = TRUE)
       validateIsOfType(points, "ThemeAestheticSelections", nullAllowed = TRUE)
-      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
-      private$.ribbons <- ribbons %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotBoxWhisker$ribbons)
-      private$.points <- points %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotBoxWhisker$points)
-
       validateIsLogical(outliers)
+
+      super$initialize(...)
+
+      private$.ribbons <- ribbons %||% getThemePropertyFor(plotName = "plotBoxWhisker", propertyName = "ribbons")
+      private$.points <- points %||% getThemePropertyFor(plotName = "plotBoxWhisker", propertyName = "points")
+      
       private$.outliers <- outliers
     }
   ),

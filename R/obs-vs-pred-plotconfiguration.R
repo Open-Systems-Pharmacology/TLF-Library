@@ -16,15 +16,15 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
                           points = NULL,
                           errorbars = NULL,
                           ...) {
-      super$initialize(...)
-
       validateIsOfType(lines, "ThemeAestheticSelections", nullAllowed = TRUE)
       validateIsOfType(points, "ThemeAestheticSelections", nullAllowed = TRUE)
       validateIsOfType(errorbars, "ThemeAestheticSelections", nullAllowed = TRUE)
-      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
-      private$.lines <- lines %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotObsVsPred$lines)
-      private$.points <- points %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotObsVsPred$points)
-      private$.errorbars <- errorbars %||% asThemeAestheticSelections(currentTheme$plotConfigurations$plotObsVsPred$errorbars)
+
+      super$initialize(...)
+
+      private$.lines <- lines %||% getThemePropertyFor(plotName = "plotObsVsPred", propertyName = "lines")
+      private$.points <- points %||% getThemePropertyFor(plotName = "plotObsVsPred", propertyName = "points")
+      private$.errorbars <- errorbars %||% getThemePropertyFor(plotName = "plotObsVsPred", propertyName = "errorbars")
     }
   )
 )

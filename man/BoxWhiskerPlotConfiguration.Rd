@@ -44,7 +44,7 @@ Other PlotConfiguration classes:
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create a new \code{PKRatioPlotConfiguration} object
+Create a new \code{BoxWhiskerPlotConfiguration} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{BoxWhiskerPlotConfiguration$new(
   outliers = TRUE,
@@ -68,7 +68,7 @@ Create a new \code{PKRatioPlotConfiguration} object
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new \code{PKRatioPlotConfiguration} object
+A new \code{BoxWhiskerPlotConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
