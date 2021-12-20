@@ -26,7 +26,8 @@ Imports:
     ggplot2 (>= 3.3.0),
     R6,
     reshape2,
-    jsonlite
+    jsonlite,
+    ospsuite.utils
 Depends: 
     R (>= 3.5)
 Encoding: UTF-8
