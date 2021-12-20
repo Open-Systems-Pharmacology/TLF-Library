@@ -6,7 +6,7 @@ tlfEnv <- new.env(parent = emptyenv())
 tlfEnv$packageName <- "tlf"
 
 #' @title LegendPositions
-#' @include enum.R
+#' @import ospsuite.utils
 #' @export
 #' @description
 #' List of all available legend positions

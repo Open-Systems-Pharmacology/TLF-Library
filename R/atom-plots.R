@@ -14,6 +14,7 @@
 #' 
 #' @family atom plots
 #' @export
+#' @import ospsuite.utils
 #' @examples
 #' # Initialize an empty plot
 #' p <- initializePlot()

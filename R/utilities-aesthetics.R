@@ -1,6 +1,7 @@
 #' @title AestheticProperties
 #' @description Enum of aesthetic property names of `ggplot2`
 #' @export
+#' @import ospsuite.utils
 #' @family enum helpers
 AestheticProperties <- enum(c(
   "color",
@@ -14,6 +15,7 @@ AestheticProperties <- enum(c(
 #' @title Linetypes
 #' @description Enum of `ggplot2` linetypes
 #' @export
+#' @import ospsuite.utils
 #' @family enum helpers
 Linetypes <- enum(c(
   "solid",
@@ -28,6 +30,7 @@ Linetypes <- enum(c(
 #' @title Shapes
 #' @description List of some `ggplot2` shapes
 #' @export
+#' @import ospsuite.utils
 #' @family enum helpers
 Shapes <- list(
   "circle" = "circle",
@@ -95,6 +98,7 @@ ColorMaps <- list(
 
 #' @title AestheticSelectionKeys
 #' @description List of some `ggplot2` shapes
+#' @import ospsuite.utils
 #' @export
 AestheticSelectionKeys <- enum(c(
   "next",

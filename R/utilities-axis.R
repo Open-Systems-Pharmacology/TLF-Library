@@ -1,5 +1,5 @@
 #' @title Scaling
-#' @include enum.R
+#' @import ospsuite.utils
 #' @export
 #' @description
 #'  Helper enum of predefined transformations of axes

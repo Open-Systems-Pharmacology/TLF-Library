@@ -272,6 +272,7 @@ DefaultDataMappingValues <- list(
 #' @title DDIComparisonTypes
 #' @description Options for comparison: residuals vs pred or obs vs pred
 #' @export
+#' @import ospsuite.utils
 DDIComparisonTypes <- enum(c("resVsPred", "obsVsPred"))
 
 getAggregatedData <- function(data,

@@ -41,7 +41,6 @@ Suggests:
 VignetteBuilder: knitr
 Collate: 
     'aaa-utilities.R'
-    'enum.R'
     'aggregation-input.R'
     'aggregation-summary.R'
     'atom-plots.R'
