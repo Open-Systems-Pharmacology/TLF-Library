@@ -53,8 +53,8 @@ ObservedDataMapping <- R6::R6Class(
       # If not, error/uncertainty are used and 
       # creates ymin and ymax as y +/- error
       self$error <- error %||% uncertainty
-      self$ymin <- ymin %||% ifnotnull(self$error, "ymin")
-      self$ymax <- ymax %||% ifnotnull(self$error, "ymax")
+      self$ymin <- ymin %||% ifNotNull(self$error, "ymin")
+      self$ymax <- ymax %||% ifNotNull(self$error, "ymax")
       self$mdv <- mdv
     },
 

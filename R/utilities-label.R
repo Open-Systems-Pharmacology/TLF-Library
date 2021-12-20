@@ -89,6 +89,6 @@ getLabelWithUnit <- function(label, unit = NULL) {
   if (isTRUE(unit %in% "")) {
     unit <- NULL
   }
-  ifnotnull(unit, label <- paste(label, " [", unit, "]", sep = ""))
+  ifNotNull(unit, label <- paste(label, " [", unit, "]", sep = ""))
   return(label)
 }
