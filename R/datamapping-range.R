@@ -80,7 +80,7 @@ RangeDataMapping <- R6::R6Class(
           self$data[, grouping$label] <- grouping$getCaptions(data, metaData)
           # Dummy variable for default aesthetics
           # Will be used to define legend labels
-          self$data$legendLabels <- ifnotnull(
+          self$data$legendLabels <- ifNotNull(
             self$data$legendLabels,
             paste(self$data$legendLabels, grouping$getCaptions(data, metaData), sep = "-"),
             grouping$getCaptions(data, metaData)

@@ -53,7 +53,7 @@ plotHistogram <- function(data = NULL,
     validateIsNumeric(x)
     data <- data.frame(x = x)
     dataMapping <- dataMapping %||% HistogramDataMapping$new(
-      x = ifnotnull(x, "x"),
+      x = ifNotNull(x, "x"),
       data = data
     )
   }

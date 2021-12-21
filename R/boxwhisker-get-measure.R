@@ -32,7 +32,7 @@ getBoxWhiskerMeasure <- function(data,
 
   # Redfine group and y while removing NA values
   y <- data[!is.na.data.frame(data[, dataMapping$y]), dataMapping$y]
-  group <- ifnotnull(
+  group <- ifNotNull(
     dataMapping$x,
     data[!is.na.data.frame(data[, dataMapping$y]), dataMapping$x],
     as.factor(rep("", length(y)))

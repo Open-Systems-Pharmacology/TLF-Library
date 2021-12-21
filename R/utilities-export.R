@@ -85,7 +85,7 @@ exportPlot <- function(plotObject, name = NULL) {
   height <- plotObject$plotConfiguration$export$height
   units <- plotObject$plotConfiguration$export$units
 
-  filename <- ifnotnull(
+  filename <- ifNotNull(
     name,
     paste0(name, ".", format),
     getUniqueExportFileName(tlfEnv$defaultExportName, format, NULL)
@@ -94,13 +94,13 @@ exportPlot <- function(plotObject, name = NULL) {
 }
 
 getUniqueExportFileName <- function(name, format, uniqueNumber) {
-  filename <- ifnotnull(
+  filename <- ifNotNull(
     uniqueNumber,
     paste0(name, "-", uniqueNumber, ".", format),
     paste0(name, ".", format)
   )
   if (file.exists(filename)) {
-    uniqueNumber <- ifnotnull(uniqueNumber, uniqueNumber + 1, 1)
+    uniqueNumber <- ifNotNull(uniqueNumber, uniqueNumber + 1, 1)
     filename <- getUniqueExportFileName(name, format, uniqueNumber)
   }
   return(filename)

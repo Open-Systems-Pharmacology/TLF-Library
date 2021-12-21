@@ -34,12 +34,12 @@ TornadoDataMapping <- R6::R6Class(
       self$groupMapping$color$label <- self$groupMapping$color$label %||% y
       self$groupMapping$color$group <- self$groupMapping$color$group %||% y
       # Link fill/shape to color if they are not explicitely mapped
-      self$groupMapping$fill <- ifnotnull(
+      self$groupMapping$fill <- ifNotNull(
         self$groupMapping$fill$label,
         self$groupMapping$fill,
         self$groupMapping$color
       )
-      self$groupMapping$shape <- ifnotnull(
+      self$groupMapping$shape <- ifNotNull(
         self$groupMapping$shape$label,
         self$groupMapping$shape,
         self$groupMapping$color

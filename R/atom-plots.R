@@ -14,6 +14,7 @@
 #' 
 #' @family atom plots
 #' @export
+#' @import ospsuite.utils
 #' @examples
 #' # Initialize an empty plot
 #' p <- initializePlot()
@@ -121,7 +122,7 @@ addScatter <- function(data = NULL,
   if (isOfLength(data, 0)) {
     validateIsSameLength(x, y)
     data <- as.data.frame(cbind(x = x, y = y))
-    dataMapping <- dataMapping %||% XYGDataMapping$new(x = ifnotnull(x, "x"), y = ifnotnull(y, "y"), data = data)
+    dataMapping <- dataMapping %||% XYGDataMapping$new(x = ifNotNull(x, "x"), y = ifNotNull(y, "y"), data = data)
   }
   # Enforce data to be a data.frame for dataMapping
   if (!isOfType(data, "data.frame")) {
@@ -250,7 +251,7 @@ addLine <- function(data = NULL,
   if (isOfLength(data, 0)) {
     data <- as.data.frame(cbind(x = x, y = y))
 
-    dataMapping <- dataMapping %||% XYGDataMapping$new(x = ifnotnull(x, "x"), y = ifnotnull(y, "y"), data = data)
+    dataMapping <- dataMapping %||% XYGDataMapping$new(x = ifNotNull(x, "x"), y = ifNotNull(y, "y"), data = data)
   }
 
   # Enforce data to be a data.frame for dataMapping

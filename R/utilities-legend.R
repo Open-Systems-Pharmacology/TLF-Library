@@ -379,7 +379,7 @@ setCaptionFill <- function(plotObject, fill, name = NULL) {
 # It was consequently moved from utilities-legend to tlf-env
 
 #' @title LegendTypes
-#' @include enum.R
+#' @import ospsuite.utils
 #' @export
 #' @description
 #' List of all available legend types
@@ -391,6 +391,12 @@ LegendTypes <- enum(c(
   "size"
 ))
 
+#' @title CaptionProperties
+#' @import ospsuite.utils
+#' @export
+#' @description
+#' List of all Caption Properties
+#' @keywords internal
 CaptionProperties <- enum(c(
   "name",
   "label",

@@ -244,7 +244,7 @@ smartMapping <- function(data) {
 #' @keywords internal
 dataMappingLabel <- function(mapping = NULL, metaData = NULL) {
   label <- NULL
-  ifnotnull(mapping, label <- getLabelWithUnit(metaData[[mapping]]$dimension, metaData[[mapping]]$unit))
+  ifNotNull(mapping, label <- getLabelWithUnit(metaData[[mapping]]$dimension, metaData[[mapping]]$unit))
   
   return(label)
 }
@@ -272,6 +272,7 @@ DefaultDataMappingValues <- list(
 #' @title DDIComparisonTypes
 #' @description Options for comparison: residuals vs pred or obs vs pred
 #' @export
+#' @import ospsuite.utils
 DDIComparisonTypes <- enum(c("resVsPred", "obsVsPred"))
 
 getAggregatedData <- function(data,

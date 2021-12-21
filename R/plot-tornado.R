@@ -48,8 +48,8 @@ plotTornado <- function(data = NULL,
 
     dataMapping <- dataMapping %||% TornadoDataMapping$new(
       sorted = sorted,
-      x = ifnotnull(x, "x"),
-      y = ifnotnull(y, "y"),
+      x = ifNotNull(x, "x"),
+      y = ifNotNull(y, "y"),
       data = data
     )
   }
