@@ -22,18 +22,20 @@ createPlotScale <- function(scale) {
 #' @return name of the `ggplot2` scale
 #' @keywords internal
 createPlotTicks <- function(ticks) {
-  if (isOfLength(ticks, 0)) {
+  if (isEmpty(ticks)) {
     return(waiver())
   }
+  if (isOfType(ticks, c("numeric", "function", "expression"))) {
+    return(ticks)
+  }
+  # If character
   if (isIncluded(ticks, c("default", "identity"))) {
     return(waiver())
   }
   if (isIncluded(ticks, c("none"))) {
     return(NULL)
   }
-  if (isOfType(ticks, c("numeric", "character", "function", "expression"))) {
-    return(ticks)
-  }
+  return(ticks)
 }
 
 
