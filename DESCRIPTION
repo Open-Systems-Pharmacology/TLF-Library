@@ -25,11 +25,10 @@ BugReports: https://github.com/open-systems-pharmacology/tlf-library/issues
 Imports: 
     ggplot2 (>= 3.3.0),
     R6,
-    reshape2,
     jsonlite,
     ospsuite.utils
 Depends: 
-    R (>= 3.5)
+    R (>= 3.6)
 Encoding: UTF-8
 RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
