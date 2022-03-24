@@ -44,7 +44,7 @@ In such plots, observed data are usually plotted as scatter points with errorbar
 Besides, the usual `tlf` input arguments commonly used by the plot functions (`data`, `metaData`, `dataMapping`, `plotConfiguration` and `plotObject`), the function `plotTimeProfile` also includes the following optional input arguments:
 
 - **`observedData`**: A data.frame to use for plot. Unlike `data`, meant for simulated data, plotted as lines and ribbons; `observedData` is plotted as scatter points and errorbars.
-- **`observedDataMapping`**: An `ObservedDataMapping` object mapping `x`, `y`, `ymin`, `ymax`, `lloq` and aesthetic groups to their variable names of `observedData`.
+- **`observedDataMapping`**: An `ObservedDataMapping` object mapping `x`, `y`, `ymin`, `ymax`, and aesthetic groups to their variable names of `observedData`.
 
 ## 2.2. Data Mappings
 
@@ -76,8 +76,6 @@ As highlighted below, the class is initialized using the method `$new`.
 The optional arguments `ymin` and `ymax` define the error bars of population range or confidence interval.
 The optional argument `error` can be used instead to calculate the errorbars from the variable `y`.
 
-The object also includes the field `lloq` for variables defining the lower limit of quantification of the data. Such data are usually censored and handled differently during modeling.
-
 The argument `mdv`, meant for missing dependent variable, is a flag inspired from Nonmem for excluding data from the final time profile plot.
 
 It can be noted that the argument `group` can be used to group the data by these aesthetics.
@@ -90,7 +88,6 @@ error = NULL,
 ymin = NULL,
 ymax = NULL,
 group = NULL,
-lloq = NULL,
 mdv = NULL
 )
 ```
@@ -401,30 +398,6 @@ plotTimeProfile(
 )
 ```
 
-## 3.2.5. Lower limit of quantification (lloq)
-
-```{r examples lloq}
-# Use common variable before usinf rbind.data.frame
-lloqData <- obsData1
-lloqData$lloq <- 0.5
-
-# Define Data Mapping
-obsDataMapping <- ObservedDataMapping$new(
-  x = "time",
-  y = "concentration",
-  ymin = "minConcentration",
-  ymax = "maxConcentration",
-  group = "caption",
-  lloq = "lloq"
-)
-
-plotTimeProfile(
-  observedData = lloqData,
-  metaData = metaData,
-  observedDataMapping = obsDataMapping
-)
-```
-
 ### 3.2.4. Missing Dependent Variable (mdv)
 
 The following code flags all values higher than `10` as `mdv`, leadin to a plot without any observed data points higher than `10` (removing the first observation)
@@ -547,7 +520,7 @@ obsDataMapping <- ObservedDataMapping$new(
   group = "caption"
 )
 
-plotTimeProfile(
+simAndObsTimeProfile <- plotTimeProfile(
   data = rbind.data.frame(
     simData1,
     simData2
@@ -560,6 +533,43 @@ plotTimeProfile(
   dataMapping = simDataMapping,
   observedDataMapping = obsDataMapping
 )
+simAndObsTimeProfile
+```
+
+In this example observed and simulated data do not share any mapping. 
+Therefore, their color pattern may not match.
+To update the plot and have appropriate colors and labels in the legend, it is possible to get the legend properties and update them as illustrated in the example below that updates the positions of the legend entries:
+
+```{r get legend properties, results='asis'}
+plotLegend <- getLegendCaption(simAndObsTimeProfile) 
+knitr::kable(plotLegend)
+```
+
+```{r update legend properties}
+plotLegend <- plotLegend[c(1,3,2,4), ]
+updateTimeProfileLegend(simAndObsTimeProfile, plotLegend)
+```
+
+Note that if observed and simulated data share common groupings, they will be merged in the final legend.
+
+```{r combine simulated and observed sharing legend}
+commonSimData1 <- simData1
+commonObsData1 <- obsData1
+commonSimData1$caption <- "Common data 1"
+commonObsData1$caption <- "Common data 1"
+commonSimData2 <- simData2
+commonObsData2 <- obsData2
+commonSimData2$caption <- "Common data 2"
+commonObsData2$caption <- "Common data 2"
+
+plotTimeProfile(
+  data = rbind.data.frame(commonSimData1, commonSimData2),
+  observedData = rbind.data.frame(commonObsData1, commonObsData2),
+  metaData = metaData,
+  dataMapping = simDataMapping,
+  observedDataMapping = obsDataMapping
+)
+
 ```
 
 ### 3.3.4. Mutliple simulations and observed data sets with their confidence intervals

@@ -3,37 +3,36 @@
 #' Producing Time Profile plots
 #'
 #' @inheritParams addScatter
-#' @param dataMapping 
+#' @param dataMapping
 #' A `TimeProfileDataMapping` object mapping `x`, `y`, `ymin`, `ymax` and aesthetic groups to their variable names of `data`.
 #' @param observedData A data.frame to use for plot.
 #' Unlike `data`, meant for simulated data, plotted as lines and ribbons;
 #' `observedData` is plotted as scatter points and errorbars.
-#' @param observedDataMapping 
-#' An `ObservedDataMapping` object mapping `x`, `y`, `ymin`, `ymax`, `lloq` and aesthetic groups to their variable names of `observedData`.
-#' @param plotConfiguration 
+#' @param observedDataMapping
+#' An `ObservedDataMapping` object mapping `x`, `y`, `ymin`, `ymax` and aesthetic groups to their variable names of `observedData`.
+#' @param plotConfiguration
 #' An optional `TimeProfilePlotConfiguration` object defining labels, grid, background and watermark.
 #' @return A `ggplot` object
 #'
 #' @export
 #' @family molecule plots
-#' @examples 
+#' @examples
 #' # Produce a Time profile plot with observed and simulated data
 #' obsData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
 #' simTime <- seq(1, 10, 0.1)
 #' simData <- data.frame(
-#' x = simTime, 
-#' y = 10*exp(-simTime),
-#' ymin = 8*exp(-simTime),
-#' ymax = 12*exp(-simTime)
+#'   x = simTime,
+#'   y = 10 * exp(-simTime),
+#'   ymin = 8 * exp(-simTime),
+#'   ymax = 12 * exp(-simTime)
 #' )
-#' 
+#'
 #' plotTimeProfile(
-#' data = simData, 
-#' observedData = obsData,
-#' dataMapping = TimeProfileDataMapping$new(x = "x", y = "y", ymin = "ymin", ymax = "ymax"),
-#' observedDataMapping = ObservedDataMapping$new(x = "x", y = "y")
+#'   data = simData,
+#'   observedData = obsData,
+#'   dataMapping = TimeProfileDataMapping$new(x = "x", y = "y", ymin = "ymin", ymax = "ymax"),
+#'   observedDataMapping = ObservedDataMapping$new(x = "x", y = "y")
 #' )
-#' 
 plotTimeProfile <- function(data = NULL,
                             metaData = NULL,
                             dataMapping = NULL,
@@ -43,15 +42,15 @@ plotTimeProfile <- function(data = NULL,
                             plotObject = NULL) {
   validateIsOfType(data, "data.frame", nullAllowed = TRUE)
   validateIsOfType(observedData, "data.frame", nullAllowed = TRUE)
-  if (all(isOfLength(data, 0), isOfLength(observedData, 0))) {
-    warning("data and observed data are of length 0. Time profile layer was not added.")
+  if (all(isEmpty(data), isEmpty(observedData))) {
+    warning("'data' and 'observedData' are of length 0. Time profile layer was not added.")
     return(plotObject)
   }
 
-  if (!isOfLength(data, 0)) {
+  if (!isEmpty(data)) {
     dataMapping <- dataMapping %||% TimeProfileDataMapping$new(data = data)
   }
-  if (!isOfLength(observedData, 0)) {
+  if (!isEmpty(observedData)) {
     observedDataMapping <- observedDataMapping %||% ObservedDataMapping$new(data = data)
   }
 
@@ -65,60 +64,210 @@ plotTimeProfile <- function(data = NULL,
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
   # Get transformed data from mapping and convert labels into characters usable by aes_string
-  if (!isOfLength(data, 0)) {
+  if (!isEmpty(data)) {
     mapData <- dataMapping$checkMapData(data)
-    if (!any(isOfLength(dataMapping$ymin, 0), isOfLength(dataMapping$ymax, 0))) {
-      plotObject <- addRibbon(
-        data = mapData,
-        dataMapping = dataMapping,
-        plotConfiguration = plotConfiguration,
-        plotObject = plotObject
-      )
+    mapLabels <- getAesStringMapping(dataMapping)
+    if (!any(isEmpty(dataMapping$ymin), isEmpty(dataMapping$ymax))) {
+      plotObject <- plotObject +
+        ggplot2::geom_ribbon(
+          data = mapData,
+          mapping = ggplot2::aes_string(
+            x = mapLabels$x,
+            ymin = mapLabels$ymin,
+            ymax = mapLabels$ymax,
+            fill = mapLabels$fill
+          ),
+          alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$alpha, position = 0, aesthetic = "alpha"),
+          show.legend = TRUE
+        )
     }
-    if (!isOfLength(dataMapping$y, 0)) {
-      plotObject <- addLine(
-        data = mapData,
-        dataMapping = dataMapping,
-        plotConfiguration = plotConfiguration,
-        plotObject = plotObject
-      )
+    if (!isEmpty(dataMapping$y)) {
+      plotObject <- plotObject +
+        ggplot2::geom_path(
+          data = mapData,
+          mapping = ggplot2::aes_string(
+            x = mapLabels$x,
+            y = mapLabels$y,
+            color = mapLabels$color,
+            linetype = mapLabels$linetype
+          ),
+          size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = 0, aesthetic = "size"),
+          show.legend = TRUE
+        )
     }
+    eval(parseUpdateAestheticProperty(AestheticProperties$fill, "ribbons"))
+    eval(parseUpdateAestheticProperty(AestheticProperties$linetype, "lines"))
   }
 
-  if (!isOfLength(observedData, 0)) {
-    mapObservedData <- observedDataMapping$checkMapData(observedData)
-    if (!all(
-      isOfLength(observedDataMapping$error, 0), 
-      isOfLength(observedDataMapping$ymin, 0),
-      isOfLength(observedDataMapping$ymax, 0)
-    )){
-      plotObject <- addErrorbar(
-        data = mapObservedData,
-        dataMapping = observedDataMapping,
-        plotConfiguration = plotConfiguration,
-        plotObject = plotObject
-      )
-    }
-    plotObject <- addScatter(
-      data = mapObservedData,
-      dataMapping = observedDataMapping,
-      plotConfiguration = plotConfiguration,
-      plotObject = plotObject
-    )
-    # LLOQ
-    if (!isOfLength(observedDataMapping$lloq, 0)) {
-      mapObservedData$legendLabels <- paste(mapObservedData$legendLabels, " LLOQ")
-      plotObject <- addLine(
-        data = mapObservedData,
-        dataMapping = XYGDataMapping$new(
-          x = observedDataMapping$x,
-          y = "lloq",
-          color = "legendLabels"
-        ),
-        plotConfiguration = plotConfiguration,
-        plotObject = plotObject
-      )
-    }
+  # If no observed data, also update colors and return plotObect
+  if (isEmpty(observedData)) {
+    eval(parseUpdateAestheticProperty(AestheticProperties$color, "lines"))
+    plotObject <- setLegendPosition(plotObject)
+    plotObject <- setLegendFont(plotObject)
+    eval(parseUpdateAxes())
+    return(plotObject)
   }
+
+  mapObservedData <- observedDataMapping$checkMapData(observedData)
+  observedMapLabels <- getAesStringMapping(observedDataMapping)
+
+  if (!any(isEmpty(observedDataMapping$ymin), isEmpty(observedDataMapping$ymax))) {
+    # Split errorbars for negative data and log scaling
+    plotObject <- plotObject +
+      ggplot2::geom_linerange(
+        data = mapObservedData,
+        mapping = ggplot2::aes_string(
+          x = observedMapLabels$x,
+          ymin = observedMapLabels$ymin,
+          ymax = observedMapLabels$y,
+          color = observedMapLabels$color
+        ),
+        size = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
+        linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, position = 0, aesthetic = "linetype"),
+        show.legend = FALSE
+      ) +
+      ggplot2::geom_linerange(
+        data = mapObservedData,
+        mapping = ggplot2::aes_string(
+          x = observedMapLabels$x,
+          ymin = observedMapLabels$y,
+          ymax = observedMapLabels$ymax,
+          color = observedMapLabels$color
+        ),
+        size = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
+        linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, position = 0, aesthetic = "linetype"),
+        show.legend = FALSE
+      )
+  }
+  plotObject <- plotObject +
+    ggplot2::geom_point(
+      data = mapObservedData,
+      mapping = ggplot2::aes_string(
+        x = observedMapLabels$x,
+        y = observedMapLabels$y,
+        color = observedMapLabels$color,
+        shape = observedMapLabels$shape
+      ),
+      size = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$size, position = 0, aesthetic = "size"),
+      show.legend = TRUE
+    )
+
+  # Update shapes
+  # Code chunk below is equivalent to commented expression with a change of variable names
+  # parseUpdateAestheticProperty(AestheticProperties$shape, "points")
+  shapeVariable <- gsub("`", "", observedMapLabels$shape)
+  shapeLength <- length(levels(mapObservedData[, shapeVariable]))
+  shapeValues <- getAestheticValues(
+    n = shapeLength,
+    selectionKey = plotConfiguration$points$shape,
+    aesthetic = "shape"
+  )
+  suppressMessages(plotObject <- plotObject + ggplot2::scale_shape_manual(values = shapeValues))
+  if (isIncluded(shapeVariable, "legendLabels")) {
+    plotObject <- plotObject + ggplot2::guides(shape = "none")
+  }
+
+  # Update colors,
+  # Since colors can be available in both simulated and observed, the commented expressions can't apply
+  # parseUpdateAestheticProperty(AestheticProperties$color, "lines")
+  # parseUpdateAestheticProperty(AestheticProperties$color, "points")
+
+  # No simulated data -> update only observedData
+  if (isEmpty(data)) {
+    colorVariable <- gsub("`", "", observedMapLabels$color)
+    colorLength <- length(levels(mapObservedData[, colorVariable]))
+
+    suppressMessages(
+      plotObject <- plotObject +
+        ggplot2::scale_color_manual(
+          values = getAestheticValues(
+            n = colorLength,
+            selectionKey = plotConfiguration$points$color,
+            aesthetic = "color"
+          )
+        )
+    )
+    if (isIncluded(colorVariable, "legendLabels")) {
+      plotObject <- plotObject + ggplot2::guides(color = "none")
+    }
+
+    plotObject <- setLegendPosition(plotObject)
+    plotObject <- setLegendFont(plotObject)
+    eval(parseUpdateAxes())
+    return(plotObject)
+  }
+
+  # Simulated and Observed data -> need to merge the legends
+  colorVariable <- gsub("`", "", mapLabels$color)
+  colorLength <- length(levels(mapData[, colorVariable]))
+  colorObservedVariable <- gsub("`", "", observedMapLabels$color)
+  # The final color vector needs a length of totalLength to prevent scale_color_manual to crash
+  colorBreaks <- c(
+    levels(mapData[, colorVariable]), 
+    setdiff(levels(mapObservedData[, colorObservedVariable]), levels(mapData[, colorVariable]))
+  )
+  totalLength <- length(colorBreaks)
+
+  # colorValues is colors for simulated and then colors for observed
+  colorValues <- c(
+    getAestheticValues(
+      n = colorLength,
+      selectionKey = plotConfiguration$lines$color,
+      aesthetic = "color"
+    ),
+    getAestheticValues(
+      n = totalLength - colorLength,
+      selectionKey = plotConfiguration$points$color,
+      aesthetic = "color"
+    )
+  )
+  
+  # Export the legend captions so the user can update legend keys order
+  plotObject$plotConfiguration$legend$caption <- data.frame(
+    name = colorBreaks,
+    label = colorBreaks,
+    color = colorValues,
+    fill = c(getAestheticValues(n = fillLength, selectionKey = plotConfiguration$ribbons$fill, position = 0, aesthetic = "fill"), 
+             rep(NA, totalLength-fillLength)),
+    linetype = c(getAestheticValues(n = linetypeLength, selectionKey = plotConfiguration$lines$linetype, position = 0, aesthetic = "linetype"), 
+                 rep("blank", totalLength-linetypeLength)),
+    shape = c(rep(" ", totalLength-shapeLength), shapeValues),
+    stringsAsFactors = FALSE
+  )
+  
+  plotObject <- updateTimeProfileLegend(
+    plotObject = plotObject, 
+    caption = plotObject$plotConfiguration$legend$caption
+    ) 
+  
+  if (isIncluded(colorVariable, "legendLabels") & isIncluded(colorObservedVariable, "legendLabels")) {
+    plotObject <- plotObject + ggplot2::guides(color = "none")
+  }
+  
+  plotObject <- setLegendPosition(plotObject)
+  plotObject <- setLegendFont(plotObject)
+  eval(parseUpdateAxes())
+  return(plotObject)
+}
+
+
+#' @title updateTimeProfileLegend
+#' @description Update time profile legend caption
+#' @param plotObject A ggplot object
+#' @param caption A data.frame as obtained from `getLegendCaption` to use for updating a plot legend.
+#' @return A `ggplot` object
+#' @export
+updateTimeProfileLegend <- function(plotObject, caption){
+  suppressMessages(
+    plotObject <- plotObject + 
+      ggplot2::scale_color_manual(breaks = caption$name, labels = caption$label, values = caption$color) + 
+      ggplot2::guides(
+        fill = "none", shape = "none", linetype = "none",
+        color = ggplot2::guide_legend(
+            override.aes = list(fill = caption$fill, linetype = caption$linetype, shape = caption$shape)
+            )
+          )
+        )
+  plotObject$plotConfiguration$legend$caption <- caption
   return(plotObject)
 }

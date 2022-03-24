@@ -18,6 +18,7 @@ XYGDataMapping <- R6::R6Class(
     #' @param linetype R6 class `Grouping` object or its input
     #' @param shape R6 class `Grouping` object or its input
     #' @param size R6 class `Grouping` object or its input
+    #' @param group R6 class `Grouping` object or its input
     #' @param data data.frame to map used by `smartMapping`
     #' @return A new `XYGDataMapping` object
     initialize = function(x = NULL,
@@ -28,6 +29,7 @@ XYGDataMapping <- R6::R6Class(
                           linetype = NULL,
                           shape = NULL,
                           size = NULL,
+                          group = NULL,
                           data = NULL) {
 
       # smartMapping is available in utilities-mapping.R
@@ -39,15 +41,16 @@ XYGDataMapping <- R6::R6Class(
         "fill" = fill,
         "linetype" = linetype,
         "shape" = shape,
-        "size" = size
+        "size" = size,
+        "group" = group
       ))
       # To simplify the process workflow, groupMapping inputs color, fill... can be used directly instead of groupMapping
       self$groupMapping <- groupMapping %||% GroupMapping$new(
-        color %||% smartMap$color,
-        fill %||% smartMap$fill,
-        linetype %||% smartMap$linetype,
-        shape %||% smartMap$shape,
-        size %||% smartMap$size
+        color %||% group %||% smartMap$color,
+        fill %||% group %||% smartMap$fill,
+        linetype %||% group %||% smartMap$linetype,
+        shape %||% group %||% smartMap$shape,
+        size %||% group %||% smartMap$size
       )
     },
 

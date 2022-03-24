@@ -65,6 +65,7 @@ Create a new \code{RangeDataMapping} object
   linetype = NULL,
   shape = NULL,
   size = NULL,
+  group = NULL,
   data = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -89,6 +90,8 @@ Create a new \code{RangeDataMapping} object
 \item{\code{shape}}{R6 class \code{Grouping} object or its input}
 
 \item{\code{size}}{R6 class \code{Grouping} object or its input}
+
+\item{\code{group}}{R6 class \code{Grouping} object or its input}
 
 \item{\code{data}}{data.frame to map used by \code{smartMapping}}
 }

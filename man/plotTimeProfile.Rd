@@ -25,7 +25,7 @@ plotTimeProfile(
 Unlike \code{data}, meant for simulated data, plotted as lines and ribbons;
 \code{observedData} is plotted as scatter points and errorbars.}
 
-\item{observedDataMapping}{An \code{ObservedDataMapping} object mapping \code{x}, \code{y}, \code{ymin}, \code{ymax}, \code{lloq} and aesthetic groups to their variable names of \code{observedData}.}
+\item{observedDataMapping}{An \code{ObservedDataMapping} object mapping \code{x}, \code{y}, \code{ymin}, \code{ymax} and aesthetic groups to their variable names of \code{observedData}.}
 
 \item{plotConfiguration}{An optional \code{TimeProfilePlotConfiguration} object defining labels, grid, background and watermark.}
 
@@ -42,19 +42,18 @@ Producing Time Profile plots
 obsData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
 simTime <- seq(1, 10, 0.1)
 simData <- data.frame(
-x = simTime, 
-y = 10*exp(-simTime),
-ymin = 8*exp(-simTime),
-ymax = 12*exp(-simTime)
+  x = simTime,
+  y = 10 * exp(-simTime),
+  ymin = 8 * exp(-simTime),
+  ymax = 12 * exp(-simTime)
 )
 
 plotTimeProfile(
-data = simData, 
-observedData = obsData,
-dataMapping = TimeProfileDataMapping$new(x = "x", y = "y", ymin = "ymin", ymax = "ymax"),
-observedDataMapping = ObservedDataMapping$new(x = "x", y = "y")
+  data = simData,
+  observedData = obsData,
+  dataMapping = TimeProfileDataMapping$new(x = "x", y = "y", ymin = "ymin", ymax = "ymax"),
+  observedDataMapping = ObservedDataMapping$new(x = "x", y = "y")
 )
-
 }
 \seealso{
 Other molecule plots: 
