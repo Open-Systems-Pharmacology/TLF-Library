@@ -21,6 +21,7 @@ RangeDataMapping <- R6::R6Class(
     #' @param linetype R6 class `Grouping` object or its input
     #' @param shape R6 class `Grouping` object or its input
     #' @param size R6 class `Grouping` object or its input
+    #' @param group R6 class `Grouping` object or its input
     #' @param data data.frame to map used by `smartMapping`
     #' @return A new `RangeDataMapping` object
     initialize = function(x = NULL,
@@ -32,6 +33,7 @@ RangeDataMapping <- R6::R6Class(
                           linetype = NULL,
                           shape = NULL,
                           size = NULL,
+                          group = NULL,
                           data = NULL) {
 
       # smartMapping is available in utilities-mapping.R
@@ -39,7 +41,7 @@ RangeDataMapping <- R6::R6Class(
       super$initialize(x %||% smartMap$x,
         y = NULL,
         groupMapping = groupMapping, color = color, fill = fill,
-        linetype = linetype, shape = shape, size = size
+        linetype = linetype, shape = shape, size = size, group = group
       )
 
       self$ymin <- ymin %||% smartMap$ymin

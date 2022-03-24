@@ -29,8 +29,6 @@ Other DataMapping classes:
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{lloq}}{mapping lower limit of quantitation variable}
-
 \item{\code{error}}{mapping error bars around scatter points}
 
 \item{\code{mdv}}{mapping missing dependent variable}
@@ -68,8 +66,9 @@ Create a new \code{ObservedDataMapping} object
   error = NULL,
   ymin = NULL,
   ymax = NULL,
-  lloq = NULL,
   mdv = NULL,
+  color = NULL,
+  shape = NULL,
   group = NULL,
   data = NULL
 )}\if{html}{\out{</div>}}
@@ -91,9 +90,11 @@ Deprecated parameter replaced by \code{error}.}
 
 \item{\code{ymax}}{mapping upper end of error bars around scatter points}
 
-\item{\code{lloq}}{mapping lower limit of quantitation variable}
-
 \item{\code{mdv}}{mapping missing dependent variable}
+
+\item{\code{color}}{R6 class \code{Grouping} object or its input}
+
+\item{\code{shape}}{R6 class \code{Grouping} object or its input}
 
 \item{\code{group}}{R6 class \code{Grouping} object or its input}
 

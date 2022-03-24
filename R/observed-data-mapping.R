@@ -6,8 +6,6 @@ ObservedDataMapping <- R6::R6Class(
   "ObservedDataMapping",
   inherit = XYGDataMapping,
   public = list(
-    #' @field lloq mapping lower limit of quantitation variable
-    lloq = NULL,
     #' @field error mapping error bars around scatter points
     error = NULL,
     #' @field mdv mapping missing dependent variable
@@ -21,8 +19,9 @@ ObservedDataMapping <- R6::R6Class(
     #' @param x Name of x variable to map
     #' @param y Name of y variable to map
     #' @param group R6 class `Grouping` object or its input
+    #' @param color R6 class `Grouping` object or its input
+    #' @param shape R6 class `Grouping` object or its input
     #' @param data data.frame to map used by `smartMapping`
-    #' @param lloq mapping lower limit of quantitation variable
     #' @param uncertainty mapping error bars around scatter points.
     #' Deprecated parameter replaced by `error`.
     #' @param error mapping error bars around scatter points
@@ -36,19 +35,18 @@ ObservedDataMapping <- R6::R6Class(
                           error = NULL,
                           ymin = NULL,
                           ymax = NULL,
-                          lloq = NULL,
                           mdv = NULL,
+                          color = NULL,
+                          shape = NULL,
                           group = NULL,
                           data = NULL){
-      validateIsString(lloq, nullAllowed = TRUE)
       validateIsString(uncertainty, nullAllowed = TRUE)
       validateIsString(error, nullAllowed = TRUE)
       validateIsString(ymin, nullAllowed = TRUE)
       validateIsString(ymax, nullAllowed = TRUE)
       validateIsString(mdv, nullAllowed = TRUE)
-      super$initialize(x = x, y = y, color = group, data = data)
+      super$initialize(x = x, y = y, color = color, shape = shape, group = group, data = data)
       
-      self$lloq <- lloq
       # If defined, ymin and ymax are used as is
       # If not, error/uncertainty are used and 
       # creates ymin and ymax as y +/- error
@@ -66,19 +64,14 @@ ObservedDataMapping <- R6::R6Class(
     checkMapData = function(data, metaData = NULL) {
       validateIsOfType(data, "data.frame")
       validateIsIncluded(self$error, names(data), nullAllowed = TRUE)
-      validateIsIncluded(self$lloq, names(data), nullAllowed = TRUE)
       validateIsIncluded(self$mdv, names(data), nullAllowed = TRUE)
       
       # Using super method, fetches x, y and groups
       mapData <- super$checkMapData(data, metaData)
-      # Add lloq data
-      if (!isOfLength(self$lloq, 0)) {
-        mapData[, self$lloq] <- data[, self$lloq]
-        mapData$lloq <- data[, self$lloq]
-      }
+      
       # ymin and ymax for error bars
       # This section may change depending on how we want to include options
-      if (!isOfLength(self$error, 0)) {
+      if (!isEmpty(self$error)) {
         mapData[, self$error] <- data[, self$error]
         # Symetric error bars
         mapData[, self$ymax] <- data[, self$y] + data[, self$error]
@@ -92,7 +85,7 @@ ObservedDataMapping <- R6::R6Class(
         mapData[, self$ymin] <- data[,self$ymin]
       }
       # MDV is a Nonmem notation in which values with MDV==1 are removed
-      if (!isOfLength(self$mdv, 0)) {
+      if (!isEmpty(self$mdv)) {
         mapData[, self$mdv] <- as.logical(data[,self$mdv])
         mapData <- mapData[!mapData[, self$mdv], ]
       }

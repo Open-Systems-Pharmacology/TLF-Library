@@ -12,6 +12,9 @@ TimeProfileDataMapping <- R6::R6Class(
     #' @param ymin Name of ymin variable to map
     #' @param ymax Name of ymax variable to map
     #' @param group R6 class `Grouping` object or its input
+    #' @param color R6 class `Grouping` object or its input
+    #' @param fill R6 class `Grouping` object or its input
+    #' @param linetype R6 class `Grouping` object or its input
     #' @param data data.frame to map used by `smartMapping`
     #' @return A new `RangeDataMapping` object
     initialize = function(x = NULL,
@@ -19,6 +22,9 @@ TimeProfileDataMapping <- R6::R6Class(
                           ymin = NULL,
                           ymax = NULL,
                           group = NULL,
+                          color = NULL,
+                          fill = NULL,
+                          linetype = NULL,
                           data = NULL) {
 
       # smartMapping is available in utilities-mapping.R
@@ -27,7 +33,7 @@ TimeProfileDataMapping <- R6::R6Class(
         x = x %||% smartMap$x,
         ymin = ymin %||% smartMap$ymin,
         ymax = ymax %||% smartMap$ymax,
-        color = group
+        color = color, fill = fill, linetype = linetype, group = group
       )
       # Since TimeProfileDataMapping inherits from RangeDataMapping
       # super$initialize introduce a self$y which is NULL
@@ -43,7 +49,7 @@ TimeProfileDataMapping <- R6::R6Class(
       validateMapping(self$y, data, nullAllowed = TRUE)
       mapData <- super$checkMapData(data, metaData)
       # This may change depending of how we want to include options
-      if (!isOfLength(self$y, 0)) {
+      if (!isEmpty(self$y)) {
         mapData[, self$y] <- data[, self$y]
       }
       self$data <- mapData
