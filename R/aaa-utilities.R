@@ -87,10 +87,10 @@ parseUpdateAestheticProperty <- function(aestheticProperty, plotConfigurationPro
     parse(text = paste0(aestheticProperty, "Length <- length(unique(mapData[, ", aestheticProperty, "Variable]))")),
     # Update the property using ggplot `scale` functions
     parse(text = paste0(
-      "plotObject <- plotObject + ggplot2::scale_", aestheticProperty, "_manual(",
+      "suppressMessages(plotObject <- plotObject + ggplot2::scale_", aestheticProperty, "_manual(",
       "values=getAestheticValues(n=", aestheticProperty, "Length,",
       "selectionKey=plotConfiguration$", plotConfigurationProperty, "$", aestheticProperty,
-      ',aesthetic = "', aestheticProperty, '"))'
+      ',aesthetic = "', aestheticProperty, '")))'
     )),
     # remove the legend of aesthetic if default unmapped aesthetic
     parse(text = paste0("if(isIncluded(", aestheticProperty, 'Variable, "legendLabels")){plotObject <- plotObject + ggplot2::guides(', aestheticProperty, " = 'none')}"))
