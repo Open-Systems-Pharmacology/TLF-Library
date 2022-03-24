@@ -15,7 +15,7 @@ addRibbon(
   color = NULL,
   size = NULL,
   linetype = NULL,
-  alpha = 0.8,
+  alpha = NULL,
   dataMapping = NULL,
   plotConfiguration = NULL,
   plotObject = NULL

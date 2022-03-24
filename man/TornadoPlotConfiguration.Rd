@@ -50,15 +50,7 @@ Other PlotConfiguration classes:
 \subsection{Method \code{new()}}{
 Create a new \code{TornadoPlotConfiguration} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TornadoPlotConfiguration$new(
-  bar = TRUE,
-  colorPalette = NULL,
-  dodge = 0.5,
-  lines = NULL,
-  points = NULL,
-  ribbons = NULL,
-  ...
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{TornadoPlotConfiguration$new(bar = TRUE, colorPalette = NULL, dodge = 0.5, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -69,12 +61,6 @@ Create a new \code{TornadoPlotConfiguration} object
 \item{\code{colorPalette}}{color palette property from \code{ggplot2}}
 
 \item{\code{dodge}}{space between the bars/points}
-
-\item{\code{lines}}{\code{ThemeAestheticSelections} object defining properties for Tornado vertical lines}
-
-\item{\code{points}}{\code{ThemeAestheticSelections} object defining properties for scatter points}
-
-\item{\code{ribbons}}{\code{ThemeAestheticSelections} object defining properties for bars}
 
 \item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
 }

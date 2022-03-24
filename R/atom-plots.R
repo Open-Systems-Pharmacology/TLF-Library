@@ -119,7 +119,7 @@ addScatter <- function(data = NULL,
   validateIsOfType(plotConfiguration, PlotConfiguration, nullAllowed = TRUE)
 
   # If data is not input, creates data from x and y inputs
-  if (isOfLength(data, 0)) {
+  if (isEmpty(data)) {
     validateIsSameLength(x, y)
     data <- as.data.frame(cbind(x = x, y = y))
     dataMapping <- dataMapping %||% XYGDataMapping$new(x = ifNotNull(x, "x"), y = ifNotNull(y, "y"), data = data)
@@ -138,7 +138,7 @@ addScatter <- function(data = NULL,
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
   # If no mapping, nor x or y, return plotObject
-  if (any(isOfLength(dataMapping$x, 0), isOfLength(dataMapping$y, 0))) {
+  if (any(isEmpty(dataMapping$x), isEmpty(dataMapping$y))) {
     warning("No mapping found for x nor y, scatter layer was not added")
     return(plotObject)
   }
@@ -421,7 +421,7 @@ addRibbon <- function(data = NULL,
                       color = NULL,
                       size = NULL,
                       linetype = NULL,
-                      alpha = 0.8,
+                      alpha = NULL,
                       dataMapping = NULL,
                       plotConfiguration = NULL,
                       plotObject = NULL) {
@@ -429,11 +429,11 @@ addRibbon <- function(data = NULL,
   validateIsOfType(plotConfiguration, PlotConfiguration, nullAllowed = TRUE)
 
   # If data is not input, creates data and its mapping from x, ymin and ymax input
-  if (isOfLength(data, 0)) {
+  if (isEmpty(data)) {
     data <- as.data.frame(cbind(x = x, ymin = ymin %||% 0, ymax = ymax %||% 0))
 
     # y-intercept ribbon
-    if (isOfLength(x, 0)) {
+    if (isEmpty(x)) {
       # Redefine data.frame for y-intercept ribbon
       data <- rbind.data.frame(cbind.data.frame(x = -Inf, data), cbind.data.frame(x = Inf, data))
     }
@@ -453,7 +453,7 @@ addRibbon <- function(data = NULL,
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
   # If no mapping, return plot
-  if (all(isOfLength(dataMapping$x, 0), isOfLength(dataMapping$ymin, 0), isOfLength(dataMapping$ymax, 0))) {
+  if (all(isEmpty(dataMapping$x), isEmpty(dataMapping$ymin), isEmpty(dataMapping$ymax))) {
     warning("No mapping found for x, ymin and ymax, ribbon layer was not added")
     return(plotObject)
   }
@@ -471,7 +471,7 @@ addRibbon <- function(data = NULL,
     ggplot2::geom_ribbon(
       data = mapData,
       mapping = ggplot2::aes_string(x = mapLabels$x, ymin = mapLabels$ymin, ymax = mapLabels$ymax, fill = "legendLabels"),
-      alpha = alpha,
+      alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$alpha, position = 0, aesthetic = "alpha"),
       show.legend = TRUE,
       na.rm = TRUE
     ) +

@@ -323,7 +323,7 @@ server <- function(input, output) {
       plotHistogram = HistogramDataMapping$new(x = "Ratio", fill = "Sex"),
       plotObsVsPred = ObsVsPredDataMapping$new(x = "Obs", y = "Pred", color = "Sex", shape = "Country"),
       plotPKRatio = PKRatioDataMapping$new(x = "Age", y = "Ratio", color = "Sex", shape = "Country"),
-      plotTimeProfile = TimeProfileDataMapping$new(x = "ID", y = "Ratio", ymin = "ymin", ymax = "ymax", fill = "Sex", color = "Sex", linetype = "Country"),
+      plotTimeProfile = TimeProfileDataMapping$new(x = "ID", y = "Ratio", ymin = "ymin", ymax = "ymax", group = c("Sex", "Country")),
       plotTornado = TornadoDataMapping$new(x = "Ratio", y = "ID")
     )
 

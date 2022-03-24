@@ -489,14 +489,14 @@ tabPlotConfigurationPanel <- function(plotName) {
         ),
         tabPanel(
           "Alpha",
-          selectInput("addRibbonSize",
+          selectInput("addRibbonAlpha",
             label = "Selection key",
             choices = c(other = "other", AestheticSelectionKeys),
             selected = jsonTheme$plotConfigurations$addRibbon$alpha[1]
           ),
           conditionalPanel(
-            "input.addRibbonSize=='other'",
-            numericInput("addRibbonSize2",
+            "input.addRibbonAlpha=='other'",
+            numericInput("addRibbonAlpha2",
               label = "", min = 0, max = 1,
               value = jsonTheme$plotConfigurations$addRibbon$alpha[1], step = 0.05
             )

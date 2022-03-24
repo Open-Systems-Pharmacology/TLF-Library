@@ -157,6 +157,9 @@ getAestheticValues <- function(n, selectionKey = NA, position = 0, aesthetic = "
 getNextAestheticValues <- function(n, position = 0, map) {
   # Get the map indices of aesthtic values to be output
   aesPositions <- seq(position + 1, position + n)
+  if(n<=0){
+    return(NULL)
+  }
 
   # In case the map is not long enough to get all the indices
   # the indices have to go start back from 1 using modelu function
@@ -177,6 +180,9 @@ getSameAestheticValues <- function(n, position = 0, map) {
   # the indices have to go start back from 1 using modelu function
   mapSize <- length(map)
   aesPosition <- (position %% mapSize) + 1
+  if(n<=0){
+    return(NULL)
+  }
 
   # Get the map indices of aesthtic values to be output
   aesPositions <- rep(aesPosition, n)
