@@ -4,7 +4,7 @@
 \alias{BoxWhiskerPlotConfiguration}
 \title{BoxWhiskerPlotConfiguration}
 \description{
-R6 class defining the configuration of a \code{ggplot} object
+R6 class defining the configuration of a \code{ggplot} object for boxplots
 }
 \seealso{
 Other PlotConfiguration classes: 
@@ -46,22 +46,13 @@ Other PlotConfiguration classes:
 \subsection{Method \code{new()}}{
 Create a new \code{BoxWhiskerPlotConfiguration} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BoxWhiskerPlotConfiguration$new(
-  outliers = TRUE,
-  ribbons = NULL,
-  points = NULL,
-  ...
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{BoxWhiskerPlotConfiguration$new(outliers = TRUE, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{outliers}}{logical defining if outliers should be included in boxplot}
-
-\item{\code{ribbons}}{\code{ThemeAestheticSelections} object defining properties for boxes of boxplot}
-
-\item{\code{points}}{\code{ThemeAestheticSelections} object defining properties for outlier scatter points}
 
 \item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
 }

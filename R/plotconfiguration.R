@@ -39,6 +39,10 @@ PlotConfiguration <- R6::R6Class(
     #' @param data data.frame used by `smartMapping`
     #' @param metaData list of information on `data`
     #' @param dataMapping R6 class or subclass `XYDataMapping`
+    #' @param lines `ThemeAestheticSelections` object or list defining how lines are plotted
+    #' @param points `ThemeAestheticSelections` object or list defining how points are plotted
+    #' @param ribbons `ThemeAestheticSelections` object or list defining how ribbons are plotted
+    #' @param errorbars `ThemeAestheticSelections` object or list defining how errorbars are plotted
     #' @return A new `PlotConfiguration` object
     initialize = function( # Label configuration
                           title = NULL,
@@ -64,6 +68,11 @@ PlotConfiguration <- R6::R6Class(
                           xGrid = NULL,
                           yGrid = NULL,
                           watermark = NULL,
+                          # configuration of how objects are plotted
+                          lines = NULL,
+                          points = NULL,
+                          ribbons = NULL,
+                          errorbars = NULL,
                           # Export configuration
                           export = NULL,
                           format = NULL,
@@ -134,12 +143,12 @@ PlotConfiguration <- R6::R6Class(
       private$.background$yGrid <- yGrid %||% private$.background$yGrid
       private$.background$watermark <- watermark %||% private$.background$watermark
 
-      # Define atom behaviour from theme
-      private$.lines <- getThemePropertyFor(plotName = "addLine")
-      private$.ribbons <- getThemePropertyFor(plotName = "addRibbon")
-      private$.points <- getThemePropertyFor(plotName = "addScatter")
-      private$.errorbars <- getThemePropertyFor(plotName = "addErrorbar")
-
+      # Define how to plot points, lines, ribbons and errorbars of the plot
+      private$.lines <- lines %||% getThemePropertyFor(plotConfiguration = self, propertyName = "lines")
+      private$.ribbons <- ribbons %||% getThemePropertyFor(plotConfiguration = self, propertyName = "ribbons")
+      private$.points <- points %||% getThemePropertyFor(plotConfiguration = self, propertyName = "points")
+      private$.errorbars <- errorbars %||% getThemePropertyFor(plotConfiguration = self, propertyName = "errorbars")
+      
       # Define export configuration, overwrite properties only if they are defined
       self$export <- export %||% ExportConfiguration$new()
       self$export$format <- format %||% self$export$format
@@ -244,3 +253,65 @@ PlotConfiguration <- R6::R6Class(
   )
 )
 
+
+#' @title TimeProfilePlotConfiguration
+#' @description R6 class defining the configuration of a `ggplot` object for time profile plots
+#' @export
+#' @family PlotConfiguration classes
+TimeProfilePlotConfiguration <- R6::R6Class(
+  "TimeProfilePlotConfiguration",
+  inherit = PlotConfiguration
+)
+
+#' @title PKRatioPlotConfiguration
+#' @description R6 class defining the configuration of a `ggplot` object for PK ratio plots
+#' @export
+#' @family PlotConfiguration classes
+PKRatioPlotConfiguration <- R6::R6Class(
+  "PKRatioPlotConfiguration",
+  inherit = PlotConfiguration
+)
+
+#' @title DDIRatioPlotConfiguration
+#' @description R6 class defining the configuration of a `ggplot` object for DDI ratio plots
+#' @export
+#' @family PlotConfiguration classes
+DDIRatioPlotConfiguration <- R6::R6Class(
+  "DDIRatioPlotConfiguration",
+  inherit = PlotConfiguration
+)
+
+#' @title ObsVsPredPlotConfiguration
+#' @description R6 class defining the configuration of a `ggplot` object for Obs vs Pred plots
+#' @export
+#' @family PlotConfiguration classes
+ObsVsPredPlotConfiguration <- R6::R6Class(
+  "ObsVsPredPlotConfiguration",
+  inherit = PlotConfiguration
+)
+
+#' @title ResVsPredPlotConfiguration
+#' @description R6 class defining the configuration of a `ggplot` object for Res vs Pred/Time plots
+#' @export
+ResVsPredPlotConfiguration <- R6::R6Class(
+  "ResVsPredPlotConfiguration",
+  inherit = PlotConfiguration
+)
+
+#' @title HistogramPlotConfiguration
+#' @description R6 class defining the configuration of a `ggplot` object for histograms
+#' @export
+#' @family PlotConfiguration classes
+HistogramPlotConfiguration <- R6::R6Class(
+  "HistogramPlotConfiguration",
+  inherit = PlotConfiguration,
+  public = list(
+    #' @description Create a new `HistogramPlotConfiguration` object
+    #' @param ylabel Histograms default display is "Count"
+    #' @param ... parameters inherited from `PlotConfiguration`
+    #' @return A new `HistogramPlotConfiguration` object
+    initialize = function(ylabel = "Count", ...) {
+      super$initialize(ylabel = ylabel, ...)
+    }
+  )
+)

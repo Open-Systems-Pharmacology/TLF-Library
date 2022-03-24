@@ -84,6 +84,10 @@ Create a new \code{PlotConfiguration} object
   xGrid = NULL,
   yGrid = NULL,
   watermark = NULL,
+  lines = NULL,
+  points = NULL,
+  ribbons = NULL,
+  errorbars = NULL,
   export = NULL,
   format = NULL,
   width = NULL,
@@ -136,6 +140,14 @@ Use Enum \code{LegendPositions} to get a list of available to legend positions.}
 \item{\code{yGrid}}{\code{LineElement} object defining properties of y-grid background}
 
 \item{\code{watermark}}{\code{Label} object defining watermark}
+
+\item{\code{lines}}{\code{ThemeAestheticSelections} object or list defining how lines are plotted}
+
+\item{\code{points}}{\code{ThemeAestheticSelections} object or list defining how points are plotted}
+
+\item{\code{ribbons}}{\code{ThemeAestheticSelections} object or list defining how ribbons are plotted}
+
+\item{\code{errorbars}}{\code{ThemeAestheticSelections} object or list defining how errorbars are plotted}
 
 \item{\code{export}}{R6 class \code{SaveConfiguration} defining saving properties}
 

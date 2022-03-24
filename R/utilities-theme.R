@@ -74,7 +74,7 @@ saveThemeToJson <- function(jsonFile, theme = NULL) {
 #' @title asThemeAestheticSelections
 #' @description
 #' Convert a list into a `ThemeAestheticSelections` object
-#' @param themeSelectionObject
+#' @param themeSelectionObject 
 #' A `ThemeAestheticSelections` or a list that include values for selecting aesthetic properties
 #' @keywords internal
 asThemeAestheticSelections <- function(themeSelectionObject) {
@@ -93,11 +93,24 @@ asThemeAestheticSelections <- function(themeSelectionObject) {
 #' @title getThemePropertyFor
 #' @description
 #' Clone a theme plot configuration property so the property is not affected in current theme
-#' @param plotName Name of plot as defined in field `plotConfigurations` from theme
+#' @param plotConfiguration `PlotConfigurations` object
 #' @param propertyName Name of property. One `lines`, `points`, `ribbons` or `errorbars`
 #' @keywords internal
-getThemePropertyFor <- function(plotName, propertyName = NULL){
-  if(isOfLength(propertyName,0)){
+getThemePropertyFor <- function(plotConfiguration, propertyName = NULL){
+  # Get theme property matching the plotConfiguration 
+  plotName <- gsub(pattern = "PlotConfiguration", replacement = "", class(plotConfiguration)[1])
+  # Simple PlotConfiguration are associated with atom plot properties
+  if(isIncluded(plotName, "")){
+    # Get theme property matching the atom
+    plotName <- switch(propertyName, lines = "addLine", ribbons = "addRibbon", points ="addScatter", errorbars = "addErrorbar")
+    themeProperty <- asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations[[plotName]])
+    return(themeProperty$clone(deep = TRUE))
+  }
+  # Complex PlotConfiguration are associated with molecule plot properties
+  plotName <- paste0("plot", plotName)
+  # If property undefined in theme, use equivalent atom plot property
+  if(isEmpty(tlfEnv$currentTheme$plotConfigurations[[plotName]][[propertyName]])){
+    plotName <- switch(propertyName, lines = "addLine", ribbons = "addRibbon", points ="addScatter", errorbars = "addErrorbar")
     themeProperty <- asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations[[plotName]])
     return(themeProperty$clone(deep = TRUE))
   }

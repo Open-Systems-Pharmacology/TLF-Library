@@ -4,10 +4,10 @@
 \alias{getThemePropertyFor}
 \title{getThemePropertyFor}
 \usage{
-getThemePropertyFor(plotName, propertyName = NULL)
+getThemePropertyFor(plotConfiguration, propertyName = NULL)
 }
 \arguments{
-\item{plotName}{Name of plot as defined in field \code{plotConfigurations} from theme}
+\item{plotConfiguration}{\code{PlotConfigurations} object}
 
 \item{propertyName}{Name of property. One \code{lines}, \code{points}, \code{ribbons} or \code{errorbars}}
 }
