@@ -520,7 +520,7 @@ obsDataMapping <- ObservedDataMapping$new(
   group = "caption"
 )
 
-plotTimeProfile(
+simAndObsTimeProfile <- plotTimeProfile(
   data = rbind.data.frame(
     simData1,
     simData2
@@ -533,6 +533,21 @@ plotTimeProfile(
   dataMapping = simDataMapping,
   observedDataMapping = obsDataMapping
 )
+simAndObsTimeProfile
+```
+
+In this example observed and simulated data do not share any mapping. 
+Therefore, their color pattern may not match.
+To update the plot and have appropriate colors and labels in the legend, it is possible to get the legend properties and update them as illustrated in the example below that updates the positions of the legend entries:
+
+```{r get legend properties, results='asis'}
+plotLegend <- getLegendCaption(simAndObsTimeProfile) 
+knitr::kable(plotLegend)
+```
+
+```{r update legend properties}
+plotLegend <- plotLegend[c(1,3,2,4), ]
+updateTimeProfileLegend(simAndObsTimeProfile, plotLegend)
 ```
 
 Note that if observed and simulated data share common groupings, they will be merged in the final legend.

@@ -221,32 +221,53 @@ plotTimeProfile <- function(data = NULL,
       aesthetic = "color"
     )
   )
-
-  suppressMessages(
-    plotObject <- plotObject + 
-      ggplot2::scale_color_manual(breaks = colorBreaks, values = colorValues)
-    )
-  # Create one nice and unique legend based on the dataMappings
-  plotObject <- plotObject + ggplot2::guides(
-    fill = "none",
-    shape = "none",
-    linetype = "none",
-    color = ggplot2::guide_legend(
-      override.aes = list(
-        fill = c(getAestheticValues(n = fillLength, selectionKey = plotConfiguration$ribbons$fill, position = 0, aesthetic = "fill"), 
-                 rep(NA, totalLength-fillLength)),
-        linetype = c(getAestheticValues(n = linetypeLength, selectionKey = plotConfiguration$lines$linetype, position = 0, aesthetic = "linetype"), 
-                     rep("blank", totalLength-linetypeLength)),
-        shape = c(rep(" ", totalLength-shapeLength), shapeValues)
-      )
-    )
+  
+  # Export the legend captions so the user can update legend keys order
+  plotObject$plotConfiguration$legend$caption <- data.frame(
+    name = colorBreaks,
+    label = colorBreaks,
+    color = colorValues,
+    fill = c(getAestheticValues(n = fillLength, selectionKey = plotConfiguration$ribbons$fill, position = 0, aesthetic = "fill"), 
+             rep(NA, totalLength-fillLength)),
+    linetype = c(getAestheticValues(n = linetypeLength, selectionKey = plotConfiguration$lines$linetype, position = 0, aesthetic = "linetype"), 
+                 rep("blank", totalLength-linetypeLength)),
+    shape = c(rep(" ", totalLength-shapeLength), shapeValues),
+    stringsAsFactors = FALSE
   )
+  
+  plotObject <- updateTimeProfileLegend(
+    plotObject = plotObject, 
+    caption = plotObject$plotConfiguration$legend$caption
+    ) 
   
   if (isIncluded(colorVariable, "legendLabels") & isIncluded(colorObservedVariable, "legendLabels")) {
     plotObject <- plotObject + ggplot2::guides(color = "none")
   }
+  
   plotObject <- setLegendPosition(plotObject)
   plotObject <- setLegendFont(plotObject)
   eval(parseUpdateAxes())
+  return(plotObject)
+}
+
+
+#' @title updateTimeProfileLegend
+#' @description Update time profile legend caption
+#' @param plotObject A ggplot object
+#' @param caption A data.frame as obtained from `getLegendCaption` to use for updating a plot legend.
+#' @return A `ggplot` object
+#' @export
+updateTimeProfileLegend <- function(plotObject, caption){
+  suppressMessages(
+    plotObject <- plotObject + 
+      ggplot2::scale_color_manual(breaks = caption$name, labels = caption$label, values = caption$color) + 
+      ggplot2::guides(
+        fill = "none", shape = "none", linetype = "none",
+        color = ggplot2::guide_legend(
+            override.aes = list(fill = caption$fill, linetype = caption$linetype, shape = caption$shape)
+            )
+          )
+        )
+  plotObject$plotConfiguration$legend$caption <- caption
   return(plotObject)
 }
