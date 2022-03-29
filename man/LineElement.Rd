@@ -29,9 +29,20 @@ R6 class defining the properties of background line elements
 \subsection{Method \code{createPlotElement()}}{
 Create a \code{ggplot2::element_line} directly usable by \code{ggplot2::theme}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LineElement$createPlotElement()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{LineElement$createPlotElement(color = NULL, size = NULL, linetype = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{color}}{character color of the frame of the background element}
+
+\item{\code{size}}{character size of the frame of the background element}
+
+\item{\code{linetype}}{character linetype of the frame of the background element}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 An \code{element_line} object.
 }

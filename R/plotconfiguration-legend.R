@@ -44,7 +44,9 @@ LegendConfiguration <- R6::R6Class(
         ggplot2::theme(
           legend.background = private$.background$createPlotElement(),
           legend.text = private$.font$createPlotFont(),
-          legend.title = private$.titleFont$createPlotFont()
+          legend.title = private$.titleFont$createPlotFont(),
+          # symbol background same as legend background
+          legend.key = private$.background$createPlotElement(linetype = Linetypes$blank)
         )
 
       # For legend title, if no title, element_blank should be used
