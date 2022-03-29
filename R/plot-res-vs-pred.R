@@ -75,8 +75,6 @@ plotResVsPred <- function(data,
   # Define shapes and colors based on plotConfiguration$points properties
   eval(parseUpdateAestheticProperty(AestheticProperties$color, "points"))
   eval(parseUpdateAestheticProperty(AestheticProperties$shape, "points"))
-  plotObject <- setLegendPosition(plotObject)
-  plotObject <- setLegendFont(plotObject)
   eval(parseUpdateAxes())
   return(plotObject)
 }
