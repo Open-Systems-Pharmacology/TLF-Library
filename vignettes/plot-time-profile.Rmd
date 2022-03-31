@@ -22,11 +22,7 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 require(tlf)
-```
-
-```{r load-theme, echo=FALSE}
-vignetteTheme <- loadThemeFromJson(system.file("extdata", "template-theme.json", package = "tlf"))
-useTheme(vignetteTheme)
+# Place default legend position above the plot for prettier time profile plots
 setDefaultLegendPosition(LegendPositions$outsideTop)
 ```
 
