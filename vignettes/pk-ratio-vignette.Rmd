@@ -24,11 +24,6 @@ knitr::opts_chunk$set(
 require(tlf)
 ```
 
-```{r load-theme, echo=FALSE}
-vignetteTheme <- loadThemeFromJson(system.file("extdata", "template-theme.json", package = "tlf"))
-useTheme(vignetteTheme)
-```
-
 # 1. Introduction
 
 The following vignette aims at documenting and illustrating workflows for producing PK ratio plots using the `tlf`-Library.

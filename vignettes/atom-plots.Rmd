@@ -24,10 +24,7 @@ knitr::opts_chunk$set(
 require(tlf)
 ```
 
-```{r load-theme, echo=FALSE}
-vignetteTheme <- loadThemeFromJson(system.file("extdata", "template-theme.json", package = "tlf"))
-useTheme(vignetteTheme)
-
+```{r load-data, echo=FALSE}
 cosData <- data.frame(time = seq(0, 20, 0.5), cos = cos(seq(0, 20, 0.5)), sin = sin(seq(0, 20, 0.5)))
 testData <- read.csv(system.file("extdata", "test-data.csv", package = "tlf"), stringsAsFactors = FALSE)
 ```

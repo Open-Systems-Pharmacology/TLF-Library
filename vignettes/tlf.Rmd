@@ -24,11 +24,6 @@ knitr::opts_chunk$set(
 require(tlf)
 ```
 
-```{r load-theme, echo=FALSE}
-vignetteTheme <- loadThemeFromJson(system.file("themes", "template-theme.json", package = "tlf"))
-useTheme(vignetteTheme)
-```
-
 # 1. Introduction
 
 ## 1.1. Objectives

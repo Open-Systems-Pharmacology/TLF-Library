@@ -186,6 +186,17 @@ useHighChartTheme <- function() {
   useTheme(loadThemeFromJson(system.file("themes", "hc-theme.json", package = "tlf")))
 }
 
+#' @title useMinimalTheme
+#' @description
+#' Set default minimal theme to be used as the current default of the tlf environment
+#' @export
+#' @examples 
+#' useMinimalTheme()
+#' addScatter(x = seq(1,10), y = rnorm(10))
+useMinimalTheme <- function() {
+  useTheme(loadThemeFromJson(system.file("themes", "minimal-theme.json", package = "tlf")))
+}
+
 ## -------------------------------------------------
 #' @title runThemeMaker
 #' @description
