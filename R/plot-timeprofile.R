@@ -102,8 +102,6 @@ plotTimeProfile <- function(data = NULL,
   # If no observed data, also update colors and return plotObect
   if (isEmpty(observedData)) {
     eval(parseUpdateAestheticProperty(AestheticProperties$color, "lines"))
-    plotObject <- setLegendPosition(plotObject)
-    plotObject <- setLegendFont(plotObject)
     eval(parseUpdateAxes())
     return(plotObject)
   }
@@ -191,8 +189,6 @@ plotTimeProfile <- function(data = NULL,
       plotObject <- plotObject + ggplot2::guides(color = "none")
     }
 
-    plotObject <- setLegendPosition(plotObject)
-    plotObject <- setLegendFont(plotObject)
     eval(parseUpdateAxes())
     return(plotObject)
   }
@@ -244,8 +240,6 @@ plotTimeProfile <- function(data = NULL,
     plotObject <- plotObject + ggplot2::guides(color = "none")
   }
   
-  plotObject <- setLegendPosition(plotObject)
-  plotObject <- setLegendFont(plotObject)
   eval(parseUpdateAxes())
   return(plotObject)
 }

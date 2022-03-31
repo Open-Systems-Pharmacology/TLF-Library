@@ -36,6 +36,8 @@ initializePlot <- function(plotConfiguration = NULL) {
   plotObject <- setXGrid(plotObject)
   plotObject <- setYGrid(plotObject)
   plotObject <- setPlotLabels(plotObject)
+  plotObject <- setLegendPosition(plotObject)
+  plotObject <- setLegendFont(plotObject)
 
   return(plotObject)
 }

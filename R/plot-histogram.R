@@ -140,8 +140,6 @@ plotHistogram <- function(data = NULL,
   eval(parseUpdateAestheticProperty(AestheticProperties$fill, "ribbons"))
   eval(parseUpdateAestheticProperty(AestheticProperties$color, "lines"))
   eval(parseUpdateAestheticProperty(AestheticProperties$linetype, "lines"))
-  plotObject <- setLegendPosition(plotObject)
-  plotObject <- setLegendFont(plotObject)
   eval(parseUpdateAxes())
   return(plotObject)
 }

@@ -143,13 +143,17 @@ BackgroundElement <- R6::R6Class(
     },
 
     #' @description Create a `ggplot2::element_rect`  directly usable by `ggplot2::theme`.
+    #' @param fill character color filling of the background element
+    #' @param color character color of the frame of the background element
+    #' @param size character size of the frame of the background element
+    #' @param linetype character linetype of the frame of the background element
     #' @return An `element_rect` object.
-    createPlotElement = function() {
+    createPlotElement = function(fill = NULL, color = NULL, size = NULL, linetype = NULL) {
       ggplot2::element_rect(
-        fill = self$fill,
-        colour = self$color,
-        size = as.numeric(self$size),
-        linetype = self$linetype
+        fill = fill %||% self$fill,
+        colour = color %||% self$color,
+        size =  size %||% as.numeric(self$size),
+        linetype = linetype %||% self$linetype
       )
     }
   )
@@ -163,12 +167,15 @@ LineElement <- R6::R6Class(
   inherit = BackgroundElement,
   public = list(
     #' @description Create a `ggplot2::element_line` directly usable by `ggplot2::theme`.
+    #' @param color character color of the frame of the background element
+    #' @param size character size of the frame of the background element
+    #' @param linetype character linetype of the frame of the background element
     #' @return An `element_line` object.
-    createPlotElement = function() {
+    createPlotElement = function(color = NULL, size = NULL, linetype = NULL) {
       ggplot2::element_line(
-        colour = self$color,
-        size = as.numeric(self$size),
-        linetype = self$linetype
+        colour = color %||% self$color,
+        size =  size %||% as.numeric(self$size),
+        linetype = linetype %||% self$linetype
       )
     }
   )
