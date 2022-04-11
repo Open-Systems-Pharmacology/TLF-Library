@@ -107,12 +107,11 @@ setLegendTitle <- function(plotObject,
 }
 
 #' @title setLegendPosition
+#' @description Set the legend position
 #' @param plotObject `ggplot` graphical object
-#' @param position legend position.
-#' Use enum `LegendPositions` to access the list of legend positions.
+#' @param position legend position as defined in helper enum `LegendPositions`
 #' @return A `ggplot` graphical object
-#' @description
-#' Set the legend position
+#' @seealso LegendPositions
 #' @export
 #' @import ggplot2
 setLegendPosition <- function(plotObject,
@@ -128,6 +127,17 @@ setLegendPosition <- function(plotObject,
 
   newPlotObject <- legend$updatePlot(newPlotObject)
   return(newPlotObject)
+}
+
+#' @title getLegendPosition
+#' @description Get the legend position
+#' @param plotObject `ggplot` graphical object
+#' @return Position of legend as defined in enum `LegendPositions`
+#' @seealso LegendPositions
+#' @export
+getLegendPosition <- function(plotObject) {
+  validateIsOfType(plotObject, "ggplot")
+  return(plotObject$plotConfiguration$legend$position)
 }
 
 #' @title setLegendCaption
@@ -409,7 +419,12 @@ CaptionProperties <- enum(c(
   "fill"
 ))
 
-getLegendPosition <- function(position) {
+#' @title createPlotLegendPosition
+#' @description Create legend position directly usable by `ggplot2`
+#' @param position Position of legend as defined in enum `LegendPositions`
+#' @return A list with fields `xPosition`, `xJustification`, `yPosition`, `yJustification`
+#' @keywords internal
+createPlotLegendPosition <- function(position) {
   validateIsIncluded(position, LegendPositions)
 
   listOfLegendPositions <- list(

@@ -41,7 +41,7 @@ Each of these properties is managed by a different R6 class object detailed in t
 - *background*
 - *xAxis*/*yAxis*
 - *legend*
-- *save*
+- *export*
 
 ```{r empty-configuration-plots}
 myConfiguration <- PlotConfiguration$new()
@@ -492,9 +492,28 @@ list.files(system.file("themes", package = "tlf"))
 These predifined themes can be directly loaded and used through functions named `use<ThemeName>Theme()`.
 For instance, the function `useMatlabTheme()` will set default plot configurations for creating plots looking like Matlab figures.
 
-# 7. Export code to re-create a PlotConfiguration object
+# 7. Exporting/Saving a plot
 
-The function `exportPlotConfigurationCode(plotConfiguration)` creates character strings corresponding to commented R code that allows you to re-create a PlotConfiguration object.
+The function `exportPlot` is a wrapper around the function `ggsave` that uses the properties of the field `export` in PlotConfiguration objects when saving a plot as a file.
+
+Since `ggsave` uses the full plot area as the plot dimensions to save, big legends can shrink the size of the panel.
+To prevent such shrinkage, plot dimensions can be updated before using `exportPlot` with the function `updateExportDimensionsForLegend` as illustrated below.
+
+```{r before update dimensions}
+scatterLegend <- setLegendPosition(scatter1, LegendPositions$outsideTop)
+# Print properties of plot export
+scatterLegend$plotConfiguration$export
+```
+
+```{r after update dimensions}
+updatedScatterLegend <- updateExportDimensionsForLegend(scatterLegend)
+# Print properties of plot export
+updatedScatterLegend$plotConfiguration$export
+```
+
+## Export code to re-create a PlotConfiguration object
+
+The function `exportPlotConfigurationCode(plotConfiguration, name)` creates character strings corresponding to commented R code that allows you to re-create a PlotConfiguration object.
 
 ```{r export-configuration}
 # Create and export a plot confiugration
@@ -503,7 +522,12 @@ exportPlotConfigurationCode(plotConfigurationToExport1)
 
 # Create, update and export a more advanced plot confiugration
 plotConfigurationToExport2 <- TornadoPlotConfiguration$new(bar = FALSE)
-exportPlotConfigurationCode(plotConfigurationToExport2)
+exportPlotConfigurationCode(plotConfigurationToExport2, name = "tornado")
 ```
 
 Since `exportPlotConfigurationCode` returns character strings, they can either be saved as a .R script or copied/pasted to be used as is or within a function. It is also possible to turn the strings into and expression to `eval` using `parse(text = exportPlotConfigurationCode(plotConfiguration))`.
+
+```{r exported configuration}
+eval(parse(text = exportPlotConfigurationCode(plotConfigurationToExport2, name = "tornado")))
+tornado
+```

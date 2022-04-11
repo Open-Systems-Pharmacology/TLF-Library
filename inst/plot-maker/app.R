@@ -143,10 +143,18 @@ ui <- fluidPage(
       ),
       tabPanel(
         "Export",
+        br(),
         fluidRow(
-          numericInput("plotHeight", "height (cm)", value = 9),
-          numericInput("plotWidth", "width (cm)", value = 16),
-          downloadButton("savedPlot", "Save Plot")
+          downloadButton("savedPlot", "Save Plot"),
+          align = "center"
+          ),
+        selectInput("exportUnits", "units", choices = c("cm", "mm", "in", "px")),
+        numericInput("exportHeight", "height (cm)", value = 9),
+        numericInput("exportWidth", "width (cm)", value = 16),
+        numericInput("exportResolution", "resolution (dpi)", value = 300),
+        fluidRow(
+          actionButton("updateDimensions", "Update dimensions for legend", icon = icon("rotate-right")),
+          align = "center"
         ),
         br(),
         fluidRow(
@@ -198,7 +206,7 @@ ui <- fluidPage(
 )
 
 #---------- Server ----------#
-server <- function(input, output) {
+server <- function(input, output, session) {
   #---------- Reactive helpers  ----------#
   #---------- Data ----------#
   getData <- reactive({
@@ -792,8 +800,16 @@ server <- function(input, output) {
     plotConfiguration$errorbars$color <- tlfInput(input$errorbarsColor2) %||% plotConfiguration$errorbars$color
     plotConfiguration$errorbars$size <- tlfInput(input$errorbarsSize2) %||% plotConfiguration$errorbars$size
     plotConfiguration$errorbars$linetype <- tlfInput(input$errorbarsLinetype2) %||% plotConfiguration$errorbars$linetype
-
-
+    
+    #--- Export
+    plotConfiguration$export$units <- tlfInput(input$exportUnits) %||% plotConfiguration$export$units
+    plotConfiguration$export$width <- tlfInput(input$exportWidth) %||% plotConfiguration$export$width
+    plotConfiguration$export$height <- tlfInput(input$exportHeight) %||% plotConfiguration$export$height
+    plotConfiguration$export$dpi <- tlfInput(input$exportResolution) %||% plotConfiguration$export$dpi
+    
+    updateNumericInput(session, inputId = "exportWidth", label = paste0("width (", input$exportUnits, ")"), value = input$exportWidth, min = 0)
+    updateNumericInput(session, inputId = "exportHeight", label = paste0("height (", input$exportUnits, ")"), value = input$exportHeight, min = 0)
+    
     #--- Return updated configuration
     return(plotConfiguration)
   })
@@ -831,7 +847,6 @@ server <- function(input, output) {
 
   #---------- Display Plot ----------#
   # Plot displayed after update
-  plotWidth <- reactive(input$plotWidth)
   output$displayPlot <- renderPlot({
     displayPlot <- getDisplayPlot()
     return(displayPlot)
@@ -861,10 +876,10 @@ server <- function(input, output) {
 
   #---------- Save Plot ----------#
   output$savedPlot <- downloadHandler(
-    filename = "savedPlot.png",
+    filename = "figure.png",
     content = function(file) {
       displayPlot <- getDisplayPlot()
-      ggsave(filename = file, plot = displayPlot, width = input$plotWidth, height = input$plotHeight, units = "cm")
+      exportPlot(displayPlot, fileName = file)
     }
   )
 
@@ -885,6 +900,18 @@ server <- function(input, output) {
     plotConfiguration <- getUpdatedPlotConfiguration()
     writeClipboard(paste(exportPlotConfigurationCode(plotConfiguration), collapse = "\n"))
   })
+  
+  observeEvent(input$updateDimensions, {
+    plotObject <- getDisplayPlot()
+    plotObject <- updateExportDimensionsForLegend(plotObject)
+    
+    updateSelectInput(session, inputId = "exportUnits", "units", choices = c("cm", "mm", "in", "px"),  selected = plotObject$plotConfiguration$export$units)
+    updateNumericInput(session, inputId = "exportWidth", label = paste0("width (", plotObject$plotConfiguration$export$units, ")"), 
+                       value = plotObject$plotConfiguration$export$width, min = 0)
+    updateNumericInput(session, inputId = "exportHeight", label = paste0("height (", plotObject$plotConfiguration$export$units, ")"), 
+                       value = plotObject$plotConfiguration$export$height, min = 0)
+  })
+  
 }
 
 shinyApp(ui = ui, server = server)

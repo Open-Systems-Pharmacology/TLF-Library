@@ -249,3 +249,41 @@ exportPlotConfigurationCode <- function(plotConfiguration, name = "plotConfigura
 
   return(plotConfigurationCode)
 }
+
+
+#' @title updateExportDimensionsForLegend
+#' @description Update plot dimensions based on size and position of legend
+#' @param plotObject A `ggplot` object
+#' @return A `ggplot` object
+#' @export
+updateExportDimensionsForLegend <- function(plotObject) {
+  # Get grob from plot = list of plot properties
+  grobObject <- ggplot2::ggplotGrob(plotObject)
+  # Look for legend grob that stores the dimensions of the legend
+  legendGrobIndex <- which(sapply(grobObject$grobs, function(grob) grob$name) == "guide-box")
+  # If no legend, index is empty
+  if (isEmpty(legendGrobIndex)) {
+    return(plotObject)
+  }
+  legendGrob <- grobObject$grobs[[legendGrobIndex]]
+  # If not empty,
+  # - add nothing if legend within
+  if (grepl(pattern = "inside", x = getLegendPosition(plotObject))) {
+    return(plotObject)
+  }
+  newPlotObject <- plotObject
+  newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
+  # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$export
+  export <- newPlotObject$plotConfiguration$export
+  # If unit is in pixels, convert all export dimensions to inches to keep compatibility with older versions of ggplot2
+  export$convertPixels()
+  # - add legend height to the final plot dimensions if legend above/below
+  if (grepl(pattern = "Top", x = getLegendPosition(plotObject)) |
+    grepl(pattern = "Bottom", x = getLegendPosition(plotObject))) {
+    export$height <- export$height + as.numeric(grid::convertUnit(max(legendGrob$heights), export$units))
+    return(newPlotObject)
+  }
+  # - add legend width to the final plot dimensions if legend left/right
+  export$width <- export$width + as.numeric(grid::convertUnit(max(legendGrob$widths), export$units))
+  return(newPlotObject)
+}
