@@ -4,12 +4,36 @@
 \alias{exportPlot}
 \title{exportPlot}
 \usage{
-exportPlot(plotObject, name = NULL)
+exportPlot(
+  plotObject,
+  fileName = NULL,
+  name = NULL,
+  format = NULL,
+  width = NULL,
+  height = NULL,
+  units = NULL,
+  dpi = NULL
+)
 }
 \arguments{
 \item{plotObject}{Graphical object created from ggplot}
 
-\item{name}{name of exported file without extension}
+\item{fileName}{name of exported file (with extension)}
+
+\item{name}{character defining the name of the file to be saved (without extension)}
+
+\item{format}{character defining the format of the file to be saved.}
+
+\item{width}{numeric values defining the width in \code{units} of the plot dimensions after saving}
+
+\item{height}{numeric values defining the height in \code{units} of the plot dimensions after saving}
+
+\item{units}{character defining the unit of the saving dimension}
+
+\item{dpi}{numeric value defining plot resolution (dots per inch)}
+}
+\value{
+The file name of the exported plot
 }
 \description{
 Save a \code{ggplot} object according to its export properties

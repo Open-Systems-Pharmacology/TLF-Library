@@ -1,45 +1,103 @@
 #' @title ExportConfiguration
-#' @description R6 class defining the save configuration of a `ggplot` object
+#' @description R6 class defining properties for saving a `ggplot` object
+#' @field name character defining the name of the file to be saved (without extension)
+#' @field format character defining the format of the file to be saved
+#' @field width numeric values defining the width in `units` of the plot dimensions after saving
+#' @field height numeric values defining the height in `units` of the plot dimensions after saving
+#' @field units character defining the unit of the saving dimension
+#' @field dpi (dots per inch) numeric value defining plot resolution
 #' @export
+#' @import ggplot2
 ExportConfiguration <- R6::R6Class(
   "ExportConfiguration",
   public = list(
-    #' @field format character defining the format of the file to be saved
+    name = NULL,
     format = NULL,
-    #' @field width numeric values defining the width in `units` of the plot dimensions after saving
     width = NULL,
-    #' @field height numeric values defining the height in `units` of the plot dimensions after saving
     height = NULL,
-    #' @field units character defining the unit of the saving dimension
     units = NULL,
+    dpi = NULL,
 
     #' @description Create a new `ExportConfiguration` object
+    #' @param name character defining the name of the file to be saved (without extension)
     #' @param format character defining the format of the file to be saved.
     #' @param width numeric values defining the width in `units` of the plot dimensions after saving
     #' @param height numeric values defining the height in `units` of the plot dimensions after saving
     #' @param units character defining the unit of the saving dimension
+    #' @param dpi numeric value defining plot resolution (dots per inch)
     #' @return A new `ExportConfiguration` object
-    initialize = function(format = tlfEnv$defaultExportParameters$format,
-                          width = tlfEnv$defaultExportParameters$width,
-                          height = tlfEnv$defaultExportParameters$height,
-                          units = tlfEnv$defaultExportParameters$units) {
-      validateIsString(c(format, units))
-      validateIsNumeric(c(width, height))
+    initialize = function(name = NULL,
+                              format = NULL,
+                              width = NULL,
+                              height = NULL,
+                              units = NULL,
+                              dpi = NULL) {
+      validateIsString(name, nullAllowed = TRUE)
+      validateIsString(format, nullAllowed = TRUE)
+      validateIsIncluded(units, c("cm", "in", "mm", "px"), nullAllowed = TRUE)
+      validateIsNumeric(width, nullAllowed = TRUE)
+      validateIsNumeric(height, nullAllowed = TRUE)
+      validateIsNumeric(dpi, nullAllowed = TRUE)
 
-      self$format <- format
-      self$height <- height
-      self$width <- width
-      self$units <- units
+      inputs <- c("name", "format", "width", "height", "units", "dpi")
+      associateExpressions <- parse(text = paste0("self$", inputs, " <- ", inputs, " %||% tlfEnv$defaultExportParameters$", inputs))
+      eval(associateExpressions)
     },
 
-    #' @description Print file export properties
-    #' @return File export properties
+    #' @description Print properties of export configuration
+    #' @return Export configuration properties
     print = function() {
-      exportProperties <- list(
-        format = self$format,
-        size = paste0(self$width, " ", self$units, " x ", self$height, " ", self$units)
+      exportDimensions <- c(
+        paste0("Format: ", self$format),
+        paste0("Width: ", self$width, " ", self$units),
+        paste0("Height: ", self$height, " ", self$units),
+        paste0("Resolution: ", self$dpi, " dots per inch")
       )
-      return(exportProperties)
+      cat(exportDimensions, sep = "\n")
+      return(invisible(exportDimensions))
+    },
+
+    #' @description Print the default exported file name from the export configuration
+    #' @return Default file name
+    getFileName = function() {
+      paste0(self$name, ".", self$format)
+    },
+
+    #' @description Save/Export a plot
+    #' @param plotObject A `ggplot` object
+    #' @param fileName character file name of the exported plot
+    #' @return The file name of the exported plot
+    savePlot = function(plotObject, fileName = NULL) {
+      validateIsOfType(plotObject, "ggplot")
+      validateIsString(fileName, nullAllowed = TRUE)
+      fileName <- fileName %||% self$getFileName()
+
+      # If unit is in pixels, convert dimensions to inches to keep compatibility with older versions of ggplot2
+      self$convertPixels()
+
+      ggplot2::ggsave(
+        filename = fileName,
+        plot = plotObject,
+        width = self$width,
+        height = self$height,
+        units = self$units,
+        dpi = self$dpi
+      )
+      # Return the file name in case users needs it
+      # Use invisible to prevent writing the file name in the console every time a plot is exported
+      return(invisible(fileName))
+    },
+
+    #' @description If unit is in pixels, convert all export dimensions to inches to keep compatibility with older versions of ggplot2
+    convertPixels = function() {
+      if (!isIncluded(self$units, "px")) {
+        return(invisible())
+      }
+      unitConversionFactor <- grDevices::dev.size("in") / grDevices::dev.size("px")
+      self$units <- "in"
+      self$width <- self$width * unitConversionFactor[1]
+      self$height <- self$height * unitConversionFactor[2]
+      return(invisible())
     }
   )
 )

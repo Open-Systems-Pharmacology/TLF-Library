@@ -6,25 +6,31 @@
 \usage{
 setPlotExport(
   plotObject,
+  name = NULL,
   format = NULL,
   width = NULL,
   height = NULL,
-  units = NULL
+  units = NULL,
+  dpi = NULL
 )
 }
 \arguments{
 \item{plotObject}{Graphical object created from ggplot}
 
-\item{format}{file format of the exported plot}
+\item{name}{character defining the name of the file to be saved (without extension)}
 
-\item{width}{plot width in \code{unit}}
+\item{format}{character defining the format of the file to be saved.}
 
-\item{height}{plot height in \code{unit}}
+\item{width}{numeric values defining the width in \code{units} of the plot dimensions after saving}
 
-\item{units}{units of \code{width} and \code{height}}
+\item{height}{numeric values defining the height in \code{units} of the plot dimensions after saving}
+
+\item{units}{character defining the unit of the saving dimension}
+
+\item{dpi}{numeric value defining plot resolution (dots per inch)}
 }
 \value{
-ggplot object with updated labels
+ggplot object with updated saving properties
 }
 \description{
 Set plot export properties

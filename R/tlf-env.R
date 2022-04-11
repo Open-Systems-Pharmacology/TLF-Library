@@ -45,36 +45,37 @@ setDefaultLegendPosition <- function(position) {
   tlfEnv$currentTheme$background$legendPosition <- position
 }
 
-tlfEnv$defaultExportParameters <- list(format = "png", width = 16, height = 9, units = "cm")
+tlfEnv$defaultExportParameters <- list(
+  format = "png", 
+  width = 16, 
+  height = 9, 
+  units = "cm",
+  dpi = 300,
+  name = "figure"
+  )
 
-#' @title setDefaultSaveParameters
-#' @description Set default save properties of tlf environment
+#' @title setDefaultExportParameters
+#' @description Set default tlf properties for exporting/saving plots
 #' @param format file format of the exported plots
 #' @param width plot width in `unit`
 #' @param height plot height in `unit`
 #' @param units units of `width` and `height`
-#' @export
-setDefaultExportParameters <- function(format, width = NULL, height = NULL, units = NULL) {
-  validateIsString(format)
-  validateIsNumeric(c(width, height), nullAllowed = TRUE)
-  validateIsString(units, nullAllowed = TRUE)
-
-  tlfEnv$defaultExportParameters$format <- format
-  tlfEnv$defaultExportParameters$width <- width %||% tlfEnv$defaultExportParameters$width
-  tlfEnv$defaultExportParameters$height <- height %||% tlfEnv$defaultExportParameters$height
-  tlfEnv$defaultExportParameters$units <- units %||% tlfEnv$defaultExportParameters$units
-}
-
-tlfEnv$defaultExportName <- "tlf-plot"
-
-#' @title setDefaultExportName
-#' @description Set default save name property of tlf environment
+#' @param dpi units of `width` and `height`
 #' @param name base file name of the exported plots
 #' @export
-setDefaultExportName <- function(name) {
-  validateIsString(name)
-  tlfEnv$defaultExportName$name <- name
+setDefaultExportParameters <- function(format = NULL, width = NULL, height = NULL, units = NULL, dpi = NULL, name = NULL) {
+  validateIsString(format, nullAllowed = TRUE)
+  validateIsIncluded(units, c("cm", "in", "mm", "px"), nullAllowed = TRUE)
+  validateIsNumeric(width, nullAllowed = TRUE)
+  validateIsNumeric(height, nullAllowed = TRUE)
+  validateIsNumeric(dpi, nullAllowed = TRUE)
+  validateIsString(name, nullAllowed = TRUE)
+  
+  inputs <- c("format", "width", "height", "units", "dpi", "name")
+  eval(parseVariableToObject(objectName = "tlfEnv$defaultExportParameters", inputs, keepIfNull = TRUE))
+  return(invisible())
 }
+
 
 tlfEnv$defaultAggregation <- list(
   functions = list(

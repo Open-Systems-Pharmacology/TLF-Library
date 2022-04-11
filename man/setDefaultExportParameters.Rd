@@ -2,9 +2,16 @@
 % Please edit documentation in R/tlf-env.R
 \name{setDefaultExportParameters}
 \alias{setDefaultExportParameters}
-\title{setDefaultSaveParameters}
+\title{setDefaultExportParameters}
 \usage{
-setDefaultExportParameters(format, width = NULL, height = NULL, units = NULL)
+setDefaultExportParameters(
+  format = NULL,
+  width = NULL,
+  height = NULL,
+  units = NULL,
+  dpi = NULL,
+  name = NULL
+)
 }
 \arguments{
 \item{format}{file format of the exported plots}
@@ -14,7 +21,11 @@ setDefaultExportParameters(format, width = NULL, height = NULL, units = NULL)
 \item{height}{plot height in \code{unit}}
 
 \item{units}{units of \code{width} and \code{height}}
+
+\item{dpi}{units of \code{width} and \code{height}}
+
+\item{name}{base file name of the exported plots}
 }
 \description{
-Set default save properties of tlf environment
+Set default tlf properties for exporting/saving plots
 }

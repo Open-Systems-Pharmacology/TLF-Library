@@ -1,6 +1,6 @@
 #' @title PlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object
-#' @field export R6 class `ExportConfiguration` defining export properties
+#' @field export R6 class `ExportConfiguration` defining properties for saving/exporting plota
 #' @family PlotConfiguration classes
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-configuration.html>
@@ -31,11 +31,13 @@ PlotConfiguration <- R6::R6Class(
     #' @param xGrid `LineElement` object defining properties of x-grid background
     #' @param yGrid `LineElement` object defining properties of y-grid background
     #' @param watermark `Label` object defining watermark
-    #' @param export R6 class `SaveConfiguration` defining saving properties
-    #' @param format character defining the format of the file to be saved
+    #' @param export R6 class `ExportConfiguration` defining properties for saving/exporting plota
+    #' @param name character defining the name of the file to be saved (without extension)
+    #' @param format character defining the format of the file to be saved.
     #' @param width numeric values defining the width in `units` of the plot dimensions after saving
     #' @param height numeric values defining the height in `units` of the plot dimensions after saving
     #' @param units character defining the unit of the saving dimension
+    #' @param dpi numeric value defining plot resolution (dots per inch)
     #' @param data data.frame used by `smartMapping`
     #' @param metaData list of information on `data`
     #' @param dataMapping R6 class or subclass `XYDataMapping`
@@ -75,10 +77,12 @@ PlotConfiguration <- R6::R6Class(
                           errorbars = NULL,
                           # Export configuration
                           export = NULL,
+                          name = NULL,
                           format = NULL,
                           width = NULL,
                           height = NULL,
                           units = NULL,
+                          dpi = NULL,
                           # Smart configuration using metaData
                           data = NULL,
                           metaData = NULL,
@@ -150,11 +154,14 @@ PlotConfiguration <- R6::R6Class(
       private$.errorbars <- errorbars %||% getThemePropertyFor(plotConfiguration = self, propertyName = "errorbars")
       
       # Define export configuration, overwrite properties only if they are defined
+      validateIsOfType(export, "ExportConfiguration", nullAllowed = TRUE)
       self$export <- export %||% ExportConfiguration$new()
+      self$export$name <- name %||% self$export$name
       self$export$format <- format %||% self$export$format
       self$export$width <- width %||% self$export$width
       self$export$height <- height %||% self$export$height
       self$export$units <- units %||% self$export$units
+      self$export$dpi <- dpi %||% self$export$dpi
     }
   ),
   active = list(

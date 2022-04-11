@@ -4,11 +4,13 @@
 \alias{ExportConfiguration}
 \title{ExportConfiguration}
 \description{
-R6 class defining the save configuration of a \code{ggplot} object
+R6 class defining properties for saving a \code{ggplot} object
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
+\item{\code{name}}{character defining the name of the file to be saved (without extension)}
+
 \item{\code{format}}{character defining the format of the file to be saved}
 
 \item{\code{width}}{numeric values defining the width in \code{units} of the plot dimensions after saving}
@@ -16,6 +18,8 @@ R6 class defining the save configuration of a \code{ggplot} object
 \item{\code{height}}{numeric values defining the height in \code{units} of the plot dimensions after saving}
 
 \item{\code{units}}{character defining the unit of the saving dimension}
+
+\item{\code{dpi}}{(dots per inch) numeric value defining plot resolution}
 }
 \if{html}{\out{</div>}}
 }
@@ -24,6 +28,9 @@ R6 class defining the save configuration of a \code{ggplot} object
 \itemize{
 \item \href{#method-new}{\code{ExportConfiguration$new()}}
 \item \href{#method-print}{\code{ExportConfiguration$print()}}
+\item \href{#method-getFileName}{\code{ExportConfiguration$getFileName()}}
+\item \href{#method-savePlot}{\code{ExportConfiguration$savePlot()}}
+\item \href{#method-convertPixels}{\code{ExportConfiguration$convertPixels()}}
 \item \href{#method-clone}{\code{ExportConfiguration$clone()}}
 }
 }
@@ -34,16 +41,20 @@ R6 class defining the save configuration of a \code{ggplot} object
 Create a new \code{ExportConfiguration} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ExportConfiguration$new(
-  format = tlfEnv$defaultExportParameters$format,
-  width = tlfEnv$defaultExportParameters$width,
-  height = tlfEnv$defaultExportParameters$height,
-  units = tlfEnv$defaultExportParameters$units
+  name = NULL,
+  format = NULL,
+  width = NULL,
+  height = NULL,
+  units = NULL,
+  dpi = NULL
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{name}}{character defining the name of the file to be saved (without extension)}
+
 \item{\code{format}}{character defining the format of the file to be saved.}
 
 \item{\code{width}}{numeric values defining the width in \code{units} of the plot dimensions after saving}
@@ -51,6 +62,8 @@ Create a new \code{ExportConfiguration} object
 \item{\code{height}}{numeric values defining the height in \code{units} of the plot dimensions after saving}
 
 \item{\code{units}}{character defining the unit of the saving dimension}
+
+\item{\code{dpi}}{numeric value defining plot resolution (dots per inch)}
 }
 \if{html}{\out{</div>}}
 }
@@ -62,14 +75,59 @@ A new \code{ExportConfiguration} object
 \if{html}{\out{<a id="method-print"></a>}}
 \if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
-Print file export properties
+Print properties of export configuration
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ExportConfiguration$print()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
-File export properties
+Export configuration properties
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getFileName"></a>}}
+\if{latex}{\out{\hypertarget{method-getFileName}{}}}
+\subsection{Method \code{getFileName()}}{
+Print the default exported file name from the export configuration
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExportConfiguration$getFileName()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Default file name
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-savePlot"></a>}}
+\if{latex}{\out{\hypertarget{method-savePlot}{}}}
+\subsection{Method \code{savePlot()}}{
+Save/Export a plot
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExportConfiguration$savePlot(plotObject, fileName = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{plotObject}}{A \code{ggplot} object}
+
+\item{\code{fileName}}{character file name of the exported plot}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+The file name of the exported plot
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-convertPixels"></a>}}
+\if{latex}{\out{\hypertarget{method-convertPixels}{}}}
+\subsection{Method \code{convertPixels()}}{
+If unit is in pixels, convert all export dimensions to inches to keep compatibility with older versions of ggplot2
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExportConfiguration$convertPixels()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
