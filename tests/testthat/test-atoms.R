@@ -1,3 +1,5 @@
+Sys.setenv(LANG = "en")
+
 context("Atom Plots")
 
 test_that("Regular atom plots provide ggplot objects that includes a PlotConfiguration object", {
