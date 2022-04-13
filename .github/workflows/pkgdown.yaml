@@ -30,7 +30,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown, open-systems-pharmacology/OSPSuite.RUtils, local::.
+          extra-packages: r-lib/pkgdown, open-systems-pharmacology/OSPSuite.RUtils, local::.
           needs: website
 
       - name: Build site
