@@ -27,6 +27,8 @@ Imports:
     R6,
     jsonlite,
     ospsuite.utils
+Remotes:
+    open-systems-pharmacology/OSPSuite.RUtils
 Depends: 
     R (>= 3.6)
 Encoding: UTF-8
