@@ -51,7 +51,8 @@ before_test:
 build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
-  - Rscript -e "install.packages(c('ospsuite.utils','covr'), repos = 'http://cran.us.r-project.org', type='win.binary')"
+  - Rscript -e "install.packages('covr', repos = 'http://cran.us.r-project.org', type='win.binary')"
+  - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/ospsuite-rutils/artifacts/ospsuite.utils.zip', repos = NULL, type = 'binary')"
 
 test_script:
   - travis-tool.sh run_tests
