@@ -26,9 +26,7 @@ Imports:
     ggplot2 (>= 3.3.0),
     R6,
     jsonlite,
-    ospsuite.utils
-Remotes:
-    open-systems-pharmacology/OSPSuite.RUtils
+    ospsuite.utils (>= 1.3.0)
 Depends: 
     R (>= 3.6)
 Encoding: UTF-8
