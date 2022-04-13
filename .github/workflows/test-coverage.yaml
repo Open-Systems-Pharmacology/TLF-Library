@@ -23,7 +23,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: r-lib/covr, open-systems-pharmacology/OSPSuite.RUtils
+          extra-packages: any::covr, open-systems-pharmacology/OSPSuite.RUtils
           needs: coverage
 
       - name: Test coverage

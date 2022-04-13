@@ -22,7 +22,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: r-lib/lintr, open-systems-pharmacology/OSPSuite.RUtils
+          extra-packages: any::lintr, open-systems-pharmacology/OSPSuite.RUtils
           needs: lint
 
       - name: Lint
