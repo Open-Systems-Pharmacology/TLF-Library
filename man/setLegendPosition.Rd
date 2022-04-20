@@ -9,12 +9,14 @@ setLegendPosition(plotObject, position = NULL)
 \arguments{
 \item{plotObject}{\code{ggplot} graphical object}
 
-\item{position}{legend position.
-Use enum \code{LegendPositions} to access the list of legend positions.}
+\item{position}{legend position as defined in helper enum \code{LegendPositions}}
 }
 \value{
 A \code{ggplot} graphical object
 }
 \description{
 Set the legend position
+}
+\seealso{
+LegendPositions
 }

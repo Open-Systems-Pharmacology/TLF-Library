@@ -155,7 +155,9 @@ knitr::include_graphics("figures/plot-maker/plot-aesthetics.png")
 The navigation bar **Export** allows to save the current plot as a file by clicking on **Save Plot** (figure below).
 Note that you need to include the extension of the file at the end of the filename. 
 
-Additionally, the plot configuration mainly corresponding to the properties updated in section 4.2. is available as a `PlotConfiguration` object.
+To prevent the final exported plot to shrink due to the legend, the dimensions can be automatically updated by clicking on **Update dimensions for legend**.
+
+Additionally, the plot configuration - mainly corresponding to the properties updated in section 4.2. - is available as a `PlotConfiguration` object.
 The R code to re-create such an object with the same properties is available in the navigation bar **Export**.
 Users can either copy/paste or save such R code.
 
