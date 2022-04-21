@@ -98,14 +98,20 @@ labelPanel <- function(displayName, labelID = tolower(displayName), includeText 
       uiOutput(paste0(labelID, "Text")),
       uiOutput(paste0(labelID, "Color")),
       uiOutput(paste0(labelID, "Size")),
-      uiOutput(paste0(labelID, "Angle"))
+      uiOutput(paste0(labelID, "Angle")),
+      uiOutput(paste0(labelID, "Align")),
+      uiOutput(paste0(labelID, "Face")),
+      uiOutput(paste0(labelID, "Family"))
     ))
   }
   tabPanel(
     displayName,
     uiOutput(paste0(labelID, "Color")),
     uiOutput(paste0(labelID, "Size")),
-    uiOutput(paste0(labelID, "Angle"))
+    uiOutput(paste0(labelID, "Angle")),
+    uiOutput(paste0(labelID, "Align")),
+    uiOutput(paste0(labelID, "Face")),
+    uiOutput(paste0(labelID, "Family"))
   )
 }
 

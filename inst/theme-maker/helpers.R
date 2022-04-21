@@ -74,9 +74,10 @@ tlfInput <- function(value) {
 
 #' @title labelPanel
 #' @description centralize all UIs for labels
-labelPanel <- function(displayName, labelID = tolower(displayName), labelInputID = labelID) {
+labelPanel <- function(displayName, labelID = tolower(displayName), labelInputID = labelID, otherInput = NULL) {
   tabPanel(
     displayName,
+    otherInput,
     selectizeInput(paste0(labelInputID, "Color"),
       label = "Color", choices = grDevices:::colors(),
       selected = jsonTheme$fonts[[labelID]]$color, options = list(create = TRUE)
@@ -88,6 +89,20 @@ labelPanel <- function(displayName, labelID = tolower(displayName), labelInputID
     numericInput(paste0(labelInputID, "Angle"),
       label = "Angle", min = -180, max = 180,
       value = jsonTheme$fonts[[labelID]]$angle, step = 1
+    ),
+    textInput(paste0(labelInputID, "Family"),
+                 label = "Family", 
+                 value = jsonTheme$fonts[[labelID]]$fontFamily
+    ),
+    selectInput(paste0(labelInputID, "Face"),
+              label = "Face", 
+              choices = FontFaces,
+              selected = jsonTheme$fonts[[labelID]]$fontFace
+    ),
+    selectInput(paste0(labelInputID, "Align"),
+              label = "Align", 
+              choices = Alignments,
+              selected = jsonTheme$fonts[[labelID]]$align
     )
   )
 }

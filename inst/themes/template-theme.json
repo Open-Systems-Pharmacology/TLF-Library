@@ -42,6 +42,13 @@
       "fontFamily": "",
       "angle": 0
     },
+    "legendTitle": {
+      "color": "black",
+      "size": 14,
+      "fontFace": "plain",
+      "fontFamily": "",
+      "angle": 0
+    },
     "xAxis": {
       "color": "black",
       "size": 14,
@@ -60,6 +67,7 @@
   "background": {
     "watermark": "template",
     "legendPosition": "outsideRight",
+    "legendTitle": null,
     "plot": {
       "fill": "white",
       "color": "black",
