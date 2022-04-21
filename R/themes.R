@@ -31,15 +31,16 @@ ThemeFont <- R6::R6Class(
     #' @param xlabel `Font` object or list for font properties of xlabel
     #' @param ylabel `Font` object or list for font properties of ylabel
     #' @param watermark `Font` object or list for font properties of watermark
-    #' @param legendTitle `Font` object or list for font properties of legend
+    #' @param legendTitle `Font` object or list for font properties of legend title
     #' @param legend `Font` object or list for font properties of legend
     #' @param xAxis `Font` object or list for font properties of xAxis
     #' @param yAxis `Font` object or list for font properties of yAxis
-    #' @param baseColor name of base color of undefined fonts. Default is black.
+    #' @param baseColor name of base color of undefined fonts. Default is "black".
     #' @param baseSize base size of undefined fonts. Default is 12.
     #' @param baseFace name of base face of undefined fonts. Default is "plain".
     #' @param baseFamily name of base family of undefined fonts. Default is "".
     #' @param baseAngle base angle of undefined fonts. Default is 0 degree.
+    #' @param baseAlign base alignment of undefined fonts. Default is "center".
     #' @return A new `ThemeFont` object
     initialize = function(title = NULL,
                           subtitle = NULL,
@@ -54,22 +55,26 @@ ThemeFont <- R6::R6Class(
                           baseSize = 12,
                           baseFace = "plain",
                           baseFamily = "",
-                          baseAngle = 0) {
+                          baseAngle = 0,
+                          baseAlign = "center") {
       # Validate necessary input
       validateIsString(baseColor)
-      validateIsString(baseFace)
       validateIsString(baseFamily)
       validateIsNumeric(baseSize)
       validateIsNumeric(baseAngle)
+      validateIsIncluded(baseFace, FontFaces)
+      validateIsIncluded(baseAlign, Alignments)
 
       # Create all field properties by parsing and evaluating their expression
       fieldNames <- c("title", "subtitle", "xlabel", "ylabel", "watermark", "legendTitle", "legend", "xAxis", "yAxis")
-      setFontExpression <- parse(text = paste0("self$", fieldNames, " <- Font$new(
-                                               color = ", fieldNames, "$color %||% baseColor,
-                                               size = ", fieldNames, "$size %||% baseSize,
-                                               fontFace = ", fieldNames, "$fontFace %||% baseFace,
-                                               fontFamily = ", fieldNames, "$fontFamily %||% baseFamily,
-                                               angle = ", fieldNames, "$angle %||% baseAngle)"))
+      setFontExpression <- parse(text = paste0(
+        "self$", fieldNames, " <- Font$new(",
+        "color = ", fieldNames, "$color %||% baseColor,",
+        "size = ", fieldNames, "$size %||% baseSize,",
+        "fontFace = ", fieldNames, "$fontFace %||% baseFace,",
+        "fontFamily = ", fieldNames, "$fontFamily %||% baseFamily,",
+        "angle = ", fieldNames, "$angle %||% baseAngle,",
+        "align = ", fieldNames, "$align %||% baseAlign)"))
       eval(setFontExpression)
     },
 
@@ -78,12 +83,14 @@ ThemeFont <- R6::R6Class(
     toJson = function() {
       jsonObject <- list()
       fieldNames <- c("title", "subtitle", "xlabel", "ylabel", "watermark", "legendTitle", "legend", "xAxis", "yAxis")
-      setJsonExpression <- parse(text = paste0("jsonObject$", fieldNames, " <- list(
-                                               color = self$", fieldNames, "$color,
-                                               size = self$", fieldNames, "$size,
-                                               angle = self$", fieldNames, "$angle,
-                                               fontFace = self$", fieldNames, "$fontFace,
-                                               fontFamily = self$", fieldNames, "$fontFamily)"))
+      setJsonExpression <- parse(text = paste0(
+        "jsonObject$", fieldNames, " <- list(",
+        "color = self$", fieldNames, "$color,",
+        "size = self$", fieldNames, "$size,",
+        "angle = self$", fieldNames, "$angle,",
+        "align = self$", fieldNames, "$align,",
+        "fontFace = self$", fieldNames, "$fontFace,",
+        "fontFamily = self$", fieldNames, "$fontFamily)"))
       eval(setJsonExpression)
       return(jsonObject)
     }

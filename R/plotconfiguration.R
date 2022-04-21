@@ -30,7 +30,7 @@ PlotConfiguration <- R6::R6Class(
     #' @param panelArea `BackgroundElement` object defining properties of panel area
     #' @param xGrid `LineElement` object defining properties of x-grid background
     #' @param yGrid `LineElement` object defining properties of y-grid background
-    #' @param watermark `Label` object defining watermark
+    #' @param watermark character or `Label` object defining watermark
     #' @param export R6 class `ExportConfiguration` defining properties for saving/exporting plota
     #' @param name character defining the name of the file to be saved (without extension)
     #' @param format character defining the format of the file to be saved.

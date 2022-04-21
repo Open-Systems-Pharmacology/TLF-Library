@@ -17,6 +17,8 @@ To access the function from its name, use match.fun: e.g. testFun <- match.fun("
 \seealso{
 Other enum helpers: 
 \code{\link{AestheticProperties}},
+\code{\link{Alignments}},
+\code{\link{FontFaces}},
 \code{\link{LegendPositions}},
 \code{\link{Linetypes}},
 \code{\link{Scaling}},

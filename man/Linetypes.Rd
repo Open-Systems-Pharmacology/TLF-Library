@@ -16,6 +16,8 @@ Enum of \code{ggplot2} linetypes
 \seealso{
 Other enum helpers: 
 \code{\link{AestheticProperties}},
+\code{\link{Alignments}},
+\code{\link{FontFaces}},
 \code{\link{LegendPositions}},
 \code{\link{Scaling}},
 \code{\link{Shapes}},

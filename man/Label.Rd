@@ -4,7 +4,7 @@
 \alias{Label}
 \title{Label}
 \description{
-R6 class defining \code{text} and \code{font} of label
+R6 class defining \code{text} and \code{font} of labels
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -36,26 +36,29 @@ Create a new \code{Label} object.
   size = NULL,
   fontFace = NULL,
   fontFamily = NULL,
-  angle = NULL
+  angle = NULL,
+  align = NULL
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{text}}{character text of the \code{Label} object}
+\item{\code{text}}{character text of the label}
 
-\item{\code{font}}{\code{Font} object defining the font of the \code{Label} object}
+\item{\code{font}}{\code{Font} object defining the font of the label}
 
-\item{\code{color}}{character defining the color of the \code{Label} object}
+\item{\code{color}}{character defining the color of the label}
 
-\item{\code{size}}{numeric defining the size of the \code{Label} object}
+\item{\code{size}}{numeric defining the size of the label}
 
-\item{\code{fontFace}}{character defining the font face of the \code{Label} object}
+\item{\code{fontFace}}{character defining the font face of the label as defined in helper enum \code{FontFaces}.}
 
-\item{\code{fontFamily}}{character defining the font family of the \code{Label} object}
+\item{\code{fontFamily}}{character defining the font family of the label}
 
-\item{\code{angle}}{numeric defining the angle of the \code{Label} object}
+\item{\code{angle}}{numeric defining the angle of the label}
+
+\item{\code{align}}{character defining the alignment of the label as defined in helper enum \code{Alignments}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -69,9 +72,33 @@ A new \code{Label} object
 \subsection{Method \code{createPlotFont()}}{
 Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::theme}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Label$createPlotFont()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Label$createPlotFont(
+  color = NULL,
+  size = NULL,
+  fontFace = NULL,
+  fontFamily = NULL,
+  angle = NULL,
+  align = NULL
+)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{color}}{character defining the color of the label}
+
+\item{\code{size}}{numeric defining the size of the label}
+
+\item{\code{fontFace}}{character defining the font face of the label as defined in helper enum \code{FontFaces}.}
+
+\item{\code{fontFamily}}{character defining the font family of the label}
+
+\item{\code{angle}}{numeric defining the angle of the label}
+
+\item{\code{align}}{character defining the alignment of the label as defined in helper enum \code{Alignments}.}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 An \code{element_text} or \code{element_blank}object.
 }
