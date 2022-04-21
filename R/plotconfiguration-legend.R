@@ -7,30 +7,31 @@ LegendConfiguration <- R6::R6Class(
     #' @description Create a new `LegendConfiguration` object
     #' @param position position of the legend as defined by enum `LegendPositions`
     #' @param caption data.frame containing the properties of the legend caption
-    #' @param title character title of the legend caption. A value of `NULL` removes the title.
-    #' @param titleFont `Font` object defining the font of the legend title
+    #' @param title character or `Label` object defining the title of the legend. A value of `NULL` removes the title.
     #' @param font `Font` object defining the font of the legend caption
     #' @param background `BackgroundElement` object defining the background of the legend
     #' @return A new `LegendConfiguration` object
     initialize = function(position = NULL,
                           caption = NULL,
                           title = NULL,
-                          titleFont = NULL,
                           font = NULL,
                           background = NULL) {
       validateIsIncluded(position, LegendPositions, nullAllowed = TRUE)
-      validateIsString(title, nullAllowed = TRUE)
-      validateIsOfType(titleFont, "Font", nullAllowed = TRUE)
+      validateIsOfType(title, c("character", "Label"), nullAllowed = TRUE)
       validateIsOfType(font, "Font", nullAllowed = TRUE)
       validateIsOfType(background, "BackgroundElement", nullAllowed = TRUE)
 
       currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
       private$.position <- position %||% currentTheme$background$legendPosition
       private$.font <- font %||% currentTheme$fonts$legend
-      private$.titleFont <- titleFont %||% currentTheme$fonts$legendTitle
       private$.background <- background %||% currentTheme$background$legend
 
-      private$.title <- title
+      # Title properties
+      private$.title <- asLabel(title, font = currentTheme$fonts$legendTitle)
+      if(isOfType(title, "Label")){
+        private$.title <- title
+      }
+      
       private$.caption <- caption %||% data.frame()
     },
 
@@ -44,17 +45,14 @@ LegendConfiguration <- R6::R6Class(
         ggplot2::theme(
           legend.background = private$.background$createPlotElement(),
           legend.text = private$.font$createPlotFont(),
-          legend.title = private$.titleFont$createPlotFont(),
+          legend.title = private$.title$createPlotFont(),
           # symbol background same as legend background
           legend.key = private$.background$createPlotElement(linetype = Linetypes$blank)
         )
 
-      # For legend title, if no title, element_blank should be used
-      if (isOfLength(private$.title, 0)) {
-        plotObject <- plotObject + ggplot2::theme(legend.title = ggplot2::element_blank())
-      }
-      # Update legend position
+      # Update legend position and alignment
       legendPosition <- createPlotLegendPosition(private$.position)
+      
       plotObject <- plotObject + ggplot2::theme(
         legend.position = c(legendPosition$xPosition, legendPosition$yPosition),
         legend.justification = c(legendPosition$xJustification, legendPosition$yJustification),
@@ -93,16 +91,7 @@ LegendConfiguration <- R6::R6Class(
       private$.font <- value %||% currentTheme$fonts$legend
       return(invisible())
     },
-    #' @field titleFont `Font` object defining the font of the legend title
-    titleFont = function(value) {
-      if (missing(value)) {
-        return(private$.titleFont)
-      }
-      validateIsOfType(value, "Font", nullAllowed = TRUE)
-      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
-      private$.titleFont <- value %||% currentTheme$fonts$legendTitle
-      return(invisible())
-    },
+    
     #' @field background `Background` object defining the background of the legend
     background = function(value) {
       if (missing(value)) {
@@ -118,15 +107,17 @@ LegendConfiguration <- R6::R6Class(
       if (missing(value)) {
         return(private$.title)
       }
-      validateIsString(value, nullAllowed = TRUE)
-      private$.title <- value
+      validateIsOfType(value, c("character", "Label"), nullAllowed = TRUE)
+      if(isOfType(value, "Label")){
+        private$.title <- asLabel(value)
+      }
+      private$.title <- asLabel(value, font = private$.title$font)
       return(invisible())
     }
   ),
   private = list(
     .position = NULL,
     .title = NULL,
-    .titleFont = NULL,
     .font = NULL,
     .background = NULL,
     .caption = NULL

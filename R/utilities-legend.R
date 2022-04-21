@@ -29,24 +29,29 @@ setLegend <- function(plotObject,
 
 #' @title setLegendFont
 #' @param plotObject ggplot object
-#' @param color color of legend font
-#' @param size size of legend font
-#' @param fontFace color of legend font
-#' @param color color of legend font
-#' @param angle angle of legend font
+#' @param size numeric defining the size of legend font
+#' @param color character defining the color of legend font
+#' @param fontFamily character defining the family of legend font
+#' @param fontFace character defining the legend font face as defined in helper enum `FontFaces`.
+#' @param angle numeric defining the angle of legend font
+#' @param align character defining the alignment of legend font as defined in helper enum `Alignments`.
 #' @return A ggplot object
 #' @description Set legend font properties
 #' @export
 setLegendFont <- function(plotObject,
                           color = NULL,
                           size = NULL,
+                          fontFamily = NULL,
                           fontFace = NULL,
-                          angle = NULL) {
+                          angle = NULL,
+                          align = NULL) {
   validateIsOfType(plotObject, "ggplot")
+  validateIsString(color, nullAllowed = TRUE)
+  validateIsString(fontFamily, nullAllowed = TRUE)
   validateIsNumeric(size, nullAllowed = TRUE)
   validateIsNumeric(angle, nullAllowed = TRUE)
-  validateIsString(color, nullAllowed = TRUE)
-  validateIsString(fontFace, nullAllowed = TRUE)
+  validateIsIncluded(fontFace, FontFaces, nullAllowed = TRUE)
+  validateIsIncluded(align, Alignments, nullAllowed = TRUE)
 
   # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
@@ -55,7 +60,7 @@ setLegendFont <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   legend <- newPlotObject$plotConfiguration$legend
-  eval(parseVariableToObject("legend$font", c("color", "size", "angle", "fontFace"), keepIfNull = TRUE))
+  eval(parseVariableToObject("legend$font", c("size", "color", "fontFace", "fontFamily", "angle", "align"), keepIfNull = TRUE))
   newPlotObject <- legend$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -63,11 +68,12 @@ setLegendFont <- function(plotObject,
 #' @title setLegendTitle
 #' @param plotObject ggplot object
 #' @param title character or `Label` object
-#' @param color color of legend font
-#' @param size size of legend font
-#' @param fontFace color of legend font
-#' @param color color of legend font
-#' @param angle angle of legend font
+#' @param size numeric defining the size of legend title
+#' @param color character defining the color of legend title
+#' @param fontFamily character defining the family of legend title
+#' @param fontFace character defining the legend title face as defined in helper enum `FontFaces`.
+#' @param angle numeric defining the angle of legend title
+#' @param align character defining the alignment of legend title as defined in helper enum `Alignments`.
 #' @return A ggplot object
 #' @description Set legend title
 #' @export
@@ -75,33 +81,27 @@ setLegendTitle <- function(plotObject,
                            title = NULL,
                            color = NULL,
                            size = NULL,
+                           fontFamily = NULL,
                            fontFace = NULL,
-                           angle = NULL) {
+                           angle = NULL,
+                           align = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(title, c("character", "Label"), nullAllowed = TRUE)
+  validateIsString(color, nullAllowed = TRUE)
+  validateIsString(fontFamily, nullAllowed = TRUE)
   validateIsNumeric(size, nullAllowed = TRUE)
   validateIsNumeric(angle, nullAllowed = TRUE)
-  validateIsString(color, nullAllowed = TRUE)
-  validateIsString(fontFace, nullAllowed = TRUE)
-
+  validateIsIncluded(fontFace, FontFaces, nullAllowed = TRUE)
+  validateIsIncluded(align, Alignments, nullAllowed = TRUE)
+  
   # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
   newPlotObject <- plotObject
   newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
-
-  # If title is`Label`, reconcile its properties with other inputs
-  if (isOfType(title, "Label")) {
-    color <- color %||% title$font$color
-    size <- size %||% title$font$size
-    angle <- angle %||% title$font$angle
-    fontFace <- fontFace %||% title$font$fontFace
-    title <- title$text
-  }
-
-  # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   legend <- newPlotObject$plotConfiguration$legend
-  eval(parseVariableToObject("legend$titleFont", c("color", "size", "angle", "fontFace"), keepIfNull = TRUE))
-  legend$title <- title %||% legend$title
+  legend$title <- title
+
+  eval(parseVariableToObject("legend$title$font", c("size", "color", "fontFace", "fontFamily", "angle", "align"), keepIfNull = TRUE))
   newPlotObject <- legend$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -426,7 +426,7 @@ CaptionProperties <- enum(c(
 #' @keywords internal
 createPlotLegendPosition <- function(position) {
   validateIsIncluded(position, LegendPositions)
-
+  
   listOfLegendPositions <- list(
     none = list(xPosition = "none", xJustification = NULL, yPosition = NULL, yJustification = NULL),
     insideTop = list(xPosition = 0.5, xJustification = 0.5, yPosition = 0.975, yJustification = 1),

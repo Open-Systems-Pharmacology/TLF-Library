@@ -16,7 +16,7 @@ PlotConfiguration <- R6::R6Class(
     #' @param xlabel character or `Label` object defining plot xlabel
     #' @param ylabel character or `Label` object defining plot ylabel
     #' @param legend `LegendConfiguration` object defining legend properties
-    #' @param legendTitle character defining legend title
+    #' @param legendTitle character or `Label` object defining legend title
     #' @param legendPosition character defining legend position.
     #' Use Enum `LegendPositions` to get a list of available to legend positions.
     #' @param xAxis `XAxisConfiguration` object defining x-axis properties

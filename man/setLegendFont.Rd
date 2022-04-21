@@ -8,20 +8,26 @@ setLegendFont(
   plotObject,
   color = NULL,
   size = NULL,
+  fontFamily = NULL,
   fontFace = NULL,
-  angle = NULL
+  angle = NULL,
+  align = NULL
 )
 }
 \arguments{
 \item{plotObject}{ggplot object}
 
-\item{color}{color of legend font}
+\item{color}{character defining the color of legend font}
 
-\item{size}{size of legend font}
+\item{size}{numeric defining the size of legend font}
 
-\item{fontFace}{color of legend font}
+\item{fontFamily}{character defining the family of legend font}
 
-\item{angle}{angle of legend font}
+\item{fontFace}{character defining the legend font face as defined in helper enum \code{FontFaces}.}
+
+\item{angle}{numeric defining the angle of legend font}
+
+\item{align}{character defining the alignment of legend font as defined in helper enum \code{Alignments}.}
 }
 \value{
 A ggplot object

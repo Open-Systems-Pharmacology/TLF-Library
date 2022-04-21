@@ -9,8 +9,10 @@ setLegendTitle(
   title = NULL,
   color = NULL,
   size = NULL,
+  fontFamily = NULL,
   fontFace = NULL,
-  angle = NULL
+  angle = NULL,
+  align = NULL
 )
 }
 \arguments{
@@ -18,13 +20,17 @@ setLegendTitle(
 
 \item{title}{character or \code{Label} object}
 
-\item{color}{color of legend font}
+\item{color}{character defining the color of legend title}
 
-\item{size}{size of legend font}
+\item{size}{numeric defining the size of legend title}
 
-\item{fontFace}{color of legend font}
+\item{fontFamily}{character defining the family of legend title}
 
-\item{angle}{angle of legend font}
+\item{fontFace}{character defining the legend title face as defined in helper enum \code{FontFaces}.}
+
+\item{angle}{numeric defining the angle of legend title}
+
+\item{align}{character defining the alignment of legend title as defined in helper enum \code{Alignments}.}
 }
 \value{
 A ggplot object

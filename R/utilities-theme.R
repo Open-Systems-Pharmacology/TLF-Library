@@ -29,7 +29,7 @@ loadThemeFromJson <- function(jsonFile) {
         eval(propertyExpression)
       }
       inputs <- names(themeContent[[themeProperty]][[propertyField]])
-      if (isOfLength(inputs, 0)) {
+      if (isEmpty(inputs)) {
         next
       }
       # Expressions overwriting the properties:
@@ -43,6 +43,7 @@ loadThemeFromJson <- function(jsonFile) {
     # Some specific cases are missing from the expressions
     background$watermark <- themeContent$background$watermark
     background$legendPosition <- themeContent$background$legendPosition
+    background$legendTitle <- themeContent$background$legendTitle
   }
   
   return(Theme$new(
@@ -64,7 +65,7 @@ saveThemeToJson <- function(jsonFile, theme = NULL) {
   validateIsOfType(theme, "Theme", nullAllowed = TRUE)
   validateIsString(jsonFile)
   
-  if (isOfLength(theme, 0)) {
+  if (isEmpty(theme)) {
     theme <- tlfEnv$currentTheme
   }
   theme$save(jsonFile)

@@ -101,6 +101,7 @@ ThemeFont <- R6::R6Class(
 #' @description R6 class defining theme background properties
 #' @field watermark character defining content of watermark
 #' @field legendPosition character defining where legend should usually be placed
+#' @field legendTitle character defining the content of legend title
 #' @field plot `BackgroundElement` object for plot area properties (outside of panel)
 #' @field panel `BackgroundElement` object for plot area properties (inside of panel)
 #' @field xAxis `BackgroundElement` object for x axis properties
@@ -114,6 +115,7 @@ ThemeBackground <- R6::R6Class(
   public = list(
     watermark = NULL,
     legendPosition = NULL,
+    legendTitle = NULL,
     plot = NULL,
     panel = NULL,
     xAxis = NULL,
@@ -125,6 +127,7 @@ ThemeBackground <- R6::R6Class(
     #' @description Create a new `ThemeBackground` object
     #' @param watermark character defining content of watermark
     #' @param legendPosition character defining where legend should usually be placed
+    #' @param legendTitle character defining the content of legend title
     #' @param plot `BackgroundElement` object or list for plot area properties (outside of panel)
     #' @param panel `BackgroundElement` object or list for plot area properties (inside of panel)
     #' @param xAxis `BackgroundElement` object or list for x axis properties
@@ -132,13 +135,14 @@ ThemeBackground <- R6::R6Class(
     #' @param xGrid `BackgroundElement` object or list for x grid properties
     #' @param yGrid `BackgroundElement` object or list for y grid properties
     #' @param legend `BackgroundElement` object or list for legend area properties
-    #' @param baseFill name of base color fill of undefined background elements. Default is white.
-    #' @param baseColor name of base color of undefined background elements. Default is black.
+    #' @param baseFill name of base color fill of undefined background elements. Default is "white".
+    #' @param baseColor name of base color of undefined background elements. Default is "black".
     #' @param baseSize name of base size of undefined background elements. Default is 0.5.
     #' @param baseLinetype name of base size of undefined background elements. Default is "solid".
-    #' @return A new `ThemeFont` object
+    #' @return A new `ThemeBackground` object
     initialize = function(watermark = NULL,
                           legendPosition = NULL,
+                          legendTitle = NULL,
                           plot = NULL,
                           panel = NULL,
                           xAxis = NULL,
@@ -150,21 +154,34 @@ ThemeBackground <- R6::R6Class(
                           baseColor = "black",
                           baseSize = 0.5,
                           baseLinetype = "solid") {
-      # Validate necessary input
+      # Validate inputs
       validateIsString(baseFill)
       validateIsString(baseColor)
-      validateIsString(baseLinetype)
+      validateIsIncluded(baseLinetype, Linetypes)
       validateIsNumeric(baseSize)
+      validateIsString(watermark, nullAllowed = TRUE)
+      validateIsString(legendTitle, nullAllowed = TRUE)
+      validateIsIncluded(legendPosition, LegendPositions, nullAllowed = TRUE)
 
       self$watermark <- watermark %||% ""
       self$legendPosition <- legendPosition %||% LegendPositions$outsideRight
+      self$legendTitle <- legendTitle
 
       # Create all field properties by parsing and evaluating their expression
       areaFieldNames <- c("plot", "panel", "legend")
       lineFieldNames <- c("xAxis", "yAxis", "xGrid", "yGrid")
 
-      setAreaExpression <- parse(text = paste0("self$", areaFieldNames, " <- BackgroundElement$new(fill = ", areaFieldNames, "$fill %||% baseFill, color = ", areaFieldNames, "$color %||% baseColor, size = ", areaFieldNames, "$size %||% baseSize, linetype = ", areaFieldNames, "$linetype %||% baseLinetype)"))
-      setLineExpression <- parse(text = paste0("self$", lineFieldNames, " <- LineElement$new(color = ", lineFieldNames, "$color %||% baseColor, size = ", lineFieldNames, "$size %||% baseSize, linetype = ", lineFieldNames, "$linetype %||% baseLinetype)"))
+      setAreaExpression <- parse(text = paste0(
+        "self$", areaFieldNames, " <- BackgroundElement$new(",
+        "fill = ", areaFieldNames, "$fill %||% baseFill,",
+        "color = ", areaFieldNames, "$color %||% baseColor,",
+        "size = ", areaFieldNames, "$size %||% baseSize,",
+        "linetype = ", areaFieldNames, "$linetype %||% baseLinetype)"))
+      setLineExpression <- parse(text = paste0(
+        "self$", lineFieldNames, " <- LineElement$new(",
+        "color = ", lineFieldNames, "$color %||% baseColor,",
+        "size = ", lineFieldNames, "$size %||% baseSize,",
+        "linetype = ", lineFieldNames, "$linetype %||% baseLinetype)"))
       eval(setAreaExpression)
       eval(setLineExpression)
     },
@@ -175,18 +192,21 @@ ThemeBackground <- R6::R6Class(
       jsonObject <- list()
       jsonObject$watermark <- self$watermark
       jsonObject$legendPosition <- self$legendPosition
+      jsonObject$legendTitle <- self$legendTitle
       areaFieldNames <- c("plot", "panel", "legend")
       lineFieldNames <- c("xAxis", "yAxis", "xGrid", "yGrid")
 
-      setJsonAreaExpression <- parse(text = paste0("jsonObject$", areaFieldNames, " <- list(
-                                                   fill = self$", areaFieldNames, "$fill,
-                                                   color = self$", areaFieldNames, "$color,
-                                                   size = self$", areaFieldNames, "$size,
-                                                   linetype = self$", areaFieldNames, "$linetype)"))
-      setJsonLineExpression <- parse(text = paste0("jsonObject$", lineFieldNames, " <- list(
-                                                   color = self$", lineFieldNames, "$color,
-                                                   size = self$", lineFieldNames, "$size,
-                                                   linetype = self$", lineFieldNames, "$linetype)"))
+      setJsonAreaExpression <- parse(text = paste0(
+        "jsonObject$", areaFieldNames, " <- list(",
+        "fill = self$", areaFieldNames, "$fill,",
+        "color = self$", areaFieldNames, "$color,",
+        "size = self$", areaFieldNames, "$size,",
+        "linetype = self$", areaFieldNames, "$linetype)"))
+      setJsonLineExpression <- parse(text = paste0(
+        "jsonObject$", lineFieldNames, " <- list(",
+        "color = self$", lineFieldNames, "$color,",
+        "size = self$", lineFieldNames, "$size,",
+        "linetype = self$", lineFieldNames, "$linetype)"))
       eval(setJsonAreaExpression)
       eval(setJsonLineExpression)
       return(jsonObject)
