@@ -4,14 +4,16 @@
 \alias{exportPlotConfigurationCode}
 \title{exportPlotConfigurationCode}
 \usage{
-exportPlotConfigurationCode(plotConfiguration)
+exportPlotConfigurationCode(plotConfiguration, name = "plotConfiguration")
 }
 \arguments{
 \item{plotConfiguration}{A \code{PlotConfiguration} object}
+
+\item{name}{Name of \code{PlotConfiguration} object in the created code}
 }
 \value{
 R code to recreate the plot configuration as character
 }
 \description{
-Export plot configuration as R code
+Export a plot configuration as R code
 }

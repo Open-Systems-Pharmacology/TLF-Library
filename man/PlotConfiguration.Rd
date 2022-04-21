@@ -24,7 +24,7 @@ Other PlotConfiguration classes:
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{export}}{R6 class \code{ExportConfiguration} defining export properties}
+\item{\code{export}}{R6 class \code{ExportConfiguration} defining properties for saving/exporting plota}
 }
 \if{html}{\out{</div>}}
 }
@@ -89,10 +89,12 @@ Create a new \code{PlotConfiguration} object
   ribbons = NULL,
   errorbars = NULL,
   export = NULL,
+  name = NULL,
   format = NULL,
   width = NULL,
   height = NULL,
   units = NULL,
+  dpi = NULL,
   data = NULL,
   metaData = NULL,
   dataMapping = NULL
@@ -149,15 +151,19 @@ Use Enum \code{LegendPositions} to get a list of available to legend positions.}
 
 \item{\code{errorbars}}{\code{ThemeAestheticSelections} object or list defining how errorbars are plotted}
 
-\item{\code{export}}{R6 class \code{SaveConfiguration} defining saving properties}
+\item{\code{export}}{R6 class \code{ExportConfiguration} defining properties for saving/exporting plota}
 
-\item{\code{format}}{character defining the format of the file to be saved}
+\item{\code{name}}{character defining the name of the file to be saved (without extension)}
+
+\item{\code{format}}{character defining the format of the file to be saved.}
 
 \item{\code{width}}{numeric values defining the width in \code{units} of the plot dimensions after saving}
 
 \item{\code{height}}{numeric values defining the height in \code{units} of the plot dimensions after saving}
 
 \item{\code{units}}{character defining the unit of the saving dimension}
+
+\item{\code{dpi}}{numeric value defining plot resolution (dots per inch)}
 
 \item{\code{data}}{data.frame used by \code{smartMapping}}
 
