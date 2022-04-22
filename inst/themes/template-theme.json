@@ -19,14 +19,16 @@
       "size": 16,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0
+      "angle": 0,
+      "align": "center"
     },
     "ylabel": {
       "color": "black",
       "size": 16,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 90
+      "angle": 90,
+      "align": "center"
     },
     "watermark": {
       "color": "grey30",
@@ -54,14 +56,16 @@
       "size": 14,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0
+      "angle": 0,
+      "align": "center"
     },
     "yAxis": {
       "color": "black",
       "size": 14,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0
+      "angle": 0,
+      "align": "right"
     }
   },
   "background": {

@@ -19,14 +19,16 @@
       "size": 9,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0
+      "angle": 0,
+      "align": "center"
     },
     "ylabel": {
       "color": "#595959",
       "size": 9,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 90
+      "angle": 90,
+      "align": "center"
     },
     "watermark": {
       "color": "#595959",
@@ -47,14 +49,16 @@
       "size": 9,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0
+      "angle": 0,
+      "align": "center"
     },
     "yAxis": {
       "color": "#595959",
       "size": 9,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0
+      "angle": 0,
+      "align": "right"
     }
   },
   "background": {

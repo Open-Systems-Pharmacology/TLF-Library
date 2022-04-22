@@ -15,7 +15,7 @@ Font <- R6::R6Class(
     fontFamily = "",
     fontFace = "plain",
     angle = 0,
-    align = "center",
+    align = "left",
 
     #' @description Create a new `Font` object.
     #' Default font properties are defined directly in the object field,

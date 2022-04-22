@@ -19,14 +19,16 @@
       "size": 10,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0
+      "angle": 0,
+      "align": "center"
     },
     "ylabel": {
       "color": "black",
       "size": 10,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 90
+      "angle": 90,
+      "align": "center"
     },
     "watermark": {
       "color": "#8989BC",
@@ -47,14 +49,16 @@
       "size": 10,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0
+      "angle": 0,
+      "align": "center"
     },
     "yAxis": {
       "color": "black",
       "size": 10,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0
+      "angle": 0,
+      "align": "right"
     }
   },
   "background": {
@@ -195,7 +199,11 @@
         "color": "black",
         "fill": "NA",
         "shape": "blank",
-        "linetype": ["solid", "longdash", "dotted"],
+        "linetype": [
+          "solid",
+          "longdash",
+          "dotted"
+        ],
         "size": 0.5,
         "alpha": 1
       },
@@ -221,7 +229,11 @@
         "color": "black",
         "fill": "NA",
         "shape": "blank",
-        "linetype": ["solid", "dotted", "solid"],
+        "linetype": [
+          "solid",
+          "dotted",
+          "solid"
+        ],
         "size": 0.5,
         "alpha": 1
       },
@@ -278,7 +290,10 @@
         "alpha": 1
       },
       "lines": {
-        "color": ["black", "red"],
+        "color": [
+          "black",
+          "red"
+        ],
         "fill": "NA",
         "shape": "blank",
         "linetype": "solid",
