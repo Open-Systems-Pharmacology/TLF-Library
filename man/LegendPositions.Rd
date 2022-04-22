@@ -16,6 +16,8 @@ List of all available legend positions
 \seealso{
 Other enum helpers: 
 \code{\link{AestheticProperties}},
+\code{\link{Alignments}},
+\code{\link{FontFaces}},
 \code{\link{Linetypes}},
 \code{\link{Scaling}},
 \code{\link{Shapes}},

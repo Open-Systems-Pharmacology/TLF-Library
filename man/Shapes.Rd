@@ -16,6 +16,8 @@ List of some \code{ggplot2} shapes
 \seealso{
 Other enum helpers: 
 \code{\link{AestheticProperties}},
+\code{\link{Alignments}},
+\code{\link{FontFaces}},
 \code{\link{LegendPositions}},
 \code{\link{Linetypes}},
 \code{\link{Scaling}},

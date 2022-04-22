@@ -57,7 +57,8 @@ Create a new \code{ThemeFont} object
   baseSize = 12,
   baseFace = "plain",
   baseFamily = "",
-  baseAngle = 0
+  baseAngle = 0,
+  baseAlign = "left"
 )}\if{html}{\out{</div>}}
 }
 
@@ -74,7 +75,7 @@ Create a new \code{ThemeFont} object
 
 \item{\code{watermark}}{\code{Font} object or list for font properties of watermark}
 
-\item{\code{legendTitle}}{\code{Font} object or list for font properties of legend}
+\item{\code{legendTitle}}{\code{Font} object or list for font properties of legend title}
 
 \item{\code{legend}}{\code{Font} object or list for font properties of legend}
 
@@ -82,7 +83,7 @@ Create a new \code{ThemeFont} object
 
 \item{\code{yAxis}}{\code{Font} object or list for font properties of yAxis}
 
-\item{\code{baseColor}}{name of base color of undefined fonts. Default is black.}
+\item{\code{baseColor}}{name of base color of undefined fonts. Default is "black".}
 
 \item{\code{baseSize}}{base size of undefined fonts. Default is 12.}
 
@@ -91,6 +92,8 @@ Create a new \code{ThemeFont} object
 \item{\code{baseFamily}}{name of base family of undefined fonts. Default is "".}
 
 \item{\code{baseAngle}}{base angle of undefined fonts. Default is 0 degree.}
+
+\item{\code{baseAlign}}{base alignment of undefined fonts. Default is "center".}
 }
 \if{html}{\out{</div>}}
 }
