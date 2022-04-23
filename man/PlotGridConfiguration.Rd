@@ -8,7 +8,7 @@ A \code{PlotGridConfiguration} object.
 }
 \description{
 R6 class defining the configuration for \code{{patchwork}} plot grid used to
-create a grid of plots from \code{{ospsuite}}. It holds values for all relevant
+create a grid of plots from \code{{tlf}}. It holds values for all relevant
 plot properties.
 }
 \section{Public fields}{
