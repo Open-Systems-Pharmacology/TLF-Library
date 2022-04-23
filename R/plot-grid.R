@@ -11,7 +11,6 @@
 #'
 #' @examples
 #'
-#' library(ospsuite)
 #' library(ggplot2)
 #' library(tlf)
 #'
@@ -98,7 +97,7 @@ plotGrid <- function(plotGridConfiguration) {
 #' @description
 #'
 #' R6 class defining the configuration for `{patchwork}` plot grid used to
-#' create a grid of plots from `{ospsuite}`. It holds values for all relevant
+#' create a grid of plots from `{tlf}`. It holds values for all relevant
 #' plot properties.
 #'
 #' @field plotList A list containing `ggplot` objects.

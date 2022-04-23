@@ -17,7 +17,6 @@ arguments are supplied through the \code{PlotGridConfiguration} object.
 }
 \examples{
 
-library(ospsuite)
 library(ggplot2)
 library(tlf)
 
