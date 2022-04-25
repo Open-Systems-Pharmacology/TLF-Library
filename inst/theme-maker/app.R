@@ -29,16 +29,7 @@ ui <- fluidPage(
           labelPanel("Subtitle"),
           labelPanel("Xlabel"),
           labelPanel("Ylabel"),
-          tabPanel(
-            "Watermark",
-            textInput("watermarkText", label = "Content", value = jsonTheme$background$watermark),
-            selectizeInput("watermarkColor",
-              label = "Color", choices = grDevices:::colors(),
-              selected = jsonTheme$fonts$watermark$color, options = list(create = TRUE)
-            ),
-            numericInput("watermarkSize", label = "Size", min = 1, max = 48, value = jsonTheme$fonts$watermark$size, step = 0.5),
-            numericInput("watermarkAngle", label = "Angle", min = -180, max = 180, value = jsonTheme$fonts$watermark$angle, step = 1)
-          )
+          labelPanel("Watermark", otherInput = textInput("watermarkText", label = "Content", value = jsonTheme$background$watermark))
         )
       ),
       tabPanel(
@@ -68,6 +59,7 @@ ui <- fluidPage(
             selectInput("legendPosition", label = "Position", choices = LegendPositions, selected = jsonTheme$background$legendPosition)
           ),
           labelPanel("Font", "legend", "legendFont"),
+          labelPanel("Title", "legendTitle", "legendTitleFont", otherInput = textInput("legendTitleText", label = "Content", value = jsonTheme$background$legendTitle)),
           backgroundPanel("Background", "legend", includeFill = TRUE)
         )
       ),
@@ -196,20 +188,16 @@ server <- function(input, output) {
   updateTheme <- reactive({
     #---------- Update Fonts ----------#
     # Each line will look like 'jsonTheme$fonts$title$color <- input$titleColor'
-    inputPlotProperties <- c("title", "subtitle", "xlabel", "ylabel", "watermark", "xAxisTicks", "yAxisTicks", "legendFont")
-    plotProperties <- c("title", "subtitle", "xlabel", "ylabel", "watermark", "xAxis", "yAxis", "legend")
-    fontProperties <- c("Color", "Size", "Angle")
+    inputPlotProperties <- c("title", "subtitle", "xlabel", "ylabel", "watermark", "xAxisTicks", "yAxisTicks", "legendFont", "legendTitleFont")
+    plotProperties <- c("title", "subtitle", "xlabel", "ylabel", "watermark", "xAxis", "yAxis", "legend", "legendTitle")
+    inputFontProperties <- c("Color", "Size", "Angle", "Align", "Face", "Family")
+    plotFontProperties <- c("color", "size", "angle", "align", "fontFace", "fontFamily")
     updateFontExpression <- parse(text = paste0(
-      "jsonTheme$fonts$", rep(plotProperties, each = length(fontProperties)),
-      "$", rep(tolower(fontProperties), length(plotProperties)),
-      " <- input$", rep(inputPlotProperties, each = length(fontProperties)), rep(fontProperties, length(plotProperties))
+      "jsonTheme$fonts$", rep(plotProperties, each = length(plotFontProperties)),
+      "$", rep(plotFontProperties, length(plotProperties)),
+      " <- input$", rep(inputPlotProperties, each = length(inputFontProperties)), rep(inputFontProperties, length(inputPlotProperties))
     ))
     eval(updateFontExpression)
-
-    # TO DO: account for legend title ?
-    # jsonTheme$fonts$legendTitle$color <- input$legendTitleColor
-    # jsonTheme$fonts$legendTitle$size <- input$legendTitleSize
-    # jsonTheme$fonts$legendTitle$angle <- input$legendTitleAngle
 
     #---------- Update Background elements ----------#
     # Each line will look like 'jsonTheme$background$plot$color <- input$plotColor'
@@ -225,6 +213,7 @@ server <- function(input, output) {
     #---------- Update remaining fields not covered by expressions ----------#
     jsonTheme$background$legendPosition <- input$legendPosition
     jsonTheme$background$watermark <- input$watermarkText
+    jsonTheme$background$legendTitle <- input$legendTitleText
 
     jsonTheme$background$plot$fill <- input$plotFill
     jsonTheme$background$panel$fill <- input$panelFill

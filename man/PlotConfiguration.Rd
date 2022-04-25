@@ -114,7 +114,7 @@ Create a new \code{PlotConfiguration} object
 
 \item{\code{legend}}{\code{LegendConfiguration} object defining legend properties}
 
-\item{\code{legendTitle}}{character defining legend title}
+\item{\code{legendTitle}}{character or \code{Label} object defining legend title}
 
 \item{\code{legendPosition}}{character defining legend position.
 Use Enum \code{LegendPositions} to get a list of available to legend positions.}
@@ -141,7 +141,7 @@ Use Enum \code{LegendPositions} to get a list of available to legend positions.}
 
 \item{\code{yGrid}}{\code{LineElement} object defining properties of y-grid background}
 
-\item{\code{watermark}}{\code{Label} object defining watermark}
+\item{\code{watermark}}{character or \code{Label} object defining watermark}
 
 \item{\code{lines}}{\code{ThemeAestheticSelections} object or list defining how lines are plotted}
 

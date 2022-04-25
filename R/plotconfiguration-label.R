@@ -57,7 +57,10 @@ LabelConfiguration <- R6::R6Class(
         return(private$.title)
       }
       validateIsOfType(value, c("character", "Label"), nullAllowed = TRUE)
-      private$.title <- asLabel(value)
+      if(isOfType(value, "Label")){
+        private$.title <- asLabel(value)
+      }
+      private$.title <- asLabel(value, font = private$.title$font)
       return(invisible())
     },
     #' @field subtitle `Label` object defining the subtitle of the plot
@@ -66,7 +69,10 @@ LabelConfiguration <- R6::R6Class(
         return(private$.subtitle)
       }
       validateIsOfType(value, c("character", "Label"), nullAllowed = TRUE)
-      private$.subtitle <- asLabel(value)
+      if(isOfType(value, "Label")){
+        private$.subtitle <- asLabel(value)
+      }
+      private$.subtitle <- asLabel(value, font = private$.subtitle$font)
       return(invisible())
     },
     #' @field xlabel `Label` object defining the xlabel of the plot
@@ -75,7 +81,10 @@ LabelConfiguration <- R6::R6Class(
         return(private$.xlabel)
       }
       validateIsOfType(value, c("character", "Label"), nullAllowed = TRUE)
-      private$.xlabel <- asLabel(value)
+      if(isOfType(value, "Label")){
+        private$.xlabel <- asLabel(value)
+      }
+      private$.xlabel <- asLabel(value, font = private$.xlabel$font)
       return(invisible())
     },
     #' @field ylabel `Label` object defining the ylabel of the plot
@@ -84,7 +93,10 @@ LabelConfiguration <- R6::R6Class(
         return(private$.ylabel)
       }
       validateIsOfType(value, c("character", "Label"), nullAllowed = TRUE)
-      private$.ylabel <- asLabel(value)
+      if(isOfType(value, "Label")){
+        private$.ylabel <- asLabel(value)
+      }
+      private$.ylabel <- asLabel(value, font = private$.ylabel$font)
       return(invisible())
     }
   ),

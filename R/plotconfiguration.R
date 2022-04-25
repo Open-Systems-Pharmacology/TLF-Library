@@ -16,7 +16,7 @@ PlotConfiguration <- R6::R6Class(
     #' @param xlabel character or `Label` object defining plot xlabel
     #' @param ylabel character or `Label` object defining plot ylabel
     #' @param legend `LegendConfiguration` object defining legend properties
-    #' @param legendTitle character defining legend title
+    #' @param legendTitle character or `Label` object defining legend title
     #' @param legendPosition character defining legend position.
     #' Use Enum `LegendPositions` to get a list of available to legend positions.
     #' @param xAxis `XAxisConfiguration` object defining x-axis properties
@@ -30,7 +30,7 @@ PlotConfiguration <- R6::R6Class(
     #' @param panelArea `BackgroundElement` object defining properties of panel area
     #' @param xGrid `LineElement` object defining properties of x-grid background
     #' @param yGrid `LineElement` object defining properties of y-grid background
-    #' @param watermark `Label` object defining watermark
+    #' @param watermark character or `Label` object defining watermark
     #' @param export R6 class `ExportConfiguration` defining properties for saving/exporting plota
     #' @param name character defining the name of the file to be saved (without extension)
     #' @param format character defining the format of the file to be saved.

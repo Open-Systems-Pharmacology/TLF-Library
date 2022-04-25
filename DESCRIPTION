@@ -27,6 +27,7 @@ Imports:
     R6,
     jsonlite,
     ospsuite.utils (>= 1.3.0)
+    patchwork
 Depends: 
     R (>= 3.6)
 Encoding: UTF-8
@@ -35,8 +36,7 @@ Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
     rmarkdown,
-    testthat (>= 2.1.0),
-    patchwork
+    testthat (>= 2.1.0)
 VignetteBuilder: knitr
 Collate: 
     'aaa-utilities.R'
@@ -63,6 +63,7 @@ Collate:
     'pkratio-get-measure.R'
     'plot-boxwhisker.R'
     'plot-ddiratio.R'
+    'plot-grid.R'
     'plot-histogram.R'
     'plot-obs-vs-pred.R'
     'plot-pkratio.R'

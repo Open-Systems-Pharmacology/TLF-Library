@@ -13,6 +13,8 @@ R6 class defining theme background properties
 
 \item{\code{legendPosition}}{character defining where legend should usually be placed}
 
+\item{\code{legendTitle}}{character defining the content of legend title}
+
 \item{\code{plot}}{\code{BackgroundElement} object for plot area properties (outside of panel)}
 
 \item{\code{panel}}{\code{BackgroundElement} object for plot area properties (inside of panel)}
@@ -46,6 +48,7 @@ Create a new \code{ThemeBackground} object
 \if{html}{\out{<div class="r">}}\preformatted{ThemeBackground$new(
   watermark = NULL,
   legendPosition = NULL,
+  legendTitle = NULL,
   plot = NULL,
   panel = NULL,
   xAxis = NULL,
@@ -67,6 +70,8 @@ Create a new \code{ThemeBackground} object
 
 \item{\code{legendPosition}}{character defining where legend should usually be placed}
 
+\item{\code{legendTitle}}{character defining the content of legend title}
+
 \item{\code{plot}}{\code{BackgroundElement} object or list for plot area properties (outside of panel)}
 
 \item{\code{panel}}{\code{BackgroundElement} object or list for plot area properties (inside of panel)}
@@ -81,9 +86,9 @@ Create a new \code{ThemeBackground} object
 
 \item{\code{legend}}{\code{BackgroundElement} object or list for legend area properties}
 
-\item{\code{baseFill}}{name of base color fill of undefined background elements. Default is white.}
+\item{\code{baseFill}}{name of base color fill of undefined background elements. Default is "white".}
 
-\item{\code{baseColor}}{name of base color of undefined background elements. Default is black.}
+\item{\code{baseColor}}{name of base color of undefined background elements. Default is "black".}
 
 \item{\code{baseSize}}{name of base size of undefined background elements. Default is 0.5.}
 
@@ -92,7 +97,7 @@ Create a new \code{ThemeBackground} object
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new \code{ThemeFont} object
+A new \code{ThemeBackground} object
 }
 }
 \if{html}{\out{<hr>}}

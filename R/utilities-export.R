@@ -195,7 +195,7 @@ exportPlotConfigurationCode <- function(plotConfiguration, name = "plotConfigura
   }
 
   legendCode <- "# Define/Overwrite PlotConfiguration legend properties"
-  for (property in c("position", "title", "background$fill", "background$color", "background$size", "background$linetype", "titleFont$color", "titleFont$size", "titleFont$fontFace", "titleFont$angle", "font$color", "font$size", "font$fontFace", "font$angle")) {
+  for (property in c("position", "background$fill", "background$color", "background$size", "background$linetype", "title$text", "title$font$color", "title$font$size", "title$font$fontFace", "title$font$angle", "font$color", "font$size", "font$fontFace", "font$angle")) {
     legendText <- paste0("plotConfiguration$legend$", property)
     updatedLegendText <- paste0(name, "$legend$", property)
     legendValue <- eval(parse(text = legendText))

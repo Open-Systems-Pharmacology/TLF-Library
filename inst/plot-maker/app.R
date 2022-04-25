@@ -103,7 +103,9 @@ ui <- fluidPage(
       tabPanel(
         "Legend",
         navlistPanel(
-          tabPanel("Position", uiOutput("legendPosition"))
+          tabPanel("Position", uiOutput("legendPosition")),
+          labelPanel("Font", labelID = "legendFont", includeText = FALSE),
+          labelPanel("Title", labelID = "legendTitle")
         )
       ),
       tabPanel("Theme", fileInput("loadTheme", label = "Use theme from .json", accept = ".json")),
@@ -401,10 +403,85 @@ server <- function(input, output, session) {
     numericInput("watermarkSize2", label = "size", min = 0, max = 48, step = 0.5, value = plotConfiguration$background$watermark$font$size)
   })
   output$watermarkAngle <- renderUI({
-    displayPlot <- getDisplayPlot()
-    numericInput("watermarkAngle2", label = "angle", min = -180, max = 180, step = 0.5, value = displayPlot$plotConfiguration$background$watermark$font$angle)
+    plotConfiguration <- getPlotConfiguration()
+    numericInput("watermarkAngle2", label = "angle", min = -180, max = 180, step = 0.5, value = plotConfiguration$background$watermark$font$angle)
+  })
+  output$watermarkAlign <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("watermarkAlign2", label = "align", choices = Alignments, selected = plotConfiguration$background$watermark$font$align)
+  })
+  output$watermarkFace <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("watermarkFace2", label = "face", choices = FontFaces, selected = plotConfiguration$background$watermark$font$fontFace)
+  })
+  output$watermarkFamily <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    textInput("watermarkFamily2", label = "family", value = plotConfiguration$background$watermark$font$fontFamily)
   })
 
+  #----- Get legend features
+  output$legendTitleText <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    textInput("legendTitleText2", label = "text", value = plotConfiguration$legend$title$text)
+  })
+  output$legendTitleColor <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    # selectizeInput with option create = TRUE, allows for elements other than choices allowing hexadecimal colors as well
+    selectizeInput("legendTitleColor2",
+                   label = "color", choices = grDevices:::colors(),
+                   selected = plotConfiguration$legend$title$font$color, options = list(create = TRUE)
+    )
+  })
+  output$legendTitleSize <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    numericInput("legendTitleSize2", label = "size", min = 0, max = 48, step = 0.5, value = plotConfiguration$legend$title$font$size)
+  })
+  output$legendTitleAngle <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    numericInput("legendTitleAngle2", label = "angle", min = -180, max = 180, step = 0.5, value = plotConfiguration$legend$title$font$angle)
+  })
+  output$legendTitleAlign <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("legendTitleAlign2", label = "align", choices = Alignments, selected = plotConfiguration$legend$title$font$align)
+  })
+  output$legendTitleFace <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("legendTitleFace2", label = "face", choices = FontFaces, selected = plotConfiguration$legend$title$font$fontFace)
+  })
+  output$legendTitleFamily <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    textInput("legendTitleFamily2", label = "family", value = plotConfiguration$legend$title$font$fontFamily)
+  })
+  
+  output$legendFontColor <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    # selectizeInput with option create = TRUE, allows for elements other than choices allowing hexadecimal colors as well
+    selectizeInput("legendFontColor2",
+                   label = "color", choices = grDevices:::colors(),
+                   selected = plotConfiguration$legend$font$color, options = list(create = TRUE)
+    )
+  })
+  output$legendFontSize <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    numericInput("legendFontSize2", label = "size", min = 0, max = 48, step = 0.5, value = plotConfiguration$legend$font$size)
+  })
+  output$legendFontAngle <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    numericInput("legendFontAngle2", label = "angle", min = -180, max = 180, step = 0.5, value = plotConfiguration$legend$font$angle)
+  })
+  output$legendFontAlign <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("legendFontAlign2", label = "align", choices = Alignments, selected = plotConfiguration$legend$font$align)
+  })
+  output$legendFontFace <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("legendFontFace2", label = "face", choices = FontFaces, selected = plotConfiguration$legend$font$fontFace)
+  })
+  output$legendFontFamily <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    textInput("legendFontFamily2", label = "family", value = plotConfiguration$legend$title$fontFamily)
+  })
+  
   #----- Get title features
   output$titleText <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -424,6 +501,18 @@ server <- function(input, output, session) {
   output$titleAngle <- renderUI({
     plotConfiguration <- getPlotConfiguration()
     numericInput("titleAngle2", label = "angle", min = -180, max = 180, step = 0.5, value = plotConfiguration$labels$title$font$angle)
+  })
+  output$titleAlign <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("titleAlign2", label = "align", choices = Alignments, selected = plotConfiguration$labels$title$font$align)
+  })
+  output$titleFace <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("titleFace2", label = "face", choices = FontFaces, selected = plotConfiguration$labels$title$font$fontFace)
+  })
+  output$titleFamily <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    textInput("titleFamily2", label = "family", value = plotConfiguration$labels$title$font$fontFamily)
   })
 
   #----- Get subtitle features
@@ -446,6 +535,18 @@ server <- function(input, output, session) {
     plotConfiguration <- getPlotConfiguration()
     numericInput("subtitleAngle2", label = "angle", min = -180, max = 180, step = 0.5, value = plotConfiguration$labels$subtitle$font$angle)
   })
+  output$subtitleAlign <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("subtitleAlign2", label = "align", choices = Alignments, selected = plotConfiguration$labels$subtitle$font$align)
+  })
+  output$subtitleFace <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("subtitleFace2", label = "face", choices = FontFaces, selected = plotConfiguration$labels$subtitle$font$fontFace)
+  })
+  output$subtitleFamily <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    textInput("subtitleFamily2", label = "family", value = plotConfiguration$labels$subtitle$font$fontFamily)
+  })
 
   #----- Get xlabel features
   output$xlabelText <- renderUI({
@@ -467,6 +568,18 @@ server <- function(input, output, session) {
     plotConfiguration <- getPlotConfiguration()
     numericInput("xlabelAngle2", label = "angle", min = -180, max = 180, step = 0.5, value = plotConfiguration$labels$xlabel$font$angle)
   })
+  output$xlabelAlign <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("xlabelAlign2", label = "align", choices = Alignments, selected = plotConfiguration$labels$xlabel$font$align)
+  })
+  output$xlabelFace <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("xlabelFace2", label = "face", choices = FontFaces, selected = plotConfiguration$labels$xlabel$font$fontFace)
+  })
+  output$xlabelFamily <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    textInput("xlabelFamily2", label = "family", value = plotConfiguration$labels$xlabel$font$fontFamily)
+  })
 
   #----- Get ylabel features
   output$ylabelText <- renderUI({
@@ -487,6 +600,18 @@ server <- function(input, output, session) {
   output$ylabelAngle <- renderUI({
     plotConfiguration <- getPlotConfiguration()
     numericInput("ylabelAngle2", label = "angle", min = -180, max = 180, step = 0.5, value = plotConfiguration$labels$ylabel$font$angle)
+  })
+  output$ylabelAlign <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("ylabelAlign2", label = "align", choices = Alignments, selected = plotConfiguration$labels$ylabel$font$align)
+  })
+  output$ylabelFace <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("ylabelFace2", label = "face", choices = FontFaces, selected = plotConfiguration$labels$ylabel$font$fontFace)
+  })
+  output$ylabelFamily <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    textInput("ylabelFamily2", label = "family", value = plotConfiguration$labels$ylabel$font$fontFamily)
   })
 
   #----- Get plot features
@@ -616,6 +741,18 @@ server <- function(input, output, session) {
     plotConfiguration <- getPlotConfiguration()
     numericInput("xTicksAngle2", label = "angle", min = -180, max = 180, step = 0.5, value = plotConfiguration$xAxis$font$angle)
   })
+  output$xTicksAlign <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("xTicksAlign2", label = "align", choices = Alignments, selected = plotConfiguration$xAxis$font$align)
+  })
+  output$xTicksFace <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("xTicksFace2", label = "face", choices = FontFaces, selected = plotConfiguration$xAxis$font$fontFace)
+  })
+  output$xTicksFamily <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    textInput("xTicksFamily2", label = "family", value = plotConfiguration$xAxis$font$fontFamily)
+  })
 
   #----- Get yAxis features
   output$yAxisColor <- renderUI({
@@ -661,6 +798,18 @@ server <- function(input, output, session) {
   output$yTicksAngle <- renderUI({
     plotConfiguration <- getPlotConfiguration()
     numericInput("yTicksAngle2", label = "angle", min = -180, max = 180, step = 0.5, value = plotConfiguration$yAxis$font$angle)
+  })
+  output$yTicksAlign <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("yTicksAlign2", label = "align", choices = Alignments, selected = plotConfiguration$yAxis$font$align)
+  })
+  output$yTicksFace <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("yTicksFace2", label = "face", choices = FontFaces, selected = plotConfiguration$yAxis$font$fontFace)
+  })
+  output$yTicksFamily <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    textInput("yTicksFamily2", label = "family", value = plotConfiguration$yAxis$font$fontFamily)
   })
 
   #----- Get legend features
@@ -733,11 +882,30 @@ server <- function(input, output, session) {
     plotConfiguration$background$watermark$font$color <- tlfInput(input$watermarkColor2) %||% plotConfiguration$background$watermark$font$color
     plotConfiguration$background$watermark$font$size <- tlfInput(input$watermarkSize2) %||% plotConfiguration$background$watermark$font$size
     plotConfiguration$background$watermark$font$angle <- tlfInput(input$watermarkAngle2) %||% plotConfiguration$background$watermark$font$angle
+    plotConfiguration$background$watermark$font$align <- tlfInput(input$watermarkAlign2) %||% plotConfiguration$background$watermark$font$align
+    plotConfiguration$background$watermark$font$fontFace <- tlfInput(input$watermarkFace2) %||% plotConfiguration$background$watermark$font$fontFace
+    plotConfiguration$background$watermark$font$fontFamily <- tlfInput(input$watermarkFamily2) %||% plotConfiguration$background$watermark$font$fontFamily
+    
+    #--- Legend
+    plotConfiguration$legend$title$text <- tlfInput(input$legendTitleText2) %||% plotConfiguration$legend$title$text
+    plotConfiguration$legend$title$font$color <- tlfInput(input$legendTitleColor2) %||% plotConfiguration$legend$title$font$color
+    plotConfiguration$legend$title$font$size <- tlfInput(input$legendTitleSize2) %||% plotConfiguration$legend$title$font$size
+    plotConfiguration$legend$title$font$angle <- tlfInput(input$legendTitleAngle2) %||% plotConfiguration$legend$title$font$angle
+    plotConfiguration$legend$title$font$align <- tlfInput(input$legendTitleAlign2) %||% plotConfiguration$legend$title$font$align
+    plotConfiguration$legend$title$font$fontFace <- tlfInput(input$legendTitleFace2) %||% plotConfiguration$legend$title$font$fontFace
+    plotConfiguration$legend$title$font$fontFamily <- tlfInput(input$legendTitleFamily2) %||% plotConfiguration$legend$title$font$fontFamily
+    
+    plotConfiguration$legend$font$color <- tlfInput(input$legendFontColor2) %||% plotConfiguration$legend$font$color
+    plotConfiguration$legend$font$size <- tlfInput(input$legendFontSize2) %||% plotConfiguration$legend$font$size
+    plotConfiguration$legend$font$angle <- tlfInput(input$legendFontAngle2) %||% plotConfiguration$legend$font$angle
+    plotConfiguration$legend$font$align <- tlfInput(input$legendFontAlign2) %||% plotConfiguration$legend$font$align
+    plotConfiguration$legend$font$fontFace <- tlfInput(input$legendFontFace2) %||% plotConfiguration$legend$font$fontFace
+    plotConfiguration$legend$font$fontFamily <- tlfInput(input$legendFontFamily2) %||% plotConfiguration$legend$font$fontFamily
 
     #--- Labels (using expressions)
-    labels <- rep(c("title", "subtitle", "xlabel", "ylabel"), 4)
-    configurationProperties <- rep(c("text", "font$color", "font$size", "font$angle"), each = 4)
-    inputProperties <- rep(c("Text", "Color", "Size", "Angle"), each = 4)
+    labels <- rep(c("title", "subtitle", "xlabel", "ylabel"), 7)
+    configurationProperties <- rep(c("text", "font$color", "font$size", "font$angle","font$align","font$fontFace","font$fontFamily"), each = 4)
+    inputProperties <- rep(c("Text", "Color", "Size", "Angle", "Align", "Face", "Family"), each = 4)
 
     labelExpression <- parse(text = paste0(
       "plotConfiguration$labels$", labels, "$", configurationProperties,
@@ -758,13 +926,14 @@ server <- function(input, output, session) {
     plotConfiguration$background$panel$fill <- tlfInput(input$panelFill2) %||% plotConfiguration$background$panel$fill
 
     #--- Axes
-    axes <- rep(c("xAxis", "yAxis"), 3)
-    ticks <- rep(c("xTicks", "yTicks"), 3)
-    inputProperties <- rep(c("Color", "Size", "Angle"), each = 2)
+    axes <- rep(c("xAxis", "yAxis"), 6)
+    ticks <- rep(c("xTicks", "yTicks"), 6)
+    fontProperties <- rep(c("color", "size", "angle", "align","fontFace", "fontFamily"), each = 2)
+    inputProperties <- rep(c("Color", "Size", "Angle", "Align", "Face", "Family"), each = 2)
 
     axesExpression <- parse(text = paste0(
-      "plotConfiguration$", axes, "$font$", tolower(inputProperties),
-      "<- tlfInput(input$", ticks, inputProperties, "2) %||% plotConfiguration$", axes, "$font$", tolower(inputProperties)
+      "plotConfiguration$", axes, "$font$", fontProperties,
+      "<- tlfInput(input$", ticks, inputProperties, "2) %||% plotConfiguration$", axes, "$font$", fontProperties
     ))
     eval(axesExpression)
     plotConfiguration$xAxis$scale <- tlfInput(input$xAxisScale2) %||% plotConfiguration$xAxis$scale

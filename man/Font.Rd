@@ -15,9 +15,11 @@ R6 class defining font properties
 
 \item{\code{fontFamily}}{character defining the family of font}
 
-\item{\code{fontFace}}{character defining the face of font}
+\item{\code{fontFace}}{character defining the font face as defined in helper enum \code{FontFaces}.}
 
 \item{\code{angle}}{numeric defining the angle of font}
+
+\item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -38,26 +40,29 @@ Default font properties are defined directly in the object field,
 so \code{NULL} input is allowed will lead to default properties.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Font$new(
-  size = NULL,
   color = NULL,
+  size = NULL,
   fontFamily = NULL,
   fontFace = NULL,
-  angle = NULL
+  angle = NULL,
+  align = NULL
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{size}}{numeric defining the size of font}
-
 \item{\code{color}}{character defining the color of font}
+
+\item{\code{size}}{numeric defining the size of font}
 
 \item{\code{fontFamily}}{character defining the family of font}
 
-\item{\code{fontFace}}{character defining the face of font}
+\item{\code{fontFace}}{character defining the font face as defined in helper enum \code{FontFaces}.}
 
 \item{\code{angle}}{numeric defining the angle of font}
+
+\item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -71,9 +76,33 @@ A new \code{Font} object
 \subsection{Method \code{createPlotFont()}}{
 Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::theme}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Font$createPlotFont()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Font$createPlotFont(
+  size = NULL,
+  color = NULL,
+  fontFamily = NULL,
+  fontFace = NULL,
+  angle = NULL,
+  align = NULL
+)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{size}}{numeric defining the size of font}
+
+\item{\code{color}}{character defining the color of font}
+
+\item{\code{fontFamily}}{character defining the family of font}
+
+\item{\code{fontFace}}{character defining the font face as defined in helper enum \code{FontFaces}.}
+
+\item{\code{angle}}{numeric defining the angle of font}
+
+\item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 An \code{element_text} object.
 }

@@ -15,8 +15,6 @@ R6 class defining the legend configuration of a \code{ggplot} object
 
 \item{\code{font}}{\code{Font} object defining the font of the legend}
 
-\item{\code{titleFont}}{\code{Font} object defining the font of the legend title}
-
 \item{\code{background}}{\code{Background} object defining the background of the legend}
 
 \item{\code{title}}{character defining title of the legend}
@@ -41,7 +39,6 @@ Create a new \code{LegendConfiguration} object
   position = NULL,
   caption = NULL,
   title = NULL,
-  titleFont = NULL,
   font = NULL,
   background = NULL
 )}\if{html}{\out{</div>}}
@@ -54,9 +51,7 @@ Create a new \code{LegendConfiguration} object
 
 \item{\code{caption}}{data.frame containing the properties of the legend caption}
 
-\item{\code{title}}{character title of the legend caption. A value of \code{NULL} removes the title.}
-
-\item{\code{titleFont}}{\code{Font} object defining the font of the legend title}
+\item{\code{title}}{character or \code{Label} object defining the title of the legend. A value of \code{NULL} removes the title.}
 
 \item{\code{font}}{\code{Font} object defining the font of the legend caption}
 
