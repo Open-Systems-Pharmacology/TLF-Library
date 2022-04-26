@@ -86,14 +86,34 @@ asPlotShape <- function(shapes) {
 }
 
 #' @title ColorMaps
-#' @description List with some color maps for `Theme` object
+#'
+#' @description
+#'
+#' List with some color maps for `Theme` object.
+#'
+#' The `ospDefault` color map is based on colors in `default_igv` qualitative
+#' color palette from `{ggsci}` package.
+#'
 #' @export
 ColorMaps <- list(
   default = c("#0078D7", "#D83B01", "#107C10", "#A80000", "#002050", "#B4009E"),
   grays = paste("gray", seq(0, 100, 10), sep = ""),
   prism = c("#FF0000", "#FF7F00", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#8F00FF"),
   blot = c("blue", "magenta", "cyan", "green", "yellow", "red"),
-  temperature = c("#262A76", "#234990", "#2F8AC3", "#26B0D2", "#FFC1CB", "#EB559", "#AE3535", "8E1F20")
+  temperature = c("#262A76", "#234990", "#2F8AC3", "#26B0D2", "#FFC1CB", "#EB559", "#AE3535", "8E1F20"),
+  ospDefault = c(
+    "#5050FFFF", "#CE3D32FF", "#749B58FF", "#F0E685FF",
+    "#466983FF", "#BA6338FF", "#5DB1DDFF", "#802268FF", "#6BD76BFF",
+    "#D595A7FF", "#924822FF", "#837B8DFF", "#C75127FF", "#D58F5CFF",
+    "#7A65A5FF", "#E4AF69FF", "#3B1B53FF", "#CDDEB7FF", "#612A79FF",
+    "#AE1F63FF", "#E7C76FFF", "#5A655EFF", "#CC9900FF", "#99CC00FF",
+    "#A9A9A9FF", "#CC9900FF", "#99CC00FF", "#33CC00FF", "#00CC33FF",
+    "#00CC99FF", "#0099CCFF", "#0A47FFFF", "#4775FFFF", "#FFC20AFF",
+    "#FFD147FF", "#990033FF", "#991A00FF", "#996600FF", "#809900FF",
+    "#339900FF", "#00991AFF", "#009966FF", "#008099FF", "#003399FF",
+    "#1A0099FF", "#660099FF", "#990080FF", "#D60047FF", "#FF1463FF",
+    "#00D68FFF", "#14FFB1FF"
+  )
 )
 
 #' @title AestheticSelectionKeys
@@ -157,7 +177,7 @@ getAestheticValues <- function(n, selectionKey = NA, position = 0, aesthetic = "
 getNextAestheticValues <- function(n, position = 0, map) {
   # Get the map indices of aesthtic values to be output
   aesPositions <- seq(position + 1, position + n)
-  if(n<=0){
+  if (n <= 0) {
     return(NULL)
   }
 
@@ -180,7 +200,7 @@ getSameAestheticValues <- function(n, position = 0, map) {
   # the indices have to go start back from 1 using modelu function
   mapSize <- length(map)
   aesPosition <- (position %% mapSize) + 1
-  if(n<=0){
+  if (n <= 0) {
     return(NULL)
   }
 

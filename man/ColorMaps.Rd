@@ -5,12 +5,15 @@
 \alias{ColorMaps}
 \title{ColorMaps}
 \format{
-An object of class \code{list} of length 5.
+An object of class \code{list} of length 6.
 }
 \usage{
 ColorMaps
 }
 \description{
-List with some color maps for \code{Theme} object
+List with some color maps for \code{Theme} object.
+
+The \code{ospDefault} color map is based on colors in \code{default_igv} qualitative
+color palette from \code{{ggsci}} package.
 }
 \keyword{datasets}
