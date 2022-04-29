@@ -20,6 +20,10 @@ A value of \code{NULL} is allowed and will lead to a default linear scale}
 \item{\code{ticklabels}}{function or values defining the axis tick labels}
 
 \item{\code{font}}{\code{Font} object defining the font of the ticklabels}
+
+\item{\code{expand}}{logical defining if data is expanded until axis.
+If \code{TRUE}, data is expanded until axis
+If \code{FALSE}, some space between data and axis is kept}
 }
 \if{html}{\out{</div>}}
 }
@@ -28,6 +32,7 @@ A value of \code{NULL} is allowed and will lead to a default linear scale}
 \itemize{
 \item \href{#method-new}{\code{AxisConfiguration$new()}}
 \item \href{#method-ggplotScale}{\code{AxisConfiguration$ggplotScale()}}
+\item \href{#method-ggplotExpansion}{\code{AxisConfiguration$ggplotExpansion()}}
 \item \href{#method-prettyTicks}{\code{AxisConfiguration$prettyTicks()}}
 \item \href{#method-prettyTickLabels}{\code{AxisConfiguration$prettyTickLabels()}}
 \item \href{#method-clone}{\code{AxisConfiguration$clone()}}
@@ -44,7 +49,8 @@ Create a new \code{AxisConfiguration} object
   scale = Scaling$lin,
   ticks = NULL,
   ticklabels = NULL,
-  font = NULL
+  font = NULL,
+  expand = FALSE
 )}\if{html}{\out{</div>}}
 }
 
@@ -61,6 +67,10 @@ Use enum \code{Scaling} to access predefined scales.}
 \item{\code{ticklabels}}{character vector or function defining what to print on axis ticks}
 
 \item{\code{font}}{\code{Font} object defining the font of ticklabels}
+
+\item{\code{expand}}{logical defining if data is expanded until axis.
+If \code{TRUE}, data is expanded until axis
+If \code{FALSE}, some space between data and axis is kept}
 }
 \if{html}{\out{</div>}}
 }
@@ -79,6 +89,19 @@ Get the \code{ggplot2} actual \code{trans} name of scale
 
 \subsection{Returns}{
 A character included in \code{ggplot2} available \code{trans} names
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ggplotExpansion"></a>}}
+\if{latex}{\out{\hypertarget{method-ggplotExpansion}{}}}
+\subsection{Method \code{ggplotExpansion()}}{
+Get the \code{ggplot2} actual function for expansion
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AxisConfiguration$ggplotExpansion()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A \code{ggplot2} function
 }
 }
 \if{html}{\out{<hr>}}

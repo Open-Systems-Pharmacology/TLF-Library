@@ -10,7 +10,8 @@ setYAxis(
   limits = NULL,
   ticks = NULL,
   ticklabels = NULL,
-  font = NULL
+  font = NULL,
+  expand = NULL
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ setYAxis(
 \item{ticklabels}{Optional values or function for axis ticklabels}
 
 \item{font}{A \code{Font} object  defining font of ticklabels}
+
+\item{expand}{Logical defining if data is expanded until axis}
 }
 \value{
 A \code{ggplot} object

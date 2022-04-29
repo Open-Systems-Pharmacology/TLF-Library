@@ -122,13 +122,19 @@ PlotConfiguration <- R6::R6Class(
 
       # X-Axis Configuration, overwrite some properties only if they are defined
       validateIsOfType(xAxis, "XAxisConfiguration", nullAllowed = TRUE)
-      private$.xAxis <- xAxis %||% XAxisConfiguration$new(scale = xAxisDefaultScale(self))
+      private$.xAxis <- xAxis %||% XAxisConfiguration$new(
+        scale = xAxisDefaultScale(self),
+        expand = xAxisDefaultExpand(self)
+      )
       private$.xAxis$limits <- xLimits %||% private$.xAxis$limits
       private$.xAxis$scale <- xScale %||% private$.xAxis$scale
 
       # Y-Axis configuration, overwrite some properties only if they are defined
       validateIsOfType(yAxis, "YAxisConfiguration", nullAllowed = TRUE)
-      private$.yAxis <- yAxis %||% YAxisConfiguration$new(scale = yAxisDefaultScale(self))
+      private$.yAxis <- yAxis %||% YAxisConfiguration$new(
+        scale = yAxisDefaultScale(self),
+        expand = xAxisDefaultExpand(self)
+      )
       private$.yAxis$limits <- yLimits %||% private$.yAxis$limits
       private$.yAxis$scale <- yScale %||% private$.yAxis$scale
 
