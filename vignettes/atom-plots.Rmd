@@ -281,6 +281,10 @@ addLine(
 )
 ```
 
+**Caution**: It is possible to define the transparency of the points and lines using `PlotConfiguration` objects using the field `alpha` in `lines` or `points`.
+Lines with transparency in legend may disappear when the plot is displayed within the viewport for older versions of RStudio (for more details, see https://github.com/tidyverse/ggplot2/issues/4351). However, this does not affect exported plots.
+
+
 ## `addRibbon`
 
 The function `addRibbon` returns a ribbon plot.

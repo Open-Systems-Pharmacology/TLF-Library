@@ -157,12 +157,14 @@ addScatter <- function(data = NULL,
     ggplot2::geom_point(
       data = mapData,
       mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, shape = "legendLabels", color = "legendLabels", size = "legendLabels"),
+      alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$alpha, aesthetic = "alpha"),
       show.legend = TRUE,
       na.rm = TRUE
     ) +
     ggplot2::geom_path(
       data = mapData,
       mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
+      alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$alpha, aesthetic = "alpha"),
       show.legend = TRUE,
       na.rm = TRUE
     ) +
@@ -249,9 +251,8 @@ addLine <- function(data = NULL,
   validateIsOfType(plotConfiguration, PlotConfiguration, nullAllowed = TRUE)
 
   # If data is not input,  creates new data and its mapping from x and y input
-  if (isOfLength(data, 0)) {
+  if (isEmpty(data)) {
     data <- as.data.frame(cbind(x = x, y = y))
-
     dataMapping <- dataMapping %||% XYGDataMapping$new(x = ifNotNull(x, "x"), y = ifNotNull(y, "y"), data = data)
   }
 
@@ -269,7 +270,7 @@ addLine <- function(data = NULL,
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
   # If no mapping, return plot
-  if (all(isOfLength(dataMapping$x, 0), isOfLength(dataMapping$y, 0))) {
+  if (all(isEmpty(dataMapping$x), isEmpty(dataMapping$y))) {
     warning("No mapping found for both x and y, line layer was not added")
     return(plotObject)
   }
@@ -286,11 +287,12 @@ addLine <- function(data = NULL,
   # y-intercept
   # geom_blank is used to fill the missing aes properties
   # This prevents messing up the legend
-  if (isOfLength(dataMapping$x, 0) && !isOfLength(dataMapping$y, 0)) {
+  if (isEmpty(dataMapping$x) && !isEmpty(dataMapping$y)) {
     plotObject <- plotObject +
       ggplot2::geom_hline(
         data = mapData,
         mapping = ggplot2::aes_string(yintercept = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
+        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, aesthetic = "alpha"),
         show.legend = TRUE
       ) +
       ggplot2::geom_blank(
@@ -299,16 +301,18 @@ addLine <- function(data = NULL,
           shape = "legendLabels",
           fill = "legendLabels"
         ),
-        show.legend = TRUE
+        # Use NA instead of TRUE to prevent having an unwanted point in the legend key
+        show.legend = NA
       )
   }
 
   # x-intercept
-  if (isOfLength(dataMapping$y, 0) && !isOfLength(dataMapping$x, 0)) {
+  if (isEmpty(dataMapping$y) && !isEmpty(dataMapping$x)) {
     plotObject <- plotObject +
       ggplot2::geom_vline(
         data = mapData,
         mapping = ggplot2::aes_string(xintercept = mapLabels$x, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
+        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, aesthetic = "alpha"),
         show.legend = TRUE
       ) +
       ggplot2::geom_blank(
@@ -317,24 +321,27 @@ addLine <- function(data = NULL,
           shape = "legendLabels",
           fill = "legendLabels"
         ),
-        show.legend = TRUE
+        # Use NA instead of TRUE to prevent having an unwanted point in the legend key
+        show.legend = NA
       )
   }
 
   # Case of a line defined by x and y
   # geom_path is used instead of geom_line,
   # consequently values are connected by their order of appearance and not according to x values
-  if (all(!isOfLength(dataMapping$x, 0), !isOfLength(dataMapping$y, 0))) {
+  if (all(!isEmpty(dataMapping$x), !isEmpty(dataMapping$y))) {
     plotObject <- plotObject +
       ggplot2::geom_point(
         data = mapData,
         mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, shape = "legendLabels", color = "legendLabels", size = "legendLabels"),
+        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, aesthetic = "alpha"),
         show.legend = TRUE,
         na.rm = TRUE
       ) +
       ggplot2::geom_path(
         data = mapData,
         mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
+        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, aesthetic = "alpha"),
         show.legend = TRUE,
         na.rm = TRUE
       ) +
@@ -561,7 +568,7 @@ addErrorbar <- function(data = NULL,
   # validateIsIncluded(barLinetype, Linetypes, nullAllowed = TRUE)
 
   # If data is not input, creates data and its mapping from x, ymin and ymax input
-  if (isOfLength(data, 0)) {
+  if (isEmpty(data)) {
     data <- as.data.frame(cbind(x = x, ymin = ymin %||% 0, ymax = ymax %||% 0))
     dataMapping <- dataMapping %||% RangeDataMapping$new(x = "x", ymin = "ymin", ymax = "ymax", data = data)
   }
@@ -579,7 +586,7 @@ addErrorbar <- function(data = NULL,
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
   # If no mapping, return plot
-  if (all(isOfLength(dataMapping$x, 0), isOfLength(dataMapping$ymin, 0), isOfLength(dataMapping$ymax, 0))) {
+  if (all(isEmpty(dataMapping$x), isEmpty(dataMapping$ymin), isEmpty(dataMapping$ymax))) {
     warning("No mapping found for x, ymin and ymax, error bar layer was not added")
     return(plotObject)
   }
@@ -609,6 +616,7 @@ addErrorbar <- function(data = NULL,
         show.legend = FALSE,
         size = size %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, aesthetic = "size"),
         linetype = linetype %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
+        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),
         color = color %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$color, aesthetic = "color")
       )
   }
@@ -626,6 +634,7 @@ addErrorbar <- function(data = NULL,
         show.legend = FALSE,
         size = size %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, aesthetic = "size"),
         linetype = linetype %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
+        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),
         color = color %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$color, aesthetic = "color")
       )
   }
