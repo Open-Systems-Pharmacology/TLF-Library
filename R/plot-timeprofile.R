@@ -92,6 +92,7 @@ plotTimeProfile <- function(data = NULL,
             linetype = mapLabels$linetype
           ),
           size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = 0, aesthetic = "size"),
+          alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, position = 0, aesthetic = "alpha"),
           show.legend = TRUE
         )
     }
@@ -122,6 +123,7 @@ plotTimeProfile <- function(data = NULL,
         ),
         size = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
         linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, position = 0, aesthetic = "linetype"),
+        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, position = 0, aesthetic = "alpha"),
         show.legend = FALSE
       ) +
       ggplot2::geom_linerange(
@@ -134,6 +136,7 @@ plotTimeProfile <- function(data = NULL,
         ),
         size = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
         linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, position = 0, aesthetic = "linetype"),
+        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, position = 0, aesthetic = "alpha"),
         show.legend = FALSE
       )
   }
@@ -147,6 +150,7 @@ plotTimeProfile <- function(data = NULL,
         shape = observedMapLabels$shape
       ),
       size = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$size, position = 0, aesthetic = "size"),
+      alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$alpha, position = 0, aesthetic = "alpha"),
       show.legend = TRUE
     )
 
