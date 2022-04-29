@@ -12,8 +12,10 @@ PlotConfiguration <- R6::R6Class(
   "PlotConfiguration",
   public = list(
     export = NULL,
-    defaultXScale = Scaling$lin,
-    defaultYScale = Scaling$lin,
+    # Caution, helper enum Scaling doesn't work here 
+    # (even using @include to collate and define the variable beforehand)
+    defaultXScale = "lin",
+    defaultYScale = "lin",
     defaultExpand = FALSE,
 
     #' @description Create a new `PlotConfiguration` object
@@ -291,7 +293,7 @@ PKRatioPlotConfiguration <- R6::R6Class(
   "PKRatioPlotConfiguration",
   inherit = PlotConfiguration,
   public = list(
-    defaultYScale = Scaling$log
+    defaultYScale = "log"
   )
 )
 
@@ -306,8 +308,8 @@ DDIRatioPlotConfiguration <- R6::R6Class(
   "DDIRatioPlotConfiguration",
   inherit = PlotConfiguration,
   public = list(
-    defaultXScale = Scaling$log,
-    defaultYScale = Scaling$log,
+    defaultXScale = "log",
+    defaultYScale = "log",
     defaultExpand = TRUE
   )
 )

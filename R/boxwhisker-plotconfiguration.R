@@ -7,7 +7,7 @@ BoxWhiskerPlotConfiguration <- R6::R6Class(
   inherit = PlotConfiguration,
   public = list(
     #' @field defaultXScale Default xAxis scale value when creating a `BoxWhiskerPlotConfiguration` object
-    defaultXScale = Scaling$discrete,
+    defaultXScale = "discrete",
     
     #' @description Create a new `BoxWhiskerPlotConfiguration` object
     #' @param outliers logical defining if outliers should be included in boxplot
