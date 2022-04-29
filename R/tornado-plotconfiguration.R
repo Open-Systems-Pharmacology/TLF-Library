@@ -12,6 +12,8 @@ TornadoPlotConfiguration <- R6::R6Class(
     colorPalette = NULL,
     #' @field dodge space between the bars/points
     dodge = NULL,
+    #' @field defaultYScale Default yAxis scale value when creating a `TornadoPlotConfiguration` object
+    defaultYScale = Scaling$discrete,
 
     #' @description Create a new `TornadoPlotConfiguration` object
     #' @param bar logical setting if tornado is uses a bar plot instead of regular points

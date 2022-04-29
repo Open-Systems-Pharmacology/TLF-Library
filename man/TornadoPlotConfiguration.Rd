@@ -28,6 +28,8 @@ Other PlotConfiguration classes:
 \item{\code{colorPalette}}{color palette property from \code{ggplot2}}
 
 \item{\code{dodge}}{space between the bars/points}
+
+\item{\code{defaultYScale}}{Default yAxis scale value when creating a \code{TornadoPlotConfiguration} object}
 }
 \if{html}{\out{</div>}}
 }

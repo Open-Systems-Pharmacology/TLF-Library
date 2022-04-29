@@ -20,6 +20,13 @@ Other PlotConfiguration classes:
 \section{Super class}{
 \code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{PKRatioPlotConfiguration}
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{defaultYScale}}{Default yAxis scale value when creating a \code{PKRatioPlotConfiguration} object}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{

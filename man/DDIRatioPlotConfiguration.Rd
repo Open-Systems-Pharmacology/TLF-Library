@@ -20,6 +20,17 @@ Other PlotConfiguration classes:
 \section{Super class}{
 \code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{DDIRatioPlotConfiguration}
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{defaultXScale}}{Default xAxis scale value when creating a \code{DDIRatioPlotConfiguration} object}
+
+\item{\code{defaultYScale}}{Default yAxis scale value when creating a \code{DDIRatioPlotConfiguration} object}
+
+\item{\code{defaultExpand}}{Default expand value when creating a \code{DDIRatioPlotConfiguration} object}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{

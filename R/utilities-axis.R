@@ -129,65 +129,6 @@ setYAxis <- function(plotObject,
   return(newPlotObject)
 }
 
-#' @title xAxisDefaultScale
-#' @description Return x-axis default scale from a plot configuration
-#' @param plotConfiguration A `PlotConfiguration` object
-#' @return The default scale.
-#' The enum `Scaling` provides a list of available scales.
-#' @examples
-#' \dontrun{
-#' # Regular plots use continuous linear scale for x-axis
-#' plotConfiguration <- PlotConfiguration$new()
-#' xAxisDefaultScale(plotConfiguration)
-#'
-#' # DDI plots use log scale for x-axis
-#' ddiPlotConfiguration <- DDIRatioPlotConfiguration$new()
-#' xAxisDefaultScale(ddiPlotConfiguration)
-#'
-#' # Boxplots use discrete scale for x-axis
-#' boxPlotConfiguration <- BoxWhiskerPlotConfiguration$new()
-#' xAxisDefaultScale(boxPlotConfiguration)
-#' }
-#' @keywords internal
-xAxisDefaultScale <- function(plotConfiguration) {
-  if (isOfType(plotConfiguration, c("DDIRatioPlotConfiguration"))) {
-    return(Scaling$log)
-  }
-  if (isOfType(plotConfiguration, c("BoxWhiskerPlotConfiguration"))) {
-    return(Scaling$discrete)
-  }
-  return(Scaling$lin)
-}
-
-#' @title yAxisDefaultScale
-#' @description Return y-axis default scale from a plot configuration
-#' @param plotConfiguration A `PlotConfiguration` object
-#' @return The default scale.
-#' The enum `Scaling` provides a list of available scales.
-#' @examples
-#' \dontrun{
-#' # Regular plots use continuous linear scale for x-axis
-#' plotConfiguration <- PlotConfiguration$new()
-#' yAxisDefaultScale(plotConfiguration)
-#'
-#' # DDI plots use log scale for y-axis
-#' ddiPlotConfiguration <- DDIRatioPlotConfiguration$new()
-#' yAxisDefaultScale(ddiPlotConfiguration)
-#'
-#' # Tornado plots use discrete scale for y-axis
-#' tornadoPlotConfiguration <- TornadoPlotConfiguration$new()
-#' yAxisDefaultScale(tornadoPlotConfiguration)
-#' }
-#' @keywords internal
-yAxisDefaultScale <- function(plotConfiguration) {
-  if (isOfType(plotConfiguration, c("PKRatioPlotConfiguration", "DDIRatioPlotConfiguration"))) {
-    return(Scaling$log)
-  }
-  if (isOfType(plotConfiguration, c("TornadoPlotConfiguration"))) {
-    return(Scaling$discrete)
-  }
-  return(Scaling$lin)
-}
 
 #' @title getLogTickLabels
 #' @description Get ticklabels expressions for log scale plots
@@ -237,50 +178,4 @@ getLnTickLabels <- function(ticks) {
 getSqrtTickLabels <- function(ticks) {
   sqrtValues <- ticks^2
   return(parse(text = paste("sqrt(", sqrtValues, ")", sep = "")))
-}
-
-#' @title xAxisDefaultExpand
-#' @description Return x-axis default expand from a plot configuration
-#' @param plotConfiguration A `PlotConfiguration` object
-#' @return The default expand.
-#' @examples
-#' \dontrun{
-#' # Regular plots use continuous linear scale for x-axis
-#' plotConfiguration <- PlotConfiguration$new()
-#' xAxisDefaultExpand(plotConfiguration)
-#'
-#' # DDI plots use log scale for x-axis
-#' ddiPlotConfiguration <- DDIRatioPlotConfiguration$new()
-#' xAxisDefaultExpand(ddiPlotConfiguration)
-#'
-#' # Boxplots use discrete scale for x-axis
-#' boxPlotConfiguration <- BoxWhiskerPlotConfiguration$new()
-#' xAxisDefaultExpand(boxPlotConfiguration)
-#' }
-#' @keywords internal
-xAxisDefaultExpand <- function(plotConfiguration) {
-  return(isOfType(plotConfiguration, c("DDIRatioPlotConfiguration")))
-}
-
-#' @title yAxisDefaultExpand
-#' @description Return x-axis default expand from a plot configuration
-#' @param plotConfiguration A `PlotConfiguration` object
-#' @return The default expand.
-#' @examples
-#' \dontrun{
-#' # Regular plots use continuous linear scale for x-axis
-#' plotConfiguration <- PlotConfiguration$new()
-#' yAxisDefaultExpand(plotConfiguration)
-#'
-#' # DDI plots use log scale for x-axis
-#' ddiPlotConfiguration <- DDIRatioPlotConfiguration$new()
-#' yAxisDefaultExpand(ddiPlotConfiguration)
-#'
-#' # Boxplots use discrete scale for x-axis
-#' boxPlotConfiguration <- BoxWhiskerPlotConfiguration$new()
-#' yAxisDefaultExpand(boxPlotConfiguration)
-#' }
-#' @keywords internal
-yAxisDefaultExpand <- function(plotConfiguration) {
-  return(isOfType(plotConfiguration, c("DDIRatioPlotConfiguration")))
 }
