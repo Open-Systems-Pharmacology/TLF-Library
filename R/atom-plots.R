@@ -301,6 +301,7 @@ addLine <- function(data = NULL,
           shape = "legendLabels",
           fill = "legendLabels"
         ),
+        # Use NA instead of TRUE to prevent having an unwanted point in the legend key
         show.legend = NA
       )
   }
@@ -320,6 +321,7 @@ addLine <- function(data = NULL,
           shape = "legendLabels",
           fill = "legendLabels"
         ),
+        # Use NA instead of TRUE to prevent having an unwanted point in the legend key
         show.legend = NA
       )
   }
