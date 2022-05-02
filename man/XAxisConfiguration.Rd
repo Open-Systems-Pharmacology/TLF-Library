@@ -19,6 +19,7 @@ R6 class defining the configuration of X-axis
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="ggplotExpansion">}\href{../../tlf/html/AxisConfiguration.html#method-ggplotExpansion}{\code{tlf::AxisConfiguration$ggplotExpansion()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="ggplotScale">}\href{../../tlf/html/AxisConfiguration.html#method-ggplotScale}{\code{tlf::AxisConfiguration$ggplotScale()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="initialize">}\href{../../tlf/html/AxisConfiguration.html#method-initialize}{\code{tlf::AxisConfiguration$initialize()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="prettyTickLabels">}\href{../../tlf/html/AxisConfiguration.html#method-prettyTickLabels}{\code{tlf::AxisConfiguration$prettyTickLabels()}}\out{</span>}

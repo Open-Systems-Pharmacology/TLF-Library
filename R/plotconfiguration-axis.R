@@ -38,7 +38,6 @@ createPlotTicks <- function(ticks) {
   return(ticks)
 }
 
-
 #' @title AxisConfiguration
 #' @description  R6 class defining the configuration of axis
 #' @export
@@ -52,20 +51,26 @@ AxisConfiguration <- R6::R6Class(
     #' @param ticks numeric vector or function defining where to position axis ticks
     #' @param ticklabels character vector or function defining what to print on axis ticks
     #' @param font `Font` object defining the font of ticklabels
+    #' @param expand logical defining if data is expanded until axis.
+    #' If `TRUE`, data is expanded until axis
+    #' If `FALSE`, some space between data and axis is kept
     #' @return A new `AxisConfiguration` object
     initialize = function(limits = NULL,
                               scale = Scaling$lin,
                               ticks = NULL,
                               ticklabels = NULL,
-                              font = NULL) {
+                              font = NULL,
+                              expand = FALSE) {
       validateIsNumeric(limits, nullAllowed = TRUE)
       validateIsOfType(font, "Font", nullAllowed = TRUE)
+      validateIsLogical(expand)
       private$.limits <- limits
 
       scale <- scale %||% Scaling$lin
       private$.scale <- createPlotScale(scale)
       private$.ticks <- createPlotTicks(ticks)
       private$.ticklabels <- createPlotTicks(ticklabels)
+      private$.expand <- expand
 
       # Default axis font will use theme
       defaultFont <- Font$new()
@@ -88,6 +93,15 @@ AxisConfiguration <- R6::R6Class(
         "ln" = "log",
         private$.scale
       )
+    },
+
+    #' @description Get the `ggplot2` actual function for expansion
+    #' @return A `ggplot2` function
+    ggplotExpansion = function() {
+      if (private$.expand) {
+        return(ggplot2::expansion())
+      }
+      return(ggplot2::waiver())
     },
 
     #' @description Get tick values for pretty default log plots
@@ -185,6 +199,17 @@ AxisConfiguration <- R6::R6Class(
       }
       private$.font <- value %||% defaultFont
       return(invisible())
+    },
+    #' @field expand logical defining if data is expanded until axis.
+    #' If `TRUE`, data is expanded until axis
+    #' If `FALSE`, some space between data and axis is kept
+    expand = function(value) {
+      if (missing(value)) {
+        return(private$.expand)
+      }
+      validateIsLogical(value)
+      private$.expand <- value
+      return(invisible())
     }
   ),
   private = list(
@@ -192,7 +217,8 @@ AxisConfiguration <- R6::R6Class(
     .scale = NULL,
     .ticks = NULL,
     .ticklabels = NULL,
-    .font = NULL
+    .font = NULL,
+    .expand = NULL
   )
 )
 
@@ -219,7 +245,11 @@ XAxisConfiguration <- R6::R6Class(
       if (isIncluded(private$.scale, Scaling$discrete)) {
         suppressMessages(
           plotObject <- plotObject +
-            ggplot2::scale_x_discrete(breaks = private$.ticks, labels = private$.ticklabels)
+            ggplot2::scale_x_discrete(
+              breaks = private$.ticks,
+              labels = private$.ticklabels,
+              expand = self$ggplotExpansion()
+            )
         )
         return(plotObject)
       }
@@ -227,7 +257,12 @@ XAxisConfiguration <- R6::R6Class(
       # `try` should be added in cases of scale breaking because all the ggplot object elements are not yet in place
       suppressMessages(
         plotObject <- plotObject +
-          ggplot2::scale_x_continuous(trans = self$ggplotScale(), breaks = self$prettyTicks(), labels = self$prettyTickLabels())
+          ggplot2::scale_x_continuous(
+            trans = self$ggplotScale(),
+            breaks = self$prettyTicks(),
+            labels = self$prettyTickLabels(),
+            expand = self$ggplotExpansion()
+          )
       )
       # Add special tick lines for pretty log plots
       suppressMessages(
@@ -268,7 +303,11 @@ YAxisConfiguration <- R6::R6Class(
       if (isIncluded(private$.scale, Scaling$discrete)) {
         suppressMessages(
           plotObject <- plotObject +
-            ggplot2::scale_y_discrete(breaks = private$.ticks, labels = private$.ticklabels)
+            ggplot2::scale_y_discrete(
+              breaks = private$.ticks,
+              labels = private$.ticklabels,
+              expand = self$ggplotExpansion()
+            )
         )
         return(plotObject)
       }
@@ -276,7 +315,12 @@ YAxisConfiguration <- R6::R6Class(
       # `try` should be added in cases of scale breaking because all the ggplot object elements are not yet in place
       suppressMessages(
         plotObject <- plotObject +
-          ggplot2::scale_y_continuous(trans = self$ggplotScale(), breaks = self$prettyTicks(), labels = self$prettyTickLabels())
+          ggplot2::scale_y_continuous(
+            trans = self$ggplotScale(),
+            breaks = self$prettyTicks(),
+            labels = self$prettyTickLabels(),
+            expand = self$ggplotExpansion()
+          )
       )
       # Add special tick lines for pretty log plots
       suppressMessages(

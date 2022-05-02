@@ -1,6 +1,9 @@
 #' @title PlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object
 #' @field export R6 class `ExportConfiguration` defining properties for saving/exporting plota
+#' @field defaultXScale Default xAxis scale value when creating a `PlotConfiguration` object
+#' @field defaultYScale Default yAxis scale value when creating a `PlotConfiguration` object
+#' @field defaultExpand Default expand value when creating a `PlotConfiguration` object
 #' @family PlotConfiguration classes
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-configuration.html>
@@ -9,6 +12,11 @@ PlotConfiguration <- R6::R6Class(
   "PlotConfiguration",
   public = list(
     export = NULL,
+    # Caution, helper enum Scaling doesn't work here 
+    # (even using @include to collate and define the variable beforehand)
+    defaultXScale = "lin",
+    defaultYScale = "lin",
+    defaultExpand = FALSE,
 
     #' @description Create a new `PlotConfiguration` object
     #' @param title character or `Label` object defining plot title
@@ -122,13 +130,19 @@ PlotConfiguration <- R6::R6Class(
 
       # X-Axis Configuration, overwrite some properties only if they are defined
       validateIsOfType(xAxis, "XAxisConfiguration", nullAllowed = TRUE)
-      private$.xAxis <- xAxis %||% XAxisConfiguration$new(scale = xAxisDefaultScale(self))
+      private$.xAxis <- xAxis %||% XAxisConfiguration$new(
+        scale = self$defaultXScale,
+        expand = self$defaultExpand
+      )
       private$.xAxis$limits <- xLimits %||% private$.xAxis$limits
       private$.xAxis$scale <- xScale %||% private$.xAxis$scale
 
       # Y-Axis configuration, overwrite some properties only if they are defined
       validateIsOfType(yAxis, "YAxisConfiguration", nullAllowed = TRUE)
-      private$.yAxis <- yAxis %||% YAxisConfiguration$new(scale = yAxisDefaultScale(self))
+      private$.yAxis <- yAxis %||% YAxisConfiguration$new(
+        scale = self$defaultYScale,
+        expand = self$defaultExpand
+      )
       private$.yAxis$limits <- yLimits %||% private$.yAxis$limits
       private$.yAxis$scale <- yScale %||% private$.yAxis$scale
 
@@ -272,20 +286,32 @@ TimeProfilePlotConfiguration <- R6::R6Class(
 
 #' @title PKRatioPlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object for PK ratio plots
+#' @field defaultYScale Default yAxis scale value when creating a `PKRatioPlotConfiguration` object
 #' @export
 #' @family PlotConfiguration classes
 PKRatioPlotConfiguration <- R6::R6Class(
   "PKRatioPlotConfiguration",
-  inherit = PlotConfiguration
+  inherit = PlotConfiguration,
+  public = list(
+    defaultYScale = "log"
+  )
 )
 
 #' @title DDIRatioPlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object for DDI ratio plots
+#' @field defaultXScale Default xAxis scale value when creating a `DDIRatioPlotConfiguration` object
+#' @field defaultYScale Default yAxis scale value when creating a `DDIRatioPlotConfiguration` object
+#' @field defaultExpand Default expand value when creating a `DDIRatioPlotConfiguration` object
 #' @export
 #' @family PlotConfiguration classes
 DDIRatioPlotConfiguration <- R6::R6Class(
   "DDIRatioPlotConfiguration",
-  inherit = PlotConfiguration
+  inherit = PlotConfiguration,
+  public = list(
+    defaultXScale = "log",
+    defaultYScale = "log",
+    defaultExpand = TRUE
+  )
 )
 
 #' @title ObsVsPredPlotConfiguration

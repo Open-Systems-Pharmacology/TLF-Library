@@ -43,6 +43,7 @@ Scaling <- enum(c(
 #' @param ticks Optional values or function for axis ticks
 #' @param ticklabels Optional values or function for axis ticklabels
 #' @param font A `Font` object  defining font of ticklabels
+#' @param expand Logical defining if data is expanded until axis
 #' @return A `ggplot` object
 #' @export
 #' @examples
@@ -64,11 +65,13 @@ setXAxis <- function(plotObject,
                      limits = NULL,
                      ticks = NULL,
                      ticklabels = NULL,
-                     font = NULL) {
+                     font = NULL,
+                     expand = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsIncluded(scale, Scaling, nullAllowed = TRUE)
   validateIsNumeric(limits, nullAllowed = TRUE)
   validateIsOfType(font, "Font", nullAllowed = TRUE)
+  validateIsLogical(expand, nullAllowed = TRUE)
 
   # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
@@ -77,7 +80,7 @@ setXAxis <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$xAxis
   xAxis <- newPlotObject$plotConfiguration$xAxis
-  eval(parseVariableToObject("xAxis", c("limits", "scale", "ticks", "ticklabels", "font"), keepIfNull = TRUE))
+  eval(parseVariableToObject("xAxis", c("limits", "scale", "ticks", "ticklabels", "font", "expand"), keepIfNull = TRUE))
   newPlotObject <- xAxis$updatePlot(newPlotObject, ylim = newPlotObject$plotConfiguration$yAxis$limits)
   return(newPlotObject)
 }
@@ -106,11 +109,13 @@ setYAxis <- function(plotObject,
                      limits = NULL,
                      ticks = NULL,
                      ticklabels = NULL,
-                     font = NULL) {
+                     font = NULL,
+                     expand = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsIncluded(scale, Scaling, nullAllowed = TRUE)
   validateIsNumeric(limits, nullAllowed = TRUE)
   validateIsOfType(font, "Font", nullAllowed = TRUE)
+  validateIsLogical(expand, nullAllowed = TRUE)
 
   # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
@@ -119,70 +124,11 @@ setYAxis <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$yAxis
   yAxis <- newPlotObject$plotConfiguration$yAxis
-  eval(parseVariableToObject("yAxis", c("limits", "scale", "ticks", "ticklabels", "font"), keepIfNull = TRUE))
+  eval(parseVariableToObject("yAxis", c("limits", "scale", "ticks", "ticklabels", "font", "expand"), keepIfNull = TRUE))
   newPlotObject <- yAxis$updatePlot(newPlotObject, xlim = newPlotObject$plotConfiguration$xAxis$limits)
   return(newPlotObject)
 }
 
-#' @title xAxisDefaultScale
-#' @description Return x-axis default scale from a plot configuration
-#' @param plotConfiguration A `PlotConfiguration` object
-#' @return The default scale.
-#' The enum `Scaling` provides a list of available scales.
-#' @examples
-#' \dontrun{
-#' # Regular plots use continuous linear scale for x-axis
-#' plotConfiguration <- PlotConfiguration$new()
-#' xAxisDefaultScale(plotConfiguration)
-#'
-#' # DDI plots use log scale for x-axis
-#' ddiPlotConfiguration <- DDIRatioPlotConfiguration$new()
-#' xAxisDefaultScale(ddiPlotConfiguration)
-#'
-#' # Boxplots use discrete scale for x-axis
-#' boxPlotConfiguration <- BoxWhiskerPlotConfiguration$new()
-#' xAxisDefaultScale(boxPlotConfiguration)
-#' }
-#' @keywords internal
-xAxisDefaultScale <- function(plotConfiguration) {
-  if (isOfType(plotConfiguration, c("DDIRatioPlotConfiguration"))) {
-    return(Scaling$log)
-  }
-  if (isOfType(plotConfiguration, c("BoxWhiskerPlotConfiguration"))) {
-    return(Scaling$discrete)
-  }
-  return(Scaling$lin)
-}
-
-#' @title yAxisDefaultScale
-#' @description Return y-axis default scale from a plot configuration
-#' @param plotConfiguration A `PlotConfiguration` object
-#' @return The default scale.
-#' The enum `Scaling` provides a list of available scales.
-#' @examples
-#' \dontrun{
-#' # Regular plots use continuous linear scale for x-axis
-#' plotConfiguration <- PlotConfiguration$new()
-#' yAxisDefaultScale(plotConfiguration)
-#'
-#' # DDI plots use log scale for y-axis
-#' ddiPlotConfiguration <- DDIRatioPlotConfiguration$new()
-#' yAxisDefaultScale(ddiPlotConfiguration)
-#'
-#' # Tornado plots use discrete scale for y-axis
-#' tornadoPlotConfiguration <- TornadoPlotConfiguration$new()
-#' yAxisDefaultScale(tornadoPlotConfiguration)
-#' }
-#' @keywords internal
-yAxisDefaultScale <- function(plotConfiguration) {
-  if (isOfType(plotConfiguration, c("PKRatioPlotConfiguration", "DDIRatioPlotConfiguration"))) {
-    return(Scaling$log)
-  }
-  if (isOfType(plotConfiguration, c("TornadoPlotConfiguration"))) {
-    return(Scaling$discrete)
-  }
-  return(Scaling$lin)
-}
 
 #' @title getLogTickLabels
 #' @description Get ticklabels expressions for log scale plots

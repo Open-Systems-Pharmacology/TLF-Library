@@ -25,6 +25,12 @@ Other PlotConfiguration classes:
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{export}}{R6 class \code{ExportConfiguration} defining properties for saving/exporting plota}
+
+\item{\code{defaultXScale}}{Default xAxis scale value when creating a \code{PlotConfiguration} object}
+
+\item{\code{defaultYScale}}{Default yAxis scale value when creating a \code{PlotConfiguration} object}
+
+\item{\code{defaultExpand}}{Default expand value when creating a \code{PlotConfiguration} object}
 }
 \if{html}{\out{</div>}}
 }
