@@ -33,21 +33,22 @@ Linetypes <- enum(c(
 #' @import ospsuite.utils
 #' @family enum helpers
 Shapes <- list(
+  # Regular shapes
   "circle" = "circle",
   "square" = "square",
-  "diamond" = "diamond",
   "triangle" = "triangle",
   "triangleDown" = "triangle down filled",
   "cross" = "cross",
   "plus" = "plus",
   "asterisk" = "asterisk",
-  "blank" = " ",
-  "dot" = "bullet",
   "hollowCircle" = "circle open",
   "hollowSquare" = "square open",
   "hollowDiamond" = "diamond open",
   "hollowTriangle" = "triangle open",
   "hollowTriangleDown" = "triangle down open",
+  "diamond" = "diamond",
+  "dot" = "bullet",
+  # Shapes translated from unicode characters
   "pentagram" = "\u2605",
   "hollowPentagram" = "\u2606",
   "cardsDiamond" = "\u2666",
@@ -70,7 +71,9 @@ Shapes <- list(
   "arrowLeft" = "\u2190",
   "arrowRight" = "\u2193",
   "arrowUp" = "\u2191",
-  "arrowDown" = "\u2193"
+  "arrowDown" = "\u2193",
+  # No shape displayed
+  "blank" = " "
 )
 
 asPlotShape <- function(shapes) {
