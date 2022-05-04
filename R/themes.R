@@ -56,7 +56,7 @@ ThemeFont <- R6::R6Class(
                           baseFace = "plain",
                           baseFamily = "",
                           baseAngle = 0,
-                          baseAlign = "left") {
+                          baseAlign = "center") {
       # Validate necessary input
       validateIsString(baseColor)
       validateIsString(baseFamily)

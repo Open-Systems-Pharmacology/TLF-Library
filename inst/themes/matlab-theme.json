@@ -5,14 +5,16 @@
       "size": 12,
       "fontFace": "bold",
       "fontFamily": "",
-      "angle": 0
+      "angle": 0,
+      "align": "center"
     },
     "subtitle": {
       "color": "black",
       "size": 11,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0
+      "angle": 0,
+      "align": "center"
     },
     "xlabel": {
       "color": "black",
@@ -42,7 +44,16 @@
       "size": 8,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0
+      "angle": 0,
+      "align": "left"
+    },
+    "legendTitle": {
+      "color": "black",
+      "size": 14,
+      "fontFace": "plain",
+      "fontFamily": "",
+      "angle": 0,
+      "align": "center"
     },
     "xAxis": {
       "color": "black",

@@ -58,7 +58,7 @@ Create a new \code{ThemeFont} object
   baseFace = "plain",
   baseFamily = "",
   baseAngle = 0,
-  baseAlign = "left"
+  baseAlign = "center"
 )}\if{html}{\out{</div>}}
 }
 
