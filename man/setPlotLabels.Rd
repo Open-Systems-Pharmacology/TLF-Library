@@ -9,7 +9,8 @@ setPlotLabels(
   title = NULL,
   subtitle = NULL,
   xlabel = NULL,
-  ylabel = NULL
+  ylabel = NULL,
+  caption = NULL
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ setPlotLabels(
 \item{xlabel}{A character value or \code{Label} object}
 
 \item{ylabel}{A character value or \code{Label} object}
+
+\item{caption}{A character value or \code{Label} object}
 }
 \value{
 A \code{ggplot} object

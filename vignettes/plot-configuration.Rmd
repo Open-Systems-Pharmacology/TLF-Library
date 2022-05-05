@@ -34,7 +34,7 @@ To create such an object, the method *new()* is required.
 Multiple arguments can be passed on the method in order to directly define the properties. 
 The properties default values can be handled and managed using the concept of themes.
 
-As the example below illustrates, the following properties are accounted for by the *PlotConfiguration* class. 
+As the example below illustrates, the following plot properties are defined by the **PlotConfiguration** class. 
 Each of these properties is managed by a different R6 class object detailed in the next sections:
 
 - *labels*
@@ -42,33 +42,50 @@ Each of these properties is managed by a different R6 class object detailed in t
 - *xAxis*/*yAxis*
 - *legend*
 - *export*
+- *points*/*lines*/*ribbons*/*errorbars*
 
-```{r empty-configuration-plots}
+```{r empty-plot-configuration}
+# Creates a PlotConfiguration with default properties
 myConfiguration <- PlotConfiguration$new()
-# myConfiguration$print()
 
+myConfiguration
+```
+
+```{r my-empty-plot-configuration}
+# Creates a PlotConfiguration with title and watermark as user-defined properties
 myConfiguration <- PlotConfiguration$new(
   title = "my title",
   watermark = "my watermark"
 )
-# myConfiguration$print()
+
+myConfiguration
 ```
 
-When a `ggplot` object is initialized using the `tlf` method *initializePlot*, a *plotConfiguration* field is implanted to the plot object.
+When a `ggplot` object is initialized using the `tlf` method **`initializePlot`**, a *plotConfiguration* field is added to the plot object. This field corresponds to a **PlotConfiguration** object and defining the properties of the initialied plot.
 
-The ***p**lotConfiguration* field is class or subclass of ***P**lotConfiguration* that aims at simplifying and clarifying the plot properties mentioned above.
+**PlotConfiguration** objects can also be directly passed to the method *initializePlot* as shown below:
 
-*PlotConfiguration* objects can also be directly passed to the method *initializePlot* as shown below:
-
-```{r empty-plots}
+```{r empty-plot}
+# Creates an empty plot with default PlotConfiguration properties
 emptyPlot <- initializePlot()
 
-myEmptyPlot <- initializePlot(myConfiguration)
+emptyPlot$plotConfiguration
+
+emptyPlot
 ```
 
-```{r show-empty-plots, echo=FALSE, fig.cap="left: emptyPlot; right: myEmptyPlot", fig.width=7.5}
-patchwork::wrap_plots(emptyPlot, myEmptyPlot, ncol = 2)
+Figure: empty plot with default PlotConfiguration properties 
+
+```{r my-empty-plot}
+# Creates an empty plot with title and watermark as user-defined properties
+myEmptyPlot <- initializePlot(myConfiguration)
+
+myEmptyPlot$plotConfiguration
+
+myEmptyPlot
 ```
+
+Figure: empty plot with title and watermark as user-defined properties
 
 # 2. Label configuration: *labels*
 
@@ -81,6 +98,7 @@ It defines the label properties of the following plot captions:
 - subtitle
 - xlabel
 - ylabel
+- caption
 
 Each field is a *Label* object that associate a text with font properties:
 
@@ -99,9 +117,10 @@ knitr::kable(data.frame(
   "text" = title$text,
   "color" = title$font$color,
   "size" = title$font$size,
-  "face" = title$font$fontFace,
-  "family" = title$font$fontFamily,
-  "angle" = title$font$angle
+  "fontFace" = title$font$fontFace,
+  "fontFamily" = title$font$fontFamily,
+  "angle" = title$font$angle,
+  "align" = title$font$align
 ))
 ```
 
@@ -116,57 +135,64 @@ myRedPlotLabel <- LabelConfiguration$new(title = Label$new(
 ))
 ```
 
-```{r show-label-configuration, results='asis', echo=FALSE}
-knitr::kable(
-  data.frame(
-    Property = c("text", "color", "size", "angle", "fontFace", "fontFamily"),
-    title = c(
-      myRedPlotLabel$title$text, myRedPlotLabel$title$font$color, myRedPlotLabel$title$font$size,
-      myRedPlotLabel$title$font$angle, myRedPlotLabel$title$font$fontFace, myRedPlotLabel$title$font$fontFamily
-    ),
-    subtitle = c(
-      "", myRedPlotLabel$subtitle$font$color, myRedPlotLabel$subtitle$font$size,
-      myRedPlotLabel$subtitle$font$angle, myRedPlotLabel$subtitle$font$fontFace, myRedPlotLabel$subtitle$font$fontFamily
-    ),
-    xlabel = c(
-      "", myRedPlotLabel$xlabel$font$color, myRedPlotLabel$xlabel$font$size,
-      myRedPlotLabel$xlabel$font$angle, myRedPlotLabel$xlabel$font$fontFace, myRedPlotLabel$xlabel$font$fontFamily
-    ),
-    ylabel = c(
-      "", myRedPlotLabel$ylabel$font$color, myRedPlotLabel$ylabel$font$size,
-      myRedPlotLabel$ylabel$font$angle, myRedPlotLabel$ylabel$font$fontFace, myRedPlotLabel$ylabel$font$fontFamily
-    )
+```{r show-label-configuration, results='asis'}
+Property <- c("text", "font$color", "font$size", "font$angle", "font$align", "font$fontFace", "font$fontFamily")
+displayNullValue <- function(value){
+  if(is.null(value)){return("*NULL*")}
+  return(value)
+}
+labelProperties <- cbind.data.frame(
+  Property = Property,
+  sapply(
+  c("title", "subtitle", "xlabel", "ylabel", "caption"),
+  function(labelName){
+    # 
+    # Use an expression to get all the properties of the label in one line
+    eval(parse(text = paste0(
+      "c(", paste0("displayNullValue(myRedPlotLabel[[labelName]]$", Property, ")", collapse = ", "), ")"
+    )))
+    }
   )
-)
+  )
+
+knitr::kable(labelProperties)
 ```
 
 ## 2.2. Label configuration in plots
 
 The effect of label configuration in plots is straightforward:
 
-```{r label-in-plot-configuration}
+```{r label-in-plot-configuration-1}
 plotConfigurationLabel1 <- PlotConfiguration$new(
   title = "Title",
   subtitle = "Subtitle",
   xlabel = "x label",
-  ylabel = "y label"
+  ylabel = "y label",
+  caption = "Caption"
 )
 
 pLab1 <- initializePlot(plotConfigurationLabel1)
 
+pLab1
+```
+
+Figure: Empty plot with labels defined as `character` using default label properties
+
+```{r label-in-plot-configuration-2}
 plotConfigurationLabel2 <- PlotConfiguration$new(
   title = Label$new(text = "Title", size = 12, color = "deepskyblue4"),
   subtitle = Label$new(text = "Subtitle", size = 11, color = "steelblue"),
   xlabel = Label$new(text = "x label", size = 10, color = "dodgerblue2"),
-  ylabel = Label$new(text = "y label", size = 10, color = "dodgerblue2")
+  ylabel = Label$new(text = "y label", size = 10, color = "dodgerblue2", angle = 45),
+  caption = Label$new(text = "Caption", size = 8, color = "steelblue", align = Alignments$left)
 )
 
 pLab2 <- initializePlot(plotConfigurationLabel2)
+
+pLab2
 ```
 
-```{r show-label-in-plot-configuration, echo=FALSE, fig.cap="left: pLab1; right: pLab2", fig.width=7.5}
-patchwork::wrap_plots(pLab1, pLab2, ncol = 2)
-```
+Figure: Empty plot with labels defined as `Label` updating default label properties
 
 ## 2.3. Changing plot labels
 

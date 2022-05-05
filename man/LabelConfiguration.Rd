@@ -16,6 +16,8 @@ R6 class defining the configuration of the labels of a \code{ggplot} object
 \item{\code{xlabel}}{\code{Label} object defining the xlabel of the plot}
 
 \item{\code{ylabel}}{\code{Label} object defining the ylabel of the plot}
+
+\item{\code{caption}}{\code{Label} object defining the caption of the plot}
 }
 \if{html}{\out{</div>}}
 }
@@ -37,7 +39,8 @@ Create a new \code{LabelConfiguration} object
   title = NULL,
   subtitle = NULL,
   xlabel = NULL,
-  ylabel = NULL
+  ylabel = NULL,
+  caption = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -51,6 +54,8 @@ Create a new \code{LabelConfiguration} object
 \item{\code{xlabel}}{character or \code{Label} object defining xlabel}
 
 \item{\code{ylabel}}{character or \code{Label} object defining ylabel}
+
+\item{\code{caption}}{character or \code{Label} object defining caption}
 }
 \if{html}{\out{</div>}}
 }

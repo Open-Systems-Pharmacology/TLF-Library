@@ -6,6 +6,7 @@
 #' @field subtitle `Font` object for font properties of subtitle
 #' @field xlabel `Font` object for font properties of xlabel
 #' @field ylabel `Font` object for font properties of ylabel
+#' @field caption `Font` object for font properties of caption
 #' @field watermark `Font` object for font properties of watermark
 #' @field legendTitle `Font` object for font properties of legend title
 #' @field legend `Font` object for font properties of legend
@@ -19,6 +20,7 @@ ThemeFont <- R6::R6Class(
     subtitle = NULL,
     xlabel = NULL,
     ylabel = NULL,
+    caption = NULL,
     watermark = NULL,
     legendTitle = NULL,
     legend = NULL,
@@ -30,6 +32,7 @@ ThemeFont <- R6::R6Class(
     #' @param subtitle `Font` object or list for font properties of subtitle
     #' @param xlabel `Font` object or list for font properties of xlabel
     #' @param ylabel `Font` object or list for font properties of ylabel
+    #' @param caption `Font` object or list for font properties of caption
     #' @param watermark `Font` object or list for font properties of watermark
     #' @param legendTitle `Font` object or list for font properties of legend title
     #' @param legend `Font` object or list for font properties of legend
@@ -46,6 +49,7 @@ ThemeFont <- R6::R6Class(
                           subtitle = NULL,
                           xlabel = NULL,
                           ylabel = NULL,
+                          caption = NULL,
                           watermark = NULL,
                           legendTitle = NULL,
                           legend = NULL,
@@ -66,7 +70,7 @@ ThemeFont <- R6::R6Class(
       validateIsIncluded(baseAlign, Alignments)
 
       # Create all field properties by parsing and evaluating their expression
-      fieldNames <- c("title", "subtitle", "xlabel", "ylabel", "watermark", "legendTitle", "legend", "xAxis", "yAxis")
+      fieldNames <- c("title", "subtitle", "xlabel", "ylabel", "caption", "watermark", "legendTitle", "legend", "xAxis", "yAxis")
       setFontExpression <- parse(text = paste0(
         "self$", fieldNames, " <- Font$new(",
         "color = ", fieldNames, "$color %||% baseColor,",
@@ -82,7 +86,7 @@ ThemeFont <- R6::R6Class(
     #' @return A list that can be saved into a json file
     toJson = function() {
       jsonObject <- list()
-      fieldNames <- c("title", "subtitle", "xlabel", "ylabel", "watermark", "legendTitle", "legend", "xAxis", "yAxis")
+      fieldNames <- c("title", "subtitle", "xlabel", "ylabel", "caption", "watermark", "legendTitle", "legend", "xAxis", "yAxis")
       setJsonExpression <- parse(text = paste0(
         "jsonObject$", fieldNames, " <- list(",
         "color = self$", fieldNames, "$color,",

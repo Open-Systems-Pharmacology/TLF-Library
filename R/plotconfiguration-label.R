@@ -9,12 +9,14 @@ LabelConfiguration <- R6::R6Class(
     #' @param subtitle character or `Label` object defining subtitle
     #' @param xlabel character or `Label` object defining xlabel
     #' @param ylabel character or `Label` object defining ylabel
+    #' @param caption character or `Label` object defining caption
     #' @return A new `LabelConfiguration` object
     initialize = function(title = NULL,
                           subtitle = NULL,
                           xlabel = NULL,
-                          ylabel = NULL) {
-      inputs <- c("title", "subtitle", "xlabel", "ylabel")
+                          ylabel = NULL,
+                          caption = NULL) {
+      inputs <- c("title", "subtitle", "xlabel", "ylabel", "caption")
       validateExpressions <- parse(text = paste0("validateIsOfType(", inputs, ', c("Label", "character"), nullAllowed =TRUE)'))
       eval(validateExpressions)
 
@@ -39,13 +41,15 @@ LabelConfiguration <- R6::R6Class(
         title = private$.title$text,
         subtitle = private$.subtitle$text,
         x = private$.xlabel$text,
-        y = private$.ylabel$text
+        y = private$.ylabel$text,
+        caption = private$.caption$text
       )
       plotObject <- plotObject + ggplot2::theme(
         plot.title = private$.title$createPlotFont(),
         plot.subtitle = private$.subtitle$createPlotFont(),
         axis.title.x = private$.xlabel$createPlotFont(),
-        axis.title.y = private$.ylabel$createPlotFont()
+        axis.title.y = private$.ylabel$createPlotFont(),
+        plot.caption = private$.caption$createPlotFont()
       )
       return(plotObject)
     }
@@ -98,12 +102,25 @@ LabelConfiguration <- R6::R6Class(
       }
       private$.ylabel <- asLabel(value, font = private$.ylabel$font)
       return(invisible())
+    },
+    #' @field caption `Label` object defining the caption of the plot
+    caption = function(value) {
+      if (missing(value)) {
+        return(private$.caption)
+      }
+      validateIsOfType(value, c("character", "Label"), nullAllowed = TRUE)
+      if(isOfType(value, "Label")){
+        private$.caption <- asLabel(value)
+      }
+      private$.caption <- asLabel(value, font = private$.caption$font)
+      return(invisible())
     }
   ),
   private = list(
     .title = NULL,
     .subtitle = NULL,
     .xlabel = NULL,
-    .ylabel = NULL
+    .ylabel = NULL,
+    .caption = NULL
   )
 )

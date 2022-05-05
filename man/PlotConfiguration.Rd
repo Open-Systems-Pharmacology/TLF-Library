@@ -75,6 +75,7 @@ Create a new \code{PlotConfiguration} object
   subtitle = NULL,
   xlabel = NULL,
   ylabel = NULL,
+  caption = NULL,
   legend = NULL,
   legendTitle = NULL,
   legendPosition = NULL,
@@ -117,6 +118,8 @@ Create a new \code{PlotConfiguration} object
 \item{\code{xlabel}}{character or \code{Label} object defining plot xlabel}
 
 \item{\code{ylabel}}{character or \code{Label} object defining plot ylabel}
+
+\item{\code{caption}}{character or \code{Label} object defining plot caption}
 
 \item{\code{legend}}{\code{LegendConfiguration} object defining legend properties}
 
