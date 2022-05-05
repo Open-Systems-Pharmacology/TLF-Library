@@ -17,6 +17,8 @@ R6 class defining theme font properties
 
 \item{\code{ylabel}}{\code{Font} object for font properties of ylabel}
 
+\item{\code{caption}}{\code{Font} object for font properties of caption}
+
 \item{\code{watermark}}{\code{Font} object for font properties of watermark}
 
 \item{\code{legendTitle}}{\code{Font} object for font properties of legend title}
@@ -48,6 +50,7 @@ Create a new \code{ThemeFont} object
   subtitle = NULL,
   xlabel = NULL,
   ylabel = NULL,
+  caption = NULL,
   watermark = NULL,
   legendTitle = NULL,
   legend = NULL,
@@ -72,6 +75,8 @@ Create a new \code{ThemeFont} object
 \item{\code{xlabel}}{\code{Font} object or list for font properties of xlabel}
 
 \item{\code{ylabel}}{\code{Font} object or list for font properties of ylabel}
+
+\item{\code{caption}}{\code{Font} object or list for font properties of caption}
 
 \item{\code{watermark}}{\code{Font} object or list for font properties of watermark}
 

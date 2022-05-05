@@ -67,6 +67,7 @@ ui <- fluidPage(
           labelPanel("Subtitle"),
           labelPanel("Xlabel"),
           labelPanel("Ylabel"),
+          labelPanel("Caption"),
           labelPanel("Watermark")
         )
       ),
@@ -547,6 +548,39 @@ server <- function(input, output, session) {
     plotConfiguration <- getPlotConfiguration()
     textInput("subtitleFamily2", label = "family", value = plotConfiguration$labels$subtitle$font$fontFamily)
   })
+  
+  #----- Get caption features
+  output$captionText <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    textInput("captionText2", label = "text", value = plotConfiguration$labels$caption$text)
+  })
+  output$captionColor <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectizeInput("captionColor2",
+                   label = "color", choices = grDevices:::colors(),
+                   selected = plotConfiguration$labels$caption$font$color, options = list(create = TRUE)
+    )
+  })
+  output$captionSize <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    numericInput("captionSize2", label = "size", min = 0, max = 48, step = 0.5, value = plotConfiguration$labels$caption$font$size)
+  })
+  output$captionAngle <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    numericInput("captionAngle2", label = "angle", min = -180, max = 180, step = 0.5, value = plotConfiguration$labels$caption$font$angle)
+  })
+  output$captionAlign <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("captionAlign2", label = "align", choices = Alignments, selected = plotConfiguration$labels$caption$font$align)
+  })
+  output$captionFace <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    selectInput("captionFace2", label = "face", choices = FontFaces, selected = plotConfiguration$labels$caption$font$fontFace)
+  })
+  output$captionFamily <- renderUI({
+    plotConfiguration <- getPlotConfiguration()
+    textInput("captionFamily2", label = "family", value = plotConfiguration$labels$caption$font$fontFamily)
+  })
 
   #----- Get xlabel features
   output$xlabelText <- renderUI({
@@ -903,9 +937,9 @@ server <- function(input, output, session) {
     plotConfiguration$legend$font$fontFamily <- tlfInput(input$legendFontFamily2) %||% plotConfiguration$legend$font$fontFamily
 
     #--- Labels (using expressions)
-    labels <- rep(c("title", "subtitle", "xlabel", "ylabel"), 7)
-    configurationProperties <- rep(c("text", "font$color", "font$size", "font$angle","font$align","font$fontFace","font$fontFamily"), each = 4)
-    inputProperties <- rep(c("Text", "Color", "Size", "Angle", "Align", "Face", "Family"), each = 4)
+    labels <- rep(c("title", "subtitle", "xlabel", "ylabel", "caption"), 7)
+    configurationProperties <- rep(c("text", "font$color", "font$size", "font$angle","font$align","font$fontFace","font$fontFamily"), each = 5)
+    inputProperties <- rep(c("Text", "Color", "Size", "Angle", "Align", "Face", "Family"), each = 5)
 
     labelExpression <- parse(text = paste0(
       "plotConfiguration$labels$", labels, "$", configurationProperties,

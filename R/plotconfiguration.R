@@ -23,6 +23,7 @@ PlotConfiguration <- R6::R6Class(
     #' @param subtitle character or `Label` object defining plot subtitle
     #' @param xlabel character or `Label` object defining plot xlabel
     #' @param ylabel character or `Label` object defining plot ylabel
+    #' @param caption character or `Label` object defining plot caption
     #' @param legend `LegendConfiguration` object defining legend properties
     #' @param legendTitle character or `Label` object defining legend title
     #' @param legendPosition character defining legend position.
@@ -59,6 +60,7 @@ PlotConfiguration <- R6::R6Class(
                           subtitle = NULL,
                           xlabel = NULL,
                           ylabel = NULL,
+                          caption = NULL,
                           # Legend Configuration
                           legend = NULL,
                           legendTitle = NULL,
@@ -100,7 +102,7 @@ PlotConfiguration <- R6::R6Class(
       # validation of the input is done within the creation of the object
       private$.labels <- LabelConfiguration$new(
         title = title, subtitle = subtitle,
-        xlabel = xlabel, ylabel = ylabel
+        xlabel = xlabel, ylabel = ylabel, caption = caption
       )
 
       # Smart configuration if xlabel and ylabel

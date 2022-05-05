@@ -32,6 +32,14 @@
       "angle": 90,
       "align": "center"
     },
+    "caption": {
+      "color": "black",
+      "size": 10,
+      "fontFace": "plain",
+      "fontFamily": "",
+      "angle": 0,
+      "align": "left"
+    },
     "watermark": {
       "color": "grey30",
       "size": 12,

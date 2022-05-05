@@ -32,6 +32,14 @@
       "angle": 90,
       "align": "center"
     },
+    "caption": {
+      "color": "#BDBDBD",
+      "size": 8,
+      "fontFace": "plain",
+      "fontFamily": "",
+      "angle": 0,
+      "align": "left"
+    },
     "watermark": {
       "color": "#486581",
       "size": 18,

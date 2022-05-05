@@ -29,6 +29,7 @@ ui <- fluidPage(
           labelPanel("Subtitle"),
           labelPanel("Xlabel"),
           labelPanel("Ylabel"),
+          labelPanel("Caption"),
           labelPanel("Watermark", otherInput = textInput("watermarkText", label = "Content", value = jsonTheme$background$watermark))
         )
       ),
@@ -188,8 +189,8 @@ server <- function(input, output) {
   updateTheme <- reactive({
     #---------- Update Fonts ----------#
     # Each line will look like 'jsonTheme$fonts$title$color <- input$titleColor'
-    inputPlotProperties <- c("title", "subtitle", "xlabel", "ylabel", "watermark", "xAxisTicks", "yAxisTicks", "legendFont", "legendTitleFont")
-    plotProperties <- c("title", "subtitle", "xlabel", "ylabel", "watermark", "xAxis", "yAxis", "legend", "legendTitle")
+    inputPlotProperties <- c("title", "subtitle", "xlabel", "ylabel", "caption", "watermark", "xAxisTicks", "yAxisTicks", "legendFont", "legendTitleFont")
+    plotProperties <- c("title", "subtitle", "xlabel", "ylabel", "caption", "watermark", "xAxis", "yAxis", "legend", "legendTitle")
     inputFontProperties <- c("Color", "Size", "Angle", "Align", "Face", "Family")
     plotFontProperties <- c("color", "size", "angle", "align", "fontFace", "fontFamily")
     updateFontExpression <- parse(text = paste0(
@@ -298,7 +299,7 @@ server <- function(input, output) {
 
     # Reactive function that update theme object
     updateTheme()
-    plotConfiguration <- PlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel")
+    plotConfiguration <- PlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel", caption = "caption")
 
     #---------- Define dataMapping from selected sample plot ----------#
     dataMapping <- switch(input$selectedSamplePlot,
@@ -324,13 +325,13 @@ server <- function(input, output) {
       addLine = plotConfiguration,
       addRibbon = plotConfiguration,
       addErrorbar = plotConfiguration,
-      plotBoxWhisker = BoxWhiskerPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel"),
-      plotDDIRatio = DDIRatioPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel", xScale = Scaling$log, yScale = Scaling$log),
-      plotHistogram = HistogramPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel"),
-      plotObsVsPred = ObsVsPredPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel"),
-      plotPKRatio = PKRatioPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel", yScale = Scaling$log),
-      plotTimeProfile = TimeProfilePlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel"),
-      plotTornado = TornadoPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel")
+      plotBoxWhisker = BoxWhiskerPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel", caption = "caption"),
+      plotDDIRatio = DDIRatioPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel", caption = "caption"),
+      plotHistogram = HistogramPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel", caption = "caption"),
+      plotObsVsPred = ObsVsPredPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel", caption = "caption"),
+      plotPKRatio = PKRatioPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel", caption = "caption"),
+      plotTimeProfile = TimeProfilePlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel", caption = "caption"),
+      plotTornado = TornadoPlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel", caption = "caption")
     )
 
     #---------- Define plot from selected sample plot ----------#

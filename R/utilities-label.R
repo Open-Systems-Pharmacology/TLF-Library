@@ -5,6 +5,7 @@
 #' @param subtitle A character value or `Label` object
 #' @param xlabel A character value or `Label` object
 #' @param ylabel A character value or `Label` object
+#' @param caption A character value or `Label` object
 #' @return A `ggplot` object
 #' @export
 #' @examples 
@@ -20,11 +21,12 @@ setPlotLabels <- function(plotObject,
                           title = NULL,
                           subtitle = NULL,
                           xlabel = NULL,
-                          ylabel = NULL) {
+                          ylabel = NULL,
+                          caption = NULL) {
   validateIsOfType(plotObject, "ggplot")
   # Inputs will undergo the same code, so parse/eval
   # parse/eval of inputs prevent copy paste of code
-  inputs <- c("title", "subtitle", "xlabel", "ylabel")
+  inputs <- c("title", "subtitle", "xlabel", "ylabel", "caption")
   validateExpressions <- parse(text = paste0("validateIsOfType(", inputs, ', c("Label", "character"), nullAllowed =TRUE)'))
   eval(validateExpressions)
 
