@@ -140,7 +140,7 @@ plotGrid <- function(plotGridConfiguration) {
 PlotGridConfiguration <- R6::R6Class(
   "PlotGridConfiguration",
   public = list(
-    plotList = NULL,
+    plotList = list(),
     title = NULL,
     subtitle = NULL,
     caption = NULL,
@@ -164,6 +164,21 @@ PlotGridConfiguration <- R6::R6Class(
     #' @return A `PlotGridConfiguration` object.
     initialize = function(plotList = NULL) {
       self$plotList <- plotList
+    },
+
+    #' @description Add a plot object.
+    #'
+    #' @param plots A single or a list containing `ggplot` object(s).
+    addPlots = function(plots = NULL) {
+      if (!is.null(plots)) {
+        validateIsOfType(plots, "ggplot")
+
+        if (objectCount(plots) == 1L) {
+          plots <- list(plots)
+        }
+
+        self$plotList <- append(self$plotList, plots)
+      }
     }
   )
 )

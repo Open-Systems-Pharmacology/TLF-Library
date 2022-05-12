@@ -82,6 +82,7 @@ in the grid. Will get repeated to match the dimensions of the grid.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{PlotGridConfiguration$new()}}
+\item \href{#method-addPlots}{\code{PlotGridConfiguration$addPlots()}}
 \item \href{#method-clone}{\code{PlotGridConfiguration$clone()}}
 }
 }
@@ -103,6 +104,23 @@ Create an instance of \code{PlotGridConfiguration} class.
 }
 \subsection{Returns}{
 A \code{PlotGridConfiguration} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-addPlots"></a>}}
+\if{latex}{\out{\hypertarget{method-addPlots}{}}}
+\subsection{Method \code{addPlots()}}{
+Add a plot object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PlotGridConfiguration$addPlots(plots = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{plots}}{A single or a list containing \code{ggplot} object(s).}
+}
+\if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
