@@ -64,8 +64,8 @@ tlfEnv$defaultExportParameters <- list(
 #' @param name base file name of the exported plots
 #' @export
 setDefaultExportParameters <- function(format = NULL, width = NULL, height = NULL, units = NULL, dpi = NULL, name = NULL) {
-  validateIsString(format, nullAllowed = TRUE)
-  validateIsIncluded(units, c("cm", "in", "mm", "px"), nullAllowed = TRUE)
+  validateIsIncluded(format, ExportFormats, nullAllowed = TRUE)
+  validateIsIncluded(units, ExportUnits, nullAllowed = TRUE)
   validateIsNumeric(width, nullAllowed = TRUE)
   validateIsNumeric(height, nullAllowed = TRUE)
   validateIsNumeric(dpi, nullAllowed = TRUE)

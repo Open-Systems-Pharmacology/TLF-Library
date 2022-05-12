@@ -1,3 +1,20 @@
+#' @title ExportUnits
+#' @import ospsuite.utils
+#' @export
+#' @description
+#' List of all available units for `width` and `height` to export a ggplot object
+#' @family enum helpers
+ExportUnits <- enum(c("cm", "in", "mm", "px"))
+
+
+#' @title ExportFormats
+#' @import ospsuite.utils
+#' @export
+#' @description
+#' List of all available formats to export a ggplot object
+#' @family enum helpers
+ExportFormats <- enum(c("png", "pdf", "eps", "ps", "tex", "jpeg", "tiff", "bmp", "svg", "wmf"))
+
 #' @title setPlotExport
 #' @description Set plot export properties
 #' @param plotObject Graphical object created from ggplot
@@ -12,8 +29,8 @@
 setPlotExport <- function(plotObject, name = NULL, format = NULL, width = NULL, height = NULL, units = NULL, dpi = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsString(name, nullAllowed = TRUE)
-  validateIsString(format, nullAllowed = TRUE)
-  validateIsIncluded(units, c("cm", "in", "mm", "px"), nullAllowed = TRUE)
+  validateIsIncluded(format, ExportFormats, nullAllowed = TRUE)
+  validateIsIncluded(units, ExportUnits, nullAllowed = TRUE)
   validateIsNumeric(width, nullAllowed = TRUE)
   validateIsNumeric(height, nullAllowed = TRUE)
   validateIsNumeric(dpi, nullAllowed = TRUE)
@@ -34,7 +51,7 @@ setPlotExport <- function(plotObject, name = NULL, format = NULL, width = NULL, 
 #' @export
 setPlotExportFormat <- function(plotObject, format = NULL) {
   validateIsOfType(plotObject, "ggplot")
-  validateIsString(format, nullAllowed = TRUE)
+  validateIsIncluded(format, ExportFormats, nullAllowed = TRUE)
 
   newPlotObject <- plotObject
   newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
@@ -57,7 +74,7 @@ setPlotExportFormat <- function(plotObject, format = NULL) {
 #' @export
 setPlotExportDimensions <- function(plotObject, width = NULL, height = NULL, units = NULL, dpi = NULL) {
   validateIsOfType(plotObject, "ggplot")
-  validateIsIncluded(units, c("cm", "in", "mm", "px"), nullAllowed = TRUE)
+  validateIsIncluded(units, ExportUnits, nullAllowed = TRUE)
   validateIsNumeric(width, nullAllowed = TRUE)
   validateIsNumeric(height, nullAllowed = TRUE)
   validateIsNumeric(dpi, nullAllowed = TRUE)
@@ -93,8 +110,8 @@ exportPlot <- function(plotObject, fileName = NULL, name = NULL, format = NULL, 
   validateIsOfType(plotObject, "ggplot")
   validateIsString(fileName, nullAllowed = TRUE)
   validateIsString(name, nullAllowed = TRUE)
-  validateIsString(format, nullAllowed = TRUE)
-  validateIsIncluded(units, c("cm", "in", "mm", "px"), nullAllowed = TRUE)
+  validateIsIncluded(format, ExportFormats, nullAllowed = TRUE)
+  validateIsIncluded(units, ExportUnits, nullAllowed = TRUE)
   validateIsNumeric(width, nullAllowed = TRUE)
   validateIsNumeric(height, nullAllowed = TRUE)
   validateIsNumeric(dpi, nullAllowed = TRUE)

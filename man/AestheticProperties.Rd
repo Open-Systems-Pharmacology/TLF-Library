@@ -16,6 +16,8 @@ Enum of aesthetic property names of \code{ggplot2}
 \seealso{
 Other enum helpers: 
 \code{\link{Alignments}},
+\code{\link{ExportFormats}},
+\code{\link{ExportUnits}},
 \code{\link{FontFaces}},
 \code{\link{LegendPositions}},
 \code{\link{Linetypes}},
