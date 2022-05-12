@@ -17,6 +17,8 @@ List of all available legend positions
 Other enum helpers: 
 \code{\link{AestheticProperties}},
 \code{\link{Alignments}},
+\code{\link{ExportFormats}},
+\code{\link{ExportUnits}},
 \code{\link{FontFaces}},
 \code{\link{Linetypes}},
 \code{\link{Scaling}},
