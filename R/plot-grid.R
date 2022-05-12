@@ -190,8 +190,17 @@ PlotGridConfiguration <- R6::R6Class(
       if (!is.null(plots)) {
         validateIsOfType(plots, "ggplot")
 
+        # When only single instance of `ggplot` object is entered:
+        # `addPlots = ggplot()`
         if (objectCount(plots) == 1L) {
-          plots <- list(plots)
+          # This single object needs to be converted to a list *only if* it
+          # already hasn't been entered in a list: `addPlots = list(ggplot())`.
+          #
+          # `ggplot` objects themselves
+          # are lists, but they will always have a length greater than 1.
+          if (is.list(plots) && length(plots) > 1L) {
+            plots <- list(plots)
+          }
         }
 
         self$plotList <- append(self$plotList, plots)
