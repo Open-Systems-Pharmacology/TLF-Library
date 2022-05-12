@@ -168,6 +168,8 @@ PlotGridConfiguration <- R6::R6Class(
 
     #' @description Add a plot object.
     #'
+    #' @param plots A single or a list containing `ggplot` object(s).
+    #'
     #' @examples
     #'
     #' library(ggplot2)
@@ -185,7 +187,8 @@ PlotGridConfiguration <- R6::R6Class(
     #' # now be a list of length `3`
     #' length(myPlotGrid$plotList)
     #'
-    #' @param plots A single or a list containing `ggplot` object(s).
+    #' @return `PlotGridConfiguration` object with `$plotList` field updated to
+    #'   store entered plots.
     addPlots = function(plots = NULL) {
       if (!is.null(plots)) {
         validateIsOfType(plots, "ggplot")

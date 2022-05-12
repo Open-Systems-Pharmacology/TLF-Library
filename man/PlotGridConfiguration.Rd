@@ -145,6 +145,10 @@ Add a plot object.
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+\code{PlotGridConfiguration} object with \verb{$plotList} field updated to
+store entered plots.
+}
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{
