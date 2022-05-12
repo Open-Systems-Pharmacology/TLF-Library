@@ -196,8 +196,10 @@ PlotGridConfiguration <- R6::R6Class(
           # This single object needs to be converted to a list *only if* it
           # already hasn't been entered in a list: `addPlots = list(ggplot())`.
           #
-          # `ggplot` objects themselves
-          # are lists, but they will always have a length greater than 1.
+          # `ggplot` objects themselves are lists, but they will always have a
+          # length greater than 1. That's how we can distinguish between
+          # `ggplot` object itself as a list and the same object stored in a
+          # list.
           if (is.list(plots) && length(plots) > 1L) {
             plots <- list(plots)
           }
