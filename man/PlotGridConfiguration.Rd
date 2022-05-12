@@ -11,6 +11,29 @@ R6 class defining the configuration for \code{{patchwork}} plot grid used to
 create a grid of plots from \code{{tlf}}. It holds values for all relevant
 plot properties.
 }
+\examples{
+
+## ------------------------------------------------
+## Method `PlotGridConfiguration$addPlots`
+## ------------------------------------------------
+
+
+library(ggplot2)
+
+myPlotGrid <- PlotGridConfiguration$new()
+
+# You can add a single ggplot object
+p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
+myPlotGrid$addPlots(p)
+
+# Or you can also pass a list
+myPlotGrid$addPlots(list("p1" = ggplot(), "p2" = ggplot()))
+
+# Since we added three plots, the `plotList` field should
+# now be a list of length `3`
+length(myPlotGrid$plotList)
+
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -82,6 +105,7 @@ in the grid. Will get repeated to match the dimensions of the grid.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{PlotGridConfiguration$new()}}
+\item \href{#method-addPlots}{\code{PlotGridConfiguration$addPlots()}}
 \item \href{#method-clone}{\code{PlotGridConfiguration$clone()}}
 }
 }
@@ -104,6 +128,50 @@ Create an instance of \code{PlotGridConfiguration} class.
 \subsection{Returns}{
 A \code{PlotGridConfiguration} object.
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-addPlots"></a>}}
+\if{latex}{\out{\hypertarget{method-addPlots}{}}}
+\subsection{Method \code{addPlots()}}{
+Add a plot object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PlotGridConfiguration$addPlots(plots = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{plots}}{A single or a list containing \code{ggplot} object(s).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{PlotGridConfiguration} object with \verb{$plotList} field updated to
+store entered plots.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{
+library(ggplot2)
+
+myPlotGrid <- PlotGridConfiguration$new()
+
+# You can add a single ggplot object
+p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
+myPlotGrid$addPlots(p)
+
+# Or you can also pass a list
+myPlotGrid$addPlots(list("p1" = ggplot(), "p2" = ggplot()))
+
+# Since we added three plots, the `plotList` field should
+# now be a list of length `3`
+length(myPlotGrid$plotList)
+
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

@@ -140,7 +140,7 @@ plotGrid <- function(plotGridConfiguration) {
 PlotGridConfiguration <- R6::R6Class(
   "PlotGridConfiguration",
   public = list(
-    plotList = NULL,
+    plotList = list(),
     title = NULL,
     subtitle = NULL,
     caption = NULL,
@@ -164,6 +164,52 @@ PlotGridConfiguration <- R6::R6Class(
     #' @return A `PlotGridConfiguration` object.
     initialize = function(plotList = NULL) {
       self$plotList <- plotList
+    },
+
+    #' @description Add a plot object.
+    #'
+    #' @param plots A single or a list containing `ggplot` object(s).
+    #'
+    #' @examples
+    #'
+    #' library(ggplot2)
+    #'
+    #' myPlotGrid <- PlotGridConfiguration$new()
+    #'
+    #' # You can add a single ggplot object
+    #' p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
+    #' myPlotGrid$addPlots(p)
+    #'
+    #' # Or you can also pass a list
+    #' myPlotGrid$addPlots(list("p1" = ggplot(), "p2" = ggplot()))
+    #'
+    #' # Since we added three plots, the `plotList` field should
+    #' # now be a list of length `3`
+    #' length(myPlotGrid$plotList)
+    #'
+    #' @return `PlotGridConfiguration` object with `$plotList` field updated to
+    #'   store entered plots.
+    addPlots = function(plots = NULL) {
+      if (!is.null(plots)) {
+        validateIsOfType(plots, "ggplot")
+
+        # When only single instance of `ggplot` object is entered:
+        # `addPlots = ggplot()`
+        if (objectCount(plots) == 1L) {
+          # This single object needs to be converted to a list *only if* it
+          # already hasn't been entered in a list: `addPlots = list(ggplot())`.
+          #
+          # `ggplot` objects themselves are lists, but they will always have a
+          # length greater than 1. That's how we can distinguish between
+          # `ggplot` object itself as a list and the same object stored in a
+          # list.
+          if (is.list(plots) && length(plots) > 1L) {
+            plots <- list(plots)
+          }
+        }
+
+        self$plotList <- append(self$plotList, plots)
+      }
     }
   )
 )
