@@ -168,6 +168,23 @@ PlotGridConfiguration <- R6::R6Class(
 
     #' @description Add a plot object.
     #'
+    #' @examples
+    #'
+    #' library(ggplot2)
+    #'
+    #' myPlotGrid <- PlotGridConfiguration$new()
+    #'
+    #' # You can add a single ggplot object
+    #' p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
+    #' myPlotGrid$addPlots(p)
+    #'
+    #' # Or you can also pass a list
+    #' myPlotGrid$addPlots(list("p1" = ggplot(), "p2" = ggplot()))
+    #'
+    #' # Since we added three plots, the `plotList` field should
+    #' # now be a list of length `3`
+    #' length(myPlotGrid$plotList)
+    #'
     #' @param plots A single or a list containing `ggplot` object(s).
     addPlots = function(plots = NULL) {
       if (!is.null(plots)) {

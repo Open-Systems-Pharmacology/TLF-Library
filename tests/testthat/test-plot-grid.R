@@ -50,12 +50,12 @@ test_that("adding plots works with plots grid configuration", {
   # adding single plot works
   myPlotGrid$addPlots(ggplot())
 
-  expect_equal(objectCount(myPlotGrid$plotList), 1L)
+  expect_equal(length(myPlotGrid$plotList), 1L)
 
   # adding a list of plot works
   myPlotGrid$addPlots(list("p1" = ggplot(), "p2" = ggplot()))
 
-  expect_equal(objectCount(myPlotGrid$plotList), 3L)
+  expect_equal(length(myPlotGrid$plotList), 3L)
 
   expect_equal(names(myPlotGrid$plotList), c("", "p1", "p2"))
 })
