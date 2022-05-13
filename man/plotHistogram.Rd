@@ -72,6 +72,7 @@ Other molecule plots:
 \code{\link{plotObsVsPred}()},
 \code{\link{plotPKRatio}()},
 \code{\link{plotResVsPred}()},
+\code{\link{plotResVsTime}()},
 \code{\link{plotTimeProfile}()},
 \code{\link{plotTornado}()}
 }

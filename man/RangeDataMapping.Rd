@@ -17,6 +17,7 @@ Other DataMapping classes:
 \code{\link{ObservedDataMapping}},
 \code{\link{PKRatioDataMapping}},
 \code{\link{ResVsPredDataMapping}},
+\code{\link{ResVsTimeDataMapping}},
 \code{\link{TimeProfileDataMapping}},
 \code{\link{TornadoDataMapping}},
 \code{\link{XYDataMapping}},

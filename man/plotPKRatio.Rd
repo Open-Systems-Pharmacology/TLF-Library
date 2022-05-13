@@ -47,6 +47,7 @@ Other molecule plots:
 \code{\link{plotHistogram}()},
 \code{\link{plotObsVsPred}()},
 \code{\link{plotResVsPred}()},
+\code{\link{plotResVsTime}()},
 \code{\link{plotTimeProfile}()},
 \code{\link{plotTornado}()}
 }

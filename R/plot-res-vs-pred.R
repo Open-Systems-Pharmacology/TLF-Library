@@ -82,3 +82,31 @@ plotResVsPred <- function(data,
   eval(parseUpdateAxes())
   return(plotObject)
 }
+
+
+#' @title plotResVsTime
+#' @description
+#' Producing residuals vs time plots
+#'
+#' @inheritParams plotObsVsPred
+#' @param dataMapping 
+#' A `ResVsTimeDataMapping` object mapping `x`, `y` and aesthetic groups to their variable names of `data`.
+#' @param plotConfiguration 
+#' An optional `ResVsTimeConfiguration` object defining labels, grid, background and watermark.
+#' @return A `ggplot` object
+#'
+#' @export
+#' @family molecule plots
+#' @examples 
+#' # Produce Obs vs Pred plot
+#' resVsTimeData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
+#' 
+#' plotResVsTime(data = resVsTimeData, dataMapping = ResVsTimeDataMapping$new(x = "x", y = "y"))
+#' 
+#' # Produce Res vs Time plot with linear regression
+#' plotResVsTime(
+#' data = resVsTimeData, 
+#' dataMapping = ResVsTimeDataMapping$new(x = "x", y = "y"),
+#' smoother = "lm"
+#' )
+plotResVsTime <- plotResVsPred
