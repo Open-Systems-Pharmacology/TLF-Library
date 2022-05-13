@@ -18,9 +18,9 @@ plotResVsPred(
 
 \item{metaData}{A named list of information about \code{data} such as the \code{dimension} and \code{unit} of its variables.}
 
-\item{dataMapping}{A \code{ObsVsPredDataMapping} object mapping \code{x}, \code{y} and aesthetic groups to their variable names of \code{data}.}
+\item{dataMapping}{A \code{ResVsPredDataMapping} object mapping \code{x}, \code{y} and aesthetic groups to their variable names of \code{data}.}
 
-\item{plotConfiguration}{An optional \code{ObsVsPredConfiguration} object defining labels, grid, background and watermark.}
+\item{plotConfiguration}{An optional \code{ResVsPredConfiguration} object defining labels, grid, background and watermark.}
 
 \item{smoother}{Optional name of smoother function:
 \itemize{
@@ -56,6 +56,7 @@ Other molecule plots:
 \code{\link{plotHistogram}()},
 \code{\link{plotObsVsPred}()},
 \code{\link{plotPKRatio}()},
+\code{\link{plotResVsTime}()},
 \code{\link{plotTimeProfile}()},
 \code{\link{plotTornado}()}
 }

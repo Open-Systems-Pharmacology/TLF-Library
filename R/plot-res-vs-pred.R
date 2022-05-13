@@ -3,6 +3,10 @@
 #' Producing residuals vs predicted plots
 #'
 #' @inheritParams plotObsVsPred
+#' @param dataMapping 
+#' A `ResVsPredDataMapping` object mapping `x`, `y` and aesthetic groups to their variable names of `data`.
+#' @param plotConfiguration 
+#' An optional `ResVsPredConfiguration` object defining labels, grid, background and watermark.
 #' @return A `ggplot` object
 #'
 #' @export
