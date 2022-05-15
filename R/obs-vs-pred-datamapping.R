@@ -40,4 +40,7 @@ ResVsPredDataMapping <- R6::R6Class(
 #' @description  Class for mapping variables in residuals vs predictions/time plot
 #' @export
 #' @family DataMapping classes
-ResVsTimeDataMapping <- ResVsPredDataMapping
+ResVsTimeDataMapping <- R6::R6Class(
+  "ResVsTimeDataMapping",
+  inherit = ResVsPredDataMapping
+)

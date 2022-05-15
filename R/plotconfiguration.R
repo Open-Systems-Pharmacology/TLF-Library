@@ -336,7 +336,10 @@ ResVsPredPlotConfiguration <- R6::R6Class(
 #' @title ResVsTimePlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object for Res vs Pred/Time plots
 #' @export
-ResVsTimePlotConfiguration <- ResVsPredPlotConfiguration
+ResVsTimePlotConfiguration <- R6::R6Class(
+  "ResVsTimePlotConfiguration",
+  inherit = ResVsPredPlotConfiguration
+)
 
 #' @title HistogramPlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object for histograms

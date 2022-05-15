@@ -6,8 +6,8 @@
 \description{
 R6 class defining the configuration of a \code{ggplot} object for Res vs Pred/Time plots
 }
-\section{Super class}{
-\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{ResVsPredPlotConfiguration}
+\section{Super classes}{
+\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{\link[tlf:ResVsPredPlotConfiguration]{tlf::ResVsPredPlotConfiguration}} -> \code{ResVsTimePlotConfiguration}
 }
 \section{Methods}{
 \subsection{Public methods}{
