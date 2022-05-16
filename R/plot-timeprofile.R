@@ -257,6 +257,7 @@ plotTimeProfile <- function(data = NULL,
     getAestheticValues(
       n = totalLength - colorLength,
       selectionKey = plotConfiguration$points$color,
+      position = colorLength,
       aesthetic = "color"
     )
   )
