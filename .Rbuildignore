@@ -6,4 +6,5 @@
 ^tests/dev
 ^\.covrignore$
 ^doc$
+^docs$
 ^Meta$
