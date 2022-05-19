@@ -31,7 +31,7 @@ Get a summary table of Box Whisker percentiles
 }
 \examples{
 # Get box-and-whisker plots of log-normal distributed data
-boxData <- data.frame(x = c(rep("A", 500), rep("B",500)), y = rlnorm(1000))
+boxData <- data.frame(x = c(rep("A", 500), rep("B", 500)), y = rlnorm(1000))
 
 getBoxWhiskerMeasure(data = boxData, dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"))
 

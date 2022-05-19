@@ -11,5 +11,5 @@ Set default Excel theme to be used as the current default of the tlf environment
 }
 \examples{
 useExcelTheme()
-addScatter(x = seq(1,10), y = rnorm(10))
+addScatter(x = seq(1, 10), y = rnorm(10))
 }

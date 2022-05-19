@@ -64,14 +64,14 @@ Add a ribbon layer to a \code{ggplot} object.
 \examples{
 # Add ribbon using x, ymin and ymax
 addRibbon(
-x = c(1, 2, 1, 2, 3), 
-ymin = c(5, 0, 2, 3, 4), 
-ymax = c(6, 2, 6, 2.5, 5)
+  x = c(1, 2, 1, 2, 3),
+  ymin = c(5, 0, 2, 3, 4),
+  ymax = c(6, 2, 6, 2.5, 5)
 )
 
 # Add ribbon using a data.frame
 time <- seq(0, 30, 0.1)
-ribbonData <- data.frame(x = time, ymin = cos(time)-1, ymax = cos(time)+1)
+ribbonData <- data.frame(x = time, ymin = cos(time) - 1, ymax = cos(time) + 1)
 
 addRibbon(
   data = ribbonData,
@@ -90,9 +90,9 @@ addRibbon(data = ribbonData, fill = "blue", alpha = 0.5, caption = "My data")
 # Add a ribbon with specific properties
 p <- addRibbon(data = ribbonData, fill = "blue", alpha = 0.5, caption = "My data")
 addRibbon(
-x = c(0, 1), ymin = c(-0.5, -0.5), ymax = c(0.5, 0.5), 
-fill = "red", alpha = 1, 
-plotObject = p
+  x = c(0, 1), ymin = c(-0.5, -0.5), ymax = c(0.5, 0.5),
+  fill = "red", alpha = 1,
+  plotObject = p
 )
 
 }

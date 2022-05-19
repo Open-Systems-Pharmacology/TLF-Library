@@ -27,10 +27,10 @@ Get a data.frame with Guest et al. ratio limits with:
 }
 \examples{
 # Get predicted vs observed Guest et al. limits
-getGuestValues(x = 10^seq(-2,2,0.2))
+getGuestValues(x = 10^seq(-2, 2, 0.2))
 
 # Get residuals vs observed Guest et al. limits
-getGuestValues(x = 10^seq(-2,2,0.2), residualsVsObserved = TRUE)
+getGuestValues(x = 10^seq(-2, 2, 0.2), residualsVsObserved = TRUE)
 
 }
 \references{

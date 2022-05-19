@@ -82,7 +82,7 @@ ExportConfiguration <- R6::R6Class(
       self$convertPixels()
 
       ggplot2::ggsave(
-        path = path,
+        path = self$path,
         filename = fileName,
         plot = plotObject,
         width = self$width,
