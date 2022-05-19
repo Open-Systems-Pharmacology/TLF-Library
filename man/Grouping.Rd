@@ -35,14 +35,14 @@ Other DataMapping classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Grouping$new()}}
-\item \href{#method-getCaptions}{\code{Grouping$getCaptions()}}
-\item \href{#method-clone}{\code{Grouping$clone()}}
+\item \href{#method-Grouping-new}{\code{Grouping$new()}}
+\item \href{#method-Grouping-getCaptions}{\code{Grouping$getCaptions()}}
+\item \href{#method-Grouping-clone}{\code{Grouping$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Grouping-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Grouping-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{Grouping} object
 \subsection{Usage}{
@@ -63,8 +63,8 @@ A new \code{Grouping} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getCaptions"></a>}}
-\if{latex}{\out{\hypertarget{method-getCaptions}{}}}
+\if{html}{\out{<a id="method-Grouping-getCaptions"></a>}}
+\if{latex}{\out{\hypertarget{method-Grouping-getCaptions}{}}}
 \subsection{Method \code{getCaptions()}}{
 Get the caption associated to each \code{group}
 \subsection{Usage}{
@@ -85,8 +85,8 @@ A vector of characters containing the captions associated to each \code{group} o
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Grouping-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Grouping-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

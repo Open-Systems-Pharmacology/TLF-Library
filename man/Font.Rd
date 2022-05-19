@@ -26,14 +26,14 @@ R6 class defining font properties
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Font$new()}}
-\item \href{#method-createPlotFont}{\code{Font$createPlotFont()}}
-\item \href{#method-clone}{\code{Font$clone()}}
+\item \href{#method-Font-new}{\code{Font$new()}}
+\item \href{#method-Font-createPlotFont}{\code{Font$createPlotFont()}}
+\item \href{#method-Font-clone}{\code{Font$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Font-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Font-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{Font} object.
 Default font properties are defined directly in the object field,
@@ -71,8 +71,8 @@ A new \code{Font} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-createPlotFont"></a>}}
-\if{latex}{\out{\hypertarget{method-createPlotFont}{}}}
+\if{html}{\out{<a id="method-Font-createPlotFont"></a>}}
+\if{latex}{\out{\hypertarget{method-Font-createPlotFont}{}}}
 \subsection{Method \code{createPlotFont()}}{
 Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::theme}.
 \subsection{Usage}{
@@ -108,8 +108,8 @@ An \code{element_text} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Font-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Font-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

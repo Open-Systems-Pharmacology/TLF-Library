@@ -1,12 +1,13 @@
 #' @title ExportConfiguration
 #' @description R6 class defining properties for saving a `ggplot` object
 #' @field name character defining the name of the file to be saved (without extension)
+#' @field path Path of the directory to save plot to: path and filename are
+#' combined to create the fully qualified file name. Defaults to the working directory.
 #' @field format character defining the format of the file to be saved
 #' @field width numeric values defining the width in `units` of the plot dimensions after saving
 #' @field height numeric values defining the height in `units` of the plot dimensions after saving
 #' @field units character defining the unit of the saving dimension
 #' @field dpi (dots per inch) numeric value defining plot resolution
-#' @inheritParams ggplot2::ggsave
 #' @export
 #' @import ggplot2
 ExportConfiguration <- R6::R6Class(
@@ -22,6 +23,8 @@ ExportConfiguration <- R6::R6Class(
 
     #' @description Create a new `ExportConfiguration` object
     #' @param name character defining the name of the file to be saved (without extension)
+    #' @param path Path of the directory to save plot to: path and filename are
+    #' combined to create the fully qualified file name. Defaults to the working directory.
     #' @param format character defining the format of the file to be saved.
     #' @param width numeric values defining the width in `units` of the plot dimensions after saving
     #' @param height numeric values defining the height in `units` of the plot dimensions after saving

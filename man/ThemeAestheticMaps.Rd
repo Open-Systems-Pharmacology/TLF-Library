@@ -26,14 +26,14 @@ R6 class defining theme aesthetic maps
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{ThemeAestheticMaps$new()}}
-\item \href{#method-toJson}{\code{ThemeAestheticMaps$toJson()}}
-\item \href{#method-clone}{\code{ThemeAestheticMaps$clone()}}
+\item \href{#method-ThemeAestheticMaps-new}{\code{ThemeAestheticMaps$new()}}
+\item \href{#method-ThemeAestheticMaps-toJson}{\code{ThemeAestheticMaps$toJson()}}
+\item \href{#method-ThemeAestheticMaps-clone}{\code{ThemeAestheticMaps$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-ThemeAestheticMaps-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ThemeAestheticMaps-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{ThemeAestheticMaps} object
 \subsection{Usage}{
@@ -69,8 +69,8 @@ A new \code{ThemeAestheticMaps} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-toJson"></a>}}
-\if{latex}{\out{\hypertarget{method-toJson}{}}}
+\if{html}{\out{<a id="method-ThemeAestheticMaps-toJson"></a>}}
+\if{latex}{\out{\hypertarget{method-ThemeAestheticMaps-toJson}{}}}
 \subsection{Method \code{toJson()}}{
 Translate object into a json list
 \subsection{Usage}{
@@ -82,8 +82,8 @@ A list that can be saved into a json file
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-ThemeAestheticMaps-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ThemeAestheticMaps-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

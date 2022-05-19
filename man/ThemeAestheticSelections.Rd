@@ -12,20 +12,20 @@ R6 class defining how plot configurations will use aesthetic maps
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{ThemeAestheticSelections$new()}}
-\item \href{#method-toJson}{\code{ThemeAestheticSelections$toJson()}}
-\item \href{#method-clone}{\code{ThemeAestheticSelections$clone()}}
+\item \href{#method-ThemeAestheticSelections-new}{\code{ThemeAestheticSelections$new()}}
+\item \href{#method-ThemeAestheticSelections-toJson}{\code{ThemeAestheticSelections$toJson()}}
+\item \href{#method-ThemeAestheticSelections-clone}{\code{ThemeAestheticSelections$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-ThemeAestheticSelections-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ThemeAestheticSelections-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{ThemeAestheticSelections} object
 \subsection{Usage}{
@@ -61,8 +61,8 @@ A new \code{ThemeAestheticSelections} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-toJson"></a>}}
-\if{latex}{\out{\hypertarget{method-toJson}{}}}
+\if{html}{\out{<a id="method-ThemeAestheticSelections-toJson"></a>}}
+\if{latex}{\out{\hypertarget{method-ThemeAestheticSelections-toJson}{}}}
 \subsection{Method \code{toJson()}}{
 Translate object into a json list
 \subsection{Usage}{
@@ -74,8 +74,8 @@ A list that can be saved into a json file
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-ThemeAestheticSelections-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ThemeAestheticSelections-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

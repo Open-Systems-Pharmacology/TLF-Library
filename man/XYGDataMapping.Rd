@@ -36,20 +36,20 @@ Other DataMapping classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{XYGDataMapping$new()}}
-\item \href{#method-checkMapData}{\code{XYGDataMapping$checkMapData()}}
-\item \href{#method-clone}{\code{XYGDataMapping$clone()}}
+\item \href{#method-XYGDataMapping-new}{\code{XYGDataMapping$new()}}
+\item \href{#method-XYGDataMapping-checkMapData}{\code{XYGDataMapping$checkMapData()}}
+\item \href{#method-XYGDataMapping-clone}{\code{XYGDataMapping$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-XYGDataMapping-new"></a>}}
+\if{latex}{\out{\hypertarget{method-XYGDataMapping-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{XYGDataMapping} object
 \subsection{Usage}{
@@ -97,8 +97,8 @@ A new \code{XYGDataMapping} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-checkMapData"></a>}}
-\if{latex}{\out{\hypertarget{method-checkMapData}{}}}
+\if{html}{\out{<a id="method-XYGDataMapping-checkMapData"></a>}}
+\if{latex}{\out{\hypertarget{method-XYGDataMapping-checkMapData}{}}}
 \subsection{Method \code{checkMapData()}}{
 Check that \code{data} variables include map variables
 \subsection{Usage}{
@@ -120,8 +120,8 @@ Dummy variable \code{defaultAes} is necessary to allow further modification of p
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-XYGDataMapping-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-XYGDataMapping-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
