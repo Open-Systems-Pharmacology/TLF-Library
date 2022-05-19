@@ -167,7 +167,7 @@ parseAddUncertaintyLayer <- function() {
           # Error bar size uses a ratio of 1/4 to match with point size
           size = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
           linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
-          alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "linetype"),
+          alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),
           na.rm = TRUE,
           show.legend = TRUE
         )
