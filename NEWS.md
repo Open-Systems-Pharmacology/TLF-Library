@@ -1,3 +1,10 @@
+# tlf 1.3.0
+
+## New features
+
+* New function `plotGrid()` to create a plot grid and `PlotGridConfiguration` class to specify its properties.
+* The default theme for all plots is the new `useMinimalTheme()`.
+
 # tlf 1.2.0
 
 ## New features
