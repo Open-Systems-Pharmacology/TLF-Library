@@ -33,11 +33,11 @@ ExportConfiguration <- R6::R6Class(
     #' @return A new `ExportConfiguration` object
     initialize = function(path = NULL,
                           name = NULL,
-                              format = NULL,
-                              width = NULL,
-                              height = NULL,
-                              units = NULL,
-                              dpi = NULL) {
+                          format = NULL,
+                          width = NULL,
+                          height = NULL,
+                          units = NULL,
+                          dpi = NULL) {
       validateIsString(name, nullAllowed = TRUE)
       validateIsString(format, nullAllowed = TRUE)
       validateIsIncluded(units, c("cm", "in", "mm", "px"), nullAllowed = TRUE)

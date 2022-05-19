@@ -46,13 +46,13 @@ setDefaultLegendPosition <- function(position) {
 }
 
 tlfEnv$defaultExportParameters <- list(
-  format = "png", 
-  width = 16, 
-  height = 9, 
+  format = "png",
+  width = 16,
+  height = 9,
   units = "cm",
   dpi = 300,
   name = "figure"
-  )
+)
 
 #' @title setDefaultExportParameters
 #' @description Set default tlf properties for exporting/saving plots
@@ -70,7 +70,7 @@ setDefaultExportParameters <- function(format = NULL, width = NULL, height = NUL
   validateIsNumeric(height, nullAllowed = TRUE)
   validateIsNumeric(dpi, nullAllowed = TRUE)
   validateIsString(name, nullAllowed = TRUE)
-  
+
   inputs <- c("format", "width", "height", "units", "dpi", "name")
   eval(parseVariableToObject(objectName = "tlfEnv$defaultExportParameters", inputs, keepIfNull = TRUE))
   return(invisible())
@@ -134,13 +134,13 @@ setDefaultAggregationLabels <- function(y = NULL, range = NULL) {
 #' @description Set default aggregation bins of tlf environment
 #' @param bins Number of bins if value, edges if vector or binning function if function
 #' @export
-#' @examples 
+#' @examples
 #' # Set default number of bins
 #' plotHistogram(x = rnorm(1000))
-#' 
+#'
 #' setDefaultAggregationBins(21)
 #' plotHistogram(x = rnorm(1000))
-#' 
+#'
 setDefaultAggregationBins <- function(bins = NULL) {
   tlfEnv$defaultAggregation$bins <- bins %||% tlfEnv$defaultAggregation$bins
 }
@@ -149,15 +149,15 @@ setDefaultAggregationBins <- function(bins = NULL) {
 #' @description Set default watermark value for current theme
 #' @param watermark A character value or `Label` object
 #' @export
-#' @examples 
+#' @examples
 #' # Set default watermark using a character
 #' setDefaultWatermark("Confidential")
 #' addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
-#' 
+#'
 #' # Set default watermark using a `Label` object
 #' setDefaultWatermark(Label$new(text = "Confidential", color = "red", angle = 30))
 #' addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
-#' 
+#'
 setDefaultWatermark <- function(watermark = NULL) {
   validateIsOfType(watermark, c("Label", "character"), nullAllowed = TRUE)
   if (isOfType(watermark, "character")) {
@@ -170,8 +170,8 @@ setDefaultWatermark <- function(watermark = NULL) {
   return(invisible())
 }
 
-tlfEnv$logTicks <- 10^seq(-6,6)
-tlfEnv$lnTicks <- exp(seq(-6,6))
+tlfEnv$logTicks <- 10^seq(-6, 6)
+tlfEnv$lnTicks <- exp(seq(-6, 6))
 
 #' @title setDefaultLogTicks
 #' @description Set default values for log ticks

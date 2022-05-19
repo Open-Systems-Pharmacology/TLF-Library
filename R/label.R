@@ -57,7 +57,8 @@ Label <- R6::R6Class(
         fontFace = fontFace,
         fontFamily = fontFamily,
         angle = angle,
-        align = align))
+        align = align
+      ))
     }
   ),
   active = list(

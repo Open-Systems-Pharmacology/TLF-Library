@@ -8,15 +8,15 @@
 #' @param caption A character value or `Label` object
 #' @return A `ggplot` object
 #' @export
-#' @examples 
+#' @examples
 #' # Set labels of a scatter plot
 #' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
-#' 
+#'
 #' setPlotLabels(p, xlabel = "new x label", ylabel = "new y label")
-#' 
+#'
 #' # Set labels using Label object
 #' setPlotLabels(p, ylabel = Label$new(text = "red y label", color = "red"))
-#' 
+#'
 setPlotLabels <- function(plotObject,
                           title = NULL,
                           subtitle = NULL,
@@ -79,14 +79,14 @@ asLabel <- function(text = "", font = NULL) {
 #' Get label with its unit within square brackets when available
 #' @param label text of axis label
 #' @param unit Character value corresponding to unit of `label`
-#' @return 
+#' @return
 #' `label [unit]` or `label` depending if `unit` is `NULL` or `""`
 #' @export
-#' @examples 
+#' @examples
 #' getLabelWithUnit("Time", "min")
-#' 
+#'
 #' getLabelWithUnit("Label without unit")
-#' 
+#'
 getLabelWithUnit <- function(label, unit = NULL) {
   if (isTRUE(unit %in% "")) {
     unit <- NULL

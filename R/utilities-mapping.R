@@ -245,7 +245,7 @@ smartMapping <- function(data) {
 dataMappingLabel <- function(mapping = NULL, metaData = NULL) {
   label <- NULL
   ifNotNull(mapping, label <- getLabelWithUnit(metaData[[mapping]]$dimension, metaData[[mapping]]$unit))
-  
+
   return(label)
 }
 
@@ -326,4 +326,3 @@ getAggregatedData <- function(data,
 
   return(aggregatedData)
 }
-
