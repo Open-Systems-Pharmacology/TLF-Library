@@ -1,22 +1,32 @@
 #' @title setPlotLabels
 #' @description Set labels properties on a ggplot object
-#' @param plotObject ggplot object to set
-#' @param title character or Label class object
-#' @param subtitle character or Label class object
-#' @param xlabel character or Label class object
-#' @param ylabel character or Label class object
-#' @return ggplot object with updated labels
+#' @param plotObject A `ggplot` object
+#' @param title A character value or `Label` object
+#' @param subtitle A character value or `Label` object
+#' @param xlabel A character value or `Label` object
+#' @param ylabel A character value or `Label` object
+#' @param caption A character value or `Label` object
+#' @return A `ggplot` object
 #' @export
+#' @examples 
+#' # Set labels of a scatter plot
+#' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+#' 
+#' setPlotLabels(p, xlabel = "new x label", ylabel = "new y label")
+#' 
+#' # Set labels using Label object
+#' setPlotLabels(p, ylabel = Label$new(text = "red y label", color = "red"))
+#' 
 setPlotLabels <- function(plotObject,
                           title = NULL,
                           subtitle = NULL,
                           xlabel = NULL,
-                          ylabel = NULL) {
+                          ylabel = NULL,
+                          caption = NULL) {
   validateIsOfType(plotObject, "ggplot")
-
   # Inputs will undergo the same code, so parse/eval
   # parse/eval of inputs prevent copy paste of code
-  inputs <- c("title", "subtitle", "xlabel", "ylabel")
+  inputs <- c("title", "subtitle", "xlabel", "ylabel", "caption")
   validateExpressions <- parse(text = paste0("validateIsOfType(", inputs, ', c("Label", "character"), nullAllowed =TRUE)'))
   eval(validateExpressions)
 
@@ -27,29 +37,23 @@ setPlotLabels <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$yAxis
   labels <- newPlotObject$plotConfiguration$labels
-
   char2LabExpressions <- parse(text = paste0(
-    "if(!is.null(", inputs, ")){",
     "if(isOfType(", inputs, ', "character")){',
-    inputs, " <- asLabel(", inputs, ", labels$", inputs, "$font)}}"
+    inputs, " <- asLabel(", inputs, ", font = labels$", inputs, "$font)}"
   ))
   eval(char2LabExpressions)
-
-  updateLabelExpressions <- parse(text = paste0("labels$", inputs, " <- ", inputs, " %||% labels$", inputs))
-  eval(updateLabelExpressions)
-
-  newPlotObject <- labels$setPlotLabels(newPlotObject)
-
+  eval(parseVariableToObject("labels", inputs, keepIfNull = TRUE))
+  newPlotObject <- labels$updatePlot(newPlotObject)
   return(newPlotObject)
 }
 
 #' @title asLabel
-#' @param text text to be set as label class
-#' @param font font properties of Label
-#' @return Label class object
+#' @param text A character value
+#' @param font A `Font` object definin the font properties of the Label
+#' @return A `Label` object
 #' @description
-#' Set a character string into a Label class associating font properties to input
-#' If text is already a Label class, asLabel can be used to updated the font properties
+#' Set a character string into a `Label` object associating font properties to input
+#' If text is already a `Label` object, `asLabel` can be used to update its font properties
 #' @export
 #' @examples
 #' title <- "Title of Plot"
@@ -70,43 +74,23 @@ asLabel <- function(text = "", font = NULL) {
   return(text)
 }
 
-#' @title setFontProperties
-#' @param plotObject ggplot object
-#' @param titleFont Font Class for title
-#' @param subtitleFont Font Class for subtitle
-#' @param xAxisFont Font Class for xaxis and ticks
-#' @param yAxisFont Font Class for yaxis and ticks
-#' @param legendFont Font Class for legend
-#' @return plotObject ggplot object with updated fonts
+#' @title getLabelWithUnit
 #' @description
-#' setFontProperties set Font Properties on a ggplot object
-#' @include font.R
+#' Get label with its unit within square brackets when available
+#' @param label text of axis label
+#' @param unit Character value corresponding to unit of `label`
+#' @return 
+#' `label [unit]` or `label` depending if `unit` is `NULL` or `""`
 #' @export
-#' @examples
-#' p <- ggplot2::ggplot() + ggplot2::labs(title = "Title")
-#' newFont <- Font$new(color = "blue", size = 20)
-#' p <- setFontProperties(plotObject = p, titleFont = newFont)
-setFontProperties <- function(plotObject,
-                              titleFont = NULL,
-                              subtitleFont = NULL,
-                              xAxisFont = NULL,
-                              yAxisFont = NULL,
-                              legendFont = NULL) {
-  if (!is.null(titleFont)) {
-    plotObject <- plotObject + theme(plot.title = titleFont$setFont())
+#' @examples 
+#' getLabelWithUnit("Time", "min")
+#' 
+#' getLabelWithUnit("Label without unit")
+#' 
+getLabelWithUnit <- function(label, unit = NULL) {
+  if (isTRUE(unit %in% "")) {
+    unit <- NULL
   }
-  if (!is.null(subtitleFont)) {
-    plotObject <- plotObject + theme(plot.subtitle = subtitleFont$setFont())
-  }
-  if (!is.null(xAxisFont)) {
-    plotObject <- plotObject + theme(axis.title.x = xAxisFont$setFont(), axis.text.x = xAxisFont$setFont())
-  }
-  if (!is.null(yAxisFont)) {
-    plotObject <- plotObject + theme(axis.title.y = yAxisFont$setFont(), axis.text.y = yAxisFont$setFont())
-  }
-  if (!is.null(legendFont)) {
-    plotObject <- plotObject + theme(legend.text = legendFont$setFont())
-  }
-
-  return(plotObject)
+  ifNotNull(unit, label <- paste(label, " [", unit, "]", sep = ""))
+  return(label)
 }

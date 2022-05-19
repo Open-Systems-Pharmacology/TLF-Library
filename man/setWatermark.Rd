@@ -4,22 +4,50 @@
 \alias{setWatermark}
 \title{setWatermark}
 \usage{
-setWatermark(plotObject, watermark = NULL, angle = 30, alpha = 0.4)
+setWatermark(
+  plotObject,
+  watermark = NULL,
+  color = NULL,
+  size = NULL,
+  angle = NULL,
+  alpha = NULL
+)
 }
 \arguments{
-\item{plotObject}{ggplot object to which the watermark is set}
+\item{plotObject}{A \code{ggplot} object}
 
-\item{watermark}{character or Label class object}
+\item{watermark}{A character value or a \code{Label} object}
 
-\item{angle}{Angle in degree from horizontal of the watermark label. Default angle is 30 degrees.}
+\item{color}{Color of the watermark.}
 
-\item{alpha}{Transparency of the watermark label.
-Alpha is a numeric between 0 and 1: 0 label is totally transparent, 1 label is totally opaque.
-Default alpha is 0.6.}
+\item{size}{Size of the watermark.}
+
+\item{angle}{Angle of the watermark (in degree).}
+
+\item{alpha}{Numeric value between 0 and 1 corresponding to transparency of the watermark
+The closer to 0, the more transparent the watermark is.
+The closer to 1, the more opaque the watermark is.}
 }
 \value{
-ggplot object to which the watermark is added.
+A \code{ggplot} object
 }
 \description{
-setWatermark
+Set the watermark of a \code{ggplot} object.
+Unlike \code{addWatermark}, the watermark layer is overridden by \code{setWatermark}.
+}
+\examples{
+# Add a watermark to an empty plot
+p <- initializePlot()
+setWatermark(p, "watermark")
+
+# Watermark with font properties
+watermarkLabel <- Label$new(text = "watermark", color = "blue")
+setWatermark(p, watermarkLabel)
+
+# Horizontal watermark
+setWatermark(p, watermarkLabel, angle = 0)
+
+# Watermark totally opaque
+setWatermark(p, watermarkLabel, alpha = 1)
+
 }

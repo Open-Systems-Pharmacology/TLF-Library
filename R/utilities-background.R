@@ -1,64 +1,27 @@
 #' @title setGrid
-#' @description Set grid properties on a ggplot object
-#' @param plotObject ggplot object to set
-#' @param color character color of the grid
-#' @param linetype character linetype of the grid. Use "blank" to remove grid.
-#' @param size numeric size of the grid lines
-#' @return ggplot object with updated Y-axis
+#' @description Set x and y grid properties of a `ggplot` object
+#' @param plotObject A `ggplot` object
+#' @param color Optional character values defining the color of the grid.
+#' See `grDevices::colors()` to get names of colors
+#' @param linetype Optional character values defining the linetype of the grid.
+#' See enum `Linetypes` to get names of linetype.
+#' @param size Optional numeric values defining the size of the grid.
+#' @return A `ggplot` object
 #' @export
+#' @examples 
+#' # Set grid of a scatter plot
+#' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+#' 
+#' setGrid(p, color = "red", linetype = "dotted")
+#' 
 setGrid <- function(plotObject,
                     color = NULL,
                     linetype = NULL,
                     size = NULL) {
   validateIsOfType(plotObject, "ggplot")
-  validateIsOfType(color, "character", nullAllowed = TRUE)
-  validateIsOfType(linetype, "character", nullAllowed = TRUE)
-  validateIsOfType(size, "numeric", nullAllowed = TRUE)
-
-  # Clone plotConfiguration into a new plot object
-  # Prevents update of R6 class being spread to plotObject
-  newPlotObject <- plotObject
-  newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
-
-  # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$grid
-  grid <- newPlotObject$plotConfiguration$background$grid
-
-  grid$color <- color %||% grid$color
-  grid$linetype <- linetype %||% grid$linetype
-  grid$size <- size %||% grid$size
-
-  newPlotObject <- newPlotObject + theme(
-    panel.grid = element_line(
-      color = grid$color,
-      size = grid$size,
-      linetype = grid$linetype
-    )
-  )
-
-  return(newPlotObject)
-}
-
-#' @title setBackground
-#' @description Set background properties on a ggplot object
-#' @param plotObject ggplot object to set
-#' @param fill character color fill of the background
-#' @param color character color of the background frame
-#' @param linetype character linetype of the background frame
-#' @param size numeric size of the background frame
-#' @param outerBackgroundFill character color fill of the outerBackground
-#' @return ggplot object with updated Y-axis
-#' @export
-setBackground <- function(plotObject,
-                          fill = NULL,
-                          color = NULL,
-                          linetype = NULL,
-                          size = NULL,
-                          outerBackgroundFill = NULL) {
-  validateIsOfType(plotObject, "ggplot")
-  validateIsOfType(size, "numeric", nullAllowed = TRUE)
-  inputs <- c("fill", "color", "linetype", "outerBackgroundFill")
-  validateExpressions <- parse(text = paste0("validateIsOfType(", inputs, ', "character", nullAllowed =TRUE)'))
-  eval(validateExpressions)
+  validateIsString(color, nullAllowed = TRUE)
+  validateIsIncluded(linetype, Linetypes, nullAllowed = TRUE)
+  validateIsNumeric(size, nullAllowed = TRUE)
 
   # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
@@ -66,45 +29,204 @@ setBackground <- function(plotObject,
   newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
-  innerBackground <- newPlotObject$plotConfiguration$background$innerBackground
-  outerBackground <- newPlotObject$plotConfiguration$background$outerBackground
-
-  innerBackground$fill <- fill %||% innerBackground$fill
-  innerBackground$color <- color %||% innerBackground$color
-  innerBackground$linetype <- linetype %||% innerBackground$linetype
-  innerBackground$size <- size %||% innerBackground$size
-  outerBackground$fill <- outerBackgroundFill %||% innerBackground$fill
-
-  newPlotObject <- newPlotObject + theme(
-    plot.background = element_rect(fill = outerBackground$fill),
-    legend.background = element_rect(fill = outerBackground$fill),
-    panel.background = element_rect(
-      fill = innerBackground$fill,
-      color = innerBackground$color,
-      size = innerBackground$size,
-      linetype = innerBackground$linetype,
-    )
-  )
+  background <- newPlotObject$plotConfiguration$background
+  eval(parseVariableToObject("background$xGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
+  eval(parseVariableToObject("background$yGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
+  newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
 
+#' @title setXGrid
+#' @description Set x grid properties of a `ggplot` object
+#' @inheritParams setGrid
+#' @return A `ggplot` object
+#' @export
+#' @examples 
+#' # Set x grid of a scatter plot
+#' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+#' 
+#' setXGrid(p, color = "red", linetype = "dotted")
+#' 
+setXGrid <- function(plotObject,
+                     color = NULL,
+                     linetype = NULL,
+                     size = NULL) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsString(color, nullAllowed = TRUE)
+  validateIsIncluded(linetype, Linetypes, nullAllowed = TRUE)
+  validateIsNumeric(size, nullAllowed = TRUE)
+
+  # Clone plotConfiguration into a new plot object
+  # Prevents update of R6 class being spread to plotObject
+  newPlotObject <- plotObject
+  newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
+
+  # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
+  background <- newPlotObject$plotConfiguration$background
+  eval(parseVariableToObject("background$xGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
+  newPlotObject <- background$updatePlot(newPlotObject)
+  return(newPlotObject)
+}
+
+#' @title setYGrid
+#' @description Set y grid properties of a `ggplot` object
+#' @inheritParams setGrid
+#' @return A `ggplot` object
+#' @export
+#' @examples 
+#' # Set y grid of a scatter
+#' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+#' 
+#' setYGrid(p, color = "red", linetype = "dotted")
+#' 
+setYGrid <- function(plotObject,
+                     color = NULL,
+                     linetype = NULL,
+                     size = NULL) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsString(color, nullAllowed = TRUE)
+  validateIsIncluded(linetype, Linetypes, nullAllowed = TRUE)
+  validateIsNumeric(size, nullAllowed = TRUE)
+
+  # Clone plotConfiguration into a new plot object
+  # Prevents update of R6 class being spread to plotObject
+  newPlotObject <- plotObject
+  newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
+
+  # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
+  background <- newPlotObject$plotConfiguration$background
+  eval(parseVariableToObject("background$yGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
+  newPlotObject <- background$updatePlot(newPlotObject)
+  return(newPlotObject)
+}
+
+#' @title setBackground
+#' @description Set background properties of a `ggplot` object
+#' @param plotObject A `ggplot` object
+#' @param fill Optional character values defining the color of the background.
+#' See `grDevices::colors()` to get names of colors
+#' @param color Optional character values defining the color of the background frame.
+#' See `grDevices::colors()` to get names of colors
+#' @param linetype Optional character values defining the linetype of the background frame.
+#' See enum `Linetypes` to get names of linetype.
+#' @param size Optional numeric values defining the size of the background frame.
+#' @return A `ggplot` object
+#' @export
+#' @examples 
+#' # Set background of a scatter plot
+#' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+#' 
+#' setBackground(p, fill = "yellowgreen", color = "red", linetype = "dotted")
+#' 
+setBackground <- function(plotObject,
+                          fill = NULL,
+                          color = NULL,
+                          linetype = NULL,
+                          size = NULL) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsString(fill, nullAllowed = TRUE)
+  validateIsString(color, nullAllowed = TRUE)
+  validateIsIncluded(linetype, Linetypes, nullAllowed = TRUE)
+  validateIsNumeric(size, nullAllowed = TRUE)
+
+  # Clone plotConfiguration into a new plot object
+  # Prevents update of R6 class being spread to plotObject
+  newPlotObject <- plotObject
+  newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
+
+  # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
+  background <- newPlotObject$plotConfiguration$background
+  eval(parseVariableToObject("background$plot", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
+  eval(parseVariableToObject("background$panel", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
+  newPlotObject <- background$updatePlot(newPlotObject)
+  return(newPlotObject)
+}
+
+#' @title setBackgroundPanelArea
+#' @description Set background panel area properties of a `ggplot` object
+#' @inheritParams setBackground
+#' @return A `ggplot` object
+#' @export
+#' @examples 
+#' # Set background of a scatter plot
+#' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+#' 
+#' setBackgroundPanelArea(p, fill = "yellowgreen", color = "red", linetype = "dotted")
+#' 
+setBackgroundPanelArea <- function(plotObject,
+                                   fill = NULL,
+                                   color = NULL,
+                                   linetype = NULL,
+                                   size = NULL) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsString(fill, nullAllowed = TRUE)
+  validateIsString(color, nullAllowed = TRUE)
+  validateIsIncluded(linetype, Linetypes, nullAllowed = TRUE)
+  validateIsNumeric(size, nullAllowed = TRUE)
+
+  # Clone plotConfiguration into a new plot object
+  # Prevents update of R6 class being spread to plotObject
+  newPlotObject <- plotObject
+  newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
+
+  # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
+  background <- newPlotObject$plotConfiguration$background
+  eval(parseVariableToObject("background$panel", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
+  newPlotObject <- background$updatePlot(newPlotObject)
+  return(newPlotObject)
+}
+
+#' @title setBackgroundPlotArea
+#' @description Set background plot area properties of a `ggplot` object
+#' @inheritParams setBackground
+#' @return A `ggplot` object
+#' @export
+#' @examples 
+#' # Set background of a scatter plot
+#' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+#' 
+#' setBackgroundPlotArea(p, fill = "yellowgreen", color = "red", linetype = "dotted")
+#' 
+setBackgroundPlotArea <- function(plotObject,
+                                  fill = NULL,
+                                  color = NULL,
+                                  linetype = NULL,
+                                  size = NULL) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsString(fill, nullAllowed = TRUE)
+  validateIsString(color, nullAllowed = TRUE)
+  validateIsIncluded(linetype, Linetypes, nullAllowed = TRUE)
+  validateIsNumeric(size, nullAllowed = TRUE)
+
+  # Clone plotConfiguration into a new plot object
+  # Prevents update of R6 class being spread to plotObject
+  newPlotObject <- plotObject
+  newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
+
+  # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
+  background <- newPlotObject$plotConfiguration$background
+  eval(parseVariableToObject("background$plot", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
+  newPlotObject <- background$updatePlot(newPlotObject)
+  return(newPlotObject)
+}
 
 #' @title addWatermark
-#' @param plotObject ggplot object to which the watermark is added
-#' @param label Character or Label class object corresponding to the watermark text
-#' (and its font properties if Label)
-#' @param angle Angle in degree from horizontal of the watermark label. Default angle is 30 degrees.
-#' @param alpha Transparency of the watermark label.
-#' Alpha is a numeric between 0 and 1: 0 label is totally transparent, 1 label is totally opaque.
-#' Default alpha is 0.4.
-#' @return \code{plotObject} ggplot object to which the watermark is added.
 #' @description
-#' addWatermark creates a ggplot grob based on the label text and its font properties.
-#' Then,  adds the grob to the ggplot object input \code{plotObject} as a new layer using \code{ggplot2::annotation_custom}.
-#' \code{angle} and \code{alpha} are optional input to customize the angle and transparency of the watermark text.
+#' Creates a `ggplot` grob based on the label text and its font properties.
+#' Then,  adds the grob to the `ggplot` object as a new layer using `ggplot2::annotation_custom`.
+#' @param plotObject A `ggplot` object
+#' @param watermark A character value or a `Label` object
+#' @param color Color of the watermark.
+#' @param size Size of the watermark.
+#' @param angle Angle of the watermark (in degree).
+#' @param alpha Numeric value between 0 and 1 corresponding to transparency of the watermark
+#' The closer to 0, the more transparent the watermark is.
+#' The closer to 1, the more opaque the watermark is.
+#' @return A `ggplot` object
 #' @import  ggplot2
 #' @export
 #' @examples
+#' # Add a watermark to an empty plot
 #' p <- ggplot2::ggplot()
 #' addWatermark(p, "watermark")
 #'
@@ -117,23 +239,36 @@ setBackground <- function(plotObject,
 #'
 #' # Watermark totally opaque
 #' addWatermark(p, watermarkLabel, alpha = 1)
+#' 
+#' # As multiple layers of watermark: 
+#' p2 <- addWatermark(p, watermarkLabel, alpha = 1)
+#' addWatermark(p2, "other watermark", color = "red", angle = 90)
 #'
-#' # Create a sun as background
-#' for (angle in seq(0, 340, 20)) {
-#'   p <- addWatermark(p,
-#'     label = Label$new(text = "            >", color = "yellow"),
-#'     angle = angle, alpha = 1
-#'   )
-#' }
 addWatermark <- function(plotObject,
-                         label,
-                         angle = 30,
-                         alpha = 0.4) {
+                         watermark,
+                         color = NULL,
+                         size = NULL,
+                         angle = NULL,
+                         alpha = NULL) {
   validateIsOfType(plotObject, "ggplot")
-  # Ensure label is a Label class
-  label <- asLabel(label)
+  validateIsOfType(watermark, c("character", "Label"))
+  validateIsString(color, nullAllowed = TRUE)
+  validateIsNumeric(size, nullAllowed = TRUE)
+  validateIsNumeric(alpha, nullAllowed = TRUE)
+  validateIsNumeric(angle, nullAllowed = TRUE)
+  # Transparency from theme aesthetic map if left undefined
+  alpha <- alpha %||% getAestheticValues(
+    n = 1,
+    selectionKey = AestheticSelectionKeys$first,
+    aesthetic = "alpha"
+  )
+  # Ensure watermark is a Label class
+  if (isOfType(watermark, "character")) {
+    watermark <- asLabel(watermark, font = tlfEnv$currentTheme$fonts$watermark)
+  }
+  eval(parseVariableToObject("watermark$font", c("color", "size", "angle"), keepIfNull = TRUE))
 
-  watermark <- createWatermarkGrob(label = label, angle = angle, alpha = alpha)
+  watermark <- createWatermarkGrob(label = watermark, alpha = alpha)
 
   plotObject <- plotObject + ggplot2::annotation_custom(grob = watermark, xmin = -Inf, ymin = -Inf, xmax = Inf, ymax = Inf)
 
@@ -141,23 +276,46 @@ addWatermark <- function(plotObject,
 }
 
 #' @title setWatermark
-#' @param plotObject ggplot object to which the watermark is set
-#' @param watermark character or Label class object
-#' @param angle Angle in degree from horizontal of the watermark label. Default angle is 30 degrees.
-#' @param alpha Transparency of the watermark label.
-#' Alpha is a numeric between 0 and 1: 0 label is totally transparent, 1 label is totally opaque.
-#' Default alpha is 0.6.
-#' @return ggplot object to which the watermark is added.
-#' @import  ggplot2
+#' @description
+#' Set the watermark of a `ggplot` object.
+#' Unlike `addWatermark`, the watermark layer is overridden by `setWatermark`.
+#' @inheritParams addWatermark
+#' @return A `ggplot` object
+#' @import ggplot2
 #' @export
+#' @examples 
+#' # Add a watermark to an empty plot
+#' p <- initializePlot()
+#' setWatermark(p, "watermark")
+#'
+#' # Watermark with font properties
+#' watermarkLabel <- Label$new(text = "watermark", color = "blue")
+#' setWatermark(p, watermarkLabel)
+#'
+#' # Horizontal watermark
+#' setWatermark(p, watermarkLabel, angle = 0)
+#'
+#' # Watermark totally opaque
+#' setWatermark(p, watermarkLabel, alpha = 1)
+#'
 setWatermark <- function(plotObject,
                          watermark = NULL,
-                         angle = 30,
-                         alpha = 0.4) {
+                         color = NULL,
+                         size = NULL,
+                         angle = NULL,
+                         alpha = NULL) {
   validateIsOfType(plotObject, "ggplot")
-  # Angle and alpha can be added as a part of plot configuration later on:
-  # For this create Watermark R6 class inheriting from Label and which gets fields angle and alpha
-  validateIsOfType(watermark, c("Label", "character"), nullAllowed = TRUE)
+  validateIsOfType(watermark, c("character", "Label"), nullAllowed = TRUE)
+  validateIsString(color, nullAllowed = TRUE)
+  validateIsNumeric(size, nullAllowed = TRUE)
+  validateIsNumeric(alpha, nullAllowed = TRUE)
+  validateIsNumeric(angle, nullAllowed = TRUE)
+
+  alpha <- alpha %||% getAestheticValues(
+    n = 1,
+    selectionKey = AestheticSelectionKeys$first,
+    aesthetic = "alpha"
+  )
 
   # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
@@ -167,19 +325,16 @@ setWatermark <- function(plotObject,
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$background$watermark
   watermarkConfiguration <- newPlotObject$plotConfiguration$background$watermark
 
-  if (!is.null(watermark)) {
-    if (isOfType(watermark, "character")) {
-      watermark <- asLabel(watermark, watermarkConfiguration$font)
-    }
+  if (isOfType(watermark, "character")) {
+    watermark <- asLabel(text = watermark, font = watermarkConfiguration$font)
   }
-
   watermarkConfiguration <- watermark %||% watermarkConfiguration
+  eval(parseVariableToObject("watermarkConfiguration$font", c("color", "size", "angle"), keepIfNull = TRUE))
 
   # If plot is initialized, addWatermark otherwise update watermark
-  if (length(plotObject$layers) == 0) {
+  if (isOfLength(plotObject$layers, 0)) {
     newPlotObject <- addWatermark(newPlotObject,
-      label = watermarkConfiguration,
-      angle = angle,
+      watermark = watermarkConfiguration,
       alpha = alpha
     )
     return(newPlotObject)
@@ -187,38 +342,44 @@ setWatermark <- function(plotObject,
 
   # Using initializePlot, watermark will always be as first layer
   dummyPlot <- addWatermark(ggplot2::ggplot(),
-    label = watermarkConfiguration,
-    angle = angle,
+    watermark = watermarkConfiguration,
     alpha = alpha
   )
-
   newPlotObject$layers[[1]] <- dummyPlot$layer[[1]]
-
   return(newPlotObject)
 }
 
 #' @title createWatermarkGrob
-#' @param label Character or Label class object corresponding to the watermark text
-#' (and its font properties if Label)
-#' @param angle Angle in degree from horizontal of the watermark label. Default angle is 30 degrees.
-#' @param alpha Transparency of the watermark label.
-#' Alpha is a numeric between 0 and 1: 0 label is totally transparent, 1 label is totally opaque.
-#' Default alpha is 0.6.
-#' @return Watermark background as a ggplot grob object
 #' @description
-#' createWatermarkGrob creates a ggplot grob based on the label text and its font properties.
+#' Creates a `ggplot` grob based on the label text and its font properties.
+#' @param label A character value or `Label` object
+#' @param alpha Numeric value between 0 and 1 corresponding to transparency of the watermark
+#' The closer to 0, the more transparent the watermark is.
+#' The closer to 1, the more opaque the watermark is.
+#' @return A `ggplot` grob
 #' @export
-createWatermarkGrob <- function(label, angle = 30, alpha = 0.6) {
+createWatermarkGrob <- function(label, alpha = NULL) {
+  validateIsNumeric(alpha, nullAllowed = TRUE)
   # Ensure label is a Label class
   label <- asLabel(label)
-  watermark <- ggplot2::ggplot() + ggplot2::theme_void() +
+  alpha <- alpha %||% getAestheticValues(
+    n = 1,
+    selectionKey = AestheticSelectionKeys$first,
+    aesthetic = "alpha"
+  )
+
+  # Font size is in .pt within annonate and requires a conversion
+  watermark <- ggplot2::ggplot() +
+    ggplot2::theme_void() +
     ggplot2::annotate(
       geom = "text",
       x = 0,
       y = 0,
-      label = label$text,
-      color = label$font$color, fontface = label$font$fontFace, size = label$font$size,
-      angle = angle, alpha = alpha
+      label = label$text %||% "",
+      color = label$font$color,
+      fontface = label$font$fontFace,
+      size = label$font$size / ggplot2::.pt,
+      angle = label$font$angle, alpha = alpha
     )
   watermark <- ggplot2::ggplotGrob(watermark)
 

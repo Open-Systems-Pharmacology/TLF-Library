@@ -2,19 +2,21 @@
 % Please edit documentation in R/utilities-legend.R
 \name{setLegendPosition}
 \alias{setLegendPosition}
-\title{setLegendTitle}
+\title{setLegendPosition}
 \usage{
-setLegendPosition(plotObject, position)
+setLegendPosition(plotObject, position = NULL)
 }
 \arguments{
 \item{plotObject}{\code{ggplot} graphical object}
 
-\item{position}{legend position.
-Use enum \code{LegendPositions} to access the list of legend positions.}
+\item{position}{legend position as defined in helper enum \code{LegendPositions}}
 }
 \value{
 A \code{ggplot} graphical object
 }
 \description{
 Set the legend position
+}
+\seealso{
+LegendPositions
 }

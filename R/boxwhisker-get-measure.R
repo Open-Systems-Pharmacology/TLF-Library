@@ -1,18 +1,18 @@
-#' get summary table of Box Whisker plot
-#'
 #' @title getBoxWhiskerMeasure
-#' @param data data.frame (or list of data.frames? TO BE DISCUSSED)
-#' containing the data to be used for the plot
-#' @param dataMapping R6 class BoxWhiskerDataMapping
-#' mapping of x, y and groupings
-#' @param ratioLimits vector of numeric
-#' containing the fold limits of PK ratios
-#' As default limits are 1.5 and 2 folds
-#' @description
-#' getPKRatioMeasure(data, dataMapping, ratioLimits) get the number of PK ratios
-#' that are within specific limits
-#' @return a data.frame reporting the PK Ratio Qualification Measure
+#' @description 
+#' Get a summary table of Box Whisker percentiles
+#' 
+#' @inheritParams plotBoxWhisker
+#' @param y Name of `y` variable in `data`.
+#' @param group Name of grouping variable in `data`.
+#' @param quantiles Numeric values between 0 and 1 defining the quantiles to summarize
+#' @return A data.frame of summary statistics
 #' @export
+#' @examples 
+#' # Get box-and-whisker plots of log-normal distributed data
+#' boxData <- data.frame(x = c(rep("A", 500), rep("B",500)), y = rlnorm(1000))
+#' 
+#' getBoxWhiskerMeasure(data = boxData, dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"))
 #'
 getBoxWhiskerMeasure <- function(data,
                                  dataMapping = NULL,
@@ -32,7 +32,7 @@ getBoxWhiskerMeasure <- function(data,
 
   # Redfine group and y while removing NA values
   y <- data[!is.na.data.frame(data[, dataMapping$y]), dataMapping$y]
-  group <- ifnotnull(
+  group <- ifNotNull(
     dataMapping$x,
     data[!is.na.data.frame(data[, dataMapping$y]), dataMapping$x],
     as.factor(rep("", length(y)))

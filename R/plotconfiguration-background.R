@@ -4,131 +4,199 @@
 BackgroundConfiguration <- R6::R6Class(
   "BackgroundConfiguration",
   public = list(
-    #' @field outerBackground R6 class \code{BackgroundElementConfiguration} object
-    outerBackground = NULL,
-    #' @field innerBackground R6 class \code{BackgroundElementConfiguration} object
-    innerBackground = NULL,
-    #' @field grid R6 class \code{BackgroundElementConfiguration} object
-    grid = NULL,
-    #' @field watermark R6 class \code{Label} object defining watermark background
-    watermark = NULL,
+    #' @description Create a new `BackgroundConfiguration` object
+    #' @param watermark `Label` object defining properties of watermark
+    #' @param plot `BackgroundElement` object defining oustide plot background properties
+    #' @param panel `BackgroundElement` object defining panel (inside of plot) background properties
+    #' @param xAxis `LineElement` object defining properties of x-axis
+    #' @param yAxis `LineElement` object defining properties of y-axis
+    #' @param xGrid `LineElement` object defining properties of x-grid
+    #' @param yGrid `LineElement` object defining properties of y-grid
+    #' @return A new `BackgroundConfiguration` object
+    initialize = function(watermark = NULL,
+                          plot = NULL,
+                          panel = NULL,
+                          xAxis = NULL,
+                          yAxis = NULL,
+                          xGrid = NULL,
+                          yGrid = NULL) {
+      validateIsOfType(watermark, c("character", "Label"), nullAllowed = TRUE)
+      currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
+      watermark <- watermark %||% currentTheme$background$watermark
+      # Enforce watermark as Label with value
+      if (isOfType(watermark, "character")) {
+        watermark <- asLabel(text = watermark, font = currentTheme$fonts$watermark)
+      }
+      private$.watermark <- watermark
 
-    #' @description Create a new \code{BackgroundConfiguration} object
-    #' @param outerBackground R6 class \code{BackgroundElementConfiguration} object
-    #' @param innerBackground R6 class \code{BackgroundElementConfiguration} object
-    #' @param grid R6 class \code{BackgroundElementConfiguration} object
-    #' @param watermark R6 class \code{Label} object defining watermark background
-    #' @param watermarkFont R6 class \code{Font} object defining watermark font
-    #' @param theme R6 class \code{Theme} object
-    #' @return A new \code{BackgroundConfiguration} object
-    initialize = function(outerBackground = NULL,
-                              innerBackground = NULL,
-                              grid = NULL,
-                              watermark = NULL,
-                              watermarkFont = NULL,
-                              theme = tlfEnv$currentTheme) {
-      self$outerBackground <- outerBackground %||% BackgroundElementConfiguration$new(theme = theme$background$outer)
-      self$innerBackground <- innerBackground %||% BackgroundElementConfiguration$new(theme = theme$background$inner)
-      self$grid <- grid %||% BackgroundElementConfiguration$new(theme = theme$background$grid)
+      areaFieldNames <- c("plot", "panel")
+      lineFieldNames <- c("xAxis", "yAxis", "xGrid", "yGrid")
 
-      self$watermark <- asLabel(watermark %||% theme$background$watermark %||% "")
-      self$watermark$font <- watermarkFont %||% self$watermark$font
+      validateAreaExpression <- parse(text = paste0("validateIsOfType(", areaFieldNames, ", 'BackgroundElement', nullAllowed = TRUE)"))
+      validateLineExpression <- parse(text = paste0("validateIsOfType(", lineFieldNames, ", 'LineElement', nullAllowed = TRUE)"))
+      eval(validateAreaExpression)
+      eval(validateLineExpression)
+
+      setAreaExpression <- parse(text = paste0("private$.", areaFieldNames, " <- ", areaFieldNames, " %||% currentTheme$background$", areaFieldNames))
+      setLineExpression <- parse(text = paste0("private$.", lineFieldNames, " <- ", lineFieldNames, " %||% currentTheme$background$", lineFieldNames))
+      eval(setAreaExpression)
+      eval(setLineExpression)
     },
 
-    #' @description Print background properties
-    #' @return Background properties
-    print = function() {
-      backgroundProperties <- list(
-        "outerBackground" = self$outerBackground$print(),
-        "innerBackground" = self$innerBackground$print(),
-        "grid" = self$grid$print(),
-        "watermark" = self$watermark$text
+    #' @description Update background a `ggplot` object from `BackgroundConfiguration` properties
+    #' @param plotObject a `ggplot` object
+    #' @return A `ggplot` object
+    updatePlot = function(plotObject) {
+      plotObject <- plotObject + ggplot2::theme(
+        plot.background = private$.plot$createPlotElement(),
+        panel.background = private$.panel$createPlotElement(),
+        axis.line.x = private$.xAxis$createPlotElement(),
+        axis.line.y = private$.yAxis$createPlotElement(),
+        panel.grid.major.x = private$.xGrid$createPlotElement(),
+        panel.grid.major.y = private$.yGrid$createPlotElement()
       )
-      return(backgroundProperties)
-    },
-
-    #' @description Set background properties of a \code{ggplot} object
-    #' @param plotObject a \code{ggplot} object
-    #' @return A \code{ggplot} object
-    setBackground = function(plotObject) {
-      plotObject <- plotObject + theme(
-        plot.background = element_rect(fill = self$outerBackground$fill),
-        panel.background = element_rect(
-          fill = self$innerBackground$fill,
-          color = self$innerBackground$color,
-          size = self$innerBackground$size,
-          linetype = self$innerBackground$linetype,
-        ),
-        panel.grid = element_line(
-          color = self$grid$color,
-          size = self$grid$size,
-          linetype = self$grid$linetype
-        )
-      )
-      plotObject <- addWatermark(plotObject = plotObject, label = self$watermark)
       return(plotObject)
     }
-  )
+  ),
+  active = list(
+    #' @field watermark `Label` object
+    watermark = function(value) {
+      if (missing(value)) {
+        return(private$.watermark)
+      }
+      validateIsOfType(value, c("character", "Label"), nullAllowed = TRUE)
+      value <- value %||% private$.watermark$text
+      # Enforce watermark as Label with value
+      if (isOfType(value, "character")) {
+        value <- asLabel(text = value, font = private$.watermark$font)
+      }
+      private$.watermark <- value
+      return(invisible())
+    },
+    #' @field plot `BackgroundElement` object
+    plot = function(value) {
+      requestOnElement(private$.plot, value)
+    },
+    #' @field panel `BackgroundElement` object
+    panel = function(value) {
+      requestOnElement(private$.panel, value)
+    },
+    #' @field xAxis `LineElement` object
+    xAxis = function(value) {
+      requestOnElement(private$.xAxis, value)
+    },
+    #' @field yAxis `LineElement` object
+    yAxis = function(value) {
+      requestOnElement(private$.yAxis, value)
+    },
+    #' @field xGrid `LineElement` object
+    xGrid = function(value) {
+      requestOnElement(private$.xGrid, value)
+    },
+    #' @field yGrid `LineElement` object
+    yGrid = function(value) {
+      requestOnElement(private$.yGrid, value)
+    }
+  ),
+  private = list(
+    .watermark = NULL,
+    .plot = NULL,
+    .panel = NULL,
+    .xAxis = NULL,
+    .yAxis = NULL,
+    .xGrid = NULL,
+    .yGrid = NULL
+  ),
 )
 
-#' @title BackgroundElementConfiguration
-#' @description  R6 class defining the configuration of background elements
+#' @title BackgroundElement
+#' @description  R6 class defining the properties of background elements
+#' @field fill character defining the color filling of the background element
+#' @field color character defining the color of the background element frame/line
+#' @field size numeric defining the size of the background element frame/line
+#' @field linetype character defining the size of the background element frame/line
 #' @export
-BackgroundElementConfiguration <- R6::R6Class(
-  "BackgroundElementConfiguration",
+BackgroundElement <- R6::R6Class(
+  "BackgroundElement",
   public = list(
-    #' @field fill character color filling of the background element
     fill = NULL,
-    #' @field color character color of the frame of the background element
     color = NULL,
-    #' @field size character size of the frame of the background element
     size = NULL,
-    #' @field linetype character linetype of the frame of the background element
     linetype = NULL,
 
-    #' @description Create a new \code{BackgroundElementConfiguration} object
+    #' @description Create a new `BackgroundElement` object
     #' @param fill character color filling of the background element
     #' @param color character color of the frame of the background element
     #' @param size character size of the frame of the background element
     #' @param linetype character linetype of the frame of the background element
-    #' @param theme R6 class \code{Theme} object
-    #' @return A new \code{BackgroundElementConfiguration} object
+    #' @return A new `BackgroundElement` object
     initialize = function(fill = NULL,
-                              color = NULL,
-                              size = NULL,
-                              linetype = NULL,
-                              theme = NULL) {
-      self$fill <- fill %||% theme$fill
-      self$color <- color %||% theme$color
-      self$size <- size %||% theme$size
-      self$linetype <- linetype %||% theme$linetype
+                          color = NULL,
+                          size = NULL,
+                          linetype = NULL) {
+      validateIsString(c(fill, color, linetype), nullAllowed = TRUE)
+      validateIsNumeric(size, nullAllowed = TRUE)
+
+      fieldNames <- c("fill", "color", "size", "linetype")
+      setPropertiesExpression <- parse(text = paste0("self$", fieldNames, " <- ", fieldNames))
+      eval(setPropertiesExpression)
     },
 
-    #' @description Print background element properties
-    #' @return Background element properties
-    print = function() {
-      backgroundProperties <- NULL
-
-      # Get properties that are of character type
-      elementProperties <- unlist(eapply(
-        self,
-        function(x) {
-          isOfType(x, "character")
-        }
-      ))
-      elementNames <- names(elementProperties[as.logical(elementProperties)])
-
-      # Build data.frame of properties while removing NULL values
-      for (elementName in elementNames) {
-        backgroundProperties <- rbind.data.frame(
-          backgroundProperties,
-          data.frame(
-            Property = elementName,
-            Value = self[[elementName]]
-          )
-        )
-      }
-      return(backgroundProperties)
+    #' @description Create a `ggplot2::element_rect`  directly usable by `ggplot2::theme`.
+    #' @param fill character color filling of the background element
+    #' @param color character color of the frame of the background element
+    #' @param size character size of the frame of the background element
+    #' @param linetype character linetype of the frame of the background element
+    #' @return An `element_rect` object.
+    createPlotElement = function(fill = NULL, color = NULL, size = NULL, linetype = NULL) {
+      ggplot2::element_rect(
+        fill = fill %||% self$fill,
+        colour = color %||% self$color,
+        size =  size %||% as.numeric(self$size),
+        linetype = linetype %||% self$linetype
+      )
     }
   )
 )
+
+#' @title LineElement
+#' @description  R6 class defining the properties of background line elements
+#' @export
+LineElement <- R6::R6Class(
+  "LineElement",
+  inherit = BackgroundElement,
+  public = list(
+    #' @description Create a `ggplot2::element_line` directly usable by `ggplot2::theme`.
+    #' @param color character color of the frame of the background element
+    #' @param size character size of the frame of the background element
+    #' @param linetype character linetype of the frame of the background element
+    #' @return An `element_line` object.
+    createPlotElement = function(color = NULL, size = NULL, linetype = NULL) {
+      ggplot2::element_line(
+        colour = color %||% self$color,
+        size =  size %||% as.numeric(self$size),
+        linetype = linetype %||% self$linetype
+      )
+    }
+  )
+)
+
+#' @keywords internal
+requestOnElement <- function(field, value) {
+  if (missing(value)) {
+    return(field)
+  }
+  # Update the element partially in case of names list
+  if (isOfType(value, "list")) {
+    for (fieldName in c("color", "size", "linetype")) {
+      field[[fieldName]] <- value[[fieldName]] %||% field[[fieldName]]
+    }
+    if (isOfType(field, "BackgroundElement")) {
+      field[["fill"]] <- value[["fill"]] %||% field[["fill"]]
+    }
+  }
+  # Or update the whole element R6 object is used
+  if (isOfType(value, "BackgroundElement")) {
+    field <- value
+  }
+}

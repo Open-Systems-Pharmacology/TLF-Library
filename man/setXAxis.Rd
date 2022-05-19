@@ -9,23 +9,44 @@ setXAxis(
   scale = NULL,
   limits = NULL,
   ticks = NULL,
-  ticklabels = NULL
+  ticklabels = NULL,
+  font = NULL,
+  expand = NULL
 )
 }
 \arguments{
-\item{plotObject}{ggplot object to set X-axis properties}
+\item{plotObject}{A \code{ggplot} object to set X-axis properties}
 
-\item{scale}{Scale of X-axis. Use enum \code{Scaling} to access names of scales.}
+\item{scale}{Scale of axis. Use enum \code{Scaling} to access names of scales.}
 
-\item{limits}{X-axis limits}
+\item{limits}{Optional numeric values of axis limits}
 
-\item{ticks}{X-axis ticks}
+\item{ticks}{Optional values or function for axis ticks}
 
-\item{ticklabels}{X-axis ticklabels}
+\item{ticklabels}{Optional values or function for axis ticklabels}
+
+\item{font}{A \code{Font} object  defining font of ticklabels}
+
+\item{expand}{Logical defining if data is expanded until axis}
 }
 \value{
-ggplot object with updated X-axis
+A \code{ggplot} object
 }
 \description{
-Set X-axis properties on a ggplot object
+Set X-axis properties of a \code{ggplot} object
+}
+\examples{
+myPlot <- addLine(x = c(1, 2, 3), y = c(10, 50, 100))
+
+# Set x-axis in log scale
+setXAxis(myPlot, scale = Scaling$log)
+
+# Set x-axis ticklabels to Greek letters
+setXAxis(myPlot, ticks = c(1, 2, 3), ticklabels = parse(text = c("alpha", "beta", "gamma")))
+
+# Set x-axis limits
+setXAxis(myPlot, limits = c(1, 2.5))
+
+# Set x-axis fonts
+setXAxis(myPlot, font = Font$new(color = "blue", size = 14))
 }

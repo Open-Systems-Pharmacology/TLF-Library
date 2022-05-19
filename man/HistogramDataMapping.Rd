@@ -4,22 +4,39 @@
 \alias{HistogramDataMapping}
 \title{HistogramDataMapping}
 \description{
-R6 class for mapping \code{x}, \code{verticalLineGroupings},
-\code{verticalLineFunctionNames} and \code{verticalLineFunctions} variables to \code{data}
+R6 class for mapping \code{x}, \code{bins}, \code{binwidth},\code{stack} and \code{distribution} to \code{data}
 }
+\seealso{
+Other DataMapping classes: 
+\code{\link{BoxWhiskerDataMapping}},
+\code{\link{DDIRatioDataMapping}},
+\code{\link{GroupMapping}},
+\code{\link{Grouping}},
+\code{\link{ObsVsPredDataMapping}},
+\code{\link{ObservedDataMapping}},
+\code{\link{PKRatioDataMapping}},
+\code{\link{RangeDataMapping}},
+\code{\link{ResVsPredDataMapping}},
+\code{\link{TimeProfileDataMapping}},
+\code{\link{TornadoDataMapping}},
+\code{\link{XYDataMapping}},
+\code{\link{XYGDataMapping}}
+}
+\concept{DataMapping classes}
 \section{Super classes}{
 \code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{HistogramDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{verticalLineGroupings}}{R6 class \code{Grouping} variable}
+\item{\code{stack}}{logical defining if histogram bars should be stacked}
 
-\item{\code{verticalLineFunctionNames}}{Vector of function name
-to be indicated in captions of the histogram}
+\item{\code{bins}}{number of bins or binning values/methods passed on \code{ggplot2::geom_histogram}}
 
-\item{\code{verticalLineFunctions}}{List of functions calculated on \code{data}
-to obtain vertical lines on the histogram}
+\item{\code{binwidth}}{width of bins passed on \code{ggplot2::geom_histogram}. Overwrites \code{bins}}
+
+\item{\code{distribution}}{Name of distribution to fit to the data.
+Only 2 distributions are currently available: \code{"normal"} and \code{"logNormal"}}
 }
 \if{html}{\out{</div>}}
 }
@@ -44,9 +61,10 @@ to obtain vertical lines on the histogram}
 Create a new \code{HistogramDataMapping} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{HistogramDataMapping$new(
-  verticalLineGroupings = NULL,
-  verticalLineFunctionNames = c("mean", "median"),
-  verticalLineFunctions = c(mean, median),
+  stack = FALSE,
+  bins = NULL,
+  binwidth = NULL,
+  distribution = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -54,13 +72,14 @@ Create a new \code{HistogramDataMapping} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{verticalLineGroupings}}{R6 class \code{Grouping} variable}
+\item{\code{stack}}{logical defining if histogram bars should be stacked}
 
-\item{\code{verticalLineFunctionNames}}{Vector of function name to be indicated in captions of the histogram
-Default value uses \code{mean} and \code{median}.}
+\item{\code{bins}}{argument passed on \code{ggplot2::geom_histogram}}
 
-\item{\code{verticalLineFunctions}}{List of functions calculated on \code{data}
-Default value uses \code{mean} and \code{median}.}
+\item{\code{binwidth}}{width of bins passed on \code{ggplot2::geom_histogram}. Overwrites \code{bins}}
+
+\item{\code{distribution}}{Name of distribution to fit to the data.
+Only 2 distributions are currently available: \code{"normal"} and \code{"logNormal"}}
 
 \item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
 }

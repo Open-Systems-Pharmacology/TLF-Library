@@ -12,9 +12,10 @@ install:
   - git submodule update --init --recursive
 
 environment:
-  app_version: "1.1"
+  app_version: "1.3"
   USE_RTOOLS: true
   R_ARCH: x64
+  R_VERSION: "4.0.5"
   KEEP_VIGNETTES: true
   NOT_CRAN: true
   COVERALLS_TOKEN:
@@ -24,9 +25,6 @@ version: "$(app_version).{build}"
 
 before_build:
   - rake "prepare_for_build[%APPVEYOR_BUILD_VERSION%]"
-
-cache:
-  - C:\RLibrary
 
 platform: x64
 
@@ -53,10 +51,15 @@ before_test:
 build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
-  - Rscript -e "install.packages('covr', repos = 'http://cran.us.r-project.org')"
+  - Rscript -e "install.packages('covr', repos = 'http://cran.us.r-project.org', type='win.binary')"
+  - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/ospsuite-rutils/artifacts/ospsuite.utils.zip', repos = NULL, type = 'binary')"
 
 test_script:
   - travis-tool.sh run_tests
+
+after_test:
+  - ps: copy tlf_*.tar.gz tlf.tar.gz
+  - ps: copy tlf_*.zip tlf.zip
 
 on_success:
   - Rscript -e "covr::codecov()"
@@ -78,10 +81,10 @@ artifacts:
   - path: '*.Rcheck\**\*.Rout'
     name: Logs
 
-  - path: '\*_*.tar.gz'
+  - path: '\*.tar.gz'
     name: Bits
 
-  - path: '\*_*.zip'
+  - path: '\*.zip'
     name: Bits
 
 notifications:

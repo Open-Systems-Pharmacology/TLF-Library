@@ -13,23 +13,26 @@ getBoxWhiskerMeasure(
 )
 }
 \arguments{
-\item{data}{data.frame (or list of data.frames? TO BE DISCUSSED)
-containing the data to be used for the plot}
+\item{data}{A data.frame to use for plot.}
 
-\item{dataMapping}{R6 class BoxWhiskerDataMapping
-mapping of x, y and groupings}
+\item{dataMapping}{A \code{BoxWhiskerDataMapping} object mapping \code{x}, \code{y} and aesthetic groups to their variable names of \code{data}.}
 
-\item{ratioLimits}{vector of numeric
-containing the fold limits of PK ratios
-As default limits are 1.5 and 2 folds}
+\item{y}{Name of \code{y} variable in \code{data}.}
+
+\item{group}{Name of grouping variable in \code{data}.}
+
+\item{quantiles}{Numeric values between 0 and 1 defining the quantiles to summarize}
 }
 \value{
-a data.frame reporting the PK Ratio Qualification Measure
+A data.frame of summary statistics
 }
 \description{
-getPKRatioMeasure(data, dataMapping, ratioLimits) get the number of PK ratios
-that are within specific limits
+Get a summary table of Box Whisker percentiles
 }
-\details{
-get summary table of Box Whisker plot
+\examples{
+# Get box-and-whisker plots of log-normal distributed data
+boxData <- data.frame(x = c(rep("A", 500), rep("B",500)), y = rlnorm(1000))
+
+getBoxWhiskerMeasure(data = boxData, dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"))
+
 }

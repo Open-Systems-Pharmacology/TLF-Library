@@ -9,23 +9,44 @@ setYAxis(
   scale = NULL,
   limits = NULL,
   ticks = NULL,
-  ticklabels = NULL
+  ticklabels = NULL,
+  font = NULL,
+  expand = NULL
 )
 }
 \arguments{
-\item{plotObject}{ggplot object to set Y-axis properties}
+\item{plotObject}{A \code{ggplot} object to set X-axis properties}
 
-\item{scale}{Scale of Y-axis. Use enum \code{Scaling} to access names of scales.}
+\item{scale}{Scale of axis. Use enum \code{Scaling} to access names of scales.}
 
-\item{limits}{Y-axis limits}
+\item{limits}{Optional numeric values of axis limits}
 
-\item{ticks}{Y-axis ticks}
+\item{ticks}{Optional values or function for axis ticks}
 
-\item{ticklabels}{Y-axis ticklabels}
+\item{ticklabels}{Optional values or function for axis ticklabels}
+
+\item{font}{A \code{Font} object  defining font of ticklabels}
+
+\item{expand}{Logical defining if data is expanded until axis}
 }
 \value{
-ggplot object with updated Y-axis
+A \code{ggplot} object
 }
 \description{
-Set Y-axis properties on a ggplot object
+Set Y-axis properties of a \code{ggplot} object
+}
+\examples{
+myPlot <- addLine(x = c(1, 2, 3), y = c(10, 50, 100))
+
+# Set y-axis in log scale
+setYAxis(myPlot, scale = Scaling$log)
+
+# Set y-axis ticklabels to Greek letters
+setYAxis(myPlot, ticks = c(10, 50, 100), ticklabels = parse(text = c("alpha", "beta", "gamma")))
+
+# Set y-axis limits
+setYAxis(myPlot, limits = c(10, 75))
+
+# Set y-axis fonts
+setYAxis(myPlot, font = Font$new(color = "blue", size = 14))
 }

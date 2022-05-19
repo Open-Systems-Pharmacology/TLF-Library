@@ -4,19 +4,36 @@
 \alias{DDIRatioDataMapping}
 \title{DDIRatioDataMapping}
 \description{
-R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{ddiRatioLines} variables to \code{data}
+R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and DDI ratio \code{lines} variables to \code{data}
 }
+\seealso{
+Other DataMapping classes: 
+\code{\link{BoxWhiskerDataMapping}},
+\code{\link{GroupMapping}},
+\code{\link{Grouping}},
+\code{\link{HistogramDataMapping}},
+\code{\link{ObsVsPredDataMapping}},
+\code{\link{ObservedDataMapping}},
+\code{\link{PKRatioDataMapping}},
+\code{\link{RangeDataMapping}},
+\code{\link{ResVsPredDataMapping}},
+\code{\link{TimeProfileDataMapping}},
+\code{\link{TornadoDataMapping}},
+\code{\link{XYDataMapping}},
+\code{\link{XYGDataMapping}}
+}
+\concept{DataMapping classes}
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{DDIRatioDataMapping}
+\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{\link[tlf:PKRatioDataMapping]{tlf::PKRatioDataMapping}} -> \code{DDIRatioDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{ddiRatioLines}}{numeric vector of ratio limits to plot}
+\item{\code{minRange}}{Mininmum range for guest and ratio lines}
 
-\item{\code{deltaGuest}}{numeric value of Guest et al ratio limits}
+\item{\code{deltaGuest}}{Value of \code{delta} in Guest et al. equation}
 
-\item{\code{range}}{2 elements vector of x limits}
+\item{\code{residualsVsObserved}}{if true, returns a mapping for generating a residuals (predicted/observed) vs observed DDI ratio plot.  If false (default) returns a mapping for predicted vs observed DDI ratio plot.}
 }
 \if{html}{\out{</div>}}
 }
@@ -24,15 +41,13 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{ddiRatioL
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{DDIRatioDataMapping$new()}}
-\item \href{#method-getDDIRatioLines}{\code{DDIRatioDataMapping$getDDIRatioLines()}}
-\item \href{#method-getGuestLines}{\code{DDIRatioDataMapping$getGuestLines()}}
 \item \href{#method-clone}{\code{DDIRatioDataMapping$clone()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="XYGDataMapping" data-id="checkMapData">}\href{../../tlf/html/XYGDataMapping.html#method-checkMapData}{\code{tlf::XYGDataMapping$checkMapData()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PKRatioDataMapping" data-id="checkMapData">}\href{../../tlf/html/PKRatioDataMapping.html#method-checkMapData}{\code{tlf::PKRatioDataMapping$checkMapData()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -43,8 +58,10 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and \code{ddiRatioL
 Create a new \code{DDIRatioDataMapping} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DDIRatioDataMapping$new(
-  ddiRatioValues = DefaultDataMappingValues$ddiRatio,
-  range = c(0.01, 100),
+  deltaGuest = 1,
+  minRange = c(0.01, 100),
+  lines = DefaultDataMappingValues$ddiRatio,
+  residualsVsObserved = FALSE,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -52,44 +69,21 @@ Create a new \code{DDIRatioDataMapping} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{ddiRatioValues}}{list of values for ratio and guest limits to plot}
+\item{\code{deltaGuest}}{Value of parameter \code{delta} in Guest et al. equation.
+Default value is 1.}
 
-\item{\code{range}}{2 elements vector of x limits}
+\item{\code{minRange}}{Mininmum range for guest lines}
 
-\item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
+\item{\code{lines}}{list of ratio limits to plot as diagonal lines}
+
+\item{\code{residualsVsObserved}}{if true, returns a mapping for generating a residuals (predicted/observed) vs observed DDI ratio plot.  If false (default) returns a mapping for predicted vs observed DDI ratio plot.}
+
+\item{\code{...}}{parameters inherited from \code{PKRatioDataMapping}}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 A new \code{DDIRatioDataMapping} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getDDIRatioLines"></a>}}
-\if{latex}{\out{\hypertarget{method-getDDIRatioLines}{}}}
-\subsection{Method \code{getDDIRatioLines()}}{
-Create a data.frame with DDI ratio limits
-This data.frame is necessary in case if log-log plots as
-\code{geom_abline} doesn't work properly in log scale
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DDIRatioDataMapping$getDDIRatioLines()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A data.frame with DDI ratio limits
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getGuestLines"></a>}}
-\if{latex}{\out{\hypertarget{method-getGuestLines}{}}}
-\subsection{Method \code{getGuestLines()}}{
-Get a data.frame with Guest et al ratio limits
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DDIRatioDataMapping$getGuestLines()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A data.frame with Guest et al ratio limits
 }
 }
 \if{html}{\out{<hr>}}

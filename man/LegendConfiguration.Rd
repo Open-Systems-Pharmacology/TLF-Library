@@ -6,14 +6,18 @@
 \description{
 R6 class defining the legend configuration of a \code{ggplot} object
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{position}}{character position of the legend}
+\item{\code{caption}}{of legend defined as data.frame with caption properties}
 
-\item{\code{title}}{character name of the legend}
+\item{\code{position}}{of legend as defined in Enum \code{LegendPositions}}
 
-\item{\code{caption}}{data.frame with}
+\item{\code{font}}{\code{Font} object defining the font of the legend}
+
+\item{\code{background}}{\code{Background} object defining the background of the legend}
+
+\item{\code{title}}{character defining title of the legend}
 }
 \if{html}{\out{</div>}}
 }
@@ -21,7 +25,7 @@ R6 class defining the legend configuration of a \code{ggplot} object
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{LegendConfiguration$new()}}
-\item \href{#method-print}{\code{LegendConfiguration$print()}}
+\item \href{#method-updatePlot}{\code{LegendConfiguration$updatePlot()}}
 \item \href{#method-clone}{\code{LegendConfiguration$clone()}}
 }
 }
@@ -32,22 +36,26 @@ R6 class defining the legend configuration of a \code{ggplot} object
 Create a new \code{LegendConfiguration} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LegendConfiguration$new(
-  position = tlfEnv$defaultLegendPosition,
+  position = NULL,
+  caption = NULL,
   title = NULL,
-  caption = NULL
+  font = NULL,
+  background = NULL
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{position}}{character position of the legend.
-Use enum \code{LegendPositions} to assess available legend positions.}
+\item{\code{position}}{position of the legend as defined by enum \code{LegendPositions}}
 
-\item{\code{title}}{character title of the legend caption.
-Default \code{NULL} does not provide any legend title.}
+\item{\code{caption}}{data.frame containing the properties of the legend caption}
 
-\item{\code{caption}}{data.frame containing the legend caption properties}
+\item{\code{title}}{character or \code{Label} object defining the title of the legend. A value of \code{NULL} removes the title.}
+
+\item{\code{font}}{\code{Font} object defining the font of the legend caption}
+
+\item{\code{background}}{\code{BackgroundElement} object defining the background of the legend}
 }
 \if{html}{\out{</div>}}
 }
@@ -56,16 +64,23 @@ A new \code{LegendConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
-\subsection{Method \code{print()}}{
-Print legend properties
+\if{html}{\out{<a id="method-updatePlot"></a>}}
+\if{latex}{\out{\hypertarget{method-updatePlot}{}}}
+\subsection{Method \code{updatePlot()}}{
+Update legend configuration on a \code{ggplot} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LegendConfiguration$print()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{LegendConfiguration$updatePlot(plotObject)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{plotObject}}{\code{ggplot} object}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
-Legend properties
+A \code{ggplot} object with updated axis properties
 }
 }
 \if{html}{\out{<hr>}}

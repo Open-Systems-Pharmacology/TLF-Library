@@ -4,18 +4,22 @@
 \alias{Font}
 \title{Font}
 \description{
-R6 class defining \code{size}, \code{color}, \code{fontFamily}, \code{fontFace} of font
+R6 class defining font properties
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{size}}{numeric size of font}
+\item{\code{size}}{numeric defining the size of font}
 
-\item{\code{color}}{character color of font}
+\item{\code{color}}{character defining the color of font}
 
-\item{\code{fontFamily}}{character family of font}
+\item{\code{fontFamily}}{character defining the family of font}
 
-\item{\code{fontFace}}{character face of font}
+\item{\code{fontFace}}{character defining the font face as defined in helper enum \code{FontFaces}.}
+
+\item{\code{angle}}{numeric defining the angle of font}
+
+\item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -23,8 +27,7 @@ R6 class defining \code{size}, \code{color}, \code{fontFamily}, \code{fontFace} 
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{Font$new()}}
-\item \href{#method-print}{\code{Font$print()}}
-\item \href{#method-setFont}{\code{Font$setFont()}}
+\item \href{#method-createPlotFont}{\code{Font$createPlotFont()}}
 \item \href{#method-clone}{\code{Font$clone()}}
 }
 }
@@ -36,19 +39,30 @@ Create a new \code{Font} object.
 Default font properties are defined directly in the object field,
 so \code{NULL} input is allowed will lead to default properties.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Font$new(size = NULL, color = NULL, fontFamily = NULL, fontFace = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Font$new(
+  color = NULL,
+  size = NULL,
+  fontFamily = NULL,
+  fontFace = NULL,
+  angle = NULL,
+  align = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{size}}{numeric size of font}
+\item{\code{color}}{character defining the color of font}
 
-\item{\code{color}}{character color of font}
+\item{\code{size}}{numeric defining the size of font}
 
-\item{\code{fontFamily}}{character family of font}
+\item{\code{fontFamily}}{character defining the family of font}
 
-\item{\code{fontFace}}{character face of font}
+\item{\code{fontFace}}{character defining the font face as defined in helper enum \code{FontFaces}.}
+
+\item{\code{angle}}{numeric defining the angle of font}
+
+\item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -57,26 +71,40 @@ A new \code{Font} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
-\subsection{Method \code{print()}}{
-Print \code{Font} properties.
+\if{html}{\out{<a id="method-createPlotFont"></a>}}
+\if{latex}{\out{\hypertarget{method-createPlotFont}{}}}
+\subsection{Method \code{createPlotFont()}}{
+Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::theme}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Font$print()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Font$createPlotFont(
+  size = NULL,
+  color = NULL,
+  fontFamily = NULL,
+  fontFace = NULL,
+  angle = NULL,
+  align = NULL
+)}\if{html}{\out{</div>}}
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setFont"></a>}}
-\if{latex}{\out{\hypertarget{method-setFont}{}}}
-\subsection{Method \code{setFont()}}{
-Create an \code{element_text} for ggplot with \code{Font} properties.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Font$setFont()}\if{html}{\out{</div>}}
-}
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{size}}{numeric defining the size of font}
 
+\item{\code{color}}{character defining the color of font}
+
+\item{\code{fontFamily}}{character defining the family of font}
+
+\item{\code{fontFace}}{character defining the font face as defined in helper enum \code{FontFaces}.}
+
+\item{\code{angle}}{numeric defining the angle of font}
+
+\item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
-An \code{element_text} for ggplot with \code{Font} properties.
+An \code{element_text} object.
 }
 }
 \if{html}{\out{<hr>}}

@@ -6,16 +6,22 @@
 \description{
 R6 class defining the configuration of background
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{outerBackground}}{R6 class \code{BackgroundElementConfiguration} object}
+\item{\code{watermark}}{\code{Label} object}
 
-\item{\code{innerBackground}}{R6 class \code{BackgroundElementConfiguration} object}
+\item{\code{plot}}{\code{BackgroundElement} object}
 
-\item{\code{grid}}{R6 class \code{BackgroundElementConfiguration} object}
+\item{\code{panel}}{\code{BackgroundElement} object}
 
-\item{\code{watermark}}{R6 class \code{Label} object defining watermark background}
+\item{\code{xAxis}}{\code{LineElement} object}
+
+\item{\code{yAxis}}{\code{LineElement} object}
+
+\item{\code{xGrid}}{\code{LineElement} object}
+
+\item{\code{yGrid}}{\code{LineElement} object}
 }
 \if{html}{\out{</div>}}
 }
@@ -23,8 +29,7 @@ R6 class defining the configuration of background
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{BackgroundConfiguration$new()}}
-\item \href{#method-print}{\code{BackgroundConfiguration$print()}}
-\item \href{#method-setBackground}{\code{BackgroundConfiguration$setBackground()}}
+\item \href{#method-updatePlot}{\code{BackgroundConfiguration$updatePlot()}}
 \item \href{#method-clone}{\code{BackgroundConfiguration$clone()}}
 }
 }
@@ -35,29 +40,32 @@ R6 class defining the configuration of background
 Create a new \code{BackgroundConfiguration} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{BackgroundConfiguration$new(
-  outerBackground = NULL,
-  innerBackground = NULL,
-  grid = NULL,
   watermark = NULL,
-  watermarkFont = NULL,
-  theme = tlfEnv$currentTheme
+  plot = NULL,
+  panel = NULL,
+  xAxis = NULL,
+  yAxis = NULL,
+  xGrid = NULL,
+  yGrid = NULL
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{outerBackground}}{R6 class \code{BackgroundElementConfiguration} object}
+\item{\code{watermark}}{\code{Label} object defining properties of watermark}
 
-\item{\code{innerBackground}}{R6 class \code{BackgroundElementConfiguration} object}
+\item{\code{plot}}{\code{BackgroundElement} object defining oustide plot background properties}
 
-\item{\code{grid}}{R6 class \code{BackgroundElementConfiguration} object}
+\item{\code{panel}}{\code{BackgroundElement} object defining panel (inside of plot) background properties}
 
-\item{\code{watermark}}{R6 class \code{Label} object defining watermark background}
+\item{\code{xAxis}}{\code{LineElement} object defining properties of x-axis}
 
-\item{\code{watermarkFont}}{R6 class \code{Font} object defining watermark font}
+\item{\code{yAxis}}{\code{LineElement} object defining properties of y-axis}
 
-\item{\code{theme}}{R6 class \code{Theme} object}
+\item{\code{xGrid}}{\code{LineElement} object defining properties of x-grid}
+
+\item{\code{yGrid}}{\code{LineElement} object defining properties of y-grid}
 }
 \if{html}{\out{</div>}}
 }
@@ -66,25 +74,12 @@ A new \code{BackgroundConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
-\subsection{Method \code{print()}}{
-Print background properties
+\if{html}{\out{<a id="method-updatePlot"></a>}}
+\if{latex}{\out{\hypertarget{method-updatePlot}{}}}
+\subsection{Method \code{updatePlot()}}{
+Update background a \code{ggplot} object from \code{BackgroundConfiguration} properties
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BackgroundConfiguration$print()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-Background properties
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setBackground"></a>}}
-\if{latex}{\out{\hypertarget{method-setBackground}{}}}
-\subsection{Method \code{setBackground()}}{
-Set background properties of a \code{ggplot} object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BackgroundConfiguration$setBackground(plotObject)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{BackgroundConfiguration$updatePlot(plotObject)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

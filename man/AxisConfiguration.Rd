@@ -6,16 +6,24 @@
 \description{
 R6 class defining the configuration of axis
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{limits}}{numeric vector of axis limits}
+\item{\code{limits}}{numeric vector of length 2 defining limits of axis.
+A value of \code{NULL} is allowed and lead to default \code{ggplot2} behaviour}
 
-\item{\code{scale}}{character defining axis scale}
+\item{\code{scale}}{name of axis scale from Enum \code{Scaling}
+A value of \code{NULL} is allowed and will lead to a default linear scale}
 
-\item{\code{ticks}}{numeric vector or function defining where to position axis ticks}
+\item{\code{ticks}}{function or values defining where axis ticks are placed}
 
-\item{\code{ticklabels}}{character vector or function defining what to print on axis ticks}
+\item{\code{ticklabels}}{function or values defining the axis tick labels}
+
+\item{\code{font}}{\code{Font} object defining the font of the ticklabels}
+
+\item{\code{expand}}{logical defining if data is expanded until axis.
+If \code{TRUE}, data is expanded until axis
+If \code{FALSE}, some space between data and axis is kept}
 }
 \if{html}{\out{</div>}}
 }
@@ -23,7 +31,10 @@ R6 class defining the configuration of axis
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{AxisConfiguration$new()}}
-\item \href{#method-print}{\code{AxisConfiguration$print()}}
+\item \href{#method-ggplotScale}{\code{AxisConfiguration$ggplotScale()}}
+\item \href{#method-ggplotExpansion}{\code{AxisConfiguration$ggplotExpansion()}}
+\item \href{#method-prettyTicks}{\code{AxisConfiguration$prettyTicks()}}
+\item \href{#method-prettyTickLabels}{\code{AxisConfiguration$prettyTickLabels()}}
 \item \href{#method-clone}{\code{AxisConfiguration$clone()}}
 }
 }
@@ -36,8 +47,10 @@ Create a new \code{AxisConfiguration} object
 \if{html}{\out{<div class="r">}}\preformatted{AxisConfiguration$new(
   limits = NULL,
   scale = Scaling$lin,
-  ticks = "default",
-  ticklabels = "default"
+  ticks = NULL,
+  ticklabels = NULL,
+  font = NULL,
+  expand = FALSE
 )}\if{html}{\out{</div>}}
 }
 
@@ -52,6 +65,12 @@ Use enum \code{Scaling} to access predefined scales.}
 \item{\code{ticks}}{numeric vector or function defining where to position axis ticks}
 
 \item{\code{ticklabels}}{character vector or function defining what to print on axis ticks}
+
+\item{\code{font}}{\code{Font} object defining the font of ticklabels}
+
+\item{\code{expand}}{logical defining if data is expanded until axis.
+If \code{TRUE}, data is expanded until axis
+If \code{FALSE}, some space between data and axis is kept}
 }
 \if{html}{\out{</div>}}
 }
@@ -60,16 +79,55 @@ A new \code{AxisConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
-\subsection{Method \code{print()}}{
-Print axis properties
+\if{html}{\out{<a id="method-ggplotScale"></a>}}
+\if{latex}{\out{\hypertarget{method-ggplotScale}{}}}
+\subsection{Method \code{ggplotScale()}}{
+Get the \code{ggplot2} actual \code{trans} name of scale
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AxisConfiguration$print()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{AxisConfiguration$ggplotScale()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
-Axis properties
+A character included in \code{ggplot2} available \code{trans} names
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ggplotExpansion"></a>}}
+\if{latex}{\out{\hypertarget{method-ggplotExpansion}{}}}
+\subsection{Method \code{ggplotExpansion()}}{
+Get the \code{ggplot2} actual function for expansion
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AxisConfiguration$ggplotExpansion()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A \code{ggplot2} function
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-prettyTicks"></a>}}
+\if{latex}{\out{\hypertarget{method-prettyTicks}{}}}
+\subsection{Method \code{prettyTicks()}}{
+Get tick values for pretty default log plots
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AxisConfiguration$prettyTicks()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+User defined tick values or tlf default ticks
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-prettyTickLabels"></a>}}
+\if{latex}{\out{\hypertarget{method-prettyTickLabels}{}}}
+\subsection{Method \code{prettyTickLabels()}}{
+Get tick labels for pretty default log plots
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AxisConfiguration$prettyTickLabels()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+User defined tick labels or tlf default ticklabels
 }
 }
 \if{html}{\out{<hr>}}

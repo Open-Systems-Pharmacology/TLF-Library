@@ -6,6 +6,23 @@
 \description{
 R6 class for mapping \code{y}, \code{GroupMapping}, \code{boxWhiskerLimits} and \code{outlierLimits} to \code{data}
 }
+\seealso{
+Other DataMapping classes: 
+\code{\link{DDIRatioDataMapping}},
+\code{\link{GroupMapping}},
+\code{\link{Grouping}},
+\code{\link{HistogramDataMapping}},
+\code{\link{ObsVsPredDataMapping}},
+\code{\link{ObservedDataMapping}},
+\code{\link{PKRatioDataMapping}},
+\code{\link{RangeDataMapping}},
+\code{\link{ResVsPredDataMapping}},
+\code{\link{TimeProfileDataMapping}},
+\code{\link{TornadoDataMapping}},
+\code{\link{XYDataMapping}},
+\code{\link{XYGDataMapping}}
+}
+\concept{DataMapping classes}
 \section{Super classes}{
 \code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{BoxWhiskerDataMapping}
 }

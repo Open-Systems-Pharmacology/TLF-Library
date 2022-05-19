@@ -4,7 +4,13 @@
 \alias{setPlotExportSize}
 \title{setPlotExportSize}
 \usage{
-setPlotExportSize(plotObject, width = NULL, height = NULL, units = NULL)
+setPlotExportSize(
+  plotObject,
+  width = NULL,
+  height = NULL,
+  units = NULL,
+  dpi = NULL
+)
 }
 \arguments{
 \item{plotObject}{Graphical object created from ggplot}
@@ -14,6 +20,8 @@ setPlotExportSize(plotObject, width = NULL, height = NULL, units = NULL)
 \item{height}{plot height in \code{unit}}
 
 \item{units}{units of \code{width} and \code{height}}
+
+\item{dpi}{numeric value defining plot resolution (dots per inch)}
 }
 \value{
 ggplot object with updated labels

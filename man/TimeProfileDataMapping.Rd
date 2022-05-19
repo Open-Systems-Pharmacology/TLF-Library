@@ -6,29 +6,37 @@
 \description{
 R6 class defining the configuration of a \code{ggplot} object for time profile plot
 }
+\seealso{
+Other DataMapping classes: 
+\code{\link{BoxWhiskerDataMapping}},
+\code{\link{DDIRatioDataMapping}},
+\code{\link{GroupMapping}},
+\code{\link{Grouping}},
+\code{\link{HistogramDataMapping}},
+\code{\link{ObsVsPredDataMapping}},
+\code{\link{ObservedDataMapping}},
+\code{\link{PKRatioDataMapping}},
+\code{\link{RangeDataMapping}},
+\code{\link{ResVsPredDataMapping}},
+\code{\link{TornadoDataMapping}},
+\code{\link{XYDataMapping}},
+\code{\link{XYGDataMapping}}
+}
+\concept{DataMapping classes}
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{TimeProfileDataMapping}
-}
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{lloq}}{numeric value of lower limit of quantification}
-
-\item{\code{isRangeTimeProfile}}{logical to set aggregation of data}
-}
-\if{html}{\out{</div>}}
+\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{\link[tlf:RangeDataMapping]{tlf::RangeDataMapping}} -> \code{TimeProfileDataMapping}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{TimeProfileDataMapping$new()}}
+\item \href{#method-checkMapData}{\code{TimeProfileDataMapping$checkMapData()}}
 \item \href{#method-clone}{\code{TimeProfileDataMapping$clone()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="XYGDataMapping" data-id="checkMapData">}\href{../../tlf/html/XYGDataMapping.html#method-checkMapData}{\code{tlf::XYGDataMapping$checkMapData()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -38,22 +46,67 @@ R6 class defining the configuration of a \code{ggplot} object for time profile p
 \subsection{Method \code{new()}}{
 Create a new \code{TimeProfileDataMapping} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TimeProfileDataMapping$new(lloq = NULL, isRangeTimeProfile = FALSE, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{TimeProfileDataMapping$new(
+  x = NULL,
+  y = NULL,
+  ymin = NULL,
+  ymax = NULL,
+  group = NULL,
+  color = NULL,
+  fill = NULL,
+  linetype = NULL,
+  data = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{lloq}}{numeric value of lower limit of quantification}
+\item{\code{x}}{Name of x variable to map}
 
-\item{\code{isRangeTimeProfile}}{Name of x variable to map}
+\item{\code{y}}{Name of y variable to map}
 
-\item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
+\item{\code{ymin}}{Name of ymin variable to map}
+
+\item{\code{ymax}}{Name of ymax variable to map}
+
+\item{\code{group}}{R6 class \code{Grouping} object or its input}
+
+\item{\code{color}}{R6 class \code{Grouping} object or its input}
+
+\item{\code{fill}}{R6 class \code{Grouping} object or its input}
+
+\item{\code{linetype}}{R6 class \code{Grouping} object or its input}
+
+\item{\code{data}}{data.frame to map used by \code{smartMapping}}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new \code{TimeProfileDataMapping} object
+A new \code{RangeDataMapping} object
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-checkMapData"></a>}}
+\if{latex}{\out{\hypertarget{method-checkMapData}{}}}
+\subsection{Method \code{checkMapData()}}{
+Check that \code{data} variables include map variables
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TimeProfileDataMapping$checkMapData(data, metaData = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data}}{data.frame to check}
+
+\item{\code{metaData}}{list containing information on \code{data}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A data.frame with map and \code{legendLabels} variables.
+Dummy variable \code{legendLabels} is necessary to allow further modification of plots.
 }
 }
 \if{html}{\out{<hr>}}

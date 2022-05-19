@@ -1,87 +1,108 @@
 #' @title PlotConfiguration
-#' @description R6 class defining the configuration of a \code{ggplot} object
+#' @description R6 class defining the configuration of a `ggplot` object
+#' @field export R6 class `ExportConfiguration` defining properties for saving/exporting plota
+#' @field defaultXScale Default xAxis scale value when creating a `PlotConfiguration` object
+#' @field defaultYScale Default yAxis scale value when creating a `PlotConfiguration` object
+#' @field defaultExpand Default expand value when creating a `PlotConfiguration` object
+#' @family PlotConfiguration classes
+#' @references For examples, see:
+#' <https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-configuration.html>
 #' @export
 PlotConfiguration <- R6::R6Class(
   "PlotConfiguration",
   public = list(
-    #' @field labels R6 class \code{LabelConfiguration} defining labels properties
-    labels = NULL,
-    #' @field legend R6 class \code{LegendConfiguration} defining legend properties
-    legend = NULL,
-    #' @field xAxis R6 class \code{XAxisConfiguration} defining X-axis properties
-    xAxis = NULL,
-    #' @field yAxis R6 class \code{YAxisConfiguration} defining Y-axis properties
-    yAxis = NULL,
-    #' @field background R6 class \code{BackgroundConfiguration} defining background properties
-    background = NULL,
-    #' @field export R6 class \code{ExportConfiguration} defining export properties
     export = NULL,
-    #' @field theme \code{Theme} R6 class defining theme aesthetic properties
-    theme = NULL,
+    # Caution, helper enum Scaling doesn't work here 
+    # (even using @include to collate and define the variable beforehand)
+    defaultXScale = "lin",
+    defaultYScale = "lin",
+    defaultExpand = FALSE,
 
-    #' @description Create a new \code{PlotConfiguration} object
-    #' @param title R6 class \code{Label} object
-    #' @param subtitle R6 class \code{Label} object
-    #' @param xlabel R6 class \code{Label} object
-    #' @param ylabel R6 class \code{Label} object
-    #' @param legend R6 class \code{LegendConfiguration} object defining legend properties
-    #' @param legendTitle character legend title
-    #' @param legendPosition character legend position.
+    #' @description Create a new `PlotConfiguration` object
+    #' @param title character or `Label` object defining plot title
+    #' @param subtitle character or `Label` object defining plot subtitle
+    #' @param xlabel character or `Label` object defining plot xlabel
+    #' @param ylabel character or `Label` object defining plot ylabel
+    #' @param caption character or `Label` object defining plot caption
+    #' @param legend `LegendConfiguration` object defining legend properties
+    #' @param legendTitle character or `Label` object defining legend title
+    #' @param legendPosition character defining legend position.
     #' Use Enum `LegendPositions` to get a list of available to legend positions.
-    #' @param xAxis R6 class \code{XAxisConfiguration} object defining X-axis properties
-    #' @param xScale character defining X-axis scale. Use enum `Scaling` to access predefined scales.
-    #' @param xLimits numeric vector of X-axis limits
-    #' @param yAxis R6 class \code{YAxisConfiguration} object defining X-axis properties
-    #' @param yScale character defining Y-axis scale. Use enum `Scaling` to access predefined scales.
-    #' @param yLimits numeric vector of Y-axis limits
-    #' @param background R6 class \code{BackgroundConfiguration} defining background properties
-    #' @param watermark R6 class \code{Label} object defining watermark background
-    #' @param export R6 class \code{SaveConfiguration} defining saving properties
-    #' @param format character defining the format of the file to be saved
+    #' @param xAxis `XAxisConfiguration` object defining x-axis properties
+    #' @param xScale name of X-axis scale. Use enum `Scaling` to access predefined scales.
+    #' @param xLimits numeric vector of length 2 defining x-axis limits
+    #' @param yAxis `YAxisConfiguration` object defining y-axis properties
+    #' @param yScale name of y-axis scale. Use enum `Scaling` to access predefined scales.
+    #' @param yLimits numeric vector of length 2 defining y-axis limits
+    #' @param background `BackgroundConfiguration` object defining background properties
+    #' @param plotArea `BackgroundElement` object defining properties of plot area
+    #' @param panelArea `BackgroundElement` object defining properties of panel area
+    #' @param xGrid `LineElement` object defining properties of x-grid background
+    #' @param yGrid `LineElement` object defining properties of y-grid background
+    #' @param watermark character or `Label` object defining watermark
+    #' @param export R6 class `ExportConfiguration` defining properties for saving/exporting plota
+    #' @param name character defining the name of the file to be saved (without extension)
+    #' @param format character defining the format of the file to be saved.
     #' @param width numeric values defining the width in `units` of the plot dimensions after saving
     #' @param height numeric values defining the height in `units` of the plot dimensions after saving
     #' @param units character defining the unit of the saving dimension
-    #' @param data data.frame used by \code{smartMapping}
-    #' @param metaData list of information on \code{data}
-    #' @param dataMapping R6 class or subclass \code{XYDataMapping}
-    #' @param theme R6 class \code{Theme}
-    #' @return A new \code{PlotConfiguration} object
+    #' @param dpi numeric value defining plot resolution (dots per inch)
+    #' @param data data.frame used by `smartMapping`
+    #' @param metaData list of information on `data`
+    #' @param dataMapping R6 class or subclass `XYDataMapping`
+    #' @param lines `ThemeAestheticSelections` object or list defining how lines are plotted
+    #' @param points `ThemeAestheticSelections` object or list defining how points are plotted
+    #' @param ribbons `ThemeAestheticSelections` object or list defining how ribbons are plotted
+    #' @param errorbars `ThemeAestheticSelections` object or list defining how errorbars are plotted
+    #' @return A new `PlotConfiguration` object
     initialize = function( # Label configuration
-                              title = NULL,
-                              subtitle = NULL,
-                              xlabel = NULL,
-                              ylabel = NULL,
-                              # Legend Configuration
-                              legend = NULL,
-                              legendTitle = NULL,
-                              legendPosition = NULL,
-                              # X-Axis configuration
-                              xAxis = NULL,
-                              xScale = NULL,
-                              xLimits = NULL,
-                              # Y-Axis configuration
-                              yAxis = NULL,
-                              yScale = NULL,
-                              yLimits = NULL,
-                              # Background configuration
-                              background = NULL,
-                              watermark = NULL,
-                              # Export configuration
-                              export = NULL,
-                              format = NULL,
-                              width = NULL,
-                              height = NULL,
-                              units = NULL,
-                              # Smart configuration using metaData
-                              data = NULL,
-                              metaData = NULL,
-                              dataMapping = NULL,
-                              # Theme
-                              theme = tlfEnv$currentTheme) {
-      self$labels <- LabelConfiguration$new(
+                          title = NULL,
+                          subtitle = NULL,
+                          xlabel = NULL,
+                          ylabel = NULL,
+                          caption = NULL,
+                          # Legend Configuration
+                          legend = NULL,
+                          legendTitle = NULL,
+                          legendPosition = NULL,
+                          # X-Axis configuration
+                          xAxis = NULL,
+                          xScale = NULL,
+                          xLimits = NULL,
+                          # Y-Axis configuration
+                          yAxis = NULL,
+                          yScale = NULL,
+                          yLimits = NULL,
+                          # Background configuration
+                          background = NULL,
+                          plotArea = NULL,
+                          panelArea = NULL,
+                          xGrid = NULL,
+                          yGrid = NULL,
+                          watermark = NULL,
+                          # configuration of how objects are plotted
+                          lines = NULL,
+                          points = NULL,
+                          ribbons = NULL,
+                          errorbars = NULL,
+                          # Export configuration
+                          export = NULL,
+                          name = NULL,
+                          format = NULL,
+                          width = NULL,
+                          height = NULL,
+                          units = NULL,
+                          dpi = NULL,
+                          # Smart configuration using metaData
+                          data = NULL,
+                          metaData = NULL,
+                          dataMapping = NULL) {
+
+      # Label configuration
+      # validation of the input is done within the creation of the object
+      private$.labels <- LabelConfiguration$new(
         title = title, subtitle = subtitle,
-        xlabel = xlabel, ylabel = ylabel,
-        theme = theme
+        xlabel = xlabel, ylabel = ylabel, caption = caption
       )
 
       # Smart configuration if xlabel and ylabel
@@ -91,144 +112,241 @@ PlotConfiguration <- R6::R6Class(
       if (!is.null(data)) {
         dataMapping <- dataMapping %||% XYGDataMapping$new(data = data)
       }
-      self$labels$xlabel <- asLabel(xlabel %||%
+      private$.labels$xlabel <- asLabel(xlabel %||%
         dataMappingLabel(dataMapping$x, metaData) %||%
         dataMapping$x %||%
-        self$labels$xlabel)
-      self$labels$ylabel <- asLabel(ylabel %||%
+        private$.labels$xlabel$text, font = private$.labels$xlabel$font)
+      private$.labels$ylabel <- asLabel(ylabel %||%
         dataMappingLabel(dataMapping$y, metaData) %||%
         dataMapping$y %||%
         dataMappingLabel(dataMapping$ymax, metaData) %||%
         dataMapping$ymax %||%
-        self$labels$ylabel)
+        private$.labels$ylabel, font = private$.labels$ylabel$font)
 
-      # Smart configuration if legend is not defined,
-      self$legend <- legend %||% LegendConfiguration$new()
-      self$legend$title <- legendTitle %||% self$legend$title
+      # Legend Configuration, overwrite some properties only if they are defined
+      validateIsOfType(legend, "LegendConfiguration", nullAllowed = TRUE)
+      private$.legend <- legend %||% LegendConfiguration$new()
+      private$.legend$title <- legendTitle %||% private$.legend$title
       validateIsIncluded(legendPosition, LegendPositions, nullAllowed = TRUE)
-      self$legend$position <- legendPosition %||% self$legend$position
+      private$.legend$position <- legendPosition %||% private$.legend$position
 
-      # Define X-Axis configuration, overwrite properties only if they are defined
-      self$xAxis <- xAxis %||% XAxisConfiguration$new(scale = xAxisDefaultScale(self))
-      self$xAxis$limits <- xLimits %||% self$xAxis$limits
-      self$xAxis$scale <- xScale %||% self$xAxis$scale
-
-      # Define Y-Axis configuration, overwrite properties only if they are defined
-      self$yAxis <- yAxis %||% YAxisConfiguration$new(scale = yAxisDefaultScale(self))
-      self$yAxis$limits <- yLimits %||% self$yAxis$limits
-      self$yAxis$scale <- yScale %||% self$yAxis$scale
-
-      # Set background properties
-      self$background <- background %||% BackgroundConfiguration$new(
-        watermark = watermark,
-        theme = theme
+      # X-Axis Configuration, overwrite some properties only if they are defined
+      validateIsOfType(xAxis, "XAxisConfiguration", nullAllowed = TRUE)
+      private$.xAxis <- xAxis %||% XAxisConfiguration$new(
+        scale = self$defaultXScale,
+        expand = self$defaultExpand
       )
-      self$background$watermark <- watermark %||% self$background$watermark
+      private$.xAxis$limits <- xLimits %||% private$.xAxis$limits
+      private$.xAxis$scale <- xScale %||% private$.xAxis$scale
 
+      # Y-Axis configuration, overwrite some properties only if they are defined
+      validateIsOfType(yAxis, "YAxisConfiguration", nullAllowed = TRUE)
+      private$.yAxis <- yAxis %||% YAxisConfiguration$new(
+        scale = self$defaultYScale,
+        expand = self$defaultExpand
+      )
+      private$.yAxis$limits <- yLimits %||% private$.yAxis$limits
+      private$.yAxis$scale <- yScale %||% private$.yAxis$scale
+
+      # Background configuration, overwrite some properties only if they are defined
+      validateIsOfType(background, "BackgroundConfiguration", nullAllowed = TRUE)
+      validateIsOfType(plotArea, "BackgroundElement", nullAllowed = TRUE)
+      validateIsOfType(panelArea, "BackgroundElement", nullAllowed = TRUE)
+      validateIsOfType(xGrid, "LineElement", nullAllowed = TRUE)
+      validateIsOfType(yGrid, "LineElement", nullAllowed = TRUE)
+      validateIsOfType(watermark, c("character", "Label"), nullAllowed = TRUE)
+
+      private$.background <- background %||% BackgroundConfiguration$new()
+      private$.background$plot <- plotArea %||% private$.background$plot
+      private$.background$panel <- panelArea %||% private$.background$panel
+      private$.background$xGrid <- xGrid %||% private$.background$xGrid
+      private$.background$yGrid <- yGrid %||% private$.background$yGrid
+      private$.background$watermark <- watermark %||% private$.background$watermark
+
+      # Define how to plot points, lines, ribbons and errorbars of the plot
+      private$.lines <- lines %||% getThemePropertyFor(plotConfiguration = self, propertyName = "lines")
+      private$.ribbons <- ribbons %||% getThemePropertyFor(plotConfiguration = self, propertyName = "ribbons")
+      private$.points <- points %||% getThemePropertyFor(plotConfiguration = self, propertyName = "points")
+      private$.errorbars <- errorbars %||% getThemePropertyFor(plotConfiguration = self, propertyName = "errorbars")
+      
       # Define export configuration, overwrite properties only if they are defined
+      validateIsOfType(export, "ExportConfiguration", nullAllowed = TRUE)
       self$export <- export %||% ExportConfiguration$new()
+      self$export$name <- name %||% self$export$name
       self$export$format <- format %||% self$export$format
       self$export$width <- width %||% self$export$width
       self$export$height <- height %||% self$export$height
       self$export$units <- units %||% self$export$units
-
-      self$theme <- theme
-    },
-
-    #' @description Print plot configuration
-    #' @return Plot configuration
-    print = function() {
-      plotProperties <- list(
-        labels = self$labels$print(),
-        legend = self$legend$print(),
-        xAxis = self$xAxis$print(),
-        yAxis = self$yAxis$print(),
-        background = self$background$print(),
-        saveConfiguration = self$saveConfiguration$print()
-      )
-      return(plotProperties)
+      self$export$dpi <- dpi %||% self$export$dpi
     }
+  ),
+  active = list(
+    #' @field labels `LabelConfiguration` object defining properties of labels
+    labels = function(value) {
+      if (missing(value)) {
+        return(private$.labels)
+      }
+      validateIsOfType(value, "LabelConfiguration", nullAllowed = TRUE)
+      private$.labels <- value %||% private$.labels
+      return(invisible())
+    },
+    #' @field legend `LegendConfiguration` object defining properties of legend
+    legend = function(value) {
+      if (missing(value)) {
+        return(private$.legend)
+      }
+      validateIsOfType(value, "LegendConfiguration", nullAllowed = TRUE)
+      private$.legend <- value %||% private$.legend
+      return(invisible())
+    },
+    #' @field xAxis `XAxisConfiguration` object defining properties of x-axis
+    xAxis = function(value) {
+      if (missing(value)) {
+        return(private$.xAxis)
+      }
+      validateIsOfType(value, "XAxisConfiguration", nullAllowed = TRUE)
+      private$.xAxis <- value %||% private$.xAxis
+      return(invisible())
+    },
+    #' @field yAxis `YAxisConfiguration` object defining properties of x-axis
+    yAxis = function(value) {
+      if (missing(value)) {
+        return(private$.yAxis)
+      }
+      validateIsOfType(value, "YAxisConfiguration", nullAllowed = TRUE)
+      private$.yAxis <- value %||% private$.yAxis
+      return(invisible())
+    },
+    #' @field background `BackgroundConfiguration` object defining properties of x-axis
+    background = function(value) {
+      if (missing(value)) {
+        return(private$.background)
+      }
+      validateIsOfType(value, "BackgroundConfiguration", nullAllowed = TRUE)
+      private$.background <- value %||% private$.background
+      return(invisible())
+    },
+    #' @field lines `ThemeAestheticSelections` defining properties of lines
+    lines = function(value) {
+      if (missing(value)) {
+        return(private$.lines)
+      }
+      validateIsOfType(value, "ThemeAestheticSelections", nullAllowed = TRUE)
+      private$.lines <- value %||% private$.lines
+      return(invisible())
+    },
+    #' @field ribbons `ThemeAestheticSelections` defining properties of ribbons
+    ribbons = function(value) {
+      if (missing(value)) {
+        return(private$.ribbons)
+      }
+      validateIsOfType(value, "ThemeAestheticSelections", nullAllowed = TRUE)
+      private$.ribbons <- value %||% private$.ribbons
+      return(invisible())
+    },
+    #' @field points `ThemeAestheticSelections` defining properties of points
+    points = function(value) {
+      if (missing(value)) {
+        return(private$.points)
+      }
+      validateIsOfType(value, "ThemeAestheticSelections", nullAllowed = TRUE)
+      private$.points <- value %||% private$.points
+      return(invisible())
+    },
+    #' @field errorbars `ThemeAestheticSelections` defining properties of error bars
+    errorbars = function(value) {
+      if (missing(value)) {
+        return(private$.errorbars)
+      }
+      validateIsOfType(value, "ThemeAestheticSelections", nullAllowed = TRUE)
+      private$.errorbars <- value %||% private$.errorbars
+      return(invisible())
+    }
+  ),
+  private = list(
+    .labels = NULL,
+    .legend = NULL,
+    .xAxis = NULL,
+    .yAxis = NULL,
+    .background = NULL,
+    .lines = NULL,
+    .ribbons = NULL,
+    .points = NULL,
+    .errorbars = NULL
   )
 )
 
 
-## -------------------------------------------------------------------
-# List of auxiliary functions used by plotConfiguration
-
-#' @title dataMappingLabel
-#' @param mapping mapping variable on label
-#' @param metaData metaData containing unit of variable
-#' @return label character of variable with its unit
-#' @description
-#' dataMappingLabel create an axis label with unit if available
-dataMappingLabel <- function(mapping = NULL, metaData = NULL) {
-  label <- NULL
-  ifnotnull(mapping, label <- getLabelWithUnit(metaData[[mapping]]$dimension, metaData[[mapping]]$unit))
-
-  return(label)
-}
-
-#' @title getLabelWithUnit
-#' @param label text of axis label
-#' @param unit metaData containing unit of variable
-#' @return label character of variable with its unit when available
-#' @description
-#' getLabelWithUnit paste unit to label when available
+#' @title TimeProfilePlotConfiguration
+#' @description R6 class defining the configuration of a `ggplot` object for time profile plots
 #' @export
-getLabelWithUnit <- function(label, unit = NULL) {
-  if (isTRUE(unit %in% "")) {
-    unit <- NULL
-  }
-  ifnotnull(unit, label <- paste(label, " [", unit, "]", sep = ""))
-  return(label)
-}
+#' @family PlotConfiguration classes
+TimeProfilePlotConfiguration <- R6::R6Class(
+  "TimeProfilePlotConfiguration",
+  inherit = PlotConfiguration
+)
 
-#' @title getLegendCaption
-#' @param captionData data used for legend caption
-#' @param which caption position in the legend
-#' @return legend captions
-#' @description
-#' getLegendCaption return the legend captions or a subset using which
+#' @title PKRatioPlotConfiguration
+#' @description R6 class defining the configuration of a `ggplot` object for PK ratio plots
+#' @field defaultYScale Default yAxis scale value when creating a `PKRatioPlotConfiguration` object
 #' @export
-getLegendCaption <- function(captionData, which = seq(1, length(levels(captionData)))) {
-  return(levels(captionData)[which])
-}
-
-#' @title updateLegendCaption
-#' @param captionData data used for legend caption
-#' @param newCaption new legend caption
-#' @param which caption position in the legend
-#' @return updated caption data
-#' @description
-#' updateLegendCaption return the updated data used for legend caption
-#' @export
-updateLegendCaption <- function(captionData, newCaption = NULL, which = NULL) {
-  ifnotnull(which, levels(captionData)[which] <- newCaption %||% levels(captionData)[which])
-  return(captionData)
-}
-
-
-setAesPropertiesToLegend <- function(parameter = NULL, aesProperties = NULL) {
-  ifnotnull(
-    aesProperties,
-    stopifnot(aesProperties %in% c("color", "colour", "size", "shape", "linetype")),
-    return(NULL)
+#' @family PlotConfiguration classes
+PKRatioPlotConfiguration <- R6::R6Class(
+  "PKRatioPlotConfiguration",
+  inherit = PlotConfiguration,
+  public = list(
+    defaultYScale = "log"
   )
+)
 
-  if (!is.null(parameter)) {
-    if (is.list(parameter)) {
-      if (min(names(parameter) %in% aesProperties) == 1) {
-        names(parameter) <- aesProperties
-      }
+#' @title DDIRatioPlotConfiguration
+#' @description R6 class defining the configuration of a `ggplot` object for DDI ratio plots
+#' @field defaultXScale Default xAxis scale value when creating a `DDIRatioPlotConfiguration` object
+#' @field defaultYScale Default yAxis scale value when creating a `DDIRatioPlotConfiguration` object
+#' @field defaultExpand Default expand value when creating a `DDIRatioPlotConfiguration` object
+#' @export
+#' @family PlotConfiguration classes
+DDIRatioPlotConfiguration <- R6::R6Class(
+  "DDIRatioPlotConfiguration",
+  inherit = PlotConfiguration,
+  public = list(
+    defaultXScale = "log",
+    defaultYScale = "log",
+    defaultExpand = TRUE
+  )
+)
+
+#' @title ObsVsPredPlotConfiguration
+#' @description R6 class defining the configuration of a `ggplot` object for Obs vs Pred plots
+#' @export
+#' @family PlotConfiguration classes
+ObsVsPredPlotConfiguration <- R6::R6Class(
+  "ObsVsPredPlotConfiguration",
+  inherit = PlotConfiguration
+)
+
+#' @title ResVsPredPlotConfiguration
+#' @description R6 class defining the configuration of a `ggplot` object for Res vs Pred/Time plots
+#' @export
+ResVsPredPlotConfiguration <- R6::R6Class(
+  "ResVsPredPlotConfiguration",
+  inherit = PlotConfiguration
+)
+
+#' @title HistogramPlotConfiguration
+#' @description R6 class defining the configuration of a `ggplot` object for histograms
+#' @export
+#' @family PlotConfiguration classes
+HistogramPlotConfiguration <- R6::R6Class(
+  "HistogramPlotConfiguration",
+  inherit = PlotConfiguration,
+  public = list(
+    #' @description Create a new `HistogramPlotConfiguration` object
+    #' @param ylabel Histograms default display is "Count"
+    #' @param ... parameters inherited from `PlotConfiguration`
+    #' @return A new `HistogramPlotConfiguration` object
+    initialize = function(ylabel = "Count", ...) {
+      super$initialize(ylabel = ylabel, ...)
     }
-    # Case where legends are provided as characters only
-    if (is.character(parameter)) {
-      parameter2 <- parameter
-      parameter <- enum(aesProperties)
-      for (property in aesProperties) {
-        parameter[[property]] <- parameter2
-      }
-    }
-  }
-  return(parameter)
-}
+  )
+)

@@ -19,31 +19,36 @@ R6 class defining the configuration of Y-axis
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-setPlotAxis}{\code{YAxisConfiguration$setPlotAxis()}}
+\item \href{#method-updatePlot}{\code{YAxisConfiguration$updatePlot()}}
 \item \href{#method-clone}{\code{YAxisConfiguration$clone()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="ggplotExpansion">}\href{../../tlf/html/AxisConfiguration.html#method-ggplotExpansion}{\code{tlf::AxisConfiguration$ggplotExpansion()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="ggplotScale">}\href{../../tlf/html/AxisConfiguration.html#method-ggplotScale}{\code{tlf::AxisConfiguration$ggplotScale()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="initialize">}\href{../../tlf/html/AxisConfiguration.html#method-initialize}{\code{tlf::AxisConfiguration$initialize()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="print">}\href{../../tlf/html/AxisConfiguration.html#method-print}{\code{tlf::AxisConfiguration$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="prettyTickLabels">}\href{../../tlf/html/AxisConfiguration.html#method-prettyTickLabels}{\code{tlf::AxisConfiguration$prettyTickLabels()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="prettyTicks">}\href{../../tlf/html/AxisConfiguration.html#method-prettyTicks}{\code{tlf::AxisConfiguration$prettyTicks()}}\out{</span>}
 }
 \out{</details>}
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setPlotAxis"></a>}}
-\if{latex}{\out{\hypertarget{method-setPlotAxis}{}}}
-\subsection{Method \code{setPlotAxis()}}{
-Set axis configuration on a \code{ggplot} object
+\if{html}{\out{<a id="method-updatePlot"></a>}}
+\if{latex}{\out{\hypertarget{method-updatePlot}{}}}
+\subsection{Method \code{updatePlot()}}{
+Update axis configuration on a \code{ggplot} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{YAxisConfiguration$setPlotAxis(plotObject)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{YAxisConfiguration$updatePlot(plotObject, xlim = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{plotObject}}{\code{ggplot} object}
+
+\item{\code{xlim}}{limits of \code{x} axis to prevent \code{coord_cartesian} to overwrite its properties}
 }
 \if{html}{\out{</div>}}
 }

@@ -1,6 +1,7 @@
 #' @title RangeDataMapping
-#' @description  R6 class for mapping \code{x}, \code{ymin} and \code{ymax} variable to \code{data}
+#' @description  R6 class for mapping `x`, `ymin` and `ymax` variable to `data`
 #' @export
+#' @family DataMapping classes
 RangeDataMapping <- R6::R6Class(
   "RangeDataMapping",
   inherit = XYGDataMapping,
@@ -10,46 +11,48 @@ RangeDataMapping <- R6::R6Class(
     #' @field ymax Name of ymax variable to map
     ymax = NULL,
 
-    #' @description Create a new \code{RangeDataMapping} object
+    #' @description Create a new `RangeDataMapping` object
     #' @param x Name of x variable to map
     #' @param ymin Name of ymin variable to map
     #' @param ymax Name of ymax variable to map
-    #' @param groupMapping R6 class \code{GroupMapping} object
-    #' @param color R6 class \code{Grouping} object or its input
-    #' @param fill R6 class \code{Grouping} object or its input
-    #' @param linetype R6 class \code{Grouping} object or its input
-    #' @param shape R6 class \code{Grouping} object or its input
-    #' @param size R6 class \code{Grouping} object or its input
-    #' @param data data.frame to map used by \code{smartMapping}
-    #' @return A new \code{RangeDataMapping} object
+    #' @param groupMapping R6 class `GroupMapping` object
+    #' @param color R6 class `Grouping` object or its input
+    #' @param fill R6 class `Grouping` object or its input
+    #' @param linetype R6 class `Grouping` object or its input
+    #' @param shape R6 class `Grouping` object or its input
+    #' @param size R6 class `Grouping` object or its input
+    #' @param group R6 class `Grouping` object or its input
+    #' @param data data.frame to map used by `smartMapping`
+    #' @return A new `RangeDataMapping` object
     initialize = function(x = NULL,
-                              ymin = NULL,
-                              ymax = NULL,
-                              groupMapping = NULL,
-                              color = NULL,
-                              fill = NULL,
-                              linetype = NULL,
-                              shape = NULL,
-                              size = NULL,
-                              data = NULL) {
+                          ymin = NULL,
+                          ymax = NULL,
+                          groupMapping = NULL,
+                          color = NULL,
+                          fill = NULL,
+                          linetype = NULL,
+                          shape = NULL,
+                          size = NULL,
+                          group = NULL,
+                          data = NULL) {
 
       # smartMapping is available in utilities-mapping.R
       smartMap <- smartMapping(data)
       super$initialize(x %||% smartMap$x,
         y = NULL,
         groupMapping = groupMapping, color = color, fill = fill,
-        linetype = linetype, shape = shape, size = size
+        linetype = linetype, shape = shape, size = size, group = group
       )
 
       self$ymin <- ymin %||% smartMap$ymin
       self$ymax <- ymax %||% smartMap$ymax
     },
 
-    #' @description Check that \code{data} variables include map variables
+    #' @description Check that `data` variables include map variables
     #' @param data data.frame to check
-    #' @param metaData list containing information on \code{data}
-    #' @return A data.frame with map and \code{defaultAes} variables.
-    #' Dummy variable \code{defaultAes} is necessary to allow further modification of plots.
+    #' @param metaData list containing information on `data`
+    #' @return A data.frame with map and `legendLabels` variables.
+    #' Dummy variable `legendLabels` is necessary to allow further modification of plots.
     checkMapData = function(data, metaData = NULL) {
       validateMapping(self$x, data, nullAllowed = TRUE)
       if (isOfType(self$ymin, "character")) {
@@ -79,7 +82,7 @@ RangeDataMapping <- R6::R6Class(
           self$data[, grouping$label] <- grouping$getCaptions(data, metaData)
           # Dummy variable for default aesthetics
           # Will be used to define legend labels
-          self$data$legendLabels <- ifnotnull(
+          self$data$legendLabels <- ifNotNull(
             self$data$legendLabels,
             paste(self$data$legendLabels, grouping$getCaptions(data, metaData), sep = "-"),
             grouping$getCaptions(data, metaData)

@@ -4,14 +4,14 @@
 \alias{Label}
 \title{Label}
 \description{
-R6 class defining \code{text} and \code{font} of label
+R6 class defining \code{text} and \code{font} of labels
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{text}}{character text of label}
+\item{\code{text}}{character text of the label}
 
-\item{\code{font}}{R6 class \code{Font} object}
+\item{\code{font}}{\code{Font} object}
 }
 \if{html}{\out{</div>}}
 }
@@ -19,8 +19,7 @@ R6 class defining \code{text} and \code{font} of label
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{Label$new()}}
-\item \href{#method-print}{\code{Label$print()}}
-\item \href{#method-setFontProperties}{\code{Label$setFontProperties()}}
+\item \href{#method-createPlotFont}{\code{Label$createPlotFont()}}
 \item \href{#method-clone}{\code{Label$clone()}}
 }
 }
@@ -36,24 +35,30 @@ Create a new \code{Label} object.
   color = NULL,
   size = NULL,
   fontFace = NULL,
-  fontFamily = NULL
+  fontFamily = NULL,
+  angle = NULL,
+  align = NULL
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{text}}{character text of label}
+\item{\code{text}}{character text of the label}
 
-\item{\code{font}}{R6 class \code{Font} object}
+\item{\code{font}}{\code{Font} object defining the font of the label}
 
-\item{\code{color}}{character color of font}
+\item{\code{color}}{character defining the color of the label}
 
-\item{\code{size}}{numeric size of font}
+\item{\code{size}}{numeric defining the size of the label}
 
-\item{\code{fontFace}}{character face of font}
+\item{\code{fontFace}}{character defining the font face of the label as defined in helper enum \code{FontFaces}.}
 
-\item{\code{fontFamily}}{character family of font}
+\item{\code{fontFamily}}{character defining the font family of the label}
+
+\item{\code{angle}}{numeric defining the angle of the label}
+
+\item{\code{align}}{character defining the alignment of the label as defined in helper enum \code{Alignments}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -62,41 +67,40 @@ A new \code{Label} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
-\subsection{Method \code{print()}}{
-Print \code{Label} properties.
+\if{html}{\out{<a id="method-createPlotFont"></a>}}
+\if{latex}{\out{\hypertarget{method-createPlotFont}{}}}
+\subsection{Method \code{createPlotFont()}}{
+Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::theme}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Label$print()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setFontProperties"></a>}}
-\if{latex}{\out{\hypertarget{method-setFontProperties}{}}}
-\subsection{Method \code{setFontProperties()}}{
-Set font properties of Label
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Label$setFontProperties(
-  color = self$font$color,
-  size = self$font$size,
-  fontFamily = self$font$fontFamily,
-  fontFace = self$font$fontFace
+\if{html}{\out{<div class="r">}}\preformatted{Label$createPlotFont(
+  color = NULL,
+  size = NULL,
+  fontFace = NULL,
+  fontFamily = NULL,
+  angle = NULL,
+  align = NULL
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{color}}{character color of font}
+\item{\code{color}}{character defining the color of the label}
 
-\item{\code{size}}{numeric size of font}
+\item{\code{size}}{numeric defining the size of the label}
 
-\item{\code{fontFamily}}{character family of font}
+\item{\code{fontFace}}{character defining the font face of the label as defined in helper enum \code{FontFaces}.}
 
-\item{\code{fontFace}}{character face of font}
+\item{\code{fontFamily}}{character defining the font family of the label}
+
+\item{\code{angle}}{numeric defining the angle of the label}
+
+\item{\code{align}}{character defining the alignment of the label as defined in helper enum \code{Alignments}.}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+An \code{element_text} or \code{element_blank}object.
 }
 }
 \if{html}{\out{<hr>}}

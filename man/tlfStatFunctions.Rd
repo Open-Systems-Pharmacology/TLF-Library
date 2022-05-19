@@ -11,7 +11,20 @@ An object of class \code{list} of length 31.
 tlfStatFunctions
 }
 \description{
-Bank of predifined functions ready to use by Aggregation methods. Bank defined as Enum.
+Bank of predefined functions ready to use by Aggregation methods. Bank defined as Enum.
 To access the function from its name, use match.fun: e.g. testFun <- match.fun("mean-1.96sd")
 }
+\seealso{
+Other enum helpers: 
+\code{\link{AestheticProperties}},
+\code{\link{Alignments}},
+\code{\link{ExportFormats}},
+\code{\link{ExportUnits}},
+\code{\link{FontFaces}},
+\code{\link{LegendPositions}},
+\code{\link{Linetypes}},
+\code{\link{Scaling}},
+\code{\link{Shapes}}
+}
+\concept{enum helpers}
 \keyword{datasets}

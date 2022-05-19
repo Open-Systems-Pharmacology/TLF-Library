@@ -20,70 +20,85 @@ addScatter(
 )
 }
 \arguments{
-\item{data}{data.frame containing the scatter points to be plotted}
+\item{data}{A data.frame to use for plot.}
 
-\item{metaData}{list of information on \code{data} such as \code{dimension} and \code{unit} of their variables}
+\item{metaData}{A named list of information about \code{data} such as the \code{dimension} and \code{unit} of its variables.}
 
-\item{x}{Mapping for x values.
-If \code{data} is NULL or not input, \code{x} numeric values will be used as is for the plot.}
+\item{x}{Numeric values to plot along the \code{x} axis. Only used instead of \code{data} if \code{data} is \code{NULL}.}
 
-\item{y}{Mapping for y values.
-If \code{data} is NULL or not input, \code{y} numeric values will be used as is for the plot.}
+\item{y}{Numeric values to plot along the \code{y} axis. Only used instead of \code{data} if \code{data} is \code{NULL}.}
 
-\item{caption}{vector of character strings defining the legend captions.
-This parameter is optional: default value \code{NULL} creates caption labels "data 1", "data 2" ...}
+\item{caption}{Optional character values defining the legend captions of the plot.}
 
-\item{color}{vector of character strings defining the color of the scatter points.
-This parameter is optional: default value \code{NULL} will choose colors according to the current theme.}
+\item{color}{Optional character values defining the colors of the plot layer.
+See \code{grDevices::colors()} to get names of colors}
 
-\item{shape}{vector of character strings or numerical defining the shapes of the scatter points.
-This parameter is optional: default value \code{NULL} will choose shapes according to the current theme.}
+\item{shape}{Optional character values defining the shapes/symbols of the plot layer.
+See enum \code{Shapes} to get names of shapes.}
 
-\item{size}{vector of numerical defining the sizes of the scatter points.
-This parameter is optional: default value \code{NULL} will choose sizes according to the current theme.}
+\item{size}{Optional numeric values defining the size of the plot layer.}
 
-\item{linetype}{vector of character strings defining the linetype linking the scatter points.
-This parameter is optional: default value \code{NULL} won't provide lines.}
+\item{linetype}{Optional character values defining the linetype of the plot layer.
+See enum \code{Linetypes} to get names of linetype.}
 
-\item{dataMapping}{\code{XYGDataMapping} class or subclass object
-mapping x, y and aesthetic variables to the variable names of \code{data}.}
+\item{dataMapping}{A \code{XYGDataMapping} object mapping \code{x}, \code{y} and aesthetic groups to their variable names of \code{data}.}
 
-\item{plotConfiguration}{\code{PlotConfiguration} object defining the labels, axes, background and legend properties of the plot.}
+\item{plotConfiguration}{An optional \code{PlotConfiguration} object defining labels, grid, background and watermark.}
 
-\item{plotObject}{\code{ggplot} graphical object to which the line layer is added
-This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided}
+\item{plotObject}{An optional \code{ggplot} object on which to add the plot layer}
 }
 \value{
-A \code{ggplot} graphical object
+A \code{ggplot} object
 }
 \description{
-Add a scatter plot layer to a \code{ggplot} graphical object.
-Use optional argument \code{caption} to set legend caption.
-Since \code{ggplot} manage aesthetic properties across all layers,
-aesthetic properties defined in \code{plotConfiguration} will apply across all layers.
+Add a scatter plot layer to a \code{ggplot} object
 }
 \examples{
 # Add scatter using x and y
-p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
+addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
 
-# Add a custom scatter
+# Add scatter using a data.frame
 time <- seq(0, 30, 0.1)
-customScatterData <- data.frame(x = time, y = cos(time))
+scatterData <- data.frame(x = time, y = cos(time))
 
-p <- addScatter(
-  data = customScatterData,
+addScatter(
+  data = scatterData,
   dataMapping = XYGDataMapping$new(x = "x", y = "y")
 )
 
 # Or for simple cases a smart mapping will get directly x and y from data
-p <- addScatter(data = customScatterData)
+addScatter(data = scatterData)
 
 # Add a scatter with caption
-p <- addScatter(data = customScatterData, caption = "My scatter plot")
+addScatter(data = scatterData, caption = "My scatter plot")
 
 # Add a scatter with specific properties
-p <- addScatter(data = customScatterData, color = "blue", shape = 19, size = 2, caption = "My data")
+addScatter(
+data = scatterData, 
+color = "blue", shape = "diamond", size = 2, caption = "My data"
+)
 
 # Add a scatter with specific properties
-pp <- addScatter(x = c(0, 1), y = c(1, 0), color = "red", shape = 20, size = 3, plotObject = p)
+p <- addScatter(
+data = scatterData, 
+color = "blue", shape = "diamond", size = 2, caption = "My data"
+)
+addScatter(
+x = c(0, 1), y = c(1, 0), 
+color = "red", shape = "circle", size = 3, 
+plotObject = p
+)
+
 }
+\references{
+For examples, see:
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html}
+}
+\seealso{
+Other atom plots: 
+\code{\link{addErrorbar}()},
+\code{\link{addLine}()},
+\code{\link{addRibbon}()},
+\code{\link{initializePlot}()}
+}
+\concept{atom plots}

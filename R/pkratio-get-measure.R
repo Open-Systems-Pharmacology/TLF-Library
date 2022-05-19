@@ -1,19 +1,24 @@
-#' get PK-Ratio qualification measure
-#'
 #' @title getPKRatioMeasure
-#' @param data data.frame (or list of data.frames? TO BE DISCUSSED)
-#' containing the data to be used for the plot
-#' @param dataMapping R6 class PKRatioDataMapping
-#' mapping of x, y and groupings
-#' @param ratioLimits vector of numeric
-#' containing the fold limits of PK ratios
-#' As default limits are 1.5 and 2 folds
-#' @description
-#' getPKRatioMeasure(data, dataMapping, ratioLimits) get the number of PK ratios
-#' that are within specific limits
-#' @return a data.frame reporting the PK Ratio Qualification Measure
+#' @description 
+#' Get a summary table of PK Ratio within specific limits
+#' 
+#' @inheritParams plotPKRatio
+#' @param ratioLimits Numeric positive values limits
+#' @return A data.frame of summary of PK Ratio within specific limits
 #' @export
-#'
+#' @examples 
+#' # Get summary of usual PK Ratio limits
+#' pkData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
+#' 
+#' getPKRatioMeasure(data = pkData, dataMapping = PKRatioDataMapping$new(x = "x", y = "y"))
+#' 
+#' # Get summary of other PK Ratio limits
+#' getPKRatioMeasure(
+#' data = pkData, 
+#' dataMapping = PKRatioDataMapping$new(x = "x", y = "y"),
+#' ratioLimits = seq(1.5, 5, 0.5)
+#' )
+#' 
 getPKRatioMeasure <- function(data, dataMapping = NULL, ratioLimits = c(1.5, 2)) {
   if (is.numeric(data)) {
     PKratios <- data[!is.na(data)]

@@ -5,42 +5,74 @@
 \title{plotHistogram}
 \usage{
 plotHistogram(
-  data,
+  data = NULL,
   metaData = NULL,
+  x = NULL,
   dataMapping = NULL,
-  plotConfiguration = NULL,
-  binWidth = NULL,
   bins = NULL,
-  verticalLineFunctions = NULL,
-  verticalLineFunctionNames = NULL,
+  binwidth = NULL,
+  stack = NULL,
+  distribution = NULL,
+  plotConfiguration = NULL,
   plotObject = NULL
 )
 }
 \arguments{
-\item{data}{data.frames containing the data to be used for the plot}
+\item{data}{A data.frame to use for plot.}
 
-\item{metaData}{list of lists (structure TO BE DISCUSSED)
-containing complementary information to data (e.g. unit)}
+\item{metaData}{A named list of information about \code{data} such as the \code{dimension} and \code{unit} of its variables.}
 
-\item{dataMapping}{R6 class HistogramDataMapping
-mapping of which data to use for histogram}
+\item{x}{Numeric values to plot along the \code{x} axis. Only used instead of \code{data} if \code{data} is \code{NULL}.}
 
-\item{plotConfiguration}{R6 class HistogramPlotConfiguration
-Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend}
+\item{dataMapping}{A \code{HistogramDataMapping} object mapping \code{x} and aesthetic groups to their variable names of \code{data}.}
 
-\item{binWidth}{(optional)}
+\item{bins}{Number or edges of bins.
+If \code{bins} is provided as a single numeric values, \code{bin} corresponds to number of bins.
+The bin edges are then equally spaced within the range of data.
+If \code{bins} is provided as an array of numeric values, \code{bin} corresponds to their edges.}
 
-\item{bins}{(optional)}
+\item{binwidth}{Numerical value of defining the width of each bin.
+If defined, \code{binwidth} can overwrite \code{bins} if \code{bins} was not provided or simply provided as a single value.}
 
-\item{verticalLineFunctions}{(optional)}
+\item{stack}{Logical defining for multiple histograms if their bars are stacked}
 
-\item{verticalLineFunctionNames}{(optional)}
+\item{distribution}{Name of distribution to fit to the data.
+Only 2 distributions are currently available: \code{"normal"} and \code{"logNormal"}}
 
-\item{plotObject}{ggplot object, if null creates new plot, if not add time profile layers to ggplot}
+\item{plotConfiguration}{An optional \code{HistogramPlotConfiguration} object defining labels, grid, background and watermark.}
+
+\item{plotObject}{An optional \code{ggplot} object on which to add the plot layer}
 }
 \value{
-a ggplot graphical object
+A \code{ggplot} object
 }
 \description{
-plotHistogram(data, metaData, dataMapping, plotConfiguration)
+Producing Histograms
 }
+\examples{
+# Produce histogram of normally distributed data
+plotHistogram(x = rnorm(100))
+
+# Produce histogram of normally distributed data with many bins
+plotHistogram(x = rlnorm(100), bins = 21)
+
+# Produce histogram of fitted normally distributed data
+plotHistogram(x = rlnorm(100), distribution = "normal")
+
+
+}
+\references{
+For examples, see:
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/histogram.html}
+}
+\seealso{
+Other molecule plots: 
+\code{\link{plotBoxWhisker}()},
+\code{\link{plotDDIRatio}()},
+\code{\link{plotObsVsPred}()},
+\code{\link{plotPKRatio}()},
+\code{\link{plotResVsPred}()},
+\code{\link{plotTimeProfile}()},
+\code{\link{plotTornado}()}
+}
+\concept{molecule plots}

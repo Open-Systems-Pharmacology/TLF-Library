@@ -6,16 +6,18 @@
 \description{
 R6 class defining the configuration of the labels of a \code{ggplot} object
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{title}}{R6 class \code{Label} object}
+\item{\code{title}}{\code{Label} object defining the title of the plot}
 
-\item{\code{subtitle}}{R6 class \code{Label} object}
+\item{\code{subtitle}}{\code{Label} object defining the subtitle of the plot}
 
-\item{\code{xlabel}}{R6 class \code{Label} object}
+\item{\code{xlabel}}{\code{Label} object defining the xlabel of the plot}
 
-\item{\code{ylabel}}{R6 class \code{Label} object}
+\item{\code{ylabel}}{\code{Label} object defining the ylabel of the plot}
+
+\item{\code{caption}}{\code{Label} object defining the caption of the plot}
 }
 \if{html}{\out{</div>}}
 }
@@ -23,8 +25,7 @@ R6 class defining the configuration of the labels of a \code{ggplot} object
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{LabelConfiguration$new()}}
-\item \href{#method-setPlotLabels}{\code{LabelConfiguration$setPlotLabels()}}
-\item \href{#method-print}{\code{LabelConfiguration$print()}}
+\item \href{#method-updatePlot}{\code{LabelConfiguration$updatePlot()}}
 \item \href{#method-clone}{\code{LabelConfiguration$clone()}}
 }
 }
@@ -39,22 +40,22 @@ Create a new \code{LabelConfiguration} object
   subtitle = NULL,
   xlabel = NULL,
   ylabel = NULL,
-  theme = tlfEnv$currentTheme
+  caption = NULL
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{title}}{R6 class \code{Label} object}
+\item{\code{title}}{character or \code{Label} object defining title}
 
-\item{\code{subtitle}}{R6 class \code{Label} object}
+\item{\code{subtitle}}{character or \code{Label} object defining subtitle}
 
-\item{\code{xlabel}}{R6 class \code{Label} object}
+\item{\code{xlabel}}{character or \code{Label} object defining xlabel}
 
-\item{\code{ylabel}}{R6 class \code{Label} object}
+\item{\code{ylabel}}{character or \code{Label} object defining ylabel}
 
-\item{\code{theme}}{R6 class \code{Theme}}
+\item{\code{caption}}{character or \code{Label} object defining caption}
 }
 \if{html}{\out{</div>}}
 }
@@ -63,12 +64,12 @@ A new \code{LabelConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setPlotLabels"></a>}}
-\if{latex}{\out{\hypertarget{method-setPlotLabels}{}}}
-\subsection{Method \code{setPlotLabels()}}{
-Set plot labels properties of a \code{ggplot} object
+\if{html}{\out{<a id="method-updatePlot"></a>}}
+\if{latex}{\out{\hypertarget{method-updatePlot}{}}}
+\subsection{Method \code{updatePlot()}}{
+Update labels of a \code{ggplot} object and their properties
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LabelConfiguration$setPlotLabels(plotObject)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{LabelConfiguration$updatePlot(plotObject)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -80,19 +81,6 @@ Set plot labels properties of a \code{ggplot} object
 }
 \subsection{Returns}{
 A \code{ggplot} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
-\subsection{Method \code{print()}}{
-Print plot label properties
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LabelConfiguration$print()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-Plot label properties
 }
 }
 \if{html}{\out{<hr>}}

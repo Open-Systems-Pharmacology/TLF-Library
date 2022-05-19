@@ -1,18 +1,19 @@
 #' @title BoxWhiskerDataMapping
-#' @description  R6 class for mapping \code{y}, \code{GroupMapping}, \code{boxWhiskerLimits} and \code{outlierLimits} to \code{data}
+#' @description  R6 class for mapping `y`, `GroupMapping`, `boxWhiskerLimits` and `outlierLimits` to `data`
 #' @export
+#' @family DataMapping classes
 BoxWhiskerDataMapping <- R6::R6Class(
   "BoxWhiskerDataMapping",
   inherit = XYGDataMapping,
   public = list(
     #' @field outlierLimits List of `minOutlierLimit` and `maxOutlierLimit` functions
-    #' outside which \code{data} is flagged as outlier
+    #' outside which `data` is flagged as outlier
     outlierLimits = NULL,
     #' @field boxWhiskerLimits List of `ymin`, `lower`, `middle`, `upper` and `ymax` functions
-    #' calculated on \code{data} to obtain box whiskers
+    #' calculated on `data` to obtain box whiskers
     boxWhiskerLimits = NULL,
 
-    #' @description Create a new \code{BoxWhiskerDataMapping} object
+    #' @description Create a new `BoxWhiskerDataMapping` object
     #' @param x Name of x variable to map
     #' Default value is NULL in case of a unique box in the boxplot.
     #' @param y Name of y variable to map
@@ -30,21 +31,20 @@ BoxWhiskerDataMapping <- R6::R6Class(
     #' Default value is `Percentile25-1.5IQR%`.
     #' @param maxOutlierLimit Name of function used for calculating upper outlier limit
     #' Default value is `Percentile75+1.5IQR%`.
-    #' @param ... parameters inherited from \code{XYGDataMapping}
-    #' @return A new \code{BoxWhiskerDataMapping} object
+    #' @param ... parameters inherited from `XYGDataMapping`
+    #' @return A new `BoxWhiskerDataMapping` object
     initialize = function(x = NULL,
-                              y,
-                              ymin = tlfStatFunctions$`Percentile5%`,
-                              lower = tlfStatFunctions$`Percentile25%`,
-                              middle = tlfStatFunctions$`Percentile50%`,
-                              upper = tlfStatFunctions$`Percentile75%`,
-                              ymax = tlfStatFunctions$`Percentile95%`,
-                              minOutlierLimit = tlfStatFunctions$`Percentile25%-1.5IQR`,
-                              maxOutlierLimit = tlfStatFunctions$`Percentile75%+1.5IQR`,
-                              ...) {
+                          y,
+                          ymin = tlfStatFunctions$`Percentile5%`,
+                          lower = tlfStatFunctions$`Percentile25%`,
+                          middle = tlfStatFunctions$`Percentile50%`,
+                          upper = tlfStatFunctions$`Percentile75%`,
+                          ymax = tlfStatFunctions$`Percentile95%`,
+                          minOutlierLimit = tlfStatFunctions$`Percentile25%-1.5IQR`,
+                          maxOutlierLimit = tlfStatFunctions$`Percentile75%+1.5IQR`,
+                          ...) {
       super$initialize(x = x, y = y, ...)
-
-      super$groupMapping$color <- super$groupMapping$color %||% super$groupMapping$fill
+      self$groupMapping$color <- self$groupMapping$color %||% self$groupMapping$fill
 
       self$boxWhiskerLimits <- c(ymin, lower, middle, upper, ymax)
       self$outlierLimits <- c(minOutlierLimit, maxOutlierLimit)
@@ -55,7 +55,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
     #' @return A data.frame with `ymin`, `lower`, `middle`, `upper`, `ymax` variables.
     getBoxWhiskerLimits = function(data) {
       # Dummy silent variable if x is NULL
-      if (is.null(self$x)) {
+      if (isOfLength(self$x, 0)) {
         data$legendLabels <- factor("")
       }
 
@@ -76,6 +76,9 @@ BoxWhiskerDataMapping <- R6::R6Class(
 
       # Dummy variable for aesthetics
       boxWhiskerLimits$legendLabels <- factor("")
+      if (!isOfLength(self$x, 0)) {
+        boxWhiskerLimits[, self$x] <- as.factor(boxWhiskerLimits[, self$x])
+      }
 
       return(boxWhiskerLimits)
     },
@@ -87,7 +90,7 @@ BoxWhiskerDataMapping <- R6::R6Class(
     getOutliers = function(data) {
       data <- self$checkMapData(data)
       # Dummy silent variable if x is NULL
-      if (is.null(self$x)) {
+      if (isOfLength(self$x, 0)) {
         data$legendLabels <- factor("")
       }
 
@@ -121,6 +124,9 @@ BoxWhiskerDataMapping <- R6::R6Class(
 
       # Dummy variable for aesthetics
       outliers$legendLabels <- factor("")
+      if (!isOfLength(self$x, 0)) {
+        outliers[, self$x] <- as.factor(outliers[, self$x])
+      }
 
       return(outliers)
     }

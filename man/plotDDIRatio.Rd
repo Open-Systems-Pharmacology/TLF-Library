@@ -9,25 +9,49 @@ plotDDIRatio(
   metaData = NULL,
   dataMapping = NULL,
   plotConfiguration = NULL,
-  plotObject = NULL
+  plotObject = NULL,
+  residualsVsObserved = NULL
 )
 }
 \arguments{
-\item{data}{data.frame (or list of data.frames? TO BE DISCUSSED)
-containing the data to be used for the plot}
+\item{data}{A data.frame to use for plot.}
 
-\item{metaData}{list of lists (structure TO BE DISCUSSED)
-containing complementary information to data (e.g. unit)}
+\item{metaData}{A named list of information about \code{data} such as the \code{dimension} and \code{unit} of its variables.}
 
-\item{dataMapping}{R6 class PKRatioDataMapping
-mapping of x, y axes + mapping of colorGrouping, sizeGrouping, shapeGrouping}
+\item{dataMapping}{A \code{DDIRatioDataMapping} object mapping \code{x}, \code{y} and aesthetic groups to their variable names of \code{data}.}
 
-\item{plotConfiguration}{R6 class PKRatioPlotConfiguration
-Plot Configuration defining title, subtitle, xlabel, ylabel watermark, and legend}
+\item{plotConfiguration}{An optional \code{DDIRatioPlotConfiguration} object defining labels, grid, background and watermark.}
+
+\item{plotObject}{An optional \code{ggplot} object on which to add the plot layer}
+
+\item{residualsVsObserved}{Optional logical value defining
+if DDI Ratio plot is drawn as residuals vs observed, instead of predicted vs observed.}
 }
 \value{
-a ggplot graphical object
+A \code{ggplot} object
 }
 \description{
-plotDDIRatio(data, metaData, dataMapping, plotConfiguration)
+Producing DDI Ratio plots
 }
+\examples{
+# Produce DDI Ratio plot
+ddiData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
+
+plotDDIRatio(data = ddiData, dataMapping = DDIRatioDataMapping$new(x = "x", y = "y"))
+
+}
+\references{
+For examples, see:
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio-vignette.html}
+}
+\seealso{
+Other molecule plots: 
+\code{\link{plotBoxWhisker}()},
+\code{\link{plotHistogram}()},
+\code{\link{plotObsVsPred}()},
+\code{\link{plotPKRatio}()},
+\code{\link{plotResVsPred}()},
+\code{\link{plotTimeProfile}()},
+\code{\link{plotTornado}()}
+}
+\concept{molecule plots}

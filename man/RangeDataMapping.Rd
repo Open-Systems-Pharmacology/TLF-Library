@@ -6,6 +6,23 @@
 \description{
 R6 class for mapping \code{x}, \code{ymin} and \code{ymax} variable to \code{data}
 }
+\seealso{
+Other DataMapping classes: 
+\code{\link{BoxWhiskerDataMapping}},
+\code{\link{DDIRatioDataMapping}},
+\code{\link{GroupMapping}},
+\code{\link{Grouping}},
+\code{\link{HistogramDataMapping}},
+\code{\link{ObsVsPredDataMapping}},
+\code{\link{ObservedDataMapping}},
+\code{\link{PKRatioDataMapping}},
+\code{\link{ResVsPredDataMapping}},
+\code{\link{TimeProfileDataMapping}},
+\code{\link{TornadoDataMapping}},
+\code{\link{XYDataMapping}},
+\code{\link{XYGDataMapping}}
+}
+\concept{DataMapping classes}
 \section{Super classes}{
 \code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{RangeDataMapping}
 }
@@ -48,6 +65,7 @@ Create a new \code{RangeDataMapping} object
   linetype = NULL,
   shape = NULL,
   size = NULL,
+  group = NULL,
   data = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -72,6 +90,8 @@ Create a new \code{RangeDataMapping} object
 \item{\code{shape}}{R6 class \code{Grouping} object or its input}
 
 \item{\code{size}}{R6 class \code{Grouping} object or its input}
+
+\item{\code{group}}{R6 class \code{Grouping} object or its input}
 
 \item{\code{data}}{data.frame to map used by \code{smartMapping}}
 }
@@ -100,8 +120,8 @@ Check that \code{data} variables include map variables
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A data.frame with map and \code{defaultAes} variables.
-Dummy variable \code{defaultAes} is necessary to allow further modification of plots.
+A data.frame with map and \code{legendLabels} variables.
+Dummy variable \code{legendLabels} is necessary to allow further modification of plots.
 }
 }
 \if{html}{\out{<hr>}}

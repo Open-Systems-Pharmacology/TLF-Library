@@ -6,22 +6,54 @@
 \description{
 R6 class defining the configuration of a \code{ggplot} object
 }
+\references{
+For examples, see:
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-configuration.html}
+}
+\seealso{
+Other PlotConfiguration classes: 
+\code{\link{BoxWhiskerPlotConfiguration}},
+\code{\link{DDIRatioPlotConfiguration}},
+\code{\link{HistogramPlotConfiguration}},
+\code{\link{ObsVsPredPlotConfiguration}},
+\code{\link{PKRatioPlotConfiguration}},
+\code{\link{TimeProfilePlotConfiguration}},
+\code{\link{TornadoPlotConfiguration}}
+}
+\concept{PlotConfiguration classes}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{labels}}{R6 class \code{LabelConfiguration} defining labels properties}
+\item{\code{export}}{R6 class \code{ExportConfiguration} defining properties for saving/exporting plota}
 
-\item{\code{legend}}{R6 class \code{LegendConfiguration} defining legend properties}
+\item{\code{defaultXScale}}{Default xAxis scale value when creating a \code{PlotConfiguration} object}
 
-\item{\code{xAxis}}{R6 class \code{XAxisConfiguration} defining X-axis properties}
+\item{\code{defaultYScale}}{Default yAxis scale value when creating a \code{PlotConfiguration} object}
 
-\item{\code{yAxis}}{R6 class \code{YAxisConfiguration} defining Y-axis properties}
+\item{\code{defaultExpand}}{Default expand value when creating a \code{PlotConfiguration} object}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{labels}}{\code{LabelConfiguration} object defining properties of labels}
 
-\item{\code{background}}{R6 class \code{BackgroundConfiguration} defining background properties}
+\item{\code{legend}}{\code{LegendConfiguration} object defining properties of legend}
 
-\item{\code{export}}{R6 class \code{ExportConfiguration} defining export properties}
+\item{\code{xAxis}}{\code{XAxisConfiguration} object defining properties of x-axis}
 
-\item{\code{theme}}{\code{Theme} R6 class defining theme aesthetic properties}
+\item{\code{yAxis}}{\code{YAxisConfiguration} object defining properties of x-axis}
+
+\item{\code{background}}{\code{BackgroundConfiguration} object defining properties of x-axis}
+
+\item{\code{lines}}{\code{ThemeAestheticSelections} defining properties of lines}
+
+\item{\code{ribbons}}{\code{ThemeAestheticSelections} defining properties of ribbons}
+
+\item{\code{points}}{\code{ThemeAestheticSelections} defining properties of points}
+
+\item{\code{errorbars}}{\code{ThemeAestheticSelections} defining properties of error bars}
 }
 \if{html}{\out{</div>}}
 }
@@ -29,7 +61,6 @@ R6 class defining the configuration of a \code{ggplot} object
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{PlotConfiguration$new()}}
-\item \href{#method-print}{\code{PlotConfiguration$print()}}
 \item \href{#method-clone}{\code{PlotConfiguration$clone()}}
 }
 }
@@ -44,6 +75,7 @@ Create a new \code{PlotConfiguration} object
   subtitle = NULL,
   xlabel = NULL,
   ylabel = NULL,
+  caption = NULL,
   legend = NULL,
   legendTitle = NULL,
   legendPosition = NULL,
@@ -54,56 +86,85 @@ Create a new \code{PlotConfiguration} object
   yScale = NULL,
   yLimits = NULL,
   background = NULL,
+  plotArea = NULL,
+  panelArea = NULL,
+  xGrid = NULL,
+  yGrid = NULL,
   watermark = NULL,
+  lines = NULL,
+  points = NULL,
+  ribbons = NULL,
+  errorbars = NULL,
   export = NULL,
+  name = NULL,
   format = NULL,
   width = NULL,
   height = NULL,
   units = NULL,
+  dpi = NULL,
   data = NULL,
   metaData = NULL,
-  dataMapping = NULL,
-  theme = tlfEnv$currentTheme
+  dataMapping = NULL
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{title}}{R6 class \code{Label} object}
+\item{\code{title}}{character or \code{Label} object defining plot title}
 
-\item{\code{subtitle}}{R6 class \code{Label} object}
+\item{\code{subtitle}}{character or \code{Label} object defining plot subtitle}
 
-\item{\code{xlabel}}{R6 class \code{Label} object}
+\item{\code{xlabel}}{character or \code{Label} object defining plot xlabel}
 
-\item{\code{ylabel}}{R6 class \code{Label} object}
+\item{\code{ylabel}}{character or \code{Label} object defining plot ylabel}
 
-\item{\code{legend}}{R6 class \code{LegendConfiguration} object defining legend properties}
+\item{\code{caption}}{character or \code{Label} object defining plot caption}
 
-\item{\code{legendTitle}}{character legend title}
+\item{\code{legend}}{\code{LegendConfiguration} object defining legend properties}
 
-\item{\code{legendPosition}}{character legend position.
+\item{\code{legendTitle}}{character or \code{Label} object defining legend title}
+
+\item{\code{legendPosition}}{character defining legend position.
 Use Enum \code{LegendPositions} to get a list of available to legend positions.}
 
-\item{\code{xAxis}}{R6 class \code{XAxisConfiguration} object defining X-axis properties}
+\item{\code{xAxis}}{\code{XAxisConfiguration} object defining x-axis properties}
 
-\item{\code{xScale}}{character defining X-axis scale. Use enum \code{Scaling} to access predefined scales.}
+\item{\code{xScale}}{name of X-axis scale. Use enum \code{Scaling} to access predefined scales.}
 
-\item{\code{xLimits}}{numeric vector of X-axis limits}
+\item{\code{xLimits}}{numeric vector of length 2 defining x-axis limits}
 
-\item{\code{yAxis}}{R6 class \code{YAxisConfiguration} object defining X-axis properties}
+\item{\code{yAxis}}{\code{YAxisConfiguration} object defining y-axis properties}
 
-\item{\code{yScale}}{character defining Y-axis scale. Use enum \code{Scaling} to access predefined scales.}
+\item{\code{yScale}}{name of y-axis scale. Use enum \code{Scaling} to access predefined scales.}
 
-\item{\code{yLimits}}{numeric vector of Y-axis limits}
+\item{\code{yLimits}}{numeric vector of length 2 defining y-axis limits}
 
-\item{\code{background}}{R6 class \code{BackgroundConfiguration} defining background properties}
+\item{\code{background}}{\code{BackgroundConfiguration} object defining background properties}
 
-\item{\code{watermark}}{R6 class \code{Label} object defining watermark background}
+\item{\code{plotArea}}{\code{BackgroundElement} object defining properties of plot area}
 
-\item{\code{export}}{R6 class \code{SaveConfiguration} defining saving properties}
+\item{\code{panelArea}}{\code{BackgroundElement} object defining properties of panel area}
 
-\item{\code{format}}{character defining the format of the file to be saved}
+\item{\code{xGrid}}{\code{LineElement} object defining properties of x-grid background}
+
+\item{\code{yGrid}}{\code{LineElement} object defining properties of y-grid background}
+
+\item{\code{watermark}}{character or \code{Label} object defining watermark}
+
+\item{\code{lines}}{\code{ThemeAestheticSelections} object or list defining how lines are plotted}
+
+\item{\code{points}}{\code{ThemeAestheticSelections} object or list defining how points are plotted}
+
+\item{\code{ribbons}}{\code{ThemeAestheticSelections} object or list defining how ribbons are plotted}
+
+\item{\code{errorbars}}{\code{ThemeAestheticSelections} object or list defining how errorbars are plotted}
+
+\item{\code{export}}{R6 class \code{ExportConfiguration} defining properties for saving/exporting plota}
+
+\item{\code{name}}{character defining the name of the file to be saved (without extension)}
+
+\item{\code{format}}{character defining the format of the file to be saved.}
 
 \item{\code{width}}{numeric values defining the width in \code{units} of the plot dimensions after saving}
 
@@ -111,31 +172,18 @@ Use Enum \code{LegendPositions} to get a list of available to legend positions.}
 
 \item{\code{units}}{character defining the unit of the saving dimension}
 
+\item{\code{dpi}}{numeric value defining plot resolution (dots per inch)}
+
 \item{\code{data}}{data.frame used by \code{smartMapping}}
 
 \item{\code{metaData}}{list of information on \code{data}}
 
 \item{\code{dataMapping}}{R6 class or subclass \code{XYDataMapping}}
-
-\item{\code{theme}}{R6 class \code{Theme}}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 A new \code{PlotConfiguration} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
-\subsection{Method \code{print()}}{
-Print plot configuration
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlotConfiguration$print()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-Plot configuration
 }
 }
 \if{html}{\out{<hr>}}

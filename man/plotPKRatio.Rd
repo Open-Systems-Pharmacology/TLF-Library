@@ -13,28 +13,41 @@ plotPKRatio(
 )
 }
 \arguments{
-\item{data}{data.frame containing the data to be used for the plot}
+\item{data}{A data.frame to use for plot.}
 
-\item{metaData}{list of lists
-containing complementary information to data (e.g. their unit and dimension).
-This parameter is optional.}
+\item{metaData}{A named list of information about \code{data} such as the \code{dimension} and \code{unit} of its variables.}
 
-\item{dataMapping}{\code{PKRatioDataMapping} class or subclass mapping x and y variables to \code{data} variable names.
-\code{dataMapping} provides also the values of the PK Ratio limits plotted as horizontal lines.
-This parameter is optional: the \code{tlf} library provides a smart mapping if only \code{data} is provided
-and default values of the PK Ratio limits.}
+\item{dataMapping}{A \code{PKRatioDataMapping} object mapping \code{x}, \code{y} and aesthetic groups to their variable names of \code{data}.}
 
-\item{plotConfiguration}{\code{PKRatioPlotConfiguration} class or subclass defining labels, grid, background and watermark
-This parameter is optional: the \code{tlf} library provides a default configuration according to the current theme}
+\item{plotConfiguration}{An optional \code{PKRatioPlotConfiguration} object defining labels, grid, background and watermark.}
 
-\item{plotObject}{\code{ggplot} graphical object to which the PK Ratio plot layer is added
-This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided}
+\item{plotObject}{An optional \code{ggplot} object on which to add the plot layer}
 }
 \value{
-A \code{ggplot} graphical object
+A \code{ggplot} object
 }
 \description{
-Add PK Ratio plot layers to a \code{ggplot} graphical object.
-PK Ratio limits are plotted as horizontal lines.
-PK Ratios are plotted as a scatter plot.
+Producing PK Ratio plots
 }
+\examples{
+# Produce PK Ratio plot
+pkData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
+
+plotPKRatio(data = pkData, dataMapping = PKRatioDataMapping$new(x = "x", y = "y"))
+
+}
+\references{
+For examples, see:
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/pk-ratio-vignette.html}
+}
+\seealso{
+Other molecule plots: 
+\code{\link{plotBoxWhisker}()},
+\code{\link{plotDDIRatio}()},
+\code{\link{plotHistogram}()},
+\code{\link{plotObsVsPred}()},
+\code{\link{plotResVsPred}()},
+\code{\link{plotTimeProfile}()},
+\code{\link{plotTornado}()}
+}
+\concept{molecule plots}

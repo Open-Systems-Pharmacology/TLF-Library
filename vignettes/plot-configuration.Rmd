@@ -1,10 +1,11 @@
 ---
-title: "Plot configuration"
-output: 
+title: "Introduction to PlotConfiguration objects"
+author: "OSPSuiteR 2021"
+output:
   rmarkdown::html_vignette:
-    number_sections: true
+    toc: true
 vignette: >
-  %\VignetteIndexEntry{plot-configuration}
+  %\VignetteIndexEntry{Introduction to PlotConfiguration objects}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -12,18 +13,20 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  dpi = 300,
+  fig.align = "center",
+  out.width = "100%"
 )
 ```
 
 ```{r setup}
-library(tlf)
+require(tlf)
 ```
-
 
 This vignette tackles about *PlotConfiguration* objects and their implementation within the `tlf`-library.
 
-# Introduction
+# 1. Introduction
 
 *PlotConfiguration* objects are R6 class objects that define plot properties. 
 
@@ -31,341 +34,394 @@ To create such an object, the method *new()* is required.
 Multiple arguments can be passed on the method in order to directly define the properties. 
 The properties default values can be handled and managed using the concept of themes.
 
-The class possesses also a *print()* method that will print the configuration of the properties below.
-
-As the example below illustrates, the following properties are accounted for by the *PlotConfiguration* class. 
+As the example below illustrates, the following plot properties are defined by the **PlotConfiguration** class. 
 Each of these properties is managed by a different R6 class object detailed in the next sections:
 
 - *labels*
 - *background*
 - *xAxis*/*yAxis*
 - *legend*
-- *save*
+- *export*
+- *points*/*lines*/*ribbons*/*errorbars*
 
-```{r}
+```{r empty-plot-configuration}
+# Creates a PlotConfiguration with default properties
 myConfiguration <- PlotConfiguration$new()
-# myConfiguration$print()
 
-myConfiguration <- PlotConfiguration$new(title = "my title",
-                                         watermark = "my watermark")
-# myConfiguration$print()
+myConfiguration
 ```
 
-When a `ggplot` object is initialized using the `tlf` method *initializePlot*, a *plotConfiguration* field of is implanted to the plot object.
-The *plotConfiguration* field is class or subclass of *PlotConfiguration* that aims at simplifying and clarifying the plot properties mentioned above.
+```{r my-empty-plot-configuration}
+# Creates a PlotConfiguration with title and watermark as user-defined properties
+myConfiguration <- PlotConfiguration$new(
+  title = "my title",
+  watermark = "my watermark"
+)
 
-*PlotConfiguration* objects can also be pass on the method *initializePlot* as shown below:
+myConfiguration
+```
 
-```{r}
+When a `ggplot` object is initialized using the `tlf` method **`initializePlot`**, a *plotConfiguration* field is added to the plot object. This field corresponds to a **PlotConfiguration** object and defining the properties of the initialied plot.
+
+**PlotConfiguration** objects can also be directly passed to the method *initializePlot* as shown below:
+
+```{r empty-plot}
+# Creates an empty plot with default PlotConfiguration properties
 emptyPlot <- initializePlot()
 
+emptyPlot$plotConfiguration
+
+emptyPlot
+```
+
+Figure: empty plot with default PlotConfiguration properties 
+
+```{r my-empty-plot}
+# Creates an empty plot with title and watermark as user-defined properties
 myEmptyPlot <- initializePlot(myConfiguration)
+
+myEmptyPlot$plotConfiguration
+
+myEmptyPlot
 ```
-```{r, echo=FALSE, fig.cap="left: emptyPlot; right: myEmptyPlot", fig.width=7.5}
-gridExtra::grid.arrange(emptyPlot, myEmptyPlot, ncol=2)
-```
 
-# Label configuration: *labels*
+Figure: empty plot with title and watermark as user-defined properties
 
-## Label and Label configuration objects
+# 2. Label configuration: *labels*
 
-The field *labels* from the *PlotConfiguration* object is a *LabelConfiguration* R6 class object.
+## 2.1. Label and Label configuration objects
+
+The field *labels* from the *PlotConfiguration* object is a *LabelConfiguration* object.
 It defines the label properties of the following plot captions:
 
 - title
 - subtitle
 - xlabel
 - ylabel
+- caption
 
-Each field is a *Label* R6 class object that associate a text with font properties:
-```{r}
-myEmptyLabel <- Label$new()
-myEmptyLabel$print()
+Each field is a *Label* object that associate a text with font properties:
 
-myLabel <- Label$new(text = "some text",
-                     color = "blue")
-myLabel$print()
+```{r label-example}
+title <- Label$new(
+  text = "This is a title text",
+  font = Font$new(
+    color = "red",
+    size = 12
+  )
+)
 ```
 
-When initializating a *LabelConfiguration* or *PlotConfiguration* object, *Label* or/and *character* objects can be passed on.
+```{r show-label-example, results='asis', echo=FALSE}
+knitr::kable(data.frame(
+  "text" = title$text,
+  "color" = title$font$color,
+  "size" = title$font$size,
+  "fontFace" = title$font$fontFace,
+  "fontFamily" = title$font$fontFamily,
+  "angle" = title$font$angle,
+  "align" = title$font$align
+))
+```
+
+When initializing a *LabelConfiguration* or *PlotConfiguration* object, *Label* and/or *character* objects can be passed on.
+
 *Character* objects will be converted into *Label* objects internally using the current theme.
 
-```{r}
-myRedPlotLabel <- LabelConfiguration$new(title = Label$new(text = "my title", 
-                                                           color = "red"))
-myRedPlotLabel$title$print()
-myRedPlotLabel$print()
-
-myPlotLabel <- LabelConfiguration$new(title = "my title")
-myPlotLabel$title$print()
-myPlotLabel$print()
+```{r label-configuration}
+myRedPlotLabel <- LabelConfiguration$new(title = Label$new(
+  text = "my title",
+  color = "red"
+))
 ```
 
-It can be noted that in the latter case, the label configuration is equivalent to the label configuration defined in the previous plot configuration "myConfiguration":
+```{r show-label-configuration, results='asis'}
+Property <- c("text", "font$color", "font$size", "font$angle", "font$align", "font$fontFace", "font$fontFamily")
+displayNullValue <- function(value){
+  if(is.null(value)){return("*NULL*")}
+  return(value)
+}
+labelProperties <- cbind.data.frame(
+  Property = Property,
+  sapply(
+  c("title", "subtitle", "xlabel", "ylabel", "caption"),
+  function(labelName){
+    # 
+    # Use an expression to get all the properties of the label in one line
+    eval(parse(text = paste0(
+      "c(", paste0("displayNullValue(myRedPlotLabel[[labelName]]$", Property, ")", collapse = ", "), ")"
+    )))
+    }
+  )
+  )
 
-```{r}
-myConfiguration$labels$title$print()
-myConfiguration$labels$print()
+knitr::kable(labelProperties)
 ```
 
-## Label configuration in plots
+## 2.2. Label configuration in plots
 
 The effect of label configuration in plots is straightforward:
-```{r}
-plotConfigurationLabel1 <- PlotConfiguration$new(title = "Title",
-                                                     subtitle = "Subtitle",
-                                                     xlabel = "x label",
-                                                     ylabel = "y label")
+
+```{r label-in-plot-configuration-1}
+plotConfigurationLabel1 <- PlotConfiguration$new(
+  title = "Title",
+  subtitle = "Subtitle",
+  xlabel = "x label",
+  ylabel = "y label",
+  caption = "Caption"
+)
 
 pLab1 <- initializePlot(plotConfigurationLabel1)
 
-plotConfigurationLabel2 <- PlotConfiguration$new(title = Label$new(text = "Title", size = 12, color = "deepskyblue4"),
-                                                 subtitle = Label$new(text = "Subtitle", size = 11, color = "steelblue"),
-                                                 xlabel = Label$new(text = "x label", size = 10, color = "dodgerblue2"),
-                                                 ylabel = Label$new(text = "y label", size = 10, color = "dodgerblue2"))
+pLab1
+```
+
+Figure: Empty plot with labels defined as `character` using default label properties
+
+```{r label-in-plot-configuration-2}
+plotConfigurationLabel2 <- PlotConfiguration$new(
+  title = Label$new(text = "Title", size = 12, color = "deepskyblue4"),
+  subtitle = Label$new(text = "Subtitle", size = 11, color = "steelblue"),
+  xlabel = Label$new(text = "x label", size = 10, color = "dodgerblue2"),
+  ylabel = Label$new(text = "y label", size = 10, color = "dodgerblue2", angle = 45),
+  caption = Label$new(text = "Caption", size = 8, color = "steelblue", align = Alignments$left)
+)
 
 pLab2 <- initializePlot(plotConfigurationLabel2)
-```
-```{r, echo=FALSE, fig.cap="left: pLab1; right: pLab2", fig.width=7.5}
-gridExtra::grid.arrange(pLab1, pLab2, ncol=2)
+
+pLab2
 ```
 
-## Changing plot labels
+Figure: Empty plot with labels defined as `Label` updating default label properties
+
+## 2.3. Changing plot labels
 
 After creating a plot, it is possible to change its label configuration using the `tlf` method *setPlotLabels*.
-The metod requires the plot object and which label property to update.
-Similar to the construction of the Label configuration, *Label* or/and *character* objects can be passed on.
+The method requires the plot object and which label property to update.
+
+Similar to the construction of the Label configuration, *Label* and/or *character* objects can be passed on.
 
 Using the previous example, *pLab2*, 
-```{r}
-pLab2$plotConfiguration$labels$title$print()
 
-pLab2Title <-  setPlotLabels(pLab2, title = "new title")
-pLab2RedTitle <-  setPlotLabels(pLab2, title = Label$new(text = "new title", color = "red"))
-
-pLab2Title$plotConfiguration$labels$title$print()
-pLab2RedTitle$plotConfiguration$labels$title$print()
-```
-```{r, echo=FALSE, fig.cap="left: pLab2Title; right: pLab2RedTitle", fig.width=7.5}
-gridExtra::grid.arrange(pLab2Title, pLab2RedTitle, ncol=2)
+```{r set-new-title, fig.width=7.5}
+setPlotLabels(pLab2, title = "new title")
 ```
 
-## Smart plot configurations
+```{r set-new-redtitle, fig.width=7.5}
+setPlotLabels(pLab2, title = Label$new(text = "new title", color = "red"))
+```
+
+## 2.4. Smart plot configurations
 
 Smart plot labels are available for initializing *PlotConfiguration* objects. 
 The principle is to provide in advance the *data* that will be used within the plot.
 As a consequence, three optional arguments can be passed on *PlotConfiguration* initialization: *data*, *metaData* and *dataMapping*.
-If no label is specifically defined, the smart configuration will fetch x and y labels within *data* and *metaData* names based on the *dataMapping*.
-*dataMapping* uses also smart functions that will check the input data.frame if not specifically initialized and will use variables named "x" and "y" as *x* and *y*.
 
-The 4 examples below illustrates the smart configurations. *pSmart1* and *pSmart2* will turn out the same, while *pSmart3* will use the information from *metaData* to write the x and y labels. *pSmart4* will overwrite the y label and title based on the input.
-```{r}
-time <- seq(0,20, 0.1)
-myData <- data.frame(x = time,
-                     y = 2*cos(time))
-myMetaData <- list(x = list(dimension = "Time",
-                            unit = "min"),
-                   y = list(dimension = "Amplitude",
-                            unit = "cm"))
-myMapping <- XYGDataMapping$new(x = "x",
-                                y = "y")
+If no label is specifically defined, the smart configuration will fetch `x` and `y` labels within *data* and *metaData* names based on the *dataMapping*. *dataMapping* also uses smart functions that will check the input data frame - if not specifically initialized - and will use variables named "x" and "y" as `x` and `y`.
+
+The four examples below illustrate the smart configurations:
+
+*pSmart1* and *pSmart2* will turn out the same, while *pSmart3* will use the information from *metaData* to write the x and y labels. *pSmart4* will overwrite the y label and title based on the input.
+
+```{r smart-example}
+time <- seq(0, 20, 0.1)
+myData <- data.frame(
+  x = time,
+  y = 2 * cos(time)
+)
+myMetaData <- list(
+  x = list(
+    dimension = "Time",
+    unit = "min"
+  ),
+  y = list(
+    dimension = "Amplitude",
+    unit = "cm"
+  )
+)
+myMapping <- XYGDataMapping$new(
+  x = "x",
+  y = "y"
+)
 
 smartConfig1 <- PlotConfiguration$new(data = myData)
-smartConfig2 <- PlotConfiguration$new(data = myData,
-                                      dataMapping = myMapping)
-smartConfig3 <- PlotConfiguration$new(data = myData,
-                                      metaData = myMetaData)
-smartConfig4 <- PlotConfiguration$new(title = Label$new(text = "Cosinus", size = 14),
-                                      ylabel = "Variations",
-                                      data = myData,
-                                      metaData = myMetaData)
+smartConfig2 <- PlotConfiguration$new(
+  data = myData,
+  dataMapping = myMapping
+)
+smartConfig3 <- PlotConfiguration$new(
+  data = myData,
+  metaData = myMetaData
+)
+smartConfig4 <- PlotConfiguration$new(
+  title = Label$new(text = "Cosinus", size = 14),
+  ylabel = "Variations",
+  data = myData,
+  metaData = myMetaData
+)
 
-pSmart1 <- initializePlot(smartConfig1) 
-pSmart2 <- initializePlot(smartConfig2) 
-pSmart3 <- initializePlot(smartConfig3) 
-pSmart4 <- initializePlot(smartConfig4) 
+pSmart1 <- initializePlot(smartConfig1)
+pSmart2 <- initializePlot(smartConfig2)
+pSmart3 <- initializePlot(smartConfig3)
+pSmart4 <- initializePlot(smartConfig4)
 ```
 
-```{r, echo=FALSE, fig.cap="left: pSmart1; right: pSmart2", fig.width=7.5}
-gridExtra::grid.arrange(pSmart1, pSmart2, ncol=2)
+```{r show-smart-example-1, echo=FALSE, fig.cap="left: pSmart1; right: pSmart2", fig.width=7.5}
+patchwork::wrap_plots(pSmart1, pSmart2, ncol = 2)
 ```
 
-```{r, echo=FALSE, fig.cap="left: pSmart3; right: pSmart4", fig.width=7.5}
-gridExtra::grid.arrange(pSmart3, pSmart4, ncol=2)
+```{r show-smart-example-2, echo=FALSE, fig.cap="left: pSmart3; right: pSmart4", fig.width=7.5}
+patchwork::wrap_plots(pSmart3, pSmart4, ncol = 2)
 ```
 
-Since all of the `tlf` plots are using internally *initializePlot* if a previous plot is not provided, the smart configurations can directly be used through the plot functions. Consequently, if *scatter1* will provide simple x and y labels, *scatter2* will name these labels after the metaData properties.
+Since all of the `tlf` plots are internally using *initializePlot*, if a previous plot is not provided, the smart configurations can directly be used through the plot functions. Consequently, if *scatter1* will provide simple x and y labels, *scatter2* will name these labels after the metaData properties.
+
 As for *scatter3* and *scatter4*, they will use the plotConfiguration defined by *smartConfig4* and lead to the exact same plot.
-```{r}
-scatter1 <-  addScatter(data = myData)
-scatter2 <-  addScatter(data = myData,
-                        metaData = myMetaData)
 
-scatter3 <-  addScatter(data = myData,
-                        plotConfiguration = smartConfig4)
+```{r smart-scatter}
+scatter1 <- addScatter(data = myData)
+scatter2 <- addScatter(
+  data = myData,
+  metaData = myMetaData
+)
+
+scatter3 <- addScatter(
+  data = myData,
+  plotConfiguration = smartConfig4
+)
 scatter4 <- initializePlot(smartConfig4)
-scatter4 <- addScatter(data = myData,
-                       plotObject = scatter4)
+scatter4 <- addScatter(
+  data = myData,
+  plotObject = scatter4
+)
 ```
 
-```{r, echo=FALSE, fig.cap="left: scatter1; right: scatter2", fig.width=7.5}
-gridExtra::grid.arrange(scatter1, scatter2, ncol=2)
+```{r show-smart-scatter 1, echo=FALSE, fig.cap="left: scatter1; right: scatter2", fig.width=7.5}
+patchwork::wrap_plots(scatter1, scatter2, ncol = 2)
 ```
 
-```{r, echo=FALSE, fig.cap="left: scatter3; right: scatter4", fig.width=7.5}
-gridExtra::grid.arrange(scatter3, scatter4, ncol=2)
+```{r show-smart-scatter 2, echo=FALSE, fig.cap="left: scatter3; right: scatter4", fig.width=7.5}
+patchwork::wrap_plots(scatter3, scatter4, ncol = 2)
 ```
 
-# Background configuration: *background*
+# 3. Background configuration: *background*
 
-The field *background* from the *PlotConfiguration* object is a *BackgroundConfiguration* R6 class object.
-It defines the following plot properties:
+## 3.1. Background configuration properties
 
-- inner and outer backgrounds
-- grid
-- watermark
+Background configuration defines the configuration of the following Background elements:
+- `plot`
+- `panel`
+- `xGrid`
+- `yGrid`
+- `xAxis`
+- `yAxis`
+- `legendPosition`
+- `watermark`
 
-Inner, outer backgrounds and grid are all *BackgroundElementConfiguration* R6 class object that associate one or multiple aesthetic properties to the background element.
-Watermark is a *Label* R6 class object to which it is also possible to set the angle and transparency.
+Except for `watermark` and `legendPosition`, which are the text of the watermark and the position of the legend defined as an element of `LegendPositions` enum, background fields are `LineElement` and `BackgroundElement` objects, which define the properties of the background element.
 
-When initializating a *BackgroundConfiguration* or *PlotConfiguration* object, the background properties and watermark can be passed on.
+As for all the `PlotConfiguration` inputs, their default values are defined from the current `Theme`, however this default can be overwritten.
 
-```{r}
-myEmptyBackgroundConfiguration <- BackgroundConfiguration$new()
-myEmptyBackgroundConfiguration$print()
+For instance:
+
+```{r background-object, results='asis'}
+background <- BackgroundConfiguration$new()
 ```
 
-## Background configuration in plots
+```{r show-background-object, results='asis', echo=FALSE}
+knitr::kable(
+  data.frame(
+    Property = c("color", "size", "linetype", "fill"),
+    plot = c(background$plot$color, background$plot$size, background$plot$linetype, background$plot$fill),
+    panel = c(background$panel$color, background$panel$size, background$panel$linetype, background$panel$fill),
+    xGrid = c(background$xGrid$color, background$xGrid$size, background$xGrid$linetype, ""),
+    yGrid = c(background$yGrid$color, background$yGrid$size, background$yGrid$linetype, ""),
+    xAxis = c(background$xAxis$color, background$xAxis$size, background$xAxis$linetype, ""),
+    yAxis = c(background$yAxis$color, background$yAxis$size, background$yAxis$linetype, "")
+  )
+)
+```
 
-The effect of background configuration in plots is quite straightforward:
-```{r}
+## 3.2. Background configuration in plots
+
+The effect of background configuration in plots is also quite straightforward:
+
+```{r background-in-plot-configuration}
 plotConfigurationBackground1 <- PlotConfiguration$new(watermark = "My Watermark")
 
 pBack1 <- initializePlot(plotConfigurationBackground1)
 
-plotConfigurationBackground2 <- PlotConfiguration$new(
-  watermark = Label$new(text = "Hello world", color = "goldenrod4", size = 8),
-  background = BackgroundConfiguration$new(outerBackground = BackgroundElementConfiguration$new(fill = "lemonchiffon"),
-                                           innerBackground = BackgroundElementConfiguration$new(fill = "lemonchiffon", 
-                                                                                                color = "goldenrod3"),
-                                           grid = BackgroundElementConfiguration$new(color = "goldenrod3")))
-
-pBack2 <- initializePlot(plotConfigurationBackground2)
+plotConfigurationBackground1$background$watermark <- Label$new(text = "Hello world", color = "goldenrod4", size = 8)
+plotConfigurationBackground1$background$plot <- BackgroundElement$new(fill = "lemonchiffon", color = "goldenrod3", linetype = "solid")
+plotConfigurationBackground1$background$panel <- BackgroundElement$new(fill = "grey", color = "black", linetype = "solid")
+pBack2 <- initializePlot(plotConfigurationBackground1)
 ```
 
-```{r, echo=FALSE, fig.cap="left: pBack1; right: pBack2", fig.width=7.5}
-gridExtra::grid.arrange(pBack1, pBack2, ncol=2)
+```{r show-background-in-plot-configuration, echo=FALSE, fig.cap="left: pBack1; right: pBack2", fig.width=7.5}
+patchwork::wrap_plots(pBack1, pBack2, ncol = 2)
 ```
 
-## Changing background properties
+## 3.3. Changing background properties
 
 After creating a plot, it is possible to change its background configuration using the following `tlf` methods:
 
-- *setBackground*
-- *setGrid*
+- *setBackground*, *setBackgroundPanelArea*, and *setBackgroundPlotArea*
+- *setGrid*, *setXGrid* and *setYGrid*
 - *setWatermark*
 
-### Set Background
+### 3.3.1. Set Background
 
-The metod *setBackground* requires the plot object and which inner/outer background properties to update.
+The methods *setBackground*, *setBackgroundPanelArea*, and *setBackgroundPlotArea* require the plot object and which properties to update.
 
 Using the previous example, *scatter1*, 
-```{r}
-scatter1$plotConfiguration$background$print()
 
-scatterNewBackground1 <-  setBackground(scatter1, 
-                             outerBackgroundFill = "darkolivegreen1",
-                             fill = "darkolivegreen2",
-                             color = "darkgreen",
-                             linetype = "blank")
-scatterNewBackground2 <-  setBackground(scatter1, 
-                             outerBackgroundFill = "lemonchiffon",
-                             fill = "lemonchiffon",
-                             size = 2,
-                             linetype = "solid")
-
-scatterNewBackground1$plotConfiguration$background$print()
-scatterNewBackground2$plotConfiguration$background$print()
+```{r set-plot-background-1, fig.width=7.5}
+setBackground(scatter1, fill = "lemonchiffon", color = "darkgreen", linetype = "solid")
 ```
 
-```{r, echo=FALSE, fig.cap="top: scatter1; bottom left: scatterNewBackground1; bottom right: scatterNewBackground2", fig.width=7.5}
-gridExtra::grid.arrange(grobs = list(scatter1, scatterNewBackground1, scatterNewBackground2), layout_matrix=rbind(c(1,1), c(2,3)))
+```{r set-panel-background-1, fig.width=7.5}
+setBackgroundPanelArea(scatter1, fill = "lemonchiffon", color = "darkgreen", linetype = "solid")
 ```
 
-### Set Grid
+### 3.3.2. Set Grid
 
-The metod *setGrid* is very similar and requires the plot object and which grid properties to update.
+The methods *setGrid*, *setXGrid*, and *setYGrid* are very similar and require the plot object and the grid properties to be updated.
 
-Using the previous examples, *scatterNewBackground1* and *scatterNewBackground2*:
-```{r}
-scatterNewBackground1$plotConfiguration$background$grid$print()
+Using the previous example *scatter1*:
 
-# Remove grid
-scatterNewGrid1 <-  setGrid(scatterNewBackground1, 
-                             linetype = "blank")
-
-scatterNewGrid1$plotConfiguration$background$grid$print()
-
-scatterNewGrid2 <-  setGrid(scatterNewBackground2, 
-                             color = "darkgreen",
-                             size = 0.5,
-                             linetype = "dotted")
-
-scatterNewGrid2$plotConfiguration$background$grid$print()
+```{r set-plot-grid, fig.width=7.5}
+setGrid(scatter1, linetype = "blank")
 ```
 
-```{r, echo=FALSE, fig.cap="left: scatterNewBackground1; right: scatterNewGrid1", fig.width=7.5}
-gridExtra::grid.arrange(scatterNewBackground1, scatterNewGrid1, ncol=2)
+```{r set-plot-y-grid, fig.width=7.5}
+setXGrid(scatter1, linetype = "blank")
 ```
 
-```{r, echo=FALSE, fig.cap="left: scatterNewBackground2; right: scatterNewGrid2", fig.width=7.5}
-gridExtra::grid.arrange(scatterNewBackground2, scatterNewGrid2, ncol=2)
+```{r set-plot-x-grid, fig.width=7.5}
+setYGrid(scatter1, linetype = "blank")
+```
+
+### 3.3.3. Set Watermark
+
+The *setWatermark* method requires the plot object, the watermark, and its properties to update.
+
+Among its properties, the following are the few important ones:
+
+- The property *alpha* is a value between 0 and 1 managing transparency of the watermark. The closer to 0, the more transparent the watermark will be. The closer to 1, the more opaque the watermark will be.
+- The property *angle*, is the angle of the watermark in degrees.
+
+Using the previous example *scatter1*: 
+
+```{r set-watermark-1, fig.width=7.5}
+setWatermark(scatter1, watermark = "Hello watermark !!")
+```
+
+```{r set-watermark-2, fig.width=7.5}
+setWatermark(scatter1, watermark = "Confidential", angle = 45, size = 6, color = "firebrick")
 ```
 
 
-### Set Watermark
-
-The metod *setWatermark* requires the plot object, the watermark and its properties to update.
-In the properties, *alpha* is a value between 0 and 1 managing transparency of the watermark.
-The closer to 0, the more transparent the watermark will be. 
-The closer to 1, the more opaque the watermark will be.
-The propert *angle*, is the angle of the watermark in degrees.
-
-Using the previous examples, *pBack2* and *scatterNewGrid2*, 
-```{r}
-pBack2$plotConfiguration$background$watermark$print()
-
-pWatermark1 <-  setWatermark(pBack2, 
-                            watermark = "Hi !!",
-                            alpha = 1,
-                            angle = 0)
-
-pWatermark2 <-  setWatermark(pBack2,
-                            alpha = 1,
-                            angle = 45)
-
-pWatermark1$plotConfiguration$background$watermark$print()
-pWatermark2$plotConfiguration$background$watermark$print()
-```
-
-```{r}
-scatterNewGrid2$plotConfiguration$background$watermark$print()
-
-scatterWatermark <-  setWatermark(scatterNewGrid2, 
-                                  watermark = Label$new(text = "Confidential", color = "firebrick"))
-
-scatterWatermark$plotConfiguration$background$watermark$print()
-```
-
-```{r, echo=FALSE, fig.cap="top: pBack2; bottom left: pWatermark2; bottom right: pWatermark2", fig.width=7.5}
-gridExtra::grid.arrange(grobs = list(pBack2, pWatermark1, pWatermark2), layout_matrix = rbind(c(1,1),c(2,3)))
-```
-
-```{r, echo=FALSE, fig.cap="left: scatterNewGrid2; right: scatterWatermark", fig.width=7.5}
-gridExtra::grid.arrange(scatterNewGrid2, scatterWatermark, ncol=2)
-```
-
-# X/Y axes configurations: *xAxis*/*yAxis*
+# 4. X/Y axes configurations: *xAxis*/*yAxis*
 
 The fields *xAxis* and *yAxis* from the *PlotConfiguration* object are a *XAxisConfiguration* and *YAxisConfiguration* R6 class objects.
 They define the following plot properties:
@@ -374,56 +430,47 @@ They define the following plot properties:
 - limits
 - ticks
 - ticklabels
+- font
 
 The property *scale* is a character string corresponding the axis scale.
-Available scales are `r paste0(c('"', paste0(Scaling, collapse = '", "'), '"'), collapse="")` and can be accessed using the enum *Scaling*.
+Available scales are *`r paste0(c('"', paste0(Scaling, collapse = '", "'), '"'), collapse="")`* and can be accessed using the enum *Scaling*.
 The property *limits* is a vector defining the range of the axis. 
+
+Regarding ticks and ticklabels, their values are directly be passed on and managed by `ggplot2`.
 The value *"default"* will leave the management of the limits to R.
 The properties *ticks* and *ticklabels* are vectors defining the plot ticks and their labels. These vectors are required to have the same length.
 The value *"default"* will leave the management of the limits to R.
 
-When initializating a *XAxisConfiguration*, *YAxisConfiguration* or *PlotConfiguration* objects, the axis properties can be passed on.
+When initializing a *XAxisConfiguration*, *YAxisConfiguration*, or *PlotConfiguration* objects, the axis properties can be passed on.
 
+```{r define-axis}
+myAxisConfiguration <- XAxisConfiguration$new()
 
-```{r}
-myEmptyAxisConfiguration <- XAxisConfiguration$new()
-myEmptyAxisConfiguration$print()
-
-myAxisConfiguration <- XAxisConfiguration$new(scale = Scaling$log10,
-                                              limits = c(1, 100))
-myAxisConfiguration$print()
+myAxisConfiguration$scale
+myAxisConfiguration$ticklabels
 ```
 
-## Axis configuration in plots
+## 4.1. Axis configuration in plots
 
 ## Changing axis properties
 
-The metods *setXAxis* and *setYAxis* requires the plot object, and the axis properties to update.
-
+The methods *setXAxis* and *setYAxis* require the plot object, and the axis properties to update.
 Using the previous example, *scatter1*: 
-```{r}
-scatter1$plotConfiguration$xAxis$print()
-scatter1$plotConfiguration$yAxis$print()
 
-scatterXlog <-  setXAxis(scatter1,
-                          scale = Scaling$log10)
-
-scatterXlog$plotConfiguration$xAxis$print()
-
-scatterXTicks <-  setXAxis(scatter1,
-                           limits = c(0, 6*pi),
-                           ticks = seq(0, 6*pi, pi),
-                           ticklabels = parse(text = c("0", "pi", paste0(seq(2, 6), "*pi"))))
-
-scatterXTicks$plotConfiguration$xAxis$print()
-
+```{r set-x-axis, fig.width=7.5}
+setXAxis(scatter1, limits = c(0.5, 20), scale = Scaling$sqrt)
 ```
 
-```{r, echo=FALSE, fig.cap="top: scatter1; bottom left: scatterXlog; bottom right: scatterXTicks", fig.width=7.5}
-gridExtra::grid.arrange(grobs = list(scatter1, scatterXlog, scatterXTicks), layout_matrix = rbind(c(1,1),c(2,3)))
+```{r set-x-axis-ticks, fig.width=7.5}
+setXAxis(scatter1,
+  limits = c(0, 6 * pi),
+  ticks = seq(0, 6 * pi, pi),
+  ticklabels = c("0", "pi", paste0(seq(2, 6), "*pi")),
+  font = Font$new(color = "dodgerblue")
+)
 ```
 
-# Legend configuration: *legend*
+# 5. Legend configuration: *legend*
 
 The field *legend* from the *PlotConfiguration* object is a *LegendConfiguration* R6 class object.
 It defines the following plot properties:
@@ -434,131 +481,79 @@ It defines the following plot properties:
 
 The property *title* is a character string corresponding the legend title.
 The property *position* is a character string corresponding the legend position.
-Available legend positions are `r paste0(c('"', paste0(LegendPositions, collapse = '", "'), '"'), collapse="")` and can be accessed using the enum *LegendPositions*.
+Available legend positions are *`r paste0(c('"', paste0(LegendPositions, collapse = '", "'), '"'), collapse="")`* and can be accessed using the enum *LegendPositions*.
 The property *caption* is a data.frame defining the caption properties of the legend. 
 
-When initializating a *LegendConfiguration* or *PlotConfiguration* object, the background properties and watermark can be passed on.
-
-```{r}
-myEmptyLegendConfiguration <- LegendConfiguration$new()
-myEmptyLegendConfiguration$print()
-
-myLegendConfiguration <- LegendConfiguration$new(title = "Legend Title",
-                                                 position = LegendPositions$insideTopRight)
-myLegendConfiguration$print()
+```{r legend-configuration}
+myLegend <- LegendConfiguration$new(position = LegendPositions$insideTopRight)
 ```
 
-## Legend configuration in plots
+## 5.1. Legend configuration in plots
 
-The effect of legend configuration in plots is straightforward.
-Using the previous example with *myData*, initializing the plot won't print the legend on the plot since no data are plotted, but will keep in memory the configuration when adding layers.
-The legend caption is updated every type a new layer is added. 
-The atom plots also allow to manually indicates desired legend properties for the corresponding layer.
+Legend position can be modified using the function `setLegendPosition`
+The methods *setLegendPosition* requires the plot object, and the position as defined by the elements of the enum *LegendPositions*
+Using the previous example, *scatter1*: 
 
-```{r}
-plotConfigurationLegend1 <- PlotConfiguration$new()
-plotConfigurationLegend1$legend$print()
-
-emptyLegend1 <- initializePlot(plotConfigurationLegend1)
-emptyLegend1$plotConfiguration$legend$print()
-
-scatterLegend1 <- addScatter(data = myData,
-                             plotConfiguration = plotConfigurationLegend1)
-scatterLegend1$plotConfiguration$legend$print()
-
-scatterLegend2 <- addLine(y = c(-1, 0, 1),
-                          plotObject = scatterLegend1)
-scatterLegend2$plotConfiguration$legend$print()
-
-scatterLegend3 <- addScatter(data = myData,
-                             caption = "Cosinus data",
-                             color = "darkblue",
-                             size = 2,
-                             plotConfiguration = plotConfigurationLegend1)
-scatterLegend3 <- addLine(y = c(-1, 0, 1),
-                          caption = "Some lines",
-                          color = "coral3",
-                          linetype = "solid",
-                          plotObject = scatterLegend3)
-scatterLegend3$plotConfiguration$legend$print()
+```{r legend-position, fig.width=7.5}
+setLegendPosition(scatter1, LegendPositions$insideTopLeft)
 ```
 
-```{r, echo=FALSE, fig.cap="top left: emptyLegend1; top right: scatterLegend1; bottom left: scatterLegend2; bottom right: scatterLegend3", fig.width=7.5}
-gridExtra::grid.arrange(emptyLegend1, scatterLegend1, scatterLegend2, scatterLegend3, ncol=2)
+
+# 6. Default plot configuration: `Theme` objects
+
+The class `Theme` allows a user-friendly way to set many default plot settings. 
+To allow a smooth way to set and update themes, themes snapshots can be saved to json files using the function `saveThemeToJson(theme)` and can be loaded from json files using the function `loadThemeFromJson(jsonFile)`.
+In order to define a theme as the current default, the function `useTheme(theme)` needs to be called.
+
+A shiny app has been created to tune `Theme` objects live and save them as json files.
+With this app, it becomes quite easy to create one's own theme with a few clicks.
+To call for the shiny app, users only needed to run the function `runThemeMaker()`.
+
+Additionally, a few predifined themes are available :
+
+```{r list of json themes}
+list.files(system.file("themes", package = "tlf"))
 ```
 
-```{r}
-plotConfigurationLegend1 <- PlotConfiguration$new(legendTitle = "my legend",
-                                                  legendPosition = LegendPositions$outsideTopLeft)
-plotConfigurationLegend1$legend$print()
+These predifined themes can be directly loaded and used through functions named `use<ThemeName>Theme()`.
+For instance, the function `useMatlabTheme()` will set default plot configurations for creating plots looking like Matlab figures.
 
-emptyLegend1 <- initializePlot(plotConfigurationLegend1)
-emptyLegend1$plotConfiguration$legend$print()
+# 7. Exporting/Saving a plot
 
-scatterLegend1 <- addScatter(data = myData,
-                             plotConfiguration = plotConfigurationLegend1)
-scatterLegend1$plotConfiguration$legend$print()
+The function `exportPlot` is a wrapper around the function `ggsave` that uses the properties of the field `export` in PlotConfiguration objects when saving a plot as a file.
 
-scatterLegend2 <- addLine(y = c(-1, 0, 1),
-                          plotObject = scatterLegend1)
-scatterLegend2$plotConfiguration$legend$print()
+Since `ggsave` uses the full plot area as the plot dimensions to save, big legends can shrink the size of the panel.
+To prevent such shrinkage, plot dimensions can be updated before using `exportPlot` with the function `updateExportDimensionsForLegend` as illustrated below.
 
-scatterLegend3 <- addScatter(data = myData,
-                             caption = "Cosinus data",
-                             color = "darkblue",
-                             size = 2,
-                             plotConfiguration = plotConfigurationLegend1)
-scatterLegend3 <- addLine(y = c(-1, 0, 1),
-                          caption = "Some lines",
-                          color = "coral3",
-                          linetype = "solid",
-                          plotObject = scatterLegend3)
-scatterLegend3$plotConfiguration$legend$print()
+```{r before update dimensions}
+scatterLegend <- setLegendPosition(scatter1, LegendPositions$outsideTop)
+# Print properties of plot export
+scatterLegend$plotConfiguration$export
 ```
 
-```{r, echo=FALSE, fig.cap="top left: emptyLegend1; top right: scatterLegend1; bottom left: scatterLegend2; bottom right: scatterLegend3", fig.width=7.5}
-gridExtra::grid.arrange(emptyLegend1, scatterLegend1, scatterLegend2, scatterLegend3, ncol=2)
+```{r after update dimensions}
+updatedScatterLegend <- updateExportDimensionsForLegend(scatterLegend)
+# Print properties of plot export
+updatedScatterLegend$plotConfiguration$export
 ```
 
-## Changing plot legend
+## Export code to re-create a PlotConfiguration object
 
-### Changing a legend title
+The function `exportPlotConfigurationCode(plotConfiguration, name)` creates character strings corresponding to commented R code that allows you to re-create a PlotConfiguration object.
 
-After creating a plot, it is possible to change its legend title using the `tlf` method *setLegendTitle*.
-The metod requires the plot object and the text of title to update with.
+```{r export-configuration}
+# Create and export a plot confiugration
+plotConfigurationToExport1 <- PlotConfiguration$new()
+exportPlotConfigurationCode(plotConfigurationToExport1)
 
-Using *scatterLegend3* from the previous example:
-```{r}
-scatterLegend3$legend$title
-
-scatterLegend4<- setLegendTitle(scatterLegend3, "My new legend")
-scatterLegend4$legend$title
+# Create, update and export a more advanced plot confiugration
+plotConfigurationToExport2 <- TornadoPlotConfiguration$new(bar = FALSE)
+exportPlotConfigurationCode(plotConfigurationToExport2, name = "tornado")
 ```
 
-```{r, echo=FALSE, fig.cap="left: scatterLegend3; right: scatterLegend4", fig.width=7.5}
-gridExtra::grid.arrange(scatterLegend3, scatterLegend4, ncol=2)
+Since `exportPlotConfigurationCode` returns character strings, they can either be saved as a .R script or copied/pasted to be used as is or within a function. It is also possible to turn the strings into and expression to `eval` using `parse(text = exportPlotConfigurationCode(plotConfiguration))`.
+
+```{r exported configuration}
+eval(parse(text = exportPlotConfigurationCode(plotConfigurationToExport2, name = "tornado")))
+tornado
 ```
-
-### Changing a legend position
-
-After creating a plot, it is also possible to change its legend position using the `tlf` method *setLegendPosition*.
-The metod requires the plot object and the new position of the legend to update with.
-
-Using *scatterLegend3* from the previous example:
-```{r}
-scatterLegend3$legend$position
-
-scatterLegend3Inside<- setLegendPosition(scatterLegend3, LegendPositions$insideTopRight)
-scatterLegend3Inside$legend$position
-```
-
-```{r, echo=FALSE, fig.cap="left: scatterLegend3; right: scatterLegend3Inside", fig.width=7.5}
-gridExtra::grid.arrange(scatterLegend3, scatterLegend3Inside, ncol=2)
-```
-  
-### Changing a legend caption
-
-# Usage of *theme*
-
-# *PlotConfiguration* derived classes
-

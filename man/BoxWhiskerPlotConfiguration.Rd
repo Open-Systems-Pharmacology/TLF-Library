@@ -4,24 +4,46 @@
 \alias{BoxWhiskerPlotConfiguration}
 \title{BoxWhiskerPlotConfiguration}
 \description{
-R6 class defining the configuration of a \code{ggplot} object
+R6 class defining the configuration of a \code{ggplot} object for boxplots
 }
+\seealso{
+Other PlotConfiguration classes: 
+\code{\link{DDIRatioPlotConfiguration}},
+\code{\link{HistogramPlotConfiguration}},
+\code{\link{ObsVsPredPlotConfiguration}},
+\code{\link{PKRatioPlotConfiguration}},
+\code{\link{PlotConfiguration}},
+\code{\link{TimeProfilePlotConfiguration}},
+\code{\link{TornadoPlotConfiguration}}
+}
+\concept{PlotConfiguration classes}
 \section{Super class}{
 \code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{BoxWhiskerPlotConfiguration}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{defaultXScale}}{Default xAxis scale value when creating a \code{BoxWhiskerPlotConfiguration} object}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{outliers}}{logical defining if outliers should be included in boxplot}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{BoxWhiskerPlotConfiguration$new()}}
-\item \href{#method-addBoxWhisker}{\code{BoxWhiskerPlotConfiguration$addBoxWhisker()}}
-\item \href{#method-addOutliers}{\code{BoxWhiskerPlotConfiguration$addOutliers()}}
 \item \href{#method-clone}{\code{BoxWhiskerPlotConfiguration$clone()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="print">}\href{../../tlf/html/PlotConfiguration.html#method-print}{\code{tlf::PlotConfiguration$print()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -31,80 +53,20 @@ R6 class defining the configuration of a \code{ggplot} object
 \subsection{Method \code{new()}}{
 Create a new \code{BoxWhiskerPlotConfiguration} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BoxWhiskerPlotConfiguration$new(...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{BoxWhiskerPlotConfiguration$new(outliers = TRUE, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{outliers}}{logical defining if outliers should be included in boxplot}
+
 \item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 A new \code{BoxWhiskerPlotConfiguration} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addBoxWhisker"></a>}}
-\if{latex}{\out{\hypertarget{method-addBoxWhisker}{}}}
-\subsection{Method \code{addBoxWhisker()}}{
-Add a boxplot layer to a \code{ggplot} object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BoxWhiskerPlotConfiguration$addBoxWhisker(
-  plotObject,
-  data,
-  metaData,
-  dataMapping
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{a \code{ggplot} object}
-
-\item{\code{data}}{data.frame}
-
-\item{\code{metaData}}{list of information on \code{data}}
-
-\item{\code{dataMapping}}{R6 class \code{BoxWhiskerDataMapping}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{ggplot} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addOutliers"></a>}}
-\if{latex}{\out{\hypertarget{method-addOutliers}{}}}
-\subsection{Method \code{addOutliers()}}{
-Add a outlier points layer to a \code{ggplot} object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BoxWhiskerPlotConfiguration$addOutliers(
-  plotObject,
-  data,
-  metaData,
-  dataMapping
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{plotObject}}{a \code{ggplot} object}
-
-\item{\code{data}}{data.frame}
-
-\item{\code{metaData}}{list of information on \code{data}}
-
-\item{\code{dataMapping}}{R6 class \code{BoxWhiskerDataMapping}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{ggplot} object
 }
 }
 \if{html}{\out{<hr>}}

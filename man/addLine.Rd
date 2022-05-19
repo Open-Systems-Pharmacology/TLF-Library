@@ -20,77 +20,85 @@ addLine(
 )
 }
 \arguments{
-\item{data}{data.frame containing the line endpoints to be plotted}
+\item{data}{A data.frame to use for plot.}
 
-\item{metaData}{list of information on \code{data} such as \code{dimension} and \code{unit} of their variables}
+\item{metaData}{A named list of information about \code{data} such as the \code{dimension} and \code{unit} of its variables.}
 
-\item{x}{Mapping for x values.
-If \code{data} is NULL or not input, \code{x} numeric values will be used as is for the plot.
-In case there is no \code{y} mapping, \code{x} are the x-values of vertical lines.}
+\item{x}{Numeric values to plot along the \code{x} axis. Only used instead of \code{data} if \code{data} is \code{NULL}.}
 
-\item{y}{Mapping for y values.
-If \code{data} is NULL or not input, \code{y} numeric values will be used as is for the plot.
-In case there is no \code{x} mapping, \code{y} are the y-values of horizontal lines.}
+\item{y}{Numeric values to plot along the \code{y} axis. Only used instead of \code{data} if \code{data} is \code{NULL}.}
 
-\item{caption}{vector of character strings defining the legend captions.
-This parameter is optional: default value is NULL.}
+\item{caption}{Optional character values defining the legend captions of the plot.}
 
-\item{color}{vector of character strings defining the color of the scatter points.
-This parameter is optional: default value \code{NULL} will choose colors according to the current theme.}
+\item{color}{Optional character values defining the colors of the plot layer.
+See \code{grDevices::colors()} to get names of colors}
 
-\item{shape}{vector of character strings or numerical defining the shapes of the scatter points.
-This parameter is optional: default value \code{NULL} will choose shapes according to the current theme.}
+\item{shape}{Optional character values defining the shapes/symbols of the plot layer.
+See enum \code{Shapes} to get names of shapes.}
 
-\item{size}{vector of numerical defining the sizes of the scatter points.
-This parameter is optional: default value \code{NULL} will choose sizes according to the current theme.}
+\item{size}{Optional numeric values defining the size of the plot layer.}
 
-\item{linetype}{vector of character strings defining the linetype linking the scatter points.
-This parameter is optional: default value \code{NULL} won't provide lines.}
+\item{linetype}{Optional character values defining the linetype of the plot layer.
+See enum \code{Linetypes} to get names of linetype.}
 
-\item{dataMapping}{\code{XYGDataMapping} class or subclass
-mapping x, y and aesthetic variables to the variable names of \code{data}.}
+\item{dataMapping}{A \code{XYGDataMapping} object mapping \code{x}, \code{y} and aesthetic groups to their variable names of \code{data}.}
 
-\item{plotConfiguration}{\code{PlotConfiguration} object defining the label and background properties of the plot.}
+\item{plotConfiguration}{An optional \code{PlotConfiguration} object defining labels, grid, background and watermark.}
 
-\item{plotObject}{\code{ggplot} graphical object to which the line layer is added
-This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided}
+\item{plotObject}{An optional \code{ggplot} object on which to add the plot layer}
 }
 \value{
-A \code{ggplot} graphical object
+A \code{ggplot} object
 }
 \description{
-Add a line layer to a \code{ggplot} graphical object.
-Use optional argument \code{caption} to set legend caption.
-Since \code{ggplot} manage aesthetic properties across all layers,
-aesthetic properties defined in \code{plotConfiguration} will apply across all layers.
+Add a line layer to a \code{ggplot} object.
 }
 \examples{
-# Add vertical line at x = 2
-addLine(x = 2)
+# Add line using x and y
+addLine(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
 
-# Add vertical line at x = 2 to a previous plot
-p <- initializePlot() +
-  ggplot2::geom_point(
-    data = data.frame(x = c(1, 2, 3), y = c(5, 6, 4)),
-    mapping = ggplot2::aes_string(x = "x", y = "y")
-  )
-p <- addLine(x = 2, plotObject = p)
+# Add line using a data.frame
+time <- seq(0, 30, 0.1)
+lineData <- data.frame(x = time, y = cos(time))
 
-# Add horizontal line at y = 5 to a previous plot
-p <- addLine(y = 5, plotObject = p)
-
-# Add a custom line
-time <- seq(0, 30, 0.01)
-customLineData <- data.frame(x = time, y = cos(time))
-
-p <- addLine(
-  data = customLineData,
+addLine(
+  data = lineData,
   dataMapping = XYGDataMapping$new(x = "x", y = "y")
 )
 
 # Or for simple cases a smart mapping will get directly x and y from data
-p <- addLine(data = customLineData)
+addLine(data = lineData)
 
 # Add a line with caption
-p <- addLine(data = customLineData, caption = "My line")
+addLine(data = lineData, caption = "My line plot")
+
+# Add a line with specific properties
+addLine(
+data = lineData, 
+color = "blue", linetype = "longdash", size = 0.5, caption = "My data"
+)
+
+# Add a line with specific properties
+p <- addLine(
+data = lineData, 
+color = "blue", linetype = "longdash", size = 0.5, caption = "My data"
+)
+addLine(
+x = c(0, 1), y = c(1, 0), 
+color = "red", linetype = "solid", size = 1, 
+plotObject = p
+)
+
 }
+\references{
+For examples, see:
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html}
+}
+\seealso{
+Other atom plots: 
+\code{\link{addErrorbar}()},
+\code{\link{addRibbon}()},
+\code{\link{addScatter}()},
+\code{\link{initializePlot}()}
+}
+\concept{atom plots}

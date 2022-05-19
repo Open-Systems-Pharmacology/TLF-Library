@@ -15,95 +15,96 @@ addRibbon(
   color = NULL,
   size = NULL,
   linetype = NULL,
-  alpha = 0.8,
+  alpha = NULL,
   dataMapping = NULL,
   plotConfiguration = NULL,
   plotObject = NULL
 )
 }
 \arguments{
-\item{data}{data.frame containing the ribbon endpoints to be plotted.}
+\item{data}{A data.frame to use for plot.}
 
-\item{metaData}{list of information on \code{data} such as \code{dimension} and \code{unit} of their variables}
+\item{metaData}{A named list of information about \code{data} such as the \code{dimension} and \code{unit} of its variables.}
 
-\item{x}{Mapping for x values.
-If \code{data} is NULL or not input, \code{x} numeric values will be used as is for the plot.}
+\item{x}{Numeric values to plot along the \code{x} axis. Only used instead of \code{data} if \code{data} is \code{NULL}.}
 
-\item{ymin}{Mapping for ymin values.
-If \code{data} is NULL or not input, \code{ymin} numeric values will be used as is for the plot.
-In case there is no \code{x} mapping, \code{ymin} are the y-values of horizontal lines.
-In case there is no \code{ymax} mapping, a value of 0 is assumed for \code{ymax}.}
+\item{ymin}{Numeric values to plot along the \code{y} axis. Only used instead of \code{data} if \code{data} is \code{NULL}.}
 
-\item{ymax}{Mapping for ymax values.
-If \code{data} is NULL or not input, \code{ymax} numeric values will be used as is for the plot.
-In case there is no \code{x} mapping, \code{ymax} are the y-values of horizontal lines.
-In case there is no \code{ymin} mapping, a value of 0 is assumed for \code{ymin}.}
+\item{ymax}{Numeric values to plot along the \code{y} axis. Only used instead of \code{data} if \code{data} is \code{NULL}.}
 
-\item{caption}{vector of character strings defining the legend captions.
-This parameter is optional: default value is NULL.}
+\item{caption}{Optional character values defining the legend captions of the plot.}
 
-\item{color}{vector of character strings defining the color of the scatter points.
-This parameter is optional: default value \code{NULL} will choose colors according to the current theme.}
+\item{fill}{Optional character values defining the colors of the plot layer.
+See \code{grDevices::colors()} to get names of colors}
 
-\item{size}{vector of numerical defining the sizes of the scatter points.
-This parameter is optional: default value \code{NULL} will choose sizes according to the current theme.}
+\item{color}{Optional character values defining the colors of the plot layer.
+See \code{grDevices::colors()} to get names of colors}
 
-\item{linetype}{vector of character strings defining the linetype linking the scatter points.
-This parameter is optional: default value \code{NULL} won't provide lines.}
+\item{size}{Optional numeric values defining the size of the plot layer.}
 
-\item{alpha}{transparency of the ribbon.
-Numeric value between 0 and 1. Value of 0, the plot is transparent. Value of 1, the plot is opaque.
-Default value for \code{alpha} is 0.8.}
+\item{linetype}{Optional character values defining the linetype of the plot layer.
+See enum \code{Linetypes} to get names of linetype.}
 
-\item{dataMapping}{\code{XYGDataMapping} class or subclass
-mapping x, y and aesthetic variables to the variable names of \code{data}.}
+\item{alpha}{Numeric value between 0 and 1 corresponding to transparency of the ribbon.
+The closer to 0, the more transparent the ribbon is.
+The closer to 1, the more opaque the ribbon is.}
 
-\item{plotConfiguration}{\code{PlotConfiguration} object defining the label and background properties of the plot.}
+\item{dataMapping}{A \code{RangeDataMapping} object mapping \code{x}, \code{ymin}, \code{ymax} and aesthetic groups to their variable names of \code{data}.}
 
-\item{plotObject}{\code{ggplot} graphical object to which the line layer is added
-This parameter is optional: the \code{tlf} library will initialize an empty plot if the parameter is NULL or not provided}
+\item{plotConfiguration}{An optional \code{PlotConfiguration} object defining labels, grid, background and watermark.}
 
-\item{shape}{vector of character strings or numerical defining the shapes of the scatter points.
-This parameter is optional: default value \code{NULL} will choose shapes according to the current theme.}
+\item{plotObject}{An optional \code{ggplot} object on which to add the plot layer}
 }
 \value{
-A \code{ggplot} graphical object
+A \code{ggplot} object
 }
 \description{
-Add a ribbon layer to a \code{ggplot} graphical object.
-Use optional argument \code{caption} to set legend caption.
-Since \code{ggplot} manage aesthetic properties across all layers,
-aesthetic properties defined in \code{plotConfiguration} will apply across all layers.
+Add a ribbon layer to a \code{ggplot} object.
 }
 \examples{
-# Add a horizontal ribbon to a previous plot
-p <- addRibbon(ymin = -5, ymax = 5)
+# Add ribbon using x, ymin and ymax
+addRibbon(
+x = c(1, 2, 1, 2, 3), 
+ymin = c(5, 0, 2, 3, 4), 
+ymax = c(6, 2, 6, 2.5, 5)
+)
 
-# Add a horizontal ribbon to a previous plot
-p <- addLine(x = c(1, 2), y = c(0, 0))
-p <- addRibbon(ymin = -5, ymax = 5, plotObject = p)
+# Add ribbon using a data.frame
+time <- seq(0, 30, 0.1)
+ribbonData <- data.frame(x = time, ymin = cos(time)-1, ymax = cos(time)+1)
 
-# Add a custom ribbon
-time <- seq(0, 30, 0.01)
-customData <- data.frame(x = time, y = cos(time), ymin = cos(time) - 0.5, ymax = cos(time) + 0.5)
-
-p <- addRibbon(
-  data = customData,
+addRibbon(
+  data = ribbonData,
   dataMapping = RangeDataMapping$new(x = "x", ymin = "ymin", ymax = "ymax")
 )
 
-# Or for simple cases a smart mapping will get directly x and y from data
-p <- addRibbon(data = customData)
+# Or for simple cases a smart mapping will get directly x, ymin and ymax from data
+addRibbon(data = ribbonData)
 
 # Add a ribbon with caption
-pr <- addRibbon(data = customData, caption = "My plot with ribbon")
+addRibbon(data = ribbonData, caption = "My ribbon plot")
 
-# Add a ribbon with different transparency
-p <- addRibbon(data = customData, alpha = 1)
+# Add a ribbon with specific properties
+addRibbon(data = ribbonData, fill = "blue", alpha = 0.5, caption = "My data")
 
-# Add a scatter to the ribbon
-pScatter <- addScatter(data = customData, caption = "My plot with ribbon", plotObject = pr)
+# Add a ribbon with specific properties
+p <- addRibbon(data = ribbonData, fill = "blue", alpha = 0.5, caption = "My data")
+addRibbon(
+x = c(0, 1), ymin = c(-0.5, -0.5), ymax = c(0.5, 0.5), 
+fill = "red", alpha = 1, 
+plotObject = p
+)
 
-# Add a scatter to the ribbon
-pLine <- addLine(data = customData, caption = "My plot with ribbon", plotObject = pr)
 }
+\references{
+For examples, see:
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html}
+}
+\seealso{
+Other atom plots: 
+\code{\link{addErrorbar}()},
+\code{\link{addLine}()},
+\code{\link{addScatter}()},
+\code{\link{initializePlot}()}
+}
+\concept{atom plots}

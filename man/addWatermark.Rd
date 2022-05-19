@@ -4,29 +4,39 @@
 \alias{addWatermark}
 \title{addWatermark}
 \usage{
-addWatermark(plotObject, label, angle = 30, alpha = 0.4)
+addWatermark(
+  plotObject,
+  watermark,
+  color = NULL,
+  size = NULL,
+  angle = NULL,
+  alpha = NULL
+)
 }
 \arguments{
-\item{plotObject}{ggplot object to which the watermark is added}
+\item{plotObject}{A \code{ggplot} object}
 
-\item{label}{Character or Label class object corresponding to the watermark text
-(and its font properties if Label)}
+\item{watermark}{A character value or a \code{Label} object}
 
-\item{angle}{Angle in degree from horizontal of the watermark label. Default angle is 30 degrees.}
+\item{color}{Color of the watermark.}
 
-\item{alpha}{Transparency of the watermark label.
-Alpha is a numeric between 0 and 1: 0 label is totally transparent, 1 label is totally opaque.
-Default alpha is 0.4.}
+\item{size}{Size of the watermark.}
+
+\item{angle}{Angle of the watermark (in degree).}
+
+\item{alpha}{Numeric value between 0 and 1 corresponding to transparency of the watermark
+The closer to 0, the more transparent the watermark is.
+The closer to 1, the more opaque the watermark is.}
 }
 \value{
-\code{plotObject} ggplot object to which the watermark is added.
+A \code{ggplot} object
 }
 \description{
-addWatermark creates a ggplot grob based on the label text and its font properties.
-Then,  adds the grob to the ggplot object input \code{plotObject} as a new layer using \code{ggplot2::annotation_custom}.
-\code{angle} and \code{alpha} are optional input to customize the angle and transparency of the watermark text.
+Creates a \code{ggplot} grob based on the label text and its font properties.
+Then,  adds the grob to the \code{ggplot} object as a new layer using \code{ggplot2::annotation_custom}.
 }
 \examples{
+# Add a watermark to an empty plot
 p <- ggplot2::ggplot()
 addWatermark(p, "watermark")
 
@@ -40,11 +50,8 @@ addWatermark(p, watermarkLabel, angle = 0)
 # Watermark totally opaque
 addWatermark(p, watermarkLabel, alpha = 1)
 
-# Create a sun as background
-for (angle in seq(0, 340, 20)) {
-  p <- addWatermark(p,
-    label = Label$new(text = "            >", color = "yellow"),
-    angle = angle, alpha = 1
-  )
-}
+# As multiple layers of watermark: 
+p2 <- addWatermark(p, watermarkLabel, alpha = 1)
+addWatermark(p2, "other watermark", color = "red", angle = 90)
+
 }

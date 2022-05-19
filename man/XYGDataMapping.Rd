@@ -6,6 +6,23 @@
 \description{
 R6 class for mapping \code{x}, \code{y} and \code{GroupMapping} variables to \code{data}
 }
+\seealso{
+Other DataMapping classes: 
+\code{\link{BoxWhiskerDataMapping}},
+\code{\link{DDIRatioDataMapping}},
+\code{\link{GroupMapping}},
+\code{\link{Grouping}},
+\code{\link{HistogramDataMapping}},
+\code{\link{ObsVsPredDataMapping}},
+\code{\link{ObservedDataMapping}},
+\code{\link{PKRatioDataMapping}},
+\code{\link{RangeDataMapping}},
+\code{\link{ResVsPredDataMapping}},
+\code{\link{TimeProfileDataMapping}},
+\code{\link{TornadoDataMapping}},
+\code{\link{XYDataMapping}}
+}
+\concept{DataMapping classes}
 \section{Super class}{
 \code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{XYGDataMapping}
 }
@@ -45,6 +62,7 @@ Create a new \code{XYGDataMapping} object
   linetype = NULL,
   shape = NULL,
   size = NULL,
+  group = NULL,
   data = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -67,6 +85,8 @@ Create a new \code{XYGDataMapping} object
 \item{\code{shape}}{R6 class \code{Grouping} object or its input}
 
 \item{\code{size}}{R6 class \code{Grouping} object or its input}
+
+\item{\code{group}}{R6 class \code{Grouping} object or its input}
 
 \item{\code{data}}{data.frame to map used by \code{smartMapping}}
 }
