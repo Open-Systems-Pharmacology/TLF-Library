@@ -247,16 +247,21 @@ plotTimeProfile <- function(data = NULL,
   )
   totalLength <- length(colorBreaks)
 
-  # colorValues is colors for simulated and then colors for observed
+  # colorValues are selected colors for simulated (and shared observed data) and then colors for remaining observed data
+  # the function "getAestheticValues" selects these values as defined in the plotConfiguration object
   colorValues <- c(
     getAestheticValues(
       n = colorLength,
       selectionKey = plotConfiguration$lines$color,
       aesthetic = "color"
     ),
+    # By using position = colorLength, 
+    # the function will start selecting the colors that come after the colors selected for lines
+    # this aims at preventing a reset of the colors and a need for manual update of the user
     getAestheticValues(
       n = totalLength - colorLength,
       selectionKey = plotConfiguration$points$color,
+      position = colorLength,
       aesthetic = "color"
     )
   )
