@@ -6,12 +6,14 @@
 #' @field height numeric values defining the height in `units` of the plot dimensions after saving
 #' @field units character defining the unit of the saving dimension
 #' @field dpi (dots per inch) numeric value defining plot resolution
+#' @inheritParams ggplot2::ggsave
 #' @export
 #' @import ggplot2
 ExportConfiguration <- R6::R6Class(
   "ExportConfiguration",
   public = list(
     name = NULL,
+    path = NULL,
     format = NULL,
     width = NULL,
     height = NULL,
@@ -26,7 +28,8 @@ ExportConfiguration <- R6::R6Class(
     #' @param units character defining the unit of the saving dimension
     #' @param dpi numeric value defining plot resolution (dots per inch)
     #' @return A new `ExportConfiguration` object
-    initialize = function(name = NULL,
+    initialize = function(path = NULL,
+                          name = NULL,
                               format = NULL,
                               width = NULL,
                               height = NULL,
@@ -39,7 +42,7 @@ ExportConfiguration <- R6::R6Class(
       validateIsNumeric(height, nullAllowed = TRUE)
       validateIsNumeric(dpi, nullAllowed = TRUE)
 
-      inputs <- c("name", "format", "width", "height", "units", "dpi")
+      inputs <- c("path", "name", "format", "width", "height", "units", "dpi")
       associateExpressions <- parse(text = paste0("self$", inputs, " <- ", inputs, " %||% tlfEnv$defaultExportParameters$", inputs))
       eval(associateExpressions)
     },
@@ -76,6 +79,7 @@ ExportConfiguration <- R6::R6Class(
       self$convertPixels()
 
       ggplot2::ggsave(
+        path = path,
         filename = fileName,
         plot = plotObject,
         width = self$width,
