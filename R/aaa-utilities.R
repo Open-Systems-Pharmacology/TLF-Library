@@ -113,6 +113,7 @@ parseAddScatterLayer <- function() {
           shape = mapLabels$shape
         ),
         size = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$size, position = 0, aesthetic = "size"),
+        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$alpha, aesthetic = "alpha"),
         na.rm = TRUE,
         show.legend = TRUE
       )
@@ -141,6 +142,7 @@ parseAddLineLayer <- function(type, value, position) {
     ),
     "color=getAestheticValues(n=1,selectionKey=plotConfiguration$lines$color,position=", position, ',aesthetic="color"),',
     "linetype=getAestheticValues(n=1,selectionKey=plotConfiguration$lines$linetype,position=", position, ',aesthetic="linetype"),',
+    "alpha=getAestheticValues(n=1,selectionKey=plotConfiguration$lines$alpha,position=", position, ',aesthetic="alpha"),',
     "size=getAestheticValues(n=1,selectionKey=plotConfiguration$lines$size,position=", position, ', aesthetic="size"))'
   ))
 }
@@ -164,6 +166,7 @@ parseAddUncertaintyLayer <- function() {
           # Error bar size uses a ratio of 1/4 to match with point size
           size = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
           linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
+          alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "linetype"),
           na.rm = TRUE,
           show.legend = TRUE
         )
