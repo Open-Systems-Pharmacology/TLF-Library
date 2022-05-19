@@ -43,10 +43,11 @@ plotObsVsPred <- function(data,
 
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
+  # Add diagonal lines with offset defined in lines of dataMapping
   for (lineIndex in seq_along(dataMapping$lines)) {
     eval(parseAddLineLayer("diagonal", dataMapping$lines[[lineIndex]], lineIndex - 1))
   }
-  if (isOfLength(lineIndex, 0)) {
+  if (isEmpty(lineIndex)) {
     lineIndex <- 0
   }
   # Add Smoother if defined

@@ -33,7 +33,7 @@ parseVariableFromObject <- function(objectName, variableName, keepIfNull = FALSE
 #' @return An expression to `eval()`
 #' @keywords internal
 parseValueToObject <- function(objectName, value) {
-  if (isOfLength(value, 0)) {
+  if (isEmpty(value)) {
     return(parse(text = paste0(objectName, " <- NULL")))
   }
   if (isOfType(value, "character")) {
@@ -122,11 +122,12 @@ parseAddScatterLayer <- function() {
 
 #' @title parseAddLineLayer
 #' @description Create an expression that adds scatter plot layer
+#' TODO: create a vignette explaining how argument `lines` in dataMapping is related to this
 #' @param type one of "horizontal", "vertical" or "diagonal"
 #' Note that for "diagonal", geom_abline is used.
 #' `value` of intercept is taken as is for linear scale but corresponds to the log of `value` for log scale.
-#'  For instance, intercept = c(-1, 0, 1) actually means that the line will go through c(0.1, 1, 10) for x=1
-#'  because log10(c(-1, 0, 1)) = c(0.1, 1, 10).
+#'  For instance, intercept = c(-1, 0, 1) with log scale actually means that the line will go through c(0.1, 1, 10)
+#'  because c(-1, 0, 1) = log10(c(0.1, 1, 10)).
 #' @param value value of xintercept or yintercept
 #' @param position line position for aesthetic properties
 #' @return An expression to `eval()`

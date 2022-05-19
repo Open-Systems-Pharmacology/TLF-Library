@@ -42,12 +42,12 @@ plotDDIRatio <- function(data,
   if(residualsVsObserved){
     lineOrientation <- "ddiHorizontal"
   }
-  # Include horizontal lines
+  # Include diagonal or horizontal lines depending on the plot type
   for (lineIndex in seq_along(dataMapping$lines)) {
     # position correspond to the number of layer lines already added
     eval(parseAddLineLayer(lineOrientation, dataMapping$lines[[lineIndex]], lineIndex - 1))
   }
-  if (isOfLength(lineIndex, 0)) {
+  if (isEmpty(lineIndex)) {
     lineIndex <- 0
   }
   # Add Guest et al. lines to plot
