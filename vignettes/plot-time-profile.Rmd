@@ -1,11 +1,10 @@
 ---
-title: "Time Profile plots"
-author: "OSPSuiteR 2021"
+title: "Time Profile Plots"
 output:
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{Time Profile plots}
+  %\VignetteIndexEntry{Time Profile Plots}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---

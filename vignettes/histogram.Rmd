@@ -1,11 +1,10 @@
 ---
-title: "Histogram plots"
-author: "OSPSuiteR 2021"
+title: "Histogram Plots"
 output:
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{Histogram plots}
+  %\VignetteIndexEntry{Histogram Plots}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
