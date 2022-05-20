@@ -57,7 +57,3 @@ reference:
   desc: "Functions defining default package settings."
   contents:
   - starts_with("setDefault")
-- title: "Molecule Plots"
-  desc: "Functions for creating advanced plots"
-  contents: 
-  - has_concept("molecule plots")
