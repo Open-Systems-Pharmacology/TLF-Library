@@ -9,3 +9,55 @@ template:
   #   primary: "#0054AD"
   #   border-radius: 0.5rem
   #   btn-border-radius: 0.25rem
+
+reference:
+- title: "Atom Plots"
+  desc: "Functions for creating base plots"
+  contents: 
+  - has_concept("atom plots")
+- title: "Molecule Plots"
+  desc: "Functions for creating advanced plots"
+  contents: 
+  - has_concept("molecule plots")
+- title: "Updating Plots"
+  desc: "Functions for updating plot properties"
+  contents: 
+  - starts_with("setBackground")
+  - starts_with("setCaption")
+  - starts_with("setLegend")
+  - starts_with("setPlot")
+  - starts_with("setX")
+  - starts_with("setY")
+  - matches("setGrid")
+  - matches("setWatermark")
+  - starts_with("update")
+- title: "PlotConfiguration Classes"
+  desc: "Classes defining plot properties"
+  contents: 
+  - has_concept("PlotConfiguration classes")
+- title: "DataMapping Classes"
+  desc: "Classes defining what data to plot"
+  contents: 
+  - has_concept("DataMapping classes")
+- title: "Enum Helpers"
+  desc: "Enums listing available values for specific properties"
+  contents: 
+  - has_concept("enum helpers")
+- title: "Shiny Apps"
+  desc: "Shiny applications"
+  contents: 
+  - has_concept("shiny apps")
+- title: "Themes"
+  desc: "Functions and classes defining default plot properties."
+  contents:
+  - ends_with("Theme")
+  - matches("saveThemeToJson")
+  - matches("runThemeMaker")
+- title: "Default Settings"
+  desc: "Functions defining default package settings."
+  contents:
+  - starts_with("setDefault")
+- title: "Molecule Plots"
+  desc: "Functions for creating advanced plots"
+  contents: 
+  - has_concept("molecule plots")
