@@ -33,7 +33,7 @@ parseVariableFromObject <- function(objectName, variableName, keepIfNull = FALSE
 #' @return An expression to `eval()`
 #' @keywords internal
 parseValueToObject <- function(objectName, value) {
-  if (isOfLength(value, 0)) {
+  if (isEmpty(value)) {
     return(parse(text = paste0(objectName, " <- NULL")))
   }
   if (isOfType(value, "character")) {
@@ -113,6 +113,8 @@ parseAddScatterLayer <- function() {
           shape = mapLabels$shape
         ),
         size = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$size, position = 0, aesthetic = "size"),
+        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$alpha, aesthetic = "alpha"),
+        na.rm = TRUE,
         show.legend = TRUE
       )
   })
@@ -120,11 +122,12 @@ parseAddScatterLayer <- function() {
 
 #' @title parseAddLineLayer
 #' @description Create an expression that adds scatter plot layer
+#' TODO: create a vignette explaining how argument `lines` in dataMapping is related to this
 #' @param type one of "horizontal", "vertical" or "diagonal"
 #' Note that for "diagonal", geom_abline is used.
 #' `value` of intercept is taken as is for linear scale but corresponds to the log of `value` for log scale.
-#'  For instance, intercept = c(-1, 0, 1) actually means that the line will go through c(0.1, 1, 10) for x=1
-#'  because log10(c(-1, 0, 1)) = c(0.1, 1, 10).
+#'  For instance, intercept = c(-1, 0, 1) with log scale actually means that the line will go through c(0.1, 1, 10)
+#'  because c(-1, 0, 1) = log10(c(0.1, 1, 10)).
 #' @param value value of xintercept or yintercept
 #' @param position line position for aesthetic properties
 #' @return An expression to `eval()`
@@ -140,6 +143,7 @@ parseAddLineLayer <- function(type, value, position) {
     ),
     "color=getAestheticValues(n=1,selectionKey=plotConfiguration$lines$color,position=", position, ',aesthetic="color"),',
     "linetype=getAestheticValues(n=1,selectionKey=plotConfiguration$lines$linetype,position=", position, ',aesthetic="linetype"),',
+    "alpha=getAestheticValues(n=1,selectionKey=plotConfiguration$lines$alpha,position=", position, ',aesthetic="alpha"),',
     "size=getAestheticValues(n=1,selectionKey=plotConfiguration$lines$size,position=", position, ', aesthetic="size"))'
   ))
 }
@@ -163,6 +167,8 @@ parseAddUncertaintyLayer <- function() {
           # Error bar size uses a ratio of 1/4 to match with point size
           size = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
           linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
+          alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),
+          na.rm = TRUE,
           show.legend = TRUE
         )
     }

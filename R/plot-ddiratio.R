@@ -42,12 +42,12 @@ plotDDIRatio <- function(data,
   if(residualsVsObserved){
     lineOrientation <- "ddiHorizontal"
   }
-  # Include horizontal lines
+  # Include diagonal or horizontal lines depending on the plot type
   for (lineIndex in seq_along(dataMapping$lines)) {
     # position correspond to the number of layer lines already added
     eval(parseAddLineLayer(lineOrientation, dataMapping$lines[[lineIndex]], lineIndex - 1))
   }
-  if (isOfLength(lineIndex, 0)) {
+  if (isEmpty(lineIndex)) {
     lineIndex <- 0
   }
   # Add Guest et al. lines to plot
@@ -60,6 +60,7 @@ plotDDIRatio <- function(data,
       na.rm = TRUE,
       color = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex, aesthetic = "color"),
       linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex, aesthetic = "linetype"),
+      alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, position = lineIndex, aesthetic = "alpha"),
       size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
     ) +
     ggplot2::geom_path(
@@ -68,6 +69,7 @@ plotDDIRatio <- function(data,
       na.rm = TRUE,
       color = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex, aesthetic = "color"),
       linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex, aesthetic = "linetype"),
+      alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, position = lineIndex, aesthetic = "alpha"),
       size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
     )
 

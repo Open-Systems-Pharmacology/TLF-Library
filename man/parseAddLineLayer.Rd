@@ -10,8 +10,8 @@ parseAddLineLayer(type, value, position)
 \item{type}{one of "horizontal", "vertical" or "diagonal"
 Note that for "diagonal", geom_abline is used.
 \code{value} of intercept is taken as is for linear scale but corresponds to the log of \code{value} for log scale.
-For instance, intercept = c(-1, 0, 1) actually means that the line will go through c(0.1, 1, 10) for x=1
-because log10(c(-1, 0, 1)) = c(0.1, 1, 10).}
+For instance, intercept = c(-1, 0, 1) with log scale actually means that the line will go through c(0.1, 1, 10)
+because c(-1, 0, 1) = log10(c(0.1, 1, 10)).}
 
 \item{value}{value of xintercept or yintercept}
 
@@ -22,5 +22,6 @@ An expression to \code{eval()}
 }
 \description{
 Create an expression that adds scatter plot layer
+TODO: create a vignette explaining how argument \code{lines} in dataMapping is related to this
 }
 \keyword{internal}
