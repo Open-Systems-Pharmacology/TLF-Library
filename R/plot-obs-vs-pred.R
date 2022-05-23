@@ -3,32 +3,32 @@
 #' Producing observed vs predicted plots
 #'
 #' @inheritParams addScatter
-#' @param smoother Optional name of smoother function: 
+#' @param smoother Optional name of smoother function:
 #' \itemize{
 #' \item `"loess"` for loess regression
 #' \item `"lm"` for linear regression
 #' }
-#' @param dataMapping 
+#' @param dataMapping
 #' A `ObsVsPredDataMapping` object mapping `x`, `y` and aesthetic groups to their variable names of `data`.
-#' @param plotConfiguration 
+#' @param plotConfiguration
 #' An optional `ObsVsPredConfiguration` object defining labels, grid, background and watermark.
 #' @return A `ggplot` object
 #'
 #' @export
 #' @family molecule plots
-#' @examples 
+#' @examples
 #' # Produce Obs vs Pred plot
 #' obsVsPredData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
-#' 
+#'
 #' plotObsVsPred(data = obsVsPredData, dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y"))
-#' 
+#'
 #' # Produce Obs vs Pred plot with linear regression
 #' plotObsVsPred(
-#' data = obsVsPredData, 
-#' dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y"),
-#' smoother = "lm"
+#'   data = obsVsPredData,
+#'   dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y"),
+#'   smoother = "lm"
 #' )
-#' 
+#'
 plotObsVsPred <- function(data,
                           metaData = NULL,
                           dataMapping = NULL,

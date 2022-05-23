@@ -1,17 +1,17 @@
 #' @title getBoxWhiskerMeasure
-#' @description 
+#' @description
 #' Get a summary table of Box Whisker percentiles
-#' 
+#'
 #' @inheritParams plotBoxWhisker
 #' @param y Name of `y` variable in `data`.
 #' @param group Name of grouping variable in `data`.
 #' @param quantiles Numeric values between 0 and 1 defining the quantiles to summarize
 #' @return A data.frame of summary statistics
 #' @export
-#' @examples 
+#' @examples
 #' # Get box-and-whisker plots of log-normal distributed data
-#' boxData <- data.frame(x = c(rep("A", 500), rep("B",500)), y = rlnorm(1000))
-#' 
+#' boxData <- data.frame(x = c(rep("A", 500), rep("B", 500)), y = rlnorm(1000))
+#'
 #' getBoxWhiskerMeasure(data = boxData, dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"))
 #'
 getBoxWhiskerMeasure <- function(data,

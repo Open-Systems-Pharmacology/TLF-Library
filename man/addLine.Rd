@@ -74,19 +74,19 @@ addLine(data = lineData, caption = "My line plot")
 
 # Add a line with specific properties
 addLine(
-data = lineData, 
-color = "blue", linetype = "longdash", size = 0.5, caption = "My data"
+  data = lineData,
+  color = "blue", linetype = "longdash", size = 0.5, caption = "My data"
 )
 
 # Add a line with specific properties
 p <- addLine(
-data = lineData, 
-color = "blue", linetype = "longdash", size = 0.5, caption = "My data"
+  data = lineData,
+  color = "blue", linetype = "longdash", size = 0.5, caption = "My data"
 )
 addLine(
-x = c(0, 1), y = c(1, 0), 
-color = "red", linetype = "solid", size = 1, 
-plotObject = p
+  x = c(0, 1), y = c(1, 0),
+  color = "red", linetype = "solid", size = 1,
+  plotObject = p
 )
 
 }

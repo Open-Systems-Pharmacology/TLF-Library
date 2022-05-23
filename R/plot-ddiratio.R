@@ -3,11 +3,11 @@
 #' Producing DDI Ratio plots
 #'
 #' @inheritParams addScatter
-#' @param residualsVsObserved Optional logical value defining 
+#' @param residualsVsObserved Optional logical value defining
 #' if DDI Ratio plot is drawn as residuals vs observed, instead of predicted vs observed.
-#' @param dataMapping 
+#' @param dataMapping
 #' A `DDIRatioDataMapping` object mapping `x`, `y` and aesthetic groups to their variable names of `data`.
-#' @param plotConfiguration 
+#' @param plotConfiguration
 #' An optional `DDIRatioPlotConfiguration` object defining labels, grid, background and watermark.
 #' @return A `ggplot` object
 #'
@@ -16,12 +16,12 @@
 #'
 #' @export
 #' @family molecule plots
-#' @examples 
+#' @examples
 #' # Produce DDI Ratio plot
 #' ddiData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
-#' 
+#'
 #' plotDDIRatio(data = ddiData, dataMapping = DDIRatioDataMapping$new(x = "x", y = "y"))
-#' 
+#'
 plotDDIRatio <- function(data,
                          metaData = NULL,
                          dataMapping = NULL,
@@ -39,7 +39,7 @@ plotDDIRatio <- function(data,
   validateIsLogical(residualsVsObserved, nullAllowed = FALSE)
 
   lineOrientation <- "diagonal"
-  if(residualsVsObserved){
+  if (residualsVsObserved) {
     lineOrientation <- "ddiHorizontal"
   }
   # Include diagonal or horizontal lines depending on the plot type
@@ -86,20 +86,20 @@ plotDDIRatio <- function(data,
 }
 
 #' @title getGuestValuesFromDataMapping
-#' @description 
+#' @description
 #' Get a data.frame with Guest et al. ratio limits from `data` and its `DDIRatioDataMapping`
 #' @inheritParams plotDDIRatio
 #' @return A data.frame with `x`, `ymin` and `ymax` defining Guest et al. limits
 #' @export
-#' @examples 
+#' @examples
 #' # Get the data.frame of Guest et al. limits
 #' ddiData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
-#' 
+#'
 #' getGuestValuesFromDataMapping(
-#' data = ddiData, 
-#' dataMapping = DDIRatioDataMapping$new(x = "x", y = "y")
+#'   data = ddiData,
+#'   dataMapping = DDIRatioDataMapping$new(x = "x", y = "y")
 #' )
-#' 
+#'
 getGuestValuesFromDataMapping <- function(data,
                                           dataMapping) {
   # Create vector of x values
@@ -112,29 +112,29 @@ getGuestValuesFromDataMapping <- function(data,
 }
 
 #' @title getGuestValues
-#' @description 
+#' @description
 #' Get a data.frame with Guest et al. ratio limits with:
 #' \itemize{
 #' \item `ymax` = `x`.`limit`
 #' \item `ymin` = `x`/`limit`
 #' \item `limit` = (`delta`+2(`x`-1))/`x`
 #' }
-#'  
+#'
 #' @param x Numeric values input of Guest function
 #' @param delta Numeric value parameter of Guest function
-#' @param residualsVsObserved Logical value defining 
+#' @param residualsVsObserved Logical value defining
 #' if limits are claculated as residuals vs observed, instead of predicted vs observed.
 #' @return A data.frame with `x`, `ymin` and `ymax` defining Guest et al. limits
-#' @references 
+#' @references
 #' <https://dmd.aspetjournals.org/content/39/2/170>
 #' @export
-#' @examples 
+#' @examples
 #' # Get predicted vs observed Guest et al. limits
-#' getGuestValues(x = 10^seq(-2,2,0.2))
-#' 
+#' getGuestValues(x = 10^seq(-2, 2, 0.2))
+#'
 #' # Get residuals vs observed Guest et al. limits
-#' getGuestValues(x = 10^seq(-2,2,0.2), residualsVsObserved = TRUE)
-#' 
+#' getGuestValues(x = 10^seq(-2, 2, 0.2), residualsVsObserved = TRUE)
+#'
 getGuestValues <- function(x, delta = 1, residualsVsObserved = FALSE) {
   xSym <- x
   xSym[x < 1] <- 1 / x[x < 1]
@@ -142,8 +142,8 @@ getGuestValues <- function(x, delta = 1, residualsVsObserved = FALSE) {
   ymin <- x / limit
   ymax <- x * limit
 
-  if(residualsVsObserved){
-    guestLines <- data.frame(x = x, ymin =1/limit, ymax = limit)
+  if (residualsVsObserved) {
+    guestLines <- data.frame(x = x, ymin = 1 / limit, ymax = limit)
     return(guestLines)
   }
   guestLines <- data.frame(x = x, ymin = ymin, ymax = ymax)

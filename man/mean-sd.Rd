@@ -18,7 +18,7 @@ Calculate \code{mean-SD}
 \examples{
 # Calculate mean-SD
 `mean-sd`(rnorm(1000))
- 
+
 }
 \seealso{
 Other stat functions: 

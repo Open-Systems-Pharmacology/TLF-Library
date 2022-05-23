@@ -28,10 +28,10 @@ LegendConfiguration <- R6::R6Class(
 
       # Title properties
       private$.title <- asLabel(title, font = currentTheme$fonts$legendTitle)
-      if(isOfType(title, "Label")){
+      if (isOfType(title, "Label")) {
         private$.title <- title
       }
-      
+
       private$.caption <- caption %||% data.frame()
     },
 
@@ -52,7 +52,7 @@ LegendConfiguration <- R6::R6Class(
 
       # Update legend position and alignment
       legendPosition <- createPlotLegendPosition(private$.position)
-      
+
       plotObject <- plotObject + ggplot2::theme(
         legend.position = c(legendPosition$xPosition, legendPosition$yPosition),
         legend.justification = c(legendPosition$xJustification, legendPosition$yJustification),
@@ -91,7 +91,7 @@ LegendConfiguration <- R6::R6Class(
       private$.font <- value %||% currentTheme$fonts$legend
       return(invisible())
     },
-    
+
     #' @field background `Background` object defining the background of the legend
     background = function(value) {
       if (missing(value)) {
@@ -108,7 +108,7 @@ LegendConfiguration <- R6::R6Class(
         return(private$.title)
       }
       validateIsOfType(value, c("character", "Label"), nullAllowed = TRUE)
-      if(isOfType(value, "Label")){
+      if (isOfType(value, "Label")) {
         private$.title <- asLabel(value)
       }
       private$.title <- asLabel(value, font = private$.title$font)

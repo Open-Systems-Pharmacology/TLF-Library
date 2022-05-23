@@ -8,12 +8,12 @@
 #' @param size Optional numeric values defining the size of the grid.
 #' @return A `ggplot` object
 #' @export
-#' @examples 
+#' @examples
 #' # Set grid of a scatter plot
 #' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
-#' 
+#'
 #' setGrid(p, color = "red", linetype = "dotted")
-#' 
+#'
 setGrid <- function(plotObject,
                     color = NULL,
                     linetype = NULL,
@@ -41,12 +41,12 @@ setGrid <- function(plotObject,
 #' @inheritParams setGrid
 #' @return A `ggplot` object
 #' @export
-#' @examples 
+#' @examples
 #' # Set x grid of a scatter plot
 #' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
-#' 
+#'
 #' setXGrid(p, color = "red", linetype = "dotted")
-#' 
+#'
 setXGrid <- function(plotObject,
                      color = NULL,
                      linetype = NULL,
@@ -73,12 +73,12 @@ setXGrid <- function(plotObject,
 #' @inheritParams setGrid
 #' @return A `ggplot` object
 #' @export
-#' @examples 
+#' @examples
 #' # Set y grid of a scatter
 #' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
-#' 
+#'
 #' setYGrid(p, color = "red", linetype = "dotted")
-#' 
+#'
 setYGrid <- function(plotObject,
                      color = NULL,
                      linetype = NULL,
@@ -112,12 +112,12 @@ setYGrid <- function(plotObject,
 #' @param size Optional numeric values defining the size of the background frame.
 #' @return A `ggplot` object
 #' @export
-#' @examples 
+#' @examples
 #' # Set background of a scatter plot
 #' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
-#' 
+#'
 #' setBackground(p, fill = "yellowgreen", color = "red", linetype = "dotted")
-#' 
+#'
 setBackground <- function(plotObject,
                           fill = NULL,
                           color = NULL,
@@ -147,12 +147,12 @@ setBackground <- function(plotObject,
 #' @inheritParams setBackground
 #' @return A `ggplot` object
 #' @export
-#' @examples 
+#' @examples
 #' # Set background of a scatter plot
 #' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
-#' 
+#'
 #' setBackgroundPanelArea(p, fill = "yellowgreen", color = "red", linetype = "dotted")
-#' 
+#'
 setBackgroundPanelArea <- function(plotObject,
                                    fill = NULL,
                                    color = NULL,
@@ -181,12 +181,12 @@ setBackgroundPanelArea <- function(plotObject,
 #' @inheritParams setBackground
 #' @return A `ggplot` object
 #' @export
-#' @examples 
+#' @examples
 #' # Set background of a scatter plot
 #' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
-#' 
+#'
 #' setBackgroundPlotArea(p, fill = "yellowgreen", color = "red", linetype = "dotted")
-#' 
+#'
 setBackgroundPlotArea <- function(plotObject,
                                   fill = NULL,
                                   color = NULL,
@@ -239,8 +239,8 @@ setBackgroundPlotArea <- function(plotObject,
 #'
 #' # Watermark totally opaque
 #' addWatermark(p, watermarkLabel, alpha = 1)
-#' 
-#' # As multiple layers of watermark: 
+#'
+#' # As multiple layers of watermark:
 #' p2 <- addWatermark(p, watermarkLabel, alpha = 1)
 #' addWatermark(p2, "other watermark", color = "red", angle = 90)
 #'
@@ -283,7 +283,7 @@ addWatermark <- function(plotObject,
 #' @return A `ggplot` object
 #' @import ggplot2
 #' @export
-#' @examples 
+#' @examples
 #' # Add a watermark to an empty plot
 #' p <- initializePlot()
 #' setWatermark(p, "watermark")

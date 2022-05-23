@@ -36,20 +36,20 @@ Other DataMapping classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{ObsVsPredDataMapping$new()}}
-\item \href{#method-clone}{\code{ObsVsPredDataMapping$clone()}}
+\item \href{#method-ObsVsPredDataMapping-new}{\code{ObsVsPredDataMapping$new()}}
+\item \href{#method-ObsVsPredDataMapping-clone}{\code{ObsVsPredDataMapping$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PKRatioDataMapping" data-id="checkMapData">}\href{../../tlf/html/PKRatioDataMapping.html#method-checkMapData}{\code{tlf::PKRatioDataMapping$checkMapData()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="PKRatioDataMapping" data-id="checkMapData"><a href='../../tlf/html/PKRatioDataMapping.html#method-PKRatioDataMapping-checkMapData'><code>tlf::PKRatioDataMapping$checkMapData()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-ObsVsPredDataMapping-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ObsVsPredDataMapping-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{ObsVsPredDataMapping} object
 \subsection{Usage}{
@@ -77,8 +77,8 @@ A new \code{ObsVsPredDataMapping} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-ObsVsPredDataMapping-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ObsVsPredDataMapping-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

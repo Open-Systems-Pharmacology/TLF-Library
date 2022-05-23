@@ -7,17 +7,17 @@
 #'
 #' @export
 #' @family molecule plots
-#' @examples 
+#' @examples
 #' # Produce Obs vs Pred plot
 #' resVsPredData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
-#' 
+#'
 #' plotResVsPred(data = resVsPredData, dataMapping = ResVsPredDataMapping$new(x = "x", y = "y"))
-#' 
+#'
 #' # Produce Res vs Pred plot with linear regression
 #' plotResVsPred(
-#' data = resVsPredData, 
-#' dataMapping = ResVsPredDataMapping$new(x = "x", y = "y"),
-#' smoother = "lm"
+#'   data = resVsPredData,
+#'   dataMapping = ResVsPredDataMapping$new(x = "x", y = "y"),
+#'   smoother = "lm"
 #' )
 plotResVsPred <- function(data,
                           metaData = NULL,

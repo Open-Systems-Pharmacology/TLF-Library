@@ -18,7 +18,7 @@ test_that("Background properties can be defined a priori", {
 
 # Create a reference plot configuration
 refPlotConfiguration <- PlotConfiguration$new()
-for(property in AestheticProperties){
+for (property in AestheticProperties) {
   refPlotConfiguration$lines[[property]] <- "reference"
   refPlotConfiguration$ribbons[[property]] <- "reference"
   refPlotConfiguration$points[[property]] <- "reference"
@@ -26,7 +26,7 @@ for(property in AestheticProperties){
 }
 
 test_that("Theme properties are not updated when PlotConfiguration is updated", {
-  for(property in AestheticProperties){
+  for (property in AestheticProperties) {
     testPlotConfiguration <- PlotConfiguration$new()
     expect_false(testPlotConfiguration$lines[[property]] %in% "reference")
     expect_false(testPlotConfiguration$ribbons[[property]] %in% "reference")

@@ -18,14 +18,14 @@ R6 class defining \code{text} and \code{font} of labels
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Label$new()}}
-\item \href{#method-createPlotFont}{\code{Label$createPlotFont()}}
-\item \href{#method-clone}{\code{Label$clone()}}
+\item \href{#method-Label-new}{\code{Label$new()}}
+\item \href{#method-Label-createPlotFont}{\code{Label$createPlotFont()}}
+\item \href{#method-Label-clone}{\code{Label$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Label-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Label-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{Label} object.
 \subsection{Usage}{
@@ -67,8 +67,8 @@ A new \code{Label} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-createPlotFont"></a>}}
-\if{latex}{\out{\hypertarget{method-createPlotFont}{}}}
+\if{html}{\out{<a id="method-Label-createPlotFont"></a>}}
+\if{latex}{\out{\hypertarget{method-Label-createPlotFont}{}}}
 \subsection{Method \code{createPlotFont()}}{
 Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::theme}.
 \subsection{Usage}{
@@ -104,8 +104,8 @@ An \code{element_text} or \code{element_blank}object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Label-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Label-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

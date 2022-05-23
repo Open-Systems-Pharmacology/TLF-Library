@@ -27,9 +27,9 @@ getPKRatioMeasure(data = pkData, dataMapping = PKRatioDataMapping$new(x = "x", y
 
 # Get summary of other PK Ratio limits
 getPKRatioMeasure(
-data = pkData, 
-dataMapping = PKRatioDataMapping$new(x = "x", y = "y"),
-ratioLimits = seq(1.5, 5, 0.5)
+  data = pkData,
+  dataMapping = PKRatioDataMapping$new(x = "x", y = "y"),
+  ratioLimits = seq(1.5, 5, 0.5)
 )
 
 }

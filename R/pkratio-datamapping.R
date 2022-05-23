@@ -40,8 +40,8 @@ PKRatioDataMapping <- R6::R6Class(
       mapData <- super$checkMapData(data, metaData)
       # This may change depending of how we want to include options
       if (!isOfLength(self$error, 0)) {
-        mapData$ymax <- data[, self$y]*(1 + data[, self$error])
-        mapData$ymin <- data[, self$y]*(1 - data[, self$error])
+        mapData$ymax <- data[, self$y] * (1 + data[, self$error])
+        mapData$ymin <- data[, self$y] * (1 - data[, self$error])
       }
       self$data <- mapData
       return(mapData)

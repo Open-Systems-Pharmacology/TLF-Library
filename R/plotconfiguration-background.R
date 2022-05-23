@@ -176,7 +176,7 @@ BackgroundElement <- R6::R6Class(
       ggplot2::element_rect(
         fill = fill %||% self$fill,
         colour = color %||% self$color,
-        size =  size %||% as.numeric(self$size),
+        size = size %||% as.numeric(self$size),
         linetype = linetype %||% self$linetype
       )
     }
@@ -198,7 +198,7 @@ LineElement <- R6::R6Class(
     createPlotElement = function(color = NULL, size = NULL, linetype = NULL) {
       ggplot2::element_line(
         colour = color %||% self$color,
-        size =  size %||% as.numeric(self$size),
+        size = size %||% as.numeric(self$size),
         linetype = linetype %||% self$linetype
       )
     }

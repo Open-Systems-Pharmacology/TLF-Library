@@ -19,24 +19,24 @@ R6 class defining the configuration of Y-axis
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-updatePlot}{\code{YAxisConfiguration$updatePlot()}}
-\item \href{#method-clone}{\code{YAxisConfiguration$clone()}}
+\item \href{#method-YAxisConfiguration-updatePlot}{\code{YAxisConfiguration$updatePlot()}}
+\item \href{#method-YAxisConfiguration-clone}{\code{YAxisConfiguration$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="ggplotExpansion">}\href{../../tlf/html/AxisConfiguration.html#method-ggplotExpansion}{\code{tlf::AxisConfiguration$ggplotExpansion()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="ggplotScale">}\href{../../tlf/html/AxisConfiguration.html#method-ggplotScale}{\code{tlf::AxisConfiguration$ggplotScale()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="initialize">}\href{../../tlf/html/AxisConfiguration.html#method-initialize}{\code{tlf::AxisConfiguration$initialize()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="prettyTickLabels">}\href{../../tlf/html/AxisConfiguration.html#method-prettyTickLabels}{\code{tlf::AxisConfiguration$prettyTickLabels()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="prettyTicks">}\href{../../tlf/html/AxisConfiguration.html#method-prettyTicks}{\code{tlf::AxisConfiguration$prettyTicks()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="ggplotExpansion"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-ggplotExpansion'><code>tlf::AxisConfiguration$ggplotExpansion()</code></a></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="ggplotScale"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-ggplotScale'><code>tlf::AxisConfiguration$ggplotScale()</code></a></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="initialize"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-initialize'><code>tlf::AxisConfiguration$initialize()</code></a></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="prettyTickLabels"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-prettyTickLabels'><code>tlf::AxisConfiguration$prettyTickLabels()</code></a></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="prettyTicks"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-prettyTicks'><code>tlf::AxisConfiguration$prettyTicks()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-updatePlot"></a>}}
-\if{latex}{\out{\hypertarget{method-updatePlot}{}}}
+\if{html}{\out{<a id="method-YAxisConfiguration-updatePlot"></a>}}
+\if{latex}{\out{\hypertarget{method-YAxisConfiguration-updatePlot}{}}}
 \subsection{Method \code{updatePlot()}}{
 Update axis configuration on a \code{ggplot} object
 \subsection{Usage}{
@@ -57,8 +57,8 @@ A \code{ggplot} object with updated axis properties
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-YAxisConfiguration-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-YAxisConfiguration-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

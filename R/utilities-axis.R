@@ -23,7 +23,7 @@
 #' Scaling$time
 #' # Date scale for POSIXlt or POSIXct data
 #' Scaling$date
-#' 
+#'
 Scaling <- enum(c(
   "lin",
   "log",

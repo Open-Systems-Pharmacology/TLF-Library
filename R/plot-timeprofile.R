@@ -255,7 +255,7 @@ plotTimeProfile <- function(data = NULL,
       selectionKey = plotConfiguration$lines$color,
       aesthetic = "color"
     ),
-    # By using position = colorLength, 
+    # By using position = colorLength,
     # the function will start selecting the colors that come after the colors selected for lines
     # this aims at preventing a reset of the colors and a need for manual update of the user
     getAestheticValues(

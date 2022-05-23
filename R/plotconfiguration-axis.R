@@ -56,11 +56,11 @@ AxisConfiguration <- R6::R6Class(
     #' If `FALSE`, some space between data and axis is kept
     #' @return A new `AxisConfiguration` object
     initialize = function(limits = NULL,
-                              scale = Scaling$lin,
-                              ticks = NULL,
-                              ticklabels = NULL,
-                              font = NULL,
-                              expand = FALSE) {
+                          scale = Scaling$lin,
+                          ticks = NULL,
+                          ticklabels = NULL,
+                          font = NULL,
+                          expand = FALSE) {
       validateIsNumeric(limits, nullAllowed = TRUE)
       validateIsOfType(font, "Font", nullAllowed = TRUE)
       validateIsLogical(expand)
@@ -87,8 +87,7 @@ AxisConfiguration <- R6::R6Class(
     #' @description Get the `ggplot2` actual `trans` name of scale
     #' @return A character included in `ggplot2` available `trans` names
     ggplotScale = function() {
-      switch(
-        private$.scale,
+      switch(private$.scale,
         "log" = "log10",
         "ln" = "log",
         private$.scale
@@ -113,8 +112,7 @@ AxisConfiguration <- R6::R6Class(
         return(private$.ticks)
       }
       # Default tick values as a function of scale
-      switch(
-        private$.scale,
+      switch(private$.scale,
         "log" = tlfEnv$logTicks,
         "ln" = tlfEnv$lnTicks,
         private$.ticks
@@ -131,8 +129,7 @@ AxisConfiguration <- R6::R6Class(
       }
       # Default tick labels as a function of scale
       # ggplot2 accepts functions as input for labels
-      switch(
-        private$.scale,
+      switch(private$.scale,
         "log" = getLogTickLabels,
         "ln" = getLnTickLabels,
         "sqrt" = getSqrtTickLabels,
@@ -266,8 +263,7 @@ XAxisConfiguration <- R6::R6Class(
       )
       # Add special tick lines for pretty log plots
       suppressMessages(
-        plotObject <- switch(
-          private$.scale,
+        plotObject <- switch(private$.scale,
           "log" = plotObject + ggplot2::annotation_logticks(sides = "b", color = private$.font$color),
           "ln" = plotObject + ggplot2::annotation_logticks(base = exp(1), sides = "b", color = private$.font$color),
           plotObject
@@ -324,8 +320,7 @@ YAxisConfiguration <- R6::R6Class(
       )
       # Add special tick lines for pretty log plots
       suppressMessages(
-        plotObject <- switch(
-          private$.scale,
+        plotObject <- switch(private$.scale,
           "log" = plotObject + ggplot2::annotation_logticks(sides = "l", color = private$.font$color),
           "ln" = plotObject + ggplot2::annotation_logticks(base = exp(1), sides = "l", color = private$.font$color),
           plotObject

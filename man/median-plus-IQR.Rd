@@ -18,7 +18,7 @@ Calculate \code{median+IQR}
 \examples{
 # Calculate median+IQR
 `median+IQR`(rnorm(1000))
- 
+
 }
 \seealso{
 Other stat functions: 

@@ -38,20 +38,20 @@ Other DataMapping classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{TornadoDataMapping$new()}}
-\item \href{#method-checkMapData}{\code{TornadoDataMapping$checkMapData()}}
-\item \href{#method-clone}{\code{TornadoDataMapping$clone()}}
+\item \href{#method-TornadoDataMapping-new}{\code{TornadoDataMapping$new()}}
+\item \href{#method-TornadoDataMapping-checkMapData}{\code{TornadoDataMapping$checkMapData()}}
+\item \href{#method-TornadoDataMapping-clone}{\code{TornadoDataMapping$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-TornadoDataMapping-new"></a>}}
+\if{latex}{\out{\hypertarget{method-TornadoDataMapping-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{TornadoDataMapping} object
 \subsection{Usage}{
@@ -84,8 +84,8 @@ A new \code{TornadoDataMapping} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-checkMapData"></a>}}
-\if{latex}{\out{\hypertarget{method-checkMapData}{}}}
+\if{html}{\out{<a id="method-TornadoDataMapping-checkMapData"></a>}}
+\if{latex}{\out{\hypertarget{method-TornadoDataMapping-checkMapData}{}}}
 \subsection{Method \code{checkMapData()}}{
 Check that \code{data} variables include map variables
 \subsection{Usage}{
@@ -107,8 +107,8 @@ Dummy variable \code{defaultAes} is necessary to allow further modification of p
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-TornadoDataMapping-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-TornadoDataMapping-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
