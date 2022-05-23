@@ -1,13 +1,12 @@
 ---
-title: "theme-maker"
+title: "Run Shiny App to Create Themes"
 resource_files:
   - figures
-author: "OSPSuiteR 2021"
 output:
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{theme-maker}
+  %\VignetteIndexEntry{Run Shiny App to Create Themes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -7,24 +7,24 @@
 #' @param sorted Optional logical value defining if `y` values are sorted by absolute values of `x`.
 #' @param colorPalette Optional character values defining a `ggplot2` colorPalette (e.g. `"Spectral"`)
 #' @param bar Optional logical value setting tornado plot as bar plot instead of scatter plot.
-#' @param dataMapping 
+#' @param dataMapping
 #' A `TornadoDataMapping` object mapping `x`, `y` and aesthetic groups to their variable names of `data`.
-#' @param plotConfiguration 
+#' @param plotConfiguration
 #' An optional `TornadoPlotConfiguration` object defining labels, grid, background and watermark.
 #' @return A `ggplot` object
 #'
 #' @export
 #' @family molecule plots
-#' @examples 
+#' @examples
 #' # Produce a tornado plot
 #' plotTornado(x = c(2, -1, 3), y = c("A", "B", "C"))
-#' 
+#'
 #' # Produce a tornado plot as scatter plot
 #' plotTornado(x = c(2, -1, 3), y = c("A", "B", "C"), bar = FALSE)
-#' 
+#'
 #' # Produce a tornado plot as is (no sorting)
 #' plotTornado(x = c(2, -1, 3), y = c("A", "B", "C"), sorted = FALSE)
-#' 
+#'
 plotTornado <- function(data = NULL,
                         metaData = NULL,
                         x = NULL,

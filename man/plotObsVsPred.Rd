@@ -44,9 +44,9 @@ plotObsVsPred(data = obsVsPredData, dataMapping = ObsVsPredDataMapping$new(x = "
 
 # Produce Obs vs Pred plot with linear regression
 plotObsVsPred(
-data = obsVsPredData, 
-dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y"),
-smoother = "lm"
+  data = obsVsPredData,
+  dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y"),
+  smoother = "lm"
 )
 
 }

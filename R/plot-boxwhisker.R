@@ -4,9 +4,9 @@
 #'
 #' @inheritParams addScatter
 #' @param outliers Logical defining if outliers should be included in boxplot
-#' @param dataMapping 
+#' @param dataMapping
 #' A `BoxWhiskerDataMapping` object mapping `x`, `y` and aesthetic groups to their variable names of `data`.
-#' @param plotConfiguration 
+#' @param plotConfiguration
 #' An optional `BoxWhiskerConfiguration` object defining labels, grid, background and watermark.
 #' @return A `ggplot` object
 #'
@@ -15,17 +15,19 @@
 #'
 #' @export
 #' @family molecule plots
-#' @examples 
+#' @examples
 #' # Produce box-and-whisker plots of log-normal distributed data
-#' boxData <- data.frame(x = c(rep("A", 500), rep("B",500)), y = rlnorm(1000))
-#' 
+#' boxData <- data.frame(x = c(rep("A", 500), rep("B", 500)), y = rlnorm(1000))
+#'
 #' plotBoxWhisker(data = boxData, dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"))
-#' 
+#'
 #' # Remove outliers from boxplot
-#' plotBoxWhisker(data = boxData, 
-#' dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"), 
-#' outliers = FALSE)
-#' 
+#' plotBoxWhisker(
+#'   data = boxData,
+#'   dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"),
+#'   outliers = FALSE
+#' )
+#'
 plotBoxWhisker <- function(data,
                            metaData = NULL,
                            outliers = NULL,
@@ -68,9 +70,9 @@ plotBoxWhisker <- function(data,
 }
 
 #' @title addBoxWhisker
-#' @description 
+#' @description
 #' Add a boxplot layer to a `ggplot` object (without outliers)
-#' 
+#'
 #' @inheritParams plotBoxWhisker
 #' @return A `ggplot` object
 #' @keywords internal
@@ -122,9 +124,9 @@ addBoxWhisker <- function(data, metaData, dataMapping, plotConfiguration, plotOb
 }
 
 #' @title addOutliers
-#' @description 
+#' @description
 #' Add scatter points for outliers to `ggplot` object
-#' 
+#'
 #' @inheritParams plotBoxWhisker
 #' @return A `ggplot` object
 #' @keywords internal

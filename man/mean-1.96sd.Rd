@@ -18,7 +18,7 @@ Calculate \verb{mean-1.96SD}
 \examples{
 # Calculate mean-1.96SD
 `mean-1.96sd`(rnorm(1000))
- 
+
 }
 \seealso{
 Other stat functions: 

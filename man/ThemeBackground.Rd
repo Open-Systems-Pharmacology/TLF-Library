@@ -34,14 +34,14 @@ R6 class defining theme background properties
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{ThemeBackground$new()}}
-\item \href{#method-toJson}{\code{ThemeBackground$toJson()}}
-\item \href{#method-clone}{\code{ThemeBackground$clone()}}
+\item \href{#method-ThemeBackground-new}{\code{ThemeBackground$new()}}
+\item \href{#method-ThemeBackground-toJson}{\code{ThemeBackground$toJson()}}
+\item \href{#method-ThemeBackground-clone}{\code{ThemeBackground$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-ThemeBackground-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ThemeBackground-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{ThemeBackground} object
 \subsection{Usage}{
@@ -101,8 +101,8 @@ A new \code{ThemeBackground} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-toJson"></a>}}
-\if{latex}{\out{\hypertarget{method-toJson}{}}}
+\if{html}{\out{<a id="method-ThemeBackground-toJson"></a>}}
+\if{latex}{\out{\hypertarget{method-ThemeBackground-toJson}{}}}
 \subsection{Method \code{toJson()}}{
 Translate object into a json list
 \subsection{Usage}{
@@ -114,8 +114,8 @@ A list that can be saved into a json file
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-ThemeBackground-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ThemeBackground-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -93,7 +93,7 @@ setLegendTitle <- function(plotObject,
   validateIsNumeric(angle, nullAllowed = TRUE)
   validateIsIncluded(fontFace, FontFaces, nullAllowed = TRUE)
   validateIsIncluded(align, Alignments, nullAllowed = TRUE)
-  
+
   # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
   newPlotObject <- plotObject
@@ -426,7 +426,7 @@ CaptionProperties <- enum(c(
 #' @keywords internal
 createPlotLegendPosition <- function(position) {
   validateIsIncluded(position, LegendPositions)
-  
+
   listOfLegendPositions <- list(
     none = list(xPosition = "none", xJustification = NULL, yPosition = NULL, yJustification = NULL),
     insideTop = list(xPosition = 0.5, xJustification = 0.5, yPosition = 0.975, yJustification = 1),

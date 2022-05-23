@@ -43,20 +43,20 @@ Other DataMapping classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{ObservedDataMapping$new()}}
-\item \href{#method-checkMapData}{\code{ObservedDataMapping$checkMapData()}}
-\item \href{#method-clone}{\code{ObservedDataMapping$clone()}}
+\item \href{#method-ObservedDataMapping-new}{\code{ObservedDataMapping$new()}}
+\item \href{#method-ObservedDataMapping-checkMapData}{\code{ObservedDataMapping$checkMapData()}}
+\item \href{#method-ObservedDataMapping-clone}{\code{ObservedDataMapping$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-ObservedDataMapping-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ObservedDataMapping-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{ObservedDataMapping} object
 \subsection{Usage}{
@@ -108,8 +108,8 @@ A new \code{ObservedDataMapping} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-checkMapData"></a>}}
-\if{latex}{\out{\hypertarget{method-checkMapData}{}}}
+\if{html}{\out{<a id="method-ObservedDataMapping-checkMapData"></a>}}
+\if{latex}{\out{\hypertarget{method-ObservedDataMapping-checkMapData}{}}}
 \subsection{Method \code{checkMapData()}}{
 Check that \code{data} variables include map variables
 \subsection{Usage}{
@@ -131,8 +131,8 @@ Dummy variable \code{defaultAes} is necessary to allow further modification of p
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-ObservedDataMapping-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ObservedDataMapping-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

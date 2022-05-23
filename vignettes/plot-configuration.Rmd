@@ -1,6 +1,5 @@
 ---
 title: "Introduction to PlotConfiguration objects"
-author: "OSPSuiteR 2021"
 output:
   rmarkdown::html_vignette:
     toc: true

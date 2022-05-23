@@ -41,22 +41,22 @@ calculated on \code{data} to obtain box whiskers}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{BoxWhiskerDataMapping$new()}}
-\item \href{#method-getBoxWhiskerLimits}{\code{BoxWhiskerDataMapping$getBoxWhiskerLimits()}}
-\item \href{#method-getOutliers}{\code{BoxWhiskerDataMapping$getOutliers()}}
-\item \href{#method-clone}{\code{BoxWhiskerDataMapping$clone()}}
+\item \href{#method-BoxWhiskerDataMapping-new}{\code{BoxWhiskerDataMapping$new()}}
+\item \href{#method-BoxWhiskerDataMapping-getBoxWhiskerLimits}{\code{BoxWhiskerDataMapping$getBoxWhiskerLimits()}}
+\item \href{#method-BoxWhiskerDataMapping-getOutliers}{\code{BoxWhiskerDataMapping$getOutliers()}}
+\item \href{#method-BoxWhiskerDataMapping-clone}{\code{BoxWhiskerDataMapping$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="XYGDataMapping" data-id="checkMapData">}\href{../../tlf/html/XYGDataMapping.html#method-checkMapData}{\code{tlf::XYGDataMapping$checkMapData()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="XYGDataMapping" data-id="checkMapData"><a href='../../tlf/html/XYGDataMapping.html#method-XYGDataMapping-checkMapData'><code>tlf::XYGDataMapping$checkMapData()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-BoxWhiskerDataMapping-new"></a>}}
+\if{latex}{\out{\hypertarget{method-BoxWhiskerDataMapping-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{BoxWhiskerDataMapping} object
 \subsection{Usage}{
@@ -112,8 +112,8 @@ A new \code{BoxWhiskerDataMapping} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getBoxWhiskerLimits"></a>}}
-\if{latex}{\out{\hypertarget{method-getBoxWhiskerLimits}{}}}
+\if{html}{\out{<a id="method-BoxWhiskerDataMapping-getBoxWhiskerLimits"></a>}}
+\if{latex}{\out{\hypertarget{method-BoxWhiskerDataMapping-getBoxWhiskerLimits}{}}}
 \subsection{Method \code{getBoxWhiskerLimits()}}{
 Get a data.frame with box-whisker limit by group
 \subsection{Usage}{
@@ -132,8 +132,8 @@ A data.frame with \code{ymin}, \code{lower}, \code{middle}, \code{upper}, \code{
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getOutliers"></a>}}
-\if{latex}{\out{\hypertarget{method-getOutliers}{}}}
+\if{html}{\out{<a id="method-BoxWhiskerDataMapping-getOutliers"></a>}}
+\if{latex}{\out{\hypertarget{method-BoxWhiskerDataMapping-getOutliers}{}}}
 \subsection{Method \code{getOutliers()}}{
 Get a data.frame flagging outliers
 \subsection{Usage}{
@@ -153,8 +153,8 @@ Values not flagged are \code{NA} in the outliers variables
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-BoxWhiskerDataMapping-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-BoxWhiskerDataMapping-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

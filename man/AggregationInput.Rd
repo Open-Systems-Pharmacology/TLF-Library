@@ -23,13 +23,13 @@ that will be used as variable name of the aggregation}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{AggregationInput$new()}}
-\item \href{#method-clone}{\code{AggregationInput$clone()}}
+\item \href{#method-AggregationInput-new}{\code{AggregationInput$new()}}
+\item \href{#method-AggregationInput-clone}{\code{AggregationInput$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-AggregationInput-new"></a>}}
+\if{latex}{\out{\hypertarget{method-AggregationInput-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{AggregationInput} object
 \subsection{Usage}{
@@ -60,8 +60,8 @@ A new \code{AggregationInput} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-AggregationInput-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-AggregationInput-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

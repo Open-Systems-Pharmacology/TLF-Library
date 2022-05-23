@@ -3,15 +3,15 @@
 #' @title initializePlot
 #' @description
 #' Initialize a `ggplot` object and set its labels, grid, background and watermark
-#' 
+#'
 #' @param plotConfiguration
 #' An optional `PlotConfiguration` object defining labels, grid, background and watermark
-#' 
+#'
 #' @return A `ggplot` graphical object
-#' 
+#'
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
-#' 
+#'
 #' @family atom plots
 #' @export
 #' @import ospsuite.utils
@@ -22,7 +22,7 @@
 #' # Implement a customized configuration using PlotConfiguration
 #' config <- PlotConfiguration$new(title = "My Plot", xlabel = "x variable", ylabel = "y variable")
 #' p <- initializePlot(config)
-#' 
+#'
 initializePlot <- function(plotConfiguration = NULL) {
   validateIsOfType(plotConfiguration, "PlotConfiguration", nullAllowed = TRUE)
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new()
@@ -44,7 +44,7 @@ initializePlot <- function(plotConfiguration = NULL) {
 #' @title addScatter
 #' @description
 #' Add a scatter plot layer to a `ggplot` object
-#' 
+#'
 #' @param data A data.frame to use for plot.
 #' @param metaData A named list of information about `data` such as the `dimension` and `unit` of its variables.
 #' @param x Numeric values to plot along the `x` axis. Only used instead of `data` if `data` is `NULL`.
@@ -58,14 +58,14 @@ initializePlot <- function(plotConfiguration = NULL) {
 #' @param linetype Optional character values defining the linetype of the plot layer.
 #' See enum `Linetypes` to get names of linetype.
 #' @param size Optional numeric values defining the size of the plot layer.
-#' @param plotConfiguration 
+#' @param plotConfiguration
 #' An optional `PlotConfiguration` object defining labels, grid, background and watermark.
-#' @param plotObject 
+#' @param plotObject
 #' An optional `ggplot` object on which to add the plot layer
 #' @return A `ggplot` object
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
-#' 
+#'
 #' @family atom plots
 #' @export
 #' @examples
@@ -89,21 +89,21 @@ initializePlot <- function(plotConfiguration = NULL) {
 #'
 #' # Add a scatter with specific properties
 #' addScatter(
-#' data = scatterData, 
-#' color = "blue", shape = "diamond", size = 2, caption = "My data"
+#'   data = scatterData,
+#'   color = "blue", shape = "diamond", size = 2, caption = "My data"
 #' )
 #'
 #' # Add a scatter with specific properties
 #' p <- addScatter(
-#' data = scatterData, 
-#' color = "blue", shape = "diamond", size = 2, caption = "My data"
+#'   data = scatterData,
+#'   color = "blue", shape = "diamond", size = 2, caption = "My data"
 #' )
 #' addScatter(
-#' x = c(0, 1), y = c(1, 0), 
-#' color = "red", shape = "circle", size = 3, 
-#' plotObject = p
+#'   x = c(0, 1), y = c(1, 0),
+#'   color = "red", shape = "circle", size = 3,
+#'   plotObject = p
 #' )
-#' 
+#'
 addScatter <- function(data = NULL,
                        metaData = NULL,
                        x = NULL,
@@ -192,11 +192,11 @@ addScatter <- function(data = NULL,
 #' @inheritParams addScatter
 #' @description
 #' Add a line layer to a `ggplot` object.
-#' 
+#'
 #' @return A `ggplot` object
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
-#' 
+#'
 #' @family atom plots
 #' @export
 #' @examples
@@ -220,21 +220,21 @@ addScatter <- function(data = NULL,
 #'
 #' # Add a line with specific properties
 #' addLine(
-#' data = lineData, 
-#' color = "blue", linetype = "longdash", size = 0.5, caption = "My data"
+#'   data = lineData,
+#'   color = "blue", linetype = "longdash", size = 0.5, caption = "My data"
 #' )
 #'
 #' # Add a line with specific properties
 #' p <- addLine(
-#' data = lineData, 
-#' color = "blue", linetype = "longdash", size = 0.5, caption = "My data"
+#'   data = lineData,
+#'   color = "blue", linetype = "longdash", size = 0.5, caption = "My data"
 #' )
 #' addLine(
-#' x = c(0, 1), y = c(1, 0), 
-#' color = "red", linetype = "solid", size = 1, 
-#' plotObject = p
+#'   x = c(0, 1), y = c(1, 0),
+#'   color = "red", linetype = "solid", size = 1,
+#'   plotObject = p
 #' )
-#' 
+#'
 addLine <- function(data = NULL,
                     metaData = NULL,
                     x = NULL,
@@ -369,7 +369,7 @@ addLine <- function(data = NULL,
 #' @title addRibbon
 #' @description
 #' Add a ribbon layer to a `ggplot` object.
-#' 
+#'
 #' @inheritParams addScatter
 #' @param ymin Numeric values to plot along the `y` axis. Only used instead of `data` if `data` is `NULL`.
 #' @param ymax Numeric values to plot along the `y` axis. Only used instead of `data` if `data` is `NULL`.
@@ -382,20 +382,20 @@ addLine <- function(data = NULL,
 #' @return A `ggplot` object
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
-#' 
+#'
 #' @family atom plots
 #' @export
 #' @examples
 #' # Add ribbon using x, ymin and ymax
 #' addRibbon(
-#' x = c(1, 2, 1, 2, 3), 
-#' ymin = c(5, 0, 2, 3, 4), 
-#' ymax = c(6, 2, 6, 2.5, 5)
+#'   x = c(1, 2, 1, 2, 3),
+#'   ymin = c(5, 0, 2, 3, 4),
+#'   ymax = c(6, 2, 6, 2.5, 5)
 #' )
 #'
 #' # Add ribbon using a data.frame
 #' time <- seq(0, 30, 0.1)
-#' ribbonData <- data.frame(x = time, ymin = cos(time)-1, ymax = cos(time)+1)
+#' ribbonData <- data.frame(x = time, ymin = cos(time) - 1, ymax = cos(time) + 1)
 #'
 #' addRibbon(
 #'   data = ribbonData,
@@ -414,11 +414,11 @@ addLine <- function(data = NULL,
 #' # Add a ribbon with specific properties
 #' p <- addRibbon(data = ribbonData, fill = "blue", alpha = 0.5, caption = "My data")
 #' addRibbon(
-#' x = c(0, 1), ymin = c(-0.5, -0.5), ymax = c(0.5, 0.5), 
-#' fill = "red", alpha = 1, 
-#' plotObject = p
+#'   x = c(0, 1), ymin = c(-0.5, -0.5), ymax = c(0.5, 0.5),
+#'   fill = "red", alpha = 1,
+#'   plotObject = p
 #' )
-#' 
+#'
 addRibbon <- function(data = NULL,
                       metaData = NULL,
                       x = NULL,
@@ -502,27 +502,27 @@ addRibbon <- function(data = NULL,
 #' @title addErrorbar
 #' @description
 #' Add an errorbar layer to a `ggplot` object.
-#' 
+#'
 #' @inheritParams addRibbon
 #' @inheritParams addScatter
 #' @param includeCap Logical defining if errorbars include caps at their ends.
 #' @return A `ggplot` object
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
-#' 
+#'
 #' @family atom plots
 #' @export
 #' @examples
 #' # Add errorbar using x, ymin and ymax
 #' addErrorbar(
-#' x = c(1, 2, 1, 2, 3), 
-#' ymin = c(5, 0, 2, 3, 4), 
-#' ymax = c(6, 2, 6, 2.5, 5)
+#'   x = c(1, 2, 1, 2, 3),
+#'   ymin = c(5, 0, 2, 3, 4),
+#'   ymax = c(6, 2, 6, 2.5, 5)
 #' )
 #'
 #' # Add errorbar using a data.frame
 #' time <- seq(0, 30, 0.5)
-#' errorbarData <- data.frame(x = time, ymin = cos(time)-1, ymax = cos(time)+1)
+#' errorbarData <- data.frame(x = time, ymin = cos(time) - 1, ymax = cos(time) + 1)
 #'
 #' addErrorbar(
 #'   data = errorbarData,
@@ -540,15 +540,15 @@ addRibbon <- function(data = NULL,
 #'
 #' # Add a errorbar with specific properties
 #' p <- addErrorbar(
-#' data = errorbarData, 
-#' color = "blue", size = 0.5, includeCap = TRUE, caption = "My data"
+#'   data = errorbarData,
+#'   color = "blue", size = 0.5, includeCap = TRUE, caption = "My data"
 #' )
 #' addScatter(
-#' x = time, y = cos(time), 
-#' color = "red", size = 1, caption = "My data", 
-#' plotObject = p
+#'   x = time, y = cos(time),
+#'   color = "red", size = 1, caption = "My data",
+#'   plotObject = p
 #' )
-#' 
+#'
 addErrorbar <- function(data = NULL,
                         metaData = NULL,
                         x = NULL,

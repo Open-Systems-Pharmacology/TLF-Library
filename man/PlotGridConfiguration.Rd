@@ -104,14 +104,14 @@ in the grid. Will get repeated to match the dimensions of the grid.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{PlotGridConfiguration$new()}}
-\item \href{#method-addPlots}{\code{PlotGridConfiguration$addPlots()}}
-\item \href{#method-clone}{\code{PlotGridConfiguration$clone()}}
+\item \href{#method-PlotGridConfiguration-new}{\code{PlotGridConfiguration$new()}}
+\item \href{#method-PlotGridConfiguration-addPlots}{\code{PlotGridConfiguration$addPlots()}}
+\item \href{#method-PlotGridConfiguration-clone}{\code{PlotGridConfiguration$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-PlotGridConfiguration-new"></a>}}
+\if{latex}{\out{\hypertarget{method-PlotGridConfiguration-new}{}}}
 \subsection{Method \code{new()}}{
 Create an instance of \code{PlotGridConfiguration} class.
 \subsection{Usage}{
@@ -130,8 +130,8 @@ A \code{PlotGridConfiguration} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addPlots"></a>}}
-\if{latex}{\out{\hypertarget{method-addPlots}{}}}
+\if{html}{\out{<a id="method-PlotGridConfiguration-addPlots"></a>}}
+\if{latex}{\out{\hypertarget{method-PlotGridConfiguration-addPlots}{}}}
 \subsection{Method \code{addPlots()}}{
 Add a plot object.
 \subsection{Usage}{
@@ -174,8 +174,8 @@ length(myPlotGrid$plotList)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-PlotGridConfiguration-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-PlotGridConfiguration-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

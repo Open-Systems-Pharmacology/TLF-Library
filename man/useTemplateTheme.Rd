@@ -11,5 +11,5 @@ Set default theme to be used as the current default of the tlf environment
 }
 \examples{
 useTemplateTheme()
-addScatter(x = seq(1,10), y = rnorm(10))
+addScatter(x = seq(1, 10), y = rnorm(10))
 }

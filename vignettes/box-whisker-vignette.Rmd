@@ -1,11 +1,10 @@
 ---
-title: "Box-whisker plots"
-author: "OSPSuiteR 2021"
+title: "Box-Whisker Plots"
 output:
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{Box-whisker plots}
+  %\VignetteIndexEntry{Box-Whisker Plots}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

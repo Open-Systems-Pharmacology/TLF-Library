@@ -12,7 +12,7 @@ PlotConfiguration <- R6::R6Class(
   "PlotConfiguration",
   public = list(
     export = NULL,
-    # Caution, helper enum Scaling doesn't work here 
+    # Caution, helper enum Scaling doesn't work here
     # (even using @include to collate and define the variable beforehand)
     defaultXScale = "lin",
     defaultYScale = "lin",
@@ -168,7 +168,7 @@ PlotConfiguration <- R6::R6Class(
       private$.ribbons <- ribbons %||% getThemePropertyFor(plotConfiguration = self, propertyName = "ribbons")
       private$.points <- points %||% getThemePropertyFor(plotConfiguration = self, propertyName = "points")
       private$.errorbars <- errorbars %||% getThemePropertyFor(plotConfiguration = self, propertyName = "errorbars")
-      
+
       # Define export configuration, overwrite properties only if they are defined
       validateIsOfType(export, "ExportConfiguration", nullAllowed = TRUE)
       self$export <- export %||% ExportConfiguration$new()

@@ -41,20 +41,20 @@ Other DataMapping classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{DDIRatioDataMapping$new()}}
-\item \href{#method-clone}{\code{DDIRatioDataMapping$clone()}}
+\item \href{#method-DDIRatioDataMapping-new}{\code{DDIRatioDataMapping$new()}}
+\item \href{#method-DDIRatioDataMapping-clone}{\code{DDIRatioDataMapping$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PKRatioDataMapping" data-id="checkMapData">}\href{../../tlf/html/PKRatioDataMapping.html#method-checkMapData}{\code{tlf::PKRatioDataMapping$checkMapData()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="PKRatioDataMapping" data-id="checkMapData"><a href='../../tlf/html/PKRatioDataMapping.html#method-PKRatioDataMapping-checkMapData'><code>tlf::PKRatioDataMapping$checkMapData()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-DDIRatioDataMapping-new"></a>}}
+\if{latex}{\out{\hypertarget{method-DDIRatioDataMapping-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{DDIRatioDataMapping} object
 \subsection{Usage}{
@@ -88,8 +88,8 @@ A new \code{DDIRatioDataMapping} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-DDIRatioDataMapping-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-DDIRatioDataMapping-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

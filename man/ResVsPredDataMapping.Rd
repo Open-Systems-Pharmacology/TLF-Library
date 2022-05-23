@@ -30,20 +30,20 @@ Other DataMapping classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-clone}{\code{ResVsPredDataMapping$clone()}}
+\item \href{#method-ResVsPredDataMapping-clone}{\code{ResVsPredDataMapping$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PKRatioDataMapping" data-id="checkMapData">}\href{../../tlf/html/PKRatioDataMapping.html#method-checkMapData}{\code{tlf::PKRatioDataMapping$checkMapData()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="ObsVsPredDataMapping" data-id="initialize">}\href{../../tlf/html/ObsVsPredDataMapping.html#method-initialize}{\code{tlf::ObsVsPredDataMapping$initialize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="PKRatioDataMapping" data-id="checkMapData"><a href='../../tlf/html/PKRatioDataMapping.html#method-PKRatioDataMapping-checkMapData'><code>tlf::PKRatioDataMapping$checkMapData()</code></a></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="ObsVsPredDataMapping" data-id="initialize"><a href='../../tlf/html/ObsVsPredDataMapping.html#method-ObsVsPredDataMapping-initialize'><code>tlf::ObsVsPredDataMapping$initialize()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-ResVsPredDataMapping-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ResVsPredDataMapping-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

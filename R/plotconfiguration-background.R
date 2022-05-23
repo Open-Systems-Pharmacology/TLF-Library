@@ -37,8 +37,8 @@ BackgroundConfiguration <- R6::R6Class(
       eval(validateAreaExpression)
       eval(validateLineExpression)
 
-      setAreaExpression <- parse(text = paste0("private$.", areaFieldNames, " <- ", areaFieldNames, " %||% currentTheme$background$", areaFieldNames))
-      setLineExpression <- parse(text = paste0("private$.", lineFieldNames, " <- ", lineFieldNames, " %||% currentTheme$background$", lineFieldNames))
+      setAreaExpression <- parse(text = paste0("self$", areaFieldNames, " <- ", areaFieldNames, " %||% currentTheme$background$", areaFieldNames))
+      setLineExpression <- parse(text = paste0("self$", lineFieldNames, " <- ", lineFieldNames, " %||% currentTheme$background$", lineFieldNames))
       eval(setAreaExpression)
       eval(setLineExpression)
     },
@@ -75,27 +75,51 @@ BackgroundConfiguration <- R6::R6Class(
     },
     #' @field plot `BackgroundElement` object
     plot = function(value) {
-      requestOnElement(private$.plot, value)
+      if (missing(value)) { 
+        return(private$.plot) 
+      } 
+      validateIsOfType(value, "BackgroundElement", nullAllowed = TRUE) 
+      private$.plot <- value %||% private$.plot
     },
     #' @field panel `BackgroundElement` object
     panel = function(value) {
-      requestOnElement(private$.panel, value)
+      if (missing(value)) { 
+        return(private$.panel) 
+      } 
+      validateIsOfType(value, "BackgroundElement", nullAllowed = TRUE) 
+      private$.panel <- value %||% private$.panel
     },
     #' @field xAxis `LineElement` object
     xAxis = function(value) {
-      requestOnElement(private$.xAxis, value)
+      if (missing(value)) { 
+        return(private$.xAxis) 
+      } 
+      validateIsOfType(value, "LineElement", nullAllowed = TRUE) 
+      private$.xAxis <- value %||% private$.xAxis
     },
     #' @field yAxis `LineElement` object
     yAxis = function(value) {
-      requestOnElement(private$.yAxis, value)
+      if (missing(value)) { 
+        return(private$.yAxis) 
+      } 
+      validateIsOfType(value, "LineElement", nullAllowed = TRUE) 
+      private$.yAxis <- value %||% private$.yAxis
     },
     #' @field xGrid `LineElement` object
     xGrid = function(value) {
-      requestOnElement(private$.xGrid, value)
+      if (missing(value)) { 
+        return(private$.xGrid) 
+      } 
+      validateIsOfType(value, "LineElement", nullAllowed = TRUE) 
+      private$.xGrid <- value %||% private$.xGrid
     },
     #' @field yGrid `LineElement` object
     yGrid = function(value) {
-      requestOnElement(private$.yGrid, value)
+      if (missing(value)) { 
+        return(private$.yGrid) 
+      } 
+      validateIsOfType(value, "LineElement", nullAllowed = TRUE) 
+      private$.yGrid <- value %||% private$.yGrid
     }
   ),
   private = list(
@@ -152,7 +176,7 @@ BackgroundElement <- R6::R6Class(
       ggplot2::element_rect(
         fill = fill %||% self$fill,
         colour = color %||% self$color,
-        size =  size %||% as.numeric(self$size),
+        size = size %||% as.numeric(self$size),
         linetype = linetype %||% self$linetype
       )
     }
@@ -174,29 +198,9 @@ LineElement <- R6::R6Class(
     createPlotElement = function(color = NULL, size = NULL, linetype = NULL) {
       ggplot2::element_line(
         colour = color %||% self$color,
-        size =  size %||% as.numeric(self$size),
+        size = size %||% as.numeric(self$size),
         linetype = linetype %||% self$linetype
       )
     }
   )
 )
-
-#' @keywords internal
-requestOnElement <- function(field, value) {
-  if (missing(value)) {
-    return(field)
-  }
-  # Update the element partially in case of names list
-  if (isOfType(value, "list")) {
-    for (fieldName in c("color", "size", "linetype")) {
-      field[[fieldName]] <- value[[fieldName]] %||% field[[fieldName]]
-    }
-    if (isOfType(field, "BackgroundElement")) {
-      field[["fill"]] <- value[["fill"]] %||% field[["fill"]]
-    }
-  }
-  # Or update the whole element R6 object is used
-  if (isOfType(value, "BackgroundElement")) {
-    field <- value
-  }
-}

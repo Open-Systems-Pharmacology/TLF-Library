@@ -60,13 +60,13 @@ Other PlotConfiguration classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{PlotConfiguration$new()}}
-\item \href{#method-clone}{\code{PlotConfiguration$clone()}}
+\item \href{#method-PlotConfiguration-new}{\code{PlotConfiguration$new()}}
+\item \href{#method-PlotConfiguration-clone}{\code{PlotConfiguration$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-PlotConfiguration-new"></a>}}
+\if{latex}{\out{\hypertarget{method-PlotConfiguration-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{PlotConfiguration} object
 \subsection{Usage}{
@@ -187,8 +187,8 @@ A new \code{PlotConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-PlotConfiguration-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-PlotConfiguration-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

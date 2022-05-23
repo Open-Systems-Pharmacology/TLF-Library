@@ -30,17 +30,17 @@ If \code{FALSE}, some space between data and axis is kept}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{AxisConfiguration$new()}}
-\item \href{#method-ggplotScale}{\code{AxisConfiguration$ggplotScale()}}
-\item \href{#method-ggplotExpansion}{\code{AxisConfiguration$ggplotExpansion()}}
-\item \href{#method-prettyTicks}{\code{AxisConfiguration$prettyTicks()}}
-\item \href{#method-prettyTickLabels}{\code{AxisConfiguration$prettyTickLabels()}}
-\item \href{#method-clone}{\code{AxisConfiguration$clone()}}
+\item \href{#method-AxisConfiguration-new}{\code{AxisConfiguration$new()}}
+\item \href{#method-AxisConfiguration-ggplotScale}{\code{AxisConfiguration$ggplotScale()}}
+\item \href{#method-AxisConfiguration-ggplotExpansion}{\code{AxisConfiguration$ggplotExpansion()}}
+\item \href{#method-AxisConfiguration-prettyTicks}{\code{AxisConfiguration$prettyTicks()}}
+\item \href{#method-AxisConfiguration-prettyTickLabels}{\code{AxisConfiguration$prettyTickLabels()}}
+\item \href{#method-AxisConfiguration-clone}{\code{AxisConfiguration$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-AxisConfiguration-new"></a>}}
+\if{latex}{\out{\hypertarget{method-AxisConfiguration-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{AxisConfiguration} object
 \subsection{Usage}{
@@ -79,8 +79,8 @@ A new \code{AxisConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ggplotScale"></a>}}
-\if{latex}{\out{\hypertarget{method-ggplotScale}{}}}
+\if{html}{\out{<a id="method-AxisConfiguration-ggplotScale"></a>}}
+\if{latex}{\out{\hypertarget{method-AxisConfiguration-ggplotScale}{}}}
 \subsection{Method \code{ggplotScale()}}{
 Get the \code{ggplot2} actual \code{trans} name of scale
 \subsection{Usage}{
@@ -92,8 +92,8 @@ A character included in \code{ggplot2} available \code{trans} names
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ggplotExpansion"></a>}}
-\if{latex}{\out{\hypertarget{method-ggplotExpansion}{}}}
+\if{html}{\out{<a id="method-AxisConfiguration-ggplotExpansion"></a>}}
+\if{latex}{\out{\hypertarget{method-AxisConfiguration-ggplotExpansion}{}}}
 \subsection{Method \code{ggplotExpansion()}}{
 Get the \code{ggplot2} actual function for expansion
 \subsection{Usage}{
@@ -105,8 +105,8 @@ A \code{ggplot2} function
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-prettyTicks"></a>}}
-\if{latex}{\out{\hypertarget{method-prettyTicks}{}}}
+\if{html}{\out{<a id="method-AxisConfiguration-prettyTicks"></a>}}
+\if{latex}{\out{\hypertarget{method-AxisConfiguration-prettyTicks}{}}}
 \subsection{Method \code{prettyTicks()}}{
 Get tick values for pretty default log plots
 \subsection{Usage}{
@@ -118,8 +118,8 @@ User defined tick values or tlf default ticks
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-prettyTickLabels"></a>}}
-\if{latex}{\out{\hypertarget{method-prettyTickLabels}{}}}
+\if{html}{\out{<a id="method-AxisConfiguration-prettyTickLabels"></a>}}
+\if{latex}{\out{\hypertarget{method-AxisConfiguration-prettyTickLabels}{}}}
 \subsection{Method \code{prettyTickLabels()}}{
 Get tick labels for pretty default log plots
 \subsection{Usage}{
@@ -131,8 +131,8 @@ User defined tick labels or tlf default ticklabels
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-AxisConfiguration-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-AxisConfiguration-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

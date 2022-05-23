@@ -2,8 +2,15 @@
 
 ## New features
 
-* New function `plotGrid()` to create a plot grid and `PlotGridConfiguration` class to specify its properties.
-* The default theme for all plots is the new `useMinimalTheme()`.
+* New function `plotGrid()` to create a plot grid and `PlotGridConfiguration` class to specify its properties (#164).
+* The default theme for all plots is the new `useMinimalTheme()` (#223).
+* `Font` and `Label` objects now accounts for properties `align` and `fontFamily` (#234).
+
+## Minor improvements and bug fixes
+
+* Log scale plots use prettier ticks and ticklabels (#199)
+* Creation of additional helper enums: `ExportFormats`, `ExportUnits`, `FontFaces` and `Alignements` (#263)
+* Plots support transparency of ribbons, points and lines defined by field `alpha` (#227, #272)
 
 # tlf 1.2.0
 
