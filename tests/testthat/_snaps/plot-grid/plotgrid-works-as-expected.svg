@@ -243,7 +243,7 @@
 <text x='549.75' y='549.57' text-anchor='middle' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='21.69px' lengthAdjust='spacingAndGlyphs'>supp</text>
 <text transform='translate(370.62,307.55) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='13.34px' lengthAdjust='spacingAndGlyphs'>len</text>
 <text transform='translate(513.44,90.07) rotate(-45)' style='font-size: 15.00px; fill: #0000FF; font-family: sans;' textLength='50.01px' lengthAdjust='spacingAndGlyphs'>Plot (B)</text>
-<text x='10.96' y='570.52' style='font-size: 10.00px; font-family: sans;' textLength='51.14px' lengthAdjust='spacingAndGlyphs'>my sources</text>
+<text x='709.04' y='570.52' text-anchor='end' style='font-size: 10.00px; font-family: sans;' textLength='51.14px' lengthAdjust='spacingAndGlyphs'>my sources</text>
 <text x='360.00' y='34.25' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='90.73px' lengthAdjust='spacingAndGlyphs'>something clever</text>
 <text x='360.00' y='18.02' text-anchor='middle' style='font-size: 14.00px; font-family: sans;' textLength='109.74px' lengthAdjust='spacingAndGlyphs'>my combined plot</text>
 </g>

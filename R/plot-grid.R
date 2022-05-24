@@ -264,7 +264,7 @@ PlotGridConfiguration <- R6::R6Class(
     captionSize = 10,
     captionFontFace = FontFaces$plain,
     captionFontFamily = "",
-    captionHorizontalJustification = 0,
+    captionHorizontalJustification = 1,
     captionVerticalJustification = 0,
     captionAngle = 0,
 
