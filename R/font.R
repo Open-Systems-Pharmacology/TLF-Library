@@ -88,7 +88,6 @@ Alignments <- enum(c("left", "center", "right"))
 #' @family enum helpers
 FontFaces <- enum(c("plain", "bold", "italic", "bold.italic"))
 
-
 #' @title checkPlotFontFamily
 #' @description Check if font family is available in Windows font database.
 #' Use function `grDevices::windowsFonts()` to get the list of font families available.

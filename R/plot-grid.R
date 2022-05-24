@@ -377,3 +377,77 @@ PlotGridConfiguration <- R6::R6Class(
     }
   )
 )
+
+# enums -------------------------------------
+
+#' @title PlotAnnotationTextSize
+#' @import ospsuite.utils
+#' @description
+#' List of default text sizes for plot annotations.
+#' @family enum helpers
+#' @export
+PlotAnnotationTextSize <- enum(
+  c(
+    # annotations for the entire grid as a whole
+    "plotGridTitleSize" = 14,
+    "plotGridSubtitleSize" = 12,
+    "plotGridCaptionSize" = 10,
+    "plotGridTagSize" = 8,
+
+    # annotations for individual plots
+    "plotTitleSize" = 12,
+    "plotSubtitleSize" = 10,
+    "plotCaptionSize" = 8,
+    "plotXLabelSize" = 10,
+    "plotYLabelSize" = 10,
+    "plotLegendTitleSize" = 10,
+    "plotLegendCaptionSize" = 10
+  )
+)
+
+#' @title VerticalJustification
+#' @import ospsuite.utils
+#' @description
+#' List of all available vertical justifications for plot annotation text.
+#' @family enum helpers
+#' @export
+VerticalJustification <- enum(
+  c(
+    "bottom" = 0,
+    "middle" = 0.5,
+    "top" = 1
+  )
+)
+
+#' @title HorizontalJustification
+#' @import ospsuite.utils
+#' @description
+#' List of all available horizontal justifications for plot annotation text.
+#' @family enum helpers
+#' @export
+HorizontalJustification <- enum(
+  c(
+    "left" = 0,
+    "middle" = 0.5,
+    "right" = 1
+  )
+)
+
+#' @title TagPositions
+#' @import ospsuite.utils
+#' @description
+#' List of all available tag positions in a plot grid.
+#' @family enum helpers
+#' @export
+TagPositions <- enum(
+  c(
+    "topLeft" = "topleft",
+    "top" = "top",
+    "topRight" = "topright",
+    "left" = "left",
+    "right" = "right",
+    "bottomLeft" = "bottomleft",
+    "bottom" = "bottom",
+    "bottomRight" = "bottomright"
+  )
+)
