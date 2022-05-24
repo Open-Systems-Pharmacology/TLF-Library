@@ -134,11 +134,41 @@ plotGrid <- function(plotGridConfiguration) {
 #'   either be specified as a text string or by concatenating calls to [area()]
 #'   together. See the examples for further information on use.
 #'
+#' @examples
+#'
+#' library(tlf)
+#'
+#' # create a list of plots
+#' ls_plots <- list(
+#'   # first plot
+#'   plotBoxWhisker(mtcars,
+#'     dataMapping = BoxWhiskerDataMapping$new(x = "am", y = "wt"), outliers = FALSE
+#'   ),
+#'   # second plot
+#'   plotBoxWhisker(ToothGrowth,
+#'     dataMapping = BoxWhiskerDataMapping$new(x = "supp", y = "len")
+#'   )
+#' )
+#'
+#' plotGridObj <- PlotGridConfiguration$new(ls_plots)
+#'
+#' plotGridObj$title <- "my combined plot"
+#' plotGridObj$subtitle <- "something clever"
+#' plotGridObj$caption <- "something dumb"
+#' plotGridObj$nColumns <- 2L
+#' plotGridObj$tagLevels <- "A"
+#' plotGridObj$tagPrefix <- "Plot ("
+#' plotGridObj$tagSuffix <- ")"
+#'
+#' # print the object to see its properties
+#' plotGridObj
+#'
 #' @return A `PlotGridConfiguration` object.
 #'
 #' @export
 PlotGridConfiguration <- R6::R6Class(
   "PlotGridConfiguration",
+  inherit = ospsuite.utils::Printable,
   public = list(
     plotList = list(),
     title = NULL,
@@ -210,6 +240,29 @@ PlotGridConfiguration <- R6::R6Class(
 
         self$plotList <- append(self$plotList, plots)
       }
+    },
+
+    #' @description
+    #' Print the object to the console.
+    print = function() {
+      private$printClass()
+
+      private$printLine("Plot grid annotations", addTab = TRUE)
+      private$printLine("\tTitle", self$title, addTab = TRUE)
+      private$printLine("\tSubtitle", self$subtitle, addTab = TRUE)
+      private$printLine("\tCaption", self$caption, addTab = TRUE)
+
+      private$printLine("Plot grid", addTab = TRUE)
+      private$printLine("\tNumber of plots included", length(self$plotList), addTab = TRUE)
+      private$printLine("\tNumber of columns in the grid", self$nColumns, addTab = TRUE)
+      private$printLine("\tNumber of rows in the grid", self$nRows, addTab = TRUE)
+      private$printLine("\tArranged in row-major order", self$byRow, addTab = TRUE)
+
+      private$printLine("Plot tags", addTab = TRUE)
+      private$printLine("\tTag level format", self$tagLevels, addTab = TRUE)
+      private$printLine("\tTag level prefix", self$tagLevels, addTab = TRUE)
+      private$printLine("\tTag level suffix", self$tagLevels, addTab = TRUE)
+      private$printLine("\tTag level separator", self$tagLevels, addTab = TRUE)
     }
   )
 )

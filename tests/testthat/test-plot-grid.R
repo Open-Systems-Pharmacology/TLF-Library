@@ -2,33 +2,35 @@ test_that("plots grid produces error with wrong input type", {
   expect_error(plotGrid(DataSet$new(name = "DS")))
 })
 
+set.seed(123)
+ls_plots <- list(
+  # first plot
+  plotBoxWhisker(mtcars,
+    dataMapping = BoxWhiskerDataMapping$new(x = "am", y = "wt"), outliers = FALSE
+  ),
+  # second plot
+  plotBoxWhisker(ToothGrowth,
+    dataMapping = BoxWhiskerDataMapping$new(x = "supp", y = "len")
+  )
+)
+
+plotGridObj <- PlotGridConfiguration$new(ls_plots)
+
+plotGridObj$title <- "my combined plot"
+plotGridObj$subtitle <- "something clever"
+plotGridObj$caption <- "something dumb"
+plotGridObj$nColumns <- 2L
+plotGridObj$tagLevels <- "A"
+plotGridObj$tagPrefix <- "Plot ("
+plotGridObj$tagSuffix <- ")"
+
+test_that("plots grid is printed", {
+  expect_visible(plotGridObj)
+})
+
 test_that("plots grid is rendered correctly", {
   skip_if_not_installed("vdiffr")
   skip_if(getRversion() < "4.1")
-
-  library(tlf)
-
-  set.seed(123)
-  ls_plots <- list(
-    # first plot
-    plotBoxWhisker(mtcars,
-      dataMapping = BoxWhiskerDataMapping$new(x = "am", y = "wt"), outliers = FALSE
-    ),
-    # second plot
-    plotBoxWhisker(ToothGrowth,
-      dataMapping = BoxWhiskerDataMapping$new(x = "supp", y = "len")
-    )
-  )
-
-  plotGridObj <- PlotGridConfiguration$new(ls_plots)
-
-  plotGridObj$title <- "my combined plot"
-  plotGridObj$subtitle <- "something clever"
-  plotGridObj$caption <- "something dumb"
-  plotGridObj$nColumns <- 2L
-  plotGridObj$tagLevels <- "A"
-  plotGridObj$tagPrefix <- "Plot ("
-  plotGridObj$tagSuffix <- ")"
 
   pGrid <- plotGrid(plotGridObj)
 
