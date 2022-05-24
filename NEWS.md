@@ -7,6 +7,7 @@
    - `TagPosition` (tag position in a plot grid) (#293)
    - `HorizontalJustification` (horizontal justifications for plot annotation text) (#293)
    - `VerticalJustification` (vertical justifications for plot annotation text) (#293)
+   - `PlotAnnotationTextSize` (default text sizes for plot annotations) (#293)
    
 ## Minor improvements and bug fixes
 

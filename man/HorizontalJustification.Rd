@@ -22,6 +22,7 @@ Other enum helpers:
 \code{\link{FontFaces}},
 \code{\link{LegendPositions}},
 \code{\link{Linetypes}},
+\code{\link{PlotAnnotationTextSize}},
 \code{\link{Scaling}},
 \code{\link{Shapes}},
 \code{\link{TagPositions}},

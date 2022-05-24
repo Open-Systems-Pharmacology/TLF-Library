@@ -44,6 +44,7 @@ Other enum helpers:
 \code{\link{HorizontalJustification}},
 \code{\link{LegendPositions}},
 \code{\link{Linetypes}},
+\code{\link{PlotAnnotationTextSize}},
 \code{\link{Shapes}},
 \code{\link{TagPositions}},
 \code{\link{VerticalJustification}},

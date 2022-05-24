@@ -86,6 +86,31 @@ VerticalJustification <- enum(
 
 tlfEnv$defaultVerticalJustification <- VerticalJustification$bottom
 
+#' @title PlotAnnotationTextSize
+#' @import ospsuite.utils
+#' @description
+#' List of default text sizes for plot annotations.
+#' @family enum helpers
+#' @export
+PlotAnnotationTextSize <- enum(
+  c(
+    # annotations for the entire grid as a whole
+    "plotGridTitleSize" = 14,
+    "plotGridSubtitleSize" = 12,
+    "plotGridCaptionSize" = 10,
+    "plotGridTagSize" = 8,
+
+    # annotations for individual plots
+    "plotTitleSize" = 12,
+    "plotSubtitleSize" = 10,
+    "plotCaptionSize" = 8,
+    "plotXLabelSize" = 10,
+    "plotYLabelSize" = 10,
+    "plotLegendTitleSize" = 10,
+    "plotLegendCaptionSize" = 10
+  )
+)
+
 #' @title setDefaultLegendPosition
 #' @description Set default legend position of tlf environment
 #' @param position legend position.
