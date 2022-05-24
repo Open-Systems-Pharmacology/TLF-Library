@@ -13,6 +13,34 @@ plot properties.
 }
 \examples{
 
+library(tlf)
+
+# create a list of plots
+ls_plots <- list(
+  # first plot
+  plotBoxWhisker(mtcars,
+    dataMapping = BoxWhiskerDataMapping$new(x = "am", y = "wt"), outliers = FALSE
+  ),
+  # second plot
+  plotBoxWhisker(ToothGrowth,
+    dataMapping = BoxWhiskerDataMapping$new(x = "supp", y = "len")
+  )
+)
+
+plotGridObj <- PlotGridConfiguration$new(ls_plots)
+
+plotGridObj$title <- "my combined plot"
+plotGridObj$subtitle <- "something clever"
+plotGridObj$caption <- "something dumb"
+plotGridObj$nColumns <- 2L
+plotGridObj$tagLevels <- "A"
+plotGridObj$tagPrefix <- "Plot ("
+plotGridObj$tagSuffix <- ")"
+
+# print the object to see its properties
+plotGridObj
+
+
 ## ------------------------------------------------
 ## Method `PlotGridConfiguration$addPlots`
 ## ------------------------------------------------
@@ -33,6 +61,9 @@ myPlotGrid$addPlots(list("p1" = ggplot(), "p2" = ggplot()))
 # now be a list of length `3`
 length(myPlotGrid$plotList)
 
+}
+\section{Super class}{
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{PlotGridConfiguration}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -106,9 +137,16 @@ in the grid. Will get repeated to match the dimensions of the grid.}
 \itemize{
 \item \href{#method-PlotGridConfiguration-new}{\code{PlotGridConfiguration$new()}}
 \item \href{#method-PlotGridConfiguration-addPlots}{\code{PlotGridConfiguration$addPlots()}}
+\item \href{#method-PlotGridConfiguration-print}{\code{PlotGridConfiguration$print()}}
 \item \href{#method-PlotGridConfiguration-clone}{\code{PlotGridConfiguration$clone()}}
 }
 }
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-PlotGridConfiguration-new"></a>}}
 \if{latex}{\out{\hypertarget{method-PlotGridConfiguration-new}{}}}
@@ -170,6 +208,16 @@ length(myPlotGrid$plotList)
 }
 \if{html}{\out{</div>}}
 
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-PlotGridConfiguration-print"></a>}}
+\if{latex}{\out{\hypertarget{method-PlotGridConfiguration-print}{}}}
+\subsection{Method \code{print()}}{
+Print the object to the console.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PlotGridConfiguration$print()}\if{html}{\out{</div>}}
 }
 
 }
