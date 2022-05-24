@@ -50,7 +50,7 @@ addWatermark(p, watermarkLabel, angle = 0)
 # Watermark totally opaque
 addWatermark(p, watermarkLabel, alpha = 1)
 
-# As multiple layers of watermark: 
+# As multiple layers of watermark:
 p2 <- addWatermark(p, watermarkLabel, alpha = 1)
 addWatermark(p2, "other watermark", color = "red", angle = 90)
 

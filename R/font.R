@@ -62,7 +62,11 @@ Font <- R6::R6Class(
         family = checkPlotFontFamily(fontFamily %||% self$fontFamily),
         angle = angle %||% self$angle,
         vjust = 0.5,
-        hjust = switch(align %||% self$align, "left" = 0, "center" = 0.5, "right" = 1)
+        hjust = switch(align %||% self$align,
+          "left" = 0,
+          "center" = 0.5,
+          "right" = 1
+        )
       )
     }
   )
@@ -74,7 +78,7 @@ Font <- R6::R6Class(
 #' @description
 #' List of all available alignments/justifications for fonts
 #' @family enum helpers
-Alignments <- enum(c("left", "center","right"))
+Alignments <- enum(c("left", "center", "right"))
 
 #' @title FontFaces
 #' @import ospsuite.utils
@@ -92,14 +96,14 @@ FontFaces <- enum(c("plain", "bold", "italic", "bold.italic"))
 #' @return Name of font family if available in Windows font database
 #' `NULL` otherwise
 #' @keywords internal
-checkPlotFontFamily <- function(fontFamily){
-  if(isEmpty(.Platform$OS.type)){
+checkPlotFontFamily <- function(fontFamily) {
+  if (isEmpty(.Platform$OS.type)) {
     return(NULL)
   }
-  if(.Platform$OS.type != "windows"){
+  if (.Platform$OS.type != "windows") {
     return(NULL)
   }
-  if(isIncluded(fontFamily, names(grDevices::windowsFonts()))){
+  if (isIncluded(fontFamily, names(grDevices::windowsFonts()))) {
     return(fontFamily)
   }
   return(NULL)

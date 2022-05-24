@@ -23,19 +23,19 @@ Other PlotConfiguration classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{HistogramPlotConfiguration$new()}}
-\item \href{#method-clone}{\code{HistogramPlotConfiguration$clone()}}
+\item \href{#method-HistogramPlotConfiguration-new}{\code{HistogramPlotConfiguration$new()}}
+\item \href{#method-HistogramPlotConfiguration-clone}{\code{HistogramPlotConfiguration$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-HistogramPlotConfiguration-new"></a>}}
+\if{latex}{\out{\hypertarget{method-HistogramPlotConfiguration-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{HistogramPlotConfiguration} object
 \subsection{Usage}{
@@ -56,8 +56,8 @@ A new \code{HistogramPlotConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-HistogramPlotConfiguration-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-HistogramPlotConfiguration-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -44,9 +44,9 @@ plotResVsPred(data = resVsPredData, dataMapping = ResVsPredDataMapping$new(x = "
 
 # Produce Res vs Pred plot with linear regression
 plotResVsPred(
-data = resVsPredData, 
-dataMapping = ResVsPredDataMapping$new(x = "x", y = "y"),
-smoother = "lm"
+  data = resVsPredData,
+  dataMapping = ResVsPredDataMapping$new(x = "x", y = "y"),
+  smoother = "lm"
 )
 }
 \seealso{

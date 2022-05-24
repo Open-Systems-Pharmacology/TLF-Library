@@ -12,20 +12,20 @@ R6 class defining the properties of background line elements
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-createPlotElement}{\code{LineElement$createPlotElement()}}
-\item \href{#method-clone}{\code{LineElement$clone()}}
+\item \href{#method-LineElement-createPlotElement}{\code{LineElement$createPlotElement()}}
+\item \href{#method-LineElement-clone}{\code{LineElement$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="BackgroundElement" data-id="initialize">}\href{../../tlf/html/BackgroundElement.html#method-initialize}{\code{tlf::BackgroundElement$initialize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="BackgroundElement" data-id="initialize"><a href='../../tlf/html/BackgroundElement.html#method-BackgroundElement-initialize'><code>tlf::BackgroundElement$initialize()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-createPlotElement"></a>}}
-\if{latex}{\out{\hypertarget{method-createPlotElement}{}}}
+\if{html}{\out{<a id="method-LineElement-createPlotElement"></a>}}
+\if{latex}{\out{\hypertarget{method-LineElement-createPlotElement}{}}}
 \subsection{Method \code{createPlotElement()}}{
 Create a \code{ggplot2::element_line} directly usable by \code{ggplot2::theme}.
 \subsection{Usage}{
@@ -48,8 +48,8 @@ An \code{element_line} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-LineElement-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-LineElement-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

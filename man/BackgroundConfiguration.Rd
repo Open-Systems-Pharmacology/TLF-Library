@@ -28,14 +28,14 @@ R6 class defining the configuration of background
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{BackgroundConfiguration$new()}}
-\item \href{#method-updatePlot}{\code{BackgroundConfiguration$updatePlot()}}
-\item \href{#method-clone}{\code{BackgroundConfiguration$clone()}}
+\item \href{#method-BackgroundConfiguration-new}{\code{BackgroundConfiguration$new()}}
+\item \href{#method-BackgroundConfiguration-updatePlot}{\code{BackgroundConfiguration$updatePlot()}}
+\item \href{#method-BackgroundConfiguration-clone}{\code{BackgroundConfiguration$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-BackgroundConfiguration-new"></a>}}
+\if{latex}{\out{\hypertarget{method-BackgroundConfiguration-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{BackgroundConfiguration} object
 \subsection{Usage}{
@@ -74,8 +74,8 @@ A new \code{BackgroundConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-updatePlot"></a>}}
-\if{latex}{\out{\hypertarget{method-updatePlot}{}}}
+\if{html}{\out{<a id="method-BackgroundConfiguration-updatePlot"></a>}}
+\if{latex}{\out{\hypertarget{method-BackgroundConfiguration-updatePlot}{}}}
 \subsection{Method \code{updatePlot()}}{
 Update background a \code{ggplot} object from \code{BackgroundConfiguration} properties
 \subsection{Usage}{
@@ -94,8 +94,8 @@ A \code{ggplot} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-BackgroundConfiguration-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-BackgroundConfiguration-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

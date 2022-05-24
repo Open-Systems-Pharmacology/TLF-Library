@@ -1,15 +1,14 @@
 ---
-title: "plot-maker"
+title: "Run Shiny App to Create Plots"
 resource_files:
   - figures
-author: "OSPSuiteR 2021"
 output:
   rmarkdown::html_vignette:
     fig.align: 'center'
     dpi: 300
     toc: true
 vignette: >
-  %\VignetteIndexEntry{plot-maker}
+  %\VignetteIndexEntry{Run Shiny App to Create Plots}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

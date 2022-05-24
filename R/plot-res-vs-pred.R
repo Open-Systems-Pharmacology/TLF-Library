@@ -7,17 +7,17 @@
 #'
 #' @export
 #' @family molecule plots
-#' @examples 
+#' @examples
 #' # Produce Obs vs Pred plot
 #' resVsPredData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
-#' 
+#'
 #' plotResVsPred(data = resVsPredData, dataMapping = ResVsPredDataMapping$new(x = "x", y = "y"))
-#' 
+#'
 #' # Produce Res vs Pred plot with linear regression
 #' plotResVsPred(
-#' data = resVsPredData, 
-#' dataMapping = ResVsPredDataMapping$new(x = "x", y = "y"),
-#' smoother = "lm"
+#'   data = resVsPredData,
+#'   dataMapping = ResVsPredDataMapping$new(x = "x", y = "y"),
+#'   smoother = "lm"
 #' )
 plotResVsPred <- function(data,
                           metaData = NULL,
@@ -33,10 +33,11 @@ plotResVsPred <- function(data,
 
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
+  # Add horizontal lines with offset defined in lines of dataMapping
   for (lineIndex in seq_along(dataMapping$lines)) {
     eval(parseAddLineLayer("horizontal", dataMapping$lines[[lineIndex]], lineIndex - 1))
   }
-  if (isOfLength(lineIndex, 0)) {
+  if (isEmpty(lineIndex)) {
     lineIndex <- 0
   }
   # Add Smoother if defined
@@ -47,9 +48,11 @@ plotResVsPred <- function(data,
         method = "loess",
         se = FALSE,
         formula = "y ~ x",
+        na.rm = TRUE,
         mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y),
         color = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex, aesthetic = "color"),
         linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex, aesthetic = "linetype"),
+        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, position = lineIndex, aesthetic = "alpha"),
         size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
       )
   }
@@ -61,8 +64,10 @@ plotResVsPred <- function(data,
         method = "lm",
         se = FALSE,
         formula = "y ~ x",
+        na.rm = TRUE,
         color = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex, aesthetic = "color"),
         linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex, aesthetic = "linetype"),
+        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, position = lineIndex, aesthetic = "alpha"),
         size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
       )
   }

@@ -24,14 +24,14 @@ R6 class defining the configuration of the labels of a \code{ggplot} object
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{LabelConfiguration$new()}}
-\item \href{#method-updatePlot}{\code{LabelConfiguration$updatePlot()}}
-\item \href{#method-clone}{\code{LabelConfiguration$clone()}}
+\item \href{#method-LabelConfiguration-new}{\code{LabelConfiguration$new()}}
+\item \href{#method-LabelConfiguration-updatePlot}{\code{LabelConfiguration$updatePlot()}}
+\item \href{#method-LabelConfiguration-clone}{\code{LabelConfiguration$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-LabelConfiguration-new"></a>}}
+\if{latex}{\out{\hypertarget{method-LabelConfiguration-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{LabelConfiguration} object
 \subsection{Usage}{
@@ -64,8 +64,8 @@ A new \code{LabelConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-updatePlot"></a>}}
-\if{latex}{\out{\hypertarget{method-updatePlot}{}}}
+\if{html}{\out{<a id="method-LabelConfiguration-updatePlot"></a>}}
+\if{latex}{\out{\hypertarget{method-LabelConfiguration-updatePlot}{}}}
 \subsection{Method \code{updatePlot()}}{
 Update labels of a \code{ggplot} object and their properties
 \subsection{Usage}{
@@ -84,8 +84,8 @@ A \code{ggplot} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-LabelConfiguration-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-LabelConfiguration-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

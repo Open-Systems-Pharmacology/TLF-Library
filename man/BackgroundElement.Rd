@@ -22,14 +22,14 @@ R6 class defining the properties of background elements
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{BackgroundElement$new()}}
-\item \href{#method-createPlotElement}{\code{BackgroundElement$createPlotElement()}}
-\item \href{#method-clone}{\code{BackgroundElement$clone()}}
+\item \href{#method-BackgroundElement-new}{\code{BackgroundElement$new()}}
+\item \href{#method-BackgroundElement-createPlotElement}{\code{BackgroundElement$createPlotElement()}}
+\item \href{#method-BackgroundElement-clone}{\code{BackgroundElement$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-BackgroundElement-new"></a>}}
+\if{latex}{\out{\hypertarget{method-BackgroundElement-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{BackgroundElement} object
 \subsection{Usage}{
@@ -54,8 +54,8 @@ A new \code{BackgroundElement} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-createPlotElement"></a>}}
-\if{latex}{\out{\hypertarget{method-createPlotElement}{}}}
+\if{html}{\out{<a id="method-BackgroundElement-createPlotElement"></a>}}
+\if{latex}{\out{\hypertarget{method-BackgroundElement-createPlotElement}{}}}
 \subsection{Method \code{createPlotElement()}}{
 Create a \code{ggplot2::element_rect}  directly usable by \code{ggplot2::theme}.
 \subsection{Usage}{
@@ -85,8 +85,8 @@ An \code{element_rect} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-BackgroundElement-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-BackgroundElement-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

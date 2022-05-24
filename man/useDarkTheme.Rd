@@ -11,5 +11,5 @@ Set default Matlab theme to be used as the current default of the tlf environmen
 }
 \examples{
 useDarkTheme()
-addScatter(x = seq(1,10), y = rnorm(10))
+addScatter(x = seq(1, 10), y = rnorm(10))
 }

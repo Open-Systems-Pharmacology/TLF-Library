@@ -37,19 +37,19 @@ Other PlotConfiguration classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{BoxWhiskerPlotConfiguration$new()}}
-\item \href{#method-clone}{\code{BoxWhiskerPlotConfiguration$clone()}}
+\item \href{#method-BoxWhiskerPlotConfiguration-new}{\code{BoxWhiskerPlotConfiguration$new()}}
+\item \href{#method-BoxWhiskerPlotConfiguration-clone}{\code{BoxWhiskerPlotConfiguration$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-BoxWhiskerPlotConfiguration-new"></a>}}
+\if{latex}{\out{\hypertarget{method-BoxWhiskerPlotConfiguration-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{BoxWhiskerPlotConfiguration} object
 \subsection{Usage}{
@@ -70,8 +70,8 @@ A new \code{BoxWhiskerPlotConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-BoxWhiskerPlotConfiguration-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-BoxWhiskerPlotConfiguration-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

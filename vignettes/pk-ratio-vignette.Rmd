@@ -1,11 +1,10 @@
 ---
-title: "PK Ratio plots"
-author: "OSPSuiteR 2021"
+title: "PK Ratio Plots"
 output:
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{PK Ratio plots}
+  %\VignetteIndexEntry{PK Ratio Plots}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---

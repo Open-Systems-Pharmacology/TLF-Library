@@ -3,9 +3,9 @@
 #' Producing PK Ratio plots
 #'
 #' @inheritParams addScatter
-#' @param dataMapping 
+#' @param dataMapping
 #' A `PKRatioDataMapping` object mapping `x`, `y` and aesthetic groups to their variable names of `data`.
-#' @param plotConfiguration 
+#' @param plotConfiguration
 #' An optional `PKRatioPlotConfiguration` object defining labels, grid, background and watermark.
 #' @return A `ggplot` object
 #'
@@ -14,12 +14,12 @@
 #'
 #' @export
 #' @family molecule plots
-#' @examples 
+#' @examples
 #' # Produce PK Ratio plot
 #' pkData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
-#' 
+#'
 #' plotPKRatio(data = pkData, dataMapping = PKRatioDataMapping$new(x = "x", y = "y"))
-#' 
+#'
 plotPKRatio <- function(data,
                         metaData = NULL,
                         dataMapping = NULL,

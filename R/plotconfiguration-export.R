@@ -1,6 +1,8 @@
 #' @title ExportConfiguration
 #' @description R6 class defining properties for saving a `ggplot` object
 #' @field name character defining the name of the file to be saved (without extension)
+#' @field path Path of the directory to save plot to: path and filename are
+#' combined to create the fully qualified file name. Defaults to the working directory.
 #' @field format character defining the format of the file to be saved
 #' @field width numeric values defining the width in `units` of the plot dimensions after saving
 #' @field height numeric values defining the height in `units` of the plot dimensions after saving
@@ -12,6 +14,7 @@ ExportConfiguration <- R6::R6Class(
   "ExportConfiguration",
   public = list(
     name = NULL,
+    path = NULL,
     format = NULL,
     width = NULL,
     height = NULL,
@@ -20,18 +23,21 @@ ExportConfiguration <- R6::R6Class(
 
     #' @description Create a new `ExportConfiguration` object
     #' @param name character defining the name of the file to be saved (without extension)
+    #' @param path Path of the directory to save plot to: path and filename are
+    #' combined to create the fully qualified file name. Defaults to the working directory.
     #' @param format character defining the format of the file to be saved.
     #' @param width numeric values defining the width in `units` of the plot dimensions after saving
     #' @param height numeric values defining the height in `units` of the plot dimensions after saving
     #' @param units character defining the unit of the saving dimension
     #' @param dpi numeric value defining plot resolution (dots per inch)
     #' @return A new `ExportConfiguration` object
-    initialize = function(name = NULL,
-                              format = NULL,
-                              width = NULL,
-                              height = NULL,
-                              units = NULL,
-                              dpi = NULL) {
+    initialize = function(path = NULL,
+                          name = NULL,
+                          format = NULL,
+                          width = NULL,
+                          height = NULL,
+                          units = NULL,
+                          dpi = NULL) {
       validateIsString(name, nullAllowed = TRUE)
       validateIsString(format, nullAllowed = TRUE)
       validateIsIncluded(units, c("cm", "in", "mm", "px"), nullAllowed = TRUE)
@@ -39,7 +45,7 @@ ExportConfiguration <- R6::R6Class(
       validateIsNumeric(height, nullAllowed = TRUE)
       validateIsNumeric(dpi, nullAllowed = TRUE)
 
-      inputs <- c("name", "format", "width", "height", "units", "dpi")
+      inputs <- c("path", "name", "format", "width", "height", "units", "dpi")
       associateExpressions <- parse(text = paste0("self$", inputs, " <- ", inputs, " %||% tlfEnv$defaultExportParameters$", inputs))
       eval(associateExpressions)
     },
@@ -76,6 +82,7 @@ ExportConfiguration <- R6::R6Class(
       self$convertPixels()
 
       ggplot2::ggsave(
+        path = self$path,
         filename = fileName,
         plot = plotObject,
         width = self$width,

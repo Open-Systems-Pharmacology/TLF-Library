@@ -39,16 +39,16 @@ ObservedDataMapping <- R6::R6Class(
                           color = NULL,
                           shape = NULL,
                           group = NULL,
-                          data = NULL){
+                          data = NULL) {
       validateIsString(uncertainty, nullAllowed = TRUE)
       validateIsString(error, nullAllowed = TRUE)
       validateIsString(ymin, nullAllowed = TRUE)
       validateIsString(ymax, nullAllowed = TRUE)
       validateIsString(mdv, nullAllowed = TRUE)
       super$initialize(x = x, y = y, color = color, shape = shape, group = group, data = data)
-      
+
       # If defined, ymin and ymax are used as is
-      # If not, error/uncertainty are used and 
+      # If not, error/uncertainty are used and
       # creates ymin and ymax as y +/- error
       self$error <- error %||% uncertainty
       self$ymin <- ymin %||% ifNotNull(self$error, "ymin")
@@ -65,10 +65,10 @@ ObservedDataMapping <- R6::R6Class(
       validateIsOfType(data, "data.frame")
       validateIsIncluded(self$error, names(data), nullAllowed = TRUE)
       validateIsIncluded(self$mdv, names(data), nullAllowed = TRUE)
-      
+
       # Using super method, fetches x, y and groups
       mapData <- super$checkMapData(data, metaData)
-      
+
       # ymin and ymax for error bars
       # This section may change depending on how we want to include options
       if (!isEmpty(self$error)) {
@@ -78,15 +78,15 @@ ObservedDataMapping <- R6::R6Class(
         mapData[, self$ymin] <- data[, self$y] - data[, self$error]
       }
       # Overwrite ymin and ymax if user defined
-      if(isIncluded(self$ymax, names(data))){
-        mapData[, self$ymax] <- data[,self$ymax]
+      if (isIncluded(self$ymax, names(data))) {
+        mapData[, self$ymax] <- data[, self$ymax]
       }
-      if(isIncluded(self$ymin, names(data))){
-        mapData[, self$ymin] <- data[,self$ymin]
+      if (isIncluded(self$ymin, names(data))) {
+        mapData[, self$ymin] <- data[, self$ymin]
       }
       # MDV is a Nonmem notation in which values with MDV==1 are removed
       if (!isEmpty(self$mdv)) {
-        mapData[, self$mdv] <- as.logical(data[,self$mdv])
+        mapData[, self$mdv] <- as.logical(data[, self$mdv])
         mapData <- mapData[!mapData[, self$mdv], ]
       }
       return(mapData)

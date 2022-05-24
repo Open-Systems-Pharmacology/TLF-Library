@@ -29,20 +29,20 @@ Other DataMapping classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{TimeProfileDataMapping$new()}}
-\item \href{#method-checkMapData}{\code{TimeProfileDataMapping$checkMapData()}}
-\item \href{#method-clone}{\code{TimeProfileDataMapping$clone()}}
+\item \href{#method-TimeProfileDataMapping-new}{\code{TimeProfileDataMapping$new()}}
+\item \href{#method-TimeProfileDataMapping-checkMapData}{\code{TimeProfileDataMapping$checkMapData()}}
+\item \href{#method-TimeProfileDataMapping-clone}{\code{TimeProfileDataMapping$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-TimeProfileDataMapping-new"></a>}}
+\if{latex}{\out{\hypertarget{method-TimeProfileDataMapping-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{TimeProfileDataMapping} object
 \subsection{Usage}{
@@ -87,8 +87,8 @@ A new \code{RangeDataMapping} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-checkMapData"></a>}}
-\if{latex}{\out{\hypertarget{method-checkMapData}{}}}
+\if{html}{\out{<a id="method-TimeProfileDataMapping-checkMapData"></a>}}
+\if{latex}{\out{\hypertarget{method-TimeProfileDataMapping-checkMapData}{}}}
 \subsection{Method \code{checkMapData()}}{
 Check that \code{data} variables include map variables
 \subsection{Usage}{
@@ -110,8 +110,8 @@ Dummy variable \code{legendLabels} is necessary to allow further modification of
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-TimeProfileDataMapping-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-TimeProfileDataMapping-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

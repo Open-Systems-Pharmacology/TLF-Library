@@ -18,7 +18,7 @@ Calculate \verb{Percentile75\%} i.e. 3rd quartile value
 \examples{
 # Calculate Percentile75\%
 `Percentile75\%`(rnorm(1000))
- 
+
 }
 \seealso{
 Other stat functions: 

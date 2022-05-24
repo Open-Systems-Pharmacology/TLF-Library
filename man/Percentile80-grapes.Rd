@@ -18,7 +18,7 @@ Calculate \verb{Percentile80\%}
 \examples{
 # Calculate Percentile80\%
 `Percentile80\%`(rnorm(1000))
- 
+
 }
 \seealso{
 Other stat functions: 
