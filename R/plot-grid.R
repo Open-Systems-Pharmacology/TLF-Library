@@ -156,6 +156,8 @@ plotGrid <- function(plotGridConfiguration) {
 #' plotGridObj$subtitle <- "something clever"
 #' plotGridObj$caption <- "something dumb"
 #' plotGridObj$nColumns <- 2L
+#' plotGridObj$nRows <- 1L
+#' plotGridObj$byRow <- TRUE
 #' plotGridObj$tagLevels <- "A"
 #' plotGridObj$tagPrefix <- "Plot ("
 #' plotGridObj$tagSuffix <- ")"
@@ -260,9 +262,9 @@ PlotGridConfiguration <- R6::R6Class(
 
       private$printLine("Plot tags", addTab = TRUE)
       private$printLine("\tTag level format", self$tagLevels, addTab = TRUE)
-      private$printLine("\tTag level prefix", self$tagLevels, addTab = TRUE)
-      private$printLine("\tTag level suffix", self$tagLevels, addTab = TRUE)
-      private$printLine("\tTag level separator", self$tagLevels, addTab = TRUE)
+      private$printLine("\tTag level prefix", self$tagPrefix, addTab = TRUE)
+      private$printLine("\tTag level suffix", self$tagSuffix, addTab = TRUE)
+      private$printLine("\tTag level separator", self$tagSeparator, addTab = TRUE)
     }
   )
 )

@@ -33,6 +33,8 @@ plotGridObj$title <- "my combined plot"
 plotGridObj$subtitle <- "something clever"
 plotGridObj$caption <- "something dumb"
 plotGridObj$nColumns <- 2L
+plotGridObj$nRows <- 1L
+plotGridObj$byRow <- TRUE
 plotGridObj$tagLevels <- "A"
 plotGridObj$tagPrefix <- "Plot ("
 plotGridObj$tagSuffix <- ")"
