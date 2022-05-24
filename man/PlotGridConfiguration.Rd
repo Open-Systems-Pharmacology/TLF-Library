@@ -29,15 +29,20 @@ ls_plots <- list(
 
 plotGridObj <- PlotGridConfiguration$new(ls_plots)
 
+# specify further customizations for the plot grid
 plotGridObj$title <- "my combined plot"
 plotGridObj$subtitle <- "something clever"
-plotGridObj$caption <- "something dumb"
+plotGridObj$caption <- "my sources"
 plotGridObj$nColumns <- 2L
-plotGridObj$nRows <- 1L
-plotGridObj$byRow <- TRUE
 plotGridObj$tagLevels <- "A"
 plotGridObj$tagPrefix <- "Plot ("
 plotGridObj$tagSuffix <- ")"
+plotGridObj$tagColor <- "blue"
+plotGridObj$tagSize <- 15
+plotGridObj$tagAngle <- 45
+plotGridObj$tagPosition <- TagPositions$top
+plotGridObj$titleHorizontalJustification <- HorizontalJustification$middle
+plotGridObj$subtitleHorizontalJustification <- HorizontalJustification$middle
 
 # print the object to see its properties
 plotGridObj
@@ -75,6 +80,12 @@ length(myPlotGrid$plotList)
 \item{\code{title, subtitle, caption}}{Text strings to use for the various plot
 annotations, where plot refers to the grid of plots as a whole.}
 
+\item{\code{titleColor, titleSize, titleFontFace, titleFontFamily, titleHorizontalJustification, titleVerticalJustification, titleAngle}}{Aesthetic properties for the plot title.}
+
+\item{\code{subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleHorizontalJustification, subtitleVerticalJustification, subtitleAngle}}{Aesthetic properties for the plot subtitle.}
+
+\item{\code{captionColor, captionSize, captionFontFace, captionFontFamily, captionHorizontalJustification, captionVerticalJustification, captionAngle}}{Aesthetic properties for the plot caption.}
+
 \item{\code{tagLevels}}{A character vector defining the enumeration format to use
 at each level. Possible values are \code{'a'} for lowercase letters, \code{'A'} for
 uppercase letters, \code{'1'} for numbers, \code{'i'} for lowercase Roman numerals, and
@@ -86,10 +97,15 @@ will be expanded to the expected sequence.}
 \item{\code{tagPrefix, tagSuffix}}{Strings that should appear before or after the
 tag.}
 
-\item{\code{tagSeparator}}{A separator between different tag levels}
+\item{\code{tagSeparator}}{A separator between different tag levels.}
 
-\item{\code{theme}}{A ggplot theme specification to use for the plot. Only elements
-related to the titles as well as plot margin and background will be used.}
+\item{\code{tagPosition}}{Position of the tag for an individual plot with respect to
+that plot. Default is topleft. For all available options, see
+\code{TagPositions}.}
+
+\item{\code{tagColor, tagSize, tagFontFamily, tagFontFace, tagHorizontalJustification, tagVerticalJustification, tagAngle, tagLineHeight, tagMargin}}{Aesthetic properties of individual plot tag text.
+For more detailed description of each aesthetic property, see docs for
+\link[ggplot2:element]{element_text()}.}
 
 \item{\code{nColumns, nRows}}{The dimensions of the grid to create - if both are
 \code{NULL} it will use the same logic as \link[ggplot2:facet_wrap]{facet_wrap()} to
@@ -112,7 +128,8 @@ patchwork.}
 
 \item{\code{design}}{Specification of the location of areas in the layout. Can
 either be specified as a text string or by concatenating calls to \code{\link[=area]{area()}}
-together. See the examples for further information on use.}
+together. See the examples in \link[patchwork:wrap_plots]{wrap_plots()} for
+further information on use.}
 }
 \if{html}{\out{</div>}}
 }
@@ -122,8 +139,18 @@ together. See the examples for further information on use.}
 \item{\code{title, subtitle, caption}}{Text strings to use for the various plot
 annotations, where plot refers to the grid of plots as a whole.}
 
+\item{\code{titleColor, titleSize, titleFontFace, titleFontFamily, titleHorizontalJustification, titleVerticalJustification, titleAngle}}{Aesthetic properties for the plot title.}
+
+\item{\code{subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleHorizontalJustification, subtitleVerticalJustification, subtitleAngle}}{Aesthetic properties for the plot subtitle.}
+
+\item{\code{captionColor, captionSize, captionFontFace, captionFontFamily, captionHorizontalJustification, captionVerticalJustification, captionAngle}}{Aesthetic properties for the plot caption.}
+
 \item{\code{tagPrefix, tagSuffix}}{Strings that should appear before or after the
 tag.}
+
+\item{\code{tagColor, tagSize, tagFontFamily, tagFontFace, tagHorizontalJustification, tagVerticalJustification, tagAngle, tagLineHeight, tagMargin}}{Aesthetic properties of individual plot tag text.
+For more detailed description of each aesthetic property, see docs for
+\link[ggplot2:element]{element_text()}.}
 
 \item{\code{nColumns, nRows}}{The dimensions of the grid to create - if both are
 \code{NULL} it will use the same logic as \link[ggplot2:facet_wrap]{facet_wrap()} to

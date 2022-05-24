@@ -20,9 +20,12 @@ Other enum helpers:
 \code{\link{ExportFormats}},
 \code{\link{ExportUnits}},
 \code{\link{FontFaces}},
+\code{\link{HorizontalJustification}},
 \code{\link{LegendPositions}},
 \code{\link{Linetypes}},
 \code{\link{Scaling}},
+\code{\link{TagPositions}},
+\code{\link{VerticalJustification}},
 \code{\link{tlfStatFunctions}}
 }
 \concept{enum helpers}

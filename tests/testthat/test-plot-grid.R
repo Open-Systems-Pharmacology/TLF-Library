@@ -16,13 +16,20 @@ ls_plots <- list(
 
 plotGridObj <- PlotGridConfiguration$new(ls_plots)
 
+# specify further customizations for the plot grid
 plotGridObj$title <- "my combined plot"
 plotGridObj$subtitle <- "something clever"
-plotGridObj$caption <- "something dumb"
+plotGridObj$caption <- "my sources"
 plotGridObj$nColumns <- 2L
 plotGridObj$tagLevels <- "A"
 plotGridObj$tagPrefix <- "Plot ("
 plotGridObj$tagSuffix <- ")"
+plotGridObj$tagColor <- "blue"
+plotGridObj$tagSize <- 15
+plotGridObj$tagAngle <- 45
+plotGridObj$tagPosition <- TagPositions$top
+plotGridObj$titleHorizontalJustification <- HorizontalJustification$middle
+plotGridObj$subtitleHorizontalJustification <- HorizontalJustification$middle
 
 test_that("plots grid is printed", {
   expect_visible(plotGridObj)
@@ -36,14 +43,11 @@ test_that("plots grid is rendered correctly", {
 
   expect_s3_class(pGrid, "ggplot")
 
-  # TODO: turn on once you figure out why Appveyor produces slightly different plot
-  # The differences are not discernible to the naked eye, so hard to diagnose at the moment
-  # but also makes it not risky to skip the test at the moment
-  # set.seed(123)
-  # vdiffr::expect_doppelganger(
-  #   title = "plotGrid works as expected",
-  #   fig = plotGrid(plotGridObj)
-  # )
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "plotGrid works as expected",
+    fig = plotGrid(plotGridObj)
+  )
 })
 
 test_that("adding plots works with plots grid configuration", {

@@ -1,3 +1,17 @@
+# tlf 1.4.0 (development versio)
+
+## New features
+
+* New helper enumerated lists: 
+   
+   - `TagPosition` (tag position in a plot grid) (#293)
+   - `HorizontalJustification` (horizontal justifications for plot annotation text) (#293)
+   - `VerticalJustification` (vertical justifications for plot annotation text) (#293)
+   
+## Minor improvements and bug fixes
+
+* `PlotGridConfiguration` class adds new fields to control the position of the individual plot tags and aesthetic properties of the tag text. (#293)
+
 # tlf 1.3.0
 
 ## New features
