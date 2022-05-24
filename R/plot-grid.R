@@ -254,13 +254,13 @@ PlotGridConfiguration <- R6::R6Class(
       private$printLine("\tSubtitle", self$subtitle, addTab = TRUE)
       private$printLine("\tCaption", self$caption, addTab = TRUE)
 
-      private$printLine("Plot grid", addTab = TRUE)
+      private$printLine("Plot grid arrangement", addTab = TRUE)
       private$printLine("\tNumber of plots included", length(self$plotList), addTab = TRUE)
       private$printLine("\tNumber of columns in the grid", self$nColumns, addTab = TRUE)
       private$printLine("\tNumber of rows in the grid", self$nRows, addTab = TRUE)
       private$printLine("\tArranged in row-major order", self$byRow, addTab = TRUE)
 
-      private$printLine("Plot tags", addTab = TRUE)
+      private$printLine("Individual plot tags", addTab = TRUE)
       private$printLine("\tTag level format", self$tagLevels, addTab = TRUE)
       private$printLine("\tTag level prefix", self$tagPrefix, addTab = TRUE)
       private$printLine("\tTag level suffix", self$tagSuffix, addTab = TRUE)
