@@ -72,22 +72,6 @@ Font <- R6::R6Class(
   )
 )
 
-#' @title Alignments
-#' @import ospsuite.utils
-#' @export
-#' @description
-#' List of all available alignments/justifications for fonts
-#' @family enum helpers
-Alignments <- enum(c("left", "center", "right"))
-
-#' @title FontFaces
-#' @import ospsuite.utils
-#' @export
-#' @description
-#' List of all available font faces
-#' @family enum helpers
-FontFaces <- enum(c("plain", "bold", "italic", "bold.italic"))
-
 #' @title checkPlotFontFamily
 #' @description Check if font family is available in Windows font database.
 #' Use function `grDevices::windowsFonts()` to get the list of font families available.

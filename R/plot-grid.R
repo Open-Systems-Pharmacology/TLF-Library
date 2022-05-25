@@ -286,33 +286,33 @@ PlotGridConfiguration <- R6::R6Class(
 
     title = NULL,
     titleColor = "black",
-    titleSize = 14,
+    titleSize = PlotAnnotationTextSize$plotGridTitleSize,
     titleFontFace = FontFaces$plain,
     titleFontFamily = "",
-    titleHorizontalJustification = 0,
-    titleVerticalJustification = 0,
+    titleHorizontalJustification = HorizontalJustification$left,
+    titleVerticalJustification = VerticalJustification$bottom,
     titleAngle = 0,
 
     # subtitle ------------------------------------
 
     subtitle = NULL,
     subtitleColor = "black",
-    subtitleSize = 12,
+    subtitleSize = PlotAnnotationTextSize$plotGridSubtitleSize,
     subtitleFontFace = FontFaces$plain,
     subtitleFontFamily = "",
-    subtitleHorizontalJustification = 0,
-    subtitleVerticalJustification = 0,
+    subtitleHorizontalJustification = HorizontalJustification$left,
+    subtitleVerticalJustification = VerticalJustification$bottom,
     subtitleAngle = 0,
 
     # caption ------------------------------------
 
     caption = NULL,
     captionColor = "black",
-    captionSize = 10,
+    captionSize = PlotAnnotationTextSize$plotGridCaptionSize,
     captionFontFace = FontFaces$plain,
     captionFontFamily = "",
-    captionHorizontalJustification = 1,
-    captionVerticalJustification = 0,
+    captionHorizontalJustification = HorizontalJustification$right,
+    captionVerticalJustification = VerticalJustification$bottom,
     captionAngle = 0,
 
     # arrangement ------------------------------------
@@ -336,11 +336,11 @@ PlotGridConfiguration <- R6::R6Class(
     # tag text ------------------------------------
 
     tagColor = "black",
-    tagSize = 8,
+    tagSize = PlotAnnotationTextSize$plotGridTagSize,
     tagFontFace = FontFaces$plain,
     tagFontFamily = "",
-    tagHorizontalJustification = 0,
-    tagVerticalJustification = 0,
+    tagHorizontalJustification = HorizontalJustification$left,
+    tagVerticalJustification = VerticalJustification$bottom,
     tagAngle = 0,
     tagLineHeight = NULL,
     tagMargin = NULL,
@@ -422,79 +422,5 @@ PlotGridConfiguration <- R6::R6Class(
       private$printLine("\tTag level suffix", self$tagSuffix, addTab = TRUE)
       private$printLine("\tTag level separator", self$tagSeparator, addTab = TRUE)
     }
-  )
-)
-
-# enums -------------------------------------
-
-#' @title PlotAnnotationTextSize
-#' @import ospsuite.utils
-#' @description
-#' List of default text sizes for plot annotations.
-#' @family enum helpers
-#' @export
-PlotAnnotationTextSize <- enum(
-  c(
-    # annotations for the entire grid as a whole
-    "plotGridTitleSize" = 14,
-    "plotGridSubtitleSize" = 12,
-    "plotGridCaptionSize" = 10,
-    "plotGridTagSize" = 8,
-
-    # annotations for individual plots
-    "plotTitleSize" = 12,
-    "plotSubtitleSize" = 10,
-    "plotCaptionSize" = 8,
-    "plotXLabelSize" = 10,
-    "plotYLabelSize" = 10,
-    "plotLegendTitleSize" = 10,
-    "plotLegendCaptionSize" = 10
-  )
-)
-
-#' @title VerticalJustification
-#' @import ospsuite.utils
-#' @description
-#' List of all available vertical justifications for plot annotation text.
-#' @family enum helpers
-#' @export
-VerticalJustification <- enum(
-  c(
-    "bottom" = 0,
-    "middle" = 0.5,
-    "top" = 1
-  )
-)
-
-#' @title HorizontalJustification
-#' @import ospsuite.utils
-#' @description
-#' List of all available horizontal justifications for plot annotation text.
-#' @family enum helpers
-#' @export
-HorizontalJustification <- enum(
-  c(
-    "left" = 0,
-    "middle" = 0.5,
-    "right" = 1
-  )
-)
-
-#' @title TagPositions
-#' @import ospsuite.utils
-#' @description
-#' List of all available tag positions in a plot grid.
-#' @family enum helpers
-#' @export
-TagPositions <- enum(
-  c(
-    "topLeft" = "topleft",
-    "top" = "top",
-    "topRight" = "topright",
-    "left" = "left",
-    "right" = "right",
-    "bottomLeft" = "bottomleft",
-    "bottom" = "bottom",
-    "bottomRight" = "bottomright"
   )
 )

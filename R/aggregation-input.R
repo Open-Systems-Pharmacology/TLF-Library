@@ -33,25 +33,7 @@ AggregationInput <- R6::R6Class(
   )
 )
 
-predefinedPercentiles <- c(0, 1, 2.5, 5, 10, 15, 20, 25, 50, 75, 80, 85, 90, 95, 97.5, 99, 100)
 
-#' @title tlfStatFunctions
-#' @description
-#' Bank of predefined functions ready to use by Aggregation methods. Bank defined as Enum.
-#' To access the function from its name, use match.fun: e.g. testFun <- match.fun("mean-1.96sd")
-#' @import ospsuite.utils
-#' @export
-#' @family enum helpers
-tlfStatFunctions <- enum(c(
-  "mean", "sd",
-  "min", "max",
-  "mean-sd", "mean+sd", "mean-1.96sd", "mean+1.96sd",
-  sapply(predefinedPercentiles, function(percentileValue) {
-    paste0("Percentile", percentileValue, "%")
-  }),
-  "median-IQR", "median+IQR", "median-1.5IQR", "median+1.5IQR",
-  "Percentile25%-1.5IQR", "Percentile75%+1.5IQR"
-))
 
 #' @title mean-1.96sd
 #' @description Calculate `mean-1.96SD`

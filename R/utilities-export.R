@@ -1,19 +1,4 @@
-#' @title ExportUnits
-#' @import ospsuite.utils
-#' @export
-#' @description
-#' List of all available units for `width` and `height` to export a ggplot object
-#' @family enum helpers
-ExportUnits <- enum(c("cm", "in", "mm", "px"))
 
-
-#' @title ExportFormats
-#' @import ospsuite.utils
-#' @export
-#' @description
-#' List of all available formats to export a ggplot object
-#' @family enum helpers
-ExportFormats <- enum(c("png", "pdf", "eps", "ps", "tex", "jpeg", "tiff", "bmp", "svg", "wmf"))
 
 #' @title setPlotExport
 #' @description Set plot export properties
