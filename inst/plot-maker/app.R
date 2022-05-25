@@ -150,7 +150,7 @@ ui <- fluidPage(
         fluidRow(
           downloadButton("savedPlot", "Save Plot"),
           align = "center"
-          ),
+        ),
         selectInput("exportUnits", "units", choices = c("cm", "mm", "in", "px")),
         numericInput("exportHeight", "height (cm)", value = 9),
         numericInput("exportWidth", "width (cm)", value = 16),
@@ -337,7 +337,7 @@ server <- function(input, output, session) {
       plotHistogram = HistogramDataMapping$new(
         x = xVariable, fill = fillVariable,
         bins = input$binsHistogram, stack = as.logical(input$stackHistogram), distribution = input$fitHistogram
-        ),
+      ),
       plotTimeProfile = TimeProfileDataMapping$new(
         x = xVariable, y = yVariable, ymin = yminVariable, ymax = ymaxVariable,
         color = colorVariable, linetype = linetypeVariable, fill = fillVariable
@@ -429,8 +429,8 @@ server <- function(input, output, session) {
     plotConfiguration <- getPlotConfiguration()
     # selectizeInput with option create = TRUE, allows for elements other than choices allowing hexadecimal colors as well
     selectizeInput("legendTitleColor2",
-                   label = "color", choices = grDevices:::colors(),
-                   selected = plotConfiguration$legend$title$font$color, options = list(create = TRUE)
+      label = "color", choices = grDevices:::colors(),
+      selected = plotConfiguration$legend$title$font$color, options = list(create = TRUE)
     )
   })
   output$legendTitleSize <- renderUI({
@@ -453,13 +453,13 @@ server <- function(input, output, session) {
     plotConfiguration <- getPlotConfiguration()
     textInput("legendTitleFamily2", label = "family", value = plotConfiguration$legend$title$font$fontFamily)
   })
-  
+
   output$legendFontColor <- renderUI({
     plotConfiguration <- getPlotConfiguration()
     # selectizeInput with option create = TRUE, allows for elements other than choices allowing hexadecimal colors as well
     selectizeInput("legendFontColor2",
-                   label = "color", choices = grDevices:::colors(),
-                   selected = plotConfiguration$legend$font$color, options = list(create = TRUE)
+      label = "color", choices = grDevices:::colors(),
+      selected = plotConfiguration$legend$font$color, options = list(create = TRUE)
     )
   })
   output$legendFontSize <- renderUI({
@@ -482,7 +482,7 @@ server <- function(input, output, session) {
     plotConfiguration <- getPlotConfiguration()
     textInput("legendFontFamily2", label = "family", value = plotConfiguration$legend$title$fontFamily)
   })
-  
+
   #----- Get title features
   output$titleText <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -548,7 +548,7 @@ server <- function(input, output, session) {
     plotConfiguration <- getPlotConfiguration()
     textInput("subtitleFamily2", label = "family", value = plotConfiguration$labels$subtitle$font$fontFamily)
   })
-  
+
   #----- Get caption features
   output$captionText <- renderUI({
     plotConfiguration <- getPlotConfiguration()
@@ -557,8 +557,8 @@ server <- function(input, output, session) {
   output$captionColor <- renderUI({
     plotConfiguration <- getPlotConfiguration()
     selectizeInput("captionColor2",
-                   label = "color", choices = grDevices:::colors(),
-                   selected = plotConfiguration$labels$caption$font$color, options = list(create = TRUE)
+      label = "color", choices = grDevices:::colors(),
+      selected = plotConfiguration$labels$caption$font$color, options = list(create = TRUE)
     )
   })
   output$captionSize <- renderUI({
@@ -919,7 +919,7 @@ server <- function(input, output, session) {
     plotConfiguration$background$watermark$font$align <- tlfInput(input$watermarkAlign2) %||% plotConfiguration$background$watermark$font$align
     plotConfiguration$background$watermark$font$fontFace <- tlfInput(input$watermarkFace2) %||% plotConfiguration$background$watermark$font$fontFace
     plotConfiguration$background$watermark$font$fontFamily <- tlfInput(input$watermarkFamily2) %||% plotConfiguration$background$watermark$font$fontFamily
-    
+
     #--- Legend
     plotConfiguration$legend$title$text <- tlfInput(input$legendTitleText2) %||% plotConfiguration$legend$title$text
     plotConfiguration$legend$title$font$color <- tlfInput(input$legendTitleColor2) %||% plotConfiguration$legend$title$font$color
@@ -928,7 +928,7 @@ server <- function(input, output, session) {
     plotConfiguration$legend$title$font$align <- tlfInput(input$legendTitleAlign2) %||% plotConfiguration$legend$title$font$align
     plotConfiguration$legend$title$font$fontFace <- tlfInput(input$legendTitleFace2) %||% plotConfiguration$legend$title$font$fontFace
     plotConfiguration$legend$title$font$fontFamily <- tlfInput(input$legendTitleFamily2) %||% plotConfiguration$legend$title$font$fontFamily
-    
+
     plotConfiguration$legend$font$color <- tlfInput(input$legendFontColor2) %||% plotConfiguration$legend$font$color
     plotConfiguration$legend$font$size <- tlfInput(input$legendFontSize2) %||% plotConfiguration$legend$font$size
     plotConfiguration$legend$font$angle <- tlfInput(input$legendFontAngle2) %||% plotConfiguration$legend$font$angle
@@ -938,7 +938,7 @@ server <- function(input, output, session) {
 
     #--- Labels (using expressions)
     labels <- rep(c("title", "subtitle", "xlabel", "ylabel", "caption"), 7)
-    configurationProperties <- rep(c("text", "font$color", "font$size", "font$angle","font$align","font$fontFace","font$fontFamily"), each = 5)
+    configurationProperties <- rep(c("text", "font$color", "font$size", "font$angle", "font$align", "font$fontFace", "font$fontFamily"), each = 5)
     inputProperties <- rep(c("Text", "Color", "Size", "Angle", "Align", "Face", "Family"), each = 5)
 
     labelExpression <- parse(text = paste0(
@@ -962,7 +962,7 @@ server <- function(input, output, session) {
     #--- Axes
     axes <- rep(c("xAxis", "yAxis"), 6)
     ticks <- rep(c("xTicks", "yTicks"), 6)
-    fontProperties <- rep(c("color", "size", "angle", "align","fontFace", "fontFamily"), each = 2)
+    fontProperties <- rep(c("color", "size", "angle", "align", "fontFace", "fontFamily"), each = 2)
     inputProperties <- rep(c("Color", "Size", "Angle", "Align", "Face", "Family"), each = 2)
 
     axesExpression <- parse(text = paste0(
@@ -1003,16 +1003,16 @@ server <- function(input, output, session) {
     plotConfiguration$errorbars$color <- tlfInput(input$errorbarsColor2) %||% plotConfiguration$errorbars$color
     plotConfiguration$errorbars$size <- tlfInput(input$errorbarsSize2) %||% plotConfiguration$errorbars$size
     plotConfiguration$errorbars$linetype <- tlfInput(input$errorbarsLinetype2) %||% plotConfiguration$errorbars$linetype
-    
+
     #--- Export
     plotConfiguration$export$units <- tlfInput(input$exportUnits) %||% plotConfiguration$export$units
     plotConfiguration$export$width <- tlfInput(input$exportWidth) %||% plotConfiguration$export$width
     plotConfiguration$export$height <- tlfInput(input$exportHeight) %||% plotConfiguration$export$height
     plotConfiguration$export$dpi <- tlfInput(input$exportResolution) %||% plotConfiguration$export$dpi
-    
+
     updateNumericInput(session, inputId = "exportWidth", label = paste0("width (", input$exportUnits, ")"), value = input$exportWidth, min = 0)
     updateNumericInput(session, inputId = "exportHeight", label = paste0("height (", input$exportUnits, ")"), value = input$exportHeight, min = 0)
-    
+
     #--- Return updated configuration
     return(plotConfiguration)
   })
@@ -1103,18 +1103,21 @@ server <- function(input, output, session) {
     plotConfiguration <- getUpdatedPlotConfiguration()
     writeClipboard(paste(exportPlotConfigurationCode(plotConfiguration), collapse = "\n"))
   })
-  
+
   observeEvent(input$updateDimensions, {
     plotObject <- getDisplayPlot()
     plotObject <- updateExportDimensionsForLegend(plotObject)
-    
-    updateSelectInput(session, inputId = "exportUnits", "units", choices = c("cm", "mm", "in", "px"),  selected = plotObject$plotConfiguration$export$units)
-    updateNumericInput(session, inputId = "exportWidth", label = paste0("width (", plotObject$plotConfiguration$export$units, ")"), 
-                       value = plotObject$plotConfiguration$export$width, min = 0)
-    updateNumericInput(session, inputId = "exportHeight", label = paste0("height (", plotObject$plotConfiguration$export$units, ")"), 
-                       value = plotObject$plotConfiguration$export$height, min = 0)
+
+    updateSelectInput(session, inputId = "exportUnits", "units", choices = c("cm", "mm", "in", "px"), selected = plotObject$plotConfiguration$export$units)
+    updateNumericInput(session,
+      inputId = "exportWidth", label = paste0("width (", plotObject$plotConfiguration$export$units, ")"),
+      value = plotObject$plotConfiguration$export$width, min = 0
+    )
+    updateNumericInput(session,
+      inputId = "exportHeight", label = paste0("height (", plotObject$plotConfiguration$export$units, ")"),
+      value = plotObject$plotConfiguration$export$height, min = 0
+    )
   })
-  
 }
 
 shinyApp(ui = ui, server = server)

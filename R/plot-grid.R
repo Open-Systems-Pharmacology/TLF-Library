@@ -1,6 +1,6 @@
 #' Create a plot grid
 #'
-#' @param plotGridConfiguration  A `PlotGridConfiguration` object, which
+#' @param plotGridConfiguration A `PlotGridConfiguration` object, which
 #'   is an `R6` class object that defines properties of a plot grid (like number
 #'   of rows, columns, labels, etc.).
 #'
@@ -35,6 +35,12 @@
 #' plotGridObj$tagLevels <- "A"
 #' plotGridObj$tagPrefix <- "Plot ("
 #' plotGridObj$tagSuffix <- ")"
+#' plotGridObj$tagColor <- "blue"
+#' plotGridObj$tagSize <- 15
+#' plotGridObj$tagAngle <- 45
+#' plotGridObj$tagPosition <- TagPositions$top
+#' plotGridObj$titleHorizontalJustification <- HorizontalJustification$middle
+#' plotGridObj$subtitleHorizontalJustification <- HorizontalJustification$middle
 #'
 #' # plot the grid
 #' plotGrid(plotGridObj)
@@ -87,7 +93,49 @@ plotGrid <- function(plotGridConfiguration) {
       tag_prefix = plotGridConfiguration$tagPrefix,
       tag_suffix = plotGridConfiguration$tagSuffix,
       tag_sep = plotGridConfiguration$tagSeparator,
-      theme = plotGridConfiguration$theme
+      theme = ggplot2::theme(
+        plot.title = ggplot2::element_text(
+          color = plotGridConfiguration$titleColor,
+          size = plotGridConfiguration$titleSize,
+          face = plotGridConfiguration$titleFontFace,
+          family = plotGridConfiguration$titleFontFamily,
+          hjust = plotGridConfiguration$titleHorizontalJustification,
+          vjust = plotGridConfiguration$titleVerticalJustification,
+          angle = plotGridConfiguration$titleAngle
+        ),
+        plot.subtitle = ggplot2::element_text(
+          color = plotGridConfiguration$subtitleColor,
+          size = plotGridConfiguration$subtitleSize,
+          face = plotGridConfiguration$subtitleFontFace,
+          family = plotGridConfiguration$subtitleFontFamily,
+          hjust = plotGridConfiguration$subtitleHorizontalJustification,
+          vjust = plotGridConfiguration$subtitleVerticalJustification,
+          angle = plotGridConfiguration$subtitleAngle
+        ),
+        plot.caption = ggplot2::element_text(
+          color = plotGridConfiguration$captionColor,
+          size = plotGridConfiguration$captionSize,
+          face = plotGridConfiguration$captionFontFace,
+          family = plotGridConfiguration$captionFontFamily,
+          hjust = plotGridConfiguration$captionHorizontalJustification,
+          vjust = plotGridConfiguration$captionVerticalJustification,
+          angle = plotGridConfiguration$captionAngle
+        )
+      )
+    ) &
+    ggplot2::theme(
+      plot.tag = ggplot2::element_text(
+        color = plotGridConfiguration$tagColor,
+        size = plotGridConfiguration$tagSize,
+        family = plotGridConfiguration$tagFontFamily,
+        face = plotGridConfiguration$tagFontFace,
+        hjust = plotGridConfiguration$tagHorizontalJustification,
+        vjust = plotGridConfiguration$tagVerticalJustification,
+        angle = plotGridConfiguration$tagAngle,
+        lineheight = plotGridConfiguration$tagLineHeight,
+        margin = plotGridConfiguration$tagMargin
+      ),
+      plot.tag.position = plotGridConfiguration$tagPosition
     )
 }
 
@@ -96,13 +144,63 @@ plotGrid <- function(plotGridConfiguration) {
 #'
 #' @description
 #'
-#' R6 class defining the configuration for `{patchwork}` plot grid used to
+#' An `R6` class defining the configuration for `{patchwork}` plot grid used to
 #' create a grid of plots from `{tlf}`. It holds values for all relevant
 #' plot properties.
+#'
+#' # Customizing
+#'
+#' You can change the default values present in public fields.
+#'
+#' For example, if you want to specify a new position for tags, you will have to
+#' do the following:
+#'
+#' ```r
+#' myPlotGridConfiguration <- PlotGridConfiguration$new()
+#' myPlotGridConfiguration$tagPosition <- TagPositions$right
+#' ```
+#'
+#' For more, see examples.
+#'
+#' # Specifying fonts
+#'
+#' A font is a particular set of glyphs (character shapes), differentiated from
+#' other fonts in the same family by additional properties such as stroke
+#' weight, slant, relative width, etc.
+#'
+#' A font face (aka typeface) is the design of lettering, characterized by
+#' variations in size, weight (e.g. bold), slope (e.g. italic), width (e.g.
+#' condensed), and so on. The available font faces can seen using
+#' `FontFaces` list.
+#'
+#' A font family is a grouping of fonts defined by shared design styles.
+#'
+#' The available font families will depend on which fonts have been installed on
+#' your computer. This information can be extracted by running the following
+#' code:
+#'
+#' ```r
+#' # install.packages("systemfonts")
+#' library(systemfonts)
+#' system_fonts()
+#' ```
+#'
+#' # Saving plot
+#'
+#' By default, the plots will be shown in plot pane of your IDE, but the plots
+#' can also be saved to a file using the `ggplot2::ggsave()` function.
+#'
+#' ```r
+#' myPlot <- plotGrid(...)
+#' ggplot2::ggsave(filename = "plot_1.png", plot = myPlot)
+#' ```
 #'
 #' @field plotList A list containing `ggplot` objects.
 #' @field title,subtitle,caption Text strings to use for the various plot
 #' annotations, where plot refers to the grid of plots as a whole.
+#' @field titleColor,titleSize,titleFontFace,titleFontFamily,titleHorizontalJustification,titleVerticalJustification,titleAngle Aesthetic properties for the plot title.
+#' @field subtitleColor,subtitleSize,subtitleFontFace,subtitleFontFamily,subtitleHorizontalJustification,subtitleVerticalJustification,subtitleAngle Aesthetic properties for the plot subtitle.
+#' @field captionColor,captionSize,captionFontFace,captionFontFamily,captionHorizontalJustification,captionVerticalJustification,captionAngle Aesthetic properties for the plot caption.
 #' @field tagLevels A character vector defining the enumeration format to use
 #' at each level. Possible values are `'a'` for lowercase letters, `'A'` for
 #' uppercase letters, `'1'` for numbers, `'i'` for lowercase Roman numerals, and
@@ -112,9 +210,13 @@ plotGrid <- function(plotGridConfiguration) {
 #' will be expanded to the expected sequence.
 #' @field tagPrefix,tagSuffix Strings that should appear before or after the
 #' tag.
-#' @field tagSeparator A separator between different tag levels
-#' @field theme A ggplot theme specification to use for the plot. Only elements
-#' related to the titles as well as plot margin and background will be used.
+#' @field tagSeparator A separator between different tag levels.
+#' @field tagPosition Position of the tag for an individual plot with respect to
+#'   that plot. Default is topleft. For all available options, see
+#'   `TagPositions`.
+#' @field tagColor,tagSize,tagFontFamily,tagFontFace,tagHorizontalJustification,tagVerticalJustification,tagAngle,tagLineHeight,tagMargin Aesthetic properties of individual plot tag text.
+#'   For more detailed description of each aesthetic property, see docs for
+#'   [element_text()][ggplot2::element_text].
 #' @field nColumns,nRows The dimensions of the grid to create - if both are
 #'   `NULL` it will use the same logic as [facet_wrap()][ggplot2::facet_wrap] to
 #'   set the dimensions
@@ -132,23 +234,89 @@ plotGrid <- function(plotGridConfiguration) {
 #' patchwork.
 #' @field design Specification of the location of areas in the layout. Can
 #'   either be specified as a text string or by concatenating calls to [area()]
-#'   together. See the examples for further information on use.
+#'   together. See the examples in [wrap_plots()][patchwork::wrap_plots] for
+#'   further information on use.
+#'
+#' @examples
+#'
+#' library(tlf)
+#'
+#' # create a list of plots
+#' ls_plots <- list(
+#'   # first plot
+#'   plotBoxWhisker(mtcars,
+#'     dataMapping = BoxWhiskerDataMapping$new(x = "am", y = "wt"), outliers = FALSE
+#'   ),
+#'   # second plot
+#'   plotBoxWhisker(ToothGrowth,
+#'     dataMapping = BoxWhiskerDataMapping$new(x = "supp", y = "len")
+#'   )
+#' )
+#'
+#' plotGridObj <- PlotGridConfiguration$new(ls_plots)
+#'
+#' # specify further customizations for the plot grid
+#' plotGridObj$title <- "my combined plot"
+#' plotGridObj$subtitle <- "something clever"
+#' plotGridObj$caption <- "my sources"
+#' plotGridObj$nColumns <- 2L
+#' plotGridObj$tagLevels <- "A"
+#' plotGridObj$tagPrefix <- "Plot ("
+#' plotGridObj$tagSuffix <- ")"
+#' plotGridObj$tagColor <- "blue"
+#' plotGridObj$tagSize <- 15
+#' plotGridObj$tagAngle <- 45
+#' plotGridObj$tagPosition <- TagPositions$top
+#' plotGridObj$titleHorizontalJustification <- HorizontalJustification$middle
+#' plotGridObj$subtitleHorizontalJustification <- HorizontalJustification$middle
+#'
+#' # print the object to see its properties
+#' plotGridObj
 #'
 #' @return A `PlotGridConfiguration` object.
 #'
 #' @export
 PlotGridConfiguration <- R6::R6Class(
   "PlotGridConfiguration",
+  inherit = ospsuite.utils::Printable,
   public = list(
     plotList = list(),
+
+    # title ------------------------------------
+
     title = NULL,
+    titleColor = "black",
+    titleSize = PlotAnnotationTextSize$plotGridTitleSize,
+    titleFontFace = FontFaces$plain,
+    titleFontFamily = "",
+    titleHorizontalJustification = HorizontalJustification$left,
+    titleVerticalJustification = VerticalJustification$bottom,
+    titleAngle = 0,
+
+    # subtitle ------------------------------------
+
     subtitle = NULL,
+    subtitleColor = "black",
+    subtitleSize = PlotAnnotationTextSize$plotGridSubtitleSize,
+    subtitleFontFace = FontFaces$plain,
+    subtitleFontFamily = "",
+    subtitleHorizontalJustification = HorizontalJustification$left,
+    subtitleVerticalJustification = VerticalJustification$bottom,
+    subtitleAngle = 0,
+
+    # caption ------------------------------------
+
     caption = NULL,
-    tagLevels = NULL,
-    tagPrefix = NULL,
-    tagSuffix = NULL,
-    tagSeparator = NULL,
-    theme = NULL,
+    captionColor = "black",
+    captionSize = PlotAnnotationTextSize$plotGridCaptionSize,
+    captionFontFace = FontFaces$plain,
+    captionFontFamily = "",
+    captionHorizontalJustification = HorizontalJustification$right,
+    captionVerticalJustification = VerticalJustification$bottom,
+    captionAngle = 0,
+
+    # arrangement ------------------------------------
+
     nColumns = NULL,
     nRows = NULL,
     byRow = NULL,
@@ -156,6 +324,26 @@ PlotGridConfiguration <- R6::R6Class(
     heights = NULL,
     guides = NULL,
     design = NULL,
+
+    # tags ------------------------------------
+
+    tagLevels = NULL,
+    tagPrefix = NULL,
+    tagSuffix = NULL,
+    tagSeparator = NULL,
+    tagPosition = NULL,
+
+    # tag text ------------------------------------
+
+    tagColor = "black",
+    tagSize = PlotAnnotationTextSize$plotGridTagSize,
+    tagFontFace = FontFaces$plain,
+    tagFontFamily = "",
+    tagHorizontalJustification = HorizontalJustification$left,
+    tagVerticalJustification = VerticalJustification$bottom,
+    tagAngle = 0,
+    tagLineHeight = NULL,
+    tagMargin = NULL,
 
     #' @description Create an instance of `PlotGridConfiguration` class.
     #'
@@ -210,6 +398,29 @@ PlotGridConfiguration <- R6::R6Class(
 
         self$plotList <- append(self$plotList, plots)
       }
+    },
+
+    #' @description
+    #' Print the object to the console.
+    print = function() {
+      private$printClass()
+
+      private$printLine("Plot grid annotations", addTab = TRUE)
+      private$printLine("\tTitle", self$title, addTab = TRUE)
+      private$printLine("\tSubtitle", self$subtitle, addTab = TRUE)
+      private$printLine("\tCaption", self$caption, addTab = TRUE)
+
+      private$printLine("Plot grid arrangement", addTab = TRUE)
+      private$printLine("\tNumber of plots included", length(self$plotList), addTab = TRUE)
+      private$printLine("\tNumber of columns in the grid", self$nColumns, addTab = TRUE)
+      private$printLine("\tNumber of rows in the grid", self$nRows, addTab = TRUE)
+      private$printLine("\tArranged in row-major order", self$byRow, addTab = TRUE)
+
+      private$printLine("Individual plot tags", addTab = TRUE)
+      private$printLine("\tTag level format", self$tagLevels, addTab = TRUE)
+      private$printLine("\tTag level prefix", self$tagPrefix, addTab = TRUE)
+      private$printLine("\tTag level suffix", self$tagSuffix, addTab = TRUE)
+      private$printLine("\tTag level separator", self$tagSeparator, addTab = TRUE)
     }
   )
 )

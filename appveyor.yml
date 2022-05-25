@@ -12,10 +12,10 @@ install:
   - git submodule update --init --recursive
 
 environment:
-  app_version: "1.3"
+  app_version: "1.4"
   USE_RTOOLS: true
   R_ARCH: x64
-  R_VERSION: "4.0.5"
+  R_VERSION: "4.1.0"
   KEEP_VIGNETTES: true
   NOT_CRAN: true
   COVERALLS_TOKEN:
