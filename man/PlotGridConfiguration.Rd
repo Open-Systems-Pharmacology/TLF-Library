@@ -7,11 +7,90 @@
 A \code{PlotGridConfiguration} object.
 }
 \description{
-R6 class defining the configuration for \code{{patchwork}} plot grid used to
+An \code{R6} class defining the configuration for \code{{patchwork}} plot grid used to
 create a grid of plots from \code{{tlf}}. It holds values for all relevant
 plot properties.
 }
+\section{Customizing}{
+You can change the default values present in public fields.
+
+For example, if you want to specify a new position for tags, you will have to
+do the following:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{myPlotGridConfiguration <- PlotGridConfiguration$new()
+myPlotGridConfiguration$tagPosition <- TagPositions$right
+}\if{html}{\out{</div>}}
+
+For more, see examples.
+}
+
+\section{Specifying fonts}{
+A font is a particular set of glyphs (character shapes), differentiated from
+other fonts in the same family by additional properties such as stroke
+weight, slant, relative width, etc.
+
+A font face (aka typeface) is the design of lettering, characterized by
+variations in size, weight (e.g. bold), slope (e.g. italic), width (e.g.
+condensed), and so on. The available font faces can seen using
+\code{FontFaces} list.
+
+A font family is a grouping of fonts defined by shared design styles.
+
+The available font families will depend on which fonts have been installed on
+your computer. This information can be extracted by running the following
+code:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# install.packages("systemfonts")
+library(systemfonts)
+system_fonts()
+}\if{html}{\out{</div>}}
+}
+
+\section{Saving plot}{
+By default, the plots will be shown in plot pane of your IDE, but the plots
+can also be saved to a file using the \code{ggplot2::ggsave()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{myPlot <- plotGrid(...)
+ggplot2::ggsave(filename = "plot_1.png", plot = myPlot)
+}\if{html}{\out{</div>}}
+}
+
 \examples{
+
+library(tlf)
+
+# create a list of plots
+ls_plots <- list(
+  # first plot
+  plotBoxWhisker(mtcars,
+    dataMapping = BoxWhiskerDataMapping$new(x = "am", y = "wt"), outliers = FALSE
+  ),
+  # second plot
+  plotBoxWhisker(ToothGrowth,
+    dataMapping = BoxWhiskerDataMapping$new(x = "supp", y = "len")
+  )
+)
+
+plotGridObj <- PlotGridConfiguration$new(ls_plots)
+
+# specify further customizations for the plot grid
+plotGridObj$title <- "my combined plot"
+plotGridObj$subtitle <- "something clever"
+plotGridObj$caption <- "my sources"
+plotGridObj$nColumns <- 2L
+plotGridObj$tagLevels <- "A"
+plotGridObj$tagPrefix <- "Plot ("
+plotGridObj$tagSuffix <- ")"
+plotGridObj$tagColor <- "blue"
+plotGridObj$tagSize <- 15
+plotGridObj$tagAngle <- 45
+plotGridObj$tagPosition <- TagPositions$top
+plotGridObj$titleHorizontalJustification <- HorizontalJustification$middle
+plotGridObj$subtitleHorizontalJustification <- HorizontalJustification$middle
+
+# print the object to see its properties
+plotGridObj
+
 
 ## ------------------------------------------------
 ## Method `PlotGridConfiguration$addPlots`
@@ -34,6 +113,9 @@ myPlotGrid$addPlots(list("p1" = ggplot(), "p2" = ggplot()))
 length(myPlotGrid$plotList)
 
 }
+\section{Super class}{
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{PlotGridConfiguration}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -41,6 +123,12 @@ length(myPlotGrid$plotList)
 
 \item{\code{title, subtitle, caption}}{Text strings to use for the various plot
 annotations, where plot refers to the grid of plots as a whole.}
+
+\item{\code{titleColor, titleSize, titleFontFace, titleFontFamily, titleHorizontalJustification, titleVerticalJustification, titleAngle}}{Aesthetic properties for the plot title.}
+
+\item{\code{subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleHorizontalJustification, subtitleVerticalJustification, subtitleAngle}}{Aesthetic properties for the plot subtitle.}
+
+\item{\code{captionColor, captionSize, captionFontFace, captionFontFamily, captionHorizontalJustification, captionVerticalJustification, captionAngle}}{Aesthetic properties for the plot caption.}
 
 \item{\code{tagLevels}}{A character vector defining the enumeration format to use
 at each level. Possible values are \code{'a'} for lowercase letters, \code{'A'} for
@@ -53,10 +141,15 @@ will be expanded to the expected sequence.}
 \item{\code{tagPrefix, tagSuffix}}{Strings that should appear before or after the
 tag.}
 
-\item{\code{tagSeparator}}{A separator between different tag levels}
+\item{\code{tagSeparator}}{A separator between different tag levels.}
 
-\item{\code{theme}}{A ggplot theme specification to use for the plot. Only elements
-related to the titles as well as plot margin and background will be used.}
+\item{\code{tagPosition}}{Position of the tag for an individual plot with respect to
+that plot. Default is topleft. For all available options, see
+\code{TagPositions}.}
+
+\item{\code{tagColor, tagSize, tagFontFamily, tagFontFace, tagHorizontalJustification, tagVerticalJustification, tagAngle, tagLineHeight, tagMargin}}{Aesthetic properties of individual plot tag text.
+For more detailed description of each aesthetic property, see docs for
+\link[ggplot2:element]{element_text()}.}
 
 \item{\code{nColumns, nRows}}{The dimensions of the grid to create - if both are
 \code{NULL} it will use the same logic as \link[ggplot2:facet_wrap]{facet_wrap()} to
@@ -79,7 +172,8 @@ patchwork.}
 
 \item{\code{design}}{Specification of the location of areas in the layout. Can
 either be specified as a text string or by concatenating calls to \code{\link[=area]{area()}}
-together. See the examples for further information on use.}
+together. See the examples in \link[patchwork:wrap_plots]{wrap_plots()} for
+further information on use.}
 }
 \if{html}{\out{</div>}}
 }
@@ -89,8 +183,18 @@ together. See the examples for further information on use.}
 \item{\code{title, subtitle, caption}}{Text strings to use for the various plot
 annotations, where plot refers to the grid of plots as a whole.}
 
+\item{\code{titleColor, titleSize, titleFontFace, titleFontFamily, titleHorizontalJustification, titleVerticalJustification, titleAngle}}{Aesthetic properties for the plot title.}
+
+\item{\code{subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleHorizontalJustification, subtitleVerticalJustification, subtitleAngle}}{Aesthetic properties for the plot subtitle.}
+
+\item{\code{captionColor, captionSize, captionFontFace, captionFontFamily, captionHorizontalJustification, captionVerticalJustification, captionAngle}}{Aesthetic properties for the plot caption.}
+
 \item{\code{tagPrefix, tagSuffix}}{Strings that should appear before or after the
 tag.}
+
+\item{\code{tagColor, tagSize, tagFontFamily, tagFontFace, tagHorizontalJustification, tagVerticalJustification, tagAngle, tagLineHeight, tagMargin}}{Aesthetic properties of individual plot tag text.
+For more detailed description of each aesthetic property, see docs for
+\link[ggplot2:element]{element_text()}.}
 
 \item{\code{nColumns, nRows}}{The dimensions of the grid to create - if both are
 \code{NULL} it will use the same logic as \link[ggplot2:facet_wrap]{facet_wrap()} to
@@ -106,9 +210,16 @@ in the grid. Will get repeated to match the dimensions of the grid.}
 \itemize{
 \item \href{#method-PlotGridConfiguration-new}{\code{PlotGridConfiguration$new()}}
 \item \href{#method-PlotGridConfiguration-addPlots}{\code{PlotGridConfiguration$addPlots()}}
+\item \href{#method-PlotGridConfiguration-print}{\code{PlotGridConfiguration$print()}}
 \item \href{#method-PlotGridConfiguration-clone}{\code{PlotGridConfiguration$clone()}}
 }
 }
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-PlotGridConfiguration-new"></a>}}
 \if{latex}{\out{\hypertarget{method-PlotGridConfiguration-new}{}}}
@@ -170,6 +281,16 @@ length(myPlotGrid$plotList)
 }
 \if{html}{\out{</div>}}
 
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-PlotGridConfiguration-print"></a>}}
+\if{latex}{\out{\hypertarget{method-PlotGridConfiguration-print}{}}}
+\subsection{Method \code{print()}}{
+Print the object to the console.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PlotGridConfiguration$print()}\if{html}{\out{</div>}}
 }
 
 }

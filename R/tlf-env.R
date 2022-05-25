@@ -5,33 +5,12 @@ tlfEnv <- new.env(parent = emptyenv())
 # name of the package. This will be used to retrieve information on the package at run time
 tlfEnv$packageName <- "tlf"
 
-#' @title LegendPositions
-#' @import ospsuite.utils
-#' @export
-#' @description
-#' List of all available legend positions
-#' @family enum helpers
-LegendPositions <- enum(c(
-  "none",
-  "insideTop",
-  "insideTopLeft",
-  "insideLeft",
-  "insideBottomLeft",
-  "insideBottom",
-  "insideBottomRight",
-  "insideRight",
-  "insideTopRight",
-  "outsideTop",
-  "outsideTopLeft",
-  "outsideLeft",
-  "outsideBottomLeft",
-  "outsideBottom",
-  "outsideBottomRight",
-  "outsideRight",
-  "outsideTopRight"
-))
 
+# Related to plot grid
 tlfEnv$defaultLegendPosition <- LegendPositions$outsideRight
+tlfEnv$defaultTagPosition <- TagPositions$topLeft
+tlfEnv$defaultHorizontalJustification <- HorizontalJustification$left
+tlfEnv$defaultVerticalJustification <- VerticalJustification$bottom
 
 #' @title setDefaultLegendPosition
 #' @description Set default legend position of tlf environment

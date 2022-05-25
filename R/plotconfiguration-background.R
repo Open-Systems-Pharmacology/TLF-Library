@@ -75,50 +75,50 @@ BackgroundConfiguration <- R6::R6Class(
     },
     #' @field plot `BackgroundElement` object
     plot = function(value) {
-      if (missing(value)) { 
-        return(private$.plot) 
-      } 
-      validateIsOfType(value, "BackgroundElement", nullAllowed = TRUE) 
+      if (missing(value)) {
+        return(private$.plot)
+      }
+      validateIsOfType(value, "BackgroundElement", nullAllowed = TRUE)
       private$.plot <- value %||% private$.plot
     },
     #' @field panel `BackgroundElement` object
     panel = function(value) {
-      if (missing(value)) { 
-        return(private$.panel) 
-      } 
-      validateIsOfType(value, "BackgroundElement", nullAllowed = TRUE) 
+      if (missing(value)) {
+        return(private$.panel)
+      }
+      validateIsOfType(value, "BackgroundElement", nullAllowed = TRUE)
       private$.panel <- value %||% private$.panel
     },
     #' @field xAxis `LineElement` object
     xAxis = function(value) {
-      if (missing(value)) { 
-        return(private$.xAxis) 
-      } 
-      validateIsOfType(value, "LineElement", nullAllowed = TRUE) 
+      if (missing(value)) {
+        return(private$.xAxis)
+      }
+      validateIsOfType(value, "LineElement", nullAllowed = TRUE)
       private$.xAxis <- value %||% private$.xAxis
     },
     #' @field yAxis `LineElement` object
     yAxis = function(value) {
-      if (missing(value)) { 
-        return(private$.yAxis) 
-      } 
-      validateIsOfType(value, "LineElement", nullAllowed = TRUE) 
+      if (missing(value)) {
+        return(private$.yAxis)
+      }
+      validateIsOfType(value, "LineElement", nullAllowed = TRUE)
       private$.yAxis <- value %||% private$.yAxis
     },
     #' @field xGrid `LineElement` object
     xGrid = function(value) {
-      if (missing(value)) { 
-        return(private$.xGrid) 
-      } 
-      validateIsOfType(value, "LineElement", nullAllowed = TRUE) 
+      if (missing(value)) {
+        return(private$.xGrid)
+      }
+      validateIsOfType(value, "LineElement", nullAllowed = TRUE)
       private$.xGrid <- value %||% private$.xGrid
     },
     #' @field yGrid `LineElement` object
     yGrid = function(value) {
-      if (missing(value)) { 
-        return(private$.yGrid) 
-      } 
-      validateIsOfType(value, "LineElement", nullAllowed = TRUE) 
+      if (missing(value)) {
+        return(private$.yGrid)
+      }
+      validateIsOfType(value, "LineElement", nullAllowed = TRUE)
       private$.yGrid <- value %||% private$.yGrid
     }
   ),
