@@ -52,7 +52,8 @@ PlotAnnotationTextSize <- enum(
     "plotXLabelSize" = 10,
     "plotYLabelSize" = 10,
     "plotLegendTitleSize" = 10,
-    "plotLegendCaptionSize" = 10
+    "plotLegendCaptionSize" = 10,
+    "plotWatermarkSize" = 20
   )
 )
 
