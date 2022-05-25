@@ -1,5 +1,3 @@
-
-
 #' @title setPlotExport
 #' @description Set plot export properties
 #' @param plotObject Graphical object created from ggplot

@@ -33,8 +33,6 @@ AggregationInput <- R6::R6Class(
   )
 )
 
-
-
 #' @title mean-1.96sd
 #' @description Calculate `mean-1.96SD`
 #' @param x Numeric values
