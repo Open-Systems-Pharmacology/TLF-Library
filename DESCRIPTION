@@ -38,10 +38,11 @@ Depends:
 Encoding: UTF-8
 RoxygenNote: 7.2.0
 Roxygen: list(markdown = TRUE)
-Suggests: 
+Suggests:
     knitr,
     rmarkdown,
-    testthat (>= 2.1.0)
+    testthat (>= 3.0.3),
+    vdiffr (>= 1.0.0)
 VignetteBuilder: knitr
 Collate: 
     'aaa-utilities.R'
