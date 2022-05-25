@@ -7,10 +7,54 @@
 A \code{PlotGridConfiguration} object.
 }
 \description{
-R6 class defining the configuration for \code{{patchwork}} plot grid used to
+An \code{R6} class defining the configuration for \code{{patchwork}} plot grid used to
 create a grid of plots from \code{{tlf}}. It holds values for all relevant
 plot properties.
 }
+\section{Customizing}{
+You can change the default values present in public fields.
+
+For example, if you want to specify a new position for tags, you will have to
+do the following:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{myPlotGridConfiguration <- PlotGridConfiguration$new()
+myPlotGridConfiguration$tagPosition <- TagPositions$right
+}\if{html}{\out{</div>}}
+
+For more, see examples.
+}
+
+\section{Specifying fonts}{
+A font is a particular set of glyphs (character shapes), differentiated from
+other fonts in the same family by additional properties such as stroke
+weight, slant, relative width, etc.
+
+A font face (aka typeface) is the design of lettering, characterized by
+variations in size, weight (e.g. bold), slope (e.g. italic), width (e.g.
+condensed), and so on. The available font faces can seen using
+\code{FontFaces} list.
+
+A font family is a grouping of fonts defined by shared design styles.
+
+The available font families will depend on which fonts have been installed on
+your computer. This information can be extracted by running the following
+code:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# install.packages("systemfonts")
+library(systemfonts)
+system_fonts()
+}\if{html}{\out{</div>}}
+}
+
+\section{Saving plot}{
+By default, the plots will be shown in plot pane of your IDE, but the plots
+can also be saved to a file using the \code{ggplot2::ggsave()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{myPlot <- plotGrid(...)
+ggplot2::ggsave(filename = "plot_1.png", plot = myPlot)
+}\if{html}{\out{</div>}}
+}
+
 \examples{
 
 library(tlf)
