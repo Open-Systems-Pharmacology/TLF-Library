@@ -144,9 +144,56 @@ plotGrid <- function(plotGridConfiguration) {
 #'
 #' @description
 #'
-#' R6 class defining the configuration for `{patchwork}` plot grid used to
+#' An `R6` class defining the configuration for `{patchwork}` plot grid used to
 #' create a grid of plots from `{tlf}`. It holds values for all relevant
 #' plot properties.
+#'
+#' # Customizing
+#'
+#' You can change the default values present in public fields.
+#'
+#' For example, if you want to specify a new position for tags, you will have to
+#' do the following:
+#'
+#' ```r
+#' myPlotGridConfiguration <- PlotGridConfiguration$new()
+#' myPlotGridConfiguration$tagPosition <- TagPositions$right
+#' ```
+#'
+#' For more, see examples.
+#'
+#' # Specifying fonts
+#'
+#' A font is a particular set of glyphs (character shapes), differentiated from
+#' other fonts in the same family by additional properties such as stroke
+#' weight, slant, relative width, etc.
+#'
+#' A font face (aka typeface) is the design of lettering, characterized by
+#' variations in size, weight (e.g. bold), slope (e.g. italic), width (e.g.
+#' condensed), and so on. The available font faces can seen using
+#' `FontFaces` list.
+#'
+#' A font family is a grouping of fonts defined by shared design styles.
+#'
+#' The available font families will depend on which fonts have been installed on
+#' your computer. This information can be extracted by running the following
+#' code:
+#'
+#' ```r
+#' # install.packages("systemfonts")
+#' library(systemfonts)
+#' system_fonts()
+#' ```
+#'
+#' # Saving plot
+#'
+#' By default, the plots will be shown in plot pane of your IDE, but the plots
+#' can also be saved to a file using the `ggplot2::ggsave()` function.
+#'
+#' ```r
+#' myPlot <- plotGrid(...)
+#' ggplot2::ggsave(filename = "plot_1.png", plot = myPlot)
+#' ```
 #'
 #' @field plotList A list containing `ggplot` objects.
 #' @field title,subtitle,caption Text strings to use for the various plot
