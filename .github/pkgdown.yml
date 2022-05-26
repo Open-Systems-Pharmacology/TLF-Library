@@ -31,10 +31,11 @@ jobs:
           use-public-rspm: true
 
       - uses: r-lib/actions/setup-r-dependencies@v2
-        run: |
-          install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/ospsuite-rutils/artifacts/ospsuite.utils.zip', repos = NULL, type = 'binary')
-        with:
-          extra-packages: r-lib/pkgdown, local::.
+         with:
+          extra-packages: |
+            r-lib/pkgdown
+            Open-Systems-Pharmacology/TLF-Library
+            local::.
           needs: website
 
       - name: Build site
