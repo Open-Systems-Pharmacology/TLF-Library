@@ -1,20 +1,3 @@
-
-#                           ****IMPORTANT**
-#
-#            Do not move these enums to any other file!
-#
-# R6 class generators will create classes at build time. This means that if any
-# of the enums are to be used inside these class environments, they need to be
-# already available in the NAMESPACE when classes are being created. If not, you
-# will get "object not found" error because R6 class generator can't find these
-# enums in the NAMESPACE.
-#
-# This whole problem can be easily avoided by collating NAMESPACE alphabetically
-# and including the enums in `aaa-` file which will be loaded before all other
-# files and therefore all R6 class environments can find the needed enums since
-# these classes will be defined in these other files.
-
-
 #' @title Alignments
 #' @import ospsuite.utils
 #' @export

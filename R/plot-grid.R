@@ -275,6 +275,8 @@ plotGrid <- function(plotGridConfiguration) {
 #'
 #' @return A `PlotGridConfiguration` object.
 #'
+#' @include utilities-enums.R
+#'
 #' @export
 PlotGridConfiguration <- R6::R6Class(
   "PlotGridConfiguration",

@@ -44,8 +44,7 @@ Suggests:
     testthat (>= 3.0.3),
     vdiffr (>= 1.0.0)
 VignetteBuilder: knitr
-Collate:
-    'aaa-enums.R'
+Collate: 
     'aaa-utilities.R'
     'aggregation-input.R'
     'aggregation-summary.R'
@@ -70,6 +69,7 @@ Collate:
     'pkratio-get-measure.R'
     'plot-boxwhisker.R'
     'plot-ddiratio.R'
+    'utilities-enums.R'
     'plot-grid.R'
     'plot-histogram.R'
     'plot-obs-vs-pred.R'
