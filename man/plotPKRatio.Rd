@@ -9,6 +9,7 @@ plotPKRatio(
   metaData = NULL,
   dataMapping = NULL,
   plotConfiguration = NULL,
+  foldDistance = NULL,
   plotObject = NULL
 )
 }
@@ -20,6 +21,9 @@ plotPKRatio(
 \item{dataMapping}{A \code{PKRatioDataMapping} object mapping \code{x}, \code{y} and aesthetic groups to their variable names of \code{data}.}
 
 \item{plotConfiguration}{An optional \code{PKRatioPlotConfiguration} object defining labels, grid, background and watermark.}
+
+\item{foldDistance}{Numeric values of fold distance lines to display in log plots.
+This argument is internally translated into \code{lines} field of \code{dataMapping}.}
 
 \item{plotObject}{An optional \code{ggplot} object on which to add the plot layer}
 }
@@ -34,6 +38,13 @@ Producing PK Ratio plots
 pkData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
 
 plotPKRatio(data = pkData, dataMapping = PKRatioDataMapping$new(x = "x", y = "y"))
+
+# Produce PK Ratio plot with user-defined horizontal lines
+plotPKRatio(
+data = pkData,
+dataMapping = PKRatioDataMapping$new(x = "x", y = "y"), 
+foldDistance = c(1, 10)
+)
 
 }
 \references{

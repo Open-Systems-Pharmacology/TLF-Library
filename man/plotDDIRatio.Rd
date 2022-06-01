@@ -9,8 +9,10 @@ plotDDIRatio(
   metaData = NULL,
   dataMapping = NULL,
   plotConfiguration = NULL,
-  plotObject = NULL,
-  residualsVsObserved = NULL
+  residualsVsObserved = NULL,
+  foldDistance = NULL,
+  deltaGuest = NULL,
+  plotObject = NULL
 )
 }
 \arguments{
@@ -22,10 +24,15 @@ plotDDIRatio(
 
 \item{plotConfiguration}{An optional \code{DDIRatioPlotConfiguration} object defining labels, grid, background and watermark.}
 
-\item{plotObject}{An optional \code{ggplot} object on which to add the plot layer}
-
 \item{residualsVsObserved}{Optional logical value defining
 if DDI Ratio plot is drawn as residuals vs observed, instead of predicted vs observed.}
+
+\item{foldDistance}{Numeric values of fold distance lines to display in log plots.
+This argument is internally translated into \code{lines} field of \code{dataMapping}.}
+
+\item{deltaGuest}{Numeric value parameter of Guest function}
+
+\item{plotObject}{An optional \code{ggplot} object on which to add the plot layer}
 }
 \value{
 A \code{ggplot} object
@@ -38,6 +45,15 @@ Producing DDI Ratio plots
 ddiData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
 
 plotDDIRatio(data = ddiData, dataMapping = DDIRatioDataMapping$new(x = "x", y = "y"))
+
+# Produce DDI Ratio plot with user-defined horizontal lines
+plotDDIRatio(
+data = ddiData,
+dataMapping = DDIRatioDataMapping$new(x = "x", y = "y"), 
+foldDistance = c(1, 10),
+deltaGuest = 1.25,
+residualsVsObserved = TRUE
+)
 
 }
 \references{

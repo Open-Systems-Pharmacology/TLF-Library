@@ -269,11 +269,41 @@ DefaultDataMappingValues <- list(
   histogram = 0
 )
 
-#' @title DDIComparisonTypes
-#' @description Options for comparison: residuals vs pred or obs vs pred
+#' @title getLinesFromFoldDistance
+#' @description 
+#' Get list of values to provide to `lines` argument of `dataMapping` objects.
+#' The `lines` are internally used as argument of `geom_hline` and `geom_abline` from `ggplot2`
+#' @param foldDistance Numeric values
+#' @return A list of numeric values
 #' @export
-#' @import ospsuite.utils
-DDIComparisonTypes <- enum(c("resVsPred", "obsVsPred"))
+#' @examples 
+#' 
+#' # Get lines for identity and 2-fold distance
+#' getLinesFromFoldDistance(c(1, 2))
+#' 
+getLinesFromFoldDistance <- function(foldDistance){
+  lapply(foldDistance, function(fold){
+    # Use unique if fold=1 is provided
+    unique(c(fold, 1/fold))
+  })
+}
+
+
+#' @title getAblineValues
+#' @description 
+#' Apply log10 transformation to lines because plot is log scaled by default and geom_abline requires the log transformed values in input of intercept
+#' Get list of values to provide to `lines` argument of `dataMapping` objects.
+#' The `lines` are internally used as argument of `geom_hline` and `geom_abline` from `ggplot2`
+#' @param values Numeric values to be transformed if scale is log
+#' @param scale Scale of axis. Use enum `Scaling` to access names of scales.
+#' @return Numeric values
+#' @keywords internal
+getAblineValues <- function(values, scale){
+  if(isIncluded(scale, Scaling$log)){
+    return(log10(values))
+  }
+  return(values)
+}
 
 getAggregatedData <- function(data,
                               xParameterName,

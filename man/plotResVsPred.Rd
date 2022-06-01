@@ -9,6 +9,7 @@ plotResVsPred(
   metaData = NULL,
   dataMapping = NULL,
   plotConfiguration = NULL,
+  foldDistance = NULL,
   smoother = NULL,
   plotObject = NULL
 )
@@ -21,6 +22,9 @@ plotResVsPred(
 \item{dataMapping}{A \code{ObsVsPredDataMapping} object mapping \code{x}, \code{y} and aesthetic groups to their variable names of \code{data}.}
 
 \item{plotConfiguration}{An optional \code{ObsVsPredConfiguration} object defining labels, grid, background and watermark.}
+
+\item{foldDistance}{Numeric values of fold distance lines to display in log plots.
+This argument is internally translated into \code{lines} field of \code{dataMapping}.}
 
 \item{smoother}{Optional name of smoother function:
 \itemize{
@@ -48,6 +52,16 @@ plotResVsPred(
   dataMapping = ResVsPredDataMapping$new(x = "x", y = "y"),
   smoother = "lm"
 )
+
+# Produce Res vs Pred plot with user-defined fold distance lines
+plotResVsPred(
+data = resVsPredData,
+dataMapping = ResVsPredDataMapping$new(x = "x", y = "y"), 
+plotConfiguration = ResVsPredPlotConfiguration$new(
+yScale = Scaling$log, yLimits = c(0.05, 50)),
+foldDistance = c(1, 10)
+)
+
 }
 \seealso{
 Other molecule plots: 

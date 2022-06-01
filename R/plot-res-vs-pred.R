@@ -19,14 +19,26 @@
 #'   dataMapping = ResVsPredDataMapping$new(x = "x", y = "y"),
 #'   smoother = "lm"
 #' )
+#' 
+#' # Produce Res vs Pred plot with user-defined fold distance lines
+#' plotResVsPred(
+#' data = resVsPredData,
+#' dataMapping = ResVsPredDataMapping$new(x = "x", y = "y"), 
+#' plotConfiguration = ResVsPredPlotConfiguration$new(
+#' yScale = Scaling$log, yLimits = c(0.05, 50)),
+#' foldDistance = c(1, 10)
+#' )
+#' 
 plotResVsPred <- function(data,
                           metaData = NULL,
                           dataMapping = NULL,
                           plotConfiguration = NULL,
+                          foldDistance = NULL,
                           smoother = NULL,
                           plotObject = NULL) {
   eval(parseCheckPlotInputs("ResVsPred"))
   validateIsIncluded(smoother, c("loess", "lm"), nullAllowed = TRUE)
+  validateIsNumeric(foldDistance, nullAllowed = TRUE)
   dataMapping$smoother <- smoother %||% dataMapping$smoother
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- getAesStringMapping(dataMapping)
@@ -34,7 +46,12 @@ plotResVsPred <- function(data,
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
   # Add horizontal lines with offset defined in lines of dataMapping
+  # Include horizontal lines
+  if(!isEmpty(foldDistance)){
+    dataMapping$lines <- getLinesFromFoldDistance(foldDistance)
+  }
   for (lineIndex in seq_along(dataMapping$lines)) {
+    # position correspond to the number of layer lines already added
     eval(parseAddLineLayer("horizontal", dataMapping$lines[[lineIndex]], lineIndex - 1))
   }
   if (isEmpty(lineIndex)) {
