@@ -1,6 +1,11 @@
-# tlf 1.4.0 (development versio)
+# tlf 1.4.0 (development version)
 
 ## New features
+
+* New helper functions and parameters to facilitate usage of plot functions (#301):
+
+  - Function `getLinesFromFoldDistance` tanslates fold distance values into `lines` argument for dataMapping objects
+  - Functions `plotDDIRatio`, `plotPKRatio`, `plotObsVsPred`, `plotResVsPred` and `plotResVsTime` include optional parameters such as `foldDistance`, `deltaGuest` or `smoother`
 
 * New helper enumerated lists: 
    
