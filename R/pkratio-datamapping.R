@@ -12,7 +12,7 @@ PKRatioDataMapping <- R6::R6Class(
     error = NULL,
 
     #' @description Create a new `PKRatioDataMapping` object
-    #' @param lines list of ratio limits to plot as horizontal lines
+    #' @param lines List of ratio limits to display as horizontal lines
     #' @param uncertainty mapping error bars around scatter points.
     #' Deprecated parameter replaced by `error`.
     #' @param error mapping error bars around scatter points

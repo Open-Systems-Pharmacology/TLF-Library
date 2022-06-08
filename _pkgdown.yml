@@ -39,6 +39,7 @@ reference:
   desc: "Classes defining what data to plot"
   contents: 
   - has_concept("DataMapping classes")
+  - matches("getLinesFromFoldDistance")
 - title: "Enum Helpers"
   desc: "Enums listing available values for specific properties"
   contents: 
