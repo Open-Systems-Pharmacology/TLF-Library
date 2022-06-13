@@ -48,6 +48,9 @@ createPlotTickLabels <- function(ticklabels) {
   if (isEmpty(ticklabels)) {
     return(waiver())
   }
+  if (isOfType(ticklabels, c("numeric", "function", "expression"))) {
+    return(ticklabels)
+  }
   if (isIncluded(ticklabels, TickLabelTransforms)) {
     transformedLabels <- switch(ticklabels,
       "default" = waiver(),
