@@ -26,6 +26,7 @@ Other enum helpers:
 \code{\link{Scaling}},
 \code{\link{Shapes}},
 \code{\link{TagPositions}},
+\code{\link{TickLabelTransforms}},
 \code{\link{VerticalJustification}},
 \code{\link{tlfStatFunctions}}
 }

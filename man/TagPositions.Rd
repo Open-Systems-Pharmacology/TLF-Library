@@ -26,6 +26,7 @@ Other enum helpers:
 \code{\link{PlotAnnotationTextSize}},
 \code{\link{Scaling}},
 \code{\link{Shapes}},
+\code{\link{TickLabelTransforms}},
 \code{\link{VerticalJustification}},
 \code{\link{tlfStatFunctions}}
 }

@@ -38,6 +38,32 @@ createPlotTicks <- function(ticks) {
   return(ticks)
 }
 
+#' @title createPlotTickLabels
+#' @description Translate ticks and ticklabels into a value directly usable by `ggplot2`
+#' to give more flexibilty in the next functions
+#' @param ticklabels character, numeric or function defining the ticks
+#' @return name of the `ggplot2` scale
+#' @keywords internal
+createPlotTickLabels <- function(ticklabels) {
+  if (isEmpty(ticklabels)) {
+    return(waiver())
+  }
+  if (isIncluded(ticklabels, TickLabelTransforms)) {
+    transformedLabels <- switch(ticklabels,
+      "default" = waiver(),
+      "none" = NULL,
+      "identity" = identity,
+      "log" = getLogTickLabels,
+      "ln" = getLnTickLabels,
+      "sqrt" = getSqrtTickLabels,
+      "greek" = getGreekTickLabels,
+      "pi" = getPiTickLabels
+    )
+    return(transformedLabels)
+  }
+  return(ticklabels)
+}
+
 #' @title AxisConfiguration
 #' @description  R6 class defining the configuration of axis
 #' @export
@@ -69,7 +95,7 @@ AxisConfiguration <- R6::R6Class(
       scale <- scale %||% Scaling$lin
       private$.scale <- createPlotScale(scale)
       private$.ticks <- createPlotTicks(ticks)
-      private$.ticklabels <- createPlotTicks(ticklabels)
+      private$.ticklabels <- createPlotTickLabels(ticklabels)
       private$.expand <- expand
 
       # Default axis font will use theme
@@ -176,7 +202,7 @@ AxisConfiguration <- R6::R6Class(
       if (missing(value)) {
         return(private$.ticklabels)
       }
-      private$.ticklabels <- createPlotTicks(value)
+      private$.ticklabels <- createPlotTickLabels(value)
       return(invisible())
     },
     #' @field font `Font` object defining the font of the ticklabels

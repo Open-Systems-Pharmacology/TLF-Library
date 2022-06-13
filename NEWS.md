@@ -13,6 +13,7 @@
    - `HorizontalJustification` (horizontal justifications for plot annotation text) (#293)
    - `VerticalJustification` (vertical justifications for plot annotation text) (#293)
    - `PlotAnnotationTextSize` (default text sizes for plot annotations) (#293)
+   - `TickLabelTransforms` (predefined tick labeling) (#304)
    
 ## Minor improvements and bug fixes
 
