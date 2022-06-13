@@ -148,7 +148,7 @@ getSqrtTickLabels <- function(ticks) {
 #' @param ticks numeric values of the ticks
 #' @return Expressions to use in `ticklabels` input parameter of `setXAxis` and `setYAxis` functions
 #' @examples
-#' ticks <- c(1, 5, 10, 50, 100, 500))
+#' ticks <- c(1, 5, 10, 50, 100, 500)
 #' getGreekTickLabels(ticks)
 #' @export
 getGreekTickLabels <- function(ticks) {

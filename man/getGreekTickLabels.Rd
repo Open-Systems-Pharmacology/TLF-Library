@@ -16,6 +16,6 @@ Expressions to use in \code{ticklabels} input parameter of \code{setXAxis} and \
 Get ticklabels expressions for discrete scale plots with greek letters
 }
 \examples{
-ticks <- c(1, 5, 10, 50, 100, 500))
+ticks <- c(1, 5, 10, 50, 100, 500)
 getGreekTickLabels(ticks)
 }
