@@ -190,7 +190,7 @@ getPiTickLabels <- function(ticks) {
     if(piFraction==0.333){return(" + \u03C0/3")}
     if(piFraction==0.5){return(" + \u03C0/2")}
     if(piFraction==0.667){return(" + 2\u03C0/3")}
-    if(piFraction==0.667){return(" + 5\u03C0/6")}
+    if(piFraction==0.833){return(" + 5\u03C0/6")}
     return(paste0("+", piFraction, "\u03C0"))
   })
   piLabels <- paste(roundPi, decPi, sep = "")
