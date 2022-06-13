@@ -75,7 +75,7 @@ Default value is 1.}
 
 \item{\code{minRange}}{Mininmum range for guest lines}
 
-\item{\code{lines}}{list of ratio limits to plot as diagonal lines}
+\item{\code{lines}}{List of ratio limits to display as diagonal/horizontal lines}
 
 \item{\code{residualsVsObserved}}{if true, returns a mapping for generating a residuals (predicted/observed) vs observed DDI ratio plot.  If false (default) returns a mapping for predicted vs observed DDI ratio plot.}
 

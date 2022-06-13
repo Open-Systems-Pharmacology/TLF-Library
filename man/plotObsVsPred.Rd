@@ -9,6 +9,7 @@ plotObsVsPred(
   metaData = NULL,
   dataMapping = NULL,
   plotConfiguration = NULL,
+  foldDistance = NULL,
   smoother = NULL,
   plotObject = NULL
 )
@@ -21,6 +22,9 @@ plotObsVsPred(
 \item{dataMapping}{A \code{ObsVsPredDataMapping} object mapping \code{x}, \code{y} and aesthetic groups to their variable names of \code{data}.}
 
 \item{plotConfiguration}{An optional \code{ObsVsPredConfiguration} object defining labels, grid, background and watermark.}
+
+\item{foldDistance}{Numeric values of fold distance lines to display in log plots.
+This argument is internally translated into \code{lines} field of \code{dataMapping}.}
 
 \item{smoother}{Optional name of smoother function:
 \itemize{
@@ -47,6 +51,16 @@ plotObsVsPred(
   data = obsVsPredData,
   dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y"),
   smoother = "lm"
+)
+
+# Produce Obs vs Pred plot with user-defined fold distance lines
+plotObsVsPred(
+data = obsVsPredData,
+dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y"), 
+plotConfiguration = ObsVsPredPlotConfiguration$new(
+xScale = Scaling$log, xLimits = c(0.05, 50),
+yScale = Scaling$log, yLimits = c(0.05, 50)),
+foldDistance = c(1, 10)
 )
 
 }

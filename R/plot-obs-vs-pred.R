@@ -3,6 +3,8 @@
 #' Producing observed vs predicted plots
 #'
 #' @inheritParams addScatter
+#' @param foldDistance Numeric values of fold distance lines to display in log plots.
+#' This argument is internally translated into `lines` field of `dataMapping`.
 #' @param smoother Optional name of smoother function:
 #' \itemize{
 #' \item `"loess"` for loess regression
@@ -29,14 +31,26 @@
 #'   smoother = "lm"
 #' )
 #'
+#' # Produce Obs vs Pred plot with user-defined fold distance lines
+#' plotObsVsPred(
+#' data = obsVsPredData,
+#' dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y"), 
+#' plotConfiguration = ObsVsPredPlotConfiguration$new(
+#' xScale = Scaling$log, xLimits = c(0.05, 50),
+#' yScale = Scaling$log, yLimits = c(0.05, 50)),
+#' foldDistance = c(1, 10)
+#' )
+#' 
 plotObsVsPred <- function(data,
                           metaData = NULL,
                           dataMapping = NULL,
                           plotConfiguration = NULL,
+                          foldDistance = NULL,
                           smoother = NULL,
                           plotObject = NULL) {
   eval(parseCheckPlotInputs("ObsVsPred"))
   validateIsIncluded(smoother, c("loess", "lm"), nullAllowed = TRUE)
+  validateIsNumeric(foldDistance, nullAllowed = TRUE)
   dataMapping$smoother <- smoother %||% dataMapping$smoother
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- getAesStringMapping(dataMapping)
@@ -44,8 +58,13 @@ plotObsVsPred <- function(data,
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
   # Add diagonal lines with offset defined in lines of dataMapping
+  if(!isEmpty(foldDistance)){
+    dataMapping$lines <- getLinesFromFoldDistance(foldDistance)
+  }
   for (lineIndex in seq_along(dataMapping$lines)) {
-    eval(parseAddLineLayer("diagonal", dataMapping$lines[[lineIndex]], lineIndex - 1))
+    lineValue <- getAblineValues(dataMapping$lines[[lineIndex]], plotConfiguration$yAxis$scale)
+    # position correspond to the number of layer lines already added
+    eval(parseAddLineLayer("diagonal", lineValue, lineIndex - 1))
   }
   if (isEmpty(lineIndex)) {
     lineIndex <- 0
