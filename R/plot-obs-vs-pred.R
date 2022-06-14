@@ -33,14 +33,15 @@
 #'
 #' # Produce Obs vs Pred plot with user-defined fold distance lines
 #' plotObsVsPred(
-#' data = obsVsPredData,
-#' dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y"), 
-#' plotConfiguration = ObsVsPredPlotConfiguration$new(
-#' xScale = Scaling$log, xLimits = c(0.05, 50),
-#' yScale = Scaling$log, yLimits = c(0.05, 50)),
-#' foldDistance = c(1, 10)
+#'   data = obsVsPredData,
+#'   dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y"),
+#'   plotConfiguration = ObsVsPredPlotConfiguration$new(
+#'     xScale = Scaling$log, xLimits = c(0.05, 50),
+#'     yScale = Scaling$log, yLimits = c(0.05, 50)
+#'   ),
+#'   foldDistance = c(1, 10)
 #' )
-#' 
+#'
 plotObsVsPred <- function(data,
                           metaData = NULL,
                           dataMapping = NULL,
@@ -58,7 +59,7 @@ plotObsVsPred <- function(data,
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
   # Add diagonal lines with offset defined in lines of dataMapping
-  if(!isEmpty(foldDistance)){
+  if (!isEmpty(foldDistance)) {
     dataMapping$lines <- getLinesFromFoldDistance(foldDistance)
   }
   for (lineIndex in seq_along(dataMapping$lines)) {

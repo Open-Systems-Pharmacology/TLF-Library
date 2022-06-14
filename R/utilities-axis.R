@@ -153,10 +153,14 @@ getSqrtTickLabels <- function(ticks) {
 #' @export
 getGreekTickLabels <- function(ticks) {
   # alpha starts at converted integer 945
-  if(is.numeric(ticks)){
-    return(sapply(ticks, function(tick){intToUtf8(tick + 944)}))
+  if (is.numeric(ticks)) {
+    return(sapply(ticks, function(tick) {
+      intToUtf8(tick + 944)
+    }))
   }
-  tickLabels <- sapply(1:length(ticks), function(tick){intToUtf8(tick + 944)})
+  tickLabels <- sapply(1:length(ticks), function(tick) {
+    intToUtf8(tick + 944)
+  })
   return(tickLabels)
 }
 
@@ -165,35 +169,49 @@ getGreekTickLabels <- function(ticks) {
 #' @param ticks numeric values of the ticks
 #' @return Expressions to use in `ticklabels` input parameter of `setXAxis` and `setYAxis` functions
 #' @examples
-#' ticks <- seq(0, 2*pi, pi/2)
+#' ticks <- seq(0, 2 * pi, pi / 2)
 #' getPiTickLabels(ticks)
 #' @export
 getPiTickLabels <- function(ticks) {
   # Get fractions of pi from ticks
   roundPi <- as.character(ticks %/% pi)
   # Remove 1 and -1 from expression
-  roundPi[roundPi=="1"] <- ""
-  roundPi[roundPi=="-1"] <- "-"
+  roundPi[roundPi == "1"] <- ""
+  roundPi[roundPi == "-1"] <- "-"
   # Flag when 0 to remove pi from label
-  roundPi[roundPi=="0"] <- "x"
-  
+  roundPi[roundPi == "0"] <- "x"
+
   roundPi <- paste(roundPi, "\u03C0", sep = "")
   roundPi[grepl("x", roundPi)] <- ""
-  
+
   # Round to 3 digits to get fraction values
   # If fraction is recognized, used fraction format
-  decPi <- round((ticks %% pi)/pi, 3)
-  decPi <- sapply(decPi, function(piFraction){
-    if(piFraction==0){return("")}
-    if(piFraction==0.167){return(" + \u03C0/6")}
-    if(piFraction==0.25){return(" + \u03C0/4")}
-    if(piFraction==0.333){return(" + \u03C0/3")}
-    if(piFraction==0.5){return(" + \u03C0/2")}
-    if(piFraction==0.667){return(" + 2\u03C0/3")}
-    if(piFraction==0.833){return(" + 5\u03C0/6")}
+  decPi <- round((ticks %% pi) / pi, 3)
+  decPi <- sapply(decPi, function(piFraction) {
+    if (piFraction == 0) {
+      return("")
+    }
+    if (piFraction == 0.167) {
+      return(" + \u03C0/6")
+    }
+    if (piFraction == 0.25) {
+      return(" + \u03C0/4")
+    }
+    if (piFraction == 0.333) {
+      return(" + \u03C0/3")
+    }
+    if (piFraction == 0.5) {
+      return(" + \u03C0/2")
+    }
+    if (piFraction == 0.667) {
+      return(" + 2\u03C0/3")
+    }
+    if (piFraction == 0.833) {
+      return(" + 5\u03C0/6")
+    }
     return(paste0("+", piFraction, "\u03C0"))
   })
   piLabels <- paste(roundPi, decPi, sep = "")
-  piLabels[piLabels==""] <- "0"
+  piLabels[piLabels == ""] <- "0"
   return(piLabels)
 }

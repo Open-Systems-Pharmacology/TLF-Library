@@ -41,9 +41,9 @@ plotPKRatio(data = pkData, dataMapping = PKRatioDataMapping$new(x = "x", y = "y"
 
 # Produce PK Ratio plot with user-defined horizontal lines
 plotPKRatio(
-data = pkData,
-dataMapping = PKRatioDataMapping$new(x = "x", y = "y"), 
-foldDistance = c(1, 10)
+  data = pkData,
+  dataMapping = PKRatioDataMapping$new(x = "x", y = "y"),
+  foldDistance = c(1, 10)
 )
 
 }

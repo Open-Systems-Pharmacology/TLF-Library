@@ -48,11 +48,11 @@ plotDDIRatio(data = ddiData, dataMapping = DDIRatioDataMapping$new(x = "x", y = 
 
 # Produce DDI Ratio plot with user-defined horizontal lines
 plotDDIRatio(
-data = ddiData,
-dataMapping = DDIRatioDataMapping$new(x = "x", y = "y"), 
-foldDistance = c(1, 10),
-deltaGuest = 1.25,
-residualsVsObserved = TRUE
+  data = ddiData,
+  dataMapping = DDIRatioDataMapping$new(x = "x", y = "y"),
+  foldDistance = c(1, 10),
+  deltaGuest = 1.25,
+  residualsVsObserved = TRUE
 )
 
 }

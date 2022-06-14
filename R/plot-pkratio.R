@@ -21,12 +21,12 @@
 #' pkData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
 #'
 #' plotPKRatio(data = pkData, dataMapping = PKRatioDataMapping$new(x = "x", y = "y"))
-#' 
+#'
 #' # Produce PK Ratio plot with user-defined horizontal lines
 #' plotPKRatio(
-#' data = pkData,
-#' dataMapping = PKRatioDataMapping$new(x = "x", y = "y"), 
-#' foldDistance = c(1, 10)
+#'   data = pkData,
+#'   dataMapping = PKRatioDataMapping$new(x = "x", y = "y"),
+#'   foldDistance = c(1, 10)
 #' )
 #'
 plotPKRatio <- function(data,
@@ -41,9 +41,9 @@ plotPKRatio <- function(data,
   mapLabels <- getAesStringMapping(dataMapping)
 
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
-  
+
   # Include horizontal lines
-  if(!isEmpty(foldDistance)){
+  if (!isEmpty(foldDistance)) {
     dataMapping$lines <- getLinesFromFoldDistance(foldDistance)
   }
   for (lineIndex in seq_along(dataMapping$lines)) {

@@ -16,6 +16,6 @@ Expressions to use in \code{ticklabels} input parameter of \code{setXAxis} and \
 Get ticklabels expressions for plots with values as ratios of Pi
 }
 \examples{
-ticks <- seq(0, 2*pi, pi/2)
+ticks <- seq(0, 2 * pi, pi / 2)
 getPiTickLabels(ticks)
 }

@@ -24,14 +24,14 @@
 #' ddiData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
 #'
 #' plotDDIRatio(data = ddiData, dataMapping = DDIRatioDataMapping$new(x = "x", y = "y"))
-#' 
+#'
 #' # Produce DDI Ratio plot with user-defined horizontal lines
 #' plotDDIRatio(
-#' data = ddiData,
-#' dataMapping = DDIRatioDataMapping$new(x = "x", y = "y"), 
-#' foldDistance = c(1, 10),
-#' deltaGuest = 1.25,
-#' residualsVsObserved = TRUE
+#'   data = ddiData,
+#'   dataMapping = DDIRatioDataMapping$new(x = "x", y = "y"),
+#'   foldDistance = c(1, 10),
+#'   deltaGuest = 1.25,
+#'   residualsVsObserved = TRUE
 #' )
 #'
 plotDDIRatio <- function(data,
@@ -53,13 +53,13 @@ plotDDIRatio <- function(data,
 
   dataMapping$residualsVsObserved <- residualsVsObserved %||% dataMapping$residualsVsObserved
   dataMapping$deltaGuest <- deltaGuest %||% dataMapping$deltaGuest
-  
+
   lineOrientation <- "diagonal"
   if (dataMapping$residualsVsObserved) {
     lineOrientation <- "ddiHorizontal"
   }
   # Include diagonal or horizontal lines depending on the plot type
-  if(!isEmpty(foldDistance)){
+  if (!isEmpty(foldDistance)) {
     dataMapping$lines <- getLinesFromFoldDistance(foldDistance)
   }
   for (lineIndex in seq_along(dataMapping$lines)) {
