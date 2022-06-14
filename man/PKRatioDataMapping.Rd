@@ -67,7 +67,7 @@ Create a new \code{PKRatioDataMapping} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{lines}}{list of ratio limits to plot as horizontal lines}
+\item{\code{lines}}{List of ratio limits to display as horizontal lines}
 
 \item{\code{uncertainty}}{mapping error bars around scatter points.
 Deprecated parameter replaced by \code{error}.}
