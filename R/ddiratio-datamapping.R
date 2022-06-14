@@ -31,7 +31,7 @@ DDIRatioDataMapping <- R6::R6Class(
       validateIsNumeric(minRange)
       validateIsOfLength(minRange, 2)
       validateIsLogical(residualsVsObserved)
-      
+
       self$lines <- lines
       self$minRange <- minRange
       self$deltaGuest <- deltaGuest

@@ -44,9 +44,9 @@ plotResVsTime(data = resVsTimeData, dataMapping = ResVsTimeDataMapping$new(x = "
 
 # Produce Res vs Time plot with linear regression
 plotResVsTime(
-data = resVsTimeData, 
-dataMapping = ResVsTimeDataMapping$new(x = "x", y = "y"),
-smoother = "lm"
+  data = resVsTimeData,
+  dataMapping = ResVsTimeDataMapping$new(x = "x", y = "y"),
+  smoother = "lm"
 )
 }
 \seealso{

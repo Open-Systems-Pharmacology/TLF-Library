@@ -55,6 +55,7 @@ Other enum helpers:
 \code{\link{PlotAnnotationTextSize}},
 \code{\link{Shapes}},
 \code{\link{TagPositions}},
+\code{\link{TickLabelTransforms}},
 \code{\link{VerticalJustification}},
 \code{\link{tlfStatFunctions}}
 }

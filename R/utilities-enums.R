@@ -320,3 +320,11 @@ ExportUnits <- enum(c("cm", "in", "mm", "px"))
 #' List of all available formats to export a ggplot object
 #' @family enum helpers
 ExportFormats <- enum(c("png", "pdf", "eps", "ps", "tex", "jpeg", "tiff", "bmp", "svg", "wmf"))
+
+#' @title TickLabelTransforms
+#' @import ospsuite.utils
+#' @export
+#' @description
+#' List of all available tick label transformation names
+#' @family enum helpers
+TickLabelTransforms <- enum(c("none", "default", "identity", "log", "ln", "sqrt", "greek", "pi"))
