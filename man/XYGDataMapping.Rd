@@ -89,7 +89,7 @@ Create a new \code{XYGDataMapping} object
 
 \item{\code{group}}{R6 class \code{Grouping} object or its input}
 
-\item{\code{data}}{data.frame to map used by \code{smartMapping}}
+\item{\code{data}}{data.frame to map used by \code{.smartMapping}}
 }
 \if{html}{\out{</div>}}
 }

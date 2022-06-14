@@ -39,7 +39,7 @@ getBoxWhiskerMeasure <- function(data,
   )
 
   summary <- tapply(y, group, FUN = function(x) {
-    summaryStat(x, quantiles)
+    .summaryStat(x, quantiles)
   })
   # As a data.frame summary row names are already group names
   summary <- as.data.frame(t(sapply(summary, FUN = rbind)))
@@ -61,12 +61,12 @@ getBoxWhiskerMeasure <- function(data,
 }
 
 
-summaryStat <- function(x, quantiles = c(0.05, 0.25, 0.5, 0.75, 0.95), na.rm = FALSE) {
+.summaryStat <- function(x, quantiles = c(0.05, 0.25, 0.5, 0.75, 0.95), na.rm = FALSE) {
   n <- length(x)
   summaryQuantiles <- as.numeric(stats::quantile(x, probs = quantiles))
-  summaryStat <- c(mean(x, na.rm = na.rm), stats::sd(x, na.rm = na.rm), exp(mean(log(x), na.rm = na.rm)), exp(stats::sd(log(x), na.rm = na.rm)))
+  .summaryStat <- c(mean(x, na.rm = na.rm), stats::sd(x, na.rm = na.rm), exp(mean(log(x), na.rm = na.rm)), exp(stats::sd(log(x), na.rm = na.rm)))
 
-  summary <- c(n, summaryQuantiles, summaryStat)
+  summary <- c(n, summaryQuantiles, .summaryStat)
 
   return(summary)
 }

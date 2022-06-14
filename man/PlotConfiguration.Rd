@@ -174,7 +174,7 @@ Use Enum \code{LegendPositions} to get a list of available to legend positions.}
 
 \item{\code{dpi}}{numeric value defining plot resolution (dots per inch)}
 
-\item{\code{data}}{data.frame used by \code{smartMapping}}
+\item{\code{data}}{data.frame used by \code{.smartMapping}}
 
 \item{\code{metaData}}{list of information on \code{data}}
 

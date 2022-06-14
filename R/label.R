@@ -31,7 +31,7 @@ Label <- R6::R6Class(
       self$text <- text
       self$font <- font %||% Font$new()
       # If font properties are explicitely written, they will overwrite the properties of input Font
-      eval(parseVariableToObject("self$font", c("size", "color", "fontFace", "fontFamily", "angle", "align"), keepIfNull = TRUE))
+      eval(.parseVariableToObject("self$font", c("size", "color", "fontFace", "fontFamily", "angle", "align"), keepIfNull = TRUE))
     },
 
     #' @description Create a `ggplot2::element_text` directly convertible by `ggplot2::theme`.

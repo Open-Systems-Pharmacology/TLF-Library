@@ -35,10 +35,10 @@ plotPKRatio <- function(data,
                         plotConfiguration = NULL,
                         foldDistance = NULL,
                         plotObject = NULL) {
-  eval(parseCheckPlotInputs("PKRatio"))
+  eval(.parseCheckPlotInputs("PKRatio"))
   validateIsNumeric(foldDistance, nullAllowed = TRUE)
   mapData <- dataMapping$checkMapData(data)
-  mapLabels <- getAesStringMapping(dataMapping)
+  mapLabels <- .getAesStringMapping(dataMapping)
 
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
@@ -48,18 +48,18 @@ plotPKRatio <- function(data,
   }
   for (lineIndex in seq_along(dataMapping$lines)) {
     # position correspond to the number of layer lines already added
-    eval(parseAddLineLayer("horizontal", dataMapping$lines[[lineIndex]], lineIndex - 1))
+    eval(.parseAddLineLayer("horizontal", dataMapping$lines[[lineIndex]], lineIndex - 1))
   }
 
   # If uncertainty is defined, add error bars
   if (!isOfLength(dataMapping$uncertainty, 0)) {
-    eval(parseAddUncertaintyLayer())
+    eval(.parseAddUncertaintyLayer())
   }
 
-  eval(parseAddScatterLayer())
+  eval(.parseAddScatterLayer())
   # Define shapes and colors based on plotConfiguration$points properties
-  eval(parseUpdateAestheticProperty(AestheticProperties$color, "points"))
-  eval(parseUpdateAestheticProperty(AestheticProperties$shape, "points"))
-  eval(parseUpdateAxes())
+  eval(.parseUpdateAestheticProperty(AestheticProperties$color, "points"))
+  eval(.parseUpdateAestheticProperty(AestheticProperties$shape, "points"))
+  eval(.parseUpdateAxes())
   return(plotObject)
 }

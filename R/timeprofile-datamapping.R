@@ -15,7 +15,7 @@ TimeProfileDataMapping <- R6::R6Class(
     #' @param color R6 class `Grouping` object or its input
     #' @param fill R6 class `Grouping` object or its input
     #' @param linetype R6 class `Grouping` object or its input
-    #' @param data data.frame to map used by `smartMapping`
+    #' @param data data.frame to map used by `.smartMapping`
     #' @return A new `RangeDataMapping` object
     initialize = function(x = NULL,
                           y = NULL,
@@ -27,8 +27,8 @@ TimeProfileDataMapping <- R6::R6Class(
                           linetype = NULL,
                           data = NULL) {
 
-      # smartMapping is available in utilities-mapping.R
-      smartMap <- smartMapping(data)
+      # .smartMapping is available in utilities-mapping.R
+      smartMap <- .smartMapping(data)
       super$initialize(
         x = x %||% smartMap$x,
         ymin = ymin %||% smartMap$ymin,
@@ -46,7 +46,7 @@ TimeProfileDataMapping <- R6::R6Class(
     #' Dummy variable `legendLabels` is necessary to allow further modification of plots.
     checkMapData = function(data, metaData = NULL) {
       validateIsOfType(data, "data.frame")
-      validateMapping(self$y, data, nullAllowed = TRUE)
+      .validateMapping(self$y, data, nullAllowed = TRUE)
       mapData <- super$checkMapData(data, metaData)
       # This may change depending of how we want to include options
       if (!isEmpty(self$y)) {

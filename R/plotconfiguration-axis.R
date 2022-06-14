@@ -1,9 +1,9 @@
-#' @title createPlotScale
+#' @title .createPlotScale
 #' @description Translate scale into one of the values available in the enum `Scaling`.
 #' @param scale character defining the name of the scale
 #' @return A value available in enum `Scaling`
 #' @keywords internal
-createPlotScale <- function(scale) {
+.createPlotScale <- function(scale) {
   validateIsString(scale)
   if (isIncluded(tolower(scale), c("identity", "lin", "linear", "default", "normal"))) {
     return("identity")
@@ -15,13 +15,13 @@ createPlotScale <- function(scale) {
   return(tolower(scale))
 }
 
-#' @title createPlotTicks
+#' @title .createPlotTicks
 #' @description Translate ticks and ticklabels into a value directly usable by `ggplot2`
 #' to give more flexibilty in the next functions
 #' @param ticks character, numeric or function defining the ticks
 #' @return name of the `ggplot2` scale
 #' @keywords internal
-createPlotTicks <- function(ticks) {
+.createPlotTicks <- function(ticks) {
   if (isEmpty(ticks)) {
     return(waiver())
   }
@@ -38,13 +38,13 @@ createPlotTicks <- function(ticks) {
   return(ticks)
 }
 
-#' @title createPlotTickLabels
+#' @title .createPlotTickLabels
 #' @description Translate ticks and ticklabels into a value directly usable by `ggplot2`
 #' to give more flexibilty in the next functions
 #' @param ticklabels character, numeric or function defining the ticks
 #' @return name of the `ggplot2` scale
 #' @keywords internal
-createPlotTickLabels <- function(ticklabels) {
+.createPlotTickLabels <- function(ticklabels) {
   if (isEmpty(ticklabels)) {
     return(waiver())
   }
@@ -96,9 +96,9 @@ AxisConfiguration <- R6::R6Class(
       private$.limits <- limits
 
       scale <- scale %||% Scaling$lin
-      private$.scale <- createPlotScale(scale)
-      private$.ticks <- createPlotTicks(ticks)
-      private$.ticklabels <- createPlotTickLabels(ticklabels)
+      private$.scale <- .createPlotScale(scale)
+      private$.ticks <- .createPlotTicks(ticks)
+      private$.ticklabels <- .createPlotTickLabels(ticklabels)
       private$.expand <- expand
 
       # Default axis font will use theme
@@ -189,7 +189,7 @@ AxisConfiguration <- R6::R6Class(
         return(private$.scale)
       }
       value <- value %||% Scaling$lin
-      private$.scale <- createPlotScale(value)
+      private$.scale <- .createPlotScale(value)
       return(invisible())
     },
     #' @field ticks function or values defining where axis ticks are placed
@@ -197,7 +197,7 @@ AxisConfiguration <- R6::R6Class(
       if (missing(value)) {
         return(private$.ticks)
       }
-      private$.ticks <- createPlotTicks(value)
+      private$.ticks <- .createPlotTicks(value)
       return(invisible())
     },
     #' @field ticklabels function or values defining the axis tick labels
@@ -205,7 +205,7 @@ AxisConfiguration <- R6::R6Class(
       if (missing(value)) {
         return(private$.ticklabels)
       }
-      private$.ticklabels <- createPlotTickLabels(value)
+      private$.ticklabels <- .createPlotTickLabels(value)
       return(invisible())
     },
     #' @field font `Font` object defining the font of the ticklabels

@@ -49,12 +49,12 @@ plotObsVsPred <- function(data,
                           foldDistance = NULL,
                           smoother = NULL,
                           plotObject = NULL) {
-  eval(parseCheckPlotInputs("ObsVsPred"))
+  eval(.parseCheckPlotInputs("ObsVsPred"))
   validateIsIncluded(smoother, c("loess", "lm"), nullAllowed = TRUE)
   validateIsNumeric(foldDistance, nullAllowed = TRUE)
   dataMapping$smoother <- smoother %||% dataMapping$smoother
   mapData <- dataMapping$checkMapData(data)
-  mapLabels <- getAesStringMapping(dataMapping)
+  mapLabels <- .getAesStringMapping(dataMapping)
 
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
@@ -63,9 +63,9 @@ plotObsVsPred <- function(data,
     dataMapping$lines <- getLinesFromFoldDistance(foldDistance)
   }
   for (lineIndex in seq_along(dataMapping$lines)) {
-    lineValue <- getAblineValues(dataMapping$lines[[lineIndex]], plotConfiguration$yAxis$scale)
+    lineValue <- .getAblineValues(dataMapping$lines[[lineIndex]], plotConfiguration$yAxis$scale)
     # position correspond to the number of layer lines already added
-    eval(parseAddLineLayer("diagonal", lineValue, lineIndex - 1))
+    eval(.parseAddLineLayer("diagonal", lineValue, lineIndex - 1))
   }
   if (isEmpty(lineIndex)) {
     lineIndex <- 0
@@ -80,10 +80,10 @@ plotObsVsPred <- function(data,
         formula = "y ~ x",
         na.rm = TRUE,
         mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y),
-        color = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex, aesthetic = "color"),
-        linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex, aesthetic = "linetype"),
-        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, position = lineIndex, aesthetic = "alpha"),
-        size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
+        color = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex, aesthetic = "color"),
+        linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex, aesthetic = "linetype"),
+        alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, position = lineIndex, aesthetic = "alpha"),
+        size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
       )
   }
   if (isIncluded(dataMapping$smoother, "lm")) {
@@ -95,21 +95,21 @@ plotObsVsPred <- function(data,
         se = FALSE,
         formula = "y ~ x",
         na.rm = TRUE,
-        color = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex, aesthetic = "color"),
-        linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex, aesthetic = "linetype"),
-        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, position = lineIndex, aesthetic = "alpha"),
-        size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
+        color = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex, aesthetic = "color"),
+        linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex, aesthetic = "linetype"),
+        alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, position = lineIndex, aesthetic = "alpha"),
+        size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
       )
   }
 
   # If uncertainty is defined, add error bars
   if (!isOfLength(dataMapping$uncertainty, 0)) {
-    eval(parseAddUncertaintyLayer())
+    eval(.parseAddUncertaintyLayer())
   }
-  eval(parseAddScatterLayer())
+  eval(.parseAddScatterLayer())
   # Define shapes and colors based on plotConfiguration$points properties
-  eval(parseUpdateAestheticProperty(AestheticProperties$color, "points"))
-  eval(parseUpdateAestheticProperty(AestheticProperties$shape, "points"))
-  eval(parseUpdateAxes())
+  eval(.parseUpdateAestheticProperty(AestheticProperties$color, "points"))
+  eval(.parseUpdateAestheticProperty(AestheticProperties$shape, "points"))
+  eval(.parseUpdateAxes())
   return(plotObject)
 }

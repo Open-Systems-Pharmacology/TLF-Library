@@ -83,7 +83,7 @@ plotHistogram <- function(data = NULL,
 
   # Get transformed data from mapping and convert labels into characters usable by aes_string
   mapData <- dataMapping$checkMapData(data)
-  mapLabels <- getAesStringMapping(dataMapping)
+  mapLabels <- .getAesStringMapping(dataMapping)
 
   position <- ggplot2::position_nudge()
   if (dataMapping$stack) {
@@ -106,14 +106,14 @@ plotHistogram <- function(data = NULL,
       bins = dataMapping$bins,
       binwidth = dataMapping$binwidth,
       breaks = edges,
-      size = getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$size, position = 0, aesthetic = "size"),
-      color = getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$color, position = 0, aesthetic = "color"),
-      alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$alpha, position = 0, aesthetic = "alpha")
+      size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$size, position = 0, aesthetic = "size"),
+      color = .getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$color, position = 0, aesthetic = "color"),
+      alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$alpha, position = 0, aesthetic = "alpha")
     )
 
   # If distribution is provided by dataMapping, get median and distribution of the data
-  fitData <- getDistributionFit(mapData, dataMapping)
-  fitMedian <- getDistributionMed(mapData, dataMapping)
+  fitData <- .getDistributionFit(mapData, dataMapping)
+  fitMedian <- .getDistributionMed(mapData, dataMapping)
 
   if (!isOfLength(fitData, 0)) {
     plotObject <- plotObject +
@@ -125,26 +125,26 @@ plotHistogram <- function(data = NULL,
           color = "legendLabels",
           linetype = "legendLabels"
         ),
-        size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = 0, aesthetic = "size")
+        size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = 0, aesthetic = "size")
       )
   }
 
   # Include vertical lines
   for (lineIndex in seq_along(fitMedian)) {
     # position corresponds to the number of layer lines already added
-    eval(parseAddLineLayer("vertical", fitMedian[lineIndex], lineIndex - 1))
+    eval(.parseAddLineLayer("vertical", fitMedian[lineIndex], lineIndex - 1))
   }
 
   # Define fill based on plotConfiguration$points properties
-  eval(parseUpdateAestheticProperty(AestheticProperties$fill, "ribbons"))
-  eval(parseUpdateAestheticProperty(AestheticProperties$color, "lines"))
-  eval(parseUpdateAestheticProperty(AestheticProperties$linetype, "lines"))
-  eval(parseUpdateAxes())
+  eval(.parseUpdateAestheticProperty(AestheticProperties$fill, "ribbons"))
+  eval(.parseUpdateAestheticProperty(AestheticProperties$color, "lines"))
+  eval(.parseUpdateAestheticProperty(AestheticProperties$linetype, "lines"))
+  eval(.parseUpdateAxes())
   return(plotObject)
 }
 
 
-#' @title getDistributionFit
+#' @title .getDistributionFit
 #' @description Get a data.frame from the fit of a distribution provided in `dataMapping`
 #' If `normal` distribution is selected, its mean is plotted
 #' If `logNormal` distribution is selected, its mode is plotted
@@ -154,7 +154,7 @@ plotHistogram <- function(data = NULL,
 #' If the bars are stacked, the fit will account for the final histogram
 #' @return A data.frame with `x`, `y` and `legendLabels`
 #' @keywords internal
-getDistributionFit <- function(data, dataMapping) {
+.getDistributionFit <- function(data, dataMapping) {
   if (isIncluded(dataMapping$distribution, "none")) {
     return()
   }
@@ -213,7 +213,7 @@ getDistributionFit <- function(data, dataMapping) {
   return(dataFit)
 }
 
-#' @title getDistributionMed
+#' @title .getDistributionMed
 #' @description Get an array of values from the fit of a distribution provided in `dataMapping`
 #' If `normal` distribution is selected, its mean is plotted
 #' If `logNormal` distribution is selected, its mode is plotted
@@ -223,7 +223,7 @@ getDistributionFit <- function(data, dataMapping) {
 #' If the bars are stacked, the fit will account for the final histogram
 #' @return Numeric values for vertical lines
 #' @keywords internal
-getDistributionMed <- function(data, dataMapping) {
+.getDistributionMed <- function(data, dataMapping) {
   if (isIncluded(dataMapping$distribution, "none")) {
     return()
   }

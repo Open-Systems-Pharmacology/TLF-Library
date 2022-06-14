@@ -22,7 +22,7 @@ setPlotExport <- function(plotObject, name = NULL, format = NULL, width = NULL, 
   newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
 
   inputs <- c("name", "format", "width", "height", "units", "dpi")
-  eval(parseVariableToObject(objectName = "newPlotObject$plotConfiguration$export", inputs, keepIfNull = TRUE))
+  eval(.parseVariableToObject(objectName = "newPlotObject$plotConfiguration$export", inputs, keepIfNull = TRUE))
   return(newPlotObject)
 }
 
@@ -65,7 +65,7 @@ setPlotExportDimensions <- function(plotObject, width = NULL, height = NULL, uni
   newPlotObject <- plotObject
   newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
   inputs <- c("width", "height", "units", "dpi")
-  eval(parseVariableToObject(objectName = "newPlotObject$plotConfiguration$export", inputs, keepIfNull = TRUE))
+  eval(.parseVariableToObject(objectName = "newPlotObject$plotConfiguration$export", inputs, keepIfNull = TRUE))
   return(newPlotObject)
 }
 
@@ -141,7 +141,7 @@ exportPlotConfigurationCode <- function(plotConfiguration, name = "plotConfigura
       labelValue <- eval(parse(text = labelText))
       labelsCode <- c(
         labelsCode,
-        as.character(parseValueToObject(updatedLabelText, labelValue))
+        as.character(.parseValueToObject(updatedLabelText, labelValue))
       )
     }
   }
@@ -153,7 +153,7 @@ exportPlotConfigurationCode <- function(plotConfiguration, name = "plotConfigura
     labelValue <- eval(parse(text = labelText))
     backgroundCode <- c(
       backgroundCode,
-      as.character(parseValueToObject(updatedLabelText, labelValue))
+      as.character(.parseValueToObject(updatedLabelText, labelValue))
     )
   }
   for (backgroundElement in c("plot", "panel", "xAxis", "yAxis", "xGrid", "yGrid")) {
@@ -163,7 +163,7 @@ exportPlotConfigurationCode <- function(plotConfiguration, name = "plotConfigura
       backgroundValue <- eval(parse(text = backgroundText))
       backgroundCode <- c(
         backgroundCode,
-        as.character(parseValueToObject(updatedBackgroundText, backgroundValue))
+        as.character(.parseValueToObject(updatedBackgroundText, backgroundValue))
       )
     }
   }
@@ -176,7 +176,7 @@ exportPlotConfigurationCode <- function(plotConfiguration, name = "plotConfigura
       axesValue <- eval(parse(text = axesText))
       axesCode <- c(
         axesCode,
-        as.character(parseValueToObject(updatedAxesText, axesValue))
+        as.character(.parseValueToObject(updatedAxesText, axesValue))
       )
     }
   }
@@ -189,7 +189,7 @@ exportPlotConfigurationCode <- function(plotConfiguration, name = "plotConfigura
       aestheticValue <- eval(parse(text = aestheticText))
       aestheticSelectionCode <- c(
         aestheticSelectionCode,
-        as.character(parseValueToObject(updatedAestheticText, aestheticValue))
+        as.character(.parseValueToObject(updatedAestheticText, aestheticValue))
       )
     }
   }
@@ -201,7 +201,7 @@ exportPlotConfigurationCode <- function(plotConfiguration, name = "plotConfigura
     legendValue <- eval(parse(text = legendText))
     legendCode <- c(
       legendCode,
-      as.character(parseValueToObject(updatedLegendText, legendValue))
+      as.character(.parseValueToObject(updatedLegendText, legendValue))
     )
   }
 
@@ -212,7 +212,7 @@ exportPlotConfigurationCode <- function(plotConfiguration, name = "plotConfigura
     exportValue <- eval(parse(text = exportText))
     exportCode <- c(
       exportCode,
-      as.character(parseValueToObject(updatedExportText, exportValue))
+      as.character(.parseValueToObject(updatedExportText, exportValue))
     )
   }
 
@@ -231,7 +231,7 @@ exportPlotConfigurationCode <- function(plotConfiguration, name = "plotConfigura
       classSpecificValue <- eval(parse(text = classSpecificText))
       classSpecificCode <- c(
         classSpecificCode,
-        as.character(parseValueToObject(updatedClassSpecificText, classSpecificValue))
+        as.character(.parseValueToObject(updatedClassSpecificText, classSpecificValue))
       )
     }
   }

@@ -277,7 +277,7 @@ ThemeAestheticMaps <- R6::R6Class(
       self$alpha <- alpha %||% c(0.75, 0.5, 0.25)
 
       # Checks shapes and linetype according to ggplot2 standards
-      self$shape <- asPlotShape(self$shape)
+      self$shape <- .asPlotShape(self$shape)
       validateIsIncluded(self$linetype, Linetypes)
     },
 

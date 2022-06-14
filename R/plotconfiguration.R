@@ -47,7 +47,7 @@ PlotConfiguration <- R6::R6Class(
     #' @param height numeric values defining the height in `units` of the plot dimensions after saving
     #' @param units character defining the unit of the saving dimension
     #' @param dpi numeric value defining plot resolution (dots per inch)
-    #' @param data data.frame used by `smartMapping`
+    #' @param data data.frame used by `.smartMapping`
     #' @param metaData list of information on `data`
     #' @param dataMapping R6 class or subclass `XYDataMapping`
     #' @param lines `ThemeAestheticSelections` object or list defining how lines are plotted
@@ -113,13 +113,13 @@ PlotConfiguration <- R6::R6Class(
         dataMapping <- dataMapping %||% XYGDataMapping$new(data = data)
       }
       private$.labels$xlabel <- asLabel(xlabel %||%
-        dataMappingLabel(dataMapping$x, metaData) %||%
+        .dataMappingLabel(dataMapping$x, metaData) %||%
         dataMapping$x %||%
         private$.labels$xlabel$text, font = private$.labels$xlabel$font)
       private$.labels$ylabel <- asLabel(ylabel %||%
-        dataMappingLabel(dataMapping$y, metaData) %||%
+        .dataMappingLabel(dataMapping$y, metaData) %||%
         dataMapping$y %||%
-        dataMappingLabel(dataMapping$ymax, metaData) %||%
+        .dataMappingLabel(dataMapping$ymax, metaData) %||%
         dataMapping$ymax %||%
         private$.labels$ylabel, font = private$.labels$ylabel$font)
 
@@ -164,10 +164,10 @@ PlotConfiguration <- R6::R6Class(
       private$.background$watermark <- watermark %||% private$.background$watermark
 
       # Define how to plot points, lines, ribbons and errorbars of the plot
-      private$.lines <- lines %||% getThemePropertyFor(plotConfiguration = self, propertyName = "lines")
-      private$.ribbons <- ribbons %||% getThemePropertyFor(plotConfiguration = self, propertyName = "ribbons")
-      private$.points <- points %||% getThemePropertyFor(plotConfiguration = self, propertyName = "points")
-      private$.errorbars <- errorbars %||% getThemePropertyFor(plotConfiguration = self, propertyName = "errorbars")
+      private$.lines <- lines %||% .getThemePropertyFor(plotConfiguration = self, propertyName = "lines")
+      private$.ribbons <- ribbons %||% .getThemePropertyFor(plotConfiguration = self, propertyName = "ribbons")
+      private$.points <- points %||% .getThemePropertyFor(plotConfiguration = self, propertyName = "points")
+      private$.errorbars <- errorbars %||% .getThemePropertyFor(plotConfiguration = self, propertyName = "errorbars")
 
       # Define export configuration, overwrite properties only if they are defined
       validateIsOfType(export, "ExportConfiguration", nullAllowed = TRUE)

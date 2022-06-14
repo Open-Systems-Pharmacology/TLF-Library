@@ -51,7 +51,7 @@ setDefaultExportParameters <- function(format = NULL, width = NULL, height = NUL
   validateIsString(name, nullAllowed = TRUE)
 
   inputs <- c("format", "width", "height", "units", "dpi", "name")
-  eval(parseVariableToObject(objectName = "tlfEnv$defaultExportParameters", inputs, keepIfNull = TRUE))
+  eval(.parseVariableToObject(objectName = "tlfEnv$defaultExportParameters", inputs, keepIfNull = TRUE))
   return(invisible())
 }
 

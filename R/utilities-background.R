@@ -30,8 +30,8 @@ setGrid <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   background <- newPlotObject$plotConfiguration$background
-  eval(parseVariableToObject("background$xGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
-  eval(parseVariableToObject("background$yGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("background$xGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("background$yGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -63,7 +63,7 @@ setXGrid <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   background <- newPlotObject$plotConfiguration$background
-  eval(parseVariableToObject("background$xGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("background$xGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -95,7 +95,7 @@ setYGrid <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   background <- newPlotObject$plotConfiguration$background
-  eval(parseVariableToObject("background$yGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("background$yGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -136,8 +136,8 @@ setBackground <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   background <- newPlotObject$plotConfiguration$background
-  eval(parseVariableToObject("background$plot", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
-  eval(parseVariableToObject("background$panel", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("background$plot", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("background$panel", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -171,7 +171,7 @@ setBackgroundPanelArea <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   background <- newPlotObject$plotConfiguration$background
-  eval(parseVariableToObject("background$panel", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("background$panel", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -205,7 +205,7 @@ setBackgroundPlotArea <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   background <- newPlotObject$plotConfiguration$background
-  eval(parseVariableToObject("background$plot", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("background$plot", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -257,7 +257,7 @@ addWatermark <- function(plotObject,
   validateIsNumeric(alpha, nullAllowed = TRUE)
   validateIsNumeric(angle, nullAllowed = TRUE)
   # Transparency from theme aesthetic map if left undefined
-  alpha <- alpha %||% getAestheticValues(
+  alpha <- alpha %||% .getAestheticValues(
     n = 1,
     selectionKey = AestheticSelectionKeys$first,
     aesthetic = "alpha"
@@ -266,7 +266,7 @@ addWatermark <- function(plotObject,
   if (isOfType(watermark, "character")) {
     watermark <- asLabel(watermark, font = tlfEnv$currentTheme$fonts$watermark)
   }
-  eval(parseVariableToObject("watermark$font", c("color", "size", "angle"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("watermark$font", c("color", "size", "angle"), keepIfNull = TRUE))
 
   watermark <- createWatermarkGrob(label = watermark, alpha = alpha)
 
@@ -311,7 +311,7 @@ setWatermark <- function(plotObject,
   validateIsNumeric(alpha, nullAllowed = TRUE)
   validateIsNumeric(angle, nullAllowed = TRUE)
 
-  alpha <- alpha %||% getAestheticValues(
+  alpha <- alpha %||% .getAestheticValues(
     n = 1,
     selectionKey = AestheticSelectionKeys$first,
     aesthetic = "alpha"
@@ -329,7 +329,7 @@ setWatermark <- function(plotObject,
     watermark <- asLabel(text = watermark, font = watermarkConfiguration$font)
   }
   watermarkConfiguration <- watermark %||% watermarkConfiguration
-  eval(parseVariableToObject("watermarkConfiguration$font", c("color", "size", "angle"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("watermarkConfiguration$font", c("color", "size", "angle"), keepIfNull = TRUE))
 
   # If plot is initialized, addWatermark otherwise update watermark
   if (isOfLength(plotObject$layers, 0)) {
@@ -362,7 +362,7 @@ createWatermarkGrob <- function(label, alpha = NULL) {
   validateIsNumeric(alpha, nullAllowed = TRUE)
   # Ensure label is a Label class
   label <- asLabel(label)
-  alpha <- alpha %||% getAestheticValues(
+  alpha <- alpha %||% .getAestheticValues(
     n = 1,
     selectionKey = AestheticSelectionKeys$first,
     aesthetic = "alpha"

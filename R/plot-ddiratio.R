@@ -42,12 +42,12 @@ plotDDIRatio <- function(data,
                          foldDistance = NULL,
                          deltaGuest = NULL,
                          plotObject = NULL) {
-  eval(parseCheckPlotInputs("DDIRatio"))
+  eval(.parseCheckPlotInputs("DDIRatio"))
   validateIsLogical(residualsVsObserved, nullAllowed = TRUE)
   validateIsNumeric(foldDistance, nullAllowed = TRUE)
   validateIsNumeric(deltaGuest, nullAllowed = TRUE)
   mapData <- dataMapping$checkMapData(data)
-  mapLabels <- getAesStringMapping(dataMapping)
+  mapLabels <- .getAesStringMapping(dataMapping)
 
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
 
@@ -63,9 +63,9 @@ plotDDIRatio <- function(data,
     dataMapping$lines <- getLinesFromFoldDistance(foldDistance)
   }
   for (lineIndex in seq_along(dataMapping$lines)) {
-    lineValue <- getAblineValues(dataMapping$lines[[lineIndex]], plotConfiguration$yAxis$scale)
+    lineValue <- .getAblineValues(dataMapping$lines[[lineIndex]], plotConfiguration$yAxis$scale)
     # position correspond to the number of layer lines already added
-    eval(parseAddLineLayer(lineOrientation, lineValue, lineIndex - 1))
+    eval(.parseAddLineLayer(lineOrientation, lineValue, lineIndex - 1))
   }
   if (isEmpty(lineIndex)) {
     lineIndex <- 0
@@ -78,30 +78,30 @@ plotDDIRatio <- function(data,
       data = guestData,
       mapping = ggplot2::aes_string(x = "x", y = "ymin"),
       na.rm = TRUE,
-      color = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex, aesthetic = "color"),
-      linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex, aesthetic = "linetype"),
-      alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, position = lineIndex, aesthetic = "alpha"),
-      size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
+      color = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex, aesthetic = "color"),
+      linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex, aesthetic = "linetype"),
+      alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, position = lineIndex, aesthetic = "alpha"),
+      size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
     ) +
     ggplot2::geom_path(
       data = guestData,
       mapping = ggplot2::aes_string(x = "x", y = "ymax"),
       na.rm = TRUE,
-      color = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex, aesthetic = "color"),
-      linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex, aesthetic = "linetype"),
-      alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, position = lineIndex, aesthetic = "alpha"),
-      size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
+      color = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex, aesthetic = "color"),
+      linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex, aesthetic = "linetype"),
+      alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, position = lineIndex, aesthetic = "alpha"),
+      size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
     )
 
   # If uncertainty is defined, add error bars
   if (!isEmpty(dataMapping$error)) {
-    eval(parseAddUncertaintyLayer())
+    eval(.parseAddUncertaintyLayer())
   }
-  eval(parseAddScatterLayer())
+  eval(.parseAddScatterLayer())
   # Define shapes and colors based on plotConfiguration$points properties
-  eval(parseUpdateAestheticProperty(AestheticProperties$color, "points"))
-  eval(parseUpdateAestheticProperty(AestheticProperties$shape, "points"))
-  eval(parseUpdateAxes())
+  eval(.parseUpdateAestheticProperty(AestheticProperties$color, "points"))
+  eval(.parseUpdateAestheticProperty(AestheticProperties$shape, "points"))
+  eval(.parseUpdateAxes())
   return(plotObject)
 }
 

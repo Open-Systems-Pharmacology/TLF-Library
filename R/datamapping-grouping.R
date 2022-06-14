@@ -38,7 +38,7 @@ Grouping <- R6::R6Class(
       validateIsOfType(self$group, c("data.frame", "character"), nullAllowed = TRUE)
 
       if (is.data.frame(self$group)) {
-        captions <- getCustomCaptions(data, self$group)
+        captions <- .getCustomCaptions(data, self$group)
       }
       if (is.character(self$group)) {
         captions <- getDefaultCaptions(data, metaData, variableList = self$group)
