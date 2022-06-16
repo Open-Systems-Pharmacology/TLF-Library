@@ -22,7 +22,7 @@ RangeDataMapping <- R6::R6Class(
     #' @param shape R6 class `Grouping` object or its input
     #' @param size R6 class `Grouping` object or its input
     #' @param group R6 class `Grouping` object or its input
-    #' @param data data.frame to map used by `smartMapping`
+    #' @param data data.frame to map used by `.smartMapping`
     #' @return A new `RangeDataMapping` object
     initialize = function(x = NULL,
                           ymin = NULL,
@@ -36,8 +36,8 @@ RangeDataMapping <- R6::R6Class(
                           group = NULL,
                           data = NULL) {
 
-      # smartMapping is available in utilities-mapping.R
-      smartMap <- smartMapping(data)
+      # .smartMapping is available in utilities-mapping.R
+      smartMap <- .smartMapping(data)
       super$initialize(x %||% smartMap$x,
         y = NULL,
         groupMapping = groupMapping, color = color, fill = fill,
@@ -54,12 +54,12 @@ RangeDataMapping <- R6::R6Class(
     #' @return A data.frame with map and `legendLabels` variables.
     #' Dummy variable `legendLabels` is necessary to allow further modification of plots.
     checkMapData = function(data, metaData = NULL) {
-      validateMapping(self$x, data, nullAllowed = TRUE)
+      .validateMapping(self$x, data, nullAllowed = TRUE)
       if (isOfType(self$ymin, "character")) {
-        validateMapping(self$ymin, data)
+        .validateMapping(self$ymin, data)
       }
       if (isOfType(self$ymax, "character")) {
-        validateMapping(self$ymax, data)
+        .validateMapping(self$ymax, data)
       }
 
       # Drop option simplify data.frame into vectors
@@ -78,7 +78,7 @@ RangeDataMapping <- R6::R6Class(
             groupVariables <- names(groupVariables)
             groupVariables <- utils::head(groupVariables, -1)
           }
-          validateMapping(groupVariables, data)
+          .validateMapping(groupVariables, data)
           self$data[, grouping$label] <- grouping$getCaptions(data, metaData)
           # Dummy variable for default aesthetics
           # Will be used to define legend labels

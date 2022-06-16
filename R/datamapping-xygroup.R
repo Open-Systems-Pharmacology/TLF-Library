@@ -19,7 +19,7 @@ XYGDataMapping <- R6::R6Class(
     #' @param shape R6 class `Grouping` object or its input
     #' @param size R6 class `Grouping` object or its input
     #' @param group R6 class `Grouping` object or its input
-    #' @param data data.frame to map used by `smartMapping`
+    #' @param data data.frame to map used by `.smartMapping`
     #' @return A new `XYGDataMapping` object
     initialize = function(x = NULL,
                           y = NULL,
@@ -32,11 +32,11 @@ XYGDataMapping <- R6::R6Class(
                           group = NULL,
                           data = NULL) {
 
-      # smartMapping is available in utilities-mapping.R
-      smartMap <- smartMapping(data)
+      # .smartMapping is available in utilities-mapping.R
+      smartMap <- .smartMapping(data)
       super$initialize(x = x %||% smartMap$x, y = y %||% smartMap$y)
 
-      validateEitherOrNullInput(groupMapping, list(
+      .validateEitherOrNullInput(groupMapping, list(
         "color" = color,
         "fill" = fill,
         "linetype" = linetype,
@@ -60,8 +60,8 @@ XYGDataMapping <- R6::R6Class(
     #' @return A data.frame with map and `defaultAes` variables.
     #' Dummy variable `defaultAes` is necessary to allow further modification of plots.
     checkMapData = function(data, metaData = NULL) {
-      validateMapping(self$x, data, nullAllowed = TRUE)
-      validateMapping(self$y, data, nullAllowed = TRUE)
+      .validateMapping(self$x, data, nullAllowed = TRUE)
+      .validateMapping(self$y, data, nullAllowed = TRUE)
 
       # Drop option simplify data.frame into vectors
       # False enforces data to stay as data.frame if x or y is empty
@@ -81,7 +81,7 @@ XYGDataMapping <- R6::R6Class(
           groupVariables <- names(groupVariables)
           groupVariables <- utils::head(groupVariables, -1)
         }
-        validateMapping(groupVariables, data)
+        .validateMapping(groupVariables, data)
         # Enforce grouping variables to be factors
         self$data[, grouping$label] <- as.factor(grouping$getCaptions(data, metaData))
 

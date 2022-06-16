@@ -37,7 +37,7 @@ Font <- R6::R6Class(
       validateIsNumeric(c(size, angle), nullAllowed = TRUE)
       validateIsIncluded(fontFace, FontFaces, nullAllowed = TRUE)
       validateIsIncluded(align, Alignments, nullAllowed = TRUE)
-      eval(parseVariableToObject("self", c("size", "color", "fontFace", "fontFamily", "angle", "align"), keepIfNull = TRUE))
+      eval(.parseVariableToObject("self", c("size", "color", "fontFace", "fontFamily", "angle", "align"), keepIfNull = TRUE))
     },
 
     #' @description Create a `ggplot2::element_text` directly convertible by `ggplot2::theme`.
@@ -59,7 +59,7 @@ Font <- R6::R6Class(
         size = size %||% self$size,
         face = fontFace %||% self$fontFace,
         # Use font family only if available in Windows font database database
-        family = checkPlotFontFamily(fontFamily %||% self$fontFamily),
+        family = .checkPlotFontFamily(fontFamily %||% self$fontFamily),
         angle = angle %||% self$angle,
         vjust = 0.5,
         hjust = switch(align %||% self$align,
@@ -72,14 +72,14 @@ Font <- R6::R6Class(
   )
 )
 
-#' @title checkPlotFontFamily
+#' @title .checkPlotFontFamily
 #' @description Check if font family is available in Windows font database.
 #' Use function `grDevices::windowsFonts()` to get the list of font families available.
 #' @param fontFamily character defining the family of font
 #' @return Name of font family if available in Windows font database
 #' `NULL` otherwise
 #' @keywords internal
-checkPlotFontFamily <- function(fontFamily) {
+.checkPlotFontFamily <- function(fontFamily) {
   if (isEmpty(.Platform$OS.type)) {
     return(NULL)
   }

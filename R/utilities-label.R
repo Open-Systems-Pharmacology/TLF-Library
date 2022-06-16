@@ -42,7 +42,7 @@ setPlotLabels <- function(plotObject,
     inputs, " <- asLabel(", inputs, ", font = labels$", inputs, "$font)}"
   ))
   eval(char2LabExpressions)
-  eval(parseVariableToObject("labels", inputs, keepIfNull = TRUE))
+  eval(.parseVariableToObject("labels", inputs, keepIfNull = TRUE))
   newPlotObject <- labels$updatePlot(newPlotObject)
   return(newPlotObject)
 }

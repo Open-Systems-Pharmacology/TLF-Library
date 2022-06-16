@@ -21,7 +21,7 @@ ObservedDataMapping <- R6::R6Class(
     #' @param group R6 class `Grouping` object or its input
     #' @param color R6 class `Grouping` object or its input
     #' @param shape R6 class `Grouping` object or its input
-    #' @param data data.frame to map used by `smartMapping`
+    #' @param data data.frame to map used by `.smartMapping`
     #' @param uncertainty mapping error bars around scatter points.
     #' Deprecated parameter replaced by `error`.
     #' @param error mapping error bars around scatter points

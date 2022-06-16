@@ -34,7 +34,7 @@ GroupMapping <- R6::R6Class(
         "if(!isOfType(", groupingInputs, ", 'Grouping')){",
         groupingInputs, " <- Grouping$new(group = ", groupingInputs, ")}"
       )))
-      eval(parseVariableToObject("self", groupingInputs, keepIfNull = FALSE))
+      eval(.parseVariableToObject("self", groupingInputs, keepIfNull = FALSE))
     }
   )
 )

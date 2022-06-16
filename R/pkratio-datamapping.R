@@ -36,7 +36,7 @@ PKRatioDataMapping <- R6::R6Class(
     #' Dummy variable `defaultAes` is necessary to allow further modification of plots.
     checkMapData = function(data, metaData = NULL) {
       validateIsOfType(data, "data.frame")
-      validateMapping(self$error, data, nullAllowed = TRUE)
+      .validateMapping(self$error, data, nullAllowed = TRUE)
       mapData <- super$checkMapData(data, metaData)
       # This may change depending of how we want to include options
       if (!isOfLength(self$error, 0)) {

@@ -66,7 +66,7 @@ plotTimeProfile <- function(data = NULL,
   # Get transformed data from mapping and convert labels into characters usable by aes_string
   if (!isEmpty(data)) {
     mapData <- dataMapping$checkMapData(data)
-    mapLabels <- getAesStringMapping(dataMapping)
+    mapLabels <- .getAesStringMapping(dataMapping)
     # Initialize variables used in legend caption
     fillValues <- NULL
     linetypeValues <- NULL
@@ -80,7 +80,7 @@ plotTimeProfile <- function(data = NULL,
             ymax = mapLabels$ymax,
             fill = mapLabels$fill
           ),
-          alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$alpha, position = 0, aesthetic = "alpha"),
+          alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$alpha, position = 0, aesthetic = "alpha"),
           show.legend = TRUE
         )
     }
@@ -94,20 +94,20 @@ plotTimeProfile <- function(data = NULL,
             color = mapLabels$color,
             linetype = mapLabels$linetype
           ),
-          size = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = 0, aesthetic = "size"),
-          alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, position = 0, aesthetic = "alpha"),
+          size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = 0, aesthetic = "size"),
+          alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, position = 0, aesthetic = "alpha"),
           show.legend = TRUE
         )
     }
-    eval(parseUpdateAestheticProperty(AestheticProperties$fill, "ribbons"))
-    eval(parseUpdateAestheticProperty(AestheticProperties$linetype, "lines"))
-    # fillLength defined in parseUpdateAestheticProperty
-    fillValues <- getAestheticValues(
+    eval(.parseUpdateAestheticProperty(AestheticProperties$fill, "ribbons"))
+    eval(.parseUpdateAestheticProperty(AestheticProperties$linetype, "lines"))
+    # fillLength defined in .parseUpdateAestheticProperty
+    fillValues <- .getAestheticValues(
       n = fillLength,
       selectionKey = plotConfiguration$ribbons$fill,
       aesthetic = "fill"
     )
-    linetypeValues <- getAestheticValues(
+    linetypeValues <- .getAestheticValues(
       n = linetypeLength,
       selectionKey = plotConfiguration$lines$linetype,
       aesthetic = "linetype"
@@ -116,11 +116,11 @@ plotTimeProfile <- function(data = NULL,
 
   # If no observed data, also update colors and return plotObect
   if (isEmpty(observedData)) {
-    eval(parseUpdateAestheticProperty(AestheticProperties$color, "lines"))
-    eval(parseUpdateAxes())
+    eval(.parseUpdateAestheticProperty(AestheticProperties$color, "lines"))
+    eval(.parseUpdateAxes())
     # Update and match legend caption to properties
-    # colorLength defined in parseUpdateAestheticProperty
-    colorValues <- getAestheticValues(
+    # colorLength defined in .parseUpdateAestheticProperty
+    colorValues <- .getAestheticValues(
       n = colorLength,
       selectionKey = plotConfiguration$lines$color,
       aesthetic = "color"
@@ -134,12 +134,12 @@ plotTimeProfile <- function(data = NULL,
       shape = " ",
       stringsAsFactors = FALSE
     )
-    eval(parseUpdateAxes())
+    eval(.parseUpdateAxes())
     return(plotObject)
   }
 
   mapObservedData <- observedDataMapping$checkMapData(observedData)
-  observedMapLabels <- getAesStringMapping(observedDataMapping)
+  observedMapLabels <- .getAesStringMapping(observedDataMapping)
 
   if (!any(isEmpty(observedDataMapping$ymin), isEmpty(observedDataMapping$ymax))) {
     # Split errorbars for negative data and log scaling
@@ -152,9 +152,9 @@ plotTimeProfile <- function(data = NULL,
           ymax = observedMapLabels$y,
           color = observedMapLabels$color
         ),
-        size = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
-        linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, position = 0, aesthetic = "linetype"),
-        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, position = 0, aesthetic = "alpha"),
+        size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
+        linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, position = 0, aesthetic = "linetype"),
+        alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, position = 0, aesthetic = "alpha"),
         show.legend = FALSE
       ) +
       ggplot2::geom_linerange(
@@ -165,9 +165,9 @@ plotTimeProfile <- function(data = NULL,
           ymax = observedMapLabels$ymax,
           color = observedMapLabels$color
         ),
-        size = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
-        linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, position = 0, aesthetic = "linetype"),
-        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, position = 0, aesthetic = "alpha"),
+        size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
+        linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, position = 0, aesthetic = "linetype"),
+        alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, position = 0, aesthetic = "alpha"),
         show.legend = FALSE
       )
   }
@@ -180,17 +180,17 @@ plotTimeProfile <- function(data = NULL,
         color = observedMapLabels$color,
         shape = observedMapLabels$shape
       ),
-      size = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$size, position = 0, aesthetic = "size"),
-      alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$alpha, position = 0, aesthetic = "alpha"),
+      size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$size, position = 0, aesthetic = "size"),
+      alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$alpha, position = 0, aesthetic = "alpha"),
       show.legend = TRUE
     )
 
   # Update shapes
   # Code chunk below is equivalent to commented expression with a change of variable names
-  # parseUpdateAestheticProperty(AestheticProperties$shape, "points")
+  # .parseUpdateAestheticProperty(AestheticProperties$shape, "points")
   shapeVariable <- gsub("`", "", observedMapLabels$shape)
   shapeLength <- length(levels(mapObservedData[, shapeVariable]))
-  shapeValues <- getAestheticValues(
+  shapeValues <- .getAestheticValues(
     n = shapeLength,
     selectionKey = plotConfiguration$points$shape,
     aesthetic = "shape"
@@ -202,14 +202,14 @@ plotTimeProfile <- function(data = NULL,
 
   # Update colors,
   # Since colors can be available in both simulated and observed, the commented expressions can't apply
-  # parseUpdateAestheticProperty(AestheticProperties$color, "lines")
-  # parseUpdateAestheticProperty(AestheticProperties$color, "points")
+  # .parseUpdateAestheticProperty(AestheticProperties$color, "lines")
+  # .parseUpdateAestheticProperty(AestheticProperties$color, "points")
 
   # No simulated data -> update only observedData
   if (isEmpty(data)) {
     colorVariable <- gsub("`", "", observedMapLabels$color)
     colorLength <- length(levels(mapObservedData[, colorVariable]))
-    colorValues <- getAestheticValues(
+    colorValues <- .getAestheticValues(
       n = colorLength,
       selectionKey = plotConfiguration$points$color,
       aesthetic = "color"
@@ -232,7 +232,7 @@ plotTimeProfile <- function(data = NULL,
       stringsAsFactors = FALSE
     )
 
-    eval(parseUpdateAxes())
+    eval(.parseUpdateAxes())
     return(plotObject)
   }
 
@@ -248,9 +248,9 @@ plotTimeProfile <- function(data = NULL,
   totalLength <- length(colorBreaks)
 
   # colorValues are selected colors for simulated (and shared observed data) and then colors for remaining observed data
-  # the function "getAestheticValues" selects these values as defined in the plotConfiguration object
+  # the function ".getAestheticValues" selects these values as defined in the plotConfiguration object
   colorValues <- c(
-    getAestheticValues(
+    .getAestheticValues(
       n = colorLength,
       selectionKey = plotConfiguration$lines$color,
       aesthetic = "color"
@@ -258,7 +258,7 @@ plotTimeProfile <- function(data = NULL,
     # By using position = colorLength,
     # the function will start selecting the colors that come after the colors selected for lines
     # this aims at preventing a reset of the colors and a need for manual update of the user
-    getAestheticValues(
+    .getAestheticValues(
       n = totalLength - colorLength,
       selectionKey = plotConfiguration$points$color,
       position = colorLength,
@@ -286,7 +286,7 @@ plotTimeProfile <- function(data = NULL,
     plotObject <- plotObject + ggplot2::guides(color = "none")
   }
 
-  eval(parseUpdateAxes())
+  eval(.parseUpdateAxes())
   return(plotObject)
 }
 

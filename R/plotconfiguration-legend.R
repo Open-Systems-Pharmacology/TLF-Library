@@ -51,7 +51,7 @@ LegendConfiguration <- R6::R6Class(
         )
 
       # Update legend position and alignment
-      legendPosition <- createPlotLegendPosition(private$.position)
+      legendPosition <- .createPlotLegendPosition(private$.position)
 
       plotObject <- plotObject + ggplot2::theme(
         legend.position = c(legendPosition$xPosition, legendPosition$yPosition),
