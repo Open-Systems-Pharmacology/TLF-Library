@@ -7,6 +7,8 @@
 #' if DDI Ratio plot is drawn as residuals vs observed, instead of predicted vs observed.
 #' @param foldDistance Numeric values of fold distance lines to display in log plots.
 #' This argument is internally translated into `lines` field of `dataMapping`.
+#' __Caution__: this argument is meant for log scaled plots and since fold distance is a ratio it is expected positive. 
+#' In particular, line of identity corresponds to a `foldDistance` of `1`.
 #' @param deltaGuest Numeric value parameter of Guest function
 #' @param dataMapping
 #' A `DDIRatioDataMapping` object mapping `x`, `y` and aesthetic groups to their variable names of `data`.

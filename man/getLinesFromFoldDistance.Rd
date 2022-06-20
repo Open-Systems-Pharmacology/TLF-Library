@@ -7,7 +7,9 @@
 getLinesFromFoldDistance(foldDistance)
 }
 \arguments{
-\item{foldDistance}{Numeric values}
+\item{foldDistance}{Numeric values
+\strong{Caution}: this argument is meant for log scaled plots and since fold distance is a ratio it is expected positive.
+In particular, line of identity corresponds to a \code{foldDistance} of \code{1}.}
 }
 \value{
 A list of numeric values
