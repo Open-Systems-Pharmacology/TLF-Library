@@ -23,7 +23,9 @@ plotPKRatio(
 \item{plotConfiguration}{An optional \code{PKRatioPlotConfiguration} object defining labels, grid, background and watermark.}
 
 \item{foldDistance}{Numeric values of fold distance lines to display in log plots.
-This argument is internally translated into \code{lines} field of \code{dataMapping}.}
+This argument is internally translated into \code{lines} field of \code{dataMapping}.
+\strong{Caution}: this argument is meant for log scaled plots and since fold distance is a ratio it is expected positive.
+In particular, line of identity corresponds to a \code{foldDistance} of \code{1}.}
 
 \item{plotObject}{An optional \code{ggplot} object on which to add the plot layer}
 }

@@ -28,7 +28,9 @@ plotDDIRatio(
 if DDI Ratio plot is drawn as residuals vs observed, instead of predicted vs observed.}
 
 \item{foldDistance}{Numeric values of fold distance lines to display in log plots.
-This argument is internally translated into \code{lines} field of \code{dataMapping}.}
+This argument is internally translated into \code{lines} field of \code{dataMapping}.
+\strong{Caution}: this argument is meant for log scaled plots and since fold distance is a ratio it is expected positive.
+In particular, line of identity corresponds to a \code{foldDistance} of \code{1}.}
 
 \item{deltaGuest}{Numeric value parameter of Guest function}
 

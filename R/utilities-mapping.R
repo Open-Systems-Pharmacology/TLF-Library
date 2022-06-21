@@ -274,6 +274,8 @@ DefaultDataMappingValues <- list(
 #' Get list of values to provide to `lines` argument of `dataMapping` objects.
 #' The `lines` are internally used as argument of `geom_hline` and `geom_abline` from `ggplot2`
 #' @param foldDistance Numeric values
+#' __Caution__: this argument is meant for log scaled plots and since fold distance is a ratio it is expected positive. 
+#' In particular, line of identity corresponds to a `foldDistance` of `1`.
 #' @return A list of numeric values
 #' @export
 #' @examples
@@ -289,8 +291,11 @@ DefaultDataMappingValues <- list(
 #' )
 getLinesFromFoldDistance <- function(foldDistance) {
   lapply(foldDistance, function(fold) {
-    # Use unique if fold=1 is provided
-    unique(c(fold, 1 / fold))
+    # if fold=1 is provided, will be just 1
+    distanceValues <- unique(c(fold, 1 / fold))
+    # If 0 is provided, 1/fold is Inf and needs to be removed from plot
+    distanceValues <- distanceValues[!is.infinite(distanceValues)]
+    return(distanceValues)
   })
 }
 
