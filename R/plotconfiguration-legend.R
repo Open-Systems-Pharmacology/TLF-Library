@@ -27,7 +27,10 @@ LegendConfiguration <- R6::R6Class(
       private$.background <- background %||% currentTheme$background$legend
 
       # Title properties
-      private$.title <- asLabel(title, font = currentTheme$fonts$legendTitle)
+      private$.title <- asLabel(
+        text = title %||% currentTheme$background$legendTitle,
+        font = currentTheme$fonts$legendTitle
+        )
       if (isOfType(title, "Label")) {
         private$.title <- title
       }
@@ -45,11 +48,19 @@ LegendConfiguration <- R6::R6Class(
         ggplot2::theme(
           legend.background = private$.background$createPlotElement(),
           legend.text = private$.font$createPlotFont(),
-          legend.title = private$.title$createPlotFont(),
           # symbol background same as legend background
           legend.key = private$.background$createPlotElement(linetype = Linetypes$blank)
         )
-
+      # Update legend title for all aesthetic properties to prevent unwanted split of legends
+      updateLegendTitleExpression <- parse(text = paste0(
+        "plotObject <- plotObject + ggplot2::guides(",
+        names(AestheticProperties), " = guide_legend(", 
+        "title = private$.title$text,",
+        "title.theme = private$.title$createPlotFont())",
+        ")"
+      ))
+      eval(updateLegendTitleExpression)
+      
       # Update legend position and alignment
       legendPosition <- .createPlotLegendPosition(private$.position)
 
