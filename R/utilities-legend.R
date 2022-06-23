@@ -68,40 +68,23 @@ setLegendFont <- function(plotObject,
 #' @title setLegendTitle
 #' @param plotObject ggplot object
 #' @param title character or `Label` object
-#' @param size numeric defining the size of legend title
-#' @param color character defining the color of legend title
-#' @param fontFamily character defining the family of legend title
-#' @param fontFace character defining the legend title face as defined in helper enum `FontFaces`.
-#' @param angle numeric defining the angle of legend title
-#' @param align character defining the alignment of legend title as defined in helper enum `Alignments`.
 #' @return A ggplot object
 #' @description Set legend title
 #' @export
 setLegendTitle <- function(plotObject,
-                           title = NULL,
-                           color = NULL,
-                           size = NULL,
-                           fontFamily = NULL,
-                           fontFace = NULL,
-                           angle = NULL,
-                           align = NULL) {
+                           title = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(title, c("character", "Label"), nullAllowed = TRUE)
-  validateIsString(color, nullAllowed = TRUE)
-  validateIsString(fontFamily, nullAllowed = TRUE)
-  validateIsNumeric(size, nullAllowed = TRUE)
-  validateIsNumeric(angle, nullAllowed = TRUE)
-  validateIsIncluded(fontFace, FontFaces, nullAllowed = TRUE)
-  validateIsIncluded(align, Alignments, nullAllowed = TRUE)
-
+  
   # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
   newPlotObject <- plotObject
   newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
   legend <- newPlotObject$plotConfiguration$legend
-  legend$title <- title
-
-  eval(.parseVariableToObject("legend$title$font", c("size", "color", "fontFace", "fontFamily", "angle", "align"), keepIfNull = TRUE))
+  if(isOfType(title, "character")){
+    title <- asLabel(title, font = legend$title$font)
+  }
+  legend$title <- title %||% legend$title
   newPlotObject <- legend$updatePlot(newPlotObject)
   return(newPlotObject)
 }

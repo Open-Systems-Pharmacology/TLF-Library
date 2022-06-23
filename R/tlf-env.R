@@ -22,6 +22,22 @@ setDefaultLegendPosition <- function(position) {
   # TO DO: Line to be deprecated
   tlfEnv$defaultLegendPosition <- position
   tlfEnv$currentTheme$background$legendPosition <- position
+  return(invisible())
+}
+
+#' @title setDefaultLegendTitle
+#' @description Set default legend title of tlf environment
+#' @param title Character or `Label` object
+#' @export
+setDefaultLegendTitle <- function(title) {
+  validateIsOfType(title, c("character", "Label"), nullAllowed = TRUE)
+  if(isOfType(title, "Label")){
+    tlfEnv$currentTheme$fonts$legendTitle <- title$font
+    tlfEnv$currentTheme$background$legendTitle <- title$text
+    return(invisible())
+  }
+  tlfEnv$currentTheme$background$legendTitle <- title
+  return(invisible())
 }
 
 tlfEnv$defaultExportParameters <- list(
