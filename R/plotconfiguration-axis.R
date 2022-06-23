@@ -287,7 +287,8 @@ XAxisConfiguration <- R6::R6Class(
             trans = self$ggplotScale(),
             breaks = self$prettyTicks(),
             labels = self$prettyTickLabels(),
-            expand = self$ggplotExpansion()
+            expand = self$ggplotExpansion(),
+            oob = .removeInfiniteValues
           )
       )
       # Add special tick lines for pretty log plots
@@ -344,7 +345,8 @@ YAxisConfiguration <- R6::R6Class(
             trans = self$ggplotScale(),
             breaks = self$prettyTicks(),
             labels = self$prettyTickLabels(),
-            expand = self$ggplotExpansion()
+            expand = self$ggplotExpansion(),
+            oob = .removeInfiniteValues
           )
       )
       # Add special tick lines for pretty log plots
