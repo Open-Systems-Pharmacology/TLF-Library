@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">tlf</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.87</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.88</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,21 +107,21 @@
 </h2>
 <p>On the upper left side of the UI, a navigation bar indicates the main properties that can be updated in the theme: <strong>Labels</strong>, <strong>Background</strong>, <strong>Axes</strong>, <strong>Legend</strong>, <strong>Aesthetic Maps</strong> and <strong>Plot Configurations</strong>.</p>
 <p>In the <strong>Labels</strong> navigation bar (already available when starting the UI), font properties of the most common labels are available. The font properties of ticks and legend are available in the properties <strong>Axes</strong> and <strong>Legend</strong>. Note that <em>Color</em> properties use a predefined list of available colors as illustrated in the figure below, however, users can type and add their own colors (e.g. hex colors).</p>
-<p><img src="figures/theme-maker/labels.PNG" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/theme-maker/labels.png" width="100%" style="display: block; margin: auto;"></p>
 <p>Properties of the watermark are available in the <strong>Labels</strong> navigation bar, and include the field <em>Content</em> which allows to define the content of the watermark (in this example the content is <em>template</em>).</p>
 <p>The <strong>Background</strong> navigation bar includes the properties of the colors, sizes, and linetypes for each background elements (illustrated below).</p>
 <p><img src="figures/theme-maker/background.png" width="100%" style="display: block; margin: auto;"></p>
 <p>The <strong>Axes</strong> navigation bar includes the properties of the axes lines (colors, sizes and linetypes) as well as the font properties of their ticks (illustrated below).</p>
-<p><img src="figures/theme-maker/axes.PNG" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/theme-maker/axes.png" width="100%" style="display: block; margin: auto;"></p>
 <p>The <strong>Legend</strong> navigation bar includes the properties of the position, fonts, and background of the legend (illustrated below).</p>
-<p><img src="figures/theme-maker/legend.PNG" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/theme-maker/legend.png" width="100%" style="display: block; margin: auto;"></p>
 <p>The <strong>Aesthetic Maps</strong> navigation bar defines the maps of aesthetic properties (color, fill, linetype, shape, size and alpha). Such maps can be used by <code>PlotConfiguration</code> objects to define how they will plot <strong>points</strong>, <strong>lines</strong>, <strong>ribbons</strong>, and <strong>errorbars</strong>. Consequently, these properties are paired with the <strong>Plot Configurations</strong> navigation bar.</p>
 <p>The <strong>Plot Configurations</strong> navigation bar defines the default aesthetic selection properties for each type of <code>PlotConfiguration</code> objects: it defines how to plot <strong>points</strong>, <strong>lines</strong>, <strong>ribbons</strong>, and <strong>errorbars</strong> for each type of atom or molecule plot available in the <code>tlf</code> package.</p>
 <p>To illustrate these properties, the example below will update these properties for a PK ratio plots</p>
 <p>First, select <em>plotPKRatio</em> in the list of sample plots to check the current features of the theme. The list of sample plots available in the UI corresponds to all the atom and molecule plot functions defined in the <code>tlf</code> package.</p>
 <p><img src="figures/theme-maker/sample-plots.png" width="100%" style="display: block; margin: auto;"></p>
 <p>Then, the <strong>Aesthetic Maps</strong> indicates for each aesthetic property pairs of rank-value for the aesthetic map. The current color map defines <em>30078D7</em> (blue color).</p>
-<p><img src="figures/theme-maker/aes-map.PNG" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/theme-maker/aes-map.png" width="100%" style="display: block; margin: auto;"></p>
 <p>The values can be changed as illustrated below where color ranked 1 was set as <em>salmon</em> and color ranked 2 was set as <em>dodgerblue</em>.</p>
 <p><img src="figures/theme-maker/aes-map-set.png" width="100%" style="display: block; margin: auto;"></p>
 <p>On the <strong>Plot Configurations</strong> navigation bar, select the <em>plotPKRatio</em> (figure below). Three selection keys are available for this plot as it includes points, lines and optionally error bars. The current selection key is <strong>reset</strong> which resets and uses in sequence the values of the color map.</p>
