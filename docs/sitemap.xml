@@ -46,16 +46,10 @@
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/news/index.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/addBoxWhisker.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/addErrorbar.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/addLine.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/addOutliers.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/addRibbon.html</loc>
@@ -85,9 +79,6 @@
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/asLabel.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/asThemeAestheticSelections.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/AxisConfiguration.html</loc>
   </url>
   <url>
@@ -106,28 +97,10 @@
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/CaptionProperties.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/checkPlotFontFamily.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/ColorMaps.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/createPlotLegendPosition.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/createPlotScale.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/createPlotTicks.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/createWatermarkGrob.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/dataMappingLabel.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/DDIComparisonTypes.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/DDIRatioDataMapping.html</loc>
@@ -256,25 +229,10 @@
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/FontFaces.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/getAesStringMapping.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/getAestheticValues.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/getBoxWhiskerMeasure.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/getDefaultCaptions.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/getDistributionFit.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/getDistributionMed.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/getFirstAestheticValues.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/getGreekTickLabels.html</loc>
@@ -304,25 +262,13 @@
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/getLogTickLabels.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/getNextAestheticValues.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/getPiTickLabels.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/getPKRatioMeasure.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/getResetAestheticvalues.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/getSameAestheticValues.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/getSqrtTickLabels.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/getThemePropertyFor.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/Grouping.html</loc>
@@ -338,12 +284,6 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/HorizontalJustification.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/ifEqual.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/ifIncluded.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/index.html</loc>
@@ -400,9 +340,6 @@
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/median-plus-IQR.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/mergeLegend.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/ObservedDataMapping.html</loc>
   </url>
   <url>
@@ -410,33 +347,6 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/ObsVsPredPlotConfiguration.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/parseAddLineLayer.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/parseAddScatterLayer.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/parseAddUncertaintyLayer.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/parseCheckPlotInputs.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/parseUpdateAestheticProperty.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/parseUpdateAxes.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/parseValueToObject.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/parseVariableFromObject.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/parseVariableToObject.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/Percentile0-grapes.html</loc>
@@ -676,9 +586,6 @@
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/Shapes.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/smartMapping.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/TagPositions.html</loc>
   </url>
   <url>
@@ -743,9 +650,6 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/useTheme.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/validateEitherOrNullInput.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/reference/VerticalJustification.html</loc>
