@@ -9,13 +9,13 @@ loadThemeFromJson <- function(jsonFile) {
   # Get the content of json file and define lists of its properties
   themeContent <- jsonlite::fromJSON(jsonFile)
   themeProperties <- names(themeContent)
-  
+
   # Define default `Theme` properties, properties defined in json will overwrite those
   fonts <- ThemeFont$new()
   background <- ThemeBackground$new()
   aestheticMaps <- ThemeAestheticMaps$new()
   plotConfigurations <- ThemePlotConfigurations$new()
-  
+
   for (themeProperty in themeProperties) {
     if (!isIncluded(themeProperty, c("fonts", "background", "aestheticMaps", "plotConfigurations"))) {
       next
@@ -45,7 +45,7 @@ loadThemeFromJson <- function(jsonFile) {
     background$legendPosition <- themeContent$background$legendPosition
     background$legendTitle <- themeContent$background$legendTitle
   }
-  
+
   return(Theme$new(
     fonts = fonts,
     background = background,
@@ -64,7 +64,7 @@ saveThemeToJson <- function(jsonFile, theme = NULL) {
   # Check that theme is a Theme
   validateIsOfType(theme, "Theme", nullAllowed = TRUE)
   validateIsString(jsonFile)
-  
+
   if (isEmpty(theme)) {
     theme <- tlfEnv$currentTheme
   }
@@ -72,50 +72,60 @@ saveThemeToJson <- function(jsonFile, theme = NULL) {
   return(invisible())
 }
 
-#' @title asThemeAestheticSelections
+#' @title .asThemeAestheticSelections
 #' @description
 #' Convert a list into a `ThemeAestheticSelections` object
-#' @param themeSelectionObject 
+#' @param themeSelectionObject
 #' A `ThemeAestheticSelections` or a list that include values for selecting aesthetic properties
 #' @keywords internal
-asThemeAestheticSelections <- function(themeSelectionObject) {
+.asThemeAestheticSelections <- function(themeSelectionObject) {
   if (isOfType(themeSelectionObject, "ThemeAestheticSelections")) {
     return(themeSelectionObject)
   }
   newThemeAestheticSelections <- ThemeAestheticSelections$new()
   setNewThemeSelectionExpression <- parse(text = paste0(
-    "newThemeAestheticSelections$", names(themeSelectionObject), 
+    "newThemeAestheticSelections$", names(themeSelectionObject),
     "<- themeSelectionObject$", names(themeSelectionObject)
   ))
   eval(setNewThemeSelectionExpression)
   return(newThemeAestheticSelections)
 }
 
-#' @title getThemePropertyFor
+#' @title .getThemePropertyFor
 #' @description
 #' Clone a theme plot configuration property so the property is not affected in current theme
 #' @param plotConfiguration `PlotConfigurations` object
 #' @param propertyName Name of property. One `lines`, `points`, `ribbons` or `errorbars`
 #' @keywords internal
-getThemePropertyFor <- function(plotConfiguration, propertyName = NULL){
-  # Get theme property matching the plotConfiguration 
+.getThemePropertyFor <- function(plotConfiguration, propertyName = NULL) {
+  # Get theme property matching the plotConfiguration
   plotName <- gsub(pattern = "PlotConfiguration", replacement = "", class(plotConfiguration)[1])
   # Simple PlotConfiguration are associated with atom plot properties
-  if(isIncluded(plotName, "")){
+  if (isIncluded(plotName, "")) {
     # Get theme property matching the atom
-    plotName <- switch(propertyName, lines = "addLine", ribbons = "addRibbon", points ="addScatter", errorbars = "addErrorbar")
-    themeProperty <- asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations[[plotName]])
+    plotName <- switch(propertyName,
+      lines = "addLine",
+      ribbons = "addRibbon",
+      points = "addScatter",
+      errorbars = "addErrorbar"
+    )
+    themeProperty <- .asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations[[plotName]])
     return(themeProperty$clone(deep = TRUE))
   }
   # Complex PlotConfiguration are associated with molecule plot properties
   plotName <- paste0("plot", plotName)
   # If property undefined in theme, use equivalent atom plot property
-  if(isEmpty(tlfEnv$currentTheme$plotConfigurations[[plotName]][[propertyName]])){
-    plotName <- switch(propertyName, lines = "addLine", ribbons = "addRibbon", points ="addScatter", errorbars = "addErrorbar")
-    themeProperty <- asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations[[plotName]])
+  if (isEmpty(tlfEnv$currentTheme$plotConfigurations[[plotName]][[propertyName]])) {
+    plotName <- switch(propertyName,
+      lines = "addLine",
+      ribbons = "addRibbon",
+      points = "addScatter",
+      errorbars = "addErrorbar"
+    )
+    themeProperty <- .asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations[[plotName]])
     return(themeProperty$clone(deep = TRUE))
   }
-  themeProperty <- asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations[[plotName]][[propertyName]])
+  themeProperty <- .asThemeAestheticSelections(tlfEnv$currentTheme$plotConfigurations[[plotName]][[propertyName]])
   return(themeProperty$clone(deep = TRUE))
 }
 
@@ -138,7 +148,7 @@ useTheme <- function(theme) {
 #' @export
 #' @examples
 #' useTemplateTheme()
-#' addScatter(x = seq(1,10), y = rnorm(10))
+#' addScatter(x = seq(1, 10), y = rnorm(10))
 useTemplateTheme <- function() {
   useTheme(loadThemeFromJson(system.file("themes", "template-theme.json", package = "tlf")))
 }
@@ -147,9 +157,9 @@ useTemplateTheme <- function() {
 #' @description
 #' Set default Matlab theme to be used as the current default of the tlf environment
 #' @export
-#' @examples 
+#' @examples
 #' useMatlabTheme()
-#' addScatter(x = seq(1,10), y = rnorm(10))
+#' addScatter(x = seq(1, 10), y = rnorm(10))
 useMatlabTheme <- function() {
   useTheme(loadThemeFromJson(system.file("themes", "matlab-theme.json", package = "tlf")))
 }
@@ -158,9 +168,9 @@ useMatlabTheme <- function() {
 #' @description
 #' Set default Matlab theme to be used as the current default of the tlf environment
 #' @export
-#' @examples 
+#' @examples
 #' useDarkTheme()
-#' addScatter(x = seq(1,10), y = rnorm(10))
+#' addScatter(x = seq(1, 10), y = rnorm(10))
 useDarkTheme <- function() {
   useTheme(loadThemeFromJson(system.file("themes", "dark-theme.json", package = "tlf")))
 }
@@ -169,9 +179,9 @@ useDarkTheme <- function() {
 #' @description
 #' Set default Excel theme to be used as the current default of the tlf environment
 #' @export
-#' @examples 
+#' @examples
 #' useExcelTheme()
-#' addScatter(x = seq(1,10), y = rnorm(10))
+#' addScatter(x = seq(1, 10), y = rnorm(10))
 useExcelTheme <- function() {
   useTheme(loadThemeFromJson(system.file("themes", "excel-theme.json", package = "tlf")))
 }
@@ -180,9 +190,9 @@ useExcelTheme <- function() {
 #' @description
 #' Set default HighChart theme to be used as the current default of the tlf environment
 #' @export
-#' @examples 
+#' @examples
 #' useHighChartTheme()
-#' addScatter(x = seq(1,10), y = rnorm(10))
+#' addScatter(x = seq(1, 10), y = rnorm(10))
 useHighChartTheme <- function() {
   useTheme(loadThemeFromJson(system.file("themes", "hc-theme.json", package = "tlf")))
 }
@@ -191,9 +201,9 @@ useHighChartTheme <- function() {
 #' @description
 #' Set default minimal theme to be used as the current default of the tlf environment
 #' @export
-#' @examples 
+#' @examples
 #' useMinimalTheme()
-#' addScatter(x = seq(1,10), y = rnorm(10))
+#' addScatter(x = seq(1, 10), y = rnorm(10))
 useMinimalTheme <- function() {
   useTheme(loadThemeFromJson(system.file("themes", "minimal-theme.json", package = "tlf")))
 }

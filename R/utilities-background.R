@@ -8,12 +8,12 @@
 #' @param size Optional numeric values defining the size of the grid.
 #' @return A `ggplot` object
 #' @export
-#' @examples 
+#' @examples
 #' # Set grid of a scatter plot
 #' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
-#' 
+#'
 #' setGrid(p, color = "red", linetype = "dotted")
-#' 
+#'
 setGrid <- function(plotObject,
                     color = NULL,
                     linetype = NULL,
@@ -30,8 +30,8 @@ setGrid <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   background <- newPlotObject$plotConfiguration$background
-  eval(parseVariableToObject("background$xGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
-  eval(parseVariableToObject("background$yGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("background$xGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("background$yGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -41,12 +41,12 @@ setGrid <- function(plotObject,
 #' @inheritParams setGrid
 #' @return A `ggplot` object
 #' @export
-#' @examples 
+#' @examples
 #' # Set x grid of a scatter plot
 #' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
-#' 
+#'
 #' setXGrid(p, color = "red", linetype = "dotted")
-#' 
+#'
 setXGrid <- function(plotObject,
                      color = NULL,
                      linetype = NULL,
@@ -63,7 +63,7 @@ setXGrid <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   background <- newPlotObject$plotConfiguration$background
-  eval(parseVariableToObject("background$xGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("background$xGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -73,12 +73,12 @@ setXGrid <- function(plotObject,
 #' @inheritParams setGrid
 #' @return A `ggplot` object
 #' @export
-#' @examples 
+#' @examples
 #' # Set y grid of a scatter
 #' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
-#' 
+#'
 #' setYGrid(p, color = "red", linetype = "dotted")
-#' 
+#'
 setYGrid <- function(plotObject,
                      color = NULL,
                      linetype = NULL,
@@ -95,7 +95,7 @@ setYGrid <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   background <- newPlotObject$plotConfiguration$background
-  eval(parseVariableToObject("background$yGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("background$yGrid", c("color", "linetype", "size"), keepIfNull = TRUE))
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -112,12 +112,12 @@ setYGrid <- function(plotObject,
 #' @param size Optional numeric values defining the size of the background frame.
 #' @return A `ggplot` object
 #' @export
-#' @examples 
+#' @examples
 #' # Set background of a scatter plot
 #' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
-#' 
+#'
 #' setBackground(p, fill = "yellowgreen", color = "red", linetype = "dotted")
-#' 
+#'
 setBackground <- function(plotObject,
                           fill = NULL,
                           color = NULL,
@@ -136,8 +136,8 @@ setBackground <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   background <- newPlotObject$plotConfiguration$background
-  eval(parseVariableToObject("background$plot", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
-  eval(parseVariableToObject("background$panel", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("background$plot", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("background$panel", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -147,12 +147,12 @@ setBackground <- function(plotObject,
 #' @inheritParams setBackground
 #' @return A `ggplot` object
 #' @export
-#' @examples 
+#' @examples
 #' # Set background of a scatter plot
 #' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
-#' 
+#'
 #' setBackgroundPanelArea(p, fill = "yellowgreen", color = "red", linetype = "dotted")
-#' 
+#'
 setBackgroundPanelArea <- function(plotObject,
                                    fill = NULL,
                                    color = NULL,
@@ -171,7 +171,7 @@ setBackgroundPanelArea <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   background <- newPlotObject$plotConfiguration$background
-  eval(parseVariableToObject("background$panel", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("background$panel", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -181,12 +181,12 @@ setBackgroundPanelArea <- function(plotObject,
 #' @inheritParams setBackground
 #' @return A `ggplot` object
 #' @export
-#' @examples 
+#' @examples
 #' # Set background of a scatter plot
 #' p <- addScatter(x = c(1, 2, 1, 2, 3), y = c(5, 0, 2, 3, 4))
-#' 
+#'
 #' setBackgroundPlotArea(p, fill = "yellowgreen", color = "red", linetype = "dotted")
-#' 
+#'
 setBackgroundPlotArea <- function(plotObject,
                                   fill = NULL,
                                   color = NULL,
@@ -205,7 +205,7 @@ setBackgroundPlotArea <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   background <- newPlotObject$plotConfiguration$background
-  eval(parseVariableToObject("background$plot", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("background$plot", c("fill", "color", "linetype", "size"), keepIfNull = TRUE))
   newPlotObject <- background$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -239,8 +239,8 @@ setBackgroundPlotArea <- function(plotObject,
 #'
 #' # Watermark totally opaque
 #' addWatermark(p, watermarkLabel, alpha = 1)
-#' 
-#' # As multiple layers of watermark: 
+#'
+#' # As multiple layers of watermark:
 #' p2 <- addWatermark(p, watermarkLabel, alpha = 1)
 #' addWatermark(p2, "other watermark", color = "red", angle = 90)
 #'
@@ -257,7 +257,7 @@ addWatermark <- function(plotObject,
   validateIsNumeric(alpha, nullAllowed = TRUE)
   validateIsNumeric(angle, nullAllowed = TRUE)
   # Transparency from theme aesthetic map if left undefined
-  alpha <- alpha %||% getAestheticValues(
+  alpha <- alpha %||% .getAestheticValues(
     n = 1,
     selectionKey = AestheticSelectionKeys$first,
     aesthetic = "alpha"
@@ -266,7 +266,7 @@ addWatermark <- function(plotObject,
   if (isOfType(watermark, "character")) {
     watermark <- asLabel(watermark, font = tlfEnv$currentTheme$fonts$watermark)
   }
-  eval(parseVariableToObject("watermark$font", c("color", "size", "angle"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("watermark$font", c("color", "size", "angle"), keepIfNull = TRUE))
 
   watermark <- createWatermarkGrob(label = watermark, alpha = alpha)
 
@@ -283,7 +283,7 @@ addWatermark <- function(plotObject,
 #' @return A `ggplot` object
 #' @import ggplot2
 #' @export
-#' @examples 
+#' @examples
 #' # Add a watermark to an empty plot
 #' p <- initializePlot()
 #' setWatermark(p, "watermark")
@@ -311,7 +311,7 @@ setWatermark <- function(plotObject,
   validateIsNumeric(alpha, nullAllowed = TRUE)
   validateIsNumeric(angle, nullAllowed = TRUE)
 
-  alpha <- alpha %||% getAestheticValues(
+  alpha <- alpha %||% .getAestheticValues(
     n = 1,
     selectionKey = AestheticSelectionKeys$first,
     aesthetic = "alpha"
@@ -329,7 +329,7 @@ setWatermark <- function(plotObject,
     watermark <- asLabel(text = watermark, font = watermarkConfiguration$font)
   }
   watermarkConfiguration <- watermark %||% watermarkConfiguration
-  eval(parseVariableToObject("watermarkConfiguration$font", c("color", "size", "angle"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("watermarkConfiguration$font", c("color", "size", "angle"), keepIfNull = TRUE))
 
   # If plot is initialized, addWatermark otherwise update watermark
   if (isOfLength(plotObject$layers, 0)) {
@@ -362,7 +362,7 @@ createWatermarkGrob <- function(label, alpha = NULL) {
   validateIsNumeric(alpha, nullAllowed = TRUE)
   # Ensure label is a Label class
   label <- asLabel(label)
-  alpha <- alpha %||% getAestheticValues(
+  alpha <- alpha %||% .getAestheticValues(
     n = 1,
     selectionKey = AestheticSelectionKeys$first,
     aesthetic = "alpha"

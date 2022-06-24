@@ -60,7 +60,7 @@ setLegendFont <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration
   legend <- newPlotObject$plotConfiguration$legend
-  eval(parseVariableToObject("legend$font", c("size", "color", "fontFace", "fontFamily", "angle", "align"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("legend$font", c("size", "color", "fontFace", "fontFamily", "angle", "align"), keepIfNull = TRUE))
   newPlotObject <- legend$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -68,40 +68,23 @@ setLegendFont <- function(plotObject,
 #' @title setLegendTitle
 #' @param plotObject ggplot object
 #' @param title character or `Label` object
-#' @param size numeric defining the size of legend title
-#' @param color character defining the color of legend title
-#' @param fontFamily character defining the family of legend title
-#' @param fontFace character defining the legend title face as defined in helper enum `FontFaces`.
-#' @param angle numeric defining the angle of legend title
-#' @param align character defining the alignment of legend title as defined in helper enum `Alignments`.
 #' @return A ggplot object
 #' @description Set legend title
 #' @export
 setLegendTitle <- function(plotObject,
-                           title = NULL,
-                           color = NULL,
-                           size = NULL,
-                           fontFamily = NULL,
-                           fontFace = NULL,
-                           angle = NULL,
-                           align = NULL) {
+                           title = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(title, c("character", "Label"), nullAllowed = TRUE)
-  validateIsString(color, nullAllowed = TRUE)
-  validateIsString(fontFamily, nullAllowed = TRUE)
-  validateIsNumeric(size, nullAllowed = TRUE)
-  validateIsNumeric(angle, nullAllowed = TRUE)
-  validateIsIncluded(fontFace, FontFaces, nullAllowed = TRUE)
-  validateIsIncluded(align, Alignments, nullAllowed = TRUE)
   
   # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
   newPlotObject <- plotObject
   newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
   legend <- newPlotObject$plotConfiguration$legend
-  legend$title <- title
-
-  eval(parseVariableToObject("legend$title$font", c("size", "color", "fontFace", "fontFamily", "angle", "align"), keepIfNull = TRUE))
+  if(isOfType(title, "character")){
+    title <- asLabel(title, font = legend$title$font)
+  }
+  legend$title <- title %||% legend$title
   newPlotObject <- legend$updatePlot(newPlotObject)
   return(newPlotObject)
 }
@@ -230,9 +213,9 @@ setCaptionLabels <- function(plotObject, label, name = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(label, c("character", "numeric"))
 
-  # getCoreSetCaptionProperty is common for all the caption properties
+  # .getCoreSetCaptionProperty is common for all the caption properties
   # prevent duplication of code everywhere
-  labelExpression <- getCoreSetCaptionProperty("label")
+  labelExpression <- .getCoreSetCaptionProperty("label")
   eval(labelExpression)
 
   return(newPlotObject)
@@ -251,9 +234,9 @@ setCaptionVisibility <- function(plotObject, visibility, name = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsLogical(visibility)
 
-  # getCoreSetCaptionProperty is common for all the caption properties
+  # .getCoreSetCaptionProperty is common for all the caption properties
   # prevent duplication of code everywhere
-  visibilityExpression <- getCoreSetCaptionProperty("visibility")
+  visibilityExpression <- .getCoreSetCaptionProperty("visibility")
   eval(visibilityExpression)
 
   return(newPlotObject)
@@ -272,9 +255,9 @@ setCaptionOrder <- function(plotObject, order, name = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(order, "numeric")
 
-  # getCoreSetCaptionProperty is common for all the caption properties
+  # .getCoreSetCaptionProperty is common for all the caption properties
   # prevent duplication of code everywhere
-  orderExpression <- getCoreSetCaptionProperty("order")
+  orderExpression <- .getCoreSetCaptionProperty("order")
   eval(orderExpression)
 
   return(newPlotObject)
@@ -293,9 +276,9 @@ setCaptionColor <- function(plotObject, color, name = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(color, c("character", "numeric"))
 
-  # getCoreSetCaptionProperty is common for all the caption properties
+  # .getCoreSetCaptionProperty is common for all the caption properties
   # prevent duplication of code everywhere
-  colorExpression <- getCoreSetCaptionProperty("color")
+  colorExpression <- .getCoreSetCaptionProperty("color")
   eval(colorExpression)
 
   return(newPlotObject)
@@ -314,9 +297,9 @@ setCaptionShape <- function(plotObject, shape, name = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(shape, c("character", "numeric"))
 
-  # getCoreSetCaptionProperty is common for all the caption properties
+  # .getCoreSetCaptionProperty is common for all the caption properties
   # prevent duplication of code everywhere
-  shapeExpression <- getCoreSetCaptionProperty("shape")
+  shapeExpression <- .getCoreSetCaptionProperty("shape")
   eval(shapeExpression)
 
   return(newPlotObject)
@@ -335,9 +318,9 @@ setCaptionSize <- function(plotObject, size, name = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(size, c("character", "numeric"))
 
-  # getCoreSetCaptionProperty is common for all the caption properties
+  # .getCoreSetCaptionProperty is common for all the caption properties
   # prevent duplication of code everywhere
-  sizeExpression <- getCoreSetCaptionProperty("size")
+  sizeExpression <- .getCoreSetCaptionProperty("size")
   eval(sizeExpression)
 
   return(newPlotObject)
@@ -356,9 +339,9 @@ setCaptionLinetype <- function(plotObject, linetype, name = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(linetype, c("character", "numeric"))
 
-  # getCoreSetCaptionProperty is common for all the caption properties
+  # .getCoreSetCaptionProperty is common for all the caption properties
   # prevent duplication of code everywhere
-  linetypeExpression <- getCoreSetCaptionProperty("linetype")
+  linetypeExpression <- .getCoreSetCaptionProperty("linetype")
   eval(linetypeExpression)
 
   return(newPlotObject)
@@ -377,9 +360,9 @@ setCaptionFill <- function(plotObject, fill, name = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(fill, c("character", "numeric"))
 
-  # getCoreSetCaptionProperty is common for all the caption properties
+  # .getCoreSetCaptionProperty is common for all the caption properties
   # prevent duplication of code everywhere
-  fillExpression <- getCoreSetCaptionProperty("fill")
+  fillExpression <- .getCoreSetCaptionProperty("fill")
   eval(fillExpression)
 
   return(newPlotObject)
@@ -419,14 +402,14 @@ CaptionProperties <- enum(c(
   "fill"
 ))
 
-#' @title createPlotLegendPosition
+#' @title .createPlotLegendPosition
 #' @description Create legend position directly usable by `ggplot2`
 #' @param position Position of legend as defined in enum `LegendPositions`
 #' @return A list with fields `xPosition`, `xJustification`, `yPosition`, `yJustification`
 #' @keywords internal
-createPlotLegendPosition <- function(position) {
+.createPlotLegendPosition <- function(position) {
   validateIsIncluded(position, LegendPositions)
-  
+
   listOfLegendPositions <- list(
     none = list(xPosition = "none", xJustification = NULL, yPosition = NULL, yJustification = NULL),
     insideTop = list(xPosition = 0.5, xJustification = 0.5, yPosition = 0.975, yJustification = 1),
@@ -451,13 +434,13 @@ createPlotLegendPosition <- function(position) {
   return(legendPosition)
 }
 
-#' @title mergeLegend
+#' @title .mergeLegend
 #' @description merge legend caption with existing legend caption
 #' @param plotObject ggplot object
 #' @param newLabels labels of caption to merge
 #' @param aestheticSelections `ThemeAestheticSelections` object
 #' @keywords internal
-mergeLegend <- function(plotObject, newLabels, aestheticSelections) {
+.mergeLegend <- function(plotObject, newLabels, aestheticSelections) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(aestheticSelections, "ThemeAestheticSelections")
 
@@ -467,7 +450,7 @@ mergeLegend <- function(plotObject, newLabels, aestheticSelections) {
 
   # Associate new values of aesthetics based on theme aesthetic selections
   newCaptionExpression <- parse(text = paste0(
-    names(AestheticProperties), " <- getAestheticValues(n = newCaptionLength,
+    names(AestheticProperties), " <- .getAestheticValues(n = newCaptionLength,
     selectionKey = aestheticSelections$", names(AestheticProperties), ",
     position = oldCaptionLength,
     aesthetic = '", names(AestheticProperties), "')"
@@ -503,7 +486,7 @@ mergeLegend <- function(plotObject, newLabels, aestheticSelections) {
   return(plotObject)
 }
 
-getCoreSetCaptionProperty <- function(property) {
+.getCoreSetCaptionProperty <- function(property) {
   c(
     parse(text = 'validateIsOfType(plotObject, "ggplot")'),
     parse(text = "newCaption <- getLegendCaption(plotObject)"),
@@ -520,6 +503,6 @@ getCoreSetCaptionProperty <- function(property) {
 }
 
 
-getDefaultCaptionFor <- function(plotName) {
+.getDefaultCaptionFor <- function(plotName) {
   as.data.frame(tlfEnv$currentTheme$defaultCaption[[plotName]], stringsAsFactors = FALSE)
 }

@@ -22,8 +22,8 @@ Get a data.frame with Guest et al. ratio limits from \code{data} and its \code{D
 ddiData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
 
 getGuestValuesFromDataMapping(
-data = ddiData, 
-dataMapping = DDIRatioDataMapping$new(x = "x", y = "y")
+  data = ddiData,
+  dataMapping = DDIRatioDataMapping$new(x = "x", y = "y")
 )
 
 }

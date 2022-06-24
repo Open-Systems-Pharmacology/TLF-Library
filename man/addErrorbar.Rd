@@ -58,14 +58,14 @@ Add an errorbar layer to a \code{ggplot} object.
 \examples{
 # Add errorbar using x, ymin and ymax
 addErrorbar(
-x = c(1, 2, 1, 2, 3), 
-ymin = c(5, 0, 2, 3, 4), 
-ymax = c(6, 2, 6, 2.5, 5)
+  x = c(1, 2, 1, 2, 3),
+  ymin = c(5, 0, 2, 3, 4),
+  ymax = c(6, 2, 6, 2.5, 5)
 )
 
 # Add errorbar using a data.frame
 time <- seq(0, 30, 0.5)
-errorbarData <- data.frame(x = time, ymin = cos(time)-1, ymax = cos(time)+1)
+errorbarData <- data.frame(x = time, ymin = cos(time) - 1, ymax = cos(time) + 1)
 
 addErrorbar(
   data = errorbarData,
@@ -83,13 +83,13 @@ addErrorbar(data = errorbarData, color = "blue", size = 0.5, includeCap = TRUE, 
 
 # Add a errorbar with specific properties
 p <- addErrorbar(
-data = errorbarData, 
-color = "blue", size = 0.5, includeCap = TRUE, caption = "My data"
+  data = errorbarData,
+  color = "blue", size = 0.5, includeCap = TRUE, caption = "My data"
 )
 addScatter(
-x = time, y = cos(time), 
-color = "red", size = 1, caption = "My data", 
-plotObject = p
+  x = time, y = cos(time),
+  color = "red", size = 1, caption = "My data",
+  plotObject = p
 )
 
 }

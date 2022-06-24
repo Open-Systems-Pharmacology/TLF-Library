@@ -18,7 +18,7 @@ Calculate \verb{Percentile100\%} i.e. \code{max} value
 \examples{
 # Calculate Percentile100\%
 `Percentile100\%`(rnorm(1000))
- 
+
 }
 \seealso{
 Other stat functions: 

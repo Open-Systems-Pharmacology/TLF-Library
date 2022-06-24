@@ -1,40 +1,3 @@
-#' @title Scaling
-#' @import ospsuite.utils
-#' @export
-#' @description
-#'  Helper enum of predefined transformations of axes
-#'  Note that the transformations will be translated internally into `ggplot2` transformations.
-#'  `ggplot2` includes more transformations than what is available in this enum.
-#' @family enum helpers
-#' @examples
-#' # Continuous linear scale
-#' Scaling$lin
-#' # Continuous log10 scale
-#' Scaling$log
-#' # Continuous natural logarithm (ln) scale (base is *e*)
-#' Scaling$ln
-#' # Discrete scale for categrical data such as boxplot and tornado plot data
-#' Scaling$discrete
-#' # Reverse continuous linear scale to switch end and beginning of linear scale
-#' Scaling$reverse
-#' # Continusous square root scale
-#' Scaling$sqrt
-#' # Time scale for POSIXlt or POSIXct data
-#' Scaling$time
-#' # Date scale for POSIXlt or POSIXct data
-#' Scaling$date
-#' 
-Scaling <- enum(c(
-  "lin",
-  "log",
-  "ln",
-  "discrete",
-  "reverse",
-  "sqrt",
-  "time",
-  "date"
-))
-
 #' @title setXAxis
 #' @description Set X-axis properties of a `ggplot` object
 #' @param plotObject A `ggplot` object to set X-axis properties
@@ -80,7 +43,7 @@ setXAxis <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$xAxis
   xAxis <- newPlotObject$plotConfiguration$xAxis
-  eval(parseVariableToObject("xAxis", c("limits", "scale", "ticks", "ticklabels", "font", "expand"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("xAxis", c("limits", "scale", "ticks", "ticklabels", "font", "expand"), keepIfNull = TRUE))
   newPlotObject <- xAxis$updatePlot(newPlotObject, ylim = newPlotObject$plotConfiguration$yAxis$limits)
   return(newPlotObject)
 }
@@ -124,7 +87,7 @@ setYAxis <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$yAxis
   yAxis <- newPlotObject$plotConfiguration$yAxis
-  eval(parseVariableToObject("yAxis", c("limits", "scale", "ticks", "ticklabels", "font", "expand"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("yAxis", c("limits", "scale", "ticks", "ticklabels", "font", "expand"), keepIfNull = TRUE))
   newPlotObject <- yAxis$updatePlot(newPlotObject, xlim = newPlotObject$plotConfiguration$xAxis$limits)
   return(newPlotObject)
 }
@@ -178,4 +141,88 @@ getLnTickLabels <- function(ticks) {
 getSqrtTickLabels <- function(ticks) {
   sqrtValues <- ticks^2
   return(parse(text = paste("sqrt(", sqrtValues, ")", sep = "")))
+}
+
+#' @title getGreekTickLabels
+#' @description Get ticklabels expressions for discrete scale plots with greek letters
+#' @param ticks numeric values of the ticks
+#' @return Expressions to use in `ticklabels` input parameter of `setXAxis` and `setYAxis` functions
+#' @examples
+#' ticks <- c(1, 5, 10, 50, 100, 500)
+#' getGreekTickLabels(ticks)
+#' @export
+getGreekTickLabels <- function(ticks) {
+  # alpha starts at converted integer 945
+  if (is.numeric(ticks)) {
+    return(sapply(ticks, function(tick) {
+      intToUtf8(tick + 944)
+    }))
+  }
+  tickLabels <- sapply(1:length(ticks), function(tick) {
+    intToUtf8(tick + 944)
+  })
+  return(tickLabels)
+}
+
+#' @title getPiTickLabels
+#' @description Get ticklabels expressions for plots with values as ratios of Pi
+#' @param ticks numeric values of the ticks
+#' @return Expressions to use in `ticklabels` input parameter of `setXAxis` and `setYAxis` functions
+#' @examples
+#' ticks <- seq(0, 2 * pi, pi / 2)
+#' getPiTickLabels(ticks)
+#' @export
+getPiTickLabels <- function(ticks) {
+  # Get fractions of pi from ticks
+  roundPi <- as.character(ticks %/% pi)
+  # Remove 1 and -1 from expression
+  roundPi[roundPi == "1"] <- ""
+  roundPi[roundPi == "-1"] <- "-"
+  # Flag when 0 to remove pi from label
+  roundPi[roundPi == "0"] <- "x"
+
+  roundPi <- paste(roundPi, "\u03C0", sep = "")
+  roundPi[grepl("x", roundPi)] <- ""
+
+  # Round to 3 digits to get fraction values
+  # If fraction is recognized, used fraction format
+  decPi <- round((ticks %% pi) / pi, 3)
+  decPi <- sapply(decPi, function(piFraction) {
+    if (piFraction == 0) {
+      return("")
+    }
+    if (piFraction == 0.167) {
+      return(" + \u03C0/6")
+    }
+    if (piFraction == 0.25) {
+      return(" + \u03C0/4")
+    }
+    if (piFraction == 0.333) {
+      return(" + \u03C0/3")
+    }
+    if (piFraction == 0.5) {
+      return(" + \u03C0/2")
+    }
+    if (piFraction == 0.667) {
+      return(" + 2\u03C0/3")
+    }
+    if (piFraction == 0.833) {
+      return(" + 5\u03C0/6")
+    }
+    return(paste0("+", piFraction, "\u03C0"))
+  })
+  piLabels <- paste(roundPi, decPi, sep = "")
+  piLabels[piLabels == ""] <- "0"
+  return(piLabels)
+}
+
+#' @title .removeInfiniteValues
+#' @description Censor/remove any values outside of range
+#' Caution, removing infinite values can cause issues with ribbons 
+#' which can use such infinite values for filling a range
+#' @param x numeric vector of values to manipulate
+#' @param range numeric vector of length two giving desired output range
+#' @keywords internal
+.removeInfiniteValues <- function(x, range = c(0,1)){
+  scales::censor(x, range, only.finite = FALSE)
 }

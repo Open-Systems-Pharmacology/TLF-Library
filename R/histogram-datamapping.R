@@ -25,10 +25,10 @@ HistogramDataMapping <- R6::R6Class(
     #' @param ... parameters inherited from `XYGDataMapping`
     #' @return A new `HistogramDataMapping` object
     initialize = function(stack = FALSE,
-                              bins = NULL,
-                              binwidth = NULL,
-                              distribution = NULL,
-                              ...) {
+                          bins = NULL,
+                          binwidth = NULL,
+                          distribution = NULL,
+                          ...) {
       super$initialize(...)
       validateIsLogical(stack)
       validateIsIncluded(distribution, c("none", "normal", "logNormal"), nullAllowed = TRUE)

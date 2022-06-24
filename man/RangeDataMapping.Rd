@@ -17,6 +17,7 @@ Other DataMapping classes:
 \code{\link{ObservedDataMapping}},
 \code{\link{PKRatioDataMapping}},
 \code{\link{ResVsPredDataMapping}},
+\code{\link{ResVsTimeDataMapping}},
 \code{\link{TimeProfileDataMapping}},
 \code{\link{TornadoDataMapping}},
 \code{\link{XYDataMapping}},
@@ -38,20 +39,20 @@ Other DataMapping classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{RangeDataMapping$new()}}
-\item \href{#method-checkMapData}{\code{RangeDataMapping$checkMapData()}}
-\item \href{#method-clone}{\code{RangeDataMapping$clone()}}
+\item \href{#method-RangeDataMapping-new}{\code{RangeDataMapping$new()}}
+\item \href{#method-RangeDataMapping-checkMapData}{\code{RangeDataMapping$checkMapData()}}
+\item \href{#method-RangeDataMapping-clone}{\code{RangeDataMapping$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-RangeDataMapping-new"></a>}}
+\if{latex}{\out{\hypertarget{method-RangeDataMapping-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{RangeDataMapping} object
 \subsection{Usage}{
@@ -93,7 +94,7 @@ Create a new \code{RangeDataMapping} object
 
 \item{\code{group}}{R6 class \code{Grouping} object or its input}
 
-\item{\code{data}}{data.frame to map used by \code{smartMapping}}
+\item{\code{data}}{data.frame to map used by \code{.smartMapping}}
 }
 \if{html}{\out{</div>}}
 }
@@ -102,8 +103,8 @@ A new \code{RangeDataMapping} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-checkMapData"></a>}}
-\if{latex}{\out{\hypertarget{method-checkMapData}{}}}
+\if{html}{\out{<a id="method-RangeDataMapping-checkMapData"></a>}}
+\if{latex}{\out{\hypertarget{method-RangeDataMapping-checkMapData}{}}}
 \subsection{Method \code{checkMapData()}}{
 Check that \code{data} variables include map variables
 \subsection{Usage}{
@@ -125,8 +126,8 @@ Dummy variable \code{legendLabels} is necessary to allow further modification of
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-RangeDataMapping-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-RangeDataMapping-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

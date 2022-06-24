@@ -22,14 +22,14 @@ R6 class defining theme properties
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Theme$new()}}
-\item \href{#method-save}{\code{Theme$save()}}
-\item \href{#method-clone}{\code{Theme$clone()}}
+\item \href{#method-Theme-new}{\code{Theme$new()}}
+\item \href{#method-Theme-save}{\code{Theme$save()}}
+\item \href{#method-Theme-clone}{\code{Theme$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Theme-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Theme-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{Theme} object
 \subsection{Usage}{
@@ -59,8 +59,8 @@ A new \code{Theme} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-save"></a>}}
-\if{latex}{\out{\hypertarget{method-save}{}}}
+\if{html}{\out{<a id="method-Theme-save"></a>}}
+\if{latex}{\out{\hypertarget{method-Theme-save}{}}}
 \subsection{Method \code{save()}}{
 Save \code{Theme} as a json file
 \subsection{Usage}{
@@ -76,8 +76,8 @@ Save \code{Theme} as a json file
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Theme-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Theme-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

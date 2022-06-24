@@ -17,6 +17,7 @@ Other DataMapping classes:
 \code{\link{PKRatioDataMapping}},
 \code{\link{RangeDataMapping}},
 \code{\link{ResVsPredDataMapping}},
+\code{\link{ResVsTimeDataMapping}},
 \code{\link{TimeProfileDataMapping}},
 \code{\link{TornadoDataMapping}},
 \code{\link{XYDataMapping}},
@@ -43,20 +44,20 @@ Only 2 distributions are currently available: \code{"normal"} and \code{"logNorm
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{HistogramDataMapping$new()}}
-\item \href{#method-clone}{\code{HistogramDataMapping$clone()}}
+\item \href{#method-HistogramDataMapping-new}{\code{HistogramDataMapping$new()}}
+\item \href{#method-HistogramDataMapping-clone}{\code{HistogramDataMapping$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="XYGDataMapping" data-id="checkMapData">}\href{../../tlf/html/XYGDataMapping.html#method-checkMapData}{\code{tlf::XYGDataMapping$checkMapData()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="XYGDataMapping" data-id="checkMapData"><a href='../../tlf/html/XYGDataMapping.html#method-XYGDataMapping-checkMapData'><code>tlf::XYGDataMapping$checkMapData()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-HistogramDataMapping-new"></a>}}
+\if{latex}{\out{\hypertarget{method-HistogramDataMapping-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{HistogramDataMapping} object
 \subsection{Usage}{
@@ -90,8 +91,8 @@ A new \code{HistogramDataMapping} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-HistogramDataMapping-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-HistogramDataMapping-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

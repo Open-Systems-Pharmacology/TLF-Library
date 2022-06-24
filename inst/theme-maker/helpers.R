@@ -91,18 +91,18 @@ labelPanel <- function(displayName, labelID = tolower(displayName), labelInputID
       value = jsonTheme$fonts[[labelID]]$angle, step = 1
     ),
     textInput(paste0(labelInputID, "Family"),
-                 label = "Family", 
-                 value = jsonTheme$fonts[[labelID]]$fontFamily
+      label = "Family",
+      value = jsonTheme$fonts[[labelID]]$fontFamily
     ),
     selectInput(paste0(labelInputID, "Face"),
-              label = "Face", 
-              choices = FontFaces,
-              selected = jsonTheme$fonts[[labelID]]$fontFace
+      label = "Face",
+      choices = FontFaces,
+      selected = jsonTheme$fonts[[labelID]]$fontFace
     ),
     selectInput(paste0(labelInputID, "Align"),
-              label = "Align", 
-              choices = Alignments,
-              selected = jsonTheme$fonts[[labelID]]$align
+      label = "Align",
+      choices = Alignments,
+      selected = jsonTheme$fonts[[labelID]]$align
     )
   )
 }

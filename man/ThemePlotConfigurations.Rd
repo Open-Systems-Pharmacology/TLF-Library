@@ -36,14 +36,14 @@ R6 class defining theme of plot configuration objects
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{ThemePlotConfigurations$new()}}
-\item \href{#method-toJson}{\code{ThemePlotConfigurations$toJson()}}
-\item \href{#method-clone}{\code{ThemePlotConfigurations$clone()}}
+\item \href{#method-ThemePlotConfigurations-new}{\code{ThemePlotConfigurations$new()}}
+\item \href{#method-ThemePlotConfigurations-toJson}{\code{ThemePlotConfigurations$toJson()}}
+\item \href{#method-ThemePlotConfigurations-clone}{\code{ThemePlotConfigurations$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-ThemePlotConfigurations-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ThemePlotConfigurations-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{ThemePlotConfigurations} object
 \subsection{Usage}{
@@ -94,8 +94,8 @@ A new \code{ThemePlotConfigurations} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-toJson"></a>}}
-\if{latex}{\out{\hypertarget{method-toJson}{}}}
+\if{html}{\out{<a id="method-ThemePlotConfigurations-toJson"></a>}}
+\if{latex}{\out{\hypertarget{method-ThemePlotConfigurations-toJson}{}}}
 \subsection{Method \code{toJson()}}{
 Translate object into a json list
 \subsection{Usage}{
@@ -107,8 +107,8 @@ A list that can be saved into a json file
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-ThemePlotConfigurations-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ThemePlotConfigurations-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

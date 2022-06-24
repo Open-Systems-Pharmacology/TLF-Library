@@ -18,7 +18,7 @@ Calculate \verb{Percentile50\%} i.e. \code{median} value
 \examples{
 # Calculate Percentile50\%
 `Percentile50\%`(rnorm(1000))
- 
+
 }
 \seealso{
 Other stat functions: 

@@ -18,7 +18,7 @@ Calculate \verb{median+1.5IQR}
 \examples{
 # Calculate median+1.5IQR
 `median+1.5IQR`(rnorm(1000))
- 
+
 }
 \seealso{
 Other stat functions: 

@@ -34,14 +34,16 @@ Producing box-and-whisker plots
 }
 \examples{
 # Produce box-and-whisker plots of log-normal distributed data
-boxData <- data.frame(x = c(rep("A", 500), rep("B",500)), y = rlnorm(1000))
+boxData <- data.frame(x = c(rep("A", 500), rep("B", 500)), y = rlnorm(1000))
 
 plotBoxWhisker(data = boxData, dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"))
 
 # Remove outliers from boxplot
-plotBoxWhisker(data = boxData, 
-dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"), 
-outliers = FALSE)
+plotBoxWhisker(
+  data = boxData,
+  dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"),
+  outliers = FALSE
+)
 
 }
 \references{
@@ -55,6 +57,7 @@ Other molecule plots:
 \code{\link{plotObsVsPred}()},
 \code{\link{plotPKRatio}()},
 \code{\link{plotResVsPred}()},
+\code{\link{plotResVsTime}()},
 \code{\link{plotTimeProfile}()},
 \code{\link{plotTornado}()}
 }

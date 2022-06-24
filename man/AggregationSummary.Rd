@@ -43,15 +43,15 @@ The summary statistic column name in each data.frame is the same as the name of 
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{AggregationSummary$new()}}
-\item \href{#method-applyAggregationFunctions}{\code{AggregationSummary$applyAggregationFunctions()}}
-\item \href{#method-generateAggregatedValues}{\code{AggregationSummary$generateAggregatedValues()}}
-\item \href{#method-clone}{\code{AggregationSummary$clone()}}
+\item \href{#method-AggregationSummary-new}{\code{AggregationSummary$new()}}
+\item \href{#method-AggregationSummary-applyAggregationFunctions}{\code{AggregationSummary$applyAggregationFunctions()}}
+\item \href{#method-AggregationSummary-generateAggregatedValues}{\code{AggregationSummary$generateAggregatedValues()}}
+\item \href{#method-AggregationSummary-clone}{\code{AggregationSummary$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-AggregationSummary-new"></a>}}
+\if{latex}{\out{\hypertarget{method-AggregationSummary-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{AggregationSummary} object
 \subsection{Usage}{
@@ -99,8 +99,8 @@ A new \code{AggregationSummary} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-applyAggregationFunctions"></a>}}
-\if{latex}{\out{\hypertarget{method-applyAggregationFunctions}{}}}
+\if{html}{\out{<a id="method-AggregationSummary-applyAggregationFunctions"></a>}}
+\if{latex}{\out{\hypertarget{method-AggregationSummary-applyAggregationFunctions}{}}}
 \subsection{Method \code{applyAggregationFunctions()}}{
 Apply aggregation functions on \code{x}
 \subsection{Usage}{
@@ -119,8 +119,8 @@ A list or vector of aggregated values
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-generateAggregatedValues"></a>}}
-\if{latex}{\out{\hypertarget{method-generateAggregatedValues}{}}}
+\if{html}{\out{<a id="method-AggregationSummary-generateAggregatedValues"></a>}}
+\if{latex}{\out{\hypertarget{method-AggregationSummary-generateAggregatedValues}{}}}
 \subsection{Method \code{generateAggregatedValues()}}{
 Generate aggregated values
 \subsection{Usage}{
@@ -132,8 +132,8 @@ A list or vector of aggregated values
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-AggregationSummary-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-AggregationSummary-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

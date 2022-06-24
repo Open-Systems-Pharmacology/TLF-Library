@@ -1,5 +1,5 @@
 #' @keywords internal
-validateMapping <- function(mapping, data, nullAllowed = FALSE) {
+.validateMapping <- function(mapping, data, nullAllowed = FALSE) {
   if (nullAllowed && is.null(mapping)) {
     return()
   }
@@ -24,7 +24,7 @@ validateMapping <- function(mapping, data, nullAllowed = FALSE) {
 #' @param eitherInput Input or list of inputs
 #' @param orInput Input or list of inputs
 #' @keywords internal
-validateEitherOrNullInput <- function(eitherInput, orInput) {
+.validateEitherOrNullInput <- function(eitherInput, orInput) {
   # Convert input to list of input if not already as list
   if (!isOfType(eitherInput, "list")) {
     eitherInput <- list(eitherInput)

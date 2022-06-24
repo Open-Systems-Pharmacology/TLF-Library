@@ -41,6 +41,12 @@ plotGridObj$nColumns <- 2L
 plotGridObj$tagLevels <- "A"
 plotGridObj$tagPrefix <- "Plot ("
 plotGridObj$tagSuffix <- ")"
+plotGridObj$tagColor <- "blue"
+plotGridObj$tagSize <- 15
+plotGridObj$tagAngle <- 45
+plotGridObj$tagPosition <- TagPositions$top
+plotGridObj$titleHorizontalJustification <- HorizontalJustification$middle
+plotGridObj$subtitleHorizontalJustification <- HorizontalJustification$middle
 
 # plot the grid
 plotGrid(plotGridObj)

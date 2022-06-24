@@ -34,14 +34,14 @@ R6 class defining theme font properties
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{ThemeFont$new()}}
-\item \href{#method-toJson}{\code{ThemeFont$toJson()}}
-\item \href{#method-clone}{\code{ThemeFont$clone()}}
+\item \href{#method-ThemeFont-new}{\code{ThemeFont$new()}}
+\item \href{#method-ThemeFont-toJson}{\code{ThemeFont$toJson()}}
+\item \href{#method-ThemeFont-clone}{\code{ThemeFont$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-ThemeFont-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ThemeFont-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{ThemeFont} object
 \subsection{Usage}{
@@ -107,8 +107,8 @@ A new \code{ThemeFont} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-toJson"></a>}}
-\if{latex}{\out{\hypertarget{method-toJson}{}}}
+\if{html}{\out{<a id="method-ThemeFont-toJson"></a>}}
+\if{latex}{\out{\hypertarget{method-ThemeFont-toJson}{}}}
 \subsection{Method \code{toJson()}}{
 Translate object into a json list
 \subsection{Usage}{
@@ -120,8 +120,8 @@ A list that can be saved into a json file
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-ThemeFont-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ThemeFont-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -18,7 +18,7 @@ Calculate \verb{Percentile0\%} i.e. \code{min} value
 \examples{
 # Calculate Percentile0\%
 `Percentile0\%`(rnorm(1000))
- 
+
 }
 \seealso{
 Other stat functions: 

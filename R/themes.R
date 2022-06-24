@@ -78,7 +78,8 @@ ThemeFont <- R6::R6Class(
         "fontFace = ", fieldNames, "$fontFace %||% baseFace,",
         "fontFamily = ", fieldNames, "$fontFamily %||% baseFamily,",
         "angle = ", fieldNames, "$angle %||% baseAngle,",
-        "align = ", fieldNames, "$align %||% baseAlign)"))
+        "align = ", fieldNames, "$align %||% baseAlign)"
+      ))
       eval(setFontExpression)
     },
 
@@ -94,7 +95,8 @@ ThemeFont <- R6::R6Class(
         "angle = self$", fieldNames, "$angle,",
         "align = self$", fieldNames, "$align,",
         "fontFace = self$", fieldNames, "$fontFace,",
-        "fontFamily = self$", fieldNames, "$fontFamily)"))
+        "fontFamily = self$", fieldNames, "$fontFamily)"
+      ))
       eval(setJsonExpression)
       return(jsonObject)
     }
@@ -180,12 +182,14 @@ ThemeBackground <- R6::R6Class(
         "fill = ", areaFieldNames, "$fill %||% baseFill,",
         "color = ", areaFieldNames, "$color %||% baseColor,",
         "size = ", areaFieldNames, "$size %||% baseSize,",
-        "linetype = ", areaFieldNames, "$linetype %||% baseLinetype)"))
+        "linetype = ", areaFieldNames, "$linetype %||% baseLinetype)"
+      ))
       setLineExpression <- parse(text = paste0(
         "self$", lineFieldNames, " <- LineElement$new(",
         "color = ", lineFieldNames, "$color %||% baseColor,",
         "size = ", lineFieldNames, "$size %||% baseSize,",
-        "linetype = ", lineFieldNames, "$linetype %||% baseLinetype)"))
+        "linetype = ", lineFieldNames, "$linetype %||% baseLinetype)"
+      ))
       eval(setAreaExpression)
       eval(setLineExpression)
     },
@@ -205,12 +209,14 @@ ThemeBackground <- R6::R6Class(
         "fill = self$", areaFieldNames, "$fill,",
         "color = self$", areaFieldNames, "$color,",
         "size = self$", areaFieldNames, "$size,",
-        "linetype = self$", areaFieldNames, "$linetype)"))
+        "linetype = self$", areaFieldNames, "$linetype)"
+      ))
       setJsonLineExpression <- parse(text = paste0(
         "jsonObject$", lineFieldNames, " <- list(",
         "color = self$", lineFieldNames, "$color,",
         "size = self$", lineFieldNames, "$size,",
-        "linetype = self$", lineFieldNames, "$linetype)"))
+        "linetype = self$", lineFieldNames, "$linetype)"
+      ))
       eval(setJsonAreaExpression)
       eval(setJsonLineExpression)
       return(jsonObject)
@@ -271,7 +277,7 @@ ThemeAestheticMaps <- R6::R6Class(
       self$alpha <- alpha %||% c(0.75, 0.5, 0.25)
 
       # Checks shapes and linetype according to ggplot2 standards
-      self$shape <- asPlotShape(self$shape)
+      self$shape <- .asPlotShape(self$shape)
       validateIsIncluded(self$linetype, Linetypes)
     },
 
@@ -533,4 +539,3 @@ Theme <- R6::R6Class(
     .plotConfigurations = NULL
   )
 )
-

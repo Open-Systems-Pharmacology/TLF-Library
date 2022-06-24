@@ -36,19 +36,19 @@ Other PlotConfiguration classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{TornadoPlotConfiguration$new()}}
-\item \href{#method-clone}{\code{TornadoPlotConfiguration$clone()}}
+\item \href{#method-TornadoPlotConfiguration-new}{\code{TornadoPlotConfiguration$new()}}
+\item \href{#method-TornadoPlotConfiguration-clone}{\code{TornadoPlotConfiguration$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-TornadoPlotConfiguration-new"></a>}}
+\if{latex}{\out{\hypertarget{method-TornadoPlotConfiguration-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{TornadoPlotConfiguration} object
 \subsection{Usage}{
@@ -73,8 +73,8 @@ A new \code{TornadoPlotConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-TornadoPlotConfiguration-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-TornadoPlotConfiguration-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

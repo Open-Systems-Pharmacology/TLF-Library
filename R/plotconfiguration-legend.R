@@ -27,11 +27,14 @@ LegendConfiguration <- R6::R6Class(
       private$.background <- background %||% currentTheme$background$legend
 
       # Title properties
-      private$.title <- asLabel(title, font = currentTheme$fonts$legendTitle)
-      if(isOfType(title, "Label")){
+      private$.title <- asLabel(
+        text = title %||% currentTheme$background$legendTitle,
+        font = currentTheme$fonts$legendTitle
+        )
+      if (isOfType(title, "Label")) {
         private$.title <- title
       }
-      
+
       private$.caption <- caption %||% data.frame()
     },
 
@@ -45,14 +48,22 @@ LegendConfiguration <- R6::R6Class(
         ggplot2::theme(
           legend.background = private$.background$createPlotElement(),
           legend.text = private$.font$createPlotFont(),
-          legend.title = private$.title$createPlotFont(),
           # symbol background same as legend background
           legend.key = private$.background$createPlotElement(linetype = Linetypes$blank)
         )
-
-      # Update legend position and alignment
-      legendPosition <- createPlotLegendPosition(private$.position)
+      # Update legend title for all aesthetic properties to prevent unwanted split of legends
+      updateLegendTitleExpression <- parse(text = paste0(
+        "plotObject <- plotObject + ggplot2::guides(",
+        names(AestheticProperties), " = guide_legend(", 
+        "title = private$.title$text,",
+        "title.theme = private$.title$createPlotFont())",
+        ")"
+      ))
+      eval(updateLegendTitleExpression)
       
+      # Update legend position and alignment
+      legendPosition <- .createPlotLegendPosition(private$.position)
+
       plotObject <- plotObject + ggplot2::theme(
         legend.position = c(legendPosition$xPosition, legendPosition$yPosition),
         legend.justification = c(legendPosition$xJustification, legendPosition$yJustification),
@@ -91,7 +102,7 @@ LegendConfiguration <- R6::R6Class(
       private$.font <- value %||% currentTheme$fonts$legend
       return(invisible())
     },
-    
+
     #' @field background `Background` object defining the background of the legend
     background = function(value) {
       if (missing(value)) {
@@ -108,7 +119,7 @@ LegendConfiguration <- R6::R6Class(
         return(private$.title)
       }
       validateIsOfType(value, c("character", "Label"), nullAllowed = TRUE)
-      if(isOfType(value, "Label")){
+      if (isOfType(value, "Label")) {
         private$.title <- asLabel(value)
       }
       private$.title <- asLabel(value, font = private$.title$font)

@@ -30,19 +30,19 @@ Other PlotConfiguration classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-clone}{\code{PKRatioPlotConfiguration$clone()}}
+\item \href{#method-PKRatioPlotConfiguration-clone}{\code{PKRatioPlotConfiguration$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="initialize">}\href{../../tlf/html/PlotConfiguration.html#method-initialize}{\code{tlf::PlotConfiguration$initialize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="initialize"><a href='../../tlf/html/PlotConfiguration.html#method-PlotConfiguration-initialize'><code>tlf::PlotConfiguration$initialize()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-PKRatioPlotConfiguration-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-PKRatioPlotConfiguration-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

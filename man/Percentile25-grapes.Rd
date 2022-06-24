@@ -18,7 +18,7 @@ Calculate \verb{Percentile25\%} i.e. 1st quartile value
 \examples{
 # Calculate Percentile25\%
 `Percentile25\%`(rnorm(1000))
- 
+
 }
 \seealso{
 Other stat functions: 

@@ -1,17 +1,17 @@
 #' @title getBoxWhiskerMeasure
-#' @description 
+#' @description
 #' Get a summary table of Box Whisker percentiles
-#' 
+#'
 #' @inheritParams plotBoxWhisker
 #' @param y Name of `y` variable in `data`.
 #' @param group Name of grouping variable in `data`.
 #' @param quantiles Numeric values between 0 and 1 defining the quantiles to summarize
 #' @return A data.frame of summary statistics
 #' @export
-#' @examples 
+#' @examples
 #' # Get box-and-whisker plots of log-normal distributed data
-#' boxData <- data.frame(x = c(rep("A", 500), rep("B",500)), y = rlnorm(1000))
-#' 
+#' boxData <- data.frame(x = c(rep("A", 500), rep("B", 500)), y = rlnorm(1000))
+#'
 #' getBoxWhiskerMeasure(data = boxData, dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"))
 #'
 getBoxWhiskerMeasure <- function(data,
@@ -39,7 +39,7 @@ getBoxWhiskerMeasure <- function(data,
   )
 
   summary <- tapply(y, group, FUN = function(x) {
-    summaryStat(x, quantiles)
+    .summaryStat(x, quantiles)
   })
   # As a data.frame summary row names are already group names
   summary <- as.data.frame(t(sapply(summary, FUN = rbind)))
@@ -61,12 +61,12 @@ getBoxWhiskerMeasure <- function(data,
 }
 
 
-summaryStat <- function(x, quantiles = c(0.05, 0.25, 0.5, 0.75, 0.95), na.rm = FALSE) {
+.summaryStat <- function(x, quantiles = c(0.05, 0.25, 0.5, 0.75, 0.95), na.rm = FALSE) {
   n <- length(x)
   summaryQuantiles <- as.numeric(stats::quantile(x, probs = quantiles))
-  summaryStat <- c(mean(x, na.rm = na.rm), stats::sd(x, na.rm = na.rm), exp(mean(log(x), na.rm = na.rm)), exp(stats::sd(log(x), na.rm = na.rm)))
+  .summaryStat <- c(mean(x, na.rm = na.rm), stats::sd(x, na.rm = na.rm), exp(mean(log(x), na.rm = na.rm)), exp(stats::sd(log(x), na.rm = na.rm)))
 
-  summary <- c(n, summaryQuantiles, summaryStat)
+  summary <- c(n, summaryQuantiles, .summaryStat)
 
   return(summary)
 }

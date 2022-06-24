@@ -24,14 +24,14 @@ R6 class defining the legend configuration of a \code{ggplot} object
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{LegendConfiguration$new()}}
-\item \href{#method-updatePlot}{\code{LegendConfiguration$updatePlot()}}
-\item \href{#method-clone}{\code{LegendConfiguration$clone()}}
+\item \href{#method-LegendConfiguration-new}{\code{LegendConfiguration$new()}}
+\item \href{#method-LegendConfiguration-updatePlot}{\code{LegendConfiguration$updatePlot()}}
+\item \href{#method-LegendConfiguration-clone}{\code{LegendConfiguration$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-LegendConfiguration-new"></a>}}
+\if{latex}{\out{\hypertarget{method-LegendConfiguration-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{LegendConfiguration} object
 \subsection{Usage}{
@@ -64,8 +64,8 @@ A new \code{LegendConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-updatePlot"></a>}}
-\if{latex}{\out{\hypertarget{method-updatePlot}{}}}
+\if{html}{\out{<a id="method-LegendConfiguration-updatePlot"></a>}}
+\if{latex}{\out{\hypertarget{method-LegendConfiguration-updatePlot}{}}}
 \subsection{Method \code{updatePlot()}}{
 Update legend configuration on a \code{ggplot} object
 \subsection{Usage}{
@@ -84,8 +84,8 @@ A \code{ggplot} object with updated axis properties
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-LegendConfiguration-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-LegendConfiguration-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

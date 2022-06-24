@@ -17,6 +17,7 @@ Other DataMapping classes:
 \code{\link{PKRatioDataMapping}},
 \code{\link{RangeDataMapping}},
 \code{\link{ResVsPredDataMapping}},
+\code{\link{ResVsTimeDataMapping}},
 \code{\link{TimeProfileDataMapping}},
 \code{\link{TornadoDataMapping}},
 \code{\link{XYDataMapping}},
@@ -41,13 +42,13 @@ Other DataMapping classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{GroupMapping$new()}}
-\item \href{#method-clone}{\code{GroupMapping$clone()}}
+\item \href{#method-GroupMapping-new}{\code{GroupMapping$new()}}
+\item \href{#method-GroupMapping-clone}{\code{GroupMapping$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-GroupMapping-new"></a>}}
+\if{latex}{\out{\hypertarget{method-GroupMapping-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{GroupMapping} object
 \subsection{Usage}{
@@ -80,8 +81,8 @@ A new \code{GroupMapping} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-GroupMapping-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-GroupMapping-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

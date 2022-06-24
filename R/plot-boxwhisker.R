@@ -4,9 +4,9 @@
 #'
 #' @inheritParams addScatter
 #' @param outliers Logical defining if outliers should be included in boxplot
-#' @param dataMapping 
+#' @param dataMapping
 #' A `BoxWhiskerDataMapping` object mapping `x`, `y` and aesthetic groups to their variable names of `data`.
-#' @param plotConfiguration 
+#' @param plotConfiguration
 #' An optional `BoxWhiskerConfiguration` object defining labels, grid, background and watermark.
 #' @return A `ggplot` object
 #'
@@ -15,17 +15,19 @@
 #'
 #' @export
 #' @family molecule plots
-#' @examples 
+#' @examples
 #' # Produce box-and-whisker plots of log-normal distributed data
-#' boxData <- data.frame(x = c(rep("A", 500), rep("B",500)), y = rlnorm(1000))
-#' 
+#' boxData <- data.frame(x = c(rep("A", 500), rep("B", 500)), y = rlnorm(1000))
+#'
 #' plotBoxWhisker(data = boxData, dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"))
-#' 
+#'
 #' # Remove outliers from boxplot
-#' plotBoxWhisker(data = boxData, 
-#' dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"), 
-#' outliers = FALSE)
-#' 
+#' plotBoxWhisker(
+#'   data = boxData,
+#'   dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"),
+#'   outliers = FALSE
+#' )
+#'
 plotBoxWhisker <- function(data,
                            metaData = NULL,
                            outliers = NULL,
@@ -56,30 +58,28 @@ plotBoxWhisker <- function(data,
   }
 
   # Add Plot Configuration layers and box whisker plots
-  plotObject <- addBoxWhisker(data, metaData, dataMapping, plotConfiguration, plotObject)
+  plotObject <- .addBoxWhisker(data, metaData, dataMapping, plotConfiguration, plotObject)
   if (plotConfiguration$outliers) {
-    plotObject <- addOutliers(data, metaData, dataMapping, plotConfiguration, plotObject)
+    plotObject <- .addOutliers(data, metaData, dataMapping, plotConfiguration, plotObject)
   }
-  plotObject <- setLegendPosition(plotObject)
-  plotObject <- setLegendFont(plotObject)
   try(suppressMessages(plotObject <- setXAxis(plotObject)))
   try(suppressMessages(plotObject <- setYAxis(plotObject)))
   return(plotObject)
 }
 
-#' @title addBoxWhisker
-#' @description 
+#' @title .addBoxWhisker
+#' @description
 #' Add a boxplot layer to a `ggplot` object (without outliers)
-#' 
+#'
 #' @inheritParams plotBoxWhisker
 #' @return A `ggplot` object
 #' @keywords internal
-addBoxWhisker <- function(data, metaData, dataMapping, plotConfiguration, plotObject) {
+.addBoxWhisker <- function(data, metaData, dataMapping, plotConfiguration, plotObject) {
 
   # Get the box plot quantiles from dataMapping
   mapData <- dataMapping$getBoxWhiskerLimits(data)
   # Convert the mapping into characters usable by aes_string
-  mapLabels <- getAesStringMapping(dataMapping)
+  mapLabels <- .getAesStringMapping(dataMapping)
 
   plotObject <- plotObject +
     ggplot2::geom_boxplot(
@@ -94,9 +94,9 @@ addBoxWhisker <- function(data, metaData, dataMapping, plotConfiguration, plotOb
         fill = mapLabels$fill,
         color = mapLabels$color
       ),
-      alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$alpha, position = 0, aesthetic = "alpha"),
-      size = getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$size, position = 0, aesthetic = "size"),
-      linetype = getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$linetype, position = 0, aesthetic = "linetype"),
+      alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$alpha, position = 0, aesthetic = "alpha"),
+      size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$size, position = 0, aesthetic = "size"),
+      linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$linetype, position = 0, aesthetic = "linetype"),
       show.legend = TRUE,
       stat = "identity"
     )
@@ -108,8 +108,8 @@ addBoxWhisker <- function(data, metaData, dataMapping, plotConfiguration, plotOb
   colorLength <- length(unique(mapData[, colorVariable]))
 
   plotObject <- plotObject +
-    ggplot2::scale_fill_manual(values = getAestheticValues(n = fillLength, selectionKey = plotConfiguration$ribbons$fill, aesthetic = "fill")) +
-    ggplot2::scale_color_manual(values = getAestheticValues(n = colorLength, selectionKey = plotConfiguration$ribbons$color, aesthetic = "color"))
+    ggplot2::scale_fill_manual(values = .getAestheticValues(n = fillLength, selectionKey = plotConfiguration$ribbons$fill, aesthetic = "fill")) +
+    ggplot2::scale_color_manual(values = .getAestheticValues(n = colorLength, selectionKey = plotConfiguration$ribbons$color, aesthetic = "color"))
 
   # If variable is legendLabel, remove it from legend
   if (isIncluded(fillVariable, "legendLabels")) {
@@ -121,17 +121,17 @@ addBoxWhisker <- function(data, metaData, dataMapping, plotConfiguration, plotOb
   return(plotObject)
 }
 
-#' @title addOutliers
-#' @description 
+#' @title .addOutliers
+#' @description
 #' Add scatter points for outliers to `ggplot` object
-#' 
+#'
 #' @inheritParams plotBoxWhisker
 #' @return A `ggplot` object
 #' @keywords internal
-addOutliers <- function(data, metaData, dataMapping, plotConfiguration, plotObject) {
+.addOutliers <- function(data, metaData, dataMapping, plotConfiguration, plotObject) {
   mapData <- dataMapping$getOutliers(data)
   # Convert the mapping into characters usable by aes_string
-  mapLabels <- getAesStringMapping(dataMapping)
+  mapLabels <- .getAesStringMapping(dataMapping)
 
   # addScatter cannot be used in this case,
   # because position dodge is needed to align boxes and outlier points
@@ -148,9 +148,9 @@ addOutliers <- function(data, metaData, dataMapping, plotConfiguration, plotObje
         group = mapLabels$fill,
         color = mapLabels$color
       ),
-      size = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$size, position = 0, aesthetic = "size"),
-      shape = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$shape, position = 0, aesthetic = "shape"),
-      color = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$color, position = 0, aesthetic = "color"),
+      size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$size, position = 0, aesthetic = "size"),
+      shape = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$shape, position = 0, aesthetic = "shape"),
+      color = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$color, position = 0, aesthetic = "color"),
       show.legend = TRUE,
       na.rm = TRUE,
       position = position_dodge(width = 0.9)
@@ -163,9 +163,9 @@ addOutliers <- function(data, metaData, dataMapping, plotConfiguration, plotObje
         group = mapLabels$fill,
         color = mapLabels$color
       ),
-      size = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$size, position = 0, aesthetic = "size"),
-      shape = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$shape, position = 0, aesthetic = "shape"),
-      color = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$color, position = 0, aesthetic = "color"),
+      size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$size, position = 0, aesthetic = "size"),
+      shape = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$shape, position = 0, aesthetic = "shape"),
+      color = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$color, position = 0, aesthetic = "color"),
       show.legend = TRUE,
       na.rm = TRUE,
       position = position_dodge(width = 0.9)

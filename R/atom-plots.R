@@ -3,15 +3,15 @@
 #' @title initializePlot
 #' @description
 #' Initialize a `ggplot` object and set its labels, grid, background and watermark
-#' 
+#'
 #' @param plotConfiguration
 #' An optional `PlotConfiguration` object defining labels, grid, background and watermark
-#' 
+#'
 #' @return A `ggplot` graphical object
-#' 
+#'
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
-#' 
+#'
 #' @family atom plots
 #' @export
 #' @import ospsuite.utils
@@ -22,7 +22,7 @@
 #' # Implement a customized configuration using PlotConfiguration
 #' config <- PlotConfiguration$new(title = "My Plot", xlabel = "x variable", ylabel = "y variable")
 #' p <- initializePlot(config)
-#' 
+#'
 initializePlot <- function(plotConfiguration = NULL) {
   validateIsOfType(plotConfiguration, "PlotConfiguration", nullAllowed = TRUE)
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new()
@@ -44,7 +44,7 @@ initializePlot <- function(plotConfiguration = NULL) {
 #' @title addScatter
 #' @description
 #' Add a scatter plot layer to a `ggplot` object
-#' 
+#'
 #' @param data A data.frame to use for plot.
 #' @param metaData A named list of information about `data` such as the `dimension` and `unit` of its variables.
 #' @param x Numeric values to plot along the `x` axis. Only used instead of `data` if `data` is `NULL`.
@@ -58,14 +58,14 @@ initializePlot <- function(plotConfiguration = NULL) {
 #' @param linetype Optional character values defining the linetype of the plot layer.
 #' See enum `Linetypes` to get names of linetype.
 #' @param size Optional numeric values defining the size of the plot layer.
-#' @param plotConfiguration 
+#' @param plotConfiguration
 #' An optional `PlotConfiguration` object defining labels, grid, background and watermark.
-#' @param plotObject 
+#' @param plotObject
 #' An optional `ggplot` object on which to add the plot layer
 #' @return A `ggplot` object
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
-#' 
+#'
 #' @family atom plots
 #' @export
 #' @examples
@@ -89,21 +89,21 @@ initializePlot <- function(plotConfiguration = NULL) {
 #'
 #' # Add a scatter with specific properties
 #' addScatter(
-#' data = scatterData, 
-#' color = "blue", shape = "diamond", size = 2, caption = "My data"
+#'   data = scatterData,
+#'   color = "blue", shape = "diamond", size = 2, caption = "My data"
 #' )
 #'
 #' # Add a scatter with specific properties
 #' p <- addScatter(
-#' data = scatterData, 
-#' color = "blue", shape = "diamond", size = 2, caption = "My data"
+#'   data = scatterData,
+#'   color = "blue", shape = "diamond", size = 2, caption = "My data"
 #' )
 #' addScatter(
-#' x = c(0, 1), y = c(1, 0), 
-#' color = "red", shape = "circle", size = 3, 
-#' plotObject = p
+#'   x = c(0, 1), y = c(1, 0),
+#'   color = "red", shape = "circle", size = 3,
+#'   plotObject = p
 #' )
-#' 
+#'
 addScatter <- function(data = NULL,
                        metaData = NULL,
                        x = NULL,
@@ -133,7 +133,7 @@ addScatter <- function(data = NULL,
   dataMapping <- dataMapping %||% XYGDataMapping$new(x = "x", y = "y", data = data)
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
   # Update plotConfiguration if user defined aesthetics
-  eval(parseVariableToObject("plotConfiguration$points", c("color", "shape", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("plotConfiguration$points", c("color", "shape", "linetype", "size"), keepIfNull = TRUE))
 
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
@@ -146,10 +146,10 @@ addScatter <- function(data = NULL,
 
   # Get mapping and convert labels into characters usable by aes_string
   mapData <- dataMapping$checkMapData(data)
-  mapLabels <- getAesStringMapping(dataMapping)
+  mapLabels <- .getAesStringMapping(dataMapping)
   # If no specific mapping, use default captions
   if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
-    mapData$legendLabels <- getlegendLabelsCaption(plotObject)
+    mapData$legendLabels <- .getlegendLabelsCaption(plotObject)
   }
   mapData$legendLabels <- caption %||% mapData$legendLabels
 
@@ -157,14 +157,14 @@ addScatter <- function(data = NULL,
     ggplot2::geom_point(
       data = mapData,
       mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, shape = "legendLabels", color = "legendLabels", size = "legendLabels"),
-      alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$alpha, aesthetic = "alpha"),
+      alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$alpha, aesthetic = "alpha"),
       show.legend = TRUE,
       na.rm = TRUE
     ) +
     ggplot2::geom_path(
       data = mapData,
       mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
-      alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$points$alpha, aesthetic = "alpha"),
+      alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$alpha, aesthetic = "alpha"),
       show.legend = TRUE,
       na.rm = TRUE
     ) +
@@ -180,11 +180,11 @@ addScatter <- function(data = NULL,
   # Prepare data for merging previous and current legend
   newLabels <- levels(factor(mapData$legendLabels))
   # Sample LegendType properties based Theme if not input
-  try(plotObject <- mergeLegend(plotObject,
+  try(plotObject <- .mergeLegend(plotObject,
     newLabels = newLabels,
     aestheticSelections = plotConfiguration$points
   ))
-  eval(parseUpdateAxes())
+  eval(.parseUpdateAxes())
   return(plotObject)
 }
 
@@ -192,11 +192,11 @@ addScatter <- function(data = NULL,
 #' @inheritParams addScatter
 #' @description
 #' Add a line layer to a `ggplot` object.
-#' 
+#'
 #' @return A `ggplot` object
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
-#' 
+#'
 #' @family atom plots
 #' @export
 #' @examples
@@ -220,21 +220,21 @@ addScatter <- function(data = NULL,
 #'
 #' # Add a line with specific properties
 #' addLine(
-#' data = lineData, 
-#' color = "blue", linetype = "longdash", size = 0.5, caption = "My data"
+#'   data = lineData,
+#'   color = "blue", linetype = "longdash", size = 0.5, caption = "My data"
 #' )
 #'
 #' # Add a line with specific properties
 #' p <- addLine(
-#' data = lineData, 
-#' color = "blue", linetype = "longdash", size = 0.5, caption = "My data"
+#'   data = lineData,
+#'   color = "blue", linetype = "longdash", size = 0.5, caption = "My data"
 #' )
 #' addLine(
-#' x = c(0, 1), y = c(1, 0), 
-#' color = "red", linetype = "solid", size = 1, 
-#' plotObject = p
+#'   x = c(0, 1), y = c(1, 0),
+#'   color = "red", linetype = "solid", size = 1,
+#'   plotObject = p
 #' )
-#' 
+#'
 addLine <- function(data = NULL,
                     metaData = NULL,
                     x = NULL,
@@ -264,7 +264,7 @@ addLine <- function(data = NULL,
   dataMapping <- dataMapping %||% XYGDataMapping$new(x = "x", y = "y", data = data)
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
   # Update plotConfiguration if user defined aesthetics
-  eval(parseVariableToObject("plotConfiguration$lines", c("color", "shape", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("plotConfiguration$lines", c("color", "shape", "linetype", "size"), keepIfNull = TRUE))
 
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
@@ -277,10 +277,10 @@ addLine <- function(data = NULL,
 
   # Get mapping and convert labels into characters usable by aes_string
   mapData <- dataMapping$checkMapData(data)
-  mapLabels <- getAesStringMapping(dataMapping)
+  mapLabels <- .getAesStringMapping(dataMapping)
   # If no specific mapping, use default captions
   if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
-    mapData$legendLabels <- getlegendLabelsCaption(plotObject)
+    mapData$legendLabels <- .getlegendLabelsCaption(plotObject)
   }
   mapData$legendLabels <- caption %||% mapData$legendLabels
 
@@ -292,7 +292,7 @@ addLine <- function(data = NULL,
       ggplot2::geom_hline(
         data = mapData,
         mapping = ggplot2::aes_string(yintercept = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
-        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, aesthetic = "alpha"),
+        alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, aesthetic = "alpha"),
         show.legend = TRUE
       ) +
       ggplot2::geom_blank(
@@ -312,7 +312,7 @@ addLine <- function(data = NULL,
       ggplot2::geom_vline(
         data = mapData,
         mapping = ggplot2::aes_string(xintercept = mapLabels$x, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
-        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, aesthetic = "alpha"),
+        alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, aesthetic = "alpha"),
         show.legend = TRUE
       ) +
       ggplot2::geom_blank(
@@ -334,14 +334,14 @@ addLine <- function(data = NULL,
       ggplot2::geom_point(
         data = mapData,
         mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, shape = "legendLabels", color = "legendLabels", size = "legendLabels"),
-        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, aesthetic = "alpha"),
+        alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, aesthetic = "alpha"),
         show.legend = TRUE,
         na.rm = TRUE
       ) +
       ggplot2::geom_path(
         data = mapData,
         mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
-        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, aesthetic = "alpha"),
+        alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, aesthetic = "alpha"),
         show.legend = TRUE,
         na.rm = TRUE
       ) +
@@ -358,18 +358,18 @@ addLine <- function(data = NULL,
   # Prepare data for merging previous and current legend
   newLabels <- levels(factor(mapData$legendLabels))
   # Sample LegendType properties based Theme if not input
-  try(plotObject <- mergeLegend(plotObject,
+  try(plotObject <- .mergeLegend(plotObject,
     newLabels = newLabels,
     aestheticSelections = plotConfiguration$lines
   ))
-  eval(parseUpdateAxes())
+  eval(.parseUpdateAxes())
   return(plotObject)
 }
 
 #' @title addRibbon
 #' @description
 #' Add a ribbon layer to a `ggplot` object.
-#' 
+#'
 #' @inheritParams addScatter
 #' @param ymin Numeric values to plot along the `y` axis. Only used instead of `data` if `data` is `NULL`.
 #' @param ymax Numeric values to plot along the `y` axis. Only used instead of `data` if `data` is `NULL`.
@@ -382,20 +382,20 @@ addLine <- function(data = NULL,
 #' @return A `ggplot` object
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
-#' 
+#'
 #' @family atom plots
 #' @export
 #' @examples
 #' # Add ribbon using x, ymin and ymax
 #' addRibbon(
-#' x = c(1, 2, 1, 2, 3), 
-#' ymin = c(5, 0, 2, 3, 4), 
-#' ymax = c(6, 2, 6, 2.5, 5)
+#'   x = c(1, 2, 1, 2, 3),
+#'   ymin = c(5, 0, 2, 3, 4),
+#'   ymax = c(6, 2, 6, 2.5, 5)
 #' )
 #'
 #' # Add ribbon using a data.frame
 #' time <- seq(0, 30, 0.1)
-#' ribbonData <- data.frame(x = time, ymin = cos(time)-1, ymax = cos(time)+1)
+#' ribbonData <- data.frame(x = time, ymin = cos(time) - 1, ymax = cos(time) + 1)
 #'
 #' addRibbon(
 #'   data = ribbonData,
@@ -414,11 +414,11 @@ addLine <- function(data = NULL,
 #' # Add a ribbon with specific properties
 #' p <- addRibbon(data = ribbonData, fill = "blue", alpha = 0.5, caption = "My data")
 #' addRibbon(
-#' x = c(0, 1), ymin = c(-0.5, -0.5), ymax = c(0.5, 0.5), 
-#' fill = "red", alpha = 1, 
-#' plotObject = p
+#'   x = c(0, 1), ymin = c(-0.5, -0.5), ymax = c(0.5, 0.5),
+#'   fill = "red", alpha = 1,
+#'   plotObject = p
 #' )
-#' 
+#'
 addRibbon <- function(data = NULL,
                       metaData = NULL,
                       x = NULL,
@@ -455,7 +455,7 @@ addRibbon <- function(data = NULL,
   dataMapping <- dataMapping %||% RangeDataMapping$new(x = x, ymin = ymin, ymax = ymax, data = data)
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
   # Update plotConfiguration if user defined aesthetics
-  eval(parseVariableToObject("plotConfiguration$ribbons", c("color", "fill", "linetype", "size", "alpha"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("plotConfiguration$ribbons", c("color", "fill", "linetype", "size", "alpha"), keepIfNull = TRUE))
 
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
@@ -468,10 +468,10 @@ addRibbon <- function(data = NULL,
 
   # Get mapping and convert labels into characters usable by aes_string
   mapData <- dataMapping$checkMapData(data)
-  mapLabels <- getAesStringMapping(dataMapping)
+  mapLabels <- .getAesStringMapping(dataMapping)
   # If no specific mapping, use default captions
   if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
-    mapData$legendLabels <- getlegendLabelsCaption(plotObject)
+    mapData$legendLabels <- .getlegendLabelsCaption(plotObject)
   }
   mapData$legendLabels <- caption %||% mapData$legendLabels
 
@@ -479,7 +479,7 @@ addRibbon <- function(data = NULL,
     ggplot2::geom_ribbon(
       data = mapData,
       mapping = ggplot2::aes_string(x = mapLabels$x, ymin = mapLabels$ymin, ymax = mapLabels$ymax, fill = "legendLabels"),
-      alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$alpha, position = 0, aesthetic = "alpha"),
+      alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$alpha, position = 0, aesthetic = "alpha"),
       show.legend = TRUE,
       na.rm = TRUE
     ) +
@@ -491,38 +491,38 @@ addRibbon <- function(data = NULL,
   # Prepare data for merging previous and current legend
   newLabels <- levels(factor(mapData$legendLabels))
   # Sample LegendType properties based Theme if not input
-  try(plotObject <- mergeLegend(plotObject,
+  try(plotObject <- .mergeLegend(plotObject,
     newLabels = newLabels,
     aestheticSelections = plotConfiguration$ribbons
   ))
-  eval(parseUpdateAxes())
+  eval(.parseUpdateAxes())
   return(plotObject)
 }
 
 #' @title addErrorbar
 #' @description
 #' Add an errorbar layer to a `ggplot` object.
-#' 
+#'
 #' @inheritParams addRibbon
 #' @inheritParams addScatter
 #' @param includeCap Logical defining if errorbars include caps at their ends.
 #' @return A `ggplot` object
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
-#' 
+#'
 #' @family atom plots
 #' @export
 #' @examples
 #' # Add errorbar using x, ymin and ymax
 #' addErrorbar(
-#' x = c(1, 2, 1, 2, 3), 
-#' ymin = c(5, 0, 2, 3, 4), 
-#' ymax = c(6, 2, 6, 2.5, 5)
+#'   x = c(1, 2, 1, 2, 3),
+#'   ymin = c(5, 0, 2, 3, 4),
+#'   ymax = c(6, 2, 6, 2.5, 5)
 #' )
 #'
 #' # Add errorbar using a data.frame
 #' time <- seq(0, 30, 0.5)
-#' errorbarData <- data.frame(x = time, ymin = cos(time)-1, ymax = cos(time)+1)
+#' errorbarData <- data.frame(x = time, ymin = cos(time) - 1, ymax = cos(time) + 1)
 #'
 #' addErrorbar(
 #'   data = errorbarData,
@@ -540,15 +540,15 @@ addRibbon <- function(data = NULL,
 #'
 #' # Add a errorbar with specific properties
 #' p <- addErrorbar(
-#' data = errorbarData, 
-#' color = "blue", size = 0.5, includeCap = TRUE, caption = "My data"
+#'   data = errorbarData,
+#'   color = "blue", size = 0.5, includeCap = TRUE, caption = "My data"
 #' )
 #' addScatter(
-#' x = time, y = cos(time), 
-#' color = "red", size = 1, caption = "My data", 
-#' plotObject = p
+#'   x = time, y = cos(time),
+#'   color = "red", size = 1, caption = "My data",
+#'   plotObject = p
 #' )
-#' 
+#'
 addErrorbar <- function(data = NULL,
                         metaData = NULL,
                         x = NULL,
@@ -580,7 +580,7 @@ addErrorbar <- function(data = NULL,
   dataMapping <- dataMapping %||% RangeDataMapping$new(x = x, ymin = ymin, ymax = ymax, data = data)
   plotConfiguration <- plotConfiguration %||% PlotConfiguration$new(data = data, metaData = metaData, dataMapping = dataMapping)
   # Update plotConfiguration if user defined aesthetics
-  eval(parseVariableToObject("plotConfiguration$errorbars", c("color", "linetype", "size"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("plotConfiguration$errorbars", c("color", "linetype", "size"), keepIfNull = TRUE))
 
   # If no plot, initialize empty plot
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
@@ -593,10 +593,10 @@ addErrorbar <- function(data = NULL,
 
   # Get mapping and convert labels into characters usable by aes_string
   mapData <- dataMapping$checkMapData(data)
-  mapLabels <- getAesStringMapping(dataMapping)
+  mapLabels <- .getAesStringMapping(dataMapping)
   # If no specific mapping, use default captions
   if (min(levels(factor(mapData$legendLabels)) == "") == 1) {
-    mapData$legendLabels <- getlegendLabelsCaption(plotObject)
+    mapData$legendLabels <- .getlegendLabelsCaption(plotObject)
   }
   mapData$legendLabels <- caption %||% mapData$legendLabels
   legendLength <- length(unique(mapData$legendLabels))
@@ -614,10 +614,10 @@ addErrorbar <- function(data = NULL,
         ),
         na.rm = TRUE,
         show.legend = FALSE,
-        size = size %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, aesthetic = "size"),
-        linetype = linetype %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
-        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),
-        color = color %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$color, aesthetic = "color")
+        size = size %||% .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, aesthetic = "size"),
+        linetype = linetype %||% .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
+        alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),
+        color = color %||% .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$color, aesthetic = "color")
       )
   }
   if (!includeCap) {
@@ -632,19 +632,19 @@ addErrorbar <- function(data = NULL,
         ),
         na.rm = TRUE,
         show.legend = FALSE,
-        size = size %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, aesthetic = "size"),
-        linetype = linetype %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
-        alpha = getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),
-        color = color %||% getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$color, aesthetic = "color")
+        size = size %||% .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, aesthetic = "size"),
+        linetype = linetype %||% .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
+        alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),
+        color = color %||% .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$color, aesthetic = "color")
       )
   }
   # Try is used to prevent crashes in the final plot due to ggplot2 peculiarities regarding scale functions
-  eval(parseUpdateAxes())
+  eval(.parseUpdateAxes())
   return(plotObject)
 }
 
 #' @keywords internal
-getlegendLabelsCaption <- function(plotObject) {
+.getlegendLabelsCaption <- function(plotObject) {
   legendLabelsCaptionCount <- which(paste0("data ", seq(1, 100)) %in% plotObject$plotConfiguration$legend$caption$label)
   if (length(legendLabelsCaptionCount) == 0) {
     legendLabelsCaptionCount <- 0

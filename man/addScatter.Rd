@@ -74,19 +74,19 @@ addScatter(data = scatterData, caption = "My scatter plot")
 
 # Add a scatter with specific properties
 addScatter(
-data = scatterData, 
-color = "blue", shape = "diamond", size = 2, caption = "My data"
+  data = scatterData,
+  color = "blue", shape = "diamond", size = 2, caption = "My data"
 )
 
 # Add a scatter with specific properties
 p <- addScatter(
-data = scatterData, 
-color = "blue", shape = "diamond", size = 2, caption = "My data"
+  data = scatterData,
+  color = "blue", shape = "diamond", size = 2, caption = "My data"
 )
 addScatter(
-x = c(0, 1), y = c(1, 0), 
-color = "red", shape = "circle", size = 3, 
-plotObject = p
+  x = c(0, 1), y = c(1, 0),
+  color = "red", shape = "circle", size = 3,
+  plotObject = p
 )
 
 }

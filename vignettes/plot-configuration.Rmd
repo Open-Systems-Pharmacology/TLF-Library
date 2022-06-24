@@ -1,6 +1,5 @@
 ---
 title: "Introduction to PlotConfiguration objects"
-author: "OSPSuiteR 2021"
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -465,7 +464,7 @@ setXAxis(scatter1, limits = c(0.5, 20), scale = Scaling$sqrt)
 setXAxis(scatter1,
   limits = c(0, 6 * pi),
   ticks = seq(0, 6 * pi, pi),
-  ticklabels = c("0", "pi", paste0(seq(2, 6), "*pi")),
+  ticklabels = TickLabelTransforms$pi,
   font = Font$new(color = "dodgerblue")
 )
 ```

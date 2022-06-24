@@ -12,7 +12,7 @@ PKRatioDataMapping <- R6::R6Class(
     error = NULL,
 
     #' @description Create a new `PKRatioDataMapping` object
-    #' @param lines list of ratio limits to plot as horizontal lines
+    #' @param lines List of ratio limits to display as horizontal lines
     #' @param uncertainty mapping error bars around scatter points.
     #' Deprecated parameter replaced by `error`.
     #' @param error mapping error bars around scatter points
@@ -36,12 +36,12 @@ PKRatioDataMapping <- R6::R6Class(
     #' Dummy variable `defaultAes` is necessary to allow further modification of plots.
     checkMapData = function(data, metaData = NULL) {
       validateIsOfType(data, "data.frame")
-      validateMapping(self$error, data, nullAllowed = TRUE)
+      .validateMapping(self$error, data, nullAllowed = TRUE)
       mapData <- super$checkMapData(data, metaData)
       # This may change depending of how we want to include options
       if (!isOfLength(self$error, 0)) {
-        mapData$ymax <- data[, self$y]*(1 + data[, self$error])
-        mapData$ymin <- data[, self$y]*(1 - data[, self$error])
+        mapData$ymax <- data[, self$y] * (1 + data[, self$error])
+        mapData$ymin <- data[, self$y] * (1 - data[, self$error])
       }
       self$data <- mapData
       return(mapData)

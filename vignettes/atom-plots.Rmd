@@ -1,11 +1,10 @@
 ---
-title: "Atom plots"
-author: "OSPSuiteR 2021"
+title: "Atom Plots"
 output:
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{Atom plots}
+  %\VignetteIndexEntry{Atom Plots}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

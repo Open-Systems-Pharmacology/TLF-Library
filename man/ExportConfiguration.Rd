@@ -11,6 +11,9 @@ R6 class defining properties for saving a \code{ggplot} object
 \describe{
 \item{\code{name}}{character defining the name of the file to be saved (without extension)}
 
+\item{\code{path}}{Path of the directory to save plot to: path and filename are
+combined to create the fully qualified file name. Defaults to the working directory.}
+
 \item{\code{format}}{character defining the format of the file to be saved}
 
 \item{\code{width}}{numeric values defining the width in \code{units} of the plot dimensions after saving}
@@ -26,21 +29,22 @@ R6 class defining properties for saving a \code{ggplot} object
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{ExportConfiguration$new()}}
-\item \href{#method-print}{\code{ExportConfiguration$print()}}
-\item \href{#method-getFileName}{\code{ExportConfiguration$getFileName()}}
-\item \href{#method-savePlot}{\code{ExportConfiguration$savePlot()}}
-\item \href{#method-convertPixels}{\code{ExportConfiguration$convertPixels()}}
-\item \href{#method-clone}{\code{ExportConfiguration$clone()}}
+\item \href{#method-ExportConfiguration-new}{\code{ExportConfiguration$new()}}
+\item \href{#method-ExportConfiguration-print}{\code{ExportConfiguration$print()}}
+\item \href{#method-ExportConfiguration-getFileName}{\code{ExportConfiguration$getFileName()}}
+\item \href{#method-ExportConfiguration-savePlot}{\code{ExportConfiguration$savePlot()}}
+\item \href{#method-ExportConfiguration-convertPixels}{\code{ExportConfiguration$convertPixels()}}
+\item \href{#method-ExportConfiguration-clone}{\code{ExportConfiguration$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-ExportConfiguration-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ExportConfiguration-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{ExportConfiguration} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ExportConfiguration$new(
+  path = NULL,
   name = NULL,
   format = NULL,
   width = NULL,
@@ -53,6 +57,9 @@ Create a new \code{ExportConfiguration} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{path}}{Path of the directory to save plot to: path and filename are
+combined to create the fully qualified file name. Defaults to the working directory.}
+
 \item{\code{name}}{character defining the name of the file to be saved (without extension)}
 
 \item{\code{format}}{character defining the format of the file to be saved.}
@@ -72,8 +79,8 @@ A new \code{ExportConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-ExportConfiguration-print"></a>}}
+\if{latex}{\out{\hypertarget{method-ExportConfiguration-print}{}}}
 \subsection{Method \code{print()}}{
 Print properties of export configuration
 \subsection{Usage}{
@@ -85,8 +92,8 @@ Export configuration properties
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getFileName"></a>}}
-\if{latex}{\out{\hypertarget{method-getFileName}{}}}
+\if{html}{\out{<a id="method-ExportConfiguration-getFileName"></a>}}
+\if{latex}{\out{\hypertarget{method-ExportConfiguration-getFileName}{}}}
 \subsection{Method \code{getFileName()}}{
 Print the default exported file name from the export configuration
 \subsection{Usage}{
@@ -98,8 +105,8 @@ Default file name
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-savePlot"></a>}}
-\if{latex}{\out{\hypertarget{method-savePlot}{}}}
+\if{html}{\out{<a id="method-ExportConfiguration-savePlot"></a>}}
+\if{latex}{\out{\hypertarget{method-ExportConfiguration-savePlot}{}}}
 \subsection{Method \code{savePlot()}}{
 Save/Export a plot
 \subsection{Usage}{
@@ -120,8 +127,8 @@ The file name of the exported plot
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-convertPixels"></a>}}
-\if{latex}{\out{\hypertarget{method-convertPixels}{}}}
+\if{html}{\out{<a id="method-ExportConfiguration-convertPixels"></a>}}
+\if{latex}{\out{\hypertarget{method-ExportConfiguration-convertPixels}{}}}
 \subsection{Method \code{convertPixels()}}{
 If unit is in pixels, convert all export dimensions to inches to keep compatibility with older versions of ggplot2
 \subsection{Usage}{
@@ -130,8 +137,8 @@ If unit is in pixels, convert all export dimensions to inches to keep compatibil
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-ExportConfiguration-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ExportConfiguration-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

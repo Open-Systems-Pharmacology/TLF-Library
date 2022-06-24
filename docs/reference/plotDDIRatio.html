@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">tlf</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.89</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,14 +27,14 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/atom-plots.html">Atom plots</a>
-    <a class="dropdown-item" href="../articles/box-whisker-vignette.html">Box-whisker plots</a>
-    <a class="dropdown-item" href="../articles/histogram.html">Histogram plots</a>
-    <a class="dropdown-item" href="../articles/pk-ratio-vignette.html">PK Ratio plots</a>
+    <a class="dropdown-item" href="../articles/atom-plots.html">Atom Plots</a>
+    <a class="dropdown-item" href="../articles/box-whisker-vignette.html">Box-Whisker Plots</a>
+    <a class="dropdown-item" href="../articles/histogram.html">Histogram Plots</a>
+    <a class="dropdown-item" href="../articles/pk-ratio-vignette.html">PK Ratio Plots</a>
     <a class="dropdown-item" href="../articles/plot-configuration.html">Introduction to PlotConfiguration objects</a>
-    <a class="dropdown-item" href="../articles/plot-maker.html">plot-maker</a>
-    <a class="dropdown-item" href="../articles/plot-time-profile.html">Time Profile plots</a>
-    <a class="dropdown-item" href="../articles/theme-maker.html">theme-maker</a>
+    <a class="dropdown-item" href="../articles/plot-maker.html">Run Shiny App to Create Plots</a>
+    <a class="dropdown-item" href="../articles/plot-time-profile.html">Time Profile Plots</a>
+    <a class="dropdown-item" href="../articles/theme-maker.html">Run Shiny App to Create Themes</a>
   </div>
 </li>
 <li class="nav-item">
@@ -72,8 +72,10 @@
   metaData <span class="op">=</span> <span class="cn">NULL</span>,
   dataMapping <span class="op">=</span> <span class="cn">NULL</span>,
   plotConfiguration <span class="op">=</span> <span class="cn">NULL</span>,
-  plotObject <span class="op">=</span> <span class="cn">NULL</span>,
-  residualsVsObserved <span class="op">=</span> <span class="cn">NULL</span>
+  residualsVsObserved <span class="op">=</span> <span class="cn">NULL</span>,
+  foldDistance <span class="op">=</span> <span class="cn">NULL</span>,
+  deltaGuest <span class="op">=</span> <span class="cn">NULL</span>,
+  plotObject <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -87,11 +89,18 @@
 <dd><p>A <code>DDIRatioDataMapping</code> object mapping <code>x</code>, <code>y</code> and aesthetic groups to their variable names of <code>data</code>.</p></dd>
 <dt>plotConfiguration</dt>
 <dd><p>An optional <code>DDIRatioPlotConfiguration</code> object defining labels, grid, background and watermark.</p></dd>
-<dt>plotObject</dt>
-<dd><p>An optional <code>ggplot</code> object on which to add the plot layer</p></dd>
 <dt>residualsVsObserved</dt>
 <dd><p>Optional logical value defining
 if DDI Ratio plot is drawn as residuals vs observed, instead of predicted vs observed.</p></dd>
+<dt>foldDistance</dt>
+<dd><p>Numeric values of fold distance lines to display in log plots.
+This argument is internally translated into <code>lines</code> field of <code>dataMapping</code>.
+<strong>Caution</strong>: this argument is meant for log scaled plots and since fold distance is a ratio it is expected positive.
+In particular, line of identity corresponds to a <code>foldDistance</code> of <code>1</code>.</p></dd>
+<dt>deltaGuest</dt>
+<dd><p>Numeric value parameter of Guest function</p></dd>
+<dt>plotObject</dt>
+<dd><p>An optional <code>ggplot</code> object on which to add the plot layer</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -110,6 +119,7 @@ if DDI Ratio plot is drawn as residuals vs observed, instead of predicted vs obs
 <code><a href="plotObsVsPred.html">plotObsVsPred</a>()</code>,
 <code><a href="plotPKRatio.html">plotPKRatio</a>()</code>,
 <code><a href="plotResVsPred.html">plotResVsPred</a>()</code>,
+<code><a href="plotResVsTime.html">plotResVsTime</a>()</code>,
 <code><a href="plotTimeProfile.html">plotTimeProfile</a>()</code>,
 <code><a href="plotTornado.html">plotTornado</a>()</code></p></div>
     </div>
@@ -122,6 +132,16 @@ if DDI Ratio plot is drawn as residuals vs observed, instead of predicted vs obs
 <span class="r-in"><span class="fu">plotDDIRatio</span><span class="op">(</span>data <span class="op">=</span> <span class="va">ddiData</span>, dataMapping <span class="op">=</span> <span class="va"><a href="DDIRatioDataMapping.html">DDIRatioDataMapping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"x"</span>, y <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="plotDDIRatio-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
+<span class="r-in"><span class="co"># Produce DDI Ratio plot with user-defined horizontal lines</span></span>
+<span class="r-in"><span class="fu">plotDDIRatio</span><span class="op">(</span></span>
+<span class="r-in">  data <span class="op">=</span> <span class="va">ddiData</span>,</span>
+<span class="r-in">  dataMapping <span class="op">=</span> <span class="va"><a href="DDIRatioDataMapping.html">DDIRatioDataMapping</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"x"</span>, y <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span>,</span>
+<span class="r-in">  foldDistance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span>,</span>
+<span class="r-in">  deltaGuest <span class="op">=</span> <span class="fl">1.25</span>,</span>
+<span class="r-in">  residualsVsObserved <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-plt img"><img src="plotDDIRatio-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -133,7 +153,7 @@ if DDI Ratio plot is drawn as residuals vs observed, instead of predicted vs obs
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer></div>

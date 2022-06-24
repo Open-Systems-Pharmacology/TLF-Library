@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">tlf</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.89</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,14 +27,14 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/atom-plots.html">Atom plots</a>
-    <a class="dropdown-item" href="../articles/box-whisker-vignette.html">Box-whisker plots</a>
-    <a class="dropdown-item" href="../articles/histogram.html">Histogram plots</a>
-    <a class="dropdown-item" href="../articles/pk-ratio-vignette.html">PK Ratio plots</a>
+    <a class="dropdown-item" href="../articles/atom-plots.html">Atom Plots</a>
+    <a class="dropdown-item" href="../articles/box-whisker-vignette.html">Box-Whisker Plots</a>
+    <a class="dropdown-item" href="../articles/histogram.html">Histogram Plots</a>
+    <a class="dropdown-item" href="../articles/pk-ratio-vignette.html">PK Ratio Plots</a>
     <a class="dropdown-item" href="../articles/plot-configuration.html">Introduction to PlotConfiguration objects</a>
-    <a class="dropdown-item" href="../articles/plot-maker.html">plot-maker</a>
-    <a class="dropdown-item" href="../articles/plot-time-profile.html">Time Profile plots</a>
-    <a class="dropdown-item" href="../articles/theme-maker.html">theme-maker</a>
+    <a class="dropdown-item" href="../articles/plot-maker.html">Run Shiny App to Create Plots</a>
+    <a class="dropdown-item" href="../articles/plot-time-profile.html">Time Profile Plots</a>
+    <a class="dropdown-item" href="../articles/theme-maker.html">Run Shiny App to Create Themes</a>
   </div>
 </li>
 <li class="nav-item">
@@ -79,6 +79,7 @@
 <code><a href="PKRatioDataMapping.html">PKRatioDataMapping</a></code>,
 <code><a href="RangeDataMapping.html">RangeDataMapping</a></code>,
 <code><a href="ResVsPredDataMapping.html">ResVsPredDataMapping</a></code>,
+<code><a href="ResVsTimeDataMapping.html">ResVsTimeDataMapping</a></code>,
 <code><a href="TimeProfileDataMapping.html">TimeProfileDataMapping</a></code>,
 <code><a href="XYDataMapping.html">XYDataMapping</a></code>,
 <code><a href="XYGDataMapping.html">XYGDataMapping</a></code></p></div>
@@ -105,10 +106,10 @@
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>TornadoDataMapping$new()</code></a></p></li>
-<li><p><a href="#method-checkMapData"><code>TornadoDataMapping$checkMapData()</code></a></p></li>
-<li><p><a href="#method-clone"><code>TornadoDataMapping$clone()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul></ul></details></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-TornadoDataMapping-new"><code>TornadoDataMapping$new()</code></a></p></li>
+<li><p><a href="#method-TornadoDataMapping-checkMapData"><code>TornadoDataMapping$checkMapData()</code></a></p></li>
+<li><p><a href="#method-TornadoDataMapping-clone"><code>TornadoDataMapping$clone()</code></a></p></li>
+</ul></div><p><details open><summary>Inherited methods</summary><ul></ul></details></p><hr><a id="method-TornadoDataMapping-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Create a new <code>TornadoDataMapping</code> object</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
@@ -150,7 +151,7 @@
 <p>A new <code>TornadoDataMapping</code> object</p>
 </div>
 
-</div><p></p><hr><a id="method-checkMapData"></a><div class="section">
+</div><p></p><hr><a id="method-TornadoDataMapping-checkMapData"></a><div class="section">
 <h3 id="method-checkmapdata-">Method <code>checkMapData()</code><a class="anchor" aria-label="anchor" href="#method-checkmapdata-"></a></h3>
 <p>Check that <code>data</code> variables include map variables</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
@@ -175,7 +176,7 @@
 Dummy variable <code>defaultAes</code> is necessary to allow further modification of plots.</p>
 </div>
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-TornadoDataMapping-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
@@ -204,7 +205,7 @@ Dummy variable <code>defaultAes</code> is necessary to allow further modificatio
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer></div>

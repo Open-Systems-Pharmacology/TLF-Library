@@ -18,6 +18,7 @@ Other DataMapping classes:
 \code{\link{PKRatioDataMapping}},
 \code{\link{RangeDataMapping}},
 \code{\link{ResVsPredDataMapping}},
+\code{\link{ResVsTimeDataMapping}},
 \code{\link{TimeProfileDataMapping}},
 \code{\link{TornadoDataMapping}},
 \code{\link{XYGDataMapping}}
@@ -37,14 +38,14 @@ Other DataMapping classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{XYDataMapping$new()}}
-\item \href{#method-checkMapData}{\code{XYDataMapping$checkMapData()}}
-\item \href{#method-clone}{\code{XYDataMapping$clone()}}
+\item \href{#method-XYDataMapping-new}{\code{XYDataMapping$new()}}
+\item \href{#method-XYDataMapping-checkMapData}{\code{XYDataMapping$checkMapData()}}
+\item \href{#method-XYDataMapping-clone}{\code{XYDataMapping$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-XYDataMapping-new"></a>}}
+\if{latex}{\out{\hypertarget{method-XYDataMapping-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{XYDataMapping} object
 \subsection{Usage}{
@@ -65,8 +66,8 @@ A new \code{XYDataMapping} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-checkMapData"></a>}}
-\if{latex}{\out{\hypertarget{method-checkMapData}{}}}
+\if{html}{\out{<a id="method-XYDataMapping-checkMapData"></a>}}
+\if{latex}{\out{\hypertarget{method-XYDataMapping-checkMapData}{}}}
 \subsection{Method \code{checkMapData()}}{
 Check that \code{data} variables include map variables
 \subsection{Usage}{
@@ -88,8 +89,8 @@ Dummy variable \code{defaultAes} is necessary to allow further modification of p
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-XYDataMapping-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-XYDataMapping-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

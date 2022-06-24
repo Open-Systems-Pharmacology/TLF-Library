@@ -61,7 +61,7 @@ LabelConfiguration <- R6::R6Class(
         return(private$.title)
       }
       validateIsOfType(value, c("character", "Label"), nullAllowed = TRUE)
-      if(isOfType(value, "Label")){
+      if (isOfType(value, "Label")) {
         private$.title <- asLabel(value)
       }
       private$.title <- asLabel(value, font = private$.title$font)
@@ -73,7 +73,7 @@ LabelConfiguration <- R6::R6Class(
         return(private$.subtitle)
       }
       validateIsOfType(value, c("character", "Label"), nullAllowed = TRUE)
-      if(isOfType(value, "Label")){
+      if (isOfType(value, "Label")) {
         private$.subtitle <- asLabel(value)
       }
       private$.subtitle <- asLabel(value, font = private$.subtitle$font)
@@ -85,7 +85,7 @@ LabelConfiguration <- R6::R6Class(
         return(private$.xlabel)
       }
       validateIsOfType(value, c("character", "Label"), nullAllowed = TRUE)
-      if(isOfType(value, "Label")){
+      if (isOfType(value, "Label")) {
         private$.xlabel <- asLabel(value)
       }
       private$.xlabel <- asLabel(value, font = private$.xlabel$font)
@@ -97,7 +97,7 @@ LabelConfiguration <- R6::R6Class(
         return(private$.ylabel)
       }
       validateIsOfType(value, c("character", "Label"), nullAllowed = TRUE)
-      if(isOfType(value, "Label")){
+      if (isOfType(value, "Label")) {
         private$.ylabel <- asLabel(value)
       }
       private$.ylabel <- asLabel(value, font = private$.ylabel$font)
@@ -109,7 +109,7 @@ LabelConfiguration <- R6::R6Class(
         return(private$.caption)
       }
       validateIsOfType(value, c("character", "Label"), nullAllowed = TRUE)
-      if(isOfType(value, "Label")){
+      if (isOfType(value, "Label")) {
         private$.caption <- asLabel(value)
       }
       private$.caption <- asLabel(value, font = private$.caption$font)

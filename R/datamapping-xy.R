@@ -36,10 +36,10 @@ XYDataMapping <- R6::R6Class(
     #' Dummy variable `defaultAes` is necessary to allow further modification of plots.
     checkMapData = function(data, metaData = NULL) {
       if (isOfType(self$x, "character")) {
-        validateMapping(self$x, data)
+        .validateMapping(self$x, data)
       }
       if (isOfType(self$y, "character")) {
-        validateMapping(self$y, data)
+        .validateMapping(self$y, data)
       }
 
       # Drop option simplify data.frame into vectors

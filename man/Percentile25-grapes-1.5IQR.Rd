@@ -18,7 +18,7 @@ Calculate \verb{Percentile25\%-1.5IQR}
 \examples{
 # Calculate Percentile25\%-1.5IQR
 `Percentile25\%-1.5IQR`(rnorm(1000))
- 
+
 }
 \seealso{
 Other stat functions: 
