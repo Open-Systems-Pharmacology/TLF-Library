@@ -27,14 +27,14 @@ LegendConfiguration <- R6::R6Class(
       private$.background <- background %||% currentTheme$background$legend
 
       # Title properties
-      private$.title <- asLabel(
+      if(!isOfType(title, "Label")){
+      title <- asLabel(
         text = title %||% currentTheme$background$legendTitle,
         font = currentTheme$fonts$legendTitle
         )
-      if (isOfType(title, "Label")) {
-        private$.title <- title
       }
-
+      private$.title <- title
+      
       private$.caption <- caption %||% data.frame()
     },
 
