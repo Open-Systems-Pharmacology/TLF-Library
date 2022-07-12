@@ -152,25 +152,43 @@
 #' @description Create an expression that adds errorbars if uncertainty is included in dataMapping
 #' @return An expression to `eval()`
 #' @keywords internal
-.parseAddUncertaintyLayer <- function() {
-  expression({
-    if (!isOfLength(dataMapping$uncertainty, 0)) {
-      plotObject <- plotObject +
-        ggplot2::geom_linerange(
-          data = mapData,
-          mapping = aes_string(
-            x = mapLabels$x,
-            ymin = "ymin",
-            ymax = "ymax",
-            color = mapLabels$color
-          ),
-          # Error bar size uses a ratio of 1/4 to match with point size
-          size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
-          linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
-          alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),
-          na.rm = TRUE,
-          show.legend = TRUE
-        )
-    }
-  })
+.parseAddUncertaintyLayer <- function(direction = "vertical") {
+  parse(text = paste0(
+    "plotObject <- plotObject +",
+    # Plot error bars from xmin/ymin to x/y
+    # If lower value is negative and plot is log scaled,
+    # Upper bar will still be plotted
+    "ggplot2::geom_linerange(",
+    "data = mapData,",
+    "mapping = aes_string(",
+    switch(
+      direction,
+      "vertical" = "x = mapLabels$x, ymin = mapLabels$ymin, ymax = mapLabels$y,",
+      "horizontal" = "y = mapLabels$y, xmin = mapLabels$xmin, xmax = mapLabels$x,"
+      ),
+    "color = mapLabels$color",
+    "),",
+    'size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),',
+    'linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),',
+    'alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),',
+    "na.rm = TRUE,",
+    "show.legend = FALSE",
+    ") + ",
+    "ggplot2::geom_linerange(",
+    "data = mapData,",
+    "mapping = aes_string(",
+    switch(
+      direction,
+      "vertical" = "x = mapLabels$x, ymin = mapLabels$y, ymax = mapLabels$ymax,",
+      "horizontal" = "y = mapLabels$y, xmin = mapLabels$x, xmax = mapLabels$xmax,"
+      ),
+    "color = mapLabels$color",
+    "),",
+    'size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),',
+    'linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),',
+    'alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),',
+    "na.rm = TRUE,",
+    "show.legend = FALSE",
+    ")"
+  ))
 }

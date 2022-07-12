@@ -32,34 +32,38 @@ Other DataMapping classes:
 \describe{
 \item{\code{lines}}{list of ratio limits to plot as horizontal lines}
 
-\item{\code{error}}{mapping error bars around scatter points}
+\item{\code{ymin}}{mapping of upper value of error bars around scatter points}
+
+\item{\code{ymax}}{mapping of lower value of error bars around scatter points}
 }
 \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-PKRatioDataMapping-new}{\code{PKRatioDataMapping$new()}}
-\item \href{#method-PKRatioDataMapping-checkMapData}{\code{PKRatioDataMapping$checkMapData()}}
-\item \href{#method-PKRatioDataMapping-clone}{\code{PKRatioDataMapping$clone()}}
+\item \href{#method-new}{\code{PKRatioDataMapping$new()}}
+\item \href{#method-checkMapData}{\code{PKRatioDataMapping$checkMapData()}}
+\item \href{#method-clone}{\code{PKRatioDataMapping$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+}
+\out{</details>}
+}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-PKRatioDataMapping-new"></a>}}
-\if{latex}{\out{\hypertarget{method-PKRatioDataMapping-new}{}}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{PKRatioDataMapping} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{PKRatioDataMapping$new(
+  x = NULL,
+  y = NULL,
+  ymin = NULL,
+  ymax = NULL,
   lines = DefaultDataMappingValues$pkRatio,
-  uncertainty = NULL,
-  error = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -67,12 +71,15 @@ Create a new \code{PKRatioDataMapping} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{x}}{Name of x variable to map}
+
+\item{\code{y}}{Name of y variable to map}
+
+\item{\code{ymin}}{mapping of upper value of error bars around scatter points}
+
+\item{\code{ymax}}{mapping of lower value of error bars around scatter points}
+
 \item{\code{lines}}{List of ratio limits to display as horizontal lines}
-
-\item{\code{uncertainty}}{mapping error bars around scatter points.
-Deprecated parameter replaced by \code{error}.}
-
-\item{\code{error}}{mapping error bars around scatter points}
 
 \item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
 }

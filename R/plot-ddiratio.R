@@ -95,10 +95,8 @@ plotDDIRatio <- function(data,
       size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
     )
 
-  # If uncertainty is defined, add error bars
-  if (!isEmpty(dataMapping$error)) {
-    eval(.parseAddUncertaintyLayer())
-  }
+  
+  eval(.parseAddUncertaintyLayer())
   eval(.parseAddScatterLayer())
   # Define shapes and colors based on plotConfiguration$points properties
   eval(.parseUpdateAestheticProperty(AestheticProperties$color, "points"))
