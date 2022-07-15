@@ -4,7 +4,7 @@
 \alias{.parseAddUncertaintyLayer}
 \title{.parseAddUncertaintyLayer}
 \usage{
-.parseAddUncertaintyLayer()
+.parseAddUncertaintyLayer(direction = "vertical")
 }
 \value{
 An expression to \code{eval()}

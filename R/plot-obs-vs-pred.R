@@ -104,10 +104,7 @@ plotObsVsPred <- function(data,
       )
   }
 
-  # If uncertainty is defined, add error bars
-  if (!isOfLength(dataMapping$uncertainty, 0)) {
-    eval(.parseAddUncertaintyLayer())
-  }
+  eval(.parseAddUncertaintyLayer(direction = "horizontal"))
   eval(.parseAddScatterLayer())
   # Define shapes and colors based on plotConfiguration$points properties
   eval(.parseUpdateAestheticProperty(AestheticProperties$color, "points"))
