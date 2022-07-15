@@ -25,11 +25,17 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{\link[tlf:PKRatioDataMapping]{tlf::PKRatioDataMapping}} -> \code{ObsVsPredDataMapping}
+\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{ObsVsPredDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
+\item{\code{lines}}{list of ratio limits to plot as horizontal lines}
+
+\item{\code{xmin}}{mapping of upper value of error bars around scatter points}
+
+\item{\code{xmax}}{mapping of lower value of error bars around scatter points}
+
 \item{\code{smoother}}{regression function name}
 }
 \if{html}{\out{</div>}}
@@ -55,6 +61,10 @@ Other DataMapping classes:
 Create a new \code{ObsVsPredDataMapping} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ObsVsPredDataMapping$new(
+  x = NULL,
+  y = NULL,
+  xmin = NULL,
+  xmax = NULL,
   lines = DefaultDataMappingValues$obsVsPred,
   smoother = NULL,
   ...
@@ -64,6 +74,14 @@ Create a new \code{ObsVsPredDataMapping} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{x}}{Name of x variable to map}
+
+\item{\code{y}}{Name of y variable to map}
+
+\item{\code{xmin}}{mapping of upper value of error bars around scatter points}
+
+\item{\code{xmax}}{mapping of lower value of error bars around scatter points}
+
 \item{\code{lines}}{list of lines to plot}
 
 \item{\code{smoother}}{smoother function or parameter
