@@ -27,6 +27,7 @@
 ^\.httr-oauth$
 ^CRAN-RELEASE$
 tests\^spelling
+^tests/dev/*\.R$
 ^LICENSE\.md$
 ^\.lintr$
 ^WIP/.
