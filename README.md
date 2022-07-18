@@ -1,43 +1,69 @@
-# TLF Library
-
-TLF Library implementation in R
+# tlf: Table, Listing and Figure for OSP
 
 <!-- badges: start -->
 
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/Open-Systems-Pharmacology/TLF-Library?branch=develop&svg=true)](https://ci.appveyor.com/project/open-systems-pharmacology-ci/TLF-Library/branch/develop){.pkgdown-devel}
-[![codecov](https://codecov.io/gh/Open-Systems-Pharmacology/TLF-Library/branch/develop/graph/badge.svg)](https://codecov.io/gh/Open-Systems-Pharmacology/TLF-Library){.pkgdown-devel}
+<a
+href="https://ci.appveyor.com/project/open-systems-pharmacology-ci/TLF-Library/branch/develop"
+class="pkgdown-devel"><img
+src="https://ci.appveyor.com/api/projects/status/github/Open-Systems-Pharmacology/TLF-Library?branch=develop&amp;svg=true"
+alt="AppVeyor build status" /></a> <a
+href="https://app.codecov.io/gh/Open-Systems-Pharmacology/TLF-Library"
+class="pkgdown-devel"><img
+src="https://codecov.io/gh/Open-Systems-Pharmacology/TLF-Library/branch/develop/graph/badge.svg"
+alt="codecov" /></a>
+
 <!-- badges: end -->
 
-# Development tasks
+The `{tlf}` package provides an object-oriented framework to create
+tables and figures, which are used by R packages in the Open Systems
+Pharmacology ecosystem:
 
-## dev_mode
+-   [`{ospsuite}`](https://www.open-systems-pharmacology.org/OSPSuite-R/)
+-   [`{ospsuite.reportingengine}`](https://www.open-systems-pharmacology.org/OSPSuite.ReportingEngine/)
 
-`devtools::dev_mode` function switches your version of R into "development mode". This is useful to avoid clobbering the existing versions of CRAN packages that you need for other tasks. Calling dev_mode() again will turn development mode off, and return you to your default library setup.
+## Installation
 
-```R
-# This will install the package in the folder C:/Rpackages
-devtools::dev_mode(path="C:/Rpackages")
+You can install the development version of `{tlf}` from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("Open-Systems-Pharmacology/TLF-Library")
 ```
 
-## Reload the package
+`{tlf}` requires following packages to be installed:
 
-```R
-devtools::load_all()
-```
+From CRAN:
 
-or `Ctrl + Shift + L`
+-   [ggplot2](https://cran.r-project.org/package=ggplot2/index.html)
+-   [jsonlite](https://cran.r-project.org/package=jsonlite/index.html)
+-   [patchwork](https://cran.r-project.org/package=patchwork/index.html)
+-   [R6](https://cran.r-project.org/package=R6/index.html)
 
-## Add or update script files
+Must be downloaded manually:
 
-`.R` files defined in `tests\dev\` will be removed from the package and can be used to simulate interaction with the package. See [scripts.R](tests/dev/scripts.R)
+-   [ospsuite.utils](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/download/v1.3.17/ospsuite.utils_1.3.17.zip)
+
+## Documentation
+
+A detailed account of existing functions and articles on how to use them
+can be found on the [dedicated
+website](https://www.open-systems-pharmacology.org/TLF-Library/).
 
 ## Code of conduct
 
-Everyone interacting in the Open Systems Pharmacology community (codebases, issue trackers, chat rooms, mailing lists etc...) is expected to follow the Open Systems Pharmacology [code of conduct](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Open Systems Pharmacology community
+(codebases, issue trackers, chat rooms, mailing lists etc.) is expected
+to follow the Open Systems Pharmacology [code of
+conduct](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODE_OF_CONDUCT.md).
 
 ## Contribution
 
-We encourage contribution to the Open Systems Pharmacology community. Before getting started please read the [contribution guidelines](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CONTRIBUTING.md). If you are contributing code, please be familiar with the [coding standards](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODING_STANDARDS_R.md).
+We encourage contribution to the Open Systems Pharmacology community.
+Before getting started please read the [contribution
+guidelines](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CONTRIBUTING.md).
+If you are contributing code, please be familiar with the [coding
+standards](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODING_STANDARDS_R.md).
 
 ## License
 
