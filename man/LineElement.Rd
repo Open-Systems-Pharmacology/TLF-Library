@@ -19,7 +19,7 @@ R6 class defining the properties of background line elements
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="BackgroundElement" data-id="initialize"><a href='../../tlf/html/BackgroundElement.html#method-BackgroundElement-initialize'><code>tlf::BackgroundElement$initialize()</code></a></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="BackgroundElement" data-id="initialize"><a href='../../tlf/html/BackgroundElement.html#method-BackgroundElement-initialize'><code>tlf::BackgroundElement$initialize()</code></a></span></li>
 </ul>
 </details>
 }}

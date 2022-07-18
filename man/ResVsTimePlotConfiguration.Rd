@@ -18,7 +18,7 @@ R6 class defining the configuration of a \code{ggplot} object for Res vs Pred/Ti
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="initialize"><a href='../../tlf/html/PlotConfiguration.html#method-PlotConfiguration-initialize'><code>tlf::PlotConfiguration$initialize()</code></a></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="initialize"><a href='../../tlf/html/PlotConfiguration.html#method-PlotConfiguration-initialize'><code>tlf::PlotConfiguration$initialize()</code></a></span></li>
 </ul>
 </details>
 }}

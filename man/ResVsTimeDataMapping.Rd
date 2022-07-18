@@ -25,7 +25,7 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{\link[tlf:PKRatioDataMapping]{tlf::PKRatioDataMapping}} -> \code{\link[tlf:ObsVsPredDataMapping]{tlf::ObsVsPredDataMapping}} -> \code{\link[tlf:ResVsPredDataMapping]{tlf::ResVsPredDataMapping}} -> \code{ResVsTimeDataMapping}
+\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{\link[tlf:ObsVsPredDataMapping]{tlf::ObsVsPredDataMapping}} -> \code{\link[tlf:ResVsPredDataMapping]{tlf::ResVsPredDataMapping}} -> \code{ResVsTimeDataMapping}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -36,8 +36,8 @@ Other DataMapping classes:
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="PKRatioDataMapping" data-id="checkMapData"><a href='../../tlf/html/PKRatioDataMapping.html#method-PKRatioDataMapping-checkMapData'><code>tlf::PKRatioDataMapping$checkMapData()</code></a></li>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="ObsVsPredDataMapping" data-id="initialize"><a href='../../tlf/html/ObsVsPredDataMapping.html#method-ObsVsPredDataMapping-initialize'><code>tlf::ObsVsPredDataMapping$initialize()</code></a></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="ObsVsPredDataMapping" data-id="checkMapData"><a href='../../tlf/html/ObsVsPredDataMapping.html#method-ObsVsPredDataMapping-checkMapData'><code>tlf::ObsVsPredDataMapping$checkMapData()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="ObsVsPredDataMapping" data-id="initialize"><a href='../../tlf/html/ObsVsPredDataMapping.html#method-ObsVsPredDataMapping-initialize'><code>tlf::ObsVsPredDataMapping$initialize()</code></a></span></li>
 </ul>
 </details>
 }}

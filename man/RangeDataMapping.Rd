@@ -44,12 +44,6 @@ Other DataMapping classes:
 \item \href{#method-RangeDataMapping-clone}{\code{RangeDataMapping$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-RangeDataMapping-new"></a>}}
 \if{latex}{\out{\hypertarget{method-RangeDataMapping-new}{}}}

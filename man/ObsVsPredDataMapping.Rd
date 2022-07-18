@@ -44,16 +44,10 @@ Other DataMapping classes:
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-ObsVsPredDataMapping-new}{\code{ObsVsPredDataMapping$new()}}
+\item \href{#method-ObsVsPredDataMapping-checkMapData}{\code{ObsVsPredDataMapping$checkMapData()}}
 \item \href{#method-ObsVsPredDataMapping-clone}{\code{ObsVsPredDataMapping$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="PKRatioDataMapping" data-id="checkMapData"><a href='../../tlf/html/PKRatioDataMapping.html#method-PKRatioDataMapping-checkMapData'><code>tlf::PKRatioDataMapping$checkMapData()</code></a></li>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ObsVsPredDataMapping-new"></a>}}
 \if{latex}{\out{\hypertarget{method-ObsVsPredDataMapping-new}{}}}
@@ -93,6 +87,29 @@ To map a loess smoother to the plot, use \code{smoother}="loess"}
 }
 \subsection{Returns}{
 A new \code{ObsVsPredDataMapping} object
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ObsVsPredDataMapping-checkMapData"></a>}}
+\if{latex}{\out{\hypertarget{method-ObsVsPredDataMapping-checkMapData}{}}}
+\subsection{Method \code{checkMapData()}}{
+Check that \code{data} variables include map variables
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ObsVsPredDataMapping$checkMapData(data, metaData = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data}}{data.frame to check}
+
+\item{\code{metaData}}{list containing information on \code{data}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A data.frame with map and \code{defaultAes} variables.
+Dummy variable \code{defaultAes} is necessary to allow further modification of plots.
 }
 }
 \if{html}{\out{<hr>}}

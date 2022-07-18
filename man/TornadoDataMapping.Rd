@@ -44,12 +44,6 @@ Other DataMapping classes:
 \item \href{#method-TornadoDataMapping-clone}{\code{TornadoDataMapping$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TornadoDataMapping-new"></a>}}
 \if{latex}{\out{\hypertarget{method-TornadoDataMapping-new}{}}}
