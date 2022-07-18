@@ -22,8 +22,9 @@ Authors@R:
              role = "ctb",
              email = "patilindrajeet.science@gmail.com",
              comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@patilindrajeets")))
-Description: An implementation of the Table, Listing and Figure concepts in R. This library provides
-    a standardized approach to creating tables and graphs based on conventions over configurations.
+Description: An implementation of the Table, Listing and Figure concepts in R. 
+    This library provides a standardized approach to creating tables and graphs 
+    based on conventions over configurations.
 License: GPL-2 | file LICENSE
 URL: https://github.com/open-systems-pharmacology/tlf-library
 BugReports: https://github.com/open-systems-pharmacology/tlf-library/issues
