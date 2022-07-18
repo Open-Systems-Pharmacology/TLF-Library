@@ -1,6 +1,3 @@
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 # tlf: Table, Listing and Figure for OSP
 
 <!-- badges: start -->
