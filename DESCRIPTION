@@ -32,7 +32,7 @@ Imports:
     ggplot2 (>= 3.3.0),
     R6,
     jsonlite,
-    ospsuite.utils,
+    ospsuite.utils (>= 1.3.0),
     patchwork
 Depends: 
     R (>= 3.6)
@@ -42,6 +42,8 @@ Roxygen: list(markdown = TRUE)
 Suggests:
     knitr,
     rmarkdown,
+    scales,
+    shiny,
     testthat (>= 3.0.3),
     vdiffr (>= 1.0.0)
 VignetteBuilder: knitr
@@ -61,6 +63,7 @@ Collate:
     'ddiratio-datamapping.R'
     'error-checks.R'
     'font.R'
+    'global-vars.R'
     'histogram-datamapping.R'
     'label.R'
     'messages.R'
