@@ -50,7 +50,7 @@ calculated on \code{data} to obtain box whiskers}
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="XYGDataMapping" data-id="checkMapData"><a href='../../tlf/html/XYGDataMapping.html#method-XYGDataMapping-checkMapData'><code>tlf::XYGDataMapping$checkMapData()</code></a></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="XYGDataMapping" data-id="checkMapData"><a href='../../tlf/html/XYGDataMapping.html#method-XYGDataMapping-checkMapData'><code>tlf::XYGDataMapping$checkMapData()</code></a></span></li>
 </ul>
 </details>
 }}

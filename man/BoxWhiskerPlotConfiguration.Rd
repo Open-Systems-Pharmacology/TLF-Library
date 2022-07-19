@@ -41,12 +41,6 @@ Other PlotConfiguration classes:
 \item \href{#method-BoxWhiskerPlotConfiguration-clone}{\code{BoxWhiskerPlotConfiguration$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BoxWhiskerPlotConfiguration-new"></a>}}
 \if{latex}{\out{\hypertarget{method-BoxWhiskerPlotConfiguration-new}{}}}

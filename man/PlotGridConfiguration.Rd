@@ -214,12 +214,6 @@ in the grid. Will get repeated to match the dimensions of the grid.}
 \item \href{#method-PlotGridConfiguration-clone}{\code{PlotGridConfiguration$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-PlotGridConfiguration-new"></a>}}
 \if{latex}{\out{\hypertarget{method-PlotGridConfiguration-new}{}}}

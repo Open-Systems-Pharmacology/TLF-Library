@@ -40,12 +40,6 @@ Other PlotConfiguration classes:
 \item \href{#method-TornadoPlotConfiguration-clone}{\code{TornadoPlotConfiguration$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TornadoPlotConfiguration-new"></a>}}
 \if{latex}{\out{\hypertarget{method-TornadoPlotConfiguration-new}{}}}

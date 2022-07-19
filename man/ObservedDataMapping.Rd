@@ -48,12 +48,6 @@ Other DataMapping classes:
 \item \href{#method-ObservedDataMapping-clone}{\code{ObservedDataMapping$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ObservedDataMapping-new"></a>}}
 \if{latex}{\out{\hypertarget{method-ObservedDataMapping-new}{}}}
