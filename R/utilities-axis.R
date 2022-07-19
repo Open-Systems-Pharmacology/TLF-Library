@@ -218,11 +218,11 @@ getPiTickLabels <- function(ticks) {
 
 #' @title .removeInfiniteValues
 #' @description Censor/remove any values outside of range
-#' Caution, removing infinite values can cause issues with ribbons 
+#' Caution, removing infinite values can cause issues with ribbons
 #' which can use such infinite values for filling a range
 #' @param x numeric vector of values to manipulate
 #' @param range numeric vector of length two giving desired output range
 #' @keywords internal
-.removeInfiniteValues <- function(x, range = c(0,1)){
+.removeInfiniteValues <- function(x, range = c(0, 1)) {
   scales::censor(x, range, only.finite = FALSE)
 }

@@ -31,7 +31,6 @@ XYGDataMapping <- R6::R6Class(
                           size = NULL,
                           group = NULL,
                           data = NULL) {
-
       # .smartMapping is available in utilities-mapping.R
       smartMap <- .smartMapping(data)
       super$initialize(x = x %||% smartMap$x, y = y %||% smartMap$y)

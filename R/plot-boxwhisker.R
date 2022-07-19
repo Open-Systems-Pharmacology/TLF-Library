@@ -75,7 +75,6 @@ plotBoxWhisker <- function(data,
 #' @return A `ggplot` object
 #' @keywords internal
 .addBoxWhisker <- function(data, metaData, dataMapping, plotConfiguration, plotObject) {
-
   # Get the box plot quantiles from dataMapping
   mapData <- dataMapping$getBoxWhiskerLimits(data)
   # Convert the mapping into characters usable by aes_string

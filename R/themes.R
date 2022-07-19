@@ -257,7 +257,6 @@ ThemeAestheticMaps <- R6::R6Class(
                           size = NULL,
                           linetype = NULL,
                           alpha = NULL) {
-
       # Validate necessary input
       validateIsString(color, nullAllowed = TRUE)
       validateIsString(fill, nullAllowed = TRUE)
@@ -316,7 +315,6 @@ ThemeAestheticSelections <- R6::R6Class(
                           size = NULL,
                           linetype = NULL,
                           alpha = NULL) {
-
       # Associate to each field its value
       initializeExpression <- parse(text = paste0("self$", names(AestheticProperties), " <- ", names(AestheticProperties), " %||% 'first'"))
       eval(initializeExpression)
@@ -388,7 +386,6 @@ ThemePlotConfigurations <- R6::R6Class(
                           plotBoxWhisker = NULL,
                           plotTornado = NULL,
                           plotHistogram = NULL) {
-
       # Validate necessary input
       atomPlotInputs <- c("addScatter", "addLine", "addRibbon", "addErrorbar")
       moleculePlotInputs <- c("plotPKRatio", "plotDDIRatio", "plotTimeProfile", "plotObsVsPred", "plotBoxWhisker", "plotTornado", "plotHistogram")

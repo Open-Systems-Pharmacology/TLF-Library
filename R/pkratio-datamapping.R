@@ -12,7 +12,7 @@ PKRatioDataMapping <- R6::R6Class(
     ymin = NULL,
     #' @field ymax mapping of lower value of error bars around scatter points
     ymax = NULL,
-    
+
     #' @description Create a new `PKRatioDataMapping` object
     #' @param x Name of x variable to map
     #' @param y Name of y variable to map
@@ -21,15 +21,15 @@ PKRatioDataMapping <- R6::R6Class(
     #' @param lines List of ratio limits to display as horizontal lines
     #' @param ... parameters inherited from `XYGDataMapping`
     #' @return A new `PKRatioDataMapping` object
-    initialize = function(x = NULL, 
-                          y = NULL, 
+    initialize = function(x = NULL,
+                          y = NULL,
                           ymin = NULL,
                           ymax = NULL,
                           lines = DefaultDataMappingValues$pkRatio,
                           ...) {
       validateIsString(ymin, nullAllowed = TRUE)
       validateIsString(ymax, nullAllowed = TRUE)
-      super$initialize(x=x,y=y,...)
+      super$initialize(x = x, y = y, ...)
       self$lines <- lines
       # If no ymin/ymax defined, map to y to get emtpy errorbars
       self$ymin <- ymin %||% self$y
