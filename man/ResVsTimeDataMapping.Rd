@@ -36,8 +36,8 @@ Other DataMapping classes:
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="ObsVsPredDataMapping" data-id="checkMapData"><a href='../../tlf/html/ObsVsPredDataMapping.html#method-ObsVsPredDataMapping-checkMapData'><code>tlf::ObsVsPredDataMapping$checkMapData()</code></a></li>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="ObsVsPredDataMapping" data-id="initialize"><a href='../../tlf/html/ObsVsPredDataMapping.html#method-ObsVsPredDataMapping-initialize'><code>tlf::ObsVsPredDataMapping$initialize()</code></a></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="ObsVsPredDataMapping" data-id="checkMapData"><a href='../../tlf/html/ObsVsPredDataMapping.html#method-ObsVsPredDataMapping-checkMapData'><code>tlf::ObsVsPredDataMapping$checkMapData()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="ObsVsPredDataMapping" data-id="initialize"><a href='../../tlf/html/ObsVsPredDataMapping.html#method-ObsVsPredDataMapping-initialize'><code>tlf::ObsVsPredDataMapping$initialize()</code></a></span></li>
 </ul>
 </details>
 }}

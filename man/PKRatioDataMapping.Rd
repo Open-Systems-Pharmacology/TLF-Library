@@ -46,12 +46,7 @@ Other DataMapping classes:
 \item \href{#method-PKRatioDataMapping-clone}{\code{PKRatioDataMapping$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-PKRatioDataMapping-new"></a>}}
 \if{latex}{\out{\hypertarget{method-PKRatioDataMapping-new}{}}}
