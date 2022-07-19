@@ -26,7 +26,6 @@ TimeProfileDataMapping <- R6::R6Class(
                           fill = NULL,
                           linetype = NULL,
                           data = NULL) {
-
       # .smartMapping is available in utilities-mapping.R
       smartMap <- .smartMapping(data)
       super$initialize(

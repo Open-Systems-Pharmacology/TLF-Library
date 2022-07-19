@@ -136,23 +136,25 @@ myRedPlotLabel <- LabelConfiguration$new(title = Label$new(
 
 ```{r show-label-configuration, results='asis'}
 Property <- c("text", "font$color", "font$size", "font$angle", "font$align", "font$fontFace", "font$fontFamily")
-displayNullValue <- function(value){
-  if(is.null(value)){return("*NULL*")}
+displayNullValue <- function(value) {
+  if (is.null(value)) {
+    return("*NULL*")
+  }
   return(value)
 }
 labelProperties <- cbind.data.frame(
   Property = Property,
   sapply(
-  c("title", "subtitle", "xlabel", "ylabel", "caption"),
-  function(labelName){
-    # 
-    # Use an expression to get all the properties of the label in one line
-    eval(parse(text = paste0(
-      "c(", paste0("displayNullValue(myRedPlotLabel[[labelName]]$", Property, ")", collapse = ", "), ")"
-    )))
+    c("title", "subtitle", "xlabel", "ylabel", "caption"),
+    function(labelName) {
+      #
+      # Use an expression to get all the properties of the label in one line
+      eval(parse(text = paste0(
+        "c(", paste0("displayNullValue(myRedPlotLabel[[labelName]]$", Property, ")", collapse = ", "), ")"
+      )))
     }
   )
-  )
+)
 
 knitr::kable(labelProperties)
 ```

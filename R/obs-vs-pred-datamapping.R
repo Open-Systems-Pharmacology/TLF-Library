@@ -25,7 +25,7 @@ ObsVsPredDataMapping <- R6::R6Class(
     #' To map a loess smoother to the plot, use `smoother`="loess"
     #' @param ... parameters inherited from `XYGDataMapping`
     #' @return A new `ObsVsPredDataMapping` object
-    initialize = function(x = NULL, 
+    initialize = function(x = NULL,
                           y = NULL,
                           xmin = NULL,
                           xmax = NULL,
@@ -35,14 +35,14 @@ ObsVsPredDataMapping <- R6::R6Class(
       validateIsIncluded(smoother, c("lm", "loess"), nullAllowed = TRUE)
       validateIsString(xmin, nullAllowed = TRUE)
       validateIsString(xmax, nullAllowed = TRUE)
-      super$initialize(x=x,y=y,...)
+      super$initialize(x = x, y = y, ...)
       self$lines <- lines
       self$smoother <- smoother
       # If no xmin/xmax defined, map to x to get emtpy errorbars
       self$xmin <- xmin %||% self$x
       self$xmax <- xmax %||% self$x
     },
-    
+
     #' @description Check that `data` variables include map variables
     #' @param data data.frame to check
     #' @param metaData list containing information on `data`
