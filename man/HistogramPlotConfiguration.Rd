@@ -27,12 +27,6 @@ Other PlotConfiguration classes:
 \item \href{#method-HistogramPlotConfiguration-clone}{\code{HistogramPlotConfiguration$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-HistogramPlotConfiguration-new"></a>}}
 \if{latex}{\out{\hypertarget{method-HistogramPlotConfiguration-new}{}}}

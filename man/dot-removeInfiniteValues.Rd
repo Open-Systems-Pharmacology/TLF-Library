@@ -12,6 +12,8 @@
 \item{range}{numeric vector of length two giving desired output range}
 }
 \description{
-Censor any values outside of range
+Censor/remove any values outside of range
+Caution, removing infinite values can cause issues with ribbons
+which can use such infinite values for filling a range
 }
 \keyword{internal}

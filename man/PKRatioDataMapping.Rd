@@ -41,20 +41,14 @@ Other DataMapping classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{PKRatioDataMapping$new()}}
-\item \href{#method-checkMapData}{\code{PKRatioDataMapping$checkMapData()}}
-\item \href{#method-clone}{\code{PKRatioDataMapping$clone()}}
+\item \href{#method-PKRatioDataMapping-new}{\code{PKRatioDataMapping$new()}}
+\item \href{#method-PKRatioDataMapping-checkMapData}{\code{PKRatioDataMapping$checkMapData()}}
+\item \href{#method-PKRatioDataMapping-clone}{\code{PKRatioDataMapping$clone()}}
 }
-}
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-PKRatioDataMapping-new"></a>}}
+\if{latex}{\out{\hypertarget{method-PKRatioDataMapping-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{PKRatioDataMapping} object
 \subsection{Usage}{
