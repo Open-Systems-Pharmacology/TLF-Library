@@ -97,7 +97,6 @@ PlotConfiguration <- R6::R6Class(
                           data = NULL,
                           metaData = NULL,
                           dataMapping = NULL) {
-
       # Label configuration
       # validation of the input is done within the creation of the object
       private$.labels <- LabelConfiguration$new(

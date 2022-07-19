@@ -31,7 +31,7 @@ setDefaultLegendPosition <- function(position) {
 #' @export
 setDefaultLegendTitle <- function(title) {
   validateIsOfType(title, c("character", "Label"), nullAllowed = TRUE)
-  if(isOfType(title, "Label")){
+  if (isOfType(title, "Label")) {
     tlfEnv$currentTheme$fonts$legendTitle <- title$font
     tlfEnv$currentTheme$background$legendTitle <- title$text
     return(invisible())
