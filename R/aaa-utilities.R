@@ -161,11 +161,10 @@
     "ggplot2::geom_linerange(",
     "data = mapData,",
     "mapping = aes_string(",
-    switch(
-      direction,
+    switch(direction,
       "vertical" = "x = mapLabels$x, ymin = mapLabels$ymin, ymax = mapLabels$y,",
       "horizontal" = "y = mapLabels$y, xmin = mapLabels$xmin, xmax = mapLabels$x,"
-      ),
+    ),
     "color = mapLabels$color",
     "),",
     'size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),',
@@ -177,11 +176,10 @@
     "ggplot2::geom_linerange(",
     "data = mapData,",
     "mapping = aes_string(",
-    switch(
-      direction,
+    switch(direction,
       "vertical" = "x = mapLabels$x, ymin = mapLabels$y, ymax = mapLabels$ymax,",
       "horizontal" = "y = mapLabels$y, xmin = mapLabels$x, xmax = mapLabels$xmax,"
-      ),
+    ),
     "color = mapLabels$color",
     "),",
     'size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),',

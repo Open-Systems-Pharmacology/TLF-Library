@@ -5,13 +5,16 @@
 }
 
 
-.binNumericCol <- function(binLimits, currentDataCol) { # function to iterate through a numeric column and find elements that fall within bin limits.  Returns a logical column of the same size as the input data column.
+.binNumericCol <- function(binLimits, currentDataCol) {
+  # function to iterate through a numeric column and find elements that fall within bin limits.  Returns a logical column of the same size as the input data column.
   .checkIfNotNumeric(currentDataCol, msg = "Dataframe column entries to be binned must be numeric.") # check that dataDf points to be binned are numeric
   sapply(binLimits, .checkIfNotNumeric, msg = "Bin limits must be numeric") # check that all bin limits are numeric
-  if (!(length(binLimits) == 2)) { # check that bin limits are of length 2.
+  if (!(length(binLimits) == 2)) {
+    # check that bin limits are of length 2.
     stop("Each element of bin limits list must be a vector of length 2.")
   }
-  if (!(binLimits[2] > binLimits[1])) { # check that bin limits are in increasing order
+  if (!(binLimits[2] > binLimits[1])) {
+    # check that bin limits are in increasing order
     stop("Bin limits must be increasing.")
   }
   dataPointsInGrp <- sapply(currentDataCol, function(x) {
@@ -25,10 +28,13 @@
 .findColumnEntriesInGroups <- function(dataDf, groupingDfRow) {
   groupingDataColumns <- dataDf[colnames(groupingDfRow)] # get columns from dataDf corresponding to column headings in groupingDf (excluding the last column heading in groupingDf)
   logicMatrix <- matrix(rep(FALSE, nrow(dataDf) * ncol(groupingDfRow)), nrow(dataDf))
-  for (n in seq(1, ncol(groupingDfRow))) { # for each column of the groupingDf
-    if (is.list(groupingDfRow[[n]])) { # case where a list is supplied for binning
+  for (n in seq(1, ncol(groupingDfRow))) {
+    # for each column of the groupingDf
+    if (is.list(groupingDfRow[[n]])) {
+      # case where a list is supplied for binning
       logicMatrix[, n] <- .binNumericCol(groupingDfRow[[n]][[1]], groupingDataColumns[[n]]) # check if each column entry lies within bin limits.  If yes, return TRUE for that entry, else FALSE.
-    } else { # case where there is no binning, only matching between caption dataframe entries and dataDf column entries
+    } else {
+      # case where there is no binning, only matching between caption dataframe entries and dataDf column entries
       logicMatrix[, n] <- sapply(groupingDataColumns[[n]], function(x) {
         return(x == groupingDfRow[[n]])
       }) # check if each column entry matches groupingDf element.  If yes, return TRUE for that entry, else FALSE.
@@ -45,10 +51,13 @@
   stopifnot(ncol(groupingDf) > 1)
   vecIndxGroupingDfRows <- seq(1, nrow(groupingDf)) # vector of factor levels associated with each caption
   groupingFactorColumn <- rep(0, nrow(dataDf)) # vector that is to be populated with factor levels that determine caption
-  for (k in vecIndxGroupingDfRows) { # for each caption
+  for (k in vecIndxGroupingDfRows) {
+    # for each caption
     logicMatrix <- .findColumnEntriesInGroups(dataDf, groupingDf[k, -ncol(groupingDf), drop = FALSE]) # call function to test if each column entry falls within the grouping
-    for (m in seq(1, nrow(dataDf))) { # for each row of dataDf
-      if (all(logicMatrix[m, ])) { # if entire dataDf row matches groupingDf row
+    for (m in seq(1, nrow(dataDf))) {
+      # for each row of dataDf
+      if (all(logicMatrix[m, ])) {
+        # if entire dataDf row matches groupingDf row
         groupingFactorColumn[m] <- vecIndxGroupingDfRows[k] # set factor level in groupingFactorColumn to k
       }
     }
@@ -89,7 +98,6 @@
 #' # Get captions separating variables witha space (character " ")
 #' getDefaultCaptions(data, metaData, sep = " ")
 getDefaultCaptions <- function(data, metaData, variableList = colnames(data), sep = "-") {
-
   # Check that the grouping is in the list of data variables
   stopifnot(variableList %in% colnames(data))
 
@@ -274,7 +282,7 @@ DefaultDataMappingValues <- list(
 #' Get list of values to provide to `lines` argument of `dataMapping` objects.
 #' The `lines` are internally used as argument of `geom_hline` and `geom_abline` from `ggplot2`
 #' @param foldDistance Numeric values
-#' __Caution__: this argument is meant for log scaled plots and since fold distance is a ratio it is expected positive. 
+#' __Caution__: this argument is meant for log scaled plots and since fold distance is a ratio it is expected positive.
 #' In particular, line of identity corresponds to a `foldDistance` of `1`.
 #' @return A list of numeric values
 #' @export
@@ -317,9 +325,9 @@ getLinesFromFoldDistance <- function(foldDistance) {
 }
 
 .getAggregatedData <- function(data,
-                              xParameterName,
-                              yParameterName,
-                              xParameterBreaks = NULL) {
+                               xParameterName,
+                               yParameterName,
+                               xParameterBreaks = NULL) {
   xParameterBreaks <- xParameterBreaks %||% tlfEnv$defaultAggregation$bins
   xParameterBins <- cut(data[, xParameterName], breaks = xParameterBreaks)
 

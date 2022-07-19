@@ -142,7 +142,6 @@ ui <- fluidPage(
 
 #---------- Server ----------#
 server <- function(input, output) {
-
   #---------- Interactive way of updating aesthetic map element ----------#
   getColorMapValue <- reactive({
     jsonTheme$aestheticMaps$color[input$colorMapIndex]
@@ -296,7 +295,6 @@ server <- function(input, output) {
   })
 
   output$samplePlot <- renderPlot({
-
     # Reactive function that update theme object
     updateTheme()
     plotConfiguration <- PlotConfiguration$new(title = "title", subtitle = "subtitle", xlabel = "xlabel", ylabel = "ylabel", caption = "caption")

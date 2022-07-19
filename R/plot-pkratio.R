@@ -5,7 +5,7 @@
 #' @inheritParams addScatter
 #' @param foldDistance Numeric values of fold distance lines to display in log plots.
 #' This argument is internally translated into `lines` field of `dataMapping`.
-#' __Caution__: this argument is meant for log scaled plots and since fold distance is a ratio it is expected positive. 
+#' __Caution__: this argument is meant for log scaled plots and since fold distance is a ratio it is expected positive.
 #' In particular, line of identity corresponds to a `foldDistance` of `1`.
 #' @param dataMapping
 #' A `PKRatioDataMapping` object mapping `x`, `y` and aesthetic groups to their variable names of `data`.

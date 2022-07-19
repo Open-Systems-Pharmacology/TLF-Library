@@ -78,12 +78,12 @@ Workflows in `tlf` usually includes the definition of `data`, their `metData` an
 histoMapping <- HistogramDataMapping$new(
   x = "Ratio",
   fill = "Sex"
-  )
+)
 
 plotHistogram(
   data = histData,
   dataMapping = histoMapping
-  )
+)
 ```
 
 In such cases, the optional arguments previously presented can be included in `dataMapping`.
@@ -94,12 +94,12 @@ histoMapping <- HistogramDataMapping$new(
   x = "Ratio",
   fill = "Sex",
   stack = TRUE
-  )
+)
 
 plotHistogram(
   data = histData,
   dataMapping = histoMapping
-  )
+)
 ```
 
 If defined as `plotHistogram` input arguments, they will overwrite `dataMapping`.
@@ -110,14 +110,14 @@ histoMapping <- HistogramDataMapping$new(
   x = "Ratio",
   fill = "Sex",
   bins = 3
-  )
+)
 
 # bin defined in both, plotHistogram has priority and overwrites dataMapping internally
 plotHistogram(
   data = histData,
   dataMapping = histoMapping,
   bins = 6
-  )
+)
 ```
 
 ## 2.5. Focus on binning
@@ -135,14 +135,14 @@ Method 2 is the more specific and defines the bin edges, consequently it cannot 
 histoMapping <- HistogramDataMapping$new(
   x = "Ratio",
   fill = "Sex"
-  )
+)
 
 # Define the number of bins in final plot
 plotHistogram(
   data = histData,
   dataMapping = histoMapping,
   bins = 6
-  )
+)
 ```
 
 *2. Define the edges of the bins with the input argument `bins` (using an array of values)
@@ -152,14 +152,14 @@ plotHistogram(
 histoMapping <- HistogramDataMapping$new(
   x = "Ratio",
   fill = "Sex"
-  )
+)
 
 # Define the edges of bins in final plot
 plotHistogram(
   data = histData,
   dataMapping = histoMapping,
-  bins = seq(0,6,0.2)
-  )
+  bins = seq(0, 6, 0.2)
+)
 ```
 
 *3. Define the width of bins with the input argument `binwidth` (using a single value).
@@ -169,14 +169,14 @@ plotHistogram(
 histoMapping <- HistogramDataMapping$new(
   x = "Ratio",
   fill = "Sex"
-  )
+)
 
 # Define the width of bins in final plot
 plotHistogram(
   data = histData,
   dataMapping = histoMapping,
   binwidth = 0.4
-  )
+)
 ```
 
 
@@ -193,13 +193,13 @@ Currently, two distributions can be fitted by the function `plotHistogram`:
 plotHistogram(
   x = histData$Ratio,
   distribution = "normal"
-  )
+)
 
 # Plot normal distribution
 plotHistogram(
   x = histData$Ratio,
   distribution = "logNormal"
-  )
+)
 ```
 
 To compare multiple distributions, they can be defined through the `dataMapping`:
@@ -209,14 +209,14 @@ To compare multiple distributions, they can be defined through the `dataMapping`
 histoMapping <- HistogramDataMapping$new(
   x = "Ratio",
   fill = "Sex"
-  )
+)
 
 # Plot normal distribution for each gender
 plotHistogram(
   data = histData,
   dataMapping = histoMapping,
   distribution = "normal"
-  )
+)
 ```
 
 With option `stack`, it is also possible to get the distribution of the sum only while splitting the content of the bars.
@@ -226,7 +226,7 @@ With option `stack`, it is also possible to get the distribution of the sum only
 histoMapping <- HistogramDataMapping$new(
   x = "Ratio",
   fill = "Sex"
-  )
+)
 
 # Plot normal distribution of sum but bars are split by gender
 plotHistogram(
@@ -234,7 +234,7 @@ plotHistogram(
   dataMapping = histoMapping,
   distribution = "normal",
   stack = TRUE
-  )
+)
 ```
 
 The `HistogramPlotConfiguration` objects can be used to tune the final plot aesthetics.
@@ -253,6 +253,6 @@ plotHistogram(
   x = histData$Ratio,
   plotConfiguration = histoConfiguration,
   distribution = "normal"
-  )
+)
 ```
 
