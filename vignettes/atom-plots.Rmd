@@ -344,7 +344,7 @@ addErrorbar(
 )
 ```
 
-Among its optional inputs, `addErrorbar` proposes `includeCap` a logical that defines if caps are included at the extremities of the error bars.
+Among its optional inputs, `addErrorbar` proposes `capWidth` a numeric that defines the width of the extremities of the error bars (caps).
 
 ```{r addErrorbar optional inputs}
 addErrorbar(
@@ -353,7 +353,7 @@ addErrorbar(
   ymax = cosData$cos,
   color = "firebrick",
   linetype = Linetypes$solid,
-  includeCap = TRUE,
+  capWidth = 0.2,
   size = 0.5,
   caption = "error bar plot"
 )

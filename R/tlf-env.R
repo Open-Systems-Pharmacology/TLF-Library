@@ -177,3 +177,15 @@ setDefaultLogTicks <- function(ticks) {
   tlfEnv$logTicks <- ticks
   return(invisible())
 }
+
+tlfEnv$defaultErrorbarCapWidth <- 0
+
+#' @title setDefaultErrorbarCapWidth
+#' @description Set default cap width of error bars
+#' @param width A numeric defining the width of the error bars
+#' @export
+setDefaultErrorbarCapWidth <- function(width) {
+  validateIsNumeric(width)
+  tlfEnv$defaultErrorbarCapWidth <- width
+  return(invisible())
+}
