@@ -46,6 +46,7 @@ Other DataMapping classes:
 \item \href{#method-PKRatioDataMapping-clone}{\code{PKRatioDataMapping$clone()}}
 }
 }
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-PKRatioDataMapping-new"></a>}}
 \if{latex}{\out{\hypertarget{method-PKRatioDataMapping-new}{}}}
