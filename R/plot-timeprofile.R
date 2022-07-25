@@ -172,34 +172,30 @@ plotTimeProfile <- function(data = NULL,
         alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, position = 0, aesthetic = "alpha"),
         show.legend = FALSE
       ) + 
-      ggplot2::geom_errorbar(
+      ggplot2::geom_point(
         data = mapObservedData,
         mapping = ggplot2::aes_string(
           x = observedMapLabels$x,
-          ymin = observedMapLabels$ymin,
-          ymax = observedMapLabels$ymin,
+          y = observedMapLabels$ymin,
           color = observedMapLabels$color,
           group = observedMapLabels$color
         ),
-        size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
-        linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, position = 0, aesthetic = "linetype"),
+        size = tlfEnv$defaultErrorbarCapSize,
+        shape = "_",
         alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, position = 0, aesthetic = "alpha"),
-        width = .getCapExtent(values = mapObservedData[,observedDataMapping$x]),
         show.legend = FALSE
       ) +
-      ggplot2::geom_errorbar(
+      ggplot2::geom_point(
         data = mapObservedData,
         mapping = ggplot2::aes_string(
           x = observedMapLabels$x,
-          ymin = observedMapLabels$ymax,
-          ymax = observedMapLabels$ymax,
+          y = observedMapLabels$ymax,
           color = observedMapLabels$color,
           group = observedMapLabels$color
         ),
-        size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
-        linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, position = 0, aesthetic = "linetype"),
+        size = tlfEnv$defaultErrorbarCapSize,
+        shape = "_",
         alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, position = 0, aesthetic = "alpha"),
-        width = .getCapExtent(values = mapObservedData[,observedDataMapping$x]),
         show.legend = FALSE
       )
   }
