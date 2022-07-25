@@ -177,3 +177,16 @@ setDefaultLogTicks <- function(ticks) {
   tlfEnv$logTicks <- ticks
   return(invisible())
 }
+
+# No cap displayed in the default settings
+tlfEnv$defaultErrorbarCapSize <- 0
+
+#' @title setDefaultErrorbarCapSize
+#' @description Set default cap size of error bars
+#' @param size A numeric defining the size of the error bar caps in pts
+#' @export
+setDefaultErrorbarCapSize <- function(size) {
+  validateIsNumeric(size)
+  tlfEnv$defaultErrorbarCapSize <- size
+  return(invisible())
+}

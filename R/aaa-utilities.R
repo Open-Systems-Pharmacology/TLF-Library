@@ -149,7 +149,8 @@
 }
 
 #' @title .parseAddUncertaintyLayer
-#' @description Create an expression that adds errorbars if uncertainty is included in dataMapping
+#' @description Create an expression that adds errorbars
+#' `mapLabels` needs to be obtained from `DataMapping` objects
 #' @return An expression to `eval()`
 #' @keywords internal
 .parseAddUncertaintyLayer <- function(direction = "vertical") {
@@ -165,7 +166,8 @@
       "vertical" = "x = mapLabels$x, ymin = mapLabels$ymin, ymax = mapLabels$y,",
       "horizontal" = "y = mapLabels$y, xmin = mapLabels$xmin, xmax = mapLabels$x,"
     ),
-    "color = mapLabels$color",
+    "color = mapLabels$color,",
+    "group = mapLabels$color",
     "),",
     'size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),',
     'linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),',
@@ -180,10 +182,45 @@
       "vertical" = "x = mapLabels$x, ymin = mapLabels$y, ymax = mapLabels$ymax,",
       "horizontal" = "y = mapLabels$y, xmin = mapLabels$x, xmax = mapLabels$xmax,"
     ),
-    "color = mapLabels$color",
+    "color = mapLabels$color,",
+    "group = mapLabels$color",
     "),",
     'size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),',
     'linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),',
+    'alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),',
+    "na.rm = TRUE,",
+    "show.legend = FALSE",
+    ") + ",
+    # Add lower cap to error bar
+    "ggplot2::geom_point(",
+    "data = mapData,",
+    "mapping = aes_string(",
+    switch(direction,
+           "vertical" = "x = mapLabels$x, y = mapLabels$ymin,",
+           "horizontal" = "y = mapLabels$y, x = mapLabels$xmin,"
+    ),
+    "color = mapLabels$color,",
+    "group = mapLabels$color",
+    "),",
+    'size = tlfEnv$defaultErrorbarCapSize,',
+    'shape = ', switch(direction, "vertical" = '"_"', "horizontal" = '"|"'), ',',
+    'alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),',
+    "na.rm = TRUE,",
+    "show.legend = FALSE",
+    ") + ",
+    # Add upper cap to error bar
+    "ggplot2::geom_point(",
+    "data = mapData,",
+    "mapping = aes_string(",
+    switch(direction,
+           "vertical" = "x = mapLabels$x, y = mapLabels$ymax,",
+           "horizontal" = "y = mapLabels$y, x = mapLabels$xmax,"
+    ),
+    "color = mapLabels$color,",
+    "group = mapLabels$color",
+    "),",
+    'size = tlfEnv$defaultErrorbarCapSize,',
+    'shape = ', switch(direction, "vertical" = '"_"', "horizontal" = '"|"'), ',', 
     'alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),',
     "na.rm = TRUE,",
     "show.legend = FALSE",

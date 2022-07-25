@@ -10,6 +10,7 @@
 An expression to \code{eval()}
 }
 \description{
-Create an expression that adds errorbars if uncertainty is included in dataMapping
+Create an expression that adds errorbars
+\code{mapLabels} needs to be obtained from \code{DataMapping} objects
 }
 \keyword{internal}
