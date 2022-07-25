@@ -14,7 +14,7 @@ addErrorbar(
   color = NULL,
   size = NULL,
   linetype = NULL,
-  capWidth = NULL,
+  capExtent = NULL,
   dataMapping = NULL,
   plotConfiguration = NULL,
   plotObject = NULL
@@ -41,7 +41,9 @@ See \code{grDevices::colors()} to get names of colors}
 \item{linetype}{Optional character values defining the linetype of the plot layer.
 See enum \code{Linetypes} to get names of linetype.}
 
-\item{capWidth}{Numeric width of the error bars}
+\item{capExtent}{Numeric extent of the error bars caps
+Caution the value corresponds to the ratio of the mean spacing between plotted error bars.
+For instance, an \code{extent} of \code{1} will fill the caps until the next error bar}
 
 \item{dataMapping}{A \code{RangeDataMapping} object mapping \code{x}, \code{ymin}, \code{ymax} and aesthetic groups to their variable names of \code{data}.}
 

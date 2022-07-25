@@ -184,7 +184,7 @@ plotTimeProfile <- function(data = NULL,
         size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
         linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, position = 0, aesthetic = "linetype"),
         alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, position = 0, aesthetic = "alpha"),
-        width = tlfEnv$defaultErrorbarCapWidth,
+        width = .getCapExtent(values = mapObservedData[,observedDataMapping$x]),
         show.legend = FALSE
       ) +
       ggplot2::geom_errorbar(
@@ -199,7 +199,7 @@ plotTimeProfile <- function(data = NULL,
         size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
         linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, position = 0, aesthetic = "linetype"),
         alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, position = 0, aesthetic = "alpha"),
-        width = tlfEnv$defaultErrorbarCapWidth,
+        width = .getCapExtent(values = mapObservedData[,observedDataMapping$x]),
         show.legend = FALSE
       )
   }

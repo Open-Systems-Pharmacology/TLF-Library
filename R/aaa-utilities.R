@@ -205,7 +205,7 @@
     'size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),',
     'linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),',
     'alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),',
-    'width = tlfEnv$defaultErrorbarCapWidth,',
+    'width = .getCapExtent(values = mapData[,dataMapping$', switch(direction, "vertical" = 'x', "horizontal" = 'y'), ']),',
     "na.rm = TRUE,",
     "show.legend = FALSE",
     ") + ",
@@ -223,7 +223,7 @@
     'size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),',
     'linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),',
     'alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),',
-    'width = tlfEnv$defaultErrorbarCapWidth,',
+    'width = .getCapExtent(values = mapData[,dataMapping$', switch(direction, "vertical" = 'x', "horizontal" = 'y'), ']),',
     "na.rm = TRUE,",
     "show.legend = FALSE",
     ")"

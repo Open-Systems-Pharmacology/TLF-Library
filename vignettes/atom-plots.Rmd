@@ -344,7 +344,7 @@ addErrorbar(
 )
 ```
 
-Among its optional inputs, `addErrorbar` proposes `capWidth` a numeric that defines the width of the extremities of the error bars (caps).
+Among its optional inputs, `addErrorbar` proposes `capExtent` a numeric that defines the width of the extremities of the error bars (caps). The value corresponds to the ratio of the mean spacing between plotted error bars. For instance, a `capExtent` of `1` will fill the caps until the next error bar.
 
 ```{r addErrorbar optional inputs}
 addErrorbar(
@@ -353,7 +353,7 @@ addErrorbar(
   ymax = cosData$cos,
   color = "firebrick",
   linetype = Linetypes$solid,
-  capWidth = 0.2,
+  capExtent = 0.2,
   size = 0.5,
   caption = "error bar plot"
 )

@@ -178,14 +178,17 @@ setDefaultLogTicks <- function(ticks) {
   return(invisible())
 }
 
-tlfEnv$defaultErrorbarCapWidth <- 0
+# No cap displayed in the default settings
+tlfEnv$defaultErrorbarCapExtent <- 0
 
-#' @title setDefaultErrorbarCapWidth
-#' @description Set default cap width of error bars
-#' @param width A numeric defining the width of the error bars
+#' @title setDefaultErrorbarCapExtent
+#' @description Set default cap extent of error bars
+#' Caution the value corresponds to the ratio of the mean spacing between plotted error bars.
+#' For instance, an `extent` of `1` will fill the caps until the next error bar
+#' @param extent A numeric defining the extent of the error bar caps
 #' @export
-setDefaultErrorbarCapWidth <- function(width) {
-  validateIsNumeric(width)
-  tlfEnv$defaultErrorbarCapWidth <- width
+setDefaultErrorbarCapExtent <- function(extent) {
+  validateIsNumeric(extent)
+  tlfEnv$defaultErrorbarCapExtent <- extent
   return(invisible())
 }

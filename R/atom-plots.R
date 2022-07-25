@@ -505,7 +505,9 @@ addRibbon <- function(data = NULL,
 #'
 #' @inheritParams addRibbon
 #' @inheritParams addScatter
-#' @param capWidth Numeric width of the error bars
+#' @param capExtent Numeric extent of the error bars caps
+#' Caution the value corresponds to the ratio of the mean spacing between plotted error bars.
+#' For instance, an `extent` of `1` will fill the caps until the next error bar
 #' @return A `ggplot` object
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
@@ -558,7 +560,7 @@ addErrorbar <- function(data = NULL,
                         color = NULL,
                         size = NULL,
                         linetype = NULL,
-                        capWidth = NULL,
+                        capExtent = NULL,
                         dataMapping = NULL,
                         plotConfiguration = NULL,
                         plotObject = NULL) {
@@ -615,7 +617,7 @@ addErrorbar <- function(data = NULL,
       linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
       alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),
       color = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$color, aesthetic = "color"),
-      width = capWidth %||% tlfEnv$defaultErrorbarCapWidth,
+      width = .getCapExtent(capExtent, mapData[,dataMapping$x]),
       na.rm = TRUE,
       show.legend = FALSE
       )
@@ -632,4 +634,14 @@ addErrorbar <- function(data = NULL,
     legendLabelsCaptionCount <- 0
   }
   return(paste0("data ", max(legendLabelsCaptionCount) + 1))
+}
+
+.getCapExtent <- function(capExtent = NULL, values){
+  values <- sort(unique(values[!is.na(values)]))
+  if(isOfLength(values, 1)){
+    return(capExtent %||% tlfEnv$defaultErrorbarCapExtent)
+  }
+  valueSpaces <- diff(values)
+  dataCapExtent <- (capExtent %||% tlfEnv$defaultErrorbarCapExtent)*mean(valueSpaces)
+  return(dataCapExtent)
 }
