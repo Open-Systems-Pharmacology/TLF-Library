@@ -25,7 +25,7 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{ObsVsPredDataMapping}
+\code{tlf::XYDataMapping} -> \code{tlf::XYGDataMapping} -> \code{ObsVsPredDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -48,7 +48,6 @@ Other DataMapping classes:
 \item \href{#method-ObsVsPredDataMapping-clone}{\code{ObsVsPredDataMapping$clone()}}
 }
 }
-
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ObsVsPredDataMapping-new"></a>}}
 \if{latex}{\out{\hypertarget{method-ObsVsPredDataMapping-new}{}}}

@@ -25,7 +25,7 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{BoxWhiskerDataMapping}
+\code{tlf::XYDataMapping} -> \code{tlf::XYGDataMapping} -> \code{BoxWhiskerDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
