@@ -68,7 +68,7 @@ XYGDataMapping <- R6::R6Class(
 
       # All possible Groupings are listed in the enum LegendTypes
       for (groupType in LegendTypes) {
-        if (isOfLength(self$groupMapping[[groupType]]$group, 0)) {
+        if (isEmpty(self$groupMapping[[groupType]]$group)) {
           next
         }
         grouping <- self$groupMapping[[groupType]]
