@@ -32,7 +32,7 @@ TimeProfileDataMapping <- R6::R6Class(
         x = x %||% smartMap$x,
         ymin = ymin %||% smartMap$ymin,
         ymax = ymax %||% smartMap$ymax,
-        color = color, fill = fill, linetype = linetype, group = group
+        color = color, fill = fill, linetype = linetype, group = group, data = data
       )
       # Since TimeProfileDataMapping inherits from RangeDataMapping
       # super$initialize introduce a self$y which is NULL
