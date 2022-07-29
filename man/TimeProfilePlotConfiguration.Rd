@@ -18,7 +18,7 @@ Other PlotConfiguration classes:
 }
 \concept{PlotConfiguration classes}
 \section{Super class}{
-\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{TimeProfilePlotConfiguration}
+\code{tlf::PlotConfiguration} -> \code{TimeProfilePlotConfiguration}
 }
 \section{Methods}{
 \subsection{Public methods}{

@@ -184,7 +184,7 @@ addScatter <- function(data = NULL,
     newLabels = newLabels,
     aestheticSelections = plotConfiguration$points
   ))
-  eval(.parseUpdateAxes())
+  plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }
 
@@ -362,7 +362,7 @@ addLine <- function(data = NULL,
     newLabels = newLabels,
     aestheticSelections = plotConfiguration$lines
   ))
-  eval(.parseUpdateAxes())
+  plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }
 
@@ -495,7 +495,7 @@ addRibbon <- function(data = NULL,
     newLabels = newLabels,
     aestheticSelections = plotConfiguration$ribbons
   ))
-  eval(.parseUpdateAxes())
+  plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }
 
@@ -566,7 +566,7 @@ addErrorbar <- function(data = NULL,
                         plotObject = NULL) {
   validateIsOfType(dataMapping, c("RangeDataMapping", "ObservedDataMapping"), nullAllowed = TRUE)
   validateIsOfType(plotConfiguration, PlotConfiguration, nullAllowed = TRUE)
-  
+
   # If data is not input, creates data and its mapping from x, ymin and ymax input
   if (isEmpty(data)) {
     data <- as.data.frame(cbind(x = x, ymin = ymin %||% 0, ymax = ymax %||% 0))
@@ -600,31 +600,31 @@ addErrorbar <- function(data = NULL,
   }
   mapData$legendLabels <- caption %||% mapData$legendLabels
   legendLength <- length(unique(mapData$legendLabels))
-  
+
   eval(.parseVariableToObject("plotObject$plotConfiguration$errorbars", c("color", "size", "linetype"), keepIfNull = TRUE))
-  
+
   plotObject <- plotObject +
     ggplot2::geom_linerange(
       data = mapData,
       mapping = aes_string(
-        x = mapLabels$x, 
-        ymin = mapLabels$ymin, 
+        x = mapLabels$x,
+        ymin = mapLabels$ymin,
         ymax = mapLabels$ymax,
         color = mapLabels$color,
         group = mapLabels$color
-        ),
+      ),
       size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
       linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
       alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),
       color = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$color, aesthetic = "color"),
       na.rm = TRUE,
       show.legend = FALSE
-      ) + 
+    ) +
     ggplot2::geom_point(
       data = mapData,
       mapping = aes_string(
-        x = mapLabels$x, 
-        y = mapLabels$ymin, 
+        x = mapLabels$x,
+        y = mapLabels$ymin,
         color = mapLabels$color,
         group = mapLabels$color
       ),
@@ -634,11 +634,11 @@ addErrorbar <- function(data = NULL,
       color = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$color, aesthetic = "color"),
       na.rm = TRUE,
       show.legend = FALSE
-    ) + 
+    ) +
     ggplot2::geom_point(
       data = mapData,
       mapping = aes_string(
-        x = mapLabels$x, 
+        x = mapLabels$x,
         y = mapLabels$ymax,
         color = mapLabels$color,
         group = mapLabels$color
@@ -650,9 +650,9 @@ addErrorbar <- function(data = NULL,
       na.rm = TRUE,
       show.legend = FALSE
     )
-  
+
   # Try is used to prevent crashes in the final plot due to ggplot2 peculiarities regarding scale functions
-  eval(.parseUpdateAxes())
+  plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }
 

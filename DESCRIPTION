@@ -100,5 +100,6 @@ Collate:
     'utilities-label.R'
     'utilities-legend.R'
     'utilities-mapping.R'
+    'utilities-molecule-plots.R'
     'utilities-theme.R'
     'utils.R'

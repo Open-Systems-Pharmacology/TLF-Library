@@ -79,7 +79,7 @@ LegendConfiguration <- R6::R6Class(
       if (missing(value)) {
         return(private$.caption)
       }
-      validateIsOfType(value, "data.frame")
+      validateIsOfType(value, c("data.frame", "list"))
       private$.caption <- value
       return(invisible())
     },

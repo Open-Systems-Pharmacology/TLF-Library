@@ -114,3 +114,101 @@
 .getFirstAestheticValues <- function(n, map) {
   return(.getSameAestheticValues(n, position = 0, map))
 }
+
+
+#' @title .getAesPropertyColumnNameFromLabels
+#' @description Get the column names of the variables mapped to aesthetic properties
+#' @param mapLabels List of mapped label names passed to `ggplot2::aes_string`
+#' @param propertyNames Names of aesthetic property (e.g. `"color"`, `"shape"`...)
+#' @return A list of variable names
+#' @keywords internal
+.getAesPropertyColumnNameFromLabels <- function(mapLabels, propertyNames) {
+  variableNames <- lapply(
+    propertyNames,
+    function(propertyName) {
+      # For aes_string to work with special characters, column names are wrapped with "`"
+      return(gsub("`", "", mapLabels[[propertyName]]))
+    }
+  )
+  names(variableNames) <- propertyNames
+  return(variableNames)
+}
+
+#' @title .getAesPropertyLengthFromLabels
+#' @description Get the names of the variables mapped to aesthetic properties
+#' @param data A data.frame with labels mapped to properties and obtained from a `DataMapping` object
+#' @param columnNames List of mapped column names of `data` obtained
+#' @param propertyNames Names of aesthetic property (e.g. `"color"`, `"shape"`...)
+#' @return A list of variable names
+#' @keywords internal
+.getAesPropertyLengthFromLabels <- function(data, columnNames, propertyNames) {
+  variableLengths <- lapply(
+    propertyNames,
+    function(propertyName) {
+      return(length(unique(data[, columnNames[[propertyName]]])))
+    }
+  )
+  names(variableLengths) <- propertyNames
+  return(variableLengths)
+}
+
+
+#' @title .updateAesProperties
+#' @description Updates the aesthetic properties of `plotObject`
+#' @param plotObject A `ggplot` object
+#' @param plotConfigurationProperty `PlotConfiguration` property name included in .
+#' `"points"`, `"lines"`, `"ribbons"` or `"errorbars"`
+#' @param propertyNames Names of aesthetic property (e.g. `"color"`, `"shape"`...)
+#' @param data A data.frame with labels mapped to properties and obtained from a `DataMapping` object
+#' @param mapLabels List of mapped label names passed to `ggplot2::aes_string`
+#' @return A `ggplot` object
+#' @keywords internal
+#' @import ggplot2
+.updateAesProperties <- function(plotObject, plotConfigurationProperty, propertyNames, data, mapLabels) {
+  propertyVariables <- .getAesPropertyColumnNameFromLabels(mapLabels, propertyNames)
+  propertyLengths <- .getAesPropertyLengthFromLabels(data, propertyVariables, propertyNames)
+  for (propertyName in propertyNames) {
+    # For match.fun to work, ggplot2 namespace is required
+    ggplotScaleFunction <- match.fun(paste0("scale_", propertyName, "_manual"))
+    # Use suppress messages to remove warning of overwriting property scale
+    suppressMessages(
+      plotObject <- plotObject +
+        ggplotScaleFunction(
+          values = .getAestheticValues(
+            n = propertyLengths[[propertyName]],
+            selectionKey = plotObject$plotConfiguration[[plotConfigurationProperty]][[propertyName]],
+            aesthetic = propertyName
+          )
+        )
+    )
+    # remove the legend of aesthetic if default unmapped aesthetic
+    if (isIncluded(propertyVariables[[propertyName]], "legendLabels")) {
+      # Dynamic code is needed here for selecting the correct input parameter of function guides
+      eval(parse(text = paste0(
+        "plotObject <- plotObject + ggplot2::guides(", propertyName, " = 'none')"
+      )))
+    }
+  }
+  return(plotObject)
+}
+
+#' @title .getAestheticValuesFromConfiguration
+#' @description Get list of values for requested aesthetic property
+#' @param n integer defining size of returned aesthetic vector
+#' @param position integer defining the current position in the aesthetic map
+#' @param plotObject A `ggplot` object
+#' @param plotConfigurationProperty `PlotConfiguration` property name included in .
+#' `"points"`, `"lines"`, `"ribbons"` or `"errorbars"`
+#' @param propertyNames Names of aesthetic property (e.g. `"color"`, `"shape"`...)
+#' @return A list of values for requested aesthetic property
+#' @keywords internal
+.getAestheticValuesFromConfiguration <- function(n = 1, position = 0, plotConfigurationProperty, propertyNames) {
+  aestheticValues <- lapply(
+    propertyNames,
+    function(propertyName) {
+      .getAestheticValues(n = n, selectionKey = plotConfigurationProperty[[propertyName]], position = position, aesthetic = propertyName)
+    }
+  )
+  names(aestheticValues) <- propertyNames
+  return(aestheticValues)
+}

@@ -25,7 +25,7 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{PKRatioDataMapping}
+\code{tlf::XYDataMapping} -> \code{tlf::XYGDataMapping} -> \code{PKRatioDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -46,7 +46,6 @@ Other DataMapping classes:
 \item \href{#method-PKRatioDataMapping-clone}{\code{PKRatioDataMapping$clone()}}
 }
 }
-
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-PKRatioDataMapping-new"></a>}}
 \if{latex}{\out{\hypertarget{method-PKRatioDataMapping-new}{}}}

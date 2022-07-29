@@ -537,11 +537,11 @@ To update the plot and have appropriate colors and labels in the legend, it is p
 
 ```{r get legend properties, results='asis'}
 plotLegend <- getLegendCaption(simAndObsTimeProfile)
-knitr::kable(plotLegend)
+knitr::kable(as.data.frame(plotLegend$color))
 ```
 
 ```{r update legend properties}
-plotLegend <- plotLegend[c(1, 3, 2, 4), ]
+plotLegend$color <- plotLegend$color[c(1, 3, 2, 4), ]
 updateTimeProfileLegend(simAndObsTimeProfile, plotLegend)
 ```
 
