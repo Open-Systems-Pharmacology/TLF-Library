@@ -34,36 +34,25 @@ plotBoxWhisker <- function(data,
                            dataMapping = NULL,
                            plotConfiguration = NULL,
                            plotObject = NULL) {
-  dataMapping <- dataMapping %||% BoxWhiskerDataMapping$new(data = data)
-  plotConfiguration <- plotConfiguration %||% BoxWhiskerPlotConfiguration$new(
-    data = data,
-    metaData = metaData,
-    dataMapping = dataMapping
-  )
-
-  validateIsOfType(dataMapping, "BoxWhiskerDataMapping")
-  validateIsOfType(plotConfiguration, "BoxWhiskerPlotConfiguration")
+  #----- Validation and formatting of input arguments -----
+  validateIsNotEmpty(data)
   validateIsOfType(data, "data.frame")
-  validateIsOfType(plotObject, "ggplot", nullAllowed = TRUE)
-
+  dataMapping <- .setDataMapping(dataMapping, BoxWhiskerDataMapping, data)
+  plotConfiguration <- .setPlotConfiguration(
+    plotConfiguration, BoxWhiskerPlotConfiguration,
+    data, metaData, dataMapping
+  )
   # Overwrites plotConfiguration$outliers if outliers is not null
   validateIsLogical(outliers, nullAllowed = TRUE)
   plotConfiguration$outliers <- outliers
+  plotObject <- .setPlotObject(plotObject, plotConfiguration)
 
-  plotObject <- plotObject %||% initializePlot(plotConfiguration)
-
-  if (nrow(data) == 0) {
-    warning(messages$errorNrowData("box whisker plot"))
-    return(plotObject)
-  }
-
-  # Add Plot Configuration layers and box whisker plots
+  #----- Build layers of molecule plot -----
   plotObject <- .addBoxWhisker(data, metaData, dataMapping, plotConfiguration, plotObject)
   if (plotConfiguration$outliers) {
     plotObject <- .addOutliers(data, metaData, dataMapping, plotConfiguration, plotObject)
   }
-  try(suppressMessages(plotObject <- setXAxis(plotObject)))
-  try(suppressMessages(plotObject <- setYAxis(plotObject)))
+  plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }
 
@@ -80,6 +69,13 @@ plotBoxWhisker <- function(data,
   # Convert the mapping into characters usable by aes_string
   mapLabels <- .getAesStringMapping(dataMapping)
 
+  aestheticValues <- .getAestheticValuesFromConfiguration(
+    n = 1,
+    position = 0,
+    plotConfigurationProperty = plotObject$plotConfiguration$ribbons,
+    propertyNames = c("size", "alpha", "linetype")
+  )
+
   plotObject <- plotObject +
     ggplot2::geom_boxplot(
       data = mapData,
@@ -93,30 +89,20 @@ plotBoxWhisker <- function(data,
         fill = mapLabels$fill,
         color = mapLabels$color
       ),
-      alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$alpha, position = 0, aesthetic = "alpha"),
-      size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$size, position = 0, aesthetic = "size"),
-      linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$linetype, position = 0, aesthetic = "linetype"),
+      alpha = aestheticValues$alpha,
+      size = aestheticValues$size,
+      linetype = aestheticValues$linetype,
       show.legend = TRUE,
       stat = "identity"
     )
 
-  # Define linetype, color, f# Define shapes and colors based on plotConfiguration$points properties
-  fillVariable <- gsub("`", "", mapLabels$fill)
-  colorVariable <- gsub("`", "", mapLabels$color)
-  fillLength <- length(unique(mapData[, fillVariable]))
-  colorLength <- length(unique(mapData[, colorVariable]))
-
-  plotObject <- plotObject +
-    ggplot2::scale_fill_manual(values = .getAestheticValues(n = fillLength, selectionKey = plotConfiguration$ribbons$fill, aesthetic = "fill")) +
-    ggplot2::scale_color_manual(values = .getAestheticValues(n = colorLength, selectionKey = plotConfiguration$ribbons$color, aesthetic = "color"))
-
-  # If variable is legendLabel, remove it from legend
-  if (isIncluded(fillVariable, "legendLabels")) {
-    plotObject <- plotObject + ggplot2::guides(fill = "none")
-  }
-  if (isIncluded(colorVariable, "legendLabels")) {
-    plotObject <- plotObject + ggplot2::guides(color = "none")
-  }
+  plotObject <- .updateAesProperties(
+    plotObject,
+    plotConfigurationProperty = "ribbons",
+    propertyNames = c("color", "fill"),
+    data = mapData,
+    mapLabels = mapLabels
+  )
   return(plotObject)
 }
 
@@ -132,7 +118,14 @@ plotBoxWhisker <- function(data,
   # Convert the mapping into characters usable by aes_string
   mapLabels <- .getAesStringMapping(dataMapping)
 
-  # addScatter cannot be used in this case,
+  aestheticValues <- .getAestheticValuesFromConfiguration(
+    n = 1,
+    position = 0,
+    plotConfigurationProperty = plotObject$plotConfiguration$points,
+    propertyNames = c("size", "alpha", "shape", "color")
+  )
+
+  # addScatterLayer cannot be used in this case,
   # because position dodge is needed to align boxes and outlier points
   # no matter the number of groups, the value of 0.9 will be always fix
   # otherwise, points won't be centered anymore
@@ -147,9 +140,10 @@ plotBoxWhisker <- function(data,
         group = mapLabels$fill,
         color = mapLabels$color
       ),
-      size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$size, position = 0, aesthetic = "size"),
-      shape = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$shape, position = 0, aesthetic = "shape"),
-      color = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$color, position = 0, aesthetic = "color"),
+      size = aestheticValues$size,
+      shape = aestheticValues$shape,
+      color = aestheticValues$color,
+      alpha = aestheticValues$alpha,
       show.legend = TRUE,
       na.rm = TRUE,
       position = position_dodge(width = 0.9)
@@ -162,9 +156,10 @@ plotBoxWhisker <- function(data,
         group = mapLabels$fill,
         color = mapLabels$color
       ),
-      size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$size, position = 0, aesthetic = "size"),
-      shape = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$shape, position = 0, aesthetic = "shape"),
-      color = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$color, position = 0, aesthetic = "color"),
+      size = aestheticValues$size,
+      shape = aestheticValues$shape,
+      color = aestheticValues$color,
+      alpha = aestheticValues$alpha,
       show.legend = TRUE,
       na.rm = TRUE,
       position = position_dodge(width = 0.9)

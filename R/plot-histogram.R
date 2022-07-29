@@ -43,11 +43,7 @@ plotHistogram <- function(data = NULL,
                           distribution = NULL,
                           plotConfiguration = NULL,
                           plotObject = NULL) {
-  validateIsNumeric(bins, nullAllowed = TRUE)
-  validateIsNumeric(binwidth, nullAllowed = TRUE)
-  validateIsLogical(stack, nullAllowed = TRUE)
-  validateIsIncluded(distribution, c("normal", "logNormal", "none"), nullAllowed = TRUE)
-
+  #----- Validation and formatting of input arguments -----
   if (is.null(data)) {
     validateIsNumeric(x)
     data <- data.frame(x = x)
@@ -56,45 +52,50 @@ plotHistogram <- function(data = NULL,
       data = data
     )
   }
-  dataMapping <- dataMapping %||% HistogramDataMapping$new(data = data)
-  plotConfiguration <- plotConfiguration %||% HistogramPlotConfiguration$new(
-    data = data,
-    metaData = metaData,
-    dataMapping = dataMapping
-  )
-
-  validateIsOfType(dataMapping, "HistogramDataMapping")
-  validateIsOfType(plotConfiguration, "HistogramPlotConfiguration")
+  validateIsNotEmpty(data)
   validateIsOfType(data, "data.frame")
-  validateIsOfType(plotObject, "ggplot", nullAllowed = TRUE)
+  dataMapping <- .setDataMapping(dataMapping, HistogramDataMapping, data)
 
-  # Overwrites plotConfiguration and dataMapping if some inputs are not null
+  # Update dataMapping if inputs provided by user
+  validateIsNumeric(bins, nullAllowed = TRUE)
+  validateIsNumeric(binwidth, nullAllowed = TRUE)
+  validateIsLogical(stack, nullAllowed = TRUE)
+  validateIsIncluded(distribution, c("normal", "logNormal", "none"), nullAllowed = TRUE)
+
   dataMapping$stack <- stack %||% dataMapping$stack
   dataMapping$distribution <- distribution %||% dataMapping$distribution
   dataMapping$bins <- bins %||% dataMapping$bins
   dataMapping$binwidth <- binwidth %||% dataMapping$binwidth
 
-  plotObject <- plotObject %||% initializePlot(plotConfiguration)
+  plotConfiguration <- .setPlotConfiguration(
+    plotConfiguration, HistogramPlotConfiguration,
+    data, metaData, dataMapping
+  )
+  plotObject <- .setPlotObject(plotObject, plotConfiguration)
 
-  if (nrow(data) == 0) {
-    warning(messages$errorNrowData("Histogram"))
-    return(plotObject)
-  }
-
-  # Get transformed data from mapping and convert labels into characters usable by aes_string
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- .getAesStringMapping(dataMapping)
 
+  #----- Build layers of molecule plot -----
+  # position defines if bars are stacked or plotted side by side
   position <- ggplot2::position_nudge()
   if (dataMapping$stack) {
     position <- ggplot2::position_stack()
   }
 
+  # If argument bins is of length > 1,
+  # bins corresponds to bin edges instead of number of bins
   edges <- NULL
   if (length(dataMapping$bins) > 1) {
     edges <- dataMapping$bins
   }
 
+  aestheticValues <- .getAestheticValuesFromConfiguration(
+    n = 1,
+    plotConfigurationProperty = plotObject$plotConfiguration$ribbons,
+    propertyNames = c("color", "size", "alpha", "linetype")
+  )
+  # 1- Histogram
   plotObject <- plotObject +
     ggplot2::geom_histogram(
       data = mapData,
@@ -106,16 +107,24 @@ plotHistogram <- function(data = NULL,
       bins = dataMapping$bins,
       binwidth = dataMapping$binwidth,
       breaks = edges,
-      size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$size, position = 0, aesthetic = "size"),
-      color = .getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$color, position = 0, aesthetic = "color"),
-      alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$alpha, position = 0, aesthetic = "alpha")
+      size = aestheticValues$size,
+      color = aestheticValues$color,
+      linetype = aestheticValues$linetype,
+      alpha = aestheticValues$alpha
     )
 
   # If distribution is provided by dataMapping, get median and distribution of the data
   fitData <- .getDistributionFit(mapData, dataMapping)
   fitMedian <- .getDistributionMed(mapData, dataMapping)
 
-  if (!isOfLength(fitData, 0)) {
+  aestheticValues <- .getAestheticValuesFromConfiguration(
+    n = 1,
+    plotConfigurationProperty = plotObject$plotConfiguration$lines,
+    propertyNames = c("size", "alpha")
+  )
+
+  # 2- Lines of distribution fit
+  if (!isEmpty(fitData)) {
     plotObject <- plotObject +
       ggplot2::geom_line(
         data = fitData,
@@ -125,21 +134,38 @@ plotHistogram <- function(data = NULL,
           color = "legendLabels",
           linetype = "legendLabels"
         ),
-        size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = 0, aesthetic = "size")
+        size = aestheticValues$size,
+        alpha = aestheticValues$alpha
       )
   }
 
-  # Include vertical lines
+  # 3- Vertical lines of median
   for (lineIndex in seq_along(fitMedian)) {
-    # position corresponds to the number of layer lines already added
-    eval(.parseAddLineLayer("vertical", fitMedian[lineIndex], lineIndex - 1))
+    plotObject <- .addLineLayer(
+      plotObject,
+      type = "vertical",
+      value = fitMedian[lineIndex],
+      # position corresponds to the number of line layers already added
+      position = lineIndex - 1
+    )
   }
 
-  # Define fill based on plotConfiguration$points properties
-  eval(.parseUpdateAestheticProperty(AestheticProperties$fill, "ribbons"))
-  eval(.parseUpdateAestheticProperty(AestheticProperties$color, "lines"))
-  eval(.parseUpdateAestheticProperty(AestheticProperties$linetype, "lines"))
-  eval(.parseUpdateAxes())
+  #----- Update properties using ggplot2::scale functions -----
+  plotObject <- .updateAesProperties(
+    plotObject,
+    plotConfigurationProperty = "ribbons",
+    propertyNames = "fill",
+    data = mapData,
+    mapLabels = mapLabels
+  )
+  plotObject <- .updateAesProperties(
+    plotObject,
+    plotConfigurationProperty = "lines",
+    propertyNames = c("color", "linetype"),
+    data = mapData,
+    mapLabels = mapLabels
+  )
+  plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }
 
