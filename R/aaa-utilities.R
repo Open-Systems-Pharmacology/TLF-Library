@@ -100,4 +100,3 @@
   try(suppressMessages(plotObject <- setYAxis(plotObject)))
   return(plotObject)
 }
-
