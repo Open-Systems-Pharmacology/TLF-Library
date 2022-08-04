@@ -18,27 +18,27 @@ ObservedDataMapping <- R6::R6Class(
     #' @description Create a new `ObservedDataMapping` object
     #' @param x Name of x variable to map
     #' @param y Name of y variable to map
-    #' @param group R6 class `Grouping` object or its input
-    #' @param color R6 class `Grouping` object or its input
-    #' @param shape R6 class `Grouping` object or its input
-    #' @param data data.frame to map used by `.smartMapping`
-    #' @param uncertainty mapping error bars around scatter points.
-    #' Deprecated parameter replaced by `error`.
-    #' @param error mapping error bars around scatter points
     #' @param ymin mapping lower end of error bars around scatter points
     #' @param ymax mapping upper end of error bars around scatter points
+    #' @param color R6 class `Grouping` object or its input
+    #' @param shape R6 class `Grouping` object or its input
+    #' @param group R6 class `Grouping` object or its input
+    #' @param error mapping error bars around scatter points
+    #' @param uncertainty mapping error bars around scatter points.
+    #' Deprecated parameter replaced by `error`.
     #' @param mdv mapping missing dependent variable
+    #' @param data data.frame to map used by `.smartMapping`
     #' @return A new `ObservedDataMapping` object
     initialize = function(x,
                           y,
-                          uncertainty = NULL,
-                          error = NULL,
                           ymin = NULL,
                           ymax = NULL,
-                          mdv = NULL,
                           color = NULL,
                           shape = NULL,
                           group = NULL,
+                          error = NULL,
+                          uncertainty = NULL,
+                          mdv = NULL,
                           data = NULL) {
       validateIsString(uncertainty, nullAllowed = TRUE)
       validateIsString(error, nullAllowed = TRUE)

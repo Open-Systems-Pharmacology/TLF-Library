@@ -57,14 +57,14 @@ Create a new \code{ObservedDataMapping} object
 \if{html}{\out{<div class="r">}}\preformatted{ObservedDataMapping$new(
   x,
   y,
-  uncertainty = NULL,
-  error = NULL,
   ymin = NULL,
   ymax = NULL,
-  mdv = NULL,
   color = NULL,
   shape = NULL,
   group = NULL,
+  error = NULL,
+  uncertainty = NULL,
+  mdv = NULL,
   data = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -76,22 +76,22 @@ Create a new \code{ObservedDataMapping} object
 
 \item{\code{y}}{Name of y variable to map}
 
-\item{\code{uncertainty}}{mapping error bars around scatter points.
-Deprecated parameter replaced by \code{error}.}
-
-\item{\code{error}}{mapping error bars around scatter points}
-
 \item{\code{ymin}}{mapping lower end of error bars around scatter points}
 
 \item{\code{ymax}}{mapping upper end of error bars around scatter points}
-
-\item{\code{mdv}}{mapping missing dependent variable}
 
 \item{\code{color}}{R6 class \code{Grouping} object or its input}
 
 \item{\code{shape}}{R6 class \code{Grouping} object or its input}
 
 \item{\code{group}}{R6 class \code{Grouping} object or its input}
+
+\item{\code{error}}{mapping error bars around scatter points}
+
+\item{\code{uncertainty}}{mapping error bars around scatter points.
+Deprecated parameter replaced by \code{error}.}
+
+\item{\code{mdv}}{mapping missing dependent variable}
 
 \item{\code{data}}{data.frame to map used by \code{.smartMapping}}
 }
