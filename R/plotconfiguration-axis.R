@@ -79,6 +79,7 @@ AxisConfiguration <- R6::R6Class(
     #' Use enum `Scaling` to access predefined scales.
     #' @param ticks numeric vector or function defining where to position axis ticks
     #' @param ticklabels character vector or function defining what to print on axis ticks
+    #' @param minorTicks numeric vector or function defining where to position minor axis ticks
     #' @param font `Font` object defining the font of ticklabels
     #' @param expand logical defining if data is expanded until axis.
     #' If `TRUE`, data is expanded until axis
@@ -88,6 +89,7 @@ AxisConfiguration <- R6::R6Class(
                           scale = Scaling$lin,
                           ticks = NULL,
                           ticklabels = NULL,
+                          minorTicks = NULL,
                           font = NULL,
                           expand = FALSE) {
       validateIsNumeric(limits, nullAllowed = TRUE)
@@ -99,6 +101,7 @@ AxisConfiguration <- R6::R6Class(
       private$.scale <- .createPlotScale(scale)
       private$.ticks <- .createPlotTicks(ticks)
       private$.ticklabels <- .createPlotTickLabels(ticklabels)
+      private$.minorTicks <- .createPlotTicks(minorTicks)
       private$.expand <- expand
 
       # Default axis font will use theme
@@ -146,6 +149,21 @@ AxisConfiguration <- R6::R6Class(
         "ln" = tlfEnv$lnTicks,
         private$.ticks
       )
+    },
+    
+    #' @description Get tick values for pretty default log plots
+    #' @return User defined tick values or tlf default ticks
+    prettyMinorTicks = function() {
+      # A waiver is a ggplot2 "flag" object, similar to NULL,
+      # that indicates the calling function should just use the default value
+      if (!isOfType(private$.minorTicks, "waiver")) {
+        return(private$.minorTicks)
+      }
+      # Default tick values as a function of scale
+      if(isIncluded(private$.scale, Scaling$log)){
+        return(tlfEnv$logMinorTicks)
+      }
+      return(private$.minorTicks)
     },
 
     #' @description Get tick labels for pretty default log plots
@@ -200,6 +218,14 @@ AxisConfiguration <- R6::R6Class(
       private$.ticks <- .createPlotTicks(value)
       return(invisible())
     },
+    #' @field minorTicks function or values defining where axis minor ticks are placed
+    minorTicks = function(value) {
+      if (missing(value)) {
+        return(private$.minorTicks)
+      }
+      private$.minorTicks <- .createPlotTicks(value)
+      return(invisible())
+    },
     #' @field ticklabels function or values defining the axis tick labels
     ticklabels = function(value) {
       if (missing(value)) {
@@ -243,6 +269,7 @@ AxisConfiguration <- R6::R6Class(
     .scale = NULL,
     .ticks = NULL,
     .ticklabels = NULL,
+    .minorTicks = NULL,
     .font = NULL,
     .expand = NULL
   )
@@ -286,6 +313,7 @@ XAxisConfiguration <- R6::R6Class(
           ggplot2::scale_x_continuous(
             trans = self$ggplotScale(),
             breaks = self$prettyTicks(),
+            minor_breaks = self$prettyMinorTicks(),
             labels = self$prettyTickLabels(),
             expand = self$ggplotExpansion(),
             oob = .removeInfiniteValues
@@ -344,6 +372,7 @@ YAxisConfiguration <- R6::R6Class(
           ggplot2::scale_y_continuous(
             trans = self$ggplotScale(),
             breaks = self$prettyTicks(),
+            minor_breaks = self$prettyMinorTicks(),
             labels = self$prettyTickLabels(),
             expand = self$ggplotExpansion(),
             oob = .removeInfiniteValues
