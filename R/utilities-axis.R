@@ -5,6 +5,7 @@
 #' @param limits Optional numeric values of axis limits
 #' @param ticks Optional values or function for axis ticks
 #' @param ticklabels Optional values or function for axis ticklabels
+#' @param minorTicks Optional values or function for axis minor ticks
 #' @param font A `Font` object  defining font of ticklabels
 #' @param expand Logical defining if data is expanded until axis
 #' @return A `ggplot` object
@@ -28,6 +29,7 @@ setXAxis <- function(plotObject,
                      limits = NULL,
                      ticks = NULL,
                      ticklabels = NULL,
+                     minorTicks = NULL,
                      font = NULL,
                      expand = NULL) {
   validateIsOfType(plotObject, "ggplot")
@@ -43,7 +45,7 @@ setXAxis <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$xAxis
   xAxis <- newPlotObject$plotConfiguration$xAxis
-  eval(.parseVariableToObject("xAxis", c("limits", "scale", "ticks", "ticklabels", "font", "expand"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("xAxis", c("limits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
   newPlotObject <- xAxis$updatePlot(newPlotObject, ylim = newPlotObject$plotConfiguration$yAxis$limits)
   return(newPlotObject)
 }
@@ -72,6 +74,7 @@ setYAxis <- function(plotObject,
                      limits = NULL,
                      ticks = NULL,
                      ticklabels = NULL,
+                     minorTicks = NULL,
                      font = NULL,
                      expand = NULL) {
   validateIsOfType(plotObject, "ggplot")
@@ -87,7 +90,7 @@ setYAxis <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$yAxis
   yAxis <- newPlotObject$plotConfiguration$yAxis
-  eval(.parseVariableToObject("yAxis", c("limits", "scale", "ticks", "ticklabels", "font", "expand"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("yAxis", c("limits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
   newPlotObject <- yAxis$updatePlot(newPlotObject, xlim = newPlotObject$plotConfiguration$xAxis$limits)
   return(newPlotObject)
 }
