@@ -10,6 +10,7 @@ setYAxis(
   limits = NULL,
   ticks = NULL,
   ticklabels = NULL,
+  minorTicks = NULL,
   font = NULL,
   expand = NULL
 )
@@ -24,6 +25,8 @@ setYAxis(
 \item{ticks}{Optional values or function for axis ticks}
 
 \item{ticklabels}{Optional values or function for axis ticklabels}
+
+\item{minorTicks}{Optional values or function for axis minor ticks}
 
 \item{font}{A \code{Font} object  defining font of ticklabels}
 

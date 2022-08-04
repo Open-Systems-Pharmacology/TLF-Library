@@ -17,11 +17,12 @@ R6 class defining the configuration of X-axis
 }
 }
 \if{html}{\out{
-<details open><summary>Inherited methods</summary>
+<details><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="ggplotExpansion"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-ggplotExpansion'><code>tlf::AxisConfiguration$ggplotExpansion()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="ggplotScale"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-ggplotScale'><code>tlf::AxisConfiguration$ggplotScale()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="initialize"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-initialize'><code>tlf::AxisConfiguration$initialize()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="prettyMinorTicks"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-prettyMinorTicks'><code>tlf::AxisConfiguration$prettyMinorTicks()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="prettyTickLabels"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-prettyTickLabels'><code>tlf::AxisConfiguration$prettyTickLabels()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="prettyTicks"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-prettyTicks'><code>tlf::AxisConfiguration$prettyTicks()</code></a></span></li>
 </ul>
