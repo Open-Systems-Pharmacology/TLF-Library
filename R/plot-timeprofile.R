@@ -184,18 +184,21 @@ plotTimeProfile <- function(data = NULL,
       fill = data.frame(
         names = levels(mapData[, simColumnNames$fill]),
         labels = levels(mapData[, simColumnNames$fill]),
+        colorNames = .getColorNamesForFirstAesValues(mapData, simColumnNames, "fill"),
         values = simFillValues %||% NA,
         stringsAsFactors = FALSE
       ),
       linetype = data.frame(
         names = levels(mapData[, simColumnNames$linetype]),
         labels = levels(mapData[, simColumnNames$linetype]),
+        colorNames = .getColorNamesForFirstAesValues(mapData, simColumnNames, "linetype"),
         values = simLinetypeValues %||% "blank",
         stringsAsFactors = FALSE
       ),
       shape = data.frame(
         names = levels(mapData[, simColumnNames$color]),
         labels = levels(mapData[, simColumnNames$color]),
+        colorNames = levels(mapData[, simColumnNames$color]),
         values = " ",
         stringsAsFactors = FALSE
       )
@@ -273,18 +276,21 @@ plotTimeProfile <- function(data = NULL,
       fill = data.frame(
         names = levels(mapObservedData[, obsColumnNames$color]),
         labels = levels(mapObservedData[, obsColumnNames$color]),
+        colorNames = levels(mapObservedData[, obsColumnNames$color]),
         values = NA,
         stringsAsFactors = FALSE
       ),
       linetype = data.frame(
         names = levels(mapObservedData[, obsColumnNames$color]),
         labels = levels(mapObservedData[, obsColumnNames$color]),
+        colorNames = levels(mapObservedData[, obsColumnNames$color]),
         values = "blank",
         stringsAsFactors = FALSE
       ),
       shape = data.frame(
         names = levels(mapObservedData[, obsColumnNames$shape]),
         labels = levels(mapObservedData[, obsColumnNames$shape]),
+        colorNames = .getColorNamesForFirstAesValues(mapObservedData, obsColumnNames, "shape"),
         values = obsShapeValues %||% NA,
         stringsAsFactors = FALSE
       )
@@ -329,18 +335,21 @@ plotTimeProfile <- function(data = NULL,
     fill = data.frame(
       names = levels(mapData[, simColumnNames$fill]),
       labels = levels(mapData[, simColumnNames$fill]),
+      colorNames = .getColorNamesForFirstAesValues(mapData, simColumnNames, "fill"),
       values = simFillValues %||% NA,
       stringsAsFactors = FALSE
     ),
     linetype = data.frame(
       names = levels(mapData[, simColumnNames$linetype]),
       labels = levels(mapData[, simColumnNames$linetype]),
+      colorNames = .getColorNamesForFirstAesValues(mapData, simColumnNames, "linetype"),
       values = simLinetypeValues %||% "blank",
       stringsAsFactors = FALSE
     ),
     shape = data.frame(
       names = levels(mapObservedData[, obsColumnNames$shape]),
       labels = levels(mapObservedData[, obsColumnNames$shape]),
+      colorNames = .getColorNamesForFirstAesValues(mapObservedData, obsColumnNames, "shape"),
       values = obsShapeValues %||% NA,
       stringsAsFactors = FALSE
     )
@@ -367,42 +376,59 @@ plotTimeProfile <- function(data = NULL,
 #' @return A `ggplot` object
 #' @export
 updateTimeProfileLegend <- function(plotObject, caption) {
-  # Update defined aesthetic properties
-  isDefinedLinetype <- caption$linetype$values != "blank"
-  isDefinedShape <- caption$shape$values != " "
-  isDefinedFill <- !is.na(caption$fill$values)
-
-  if (any(isDefinedLinetype)) {
-    suppressMessages(
-      plotObject <- plotObject +
-        ggplot2::scale_linetype_manual(
-          breaks = caption$linetype$names[isDefinedLinetype],
-          labels = caption$linetype$labels[isDefinedLinetype],
-          values = caption$linetype$values[isDefinedLinetype]
-        )
+  # Apply ggplot2 scale functions only to defined/mapped aesthetics
+  # values for undefined aesthetics are set to blank symbol, linetype, etc.
+  blankValues <- list(
+    shape = " ",
+    linetype = "blank",
+    fill = NA
+  )
+  scaleFunction <- list(
+    shape = ggplot2::scale_shape_manual,
+    linetype = ggplot2::scale_linetype_manual,
+    fill = ggplot2::scale_fill_manual
+  )
+  
+  unDefinedNames <- list()
+  for(property in c("shape", "linetype", "fill")){
+    # Use suppressMessages to prevent ggplot2 to 
+    # throw message that scale was updated
+      suppressMessages(
+        plotObject <- plotObject +
+          scaleFunction[[property]](
+            breaks = caption[[property]]$names,
+            labels = caption[[property]]$labels,
+            values = caption[[property]]$values
+          )
+      )
+    # Get legend names that are not scaled but in final legend
+    unDefinedNames[[property]] <- setdiff(
+      caption$color$names, 
+      caption[[property]]$colorNames
     )
-  }
-  if (any(isDefinedShape)) {
-    suppressMessages(
-      plotObject <- plotObject +
-        ggplot2::scale_shape_manual(
-          breaks = caption$shape$names[isDefinedShape],
-          labels = caption$shape$labels[isDefinedShape],
-          values = caption$shape$values[isDefinedShape]
-        )
+    # Fill in the caption guide for shape, linetype and fill
+    caption[[property]] <- rbind.data.frame(
+      caption[[property]],
+      data.frame(
+        names = unDefinedNames[[property]], 
+        labels = unDefinedNames[[property]],
+        colorNames = unDefinedNames[[property]], 
+        values = rep(blankValues[[property]], length(unDefinedNames[[property]]))
+      ),
+      stringsAsFactors = FALSE
     )
+    # Keep only names and order provided by color legend
+    captionOrder <- sapply(
+      caption$color$names,
+      function(colorName){
+        head(which(caption[[property]]$colorNames == colorName), 1)
+        }
+      )
+    caption[[property]] <- caption[[property]][captionOrder, ]
   }
-  if (any(isDefinedFill)) {
-    suppressMessages(
-      plotObject <- plotObject +
-        ggplot2::scale_fill_manual(
-          breaks = caption$fill$names[isDefinedFill],
-          labels = caption$fill$labels[isDefinedFill],
-          values = caption$fill$values[isDefinedFill]
-        )
-    )
-  }
-
+  
+  # Update color scale and use color caption 
+  # as reference for displaying final legend
   suppressMessages(
     plotObject <- plotObject +
       ggplot2::scale_color_manual(
@@ -415,10 +441,15 @@ updateTimeProfileLegend <- function(plotObject, caption) {
         color = ggplot2::guide_legend(
           title = plotObject$plotConfiguration$legend$title$text,
           title.theme = plotObject$plotConfiguration$legend$title$createPlotFont(),
-          override.aes = list(fill = caption$fill$values, linetype = caption$linetype$values)
+          override.aes = list(
+            shape = caption$shape$values,
+            fill = caption$fill$values,
+            linetype = caption$linetype$values
+            )
         )
       )
   )
   plotObject$plotConfiguration$legend$caption <- caption
   return(plotObject)
 }
+

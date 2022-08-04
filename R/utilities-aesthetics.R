@@ -152,6 +152,23 @@
   return(variableLengths)
 }
 
+#' @title .getColorNamesForFirstAesValues
+#' @description Get the first found value of map color for another map property
+#' @param data A data.frame with labels mapped to properties and obtained from a `DataMapping` object
+#' @param columnNames List of mapped column names of `data` obtained
+#' @param propertyName Name of aesthetic property (e.g. `"shape"`...)
+#' @return Selected levels of `data[,columnNames$color]`
+#' @keywords internal
+.getColorNamesForFirstAesValues <- function(data, columnNames, propertyName){
+  colorNames <- sapply(
+    levels(data[, columnNames[[propertyName]]]),
+    function(propertyLevel){
+      head(data[which(data[, columnNames[[propertyName]]] %in% propertyLevel), columnNames$color], 1)
+    }
+  )
+  return(colorNames) 
+}
+
 
 #' @title .updateAesProperties
 #' @description Updates the aesthetic properties of `plotObject`
