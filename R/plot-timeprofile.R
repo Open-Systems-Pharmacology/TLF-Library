@@ -88,7 +88,8 @@ plotTimeProfile <- function(data = NULL,
             x = mapLabels$x,
             ymin = mapLabels$ymin,
             ymax = mapLabels$ymax,
-            fill = mapLabels$fill
+            fill = mapLabels$fill,
+            group = mapLabels$linetype
           ),
           alpha = aestheticValues$alpha,
           na.rm = TRUE,
