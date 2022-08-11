@@ -108,6 +108,7 @@ plotResVsPred <- function(data,
     data = mapData,
     mapLabels = mapLabels
   )
+  plotObject <- .updateSymmetricAxes(plotObject, mapData, dataMapping)
   plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }

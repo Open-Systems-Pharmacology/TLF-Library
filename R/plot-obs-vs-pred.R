@@ -137,6 +137,8 @@ plotObsVsPred <- function(data,
     data = mapData,
     mapLabels = mapLabels
   )
+  # Update axes limits if option symmetric and user did not define specific limits
+  plotObject <- .updateSameAxes(plotObject, mapData, dataMapping)
   plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }

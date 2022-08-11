@@ -64,6 +64,7 @@ Collate:
     'error-checks.R'
     'font.R'
     'global-vars.R'
+    'helpers.R'
     'histogram-datamapping.R'
     'label.R'
     'messages.R'

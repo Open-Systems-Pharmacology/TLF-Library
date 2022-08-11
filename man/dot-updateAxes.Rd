@@ -6,6 +6,9 @@
 \usage{
 .updateAxes(plotObject)
 }
+\arguments{
+\item{plotObject}{A \code{ggplot} object}
+}
 \value{
 A \code{ggplot} object
 }

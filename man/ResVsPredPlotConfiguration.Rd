@@ -9,6 +9,13 @@ R6 class defining the configuration of a \code{ggplot} object for Res vs Pred/Ti
 \section{Super class}{
 \code{tlf::PlotConfiguration} -> \code{ResVsPredPlotConfiguration}
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{defaultSymmetricAxes}}{Default option setting symmetric xAxis and/or yAxis limits when creating a \code{ResVsPredPlotConfiguration} object}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
