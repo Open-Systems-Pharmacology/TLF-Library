@@ -150,7 +150,7 @@ AxisConfiguration <- R6::R6Class(
         private$.ticks
       )
     },
-    
+
     #' @description Get tick values for pretty default log plots
     #' @return User defined tick values or tlf default ticks
     prettyMinorTicks = function() {
@@ -160,7 +160,7 @@ AxisConfiguration <- R6::R6Class(
         return(private$.minorTicks)
       }
       # Default tick values as a function of scale
-      if(isIncluded(private$.scale, Scaling$log)){
+      if (isIncluded(private$.scale, Scaling$log)) {
         return(tlfEnv$logMinorTicks)
       }
       return(private$.minorTicks)
