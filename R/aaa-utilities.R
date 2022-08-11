@@ -110,11 +110,11 @@
 #' @return A `ggplot` object
 #' @keywords internal
 .updateSameAxes <- function(plotObject, data, dataMapping) {
-  if(!all(
+  if (!all(
     plotObject$plotConfiguration$defaultSymmetricAxes,
     isEmpty(plotObject$plotConfiguration$xAxis$limits),
     isEmpty(plotObject$plotConfiguration$yAxis$limits)
-  )){
+  )) {
     return(plotObject)
   }
   limits <- .getSameLimitsFromMapping(data, dataMapping)
@@ -131,14 +131,13 @@
 #' @return A `ggplot` object
 #' @keywords internal
 .updateSymmetricAxes <- function(plotObject, data, dataMapping) {
-  if(!all(
+  if (!all(
     plotObject$plotConfiguration$defaultSymmetricAxes,
     isEmpty(plotObject$plotConfiguration$yAxis$limits)
-  )){
+  )) {
     return(plotObject)
   }
   limits <- getSymmetricLimits(data[, dataMapping$y])
   plotObject$plotConfiguration$yAxis$limits <- limits
   return(plotObject)
 }
-

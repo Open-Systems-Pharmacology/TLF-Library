@@ -159,14 +159,14 @@
 #' @param propertyName Name of aesthetic property (e.g. `"shape"`...)
 #' @return Selected levels of `data[,columnNames$color]`
 #' @keywords internal
-.getColorNamesForFirstAesValues <- function(data, columnNames, propertyName){
+.getColorNamesForFirstAesValues <- function(data, columnNames, propertyName) {
   colorNames <- sapply(
     levels(data[, columnNames[[propertyName]]]),
-    function(propertyLevel){
+    function(propertyLevel) {
       head(data[which(data[, columnNames[[propertyName]]] %in% propertyLevel), columnNames$color], 1)
     }
   )
-  return(colorNames) 
+  return(colorNames)
 }
 
 

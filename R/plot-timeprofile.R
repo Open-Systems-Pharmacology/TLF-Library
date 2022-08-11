@@ -389,31 +389,31 @@ updateTimeProfileLegend <- function(plotObject, caption) {
     linetype = ggplot2::scale_linetype_manual,
     fill = ggplot2::scale_fill_manual
   )
-  
+
   unDefinedNames <- list()
-  for(property in c("shape", "linetype", "fill")){
-    # Use suppressMessages to prevent ggplot2 to 
+  for (property in c("shape", "linetype", "fill")) {
+    # Use suppressMessages to prevent ggplot2 to
     # throw message that scale was updated
-      suppressMessages(
-        plotObject <- plotObject +
-          scaleFunction[[property]](
-            breaks = caption[[property]]$names,
-            labels = caption[[property]]$labels,
-            values = caption[[property]]$values
-          )
-      )
+    suppressMessages(
+      plotObject <- plotObject +
+        scaleFunction[[property]](
+          breaks = caption[[property]]$names,
+          labels = caption[[property]]$labels,
+          values = caption[[property]]$values
+        )
+    )
     # Get legend names that are not scaled but in final legend
     unDefinedNames[[property]] <- setdiff(
-      caption$color$names, 
+      caption$color$names,
       caption[[property]]$colorNames
     )
     # Fill in the caption guide for shape, linetype and fill
     caption[[property]] <- rbind.data.frame(
       caption[[property]],
       data.frame(
-        names = unDefinedNames[[property]], 
+        names = unDefinedNames[[property]],
         labels = unDefinedNames[[property]],
-        colorNames = unDefinedNames[[property]], 
+        colorNames = unDefinedNames[[property]],
         values = rep(blankValues[[property]], length(unDefinedNames[[property]]))
       ),
       stringsAsFactors = FALSE
@@ -421,14 +421,14 @@ updateTimeProfileLegend <- function(plotObject, caption) {
     # Keep only names and order provided by color legend
     captionOrder <- sapply(
       caption$color$names,
-      function(colorName){
+      function(colorName) {
         head(which(caption[[property]]$colorNames == colorName), 1)
-        }
-      )
+      }
+    )
     caption[[property]] <- caption[[property]][captionOrder, ]
   }
-  
-  # Update color scale and use color caption 
+
+  # Update color scale and use color caption
   # as reference for displaying final legend
   suppressMessages(
     plotObject <- plotObject +
@@ -446,11 +446,10 @@ updateTimeProfileLegend <- function(plotObject, caption) {
             shape = caption$shape$values,
             fill = caption$fill$values,
             linetype = caption$linetype$values
-            )
+          )
         )
       )
   )
   plotObject$plotConfiguration$legend$caption <- caption
   return(plotObject)
 }
-

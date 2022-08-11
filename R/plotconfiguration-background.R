@@ -55,8 +55,8 @@ BackgroundConfiguration <- R6::R6Class(
         panel.grid.major.x = private$.xGrid$createPlotElement(),
         panel.grid.major.y = private$.yGrid$createPlotElement(),
         # Minor grid is same as Major grid but less thick
-        panel.grid.minor.x = private$.xGrid$createPlotElement(size = as.numeric(private$.xGrid$size)/2),
-        panel.grid.minor.y = private$.yGrid$createPlotElement(size = as.numeric(private$.yGrid$size)/2)
+        panel.grid.minor.x = private$.xGrid$createPlotElement(size = as.numeric(private$.xGrid$size) / 2),
+        panel.grid.minor.y = private$.yGrid$createPlotElement(size = as.numeric(private$.yGrid$size) / 2)
       )
       return(plotObject)
     }

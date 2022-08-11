@@ -382,7 +382,6 @@ getLinesFromFoldDistance <- function(foldDistance) {
 #' @param data A data.frame with labels mapped to properties and obtained from a `DataMapping` object
 #' @param dataMapping A `ObsVsPredDataMapping` object
 #' @keywords internal
-.getSameLimitsFromMapping <- function(data, dataMapping){
-  getSameLimits(data[,dataMapping$x], data[,dataMapping$y], data[,dataMapping$xmin], data[,dataMapping$xmax])
+.getSameLimitsFromMapping <- function(data, dataMapping) {
+  getSameLimits(data[, dataMapping$x], data[, dataMapping$y], data[, dataMapping$xmin], data[, dataMapping$xmax])
 }
-
