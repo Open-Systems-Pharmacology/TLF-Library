@@ -168,7 +168,7 @@ setDefaultWatermark <- function(watermark = NULL) {
 tlfEnv$logTicks <- 10^seq(-10, 10)
 tlfEnv$lnTicks <- exp(seq(-10, 10))
 # Log minor ticks for every integer
-tlfEnv$logMinorTicks <- rep(seq(1,9), 21)*rep(10^seq(-10, 10), each = 9)
+tlfEnv$logMinorTicks <- rep(seq(1, 9), 21) * rep(10^seq(-10, 10), each = 9)
 
 #' @title setDefaultLogTicks
 #' @description Set default values for log ticks
