@@ -92,6 +92,7 @@
 
 #' @title .updateAxes
 #' @description Updates the plot axes
+#' @param plotObject A `ggplot` object
 #' @return A `ggplot` object
 #' @keywords internal
 .updateAxes <- function(plotObject) {
@@ -100,3 +101,44 @@
   try(suppressMessages(plotObject <- setYAxis(plotObject)))
   return(plotObject)
 }
+
+#' @title .updateSameAxes
+#' @description Updates plot configuration axes to get same limits
+#' @param plotObject A `ggplot` object
+#' @param data A data.frame
+#' @param dataMapping A `DataMapping` object
+#' @return A `ggplot` object
+#' @keywords internal
+.updateSameAxes <- function(plotObject, data, dataMapping) {
+  if(!all(
+    plotObject$plotConfiguration$defaultSymmetricAxes,
+    isEmpty(plotObject$plotConfiguration$xAxis$limits),
+    isEmpty(plotObject$plotConfiguration$yAxis$limits)
+  )){
+    return(plotObject)
+  }
+  limits <- .getSameLimitsFromMapping(data, dataMapping)
+  plotObject$plotConfiguration$xAxis$limits <- limits
+  plotObject$plotConfiguration$yAxis$limits <- limits
+  return(plotObject)
+}
+
+#' @title .updateSymmetricAxes
+#' @description Updates plot configuration axes to get symmetric limits
+#' @param plotObject A `ggplot` object
+#' @param data A data.frame
+#' @param dataMapping A `DataMapping` object
+#' @return A `ggplot` object
+#' @keywords internal
+.updateSymmetricAxes <- function(plotObject, data, dataMapping) {
+  if(!all(
+    plotObject$plotConfiguration$defaultSymmetricAxes,
+    isEmpty(plotObject$plotConfiguration$yAxis$limits)
+  )){
+    return(plotObject)
+  }
+  limits <- getSymmetricLimits(data[, dataMapping$y])
+  plotObject$plotConfiguration$yAxis$limits <- limits
+  return(plotObject)
+}
+
