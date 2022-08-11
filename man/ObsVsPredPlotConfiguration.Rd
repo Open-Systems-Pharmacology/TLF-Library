@@ -20,6 +20,13 @@ Other PlotConfiguration classes:
 \section{Super class}{
 \code{tlf::PlotConfiguration} -> \code{ObsVsPredPlotConfiguration}
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{defaultSymmetricAxes}}{Default option setting symmetric xAxis and/or yAxis limits when creating a \code{ObsVsPredPlotConfiguration} object}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{

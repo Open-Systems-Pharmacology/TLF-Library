@@ -31,6 +31,8 @@ Other PlotConfiguration classes:
 \item{\code{defaultYScale}}{Default yAxis scale value when creating a \code{PlotConfiguration} object}
 
 \item{\code{defaultExpand}}{Default expand value when creating a \code{PlotConfiguration} object}
+
+\item{\code{defaultSymmetricAxes}}{Default option setting symmetric xAxis and/or yAxis limits when creating a \code{PlotConfiguration} object}
 }
 \if{html}{\out{</div>}}
 }

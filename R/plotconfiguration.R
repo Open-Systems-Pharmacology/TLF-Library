@@ -4,6 +4,7 @@
 #' @field defaultXScale Default xAxis scale value when creating a `PlotConfiguration` object
 #' @field defaultYScale Default yAxis scale value when creating a `PlotConfiguration` object
 #' @field defaultExpand Default expand value when creating a `PlotConfiguration` object
+#' @field defaultSymmetricAxes Default option setting symmetric xAxis and/or yAxis limits when creating a `PlotConfiguration` object
 #' @family PlotConfiguration classes
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-configuration.html>
@@ -17,6 +18,7 @@ PlotConfiguration <- R6::R6Class(
     defaultXScale = "lin",
     defaultYScale = "lin",
     defaultExpand = FALSE,
+    defaultSymmetricAxes = FALSE,
 
     #' @description Create a new `PlotConfiguration` object
     #' @param title character or `Label` object defining plot title
@@ -317,19 +319,27 @@ DDIRatioPlotConfiguration <- R6::R6Class(
 
 #' @title ObsVsPredPlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object for Obs vs Pred plots
+#' @field defaultSymmetricAxes Default option setting symmetric xAxis and/or yAxis limits when creating a `ObsVsPredPlotConfiguration` object
 #' @export
 #' @family PlotConfiguration classes
 ObsVsPredPlotConfiguration <- R6::R6Class(
   "ObsVsPredPlotConfiguration",
-  inherit = PlotConfiguration
+  inherit = PlotConfiguration,
+  public = list(
+    defaultSymmetricAxes = TRUE
+  )
 )
 
 #' @title ResVsPredPlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object for Res vs Pred/Time plots
+#' @field defaultSymmetricAxes Default option setting symmetric xAxis and/or yAxis limits when creating a `ResVsPredPlotConfiguration` object
 #' @export
 ResVsPredPlotConfiguration <- R6::R6Class(
   "ResVsPredPlotConfiguration",
-  inherit = PlotConfiguration
+  inherit = PlotConfiguration,
+  public = list(
+    defaultSymmetricAxes = TRUE
+  )
 )
 
 #' @title ResVsTimePlotConfiguration
