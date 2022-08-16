@@ -219,6 +219,23 @@ getPiTickLabels <- function(ticks) {
   return(piLabels)
 }
 
+#' @title getPercentileTickLabels
+#' @description Get ticklabels expressions for percentiles of normal distribution scale plots
+#' @param ticks numeric values of the ticks
+#' @return Expressions to use in `ticklabels` input parameter of `setXAxis` and `setYAxis` functions
+#' @examples
+#' ticks <- rnorm(5)
+#' getPercentileTickLabels(ticks)
+#'
+#' # Get percentile of normal distribution
+#' ticks <- qnorm(seq(1, 9) / 10)
+#' getPercentileTickLabels(ticks)
+#'
+#' @export
+getPercentileTickLabels <- function(ticks) {
+  return(paste0(round(100 * stats::pnorm(ticks), 3), "%"))
+}
+
 #' @title .removeInfiniteValues
 #' @description Censor/remove any values outside of range
 #' Caution, removing infinite values can cause issues with ribbons

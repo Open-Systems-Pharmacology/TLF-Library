@@ -17,6 +17,7 @@ Other PlotConfiguration classes:
 \code{\link{HistogramPlotConfiguration}},
 \code{\link{ObsVsPredPlotConfiguration}},
 \code{\link{PKRatioPlotConfiguration}},
+\code{\link{QQPlotConfiguration}},
 \code{\link{TimeProfilePlotConfiguration}},
 \code{\link{TornadoPlotConfiguration}}
 }

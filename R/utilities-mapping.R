@@ -274,7 +274,8 @@ DefaultDataMappingValues <- list(
   ),
   resVsPred = 0,
   tornado = 0,
-  histogram = 0
+  histogram = 0,
+  qqPlot = "StandardNormalQuantiles"
 )
 
 #' @title getLinesFromFoldDistance
