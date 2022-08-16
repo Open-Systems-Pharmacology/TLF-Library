@@ -248,7 +248,7 @@ Shapes <- list(
   "musicKey" = "\u266a",
   "hollowFlag" = "\u263a",
   "arrowLeft" = "\u2190",
-  "arrowRight" = "\u2193",
+  "arrowRight" = "\u2192",
   "arrowUp" = "\u2191",
   "arrowDown" = "\u2193",
   # No shape displayed
@@ -268,7 +268,8 @@ Shapes <- list(
 #' @family enum helpers
 #'
 #' @examples
-#' # Continuous linear scale
+#' # Continuous linear/identity scale
+#' Scaling$identity
 #' Scaling$lin
 #'
 #' # Continuous log10 scale
@@ -294,6 +295,7 @@ Shapes <- list(
 #'
 #' @export
 Scaling <- enum(c(
+  "identity",
   "lin",
   "log",
   "ln",
