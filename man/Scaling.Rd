@@ -5,7 +5,7 @@
 \alias{Scaling}
 \title{Scaling}
 \format{
-An object of class \code{list} of length 8.
+An object of class \code{list} of length 9.
 }
 \usage{
 Scaling
@@ -17,7 +17,8 @@ transformations. \code{ggplot2} includes more transformations than what is
 available in this enum.
 }
 \examples{
-# Continuous linear scale
+# Continuous linear/identity scale
+Scaling$identity
 Scaling$lin
 
 # Continuous log10 scale
