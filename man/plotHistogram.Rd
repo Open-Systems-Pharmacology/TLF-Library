@@ -70,6 +70,7 @@ Other molecule plots:
 \code{\link{plotDDIRatio}()},
 \code{\link{plotObsVsPred}()},
 \code{\link{plotPKRatio}()},
+\code{\link{plotQQ}()},
 \code{\link{plotResVsPred}()},
 \code{\link{plotResVsTime}()},
 \code{\link{plotTimeProfile}()},

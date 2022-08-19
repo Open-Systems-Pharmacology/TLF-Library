@@ -367,3 +367,22 @@ HistogramPlotConfiguration <- R6::R6Class(
     }
   )
 )
+
+#' @title QQPlotConfiguration
+#' @description R6 class defining the configuration of a `ggplot` object for Quantile-Quantile plots
+#' @export
+#' @family PlotConfiguration classes
+QQPlotConfiguration <- R6::R6Class(
+  "QQPlotConfiguration",
+  inherit = PlotConfiguration,
+  public = list(
+    #' @description Create a new `QQPlotConfiguration` object
+    #' @param xlabel QQ-plot default display is "Standard Normal Quantiles"
+    #' @param ... parameters inherited from `PlotConfiguration`
+    #' @return A new `QQPlotConfiguration` object
+    initialize = function(xlabel = "Standard Normal Quantiles",
+                          ...) {
+      super$initialize(xlabel = xlabel, ...)
+    }
+  )
+)
