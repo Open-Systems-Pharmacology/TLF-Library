@@ -36,7 +36,7 @@ plotQQ <- function(data = NULL,
     validateIsNumeric(y)
     data <- data.frame(y = y)
     dataMapping <- dataMapping %||% QQDataMapping$new(
-      y = ifNotNull(y, "y"),
+      y = "y",
       data = data
     )
   }
