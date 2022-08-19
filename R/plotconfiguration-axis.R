@@ -180,6 +180,7 @@ AxisConfiguration <- R6::R6Class(
         "log" = getLogTickLabels,
         "ln" = getLnTickLabels,
         "sqrt" = getSqrtTickLabels,
+        "percentiles" = getPercentileTickLabels,
         private$.ticklabels
       )
     }
