@@ -26,6 +26,7 @@ Description: An implementation of the Table, Listing and Figure concepts in R.
     This library provides a standardized approach to creating tables and graphs 
     based on conventions over configurations.
 License: GPL-2 | file LICENSE
+Language: en-US
 URL: https://github.com/open-systems-pharmacology/tlf-library
 BugReports: https://github.com/open-systems-pharmacology/tlf-library/issues
 Imports: 
