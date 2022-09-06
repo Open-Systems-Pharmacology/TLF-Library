@@ -9,6 +9,7 @@ R6 class defining the configuration of a \code{ggplot} object for tornado plots
 \seealso{
 Other PlotConfiguration classes: 
 \code{\link{BoxWhiskerPlotConfiguration}},
+\code{\link{CumulativeTimeProfilePlotConfiguration}},
 \code{\link{DDIRatioPlotConfiguration}},
 \code{\link{HistogramPlotConfiguration}},
 \code{\link{ObsVsPredPlotConfiguration}},

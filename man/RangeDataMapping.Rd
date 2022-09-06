@@ -9,6 +9,7 @@ R6 class for mapping \code{x}, \code{ymin} and \code{ymax} variable to \code{dat
 \seealso{
 Other DataMapping classes: 
 \code{\link{BoxWhiskerDataMapping}},
+\code{\link{CumulativeTimeProfileDataMapping}},
 \code{\link{DDIRatioDataMapping}},
 \code{\link{GroupMapping}},
 \code{\link{Grouping}},

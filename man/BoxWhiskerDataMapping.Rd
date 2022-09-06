@@ -8,6 +8,7 @@ R6 class for mapping \code{y}, \code{GroupMapping}, \code{boxWhiskerLimits} and 
 }
 \seealso{
 Other DataMapping classes: 
+\code{\link{CumulativeTimeProfileDataMapping}},
 \code{\link{DDIRatioDataMapping}},
 \code{\link{GroupMapping}},
 \code{\link{Grouping}},
