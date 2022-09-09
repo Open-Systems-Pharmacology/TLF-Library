@@ -15,14 +15,19 @@ List of all available alignments/justifications for fonts
 }
 \seealso{
 Other enum helpers: 
+\code{\link{AestheticFields}},
 \code{\link{AestheticProperties}},
+\code{\link{Atoms}},
+\code{\link{DataMappings}},
 \code{\link{ExportFormats}},
 \code{\link{ExportUnits}},
 \code{\link{FontFaces}},
 \code{\link{HorizontalJustification}},
 \code{\link{LegendPositions}},
 \code{\link{Linetypes}},
+\code{\link{Molecules}},
 \code{\link{PlotAnnotationTextSize}},
+\code{\link{PlotConfigurations}},
 \code{\link{Scaling}},
 \code{\link{Shapes}},
 \code{\link{TagPositions}},

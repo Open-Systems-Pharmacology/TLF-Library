@@ -7,7 +7,7 @@
 R6 class defining the configuration of Y-axis
 }
 \section{Super class}{
-\code{tlf::AxisConfiguration} -> \code{YAxisConfiguration}
+\code{\link[tlf:AxisConfiguration]{tlf::AxisConfiguration}} -> \code{YAxisConfiguration}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

@@ -7,7 +7,7 @@
 R6 class defining the properties of background line elements
 }
 \section{Super class}{
-\code{tlf::BackgroundElement} -> \code{LineElement}
+\code{\link[tlf:BackgroundElement]{tlf::BackgroundElement}} -> \code{LineElement}
 }
 \section{Methods}{
 \subsection{Public methods}{

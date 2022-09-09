@@ -7,7 +7,7 @@
 R6 class defining the configuration of X-axis
 }
 \section{Super class}{
-\code{tlf::AxisConfiguration} -> \code{XAxisConfiguration}
+\code{\link[tlf:AxisConfiguration]{tlf::AxisConfiguration}} -> \code{XAxisConfiguration}
 }
 \section{Methods}{
 \subsection{Public methods}{
