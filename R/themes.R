@@ -339,103 +339,70 @@ ThemeAestheticSelections <- R6::R6Class(
 #' @field addLine theme properties for `PlotConfiguration` objects as used in function `addLine()`
 #' @field addRibbon theme properties for `PlotConfiguration` objects as used in function `addRibbon()`
 #' @field addErrorbar theme properties for `PlotConfiguration` objects as used in function `addErrorbar()`
-#' @field plotPKRatio theme properties for `PlotConfiguration` objects as used in function `plotPKRatio()`
-#' @field plotDDIRatio theme properties for `PlotConfiguration` objects as used in function `plotDDIRatio()`
-#' @field plotTimeProfile theme properties for `PlotConfiguration` objects as used in function `plotTimeProfile()`
-#' @field plotObsVsPred theme properties for `PlotConfiguration` objects as used in function `plotObsVsPred()`
-#' @field plotBoxWhisker theme properties for `PlotConfiguration` objects as used in function `plotBoxWhisker()`
-#' @field plotTornado theme properties for `PlotConfiguration` objects as used in function `plotTornado()`
-#' @field plotHistogram theme properties for `PlotConfiguration` objects as used in function `plotHistogram()`
 #' @export
 ThemePlotConfigurations <- R6::R6Class(
   "ThemePlotConfigurations",
+  # This allows the R6 class to accept new fields
+  lock_objects = FALSE,
   public = list(
     addScatter = NULL,
     addLine = NULL,
     addRibbon = NULL,
     addErrorbar = NULL,
-    plotPKRatio = NULL,
-    plotDDIRatio = NULL,
-    plotTimeProfile = NULL,
-    plotObsVsPred = NULL,
-    plotBoxWhisker = NULL,
-    plotTornado = NULL,
-    plotHistogram = NULL,
 
     #' @description Create a new `ThemePlotConfigurations` object
     #' @param addScatter theme properties for `PlotConfiguration` objects as used in function `addScatter()`
     #' @param addLine theme properties for `PlotConfiguration` objects as used in function `addLine()`
     #' @param addRibbon theme properties for `PlotConfiguration` objects as used in function `addRibbon()`
     #' @param addErrorbar theme properties for `PlotConfiguration` objects as used in function `addErrorbar()`
-    #' @param plotPKRatio theme properties for `PlotConfiguration` objects as used in function `plotPKRatio()`
-    #' @param plotDDIRatio theme properties for `PlotConfiguration` objects as used in function `plotDDIRatio()`
-    #' @param plotTimeProfile theme properties for `PlotConfiguration` objects as used in function `plotTimeProfile()`
-    #' @param plotObsVsPred theme properties for `PlotConfiguration` objects as used in function `plotObsVsPred()`
-    #' @param plotBoxWhisker theme properties for `PlotConfiguration` objects as used in function `plotBoxWhisker()`
-    #' @param plotTornado theme properties for `PlotConfiguration` objects as used in function `plotTornado()`
-    #' @param plotHistogram theme properties for `PlotConfiguration` objects as used in function `plotHistogram()`
+    #' @param ... theme properties for `PlotConfiguration` objects as used in molecule plots
     #' @return A new `ThemePlotConfigurations` object
     initialize = function(addScatter = NULL,
                           addLine = NULL,
                           addRibbon = NULL,
                           addErrorbar = NULL,
-                          plotPKRatio = NULL,
-                          plotDDIRatio = NULL,
-                          plotTimeProfile = NULL,
-                          plotObsVsPred = NULL,
-                          plotBoxWhisker = NULL,
-                          plotTornado = NULL,
-                          plotHistogram = NULL) {
+                          ...) {
       # Validate necessary input
-      atomPlotInputs <- c("addScatter", "addLine", "addRibbon", "addErrorbar")
-      moleculePlotInputs <- c("plotPKRatio", "plotDDIRatio", "plotTimeProfile", "plotObsVsPred", "plotBoxWhisker", "plotTornado", "plotHistogram")
-
+      atomPlotInputs <- as.character(setdiff(Atoms, "initializePlot"))
       validateExpressions <- parse(text = paste0("validateIsOfType(", atomPlotInputs, ", 'ThemeAestheticSelections', nullAllowed = TRUE)"))
       eval(validateExpressions)
-      validateExpressions <- parse(text = paste0("validateIsOfType(c(", moleculePlotInputs, "), 'ThemeAestheticSelections', nullAllowed = TRUE)"))
-      eval(validateExpressions)
 
-      # Default aesthetic for atom plots
+      # Default aesthetics for atom plots
       self$addScatter <- addScatter %||% ThemeAestheticSelections$new(color = "next", fill = NA, shape = "next", linetype = "blank", size = "first", alpha = 1)
       self$addLine <- addLine %||% ThemeAestheticSelections$new(color = "next", fill = NA, shape = "blank", linetype = "reset", size = "first", alpha = 1)
       self$addRibbon <- addRibbon %||% ThemeAestheticSelections$new(color = "next", fill = "next", shape = "blank", linetype = "first", size = "same", alpha = 1)
       self$addErrorbar <- addErrorbar %||% ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "blank", linetype = "first", size = "same", alpha = 1)
 
-      # Default aesthetic for molecule plots
-      self$plotPKRatio <- plotPKRatio %||% list(
-        lines = ThemeAestheticSelections$new(color = c("#000000", "#0078D7", "#D83B01"), linetype = c("longdash", "longdash", "longdash"), size = 0.5, alpha = 1),
-        points = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "reset", linetype = "blank", size = 3),
-        errorbars = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "blank", linetype = "solid", size = 1)
-      )
-      self$plotDDIRatio <- plotDDIRatio %||% list(
-        lines = ThemeAestheticSelections$new(color = c("#000000", "#0078D7", "#D83B01"), linetype = c("longdash", "longdash", "longdash"), size = 0.5, alpha = 1),
-        points = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "reset", linetype = "blank", size = 3),
-        errorbars = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "blank", linetype = "solid", size = 1)
-      )
-      self$plotTimeProfile <- plotTimeProfile %||% list(
-        lines = ThemeAestheticSelections$new(color = "reset", fill = "reset", shape = "blank", linetype = "reset", size = 1),
-        ribbons = ThemeAestheticSelections$new(color = "reset", fill = "reset", shape = "blank", linetype = "blank", size = 1, alpha = "first"),
-        points = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "reset", linetype = "blank", size = 3),
-        errorbars = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "blank", linetype = "solid", size = 1)
-      )
-      self$plotObsVsPred <- plotObsVsPred %||% list(
-        lines = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "blank", linetype = "reset", size = 1),
-        points = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "reset", linetype = "blank", size = 3),
-        errorbars = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "blank", linetype = "solid", size = 1)
-      )
-      self$plotBoxWhisker <- plotBoxWhisker %||% list(
-        ribbons = ThemeAestheticSelections$new(color = "#000000", fill = "next", linetype = "solid", size = 1, alpha = "first"),
-        points = ThemeAestheticSelections$new(color = "#000000", shape = "first", linetype = "blank", size = 1)
-      )
-      self$plotTornado <- plotTornado %||% list(
-        lines = ThemeAestheticSelections$new(color = "#000000", fill = NA, shape = "blank", linetype = "longdash", size = 1),
-        ribbons = ThemeAestheticSelections$new(color = "reset", fill = "reset", shape = "blank", linetype = "solid", size = 1, alpha = "first"),
-        points = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "reset", linetype = "blank", size = 3)
-      )
-      self$plotHistogram <- plotHistogram %||% list(
-        lines = ThemeAestheticSelections$new(color = "reset", fill = NA, shape = "blank", linetype = "reset", size = 1),
-        ribbons = ThemeAestheticSelections$new(color = "#000000", fill = "reset", shape = "blank", linetype = "solid", size = 0.5, alpha = "first")
-      )
+      # Aesthetics for molecule plots
+      # This allows also user defined molecule plots
+      userMoleculePlots <- list(...)
+      moleculePlotInputs <- union(names(userMoleculePlots), as.character(Molecules))
+
+      for (molecule in moleculePlotInputs) {
+        # Empty list if not defined by user
+        userMoleculePlot <- list()
+        if (isIncluded(molecule, names(userMoleculePlots))) {
+          # Need to clone R6 classes to prevent linking between each aesthetic
+          # ie. changing one property will change them all
+          userMoleculePlot <- lapply(
+            AestheticFields,
+            FUN = function(fieldName) {
+              fieldProperties <- userMoleculePlots[[molecule]][[fieldName]]
+              if (isEmpty(fieldProperties)) {
+                return(NULL)
+              }
+              fieldProperties <- .asThemeAestheticSelections(fieldProperties)
+              return(fieldProperties$clone())
+            }
+          )
+        }
+        self[[molecule]] <- list(
+          points = userMoleculePlot$points %||% self$addScatter$clone(),
+          lines = userMoleculePlot$lines %||% self$addLine$clone(),
+          ribbons = userMoleculePlot$ribbons %||% self$addRibbon$clone(),
+          errorbars = userMoleculePlot$errorbars %||% self$addErrorbar$clone()
+        )
+      }
     },
 
     #' @description Translate object into a json list

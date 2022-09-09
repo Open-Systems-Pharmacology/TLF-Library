@@ -2,6 +2,13 @@ Sys.setenv(LANG = "en")
 
 context("Atom Plots")
 
+test_that("Enum 'Atoms' includes all the atoms", {
+  expect_setequal(
+    as.character(Atoms),
+    c("initializePlot", "addScatter", "addLine", "addRibbon", "addErrorbar")
+  )
+})
+
 test_that("Regular atom plots provide ggplot objects that includes a PlotConfiguration object", {
   emptyPlot <- initializePlot()
   scatterPlot <- addScatter(x = c(1, 2, 3), y = c(1, 2, 3))
