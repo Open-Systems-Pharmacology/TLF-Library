@@ -9,6 +9,7 @@ R6 class defining the configuration of a \code{ggplot} object for time profile p
 \seealso{
 Other DataMapping classes: 
 \code{\link{BoxWhiskerDataMapping}},
+\code{\link{CumulativeTimeProfileDataMapping}},
 \code{\link{DDIRatioDataMapping}},
 \code{\link{GroupMapping}},
 \code{\link{Grouping}},

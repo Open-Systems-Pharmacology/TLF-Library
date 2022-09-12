@@ -9,6 +9,7 @@ R6 class for mapping \code{x} and \code{y} variable to \code{data}
 \seealso{
 Other DataMapping classes: 
 \code{\link{BoxWhiskerDataMapping}},
+\code{\link{CumulativeTimeProfileDataMapping}},
 \code{\link{DDIRatioDataMapping}},
 \code{\link{GroupMapping}},
 \code{\link{Grouping}},

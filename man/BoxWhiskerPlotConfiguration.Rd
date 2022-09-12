@@ -8,6 +8,7 @@ R6 class defining the configuration of a \code{ggplot} object for boxplots
 }
 \seealso{
 Other PlotConfiguration classes: 
+\code{\link{CumulativeTimeProfilePlotConfiguration}},
 \code{\link{DDIRatioPlotConfiguration}},
 \code{\link{HistogramPlotConfiguration}},
 \code{\link{ObsVsPredPlotConfiguration}},

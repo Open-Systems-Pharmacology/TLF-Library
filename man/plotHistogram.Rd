@@ -67,6 +67,7 @@ For examples, see:
 \seealso{
 Other molecule plots: 
 \code{\link{plotBoxWhisker}()},
+\code{\link{plotCumulativeTimeProfile}()},
 \code{\link{plotDDIRatio}()},
 \code{\link{plotObsVsPred}()},
 \code{\link{plotPKRatio}()},
