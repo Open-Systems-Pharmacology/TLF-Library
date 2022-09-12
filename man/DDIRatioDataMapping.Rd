@@ -9,6 +9,7 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and DDI ratio \code
 \seealso{
 Other DataMapping classes: 
 \code{\link{BoxWhiskerDataMapping}},
+\code{\link{CumulativeTimeProfileDataMapping}},
 \code{\link{GroupMapping}},
 \code{\link{Grouping}},
 \code{\link{HistogramDataMapping}},

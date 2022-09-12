@@ -9,6 +9,7 @@ R6 class for mapping \code{Grouping} variables to \code{data}
 \seealso{
 Other DataMapping classes: 
 \code{\link{BoxWhiskerDataMapping}},
+\code{\link{CumulativeTimeProfileDataMapping}},
 \code{\link{DDIRatioDataMapping}},
 \code{\link{Grouping}},
 \code{\link{HistogramDataMapping}},
