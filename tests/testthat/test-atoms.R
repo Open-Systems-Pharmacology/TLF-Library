@@ -4,7 +4,7 @@ context("Atom Plots")
 
 test_that("Enum 'Atoms' includes all the atoms", {
   expect_setequal(
-    as.character(Atoms),
+    as.character(AtomPlots),
     c("initializePlot", "addScatter", "addLine", "addRibbon", "addErrorbar")
   )
 })

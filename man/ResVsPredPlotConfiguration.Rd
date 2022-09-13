@@ -7,7 +7,7 @@
 R6 class defining the configuration of a \code{ggplot} object for Res vs Pred/Time plots
 }
 \section{Super class}{
-\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{ResVsPredPlotConfiguration}
+\code{tlf::PlotConfiguration} -> \code{ResVsPredPlotConfiguration}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

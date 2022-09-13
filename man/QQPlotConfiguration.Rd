@@ -19,7 +19,7 @@ Other PlotConfiguration classes:
 }
 \concept{PlotConfiguration classes}
 \section{Super class}{
-\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{QQPlotConfiguration}
+\code{tlf::PlotConfiguration} -> \code{QQPlotConfiguration}
 }
 \section{Methods}{
 \subsection{Public methods}{

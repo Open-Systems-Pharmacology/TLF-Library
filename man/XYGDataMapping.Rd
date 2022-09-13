@@ -26,7 +26,7 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super class}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{XYGDataMapping}
+\code{tlf::XYDataMapping} -> \code{XYGDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

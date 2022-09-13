@@ -47,21 +47,21 @@ AestheticFields <- enum(c(
   "errorbars"
 ))
 
-#' @title Atoms
+#' @title AtomPlots
 #' @import ospsuite.utils
 #' @export
 #' @description
 #' List of all available atom plots
 #' @family enum helpers
-Atoms <- enum(c(.getTitlesFromFamilyTag("atom plots")))
+AtomPlots <- enum(c(.getTitlesFromFamilyTag("atom plots")))
 
-#' @title Molecules
+#' @title MoleculePlots
 #' @import ospsuite.utils
 #' @export
 #' @description
 #' List of all available molecule plots
 #' @family enum helpers
-Molecules <- enum(c(.getTitlesFromFamilyTag("molecule plots")))
+MoleculePlots <- enum(c(.getTitlesFromFamilyTag("molecule plots")))
 
 #' @title PlotConfigurations
 #' @import ospsuite.utils

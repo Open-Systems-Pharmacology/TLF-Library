@@ -26,7 +26,7 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{\link[tlf:RangeDataMapping]{tlf::RangeDataMapping}} -> \code{TimeProfileDataMapping}
+\code{tlf::XYDataMapping} -> \code{tlf::XYGDataMapping} -> \code{tlf::RangeDataMapping} -> \code{TimeProfileDataMapping}
 }
 \section{Methods}{
 \subsection{Public methods}{

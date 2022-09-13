@@ -17,7 +17,7 @@ List of all available alignments/justifications for fonts
 Other enum helpers: 
 \code{\link{AestheticFields}},
 \code{\link{AestheticProperties}},
-\code{\link{Atoms}},
+\code{\link{AtomPlots}},
 \code{\link{DataMappings}},
 \code{\link{ExportFormats}},
 \code{\link{ExportUnits}},
@@ -25,7 +25,7 @@ Other enum helpers:
 \code{\link{HorizontalJustification}},
 \code{\link{LegendPositions}},
 \code{\link{Linetypes}},
-\code{\link{Molecules}},
+\code{\link{MoleculePlots}},
 \code{\link{PlotAnnotationTextSize}},
 \code{\link{PlotConfigurations}},
 \code{\link{Scaling}},

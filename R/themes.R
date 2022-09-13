@@ -363,7 +363,7 @@ ThemePlotConfigurations <- R6::R6Class(
                           addErrorbar = NULL,
                           ...) {
       # Validate necessary input
-      atomPlotInputs <- as.character(setdiff(Atoms, "initializePlot"))
+      atomPlotInputs <- as.character(setdiff(AtomPlots, "initializePlot"))
       validateExpressions <- parse(text = paste0("validateIsOfType(", atomPlotInputs, ", 'ThemeAestheticSelections', nullAllowed = TRUE)"))
       eval(validateExpressions)
 
@@ -376,7 +376,7 @@ ThemePlotConfigurations <- R6::R6Class(
       # Aesthetics for molecule plots
       # This allows also user defined molecule plots
       userMoleculePlots <- list(...)
-      moleculePlotInputs <- union(names(userMoleculePlots), as.character(Molecules))
+      moleculePlotInputs <- union(names(userMoleculePlots), as.character(MoleculePlots))
 
       for (molecule in moleculePlotInputs) {
         # Empty list if not defined by user
