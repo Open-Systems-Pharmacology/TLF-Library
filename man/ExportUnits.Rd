@@ -15,14 +15,19 @@ List of all available units for \code{width} and \code{height} to export a ggplo
 }
 \seealso{
 Other enum helpers: 
+\code{\link{AestheticFields}},
 \code{\link{AestheticProperties}},
 \code{\link{Alignments}},
+\code{\link{AtomPlots}},
+\code{\link{DataMappings}},
 \code{\link{ExportFormats}},
 \code{\link{FontFaces}},
 \code{\link{HorizontalJustification}},
 \code{\link{LegendPositions}},
 \code{\link{Linetypes}},
+\code{\link{MoleculePlots}},
 \code{\link{PlotAnnotationTextSize}},
+\code{\link{PlotConfigurations}},
 \code{\link{Scaling}},
 \code{\link{Shapes}},
 \code{\link{TagPositions}},

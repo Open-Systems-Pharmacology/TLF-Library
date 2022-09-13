@@ -1,3 +1,84 @@
+#' @title .getTitlesFromFamilyTag
+#' @description Get all title names from documented functions/R6 classes that have specific family tags.
+#' The function aims at created automated and synchronized enums
+#' @param familyTag Family tag used to document functions or R6 classes
+#' @return character array of titles
+#' @import ospsuite.utils
+#' @keywords internal
+.getTitlesFromFamilyTag <- function(familyTag) {
+  functionNames <- NULL
+  for (filePath in list.files("./R", full.names = TRUE)) {
+    fileContent <- readLines(filePath, warn = FALSE)
+    familyTagLines <- grep(pattern = paste0("#' @family ", familyTag), x = fileContent)
+    if (isEmpty(familyTagLines)) {
+      next
+    }
+    # Get closest title before tag
+    titleLines <- grep(pattern = "#' @title", x = fileContent)
+    functionNames <- c(
+      functionNames,
+      sapply(
+        familyTagLines,
+        # assumes that title tag is defined before family tag
+        FUN = function(familyTagLine) {
+          # Get line of closest title tag before family tag
+          titleLine <- titleLines[which.min(
+            familyTagLine - titleLines[titleLines < familyTagLine]
+          )]
+          functionName <- trimws(gsub(".*@title", "", fileContent[titleLine]))
+          return(functionName)
+        }
+      )
+    )
+  }
+  return(functionNames)
+}
+
+#' @title AestheticFields
+#' @import ospsuite.utils
+#' @export
+#' @description
+#' List of all available aesthetic fields that manage aesthetic properties
+#' @family enum helpers
+AestheticFields <- enum(c(
+  "lines",
+  "points",
+  "ribbons",
+  "errorbars"
+))
+
+#' @title AtomPlots
+#' @import ospsuite.utils
+#' @export
+#' @description
+#' List of all available atom plots
+#' @family enum helpers
+AtomPlots <- enum(c(.getTitlesFromFamilyTag("atom plots")))
+
+#' @title MoleculePlots
+#' @import ospsuite.utils
+#' @export
+#' @description
+#' List of all available molecule plots
+#' @family enum helpers
+MoleculePlots <- enum(c(.getTitlesFromFamilyTag("molecule plots")))
+
+#' @title PlotConfigurations
+#' @import ospsuite.utils
+#' @export
+#' @description
+#' List of all available molecule plots
+#' @family enum helpers
+PlotConfigurations <- enum(c(.getTitlesFromFamilyTag("PlotConfiguration classes")))
+
+#' @title DataMappings
+#' @import ospsuite.utils
+#' @export
+#' @description
+#' List of all available molecule plots
+#' @family enum helpers
+DataMappings <- enum(c(.getTitlesFromFamilyTag("DataMapping classes")))
+
 #' @title Alignments
 #' @import ospsuite.utils
 #' @export

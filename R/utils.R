@@ -1,5 +1,5 @@
 # Because collate put tlf-env and themes before utils,
-# The curretnTheme is defined here: after the definition of %||%
+# The currentTheme is defined here: after the definition of %||%
 tlfEnv$currentTheme <- Theme$new()
 
 # Default theme is minimal when package is loaded
