@@ -15,15 +15,20 @@ List of some \code{ggplot2} shapes
 }
 \seealso{
 Other enum helpers: 
+\code{\link{AestheticFields}},
 \code{\link{AestheticProperties}},
 \code{\link{Alignments}},
+\code{\link{AtomPlots}},
+\code{\link{DataMappings}},
 \code{\link{ExportFormats}},
 \code{\link{ExportUnits}},
 \code{\link{FontFaces}},
 \code{\link{HorizontalJustification}},
 \code{\link{LegendPositions}},
 \code{\link{Linetypes}},
+\code{\link{MoleculePlots}},
 \code{\link{PlotAnnotationTextSize}},
+\code{\link{PlotConfigurations}},
 \code{\link{Scaling}},
 \code{\link{TagPositions}},
 \code{\link{TickLabelTransforms}},
