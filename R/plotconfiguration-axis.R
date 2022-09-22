@@ -320,14 +320,31 @@ XAxisConfiguration <- R6::R6Class(
             oob = .removeInfiniteValues
           )
       )
+      if(!isIncluded(private$.scale, c(Scaling$log, Scaling$ln))){
+        return(plotObject)
+      }
+      # Checks that the final plot limits include at least one pretty log tick
+      plotScaleData <- ggplot2::layer_scales(plotObject)
+      xDataRange <- switch(
+        private$.scale,
+        "log" = 10^plotScaleData$x$range$range,
+        "ln" = exp(plotScaleData$x$range$range)
+      )
+      if(!isEmpty(private$.limits)){
+        xDataRange <- private$.limits
+      }
+      
+      if(!.isLogTicksIncludedInLimits(xDataRange, private$.scale)){
+        return(plotObject)
+      }
       # Add special tick lines for pretty log plots
-      suppressMessages(
+      suppressMessages({
         plotObject <- switch(private$.scale,
           "log" = plotObject + ggplot2::annotation_logticks(sides = "b", color = private$.font$color),
           "ln" = plotObject + ggplot2::annotation_logticks(base = exp(1), sides = "b", color = private$.font$color),
           plotObject
         )
-      )
+      })
       return(plotObject)
     }
   )
@@ -379,15 +396,33 @@ YAxisConfiguration <- R6::R6Class(
             oob = .removeInfiniteValues
           )
       )
-      # Add special tick lines for pretty log plots
-      suppressMessages(
+      if(!isIncluded(private$.scale, c(Scaling$log, Scaling$ln))){
+        return(plotObject)
+      }
+      # Checks that the final plot limits include at least one pretty log tick
+      plotScaleData <- ggplot2::layer_scales(plotObject)
+      yDataRange <- switch(
+        private$.scale,
+        "log" = 10^plotScaleData$y$range$range,
+        "ln" = exp(plotScaleData$y$range$range)
+      )
+      if(!isEmpty(private$.limits)){
+        yDataRange <- private$.limits
+      }
+      
+      if(!.isLogTicksIncludedInLimits(yDataRange, private$.scale)){
+        return(plotObject)
+      }
+      suppressMessages({
         plotObject <- switch(private$.scale,
           "log" = plotObject + ggplot2::annotation_logticks(sides = "l", color = private$.font$color),
           "ln" = plotObject + ggplot2::annotation_logticks(base = exp(1), sides = "l", color = private$.font$color),
           plotObject
         )
-      )
+      })
       return(plotObject)
     }
   )
 )
+
+
