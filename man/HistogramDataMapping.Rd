@@ -32,6 +32,8 @@ Other DataMapping classes:
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
+\item{\code{frequency}}{logical defining if histogram displays a frequency in y axis}
+
 \item{\code{stack}}{logical defining if histogram bars should be stacked}
 
 \item{\code{bins}}{number of bins or binning values/methods passed on \code{ggplot2::geom_histogram}}
@@ -64,6 +66,7 @@ Only 2 distributions are currently available: \code{"normal"} and \code{"logNorm
 Create a new \code{HistogramDataMapping} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{HistogramDataMapping$new(
+  frequency = FALSE,
   stack = FALSE,
   bins = NULL,
   binwidth = NULL,
@@ -75,6 +78,8 @@ Create a new \code{HistogramDataMapping} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{frequency}}{logical defining if histogram displays a frequency in y axis}
+
 \item{\code{stack}}{logical defining if histogram bars should be stacked}
 
 \item{\code{bins}}{argument passed on \code{ggplot2::geom_histogram}}

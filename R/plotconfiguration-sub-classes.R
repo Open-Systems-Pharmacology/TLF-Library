@@ -76,16 +76,7 @@ ResVsTimePlotConfiguration <- R6::R6Class(
 #' @family PlotConfiguration classes
 HistogramPlotConfiguration <- R6::R6Class(
   "HistogramPlotConfiguration",
-  inherit = PlotConfiguration,
-  public = list(
-    #' @description Create a new `HistogramPlotConfiguration` object
-    #' @param ylabel Histograms default display is "Count"
-    #' @param ... parameters inherited from `PlotConfiguration`
-    #' @return A new `HistogramPlotConfiguration` object
-    initialize = function(ylabel = "Count", ...) {
-      super$initialize(ylabel = ylabel, ...)
-    }
-  )
+  inherit = PlotConfiguration
 )
 
 #' @title QQPlotConfiguration

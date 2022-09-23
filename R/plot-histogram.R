@@ -3,6 +3,7 @@
 #' Producing Histograms
 #'
 #' @inheritParams addScatter
+#' @param frequency logical defining if histogram displays a frequency in y axis
 #' @param bins Number or edges of bins.
 #' If `bins` is provided as a single numeric values, `bin` corresponds to number of bins.
 #' The bin edges are then equally spaced within the range of data.
@@ -27,6 +28,9 @@
 #' # Produce histogram of normally distributed data
 #' plotHistogram(x = rnorm(100))
 #'
+#' # Produce histogram of normally distributed data normalized in y axis
+#' plotHistogram(x = rnorm(100), frequency = TRUE)
+#'
 #' # Produce histogram of normally distributed data with many bins
 #' plotHistogram(x = rlnorm(100), bins = 21)
 #'
@@ -37,6 +41,7 @@ plotHistogram <- function(data = NULL,
                           metaData = NULL,
                           x = NULL,
                           dataMapping = NULL,
+                          frequency = NULL,
                           bins = NULL,
                           binwidth = NULL,
                           stack = NULL,
@@ -61,16 +66,26 @@ plotHistogram <- function(data = NULL,
   validateIsNumeric(binwidth, nullAllowed = TRUE)
   validateIsLogical(stack, nullAllowed = TRUE)
   validateIsIncluded(distribution, c("normal", "logNormal", "none"), nullAllowed = TRUE)
+  validateIsLogical(frequency, nullAllowed = TRUE)
 
+  dataMapping$frequency <- frequency %||% dataMapping$frequency
   dataMapping$stack <- stack %||% dataMapping$stack
   dataMapping$distribution <- distribution %||% dataMapping$distribution
   dataMapping$bins <- bins %||% dataMapping$bins
   dataMapping$binwidth <- binwidth %||% dataMapping$binwidth
 
+  # Check for default labeling to update plotConfiguration after using .setPlotConfiguration
+  ylabel <- NULL
+  if (isEmpty(plotConfiguration)) {
+    ylabel <- ifelse(dataMapping$frequency, "Relative frequency", "Count")
+  }
+
   plotConfiguration <- .setPlotConfiguration(
     plotConfiguration, HistogramPlotConfiguration,
     data, metaData, dataMapping
   )
+  # Update default ylabel based on frequency
+  plotConfiguration$labels$ylabel <- ylabel %||% plotConfiguration$labels$ylabel
   plotObject <- .setPlotObject(plotObject, plotConfiguration)
 
   mapData <- dataMapping$checkMapData(data)
@@ -89,6 +104,23 @@ plotHistogram <- function(data = NULL,
   if (length(dataMapping$bins) > 1) {
     edges <- dataMapping$bins
   }
+  # Manage ggplot aes_string property depending on stack and frequency options
+  # geom_histogram can use computed variables defined between two dots
+  # see https://ggplot2.tidyverse.org/reference/geom_histogram.html for more info
+  yAes <- "..count.."
+
+  if (dataMapping$frequency) {
+    # If histogram bars are not stacked, calculate frequency within each data groups
+    # Since there is no direct computed variable
+    # ncount variable is scaled by binwidth*dnorm(0) to get an area of ~1
+    yAes <- paste0("..ncount..*max(..width..)*", stats::dnorm(0))
+    if (dataMapping$stack) {
+      # If histogram bars are stacked,
+      # Calculate overall frequency as count per bin / total
+      # This results in same histogram shapes no matter the data groups
+      yAes <- "..count../sum(..count..)"
+    }
+  }
 
   aestheticValues <- .getAestheticValuesFromConfiguration(
     n = 1,
@@ -101,6 +133,7 @@ plotHistogram <- function(data = NULL,
       data = mapData,
       mapping = ggplot2::aes_string(
         x = mapLabels$x,
+        y = yAes,
         fill = mapLabels$fill
       ),
       position = position,
@@ -202,9 +235,10 @@ plotHistogram <- function(data = NULL,
   binwidth <- dataMapping$binwidth %||% binwidth
 
   if (dataMapping$stack) {
+    yScaling <- binwidth * ifelse(dataMapping$frequency, 1, length(x))
     dataFit <- data.frame(
       x = xFit,
-      y = length(x) * binwidth * switch(dataMapping$distribution,
+      y = yScaling * switch(dataMapping$distribution,
         "normal" = stats::dnorm(xFit, mean = mean(x, na.rm = TRUE), sd = stats::sd(x, na.rm = TRUE)),
         "logNormal" = stats::dlnorm(xFit, meanlog = mean(log(x), na.rm = TRUE), sdlog = stats::sd(log(x), na.rm = TRUE))
       ),
@@ -216,11 +250,12 @@ plotHistogram <- function(data = NULL,
   dataFit <- NULL
   for (groupLevel in levels(data$legendLabels)) {
     selectedGroup <- data$legendLabels %in% groupLevel
+    yScaling <- binwidth * ifelse(dataMapping$frequency, 1, length(x[selectedGroup]))
     dataFit <- rbind.data.frame(
       dataFit,
       data.frame(
         x = xFit,
-        y = length(x[selectedGroup]) * binwidth * switch(dataMapping$distribution,
+        y = yScaling * switch(dataMapping$distribution,
           "normal" = stats::dnorm(
             xFit,
             mean = mean(x[selectedGroup], na.rm = TRUE),

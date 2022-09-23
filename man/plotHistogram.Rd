@@ -9,6 +9,7 @@ plotHistogram(
   metaData = NULL,
   x = NULL,
   dataMapping = NULL,
+  frequency = NULL,
   bins = NULL,
   binwidth = NULL,
   stack = NULL,
@@ -25,6 +26,8 @@ plotHistogram(
 \item{x}{Numeric values to plot along the \code{x} axis. Only used instead of \code{data} if \code{data} is \code{NULL}.}
 
 \item{dataMapping}{A \code{HistogramDataMapping} object mapping \code{x} and aesthetic groups to their variable names of \code{data}.}
+
+\item{frequency}{logical defining if histogram displays a frequency in y axis}
 
 \item{bins}{Number or edges of bins.
 If \code{bins} is provided as a single numeric values, \code{bin} corresponds to number of bins.
@@ -52,6 +55,9 @@ Producing Histograms
 \examples{
 # Produce histogram of normally distributed data
 plotHistogram(x = rnorm(100))
+
+# Produce histogram of normally distributed data normalized in y axis
+plotHistogram(x = rnorm(100), frequency = TRUE)
 
 # Produce histogram of normally distributed data with many bins
 plotHistogram(x = rlnorm(100), bins = 21)
