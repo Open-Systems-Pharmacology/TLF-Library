@@ -177,29 +177,29 @@ plotTimeProfile <- function(data = NULL,
     # Add a legend caption list if legend or properties need to be updated
     plotObject$plotConfiguration$legend$caption <- list(
       color = data.frame(
-        names = levels(mapData[, simColumnNames$color]),
-        labels = levels(mapData[, simColumnNames$color]),
+        names = levels(as.factor(mapData[, simColumnNames$color])),
+        labels = levels(as.factor(mapData[, simColumnNames$color])),
         values = simColorValues,
         stringsAsFactors = FALSE
       ),
       fill = data.frame(
-        names = levels(mapData[, simColumnNames$fill]),
-        labels = levels(mapData[, simColumnNames$fill]),
+        names = levels(as.factor(mapData[, simColumnNames$fill])),
+        labels = levels(as.factor(mapData[, simColumnNames$fill])),
         colorNames = .getColorNamesForFirstAesValues(mapData, simColumnNames, "fill"),
         values = simFillValues %||% NA,
         stringsAsFactors = FALSE
       ),
       linetype = data.frame(
-        names = levels(mapData[, simColumnNames$linetype]),
-        labels = levels(mapData[, simColumnNames$linetype]),
+        names = levels(as.factor(mapData[, simColumnNames$linetype])),
+        labels = levels(as.factor(mapData[, simColumnNames$linetype])),
         colorNames = .getColorNamesForFirstAesValues(mapData, simColumnNames, "linetype"),
         values = simLinetypeValues %||% "blank",
         stringsAsFactors = FALSE
       ),
       shape = data.frame(
-        names = levels(mapData[, simColumnNames$color]),
-        labels = levels(mapData[, simColumnNames$color]),
-        colorNames = levels(mapData[, simColumnNames$color]),
+        names = levels(as.factor(mapData[, simColumnNames$color])),
+        labels = levels(as.factor(mapData[, simColumnNames$color])),
+        colorNames = levels(as.factor(mapData[, simColumnNames$color])),
         values = " ",
         stringsAsFactors = FALSE
       )
@@ -269,28 +269,28 @@ plotTimeProfile <- function(data = NULL,
 
     plotObject$plotConfiguration$legend$caption <- list(
       color = data.frame(
-        names = levels(mapObservedData[, obsColumnNames$color]),
-        labels = levels(mapObservedData[, obsColumnNames$color]),
+        names = levels(as.factor(mapObservedData[, obsColumnNames$color])),
+        labels = levels(as.factor(mapObservedData[, obsColumnNames$color])),
         values = obsColorValues,
         stringsAsFactors = FALSE
       ),
       fill = data.frame(
-        names = levels(mapObservedData[, obsColumnNames$color]),
-        labels = levels(mapObservedData[, obsColumnNames$color]),
-        colorNames = levels(mapObservedData[, obsColumnNames$color]),
+        names = levels(as.factor(mapObservedData[, obsColumnNames$color])),
+        labels = levels(as.factor(mapObservedData[, obsColumnNames$color])),
+        colorNames = levels(as.factor(mapObservedData[, obsColumnNames$color])),
         values = NA,
         stringsAsFactors = FALSE
       ),
       linetype = data.frame(
-        names = levels(mapObservedData[, obsColumnNames$color]),
-        labels = levels(mapObservedData[, obsColumnNames$color]),
-        colorNames = levels(mapObservedData[, obsColumnNames$color]),
+        names = levels(as.factor(mapObservedData[, obsColumnNames$color])),
+        labels = levels(as.factor(mapObservedData[, obsColumnNames$color])),
+        colorNames = levels(as.factor(mapObservedData[, obsColumnNames$color])),
         values = "blank",
         stringsAsFactors = FALSE
       ),
       shape = data.frame(
-        names = levels(mapObservedData[, obsColumnNames$shape]),
-        labels = levels(mapObservedData[, obsColumnNames$shape]),
+        names = levels(as.factor(mapObservedData[, obsColumnNames$shape])),
+        labels = levels(as.factor(mapObservedData[, obsColumnNames$shape])),
         colorNames = .getColorNamesForFirstAesValues(mapObservedData, obsColumnNames, "shape"),
         values = obsShapeValues %||% NA,
         stringsAsFactors = FALSE
@@ -303,7 +303,7 @@ plotTimeProfile <- function(data = NULL,
 
   #--- Simulated and observed data ---
   # The final color vector needs a length of totalLength to prevent scale_color_manual to crash
-  colorBreaks <- levels(c(mapData[, simColumnNames$color], mapObservedData[, obsColumnNames$color]))
+  colorBreaks <- levels(as.factor(c(mapData[, simColumnNames$color], mapObservedData[, obsColumnNames$color])))
   totalColorLength <- length(colorBreaks)
 
   # colorValues are selected colors for simulated (and shared observed data) and then colors for remaining observed data
@@ -334,22 +334,22 @@ plotTimeProfile <- function(data = NULL,
       stringsAsFactors = FALSE
     ),
     fill = data.frame(
-      names = levels(mapData[, simColumnNames$fill]),
-      labels = levels(mapData[, simColumnNames$fill]),
+      names = levels(as.factor(mapData[, simColumnNames$fill])),
+      labels = levels(as.factor(mapData[, simColumnNames$fill])),
       colorNames = .getColorNamesForFirstAesValues(mapData, simColumnNames, "fill"),
       values = simFillValues %||% NA,
       stringsAsFactors = FALSE
     ),
     linetype = data.frame(
-      names = levels(mapData[, simColumnNames$linetype]),
-      labels = levels(mapData[, simColumnNames$linetype]),
+      names = levels(as.factor(mapData[, simColumnNames$linetype])),
+      labels = levels(as.factor(mapData[, simColumnNames$linetype])),
       colorNames = .getColorNamesForFirstAesValues(mapData, simColumnNames, "linetype"),
       values = simLinetypeValues %||% "blank",
       stringsAsFactors = FALSE
     ),
     shape = data.frame(
-      names = levels(mapObservedData[, obsColumnNames$shape]),
-      labels = levels(mapObservedData[, obsColumnNames$shape]),
+      names = levels(as.factor(mapObservedData[, obsColumnNames$shape])),
+      labels = levels(as.factor(mapObservedData[, obsColumnNames$shape])),
       colorNames = .getColorNamesForFirstAesValues(mapObservedData, obsColumnNames, "shape"),
       values = obsShapeValues %||% NA,
       stringsAsFactors = FALSE
