@@ -32,15 +32,20 @@ plotHistogram(
 \item{bins}{Number or edges of bins.
 If \code{bins} is provided as a single numeric values, \code{bin} corresponds to number of bins.
 The bin edges are then equally spaced within the range of data.
-If \code{bins} is provided as an array of numeric values, \code{bin} corresponds to their edges.}
+If \code{bins} is provided as an array of numeric values, \code{bin} corresponds to their edges.
+Default value, \code{bins=NULL}, uses the value defined by \code{dataMapping}}
 
 \item{binwidth}{Numerical value of defining the width of each bin.
-If defined, \code{binwidth} can overwrite \code{bins} if \code{bins} was not provided or simply provided as a single value.}
+If defined, \code{binwidth} can overwrite \code{bins} if \code{bins} was not provided or simply provided as a single value.
+Default value, \code{binwidth=NULL}, uses the value defined by \code{dataMapping}}
 
-\item{stack}{Logical defining for multiple histograms if their bars are stacked}
+\item{stack}{Logical defining for multiple histograms if their bars are stacked
+Default value, \code{stack=NULL}, uses the value defined by \code{dataMapping}}
 
 \item{distribution}{Name of distribution to fit to the data.
-Only 2 distributions are currently available: \code{"normal"} and \code{"logNormal"}}
+Only 2 distributions are currently available: \code{"normal"} and \code{"logNormal"}
+Use \code{distribution="none"} to prevent fit of distribution
+Default value, \code{distribution=NULL}, uses the value defined by \code{dataMapping}}
 
 \item{plotConfiguration}{An optional \code{HistogramPlotConfiguration} object defining labels, grid, background and watermark.}
 

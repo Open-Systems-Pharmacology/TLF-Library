@@ -8,11 +8,16 @@
 #' If `bins` is provided as a single numeric values, `bin` corresponds to number of bins.
 #' The bin edges are then equally spaced within the range of data.
 #' If `bins` is provided as an array of numeric values, `bin` corresponds to their edges.
+#' Default value, `bins=NULL`, uses the value defined by `dataMapping`
 #' @param binwidth Numerical value of defining the width of each bin.
 #' If defined, `binwidth` can overwrite `bins` if `bins` was not provided or simply provided as a single value.
+#' Default value, `binwidth=NULL`, uses the value defined by `dataMapping`
 #' @param stack Logical defining for multiple histograms if their bars are stacked
+#' Default value, `stack=NULL`, uses the value defined by `dataMapping`
 #' @param distribution Name of distribution to fit to the data.
 #' Only 2 distributions are currently available: `"normal"` and `"logNormal"`
+#' Use `distribution="none"` to prevent fit of distribution
+#' Default value, `distribution=NULL`, uses the value defined by `dataMapping`
 #' @param dataMapping
 #' A `HistogramDataMapping` object mapping `x` and aesthetic groups to their variable names of `data`.
 #' @param plotConfiguration
