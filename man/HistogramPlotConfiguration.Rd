@@ -25,32 +25,16 @@ Other PlotConfiguration classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-HistogramPlotConfiguration-new}{\code{HistogramPlotConfiguration$new()}}
 \item \href{#method-HistogramPlotConfiguration-clone}{\code{HistogramPlotConfiguration$clone()}}
 }
 }
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-HistogramPlotConfiguration-new"></a>}}
-\if{latex}{\out{\hypertarget{method-HistogramPlotConfiguration-new}{}}}
-\subsection{Method \code{new()}}{
-Create a new \code{HistogramPlotConfiguration} object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{HistogramPlotConfiguration$new(ylabel = "Count", ...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{ylabel}}{Histograms default display is "Count"}
-
-\item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new \code{HistogramPlotConfiguration} object
-}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="initialize"><a href='../../tlf/html/PlotConfiguration.html#method-PlotConfiguration-initialize'><code>tlf::PlotConfiguration$initialize()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-HistogramPlotConfiguration-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-HistogramPlotConfiguration-clone}{}}}
