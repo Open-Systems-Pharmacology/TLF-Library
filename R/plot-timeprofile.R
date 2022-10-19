@@ -44,22 +44,34 @@ plotTimeProfile <- function(data = NULL,
   if (all(isEmpty(data), isEmpty(observedData))) {
     stop("At least 'data' or 'observedData' is required.")
   }
-  validateIsOfType(data, "data.frame", nullAllowed = TRUE)
-  validateIsOfType(observedData, "data.frame", nullAllowed = TRUE)
-
-  if (!isEmpty(data)) {
-    dataMapping <- .setDataMapping(dataMapping, TimeProfileDataMapping, data)
+  # If no observed data, plotTimeProfile = plotSimulatedTimeProfile
+  if (isEmpty(observedData)) {
+    return(plotSimulatedTimeProfile(
+      data = data,
+      metaData = metaData,
+      dataMapping = dataMapping,
+      plotConfiguration = plotConfiguration,
+      plotObject = plotObject
+    ))
   }
-  if (!isEmpty(observedData)) {
-    observedDataMapping <- .setDataMapping(observedDataMapping, ObservedDataMapping, observedData)
-  }
-  # If data is empty, plotConfiguration from observedData is used
+  # If no data, plotTimeProfile = plotObservedTimeProfile
   if (isEmpty(data)) {
-    plotConfiguration <- .setPlotConfiguration(
-      plotConfiguration, TimeProfilePlotConfiguration,
-      observedData, metaData, observedDataMapping
-    )
+    return(plotObservedTimeProfile(
+      data = observedData,
+      metaData = metaData,
+      dataMapping = observedDataMapping,
+      plotConfiguration = plotConfiguration,
+      plotObject = plotObject
+    ))
   }
+
+  # In the sequel, both data and observed data are defined
+  validateIsOfType(data, "data.frame")
+  validateIsOfType(observedData, "data.frame")
+
+  dataMapping <- .setDataMapping(dataMapping, TimeProfileDataMapping, data)
+  observedDataMapping <- .setDataMapping(observedDataMapping, ObservedDataMapping, observedData)
+
   plotConfiguration <- .setPlotConfiguration(
     plotConfiguration, TimeProfilePlotConfiguration,
     data, metaData, dataMapping
@@ -67,153 +79,61 @@ plotTimeProfile <- function(data = NULL,
 
   plotObject <- .setPlotObject(plotObject, plotConfiguration)
 
-  #----- Build layers of molecule plot -----
-  #--- Simulated data ---
-  if (!isEmpty(data)) {
-    mapData <- dataMapping$checkMapData(data)
-    mapLabels <- .getAesStringMapping(dataMapping)
+  mapData <- dataMapping$checkMapData(data)
+  mapLabels <- .getAesStringMapping(dataMapping)
 
-    # Add ribbons for population time profiles
-    if (!any(isEmpty(dataMapping$ymin), isEmpty(dataMapping$ymax))) {
-      aestheticValues <- .getAestheticValuesFromConfiguration(
-        n = 1,
-        position = 0,
-        plotConfigurationProperty = plotObject$plotConfiguration$ribbons,
-        propertyNames = c("alpha")
-      )
-      plotObject <- plotObject +
-        ggplot2::geom_ribbon(
-          data = mapData,
-          mapping = ggplot2::aes_string(
-            x = mapLabels$x,
-            ymin = mapLabels$ymin,
-            ymax = mapLabels$ymax,
-            fill = mapLabels$fill,
-            group = mapLabels$linetype
-          ),
-          alpha = aestheticValues$alpha,
-          na.rm = TRUE,
-          show.legend = TRUE
-        )
-    }
-    # Add simulated time profile
-    if (!isEmpty(dataMapping$y)) {
-      aestheticValues <- .getAestheticValuesFromConfiguration(
-        n = 1,
-        position = 0,
-        plotConfigurationProperty = plotObject$plotConfiguration$lines,
-        propertyNames = c("alpha", "size")
-      )
-      plotObject <- plotObject +
-        ggplot2::geom_path(
-          data = mapData,
-          mapping = ggplot2::aes_string(
-            x = mapLabels$x,
-            y = mapLabels$y,
-            color = mapLabels$color,
-            linetype = mapLabels$linetype
-          ),
-          size = aestheticValues$size,
-          alpha = aestheticValues$alpha,
-          na.rm = TRUE,
-          show.legend = TRUE,
-        )
-    }
-
-    #----- Update properties using ggplot2::scale functions -----
-    plotObject <- .updateAesProperties(
-      plotObject,
-      plotConfigurationProperty = "ribbons",
-      propertyNames = "fill",
-      data = mapData,
-      mapLabels = mapLabels
-    )
-    plotObject <- .updateAesProperties(
-      plotObject,
-      plotConfigurationProperty = "lines",
-      propertyNames = "linetype",
-      data = mapData,
-      mapLabels = mapLabels
-    )
-
-    # Get aesthetic information of simulated data for creating a legend caption data.frame
-    simColumnNames <- .getAesPropertyColumnNameFromLabels(
-      mapLabels,
-      c("color", "fill", "linetype")
-    )
-    simAesLengths <- .getAesPropertyLengthFromLabels(
-      data = mapData,
-      simColumnNames,
-      c("color", "fill", "linetype")
-    )
-
-    simFillValues <- .getAestheticValuesFromConfiguration(
-      n = simAesLengths$fill,
-      plotConfigurationProperty = plotObject$plotConfiguration$ribbons,
-      propertyNames = "fill"
-    )$fill
-    simLinetypeValues <- .getAestheticValuesFromConfiguration(
-      n = simAesLengths$linetype,
-      plotConfigurationProperty = plotObject$plotConfiguration$lines,
-      propertyNames = "linetype"
-    )$linetype
-    simColorValues <- .getAestheticValuesFromConfiguration(
-      n = simAesLengths$color,
-      plotConfigurationProperty = plotObject$plotConfiguration$lines,
-      propertyNames = "color"
-    )$color
-  }
-
-  #--- Simulated data only ---
-  if (isEmpty(observedData)) {
-    plotObject <- .updateAesProperties(
-      plotObject,
-      plotConfigurationProperty = "lines",
-      propertyNames = "color",
-      data = mapData,
-      mapLabels = mapLabels
-    )
-
-    # Add a legend caption list if legend or properties need to be updated
-    plotObject$plotConfiguration$legend$caption <- list(
-      color = data.frame(
-        names = levels(as.factor(mapData[, simColumnNames$color])),
-        labels = levels(as.factor(mapData[, simColumnNames$color])),
-        values = simColorValues,
-        stringsAsFactors = FALSE
-      ),
-      fill = data.frame(
-        names = levels(as.factor(mapData[, simColumnNames$fill])),
-        labels = levels(as.factor(mapData[, simColumnNames$fill])),
-        colorNames = .getColorNamesForFirstAesValues(mapData, simColumnNames, "fill"),
-        values = simFillValues %||% NA,
-        stringsAsFactors = FALSE
-      ),
-      linetype = data.frame(
-        names = levels(as.factor(mapData[, simColumnNames$linetype])),
-        labels = levels(as.factor(mapData[, simColumnNames$linetype])),
-        colorNames = .getColorNamesForFirstAesValues(mapData, simColumnNames, "linetype"),
-        values = simLinetypeValues %||% "blank",
-        stringsAsFactors = FALSE
-      ),
-      shape = data.frame(
-        names = levels(as.factor(mapData[, simColumnNames$color])),
-        labels = levels(as.factor(mapData[, simColumnNames$color])),
-        colorNames = levels(as.factor(mapData[, simColumnNames$color])),
-        values = " ",
-        stringsAsFactors = FALSE
-      )
-    )
-
-    plotObject <- .updateAxes(plotObject)
-    return(plotObject)
-  }
-
-  #--- Observed data ---
-  # Then, add observed data
   mapObservedData <- observedDataMapping$checkMapData(observedData)
   observedMapLabels <- .getAesStringMapping(observedDataMapping)
 
+  #----- Build layers of molecule plot -----
+  #--- Simulated data ---
+  # 1- If available, add ribbons for population time profiles
+  if (!any(isEmpty(dataMapping$ymin), isEmpty(dataMapping$ymax))) {
+    aestheticValues <- .getAestheticValuesFromConfiguration(
+      n = 1,
+      position = 0,
+      plotConfigurationProperty = plotObject$plotConfiguration$ribbons,
+      propertyNames = c("alpha")
+    )
+    plotObject <- plotObject +
+      ggplot2::geom_ribbon(
+        data = mapData,
+        mapping = ggplot2::aes_string(
+          x = mapLabels$x,
+          ymin = mapLabels$ymin,
+          ymax = mapLabels$ymax,
+          fill = mapLabels$fill,
+          group = mapLabels$linetype
+        ),
+        alpha = aestheticValues$alpha,
+        na.rm = TRUE,
+        show.legend = TRUE
+      )
+  }
+  # 2- If available, add simulated time profile
+  if (!isEmpty(dataMapping$y)) {
+    aestheticValues <- .getAestheticValuesFromConfiguration(
+      n = 1,
+      position = 0,
+      plotConfigurationProperty = plotObject$plotConfiguration$lines,
+      propertyNames = c("alpha", "size")
+    )
+    plotObject <- plotObject +
+      ggplot2::geom_path(
+        data = mapData,
+        mapping = ggplot2::aes_string(
+          x = mapLabels$x,
+          y = mapLabels$y,
+          color = mapLabels$color,
+          linetype = mapLabels$linetype
+        ),
+        size = aestheticValues$size,
+        alpha = aestheticValues$alpha,
+        na.rm = TRUE,
+        show.legend = TRUE,
+      )
+  }
+  # 3- If available, add error bars
   if (!any(isEmpty(observedDataMapping$ymin), isEmpty(observedDataMapping$ymax))) {
     plotObject <- .addErrorbarLayer(
       plotObject,
@@ -221,12 +141,54 @@ plotTimeProfile <- function(data = NULL,
       mapLabels = observedMapLabels
     )
   }
-
+  # 4 - Add observed scatter points
   plotObject <- .addScatterLayer(
     plotObject,
     data = mapObservedData,
     mapLabels = observedMapLabels
   )
+  #----- Update properties using ggplot2::scale functions -----
+  plotObject <- .updateAesProperties(
+    plotObject,
+    plotConfigurationProperty = "ribbons",
+    propertyNames = "fill",
+    data = mapData,
+    mapLabels = mapLabels
+  )
+  plotObject <- .updateAesProperties(
+    plotObject,
+    plotConfigurationProperty = "lines",
+    propertyNames = "linetype",
+    data = mapData,
+    mapLabels = mapLabels
+  )
+
+  # Get aesthetic information of simulated data for creating a legend caption data.frame
+  simColumnNames <- .getAesPropertyColumnNameFromLabels(
+    mapLabels,
+    c("color", "fill", "linetype")
+  )
+  simAesLengths <- .getAesPropertyLengthFromLabels(
+    data = mapData,
+    simColumnNames,
+    c("color", "fill", "linetype")
+  )
+
+  simFillValues <- .getAestheticValuesFromConfiguration(
+    n = simAesLengths$fill,
+    plotConfigurationProperty = plotObject$plotConfiguration$ribbons,
+    propertyNames = "fill"
+  )$fill
+  simLinetypeValues <- .getAestheticValuesFromConfiguration(
+    n = simAesLengths$linetype,
+    plotConfigurationProperty = plotObject$plotConfiguration$lines,
+    propertyNames = "linetype"
+  )$linetype
+  simColorValues <- .getAestheticValuesFromConfiguration(
+    n = simAesLengths$color,
+    plotConfigurationProperty = plotObject$plotConfiguration$lines,
+    propertyNames = "color"
+  )$color
 
   plotObject <- .updateAesProperties(
     plotObject,
@@ -257,51 +219,7 @@ plotTimeProfile <- function(data = NULL,
     propertyNames = "color"
   )$color
 
-  #--- Observed data only ---
-  if (isEmpty(data)) {
-    plotObject <- .updateAesProperties(
-      plotObject,
-      plotConfigurationProperty = "points",
-      propertyNames = "color",
-      data = mapObservedData,
-      mapLabels = observedMapLabels
-    )
 
-    plotObject$plotConfiguration$legend$caption <- list(
-      color = data.frame(
-        names = levels(as.factor(mapObservedData[, obsColumnNames$color])),
-        labels = levels(as.factor(mapObservedData[, obsColumnNames$color])),
-        values = obsColorValues,
-        stringsAsFactors = FALSE
-      ),
-      fill = data.frame(
-        names = levels(as.factor(mapObservedData[, obsColumnNames$color])),
-        labels = levels(as.factor(mapObservedData[, obsColumnNames$color])),
-        colorNames = levels(as.factor(mapObservedData[, obsColumnNames$color])),
-        values = NA,
-        stringsAsFactors = FALSE
-      ),
-      linetype = data.frame(
-        names = levels(as.factor(mapObservedData[, obsColumnNames$color])),
-        labels = levels(as.factor(mapObservedData[, obsColumnNames$color])),
-        colorNames = levels(as.factor(mapObservedData[, obsColumnNames$color])),
-        values = "blank",
-        stringsAsFactors = FALSE
-      ),
-      shape = data.frame(
-        names = levels(as.factor(mapObservedData[, obsColumnNames$shape])),
-        labels = levels(as.factor(mapObservedData[, obsColumnNames$shape])),
-        colorNames = .getColorNamesForFirstAesValues(mapObservedData, obsColumnNames, "shape"),
-        values = obsShapeValues %||% NA,
-        stringsAsFactors = FALSE
-      )
-    )
-
-    plotObject <- .updateAxes(plotObject)
-    return(plotObject)
-  }
-
-  #--- Simulated and observed data ---
   # The final color vector needs a length of totalLength to prevent scale_color_manual to crash
   colorBreaks <- levels(as.factor(c(mapData[, simColumnNames$color], mapObservedData[, obsColumnNames$color])))
   totalColorLength <- length(colorBreaks)
