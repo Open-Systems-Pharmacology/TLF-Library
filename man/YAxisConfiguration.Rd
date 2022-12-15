@@ -12,7 +12,7 @@ R6 class defining the configuration of Y-axis
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{position}}{character poistion of the Y-axis}
+\item{\code{position}}{character position of the Y-axis}
 }
 \if{html}{\out{</div>}}
 }

@@ -6,12 +6,14 @@
 #' @field subtitle `Font` object for font properties of subtitle
 #' @field xlabel `Font` object for font properties of xlabel
 #' @field ylabel `Font` object for font properties of ylabel
+#' @field y2label `Font` object for font properties of y2label
 #' @field caption `Font` object for font properties of caption
 #' @field watermark `Font` object for font properties of watermark
 #' @field legendTitle `Font` object for font properties of legend title
 #' @field legend `Font` object for font properties of legend
 #' @field xAxis `Font` object for font properties of xAxis
 #' @field yAxis `Font` object for font properties of yAxis
+#' @field y2Axis `Font` object for font properties of y2Axis
 #' @export
 ThemeFont <- R6::R6Class(
   "ThemeFont",
@@ -20,24 +22,28 @@ ThemeFont <- R6::R6Class(
     subtitle = NULL,
     xlabel = NULL,
     ylabel = NULL,
+    y2label = NULL,
     caption = NULL,
     watermark = NULL,
     legendTitle = NULL,
     legend = NULL,
     xAxis = NULL,
     yAxis = NULL,
+    y2Axis = NULL,
 
     #' @description Create a new `ThemeFont` object
     #' @param title `Font` object or list for font properties title
     #' @param subtitle `Font` object or list for font properties of subtitle
     #' @param xlabel `Font` object or list for font properties of xlabel
     #' @param ylabel `Font` object or list for font properties of ylabel
+    #' @param y2label `Font` object or list for font properties of y2label
     #' @param caption `Font` object or list for font properties of caption
     #' @param watermark `Font` object or list for font properties of watermark
     #' @param legendTitle `Font` object or list for font properties of legend title
     #' @param legend `Font` object or list for font properties of legend
     #' @param xAxis `Font` object or list for font properties of xAxis
     #' @param yAxis `Font` object or list for font properties of yAxis
+    #' @param y2Axis `Font` object or list for font properties of y2Axis
     #' @param baseColor name of base color of undefined fonts. Default is "black".
     #' @param baseSize base size of undefined fonts. Default is 12.
     #' @param baseFace name of base face of undefined fonts. Default is "plain".
@@ -49,12 +55,14 @@ ThemeFont <- R6::R6Class(
                           subtitle = NULL,
                           xlabel = NULL,
                           ylabel = NULL,
+                          y2label = NULL,
                           caption = NULL,
                           watermark = NULL,
                           legendTitle = NULL,
                           legend = NULL,
                           xAxis = NULL,
                           yAxis = NULL,
+                          y2Axis = NULL,
                           baseColor = "black",
                           baseSize = 12,
                           baseFace = "plain",
@@ -70,7 +78,7 @@ ThemeFont <- R6::R6Class(
       validateIsIncluded(baseAlign, Alignments)
 
       # Create all field properties by parsing and evaluating their expression
-      fieldNames <- c("title", "subtitle", "xlabel", "ylabel", "caption", "watermark", "legendTitle", "legend", "xAxis", "yAxis")
+      fieldNames <- c("title", "subtitle", "xlabel", "ylabel", "y2label", "caption", "watermark", "legendTitle", "legend", "xAxis", "yAxis", "y2Axis")
       setFontExpression <- parse(text = paste0(
         "self$", fieldNames, " <- Font$new(",
         "color = ", fieldNames, "$color %||% baseColor,",
@@ -87,7 +95,7 @@ ThemeFont <- R6::R6Class(
     #' @return A list that can be saved into a json file
     toJson = function() {
       jsonObject <- list()
-      fieldNames <- c("title", "subtitle", "xlabel", "ylabel", "caption", "watermark", "legendTitle", "legend", "xAxis", "yAxis")
+      fieldNames <- c("title", "subtitle", "xlabel", "ylabel", "caption", "watermark", "legendTitle", "legend", "xAxis", "yAxis", "y2Axis")
       setJsonExpression <- parse(text = paste0(
         "jsonObject$", fieldNames, " <- list(",
         "color = self$", fieldNames, "$color,",
@@ -112,8 +120,10 @@ ThemeFont <- R6::R6Class(
 #' @field panel `BackgroundElement` object for plot area properties (inside of panel)
 #' @field xAxis `BackgroundElement` object for x axis properties
 #' @field yAxis `BackgroundElement` object for y axis properties
+#' @field y2Axis `BackgroundElement` object for right y axis properties
 #' @field xGrid `BackgroundElement` object for x grid properties
 #' @field yGrid `BackgroundElement` object for y grid properties
+#' @field y2Grid `BackgroundElement` object for right y grid properties
 #' @field legend `BackgroundElement` object for legend area properties
 #' @export
 ThemeBackground <- R6::R6Class(
@@ -126,8 +136,10 @@ ThemeBackground <- R6::R6Class(
     panel = NULL,
     xAxis = NULL,
     yAxis = NULL,
+    y2Axis = NULL,
     xGrid = NULL,
     yGrid = NULL,
+    y2Grid = NULL,
     legend = NULL,
 
     #' @description Create a new `ThemeBackground` object
@@ -138,8 +150,10 @@ ThemeBackground <- R6::R6Class(
     #' @param panel `BackgroundElement` object or list for plot area properties (inside of panel)
     #' @param xAxis `BackgroundElement` object or list for x axis properties
     #' @param yAxis `BackgroundElement` object or list for y axis properties
+    #' @param y2Axis `BackgroundElement` object or list for right y axis properties
     #' @param xGrid `BackgroundElement` object or list for x grid properties
     #' @param yGrid `BackgroundElement` object or list for y grid properties
+    #' @param y2Grid `BackgroundElement` object or list for right y grid properties
     #' @param legend `BackgroundElement` object or list for legend area properties
     #' @param baseFill name of base color fill of undefined background elements. Default is "white".
     #' @param baseColor name of base color of undefined background elements. Default is "black".
@@ -153,8 +167,10 @@ ThemeBackground <- R6::R6Class(
                           panel = NULL,
                           xAxis = NULL,
                           yAxis = NULL,
+                          y2Axis = NULL,
                           xGrid = NULL,
                           yGrid = NULL,
+                          y2Grid = NULL,
                           legend = NULL,
                           baseFill = "white",
                           baseColor = "black",
@@ -175,7 +191,7 @@ ThemeBackground <- R6::R6Class(
 
       # Create all field properties by parsing and evaluating their expression
       areaFieldNames <- c("plot", "panel", "legend")
-      lineFieldNames <- c("xAxis", "yAxis", "xGrid", "yGrid")
+      lineFieldNames <- c("xAxis", "yAxis", "y2Axis", "xGrid", "yGrid", "y2Grid")
 
       setAreaExpression <- parse(text = paste0(
         "self$", areaFieldNames, " <- BackgroundElement$new(",
@@ -202,7 +218,7 @@ ThemeBackground <- R6::R6Class(
       jsonObject$legendPosition <- self$legendPosition
       jsonObject$legendTitle <- self$legendTitle
       areaFieldNames <- c("plot", "panel", "legend")
-      lineFieldNames <- c("xAxis", "yAxis", "xGrid", "yGrid")
+      lineFieldNames <- c("xAxis", "yAxis", "y2Axis", "xGrid", "yGrid", "y2Grid")
 
       setJsonAreaExpression <- parse(text = paste0(
         "jsonObject$", areaFieldNames, " <- list(",

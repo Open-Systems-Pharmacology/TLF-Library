@@ -242,3 +242,69 @@
   )
   return(plotObject)
 }
+
+#' @title getDualAxisPlot
+#' @description Check if dual Y Axis is needed
+#' @param leftPlotObject A `ggplot` object with left y-axis
+#' @param rightPlotObject A `ggplot` object with right y-axis
+#' @return A `ggplot` object with dual y-axis
+#' @export
+getDualAxisPlot <- function(leftPlotObject, rightPlotObject){
+  stopifnot(requireNamespace("cowplot", quietly = TRUE))
+  # Only one legend shall be kept to prevent text not aligned and on top of plot axes text
+  # For most cases, right plot legend is kept as is while left plot legend is removed
+  # If left side legend, left plot legend is kept as is while right plot legend is removed
+  legendPosition <- getLegendPosition(leftPlotObject)
+  if(isIncluded(legendPosition, LegendPositions$outsideLeft)){
+    rightPlotObject <- setLegendPosition(rightPlotObject, position = LegendPositions$none)
+  } else {
+    leftPlotObject <- setLegendPosition(leftPlotObject, position = LegendPositions$none)
+  }
+  # Set same X-Axis between plots
+  leftScale <- ggplot2::layer_scales(leftPlotObject)
+  rightScale <- ggplot2::layer_scales(rightPlotObject)
+  mergeXRange <- range(leftScale$x$range$range, rightScale$x$range$range)
+  
+  leftPlotObject <- setXAxis(leftPlotObject, limits = mergeXRange)
+  rightPlotObject <- setXAxis(rightPlotObject, limits = mergeXRange)
+  
+  # Transformed right plot to be compatible with left plot
+  rightPlotObject <- rightPlotObject + 
+    ggplot2::theme(
+      # Update right axis properties
+      axis.text.y.right = rightPlotObject$plotConfiguration$y2Axis$font$createPlotFont(),
+      axis.title.y.right = rightPlotObject$plotConfiguration$labels$y2label$createPlotFont(),
+      axis.line.y.right = rightPlotObject$plotConfiguration$background$y2Axis$createPlotElement(),
+      panel.grid.major.y = rightPlotObject$plotConfiguration$background$y2Grid$createPlotElement(),
+      panel.grid.minor.y = rightPlotObject$plotConfiguration$background$y2Grid$createPlotElement(
+        size = as.numeric(rightPlotObject$plotConfiguration$background$y2Grid$size) / 2
+        ),
+      # Remove all other background properties 
+      plot.background = ggplot2::element_blank(),
+      panel.background = ggplot2::element_blank(),
+      axis.line.x = ggplot2::element_blank(),
+      axis.line.y.left = ggplot2::element_blank(),
+      panel.grid.major.x = ggplot2::element_blank(),
+      panel.grid.minor.x = ggplot2::element_blank()
+    )
+  rightPlotObject <- setPlotLabels(
+    rightPlotObject, 
+    ylabel = rightPlotObject$plotConfiguration$labels$y2label
+    )
+  rightPlotObject <- setY2Axis(rightPlotObject)
+  leftPlotObject <- setYAxis(leftPlotObject)
+  
+  alignedPlots <- cowplot::align_plots(
+    leftPlotObject, 
+    rightPlotObject, 
+    align = "hv", 
+    axis = "tblr"
+  )
+  
+  mergedPlotObject <- cowplot::ggdraw(alignedPlots[[1]]) + 
+    cowplot::draw_plot(alignedPlots[[2]])
+  # In case of additional updates, clone plotConfiguration
+  mergedPlotObject$plotConfiguration <- leftPlotObject$plotConfiguration$clone(deep = TRUE)
+  
+  return(mergedPlotObject)
+}

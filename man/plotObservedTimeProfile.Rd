@@ -5,7 +5,7 @@
 \title{plotObservedTimeProfile}
 \usage{
 plotObservedTimeProfile(
-  data = NULL,
+  data,
   metaData = NULL,
   dataMapping = NULL,
   plotConfiguration = NULL,

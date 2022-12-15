@@ -29,11 +29,21 @@ Other DataMapping classes:
 \section{Super classes}{
 \code{tlf::XYDataMapping} -> \code{tlf::XYGDataMapping} -> \code{tlf::RangeDataMapping} -> \code{TimeProfileDataMapping}
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{y2Axis}}{Name of y2Axis variable to map}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-TimeProfileDataMapping-new}{\code{TimeProfileDataMapping$new()}}
 \item \href{#method-TimeProfileDataMapping-checkMapData}{\code{TimeProfileDataMapping$checkMapData()}}
+\item \href{#method-TimeProfileDataMapping-requireDualAxis}{\code{TimeProfileDataMapping$requireDualAxis()}}
+\item \href{#method-TimeProfileDataMapping-getLeftAxis}{\code{TimeProfileDataMapping$getLeftAxis()}}
+\item \href{#method-TimeProfileDataMapping-getRightAxis}{\code{TimeProfileDataMapping$getRightAxis()}}
 \item \href{#method-TimeProfileDataMapping-clone}{\code{TimeProfileDataMapping$clone()}}
 }
 }
@@ -49,6 +59,7 @@ Create a new \code{TimeProfileDataMapping} object
   ymin = NULL,
   ymax = NULL,
   group = NULL,
+  y2Axis = NULL,
   color = NULL,
   fill = NULL,
   linetype = NULL,
@@ -68,6 +79,8 @@ Create a new \code{TimeProfileDataMapping} object
 \item{\code{ymax}}{Name of ymax variable to map}
 
 \item{\code{group}}{R6 class \code{Grouping} object or its input}
+
+\item{\code{y2Axis}}{Name of y2Axis variable to map}
 
 \item{\code{color}}{R6 class \code{Grouping} object or its input}
 
@@ -104,6 +117,66 @@ Check that \code{data} variables include map variables
 \subsection{Returns}{
 A data.frame with map and \code{legendLabels} variables.
 Dummy variable \code{legendLabels} is necessary to allow further modification of plots.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-TimeProfileDataMapping-requireDualAxis"></a>}}
+\if{latex}{\out{\hypertarget{method-TimeProfileDataMapping-requireDualAxis}{}}}
+\subsection{Method \code{requireDualAxis()}}{
+Assess if \code{data} require a dual axis plot
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TimeProfileDataMapping$requireDualAxis(data)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data}}{data.frame to check}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A logical
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-TimeProfileDataMapping-getLeftAxis"></a>}}
+\if{latex}{\out{\hypertarget{method-TimeProfileDataMapping-getLeftAxis}{}}}
+\subsection{Method \code{getLeftAxis()}}{
+Render NA values for all right axis data
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TimeProfileDataMapping$getLeftAxis(data)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data}}{A data.frame}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A data.frame to be plotted in left axis
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-TimeProfileDataMapping-getRightAxis"></a>}}
+\if{latex}{\out{\hypertarget{method-TimeProfileDataMapping-getRightAxis}{}}}
+\subsection{Method \code{getRightAxis()}}{
+Render NA values for all left axis data
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TimeProfileDataMapping$getRightAxis(data)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data}}{A data.frame}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A data.frame to be plotted in right axis
 }
 }
 \if{html}{\out{<hr>}}

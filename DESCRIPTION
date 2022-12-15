@@ -41,6 +41,7 @@ Encoding: UTF-8
 RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
 Suggests:
+    cowplot,
     knitr,
     rmarkdown,
     scales,
@@ -99,6 +100,7 @@ Collate:
     'themes.R'
     'timeprofile-datamapping.R'
     'timeprofile-helper.R'
+    'timeprofile-plotconfiguration.R'
     'tlf-env.R'
     'tornado-datamapping.R'
     'tornado-plotconfiguration.R'
