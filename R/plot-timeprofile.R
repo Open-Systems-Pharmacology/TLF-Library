@@ -79,6 +79,59 @@ plotTimeProfile <- function(data = NULL,
 
   plotObject <- .setPlotObject(plotObject, plotConfiguration)
 
+  requireDualAxis <- any(
+    dataMapping$requireDualAxis(data),
+    observedDataMapping$requireDualAxis(observedData)
+  )
+
+  if (!requireDualAxis) {
+    plotObject <- .plotTimeProfileCore(
+      data = data,
+      metaData = metaData,
+      dataMapping = dataMapping,
+      observedData = observedData,
+      observedDataMapping = observedDataMapping,
+      plotConfiguration = plotConfiguration,
+      plotObject = plotObject
+    )
+    return(plotObject)
+  }
+
+  leftPlotObject <- .plotTimeProfileCore(
+    data = dataMapping$getLeftAxis(data),
+    metaData = metaData,
+    dataMapping = dataMapping,
+    observedData = observedDataMapping$getLeftAxis(observedData),
+    observedDataMapping = observedDataMapping,
+    plotConfiguration = plotConfiguration,
+    plotObject = plotObject
+  )
+  rightPlotObject <- .plotTimeProfileCore(
+    data = dataMapping$getRightAxis(data),
+    metaData = metaData,
+    dataMapping = dataMapping,
+    observedData = observedDataMapping$getRightAxis(observedData),
+    observedDataMapping = observedDataMapping,
+    plotConfiguration = plotConfiguration,
+    plotObject = plotObject
+  )
+  plotObject <- getDualAxisPlot(leftPlotObject, rightPlotObject)
+  return(plotObject)
+}
+
+
+#' @title .plotTimeProfileCore
+#' @description Producing Core of Time Profile plots
+#' @inheritParams plotTimeProfile
+#' @return A `ggplot` object
+#' @keywords internal
+.plotTimeProfileCore <- function(data = NULL,
+                                 metaData = NULL,
+                                 dataMapping = NULL,
+                                 observedData = NULL,
+                                 observedDataMapping = NULL,
+                                 plotConfiguration = NULL,
+                                 plotObject = NULL) {
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- .getAesStringMapping(dataMapping)
 
@@ -286,6 +339,7 @@ plotTimeProfile <- function(data = NULL,
   plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }
+
 
 
 #' @title updateTimeProfileLegend

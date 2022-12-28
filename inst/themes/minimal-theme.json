@@ -32,6 +32,14 @@
       "angle": 90,
       "align": "center"
     },
+    "y2label": {
+      "color": "grey20",
+      "size": 10,
+      "fontFace": "plain",
+      "fontFamily": "",
+      "angle": -90,
+      "align": "center"
+    },
     "caption": {
       "color": "grey20",
       "size": 8,
@@ -79,6 +87,14 @@
       "fontFamily": "",
       "angle": 0,
       "align": "right"
+    },
+    "y2Axis": {
+      "color": "grey20",
+      "size": 10,
+      "fontFace": "plain",
+      "fontFamily": "",
+      "angle": 0,
+      "align": "right"
     }
   },
   "background": {
@@ -106,12 +122,22 @@
       "size": "0.5",
       "linetype": "solid"
     },
+    "y2Axis": {
+      "color": "grey20",
+      "size": "0.5",
+      "linetype": "solid"
+    },
     "xGrid": {
       "color": "grey20",
       "size": "0.5",
       "linetype": "blank"
     },
     "yGrid": {
+      "color": "grey20",
+      "size": "0.5",
+      "linetype": "blank"
+    },
+    "y2Grid": {
       "color": "grey20",
       "size": "0.5",
       "linetype": "blank"

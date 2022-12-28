@@ -1,12 +1,3 @@
-#' @title TimeProfilePlotConfiguration
-#' @description R6 class defining the configuration of a `ggplot` object for time profile plots
-#' @export
-#' @family PlotConfiguration classes
-TimeProfilePlotConfiguration <- R6::R6Class(
-  "TimeProfilePlotConfiguration",
-  inherit = PlotConfiguration
-)
-
 #' @title PKRatioPlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object for PK ratio plots
 #' @field defaultYScale Default yAxis scale value when creating a `PKRatioPlotConfiguration` object
