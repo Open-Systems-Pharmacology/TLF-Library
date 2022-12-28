@@ -10,16 +10,20 @@ BackgroundConfiguration <- R6::R6Class(
     #' @param panel `BackgroundElement` object defining panel (inside of plot) background properties
     #' @param xAxis `LineElement` object defining properties of x-axis
     #' @param yAxis `LineElement` object defining properties of y-axis
+    #' @param y2Axis `LineElement` object defining properties of right y-axis
     #' @param xGrid `LineElement` object defining properties of x-grid
     #' @param yGrid `LineElement` object defining properties of y-grid
+    #' @param y2Grid `LineElement` object defining properties of right y-grid
     #' @return A new `BackgroundConfiguration` object
     initialize = function(watermark = NULL,
                           plot = NULL,
                           panel = NULL,
                           xAxis = NULL,
                           yAxis = NULL,
+                          y2Axis = NULL,
                           xGrid = NULL,
-                          yGrid = NULL) {
+                          yGrid = NULL,
+                          y2Grid = NULL) {
       validateIsOfType(watermark, c("character", "Label"), nullAllowed = TRUE)
       currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
       watermark <- watermark %||% currentTheme$background$watermark
@@ -30,7 +34,7 @@ BackgroundConfiguration <- R6::R6Class(
       private$.watermark <- watermark
 
       areaFieldNames <- c("plot", "panel")
-      lineFieldNames <- c("xAxis", "yAxis", "xGrid", "yGrid")
+      lineFieldNames <- c("xAxis", "yAxis", "y2Axis", "xGrid", "yGrid", "y2Grid")
 
       validateAreaExpression <- parse(text = paste0("validateIsOfType(", areaFieldNames, ", 'BackgroundElement', nullAllowed = TRUE)"))
       validateLineExpression <- parse(text = paste0("validateIsOfType(", lineFieldNames, ", 'LineElement', nullAllowed = TRUE)"))
@@ -108,6 +112,14 @@ BackgroundConfiguration <- R6::R6Class(
       validateIsOfType(value, "LineElement", nullAllowed = TRUE)
       private$.yAxis <- value %||% private$.yAxis
     },
+    #' @field y2Axis `LineElement` object
+    y2Axis = function(value) {
+      if (missing(value)) {
+        return(private$.y2Axis)
+      }
+      validateIsOfType(value, "LineElement", nullAllowed = TRUE)
+      private$.y2Axis <- value %||% private$.y2Axis
+    },
     #' @field xGrid `LineElement` object
     xGrid = function(value) {
       if (missing(value)) {
@@ -123,6 +135,14 @@ BackgroundConfiguration <- R6::R6Class(
       }
       validateIsOfType(value, "LineElement", nullAllowed = TRUE)
       private$.yGrid <- value %||% private$.yGrid
+    },
+    #' @field y2Grid `LineElement` object
+    y2Grid = function(value) {
+      if (missing(value)) {
+        return(private$.y2Grid)
+      }
+      validateIsOfType(value, "LineElement", nullAllowed = TRUE)
+      private$.y2Grid <- value %||% private$.y2Grid
     }
   ),
   private = list(
@@ -131,9 +151,11 @@ BackgroundConfiguration <- R6::R6Class(
     .panel = NULL,
     .xAxis = NULL,
     .yAxis = NULL,
+    .y2Axis = NULL,
     .xGrid = NULL,
-    .yGrid = NULL
-  ),
+    .yGrid = NULL,
+    .y2Grid = NULL
+  )
 )
 
 #' @title BackgroundElement

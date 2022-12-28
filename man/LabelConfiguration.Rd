@@ -18,6 +18,8 @@ R6 class defining the configuration of the labels of a \code{ggplot} object
 \item{\code{ylabel}}{\code{Label} object defining the ylabel of the plot}
 
 \item{\code{caption}}{\code{Label} object defining the caption of the plot}
+
+\item{\code{y2label}}{\code{Label} object defining the y2label of the plot}
 }
 \if{html}{\out{</div>}}
 }

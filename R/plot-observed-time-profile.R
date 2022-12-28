@@ -18,7 +18,7 @@
 #'   data = obsData,
 #'   dataMapping = ObservedDataMapping$new(x = "x", y = "y")
 #' )
-plotObservedTimeProfile <- function(data = NULL,
+plotObservedTimeProfile <- function(data,
                                     metaData = NULL,
                                     dataMapping = NULL,
                                     plotConfiguration = NULL,
@@ -33,9 +33,50 @@ plotObservedTimeProfile <- function(data = NULL,
   )
   plotObject <- .setPlotObject(plotObject, plotConfiguration)
 
+  requireDualAxis <- dataMapping$requireDualAxis(data)
+
+  if (!requireDualAxis) {
+    plotObject <- .plotObservedTimeProfileCore(
+      data = data,
+      metaData = metaData,
+      dataMapping = dataMapping,
+      plotConfiguration = plotConfiguration,
+      plotObject = plotObject
+    )
+    return(plotObject)
+  }
+
+  leftPlotObject <- .plotObservedTimeProfileCore(
+    data = dataMapping$getLeftAxis(data),
+    metaData = metaData,
+    dataMapping = dataMapping,
+    plotConfiguration = plotConfiguration,
+    plotObject = plotObject
+  )
+  rightPlotObject <- .plotObservedTimeProfileCore(
+    data = dataMapping$getRightAxis(data),
+    metaData = metaData,
+    dataMapping = dataMapping,
+    plotConfiguration = plotConfiguration,
+    plotObject = plotObject
+  )
+  plotObject <- getDualAxisPlot(leftPlotObject, rightPlotObject)
+  return(plotObject)
+}
+
+
+#' @title .plotObservedTimeProfileCore
+#' @description Producing Core of Time Profile plots for observed data
+#' @inheritParams plotObservedTimeProfile
+#' @return A `ggplot` object
+#' @keywords internal
+.plotObservedTimeProfileCore <- function(data = NULL,
+                                         metaData = NULL,
+                                         dataMapping = NULL,
+                                         plotConfiguration = NULL,
+                                         plotObject = NULL) {
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- .getAesStringMapping(dataMapping)
-
   #----- Build layers of molecule plot -----
   # 1- Error bars if available
   if (!any(isEmpty(dataMapping$ymin), isEmpty(dataMapping$ymax))) {

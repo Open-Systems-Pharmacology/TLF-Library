@@ -357,8 +357,8 @@ YAxisConfiguration <- R6::R6Class(
   "YAxisConfiguration",
   inherit = AxisConfiguration,
   public = list(
-    #' @field position character poistion of the Y-axis
-    position = NULL, # TO DO: find a way to include position in y axis, then scale position = "left" or "right"
+    #' @field position character position of the Y-axis
+    position = "left",
 
     #' @description Update axis configuration on a `ggplot` object
     #' @param plotObject `ggplot` object
@@ -367,7 +367,12 @@ YAxisConfiguration <- R6::R6Class(
     updatePlot = function(plotObject, xlim = NULL) {
       validateIsOfType(plotObject, "ggplot")
       # Update font properties
-      plotObject <- plotObject + ggplot2::theme(axis.text.y = private$.font$createPlotFont())
+      plotObject <- plotObject + switch(
+        self$position,
+        "left" = ggplot2::theme(axis.text.y = private$.font$createPlotFont()),
+        "right" = ggplot2::theme(axis.text.y.right = private$.font$createPlotFont())
+      )
+        
       suppressMessages(
         plotObject <- plotObject + ggplot2::coord_cartesian(xlim = xlim, ylim = private$.limits)
       )
@@ -376,6 +381,7 @@ YAxisConfiguration <- R6::R6Class(
         suppressMessages(
           plotObject <- plotObject +
             ggplot2::scale_y_discrete(
+              position = self$position,
               breaks = private$.ticks,
               labels = private$.ticklabels,
               expand = self$ggplotExpansion()
@@ -388,6 +394,7 @@ YAxisConfiguration <- R6::R6Class(
       suppressMessages(
         plotObject <- plotObject +
           ggplot2::scale_y_continuous(
+            position = self$position,
             trans = self$ggplotScale(),
             breaks = self$prettyTicks(),
             minor_breaks = self$prettyMinorTicks(),
@@ -415,8 +422,15 @@ YAxisConfiguration <- R6::R6Class(
       }
       suppressMessages({
         plotObject <- switch(private$.scale,
-          "log" = plotObject + ggplot2::annotation_logticks(sides = "l", color = private$.font$color),
-          "ln" = plotObject + ggplot2::annotation_logticks(base = exp(1), sides = "l", color = private$.font$color),
+          "log" = plotObject + ggplot2::annotation_logticks(
+            sides = switch(self$position, "left" = "l", "right" = "r"),
+            color = private$.font$color
+            ),
+          "ln" = plotObject + ggplot2::annotation_logticks(
+            base = exp(1), 
+            sides = switch(self$position, "left" = "l", "right" = "r"),
+            color = private$.font$color
+            ),
           plotObject
         )
       })

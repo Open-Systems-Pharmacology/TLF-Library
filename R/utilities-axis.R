@@ -95,6 +95,38 @@ setYAxis <- function(plotObject,
   return(newPlotObject)
 }
 
+#' @title setY2Axis
+#' @description Set right Y-axis properties of a `ggplot` object
+#' @inheritParams setXAxis
+#' @return A `ggplot` object
+#' @export
+setY2Axis <- function(plotObject,
+                     scale = NULL,
+                     limits = NULL,
+                     ticks = NULL,
+                     ticklabels = NULL,
+                     minorTicks = NULL,
+                     font = NULL,
+                     expand = NULL) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsIncluded(scale, Scaling, nullAllowed = TRUE)
+  validateIsNumeric(limits, nullAllowed = TRUE)
+  validateIsOfType(font, "Font", nullAllowed = TRUE)
+  validateIsLogical(expand, nullAllowed = TRUE)
+  
+  # Clone plotConfiguration into a new plot object
+  # Prevents update of R6 class being spread to plotObject
+  newPlotObject <- plotObject
+  newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
+  
+  # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$yAxis
+  y2Axis <- newPlotObject$plotConfiguration$y2Axis %||% YAxisConfiguration$new()
+  y2Axis$position <- "right"
+  eval(.parseVariableToObject("y2Axis", c("limits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
+  newPlotObject <- y2Axis$updatePlot(newPlotObject, xlim = newPlotObject$plotConfiguration$xAxis$limits)
+  return(newPlotObject)
+}
+
 
 #' @title getLogTickLabels
 #' @description Get ticklabels expressions for log scale plots

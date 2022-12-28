@@ -103,12 +103,12 @@
 <g clip-path='url(#cpMzMuMTV8MzUxLjc0fDkwLjA3fDUyNS4wMg==)'>
 <line x1='120.04' y1='267.89' x2='120.04' y2='109.84' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <line x1='120.04' y1='310.27' x2='120.04' y2='347.52' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<polygon points='54.87,267.89 54.87,310.27 185.20,310.27 185.20,267.89 54.87,267.89 ' style='stroke-width: 1.07; stroke: #333333; fill: #0078D7; fill-opacity: 0.75;' />
-<line x1='54.87' y1='301.64' x2='185.20' y2='301.64' style='stroke-width: 2.13; stroke: #333333; stroke-linecap: butt;' />
+<polygon points='54.87,267.89 54.87,310.27 185.20,310.27 185.20,267.89 54.87,267.89 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt; stroke-linejoin: miter; fill: #0078D7; fill-opacity: 0.75;' />
+<line x1='54.87' y1='301.64' x2='185.20' y2='301.64' style='stroke-width: 2.13; stroke: #333333; stroke-linecap: butt; stroke-linejoin: miter;' />
 <line x1='264.85' y1='379.07' x2='264.85' y2='321.52' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <line x1='264.85' y1='467.49' x2='264.85' y2='505.25' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<polygon points='199.69,379.07 199.69,467.49 330.02,467.49 330.02,379.07 199.69,379.07 ' style='stroke-width: 1.07; stroke: #333333; fill: #0078D7; fill-opacity: 0.75;' />
-<line x1='199.69' y1='427.21' x2='330.02' y2='427.21' style='stroke-width: 2.13; stroke: #333333; stroke-linecap: butt;' />
+<polygon points='199.69,379.07 199.69,467.49 330.02,467.49 330.02,379.07 199.69,379.07 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt; stroke-linejoin: miter; fill: #0078D7; fill-opacity: 0.75;' />
+<line x1='199.69' y1='427.21' x2='330.02' y2='427.21' style='stroke-width: 2.13; stroke: #333333; stroke-linecap: butt; stroke-linejoin: miter;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <polyline points='33.15,525.02 33.15,90.07 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
@@ -212,12 +212,12 @@
 <g clip-path='url(#cpMzkwLjQ1fDcwOS4wNHw5MC4wN3w1MjUuMDI=)'>
 <line x1='477.34' y1='193.37' x2='477.34' y2='151.34' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <line x1='477.34' y1='350.43' x2='477.34' y2='442.66' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<polygon points='412.17,193.37 412.17,350.43 542.51,350.43 542.51,193.37 412.17,193.37 ' style='stroke-width: 1.07; stroke: #333333; fill: #0078D7; fill-opacity: 0.75;' />
-<line x1='412.17' y1='239.95' x2='542.51' y2='239.95' style='stroke-width: 2.13; stroke: #333333; stroke-linecap: butt;' />
+<polygon points='412.17,193.37 412.17,350.43 542.51,350.43 542.51,193.37 412.17,193.37 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt; stroke-linejoin: miter; fill: #0078D7; fill-opacity: 0.75;' />
+<line x1='412.17' y1='239.95' x2='542.51' y2='239.95' style='stroke-width: 2.13; stroke: #333333; stroke-linecap: butt; stroke-linejoin: miter;' />
 <line x1='622.15' y1='233.79' x2='622.15' y2='109.84' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <line x1='622.15' y1='417.02' x2='622.15' y2='505.25' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<polygon points='556.99,233.79 556.99,417.02 687.32,417.02 687.32,233.79 556.99,233.79 ' style='stroke-width: 1.07; stroke: #333333; fill: #0078D7; fill-opacity: 0.75;' />
-<line x1='556.99' y1='335.41' x2='687.32' y2='335.41' style='stroke-width: 2.13; stroke: #333333; stroke-linecap: butt;' />
+<polygon points='556.99,233.79 556.99,417.02 687.32,417.02 687.32,233.79 556.99,233.79 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt; stroke-linejoin: miter; fill: #0078D7; fill-opacity: 0.75;' />
+<line x1='556.99' y1='335.41' x2='687.32' y2='335.41' style='stroke-width: 2.13; stroke: #333333; stroke-linecap: butt; stroke-linejoin: miter;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <polyline points='390.45,525.02 390.45,90.07 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />

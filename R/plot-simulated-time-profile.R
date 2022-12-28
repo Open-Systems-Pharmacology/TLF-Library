@@ -39,10 +39,51 @@ plotSimulatedTimeProfile <- function(data = NULL,
     data, metaData, dataMapping
   )
   plotObject <- .setPlotObject(plotObject, plotConfiguration)
+  
+  requireDualAxis <- dataMapping$requireDualAxis(data)
+  
+  if (!requireDualAxis) {
+    plotObject <- .plotSimulatedTimeProfileCore(
+      data = data,
+      metaData = metaData,
+      dataMapping = dataMapping,
+      plotConfiguration = plotConfiguration,
+      plotObject = plotObject
+    )
+    return(plotObject)
+  }
+  
+  leftPlotObject <- .plotSimulatedTimeProfileCore(
+    data = dataMapping$getLeftAxis(data),
+    metaData = metaData,
+    dataMapping = dataMapping,
+    plotConfiguration = plotConfiguration,
+    plotObject = plotObject
+  )
+  rightPlotObject <- .plotSimulatedTimeProfileCore(
+    data = dataMapping$getRightAxis(data),
+    metaData = metaData,
+    dataMapping = dataMapping,
+    plotConfiguration = plotConfiguration,
+    plotObject = plotObject
+  )
+  plotObject <- getDualAxisPlot(leftPlotObject, rightPlotObject)
+  return(plotObject)
+}
 
+#' @title .plotSimulatedTimeProfileCore
+#' @description Producing Core of Time Profile plots for simulated data
+#' @inheritParams plotSimulatedTimeProfile
+#' @return A `ggplot` object
+#' @keywords internal
+.plotSimulatedTimeProfileCore <- function(data = NULL,
+                                         metaData = NULL,
+                                         dataMapping = NULL,
+                                         plotConfiguration = NULL,
+                                         plotObject = NULL) {
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- .getAesStringMapping(dataMapping)
-
+  
   #----- Build layers of molecule plot -----
   # 1- Ribbons if available
   if (!any(isEmpty(dataMapping$ymin), isEmpty(dataMapping$ymax))) {
@@ -67,7 +108,7 @@ plotSimulatedTimeProfile <- function(data = NULL,
         show.legend = TRUE
       )
   }
-
+  
   # 2- Lines
   if (!isEmpty(dataMapping$y)) {
     aestheticValues <- .getAestheticValuesFromConfiguration(
@@ -91,7 +132,7 @@ plotSimulatedTimeProfile <- function(data = NULL,
         show.legend = TRUE,
       )
   }
-
+  
   #----- Update properties using ggplot2::scale functions -----
   plotObject <- .updateAesProperties(
     plotObject,
