@@ -5,7 +5,7 @@
 \alias{MoleculePlots}
 \title{MoleculePlots}
 \format{
-An object of class \code{list} of length 13.
+An object of class \code{list} of length 14.
 }
 \usage{
 MoleculePlots
@@ -17,14 +17,18 @@ List of all available molecule plots
 Other enum helpers: 
 \code{\link{AestheticFields}},
 \code{\link{AestheticProperties}},
+\code{\link{AestheticSelectionKeys}},
 \code{\link{Alignments}},
 \code{\link{AtomPlots}},
+\code{\link{ColorMaps}},
 \code{\link{DataMappings}},
+\code{\link{DefaultDataMappingValues}},
 \code{\link{ExportFormats}},
 \code{\link{ExportUnits}},
 \code{\link{FontFaces}},
 \code{\link{HorizontalJustification}},
 \code{\link{LegendPositions}},
+\code{\link{LegendTypes}},
 \code{\link{Linetypes}},
 \code{\link{PlotAnnotationTextSize}},
 \code{\link{PlotConfigurations}},

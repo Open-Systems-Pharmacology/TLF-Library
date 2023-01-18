@@ -154,6 +154,7 @@ getDefaultCaptions <- function(data, metaData, variableList = colnames(data), se
 #' dataMapping <- XYGDataMapping$new(x = "Time [h]", y = "Concentration [mol/L]", color = "Dose")
 #' mappingLabels <- .getAesStringMapping(dataMapping)
 #' }
+#' @keywords internal
 .getAesStringMapping <- function(dataMapping) {
   # Define list of mappings to check
   geomMappings <- c("x", "y", "xmin", "xmax", "ymin", "ymax", "lower", "middle", "upper")
@@ -209,6 +210,7 @@ getDefaultCaptions <- function(data, metaData, variableList = colnames(data), se
 #' data <- data.frame(x = c(1, 2, 3), y = c(6, 5, 4), color = c("blue", "red", "blue"))
 #' mapping <- .smartMapping(data)
 #' }
+#' @keywords internal
 .smartMapping <- function(data) {
   # Initialize smart mapping with null values
   geomMappings <- c("x", "y", "ymin", "ymax", "lower", "middle", "upper")
@@ -259,6 +261,7 @@ getDefaultCaptions <- function(data, metaData, variableList = colnames(data), se
 
 #' @title DefaultDataMappingValues
 #' @description List of default values used in dataMapping
+#' @family enum helpers
 DefaultDataMappingValues <- list(
   pkRatio = list(
     pkRatio1 = 1,

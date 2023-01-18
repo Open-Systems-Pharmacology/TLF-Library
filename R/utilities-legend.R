@@ -376,6 +376,7 @@ setCaptionFill <- function(plotObject, fill, name = NULL) {
 #' @export
 #' @description
 #' List of all available legend types
+#' @family enum helpers
 LegendTypes <- enum(c(
   "color",
   "shape",

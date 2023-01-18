@@ -1,0 +1,18 @@
+pandoc: 2.19.2
+pkgdown: 2.0.6
+pkgdown_sha: ~
+articles:
+  atom-plots: atom-plots.html
+  box-whisker-vignette: box-whisker-vignette.html
+  histogram: histogram.html
+  pk-ratio-vignette: pk-ratio-vignette.html
+  plot-configuration: plot-configuration.html
+  plot-maker: plot-maker.html
+  plot-time-profile: plot-time-profile.html
+  theme-maker: theme-maker.html
+  tlf: tlf.html
+last_built: 2023-01-18T10:28Z
+urls:
+  reference: https://www.open-systems-pharmacology.org/TLF-Library/reference
+  article: https://www.open-systems-pharmacology.org/TLF-Library/articles
+

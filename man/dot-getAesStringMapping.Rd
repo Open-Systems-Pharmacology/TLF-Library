@@ -27,3 +27,4 @@ dataMapping <- XYGDataMapping$new(x = "Time [h]", y = "Concentration [mol/L]", c
 mappingLabels <- .getAesStringMapping(dataMapping)
 }
 }
+\keyword{internal}

@@ -10,6 +10,7 @@
 #' @field dpi (dots per inch) numeric value defining plot resolution
 #' @export
 #' @import ggplot2
+#' @family PlotConfiguration classes
 ExportConfiguration <- R6::R6Class(
   "ExportConfiguration",
   public = list(
