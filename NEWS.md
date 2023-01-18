@@ -1,3 +1,24 @@
+# tlf 1.5.0
+
+## New features
+
+* New plots and their corresponding classes are now available :
+
+  - [`plotQQ()`](../reference/plotQQ.html) (#362)
+  - [`plotCumulativeTimeProfile()`](../reference/plotCumulativeTimeProfile.html) (#363)
+  - [`plotObservedTimeProfile()`](../reference/plotObservedTimeProfile.html) (#390)
+  - [`plotSimulatedTimeProfile()`](../reference/plotSimulatedTimeProfile.html) (#391)
+
+* Time Profile plots handle dual axis plots (#392)
+
+* Histograms can use normalized y axis (#383, #3889)
+
+* New helpers for creating symmetric plots are available (#350)
+
+## Minor improvements and bug fixes   
+
+* Minor ticks can be displayed
+
 # tlf 1.4.87
 
 ## New features
