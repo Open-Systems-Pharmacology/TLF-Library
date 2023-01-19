@@ -139,8 +139,8 @@ VerticalJustification <- enum(
 #' @import ospsuite.utils
 #' @description
 #' List of all available horizontal justifications for plot annotation text.
-#' @family enum helpers
 #' @export
+#' @family enum helpers
 HorizontalJustification <- enum(
   c(
     "left" = 0,
@@ -153,8 +153,8 @@ HorizontalJustification <- enum(
 #' @import ospsuite.utils
 #' @description
 #' List of all available tag positions in a plot grid.
-#' @family enum helpers
 #' @export
+#' @family enum helpers
 TagPositions <- enum(
   c(
     "topLeft" = "topleft",
@@ -179,6 +179,7 @@ TagPositions <- enum(
 #' color palette from `{ggsci}` package.
 #'
 #' @export
+#' @family enum helpers
 ColorMaps <- list(
   default = c("#0078D7", "#D83B01", "#107C10", "#A80000", "#002050", "#B4009E"),
   grays = paste("gray", seq(0, 100, 10), sep = ""),
@@ -204,6 +205,7 @@ ColorMaps <- list(
 #' @description List of some `ggplot2` shapes
 #' @import ospsuite.utils
 #' @export
+#' @family enum helpers
 AestheticSelectionKeys <- enum(c(
   "next",
   "same",
@@ -236,8 +238,8 @@ tlfStatFunctions <- enum(c(
 #' @import ospsuite.utils
 #' @description
 #' List of all available legend positions
-#' @family enum helpers
 #' @export
+#' @family enum helpers
 LegendPositions <- enum(c(
   "none",
   "insideTop",

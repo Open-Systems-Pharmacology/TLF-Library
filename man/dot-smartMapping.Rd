@@ -35,3 +35,4 @@ data <- data.frame(x = c(1, 2, 3), y = c(6, 5, 4), color = c("blue", "red", "blu
 mapping <- .smartMapping(data)
 }
 }
+\keyword{internal}

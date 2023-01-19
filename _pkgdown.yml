@@ -25,17 +25,30 @@ reference:
   - starts_with("setX")
   - starts_with("setY")
   - matches("setGrid")
+  - matches("addWatermark")
+  - matches("createWatermarkGrob")
   - matches("setWatermark")
   - starts_with("update")
+  - starts_with("get")
 - title: "PlotConfiguration Classes"
   desc: "Classes defining plot properties"
   contents:
   - has_concept("PlotConfiguration classes")
+  - ends_with("Label")
+  - matches("Font")
 - title: "DataMapping Classes"
   desc: "Classes defining what data to plot"
   contents:
   - has_concept("DataMapping classes")
   - matches("getLinesFromFoldDistance")
+- title: "Summary and Aggregation Helpers"
+  desc: "Classes, functions and objects summarizing data"
+  contents:
+  - has_concept("stat functions")
+  - starts_with("Aggregation")
+  - ends_with("Measure")
+  - matches("isBetween")
+  - starts_with("getGuestValues")
 - title: "Enum Helpers"
   desc: "Enums listing available values for specific properties"
   contents:
@@ -48,12 +61,19 @@ reference:
   desc: "Functions and classes defining default plot properties."
   contents:
   - ends_with("Theme")
+  - starts_with("Theme")
   - matches("saveThemeToJson")
+  - matches("loadThemeFromJson")
   - matches("runThemeMaker")
 - title: "Default Settings"
   desc: "Functions defining default package settings."
   contents:
   - starts_with("setDefault")
+  - starts_with("getDefault")
+- title: "Exporting Plots"
+  desc: "Functions for saving and exporting plots."
+  contents:
+  - starts_with("export")
 
 articles:
 

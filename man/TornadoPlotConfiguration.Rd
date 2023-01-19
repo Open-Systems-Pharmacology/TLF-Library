@@ -8,15 +8,27 @@ R6 class defining the configuration of a \code{ggplot} object for tornado plots
 }
 \seealso{
 Other PlotConfiguration classes: 
+\code{\link{AxisConfiguration}},
+\code{\link{BackgroundConfiguration}},
+\code{\link{BackgroundElement}},
 \code{\link{BoxWhiskerPlotConfiguration}},
 \code{\link{CumulativeTimeProfilePlotConfiguration}},
 \code{\link{DDIRatioPlotConfiguration}},
+\code{\link{ExportConfiguration}},
 \code{\link{HistogramPlotConfiguration}},
+\code{\link{LabelConfiguration}},
+\code{\link{LegendConfiguration}},
+\code{\link{LineElement}},
 \code{\link{ObsVsPredPlotConfiguration}},
 \code{\link{PKRatioPlotConfiguration}},
 \code{\link{PlotConfiguration}},
+\code{\link{PlotGridConfiguration}},
 \code{\link{QQPlotConfiguration}},
-\code{\link{TimeProfilePlotConfiguration}}
+\code{\link{ResVsPredPlotConfiguration}},
+\code{\link{ResVsTimePlotConfiguration}},
+\code{\link{TimeProfilePlotConfiguration}},
+\code{\link{XAxisConfiguration}},
+\code{\link{YAxisConfiguration}}
 }
 \concept{PlotConfiguration classes}
 \section{Super class}{

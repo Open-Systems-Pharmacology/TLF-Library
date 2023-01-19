@@ -1,6 +1,7 @@
 #' @title LegendConfiguration
 #' @description R6 class defining the legend configuration of a `ggplot` object
 #' @export
+#' @family PlotConfiguration classes
 LegendConfiguration <- R6::R6Class(
   "LegendConfiguration",
   public = list(

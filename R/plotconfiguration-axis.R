@@ -70,6 +70,7 @@
 #' @title AxisConfiguration
 #' @description  R6 class defining the configuration of axis
 #' @export
+#' @family PlotConfiguration classes
 AxisConfiguration <- R6::R6Class(
   "AxisConfiguration",
   public = list(
@@ -279,6 +280,7 @@ AxisConfiguration <- R6::R6Class(
 #' @title XAxisConfiguration
 #' @description  R6 class defining the configuration of X-axis
 #' @export
+#' @family PlotConfiguration classes
 XAxisConfiguration <- R6::R6Class(
   "XAxisConfiguration",
   inherit = AxisConfiguration,
@@ -353,6 +355,7 @@ XAxisConfiguration <- R6::R6Class(
 #' @title YAxisConfiguration
 #' @description  R6 class defining the configuration of Y-axis
 #' @export
+#' @family PlotConfiguration classes
 YAxisConfiguration <- R6::R6Class(
   "YAxisConfiguration",
   inherit = AxisConfiguration,
