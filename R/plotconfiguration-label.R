@@ -1,6 +1,7 @@
 #' @title LabelConfiguration
 #' @description R6 class defining the configuration of the labels of a `ggplot` object
 #' @export
+#' @family PlotConfiguration classes
 LabelConfiguration <- R6::R6Class(
   "LabelConfiguration",
   public = list(

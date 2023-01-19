@@ -45,6 +45,7 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
 #' @description R6 class defining the configuration of a `ggplot` object for Res vs Pred/Time plots
 #' @field defaultSymmetricAxes Default option setting symmetric xAxis and/or yAxis limits when creating a `ResVsPredPlotConfiguration` object
 #' @export
+#' @family PlotConfiguration classes
 ResVsPredPlotConfiguration <- R6::R6Class(
   "ResVsPredPlotConfiguration",
   inherit = PlotConfiguration,
@@ -56,6 +57,7 @@ ResVsPredPlotConfiguration <- R6::R6Class(
 #' @title ResVsTimePlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object for Res vs Pred/Time plots
 #' @export
+#' @family PlotConfiguration classes
 ResVsTimePlotConfiguration <- R6::R6Class(
   "ResVsTimePlotConfiguration",
   inherit = ResVsPredPlotConfiguration

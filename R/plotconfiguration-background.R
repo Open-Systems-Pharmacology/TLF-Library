@@ -1,6 +1,7 @@
 #' @title BackgroundConfiguration
 #' @description R6 class defining the configuration of background
 #' @export
+#' @family PlotConfiguration classes
 BackgroundConfiguration <- R6::R6Class(
   "BackgroundConfiguration",
   public = list(
@@ -165,6 +166,7 @@ BackgroundConfiguration <- R6::R6Class(
 #' @field size numeric defining the size of the background element frame/line
 #' @field linetype character defining the size of the background element frame/line
 #' @export
+#' @family PlotConfiguration classes
 BackgroundElement <- R6::R6Class(
   "BackgroundElement",
   public = list(
@@ -211,6 +213,7 @@ BackgroundElement <- R6::R6Class(
 #' @title LineElement
 #' @description  R6 class defining the properties of background line elements
 #' @export
+#' @family PlotConfiguration classes
 LineElement <- R6::R6Class(
   "LineElement",
   inherit = BackgroundElement,

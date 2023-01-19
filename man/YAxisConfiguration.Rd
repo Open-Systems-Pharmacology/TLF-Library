@@ -6,6 +6,31 @@
 \description{
 R6 class defining the configuration of Y-axis
 }
+\seealso{
+Other PlotConfiguration classes: 
+\code{\link{AxisConfiguration}},
+\code{\link{BackgroundConfiguration}},
+\code{\link{BackgroundElement}},
+\code{\link{BoxWhiskerPlotConfiguration}},
+\code{\link{CumulativeTimeProfilePlotConfiguration}},
+\code{\link{DDIRatioPlotConfiguration}},
+\code{\link{ExportConfiguration}},
+\code{\link{HistogramPlotConfiguration}},
+\code{\link{LabelConfiguration}},
+\code{\link{LegendConfiguration}},
+\code{\link{LineElement}},
+\code{\link{ObsVsPredPlotConfiguration}},
+\code{\link{PKRatioPlotConfiguration}},
+\code{\link{PlotConfiguration}},
+\code{\link{PlotGridConfiguration}},
+\code{\link{QQPlotConfiguration}},
+\code{\link{ResVsPredPlotConfiguration}},
+\code{\link{ResVsTimePlotConfiguration}},
+\code{\link{TimeProfilePlotConfiguration}},
+\code{\link{TornadoPlotConfiguration}},
+\code{\link{XAxisConfiguration}}
+}
+\concept{PlotConfiguration classes}
 \section{Super class}{
 \code{tlf::AxisConfiguration} -> \code{YAxisConfiguration}
 }

@@ -72,6 +72,7 @@
 #' For more, see: <https://patchwork.data-imaginist.com/articles/patchwork.html>
 #'
 #' @export
+#' @family molecule plots
 plotGrid <- function(plotGridConfiguration) {
   validateIsOfType(plotGridConfiguration, "PlotGridConfiguration")
 
@@ -278,6 +279,7 @@ plotGrid <- function(plotGridConfiguration) {
 #' @include utilities-enums.R
 #'
 #' @export
+#' @family PlotConfiguration classes
 PlotGridConfiguration <- R6::R6Class(
   "PlotGridConfiguration",
   inherit = ospsuite.utils::Printable,

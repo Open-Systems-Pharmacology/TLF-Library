@@ -64,6 +64,7 @@ plotCumulativeTimeProfile(
 Other molecule plots: 
 \code{\link{plotBoxWhisker}()},
 \code{\link{plotDDIRatio}()},
+\code{\link{plotGrid}()},
 \code{\link{plotHistogram}()},
 \code{\link{plotObsVsPred}()},
 \code{\link{plotObservedTimeProfile}()},
