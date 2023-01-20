@@ -428,7 +428,7 @@ complex time profiles comparing observed and simulated data can be plotted.
 
 ### 3.3.1. Single simulation and observed data set
 
-```{r combine simulated and observed}
+```{r combine simulated and observed, eval= getRversion() >= "4.0"}
 # Define Data Mappings
 simDataMapping <- TimeProfileDataMapping$new(
   x = "time",
