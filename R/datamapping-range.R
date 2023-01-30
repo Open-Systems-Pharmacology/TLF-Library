@@ -35,7 +35,6 @@ RangeDataMapping <- R6::R6Class(
                           size = NULL,
                           group = NULL,
                           data = NULL) {
-
       # .smartMapping is available in utilities-mapping.R
       smartMap <- .smartMapping(data)
       super$initialize(x %||% smartMap$x,
@@ -68,26 +67,34 @@ RangeDataMapping <- R6::R6Class(
 
       # All possible Groupings are listed in the enum LegendTypes
       for (groupType in LegendTypes) {
-        if (!is.null(self$groupMapping[[groupType]]$group)) {
-          grouping <- self$groupMapping[[groupType]]
-
-          groupVariables <- grouping$group
-          if (isOfType(groupVariables, "data.frame")) {
-            # Last group variable is the label in group data.frames
-            # and need to be removed from the check
-            groupVariables <- names(groupVariables)
-            groupVariables <- utils::head(groupVariables, -1)
-          }
-          .validateMapping(groupVariables, data)
-          self$data[, grouping$label] <- grouping$getCaptions(data, metaData)
-          # Dummy variable for default aesthetics
-          # Will be used to define legend labels
-          self$data$legendLabels <- ifNotNull(
-            self$data$legendLabels,
-            paste(self$data$legendLabels, grouping$getCaptions(data, metaData), sep = "-"),
-            grouping$getCaptions(data, metaData)
-          )
+        if (isEmpty(self$groupMapping[[groupType]]$group)) {
+          next
         }
+        grouping <- self$groupMapping[[groupType]]
+
+        groupVariables <- grouping$group
+        if (isOfType(groupVariables, "data.frame")) {
+          # Last group variable is the label in group data.frames
+          # and need to be removed from the check
+          groupVariables <- names(groupVariables)
+          groupVariables <- utils::head(groupVariables, -1)
+        }
+        .validateMapping(groupVariables, data)
+        # Enforce grouping variables to be factors
+        self$data[, grouping$label] <- as.factor(grouping$getCaptions(data, metaData))
+
+        # Dummy variable for default aesthetics that will be used to define legend labels
+        legendLabels <- self$data$legendLabels %||% grouping$getCaptions(data, metaData)
+
+        # Prevent duplication of legend if groupings are the same
+        if (isTRUE(all.equal(legendLabels, grouping$getCaptions(data, metaData)))) {
+          self$data$legendLabels <- legendLabels
+          next
+        }
+        self$data$legendLabels <- as.factor(paste(as.character(self$data$legendLabels),
+          as.character(grouping$getCaptions(data, metaData)),
+          sep = "-"
+        ))
       }
 
       if (is.null(self$data$legendLabels)) {

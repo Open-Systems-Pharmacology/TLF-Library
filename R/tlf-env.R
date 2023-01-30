@@ -31,7 +31,7 @@ setDefaultLegendPosition <- function(position) {
 #' @export
 setDefaultLegendTitle <- function(title) {
   validateIsOfType(title, c("character", "Label"), nullAllowed = TRUE)
-  if(isOfType(title, "Label")){
+  if (isOfType(title, "Label")) {
     tlfEnv$currentTheme$fonts$legendTitle <- title$font
     tlfEnv$currentTheme$background$legendTitle <- title$text
     return(invisible())
@@ -165,8 +165,10 @@ setDefaultWatermark <- function(watermark = NULL) {
   return(invisible())
 }
 
-tlfEnv$logTicks <- 10^seq(-6, 6)
-tlfEnv$lnTicks <- exp(seq(-6, 6))
+tlfEnv$logTicks <- 10^seq(-10, 10)
+tlfEnv$lnTicks <- exp(seq(-10, 10))
+# Log minor ticks for every integer
+tlfEnv$logMinorTicks <- rep(seq(1, 9), 21) * rep(10^seq(-10, 10), each = 9)
 
 #' @title setDefaultLogTicks
 #' @description Set default values for log ticks
@@ -175,5 +177,18 @@ tlfEnv$lnTicks <- exp(seq(-6, 6))
 #' @export
 setDefaultLogTicks <- function(ticks) {
   tlfEnv$logTicks <- ticks
+  return(invisible())
+}
+
+# No cap displayed in the default settings
+tlfEnv$defaultErrorbarCapSize <- 0
+
+#' @title setDefaultErrorbarCapSize
+#' @description Set default cap size of error bars
+#' @param size A numeric defining the size of the error bar caps in pts
+#' @export
+setDefaultErrorbarCapSize <- function(size) {
+  validateIsNumeric(size)
+  tlfEnv$defaultErrorbarCapSize <- size
   return(invisible())
 }

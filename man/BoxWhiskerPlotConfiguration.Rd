@@ -8,17 +8,31 @@ R6 class defining the configuration of a \code{ggplot} object for boxplots
 }
 \seealso{
 Other PlotConfiguration classes: 
+\code{\link{AxisConfiguration}},
+\code{\link{BackgroundConfiguration}},
+\code{\link{BackgroundElement}},
+\code{\link{CumulativeTimeProfilePlotConfiguration}},
 \code{\link{DDIRatioPlotConfiguration}},
+\code{\link{ExportConfiguration}},
 \code{\link{HistogramPlotConfiguration}},
+\code{\link{LabelConfiguration}},
+\code{\link{LegendConfiguration}},
+\code{\link{LineElement}},
 \code{\link{ObsVsPredPlotConfiguration}},
 \code{\link{PKRatioPlotConfiguration}},
 \code{\link{PlotConfiguration}},
+\code{\link{PlotGridConfiguration}},
+\code{\link{QQPlotConfiguration}},
+\code{\link{ResVsPredPlotConfiguration}},
+\code{\link{ResVsTimePlotConfiguration}},
 \code{\link{TimeProfilePlotConfiguration}},
-\code{\link{TornadoPlotConfiguration}}
+\code{\link{TornadoPlotConfiguration}},
+\code{\link{XAxisConfiguration}},
+\code{\link{YAxisConfiguration}}
 }
 \concept{PlotConfiguration classes}
 \section{Super class}{
-\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{BoxWhiskerPlotConfiguration}
+\code{tlf::PlotConfiguration} -> \code{BoxWhiskerPlotConfiguration}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -41,12 +55,6 @@ Other PlotConfiguration classes:
 \item \href{#method-BoxWhiskerPlotConfiguration-clone}{\code{BoxWhiskerPlotConfiguration$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BoxWhiskerPlotConfiguration-new"></a>}}
 \if{latex}{\out{\hypertarget{method-BoxWhiskerPlotConfiguration-new}{}}}

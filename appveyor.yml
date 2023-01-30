@@ -12,7 +12,7 @@ install:
   - git submodule update --init --recursive
 
 environment:
-  app_version: "1.4"
+  app_version: "1.5"
   USE_RTOOLS: true
   R_ARCH: x64
   R_VERSION: "4.1.0"
@@ -51,7 +51,7 @@ before_test:
 build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
-  - Rscript -e "install.packages('covr', repos = 'http://cran.us.r-project.org', type='win.binary')"
+  - Rscript -e "install.packages(c('covr', 'spelling'), repos = 'http://cran.us.r-project.org', type='win.binary')"
   - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/ospsuite-rutils/artifacts/ospsuite.utils.zip', repos = NULL, type = 'binary')"
 
 test_script:
@@ -62,6 +62,7 @@ after_test:
   - ps: copy tlf_*.zip tlf.zip
 
 on_success:
+  - Rscript -e "spelling::spell_check_package()"
   - Rscript -e "covr::codecov()"
 
 on_failure:

@@ -5,7 +5,7 @@
 \alias{Scaling}
 \title{Scaling}
 \format{
-An object of class \code{list} of length 8.
+An object of class \code{list} of length 9.
 }
 \usage{
 Scaling
@@ -17,7 +17,8 @@ transformations. \code{ggplot2} includes more transformations than what is
 available in this enum.
 }
 \examples{
-# Continuous linear scale
+# Continuous linear/identity scale
+Scaling$identity
 Scaling$lin
 
 # Continuous log10 scale
@@ -44,15 +45,24 @@ Scaling$date
 }
 \seealso{
 Other enum helpers: 
+\code{\link{AestheticFields}},
 \code{\link{AestheticProperties}},
+\code{\link{AestheticSelectionKeys}},
 \code{\link{Alignments}},
+\code{\link{AtomPlots}},
+\code{\link{ColorMaps}},
+\code{\link{DataMappings}},
+\code{\link{DefaultDataMappingValues}},
 \code{\link{ExportFormats}},
 \code{\link{ExportUnits}},
 \code{\link{FontFaces}},
 \code{\link{HorizontalJustification}},
 \code{\link{LegendPositions}},
+\code{\link{LegendTypes}},
 \code{\link{Linetypes}},
+\code{\link{MoleculePlots}},
 \code{\link{PlotAnnotationTextSize}},
+\code{\link{PlotConfigurations}},
 \code{\link{Shapes}},
 \code{\link{TagPositions}},
 \code{\link{TickLabelTransforms}},

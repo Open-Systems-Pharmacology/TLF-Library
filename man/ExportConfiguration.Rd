@@ -6,6 +6,31 @@
 \description{
 R6 class defining properties for saving a \code{ggplot} object
 }
+\seealso{
+Other PlotConfiguration classes: 
+\code{\link{AxisConfiguration}},
+\code{\link{BackgroundConfiguration}},
+\code{\link{BackgroundElement}},
+\code{\link{BoxWhiskerPlotConfiguration}},
+\code{\link{CumulativeTimeProfilePlotConfiguration}},
+\code{\link{DDIRatioPlotConfiguration}},
+\code{\link{HistogramPlotConfiguration}},
+\code{\link{LabelConfiguration}},
+\code{\link{LegendConfiguration}},
+\code{\link{LineElement}},
+\code{\link{ObsVsPredPlotConfiguration}},
+\code{\link{PKRatioPlotConfiguration}},
+\code{\link{PlotConfiguration}},
+\code{\link{PlotGridConfiguration}},
+\code{\link{QQPlotConfiguration}},
+\code{\link{ResVsPredPlotConfiguration}},
+\code{\link{ResVsTimePlotConfiguration}},
+\code{\link{TimeProfilePlotConfiguration}},
+\code{\link{TornadoPlotConfiguration}},
+\code{\link{XAxisConfiguration}},
+\code{\link{YAxisConfiguration}}
+}
+\concept{PlotConfiguration classes}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{

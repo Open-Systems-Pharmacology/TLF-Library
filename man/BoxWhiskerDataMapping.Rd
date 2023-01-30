@@ -8,6 +8,7 @@ R6 class for mapping \code{y}, \code{GroupMapping}, \code{boxWhiskerLimits} and 
 }
 \seealso{
 Other DataMapping classes: 
+\code{\link{CumulativeTimeProfileDataMapping}},
 \code{\link{DDIRatioDataMapping}},
 \code{\link{GroupMapping}},
 \code{\link{Grouping}},
@@ -15,6 +16,7 @@ Other DataMapping classes:
 \code{\link{ObsVsPredDataMapping}},
 \code{\link{ObservedDataMapping}},
 \code{\link{PKRatioDataMapping}},
+\code{\link{QQDataMapping}},
 \code{\link{RangeDataMapping}},
 \code{\link{ResVsPredDataMapping}},
 \code{\link{ResVsTimeDataMapping}},
@@ -25,7 +27,7 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{BoxWhiskerDataMapping}
+\code{tlf::XYDataMapping} -> \code{tlf::XYGDataMapping} -> \code{BoxWhiskerDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -50,7 +52,7 @@ calculated on \code{data} to obtain box whiskers}
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="XYGDataMapping" data-id="checkMapData"><a href='../../tlf/html/XYGDataMapping.html#method-XYGDataMapping-checkMapData'><code>tlf::XYGDataMapping$checkMapData()</code></a></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="XYGDataMapping" data-id="checkMapData"><a href='../../tlf/html/XYGDataMapping.html#method-XYGDataMapping-checkMapData'><code>tlf::XYGDataMapping$checkMapData()</code></a></span></li>
 </ul>
 </details>
 }}

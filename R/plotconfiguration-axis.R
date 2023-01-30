@@ -70,6 +70,7 @@
 #' @title AxisConfiguration
 #' @description  R6 class defining the configuration of axis
 #' @export
+#' @family PlotConfiguration classes
 AxisConfiguration <- R6::R6Class(
   "AxisConfiguration",
   public = list(
@@ -79,6 +80,7 @@ AxisConfiguration <- R6::R6Class(
     #' Use enum `Scaling` to access predefined scales.
     #' @param ticks numeric vector or function defining where to position axis ticks
     #' @param ticklabels character vector or function defining what to print on axis ticks
+    #' @param minorTicks numeric vector or function defining where to position minor axis ticks
     #' @param font `Font` object defining the font of ticklabels
     #' @param expand logical defining if data is expanded until axis.
     #' If `TRUE`, data is expanded until axis
@@ -88,6 +90,7 @@ AxisConfiguration <- R6::R6Class(
                           scale = Scaling$lin,
                           ticks = NULL,
                           ticklabels = NULL,
+                          minorTicks = NULL,
                           font = NULL,
                           expand = FALSE) {
       validateIsNumeric(limits, nullAllowed = TRUE)
@@ -99,6 +102,7 @@ AxisConfiguration <- R6::R6Class(
       private$.scale <- .createPlotScale(scale)
       private$.ticks <- .createPlotTicks(ticks)
       private$.ticklabels <- .createPlotTickLabels(ticklabels)
+      private$.minorTicks <- .createPlotTicks(minorTicks)
       private$.expand <- expand
 
       # Default axis font will use theme
@@ -148,6 +152,21 @@ AxisConfiguration <- R6::R6Class(
       )
     },
 
+    #' @description Get tick values for pretty default log plots
+    #' @return User defined tick values or tlf default ticks
+    prettyMinorTicks = function() {
+      # A waiver is a ggplot2 "flag" object, similar to NULL,
+      # that indicates the calling function should just use the default value
+      if (!isOfType(private$.minorTicks, "waiver")) {
+        return(private$.minorTicks)
+      }
+      # Default tick values as a function of scale
+      if (isIncluded(private$.scale, Scaling$log)) {
+        return(tlfEnv$logMinorTicks)
+      }
+      return(private$.minorTicks)
+    },
+
     #' @description Get tick labels for pretty default log plots
     #' @return User defined tick labels or tlf default ticklabels
     prettyTickLabels = function() {
@@ -162,6 +181,7 @@ AxisConfiguration <- R6::R6Class(
         "log" = getLogTickLabels,
         "ln" = getLnTickLabels,
         "sqrt" = getSqrtTickLabels,
+        "percentiles" = getPercentileTickLabels,
         private$.ticklabels
       )
     }
@@ -198,6 +218,14 @@ AxisConfiguration <- R6::R6Class(
         return(private$.ticks)
       }
       private$.ticks <- .createPlotTicks(value)
+      return(invisible())
+    },
+    #' @field minorTicks function or values defining where axis minor ticks are placed
+    minorTicks = function(value) {
+      if (missing(value)) {
+        return(private$.minorTicks)
+      }
+      private$.minorTicks <- .createPlotTicks(value)
       return(invisible())
     },
     #' @field ticklabels function or values defining the axis tick labels
@@ -243,6 +271,7 @@ AxisConfiguration <- R6::R6Class(
     .scale = NULL,
     .ticks = NULL,
     .ticklabels = NULL,
+    .minorTicks = NULL,
     .font = NULL,
     .expand = NULL
   )
@@ -251,6 +280,7 @@ AxisConfiguration <- R6::R6Class(
 #' @title XAxisConfiguration
 #' @description  R6 class defining the configuration of X-axis
 #' @export
+#' @family PlotConfiguration classes
 XAxisConfiguration <- R6::R6Class(
   "XAxisConfiguration",
   inherit = AxisConfiguration,
@@ -286,19 +316,37 @@ XAxisConfiguration <- R6::R6Class(
           ggplot2::scale_x_continuous(
             trans = self$ggplotScale(),
             breaks = self$prettyTicks(),
+            minor_breaks = self$prettyMinorTicks(),
             labels = self$prettyTickLabels(),
             expand = self$ggplotExpansion(),
             oob = .removeInfiniteValues
           )
       )
+      if(!isIncluded(private$.scale, c(Scaling$log, Scaling$ln))){
+        return(plotObject)
+      }
+      # Checks that the final plot limits include at least one pretty log tick
+      plotScaleData <- ggplot2::layer_scales(plotObject)
+      xDataRange <- switch(
+        private$.scale,
+        "log" = 10^plotScaleData$x$range$range,
+        "ln" = exp(plotScaleData$x$range$range)
+      )
+      if(!isEmpty(private$.limits)){
+        xDataRange <- private$.limits
+      }
+      
+      if(!.isLogTicksIncludedInLimits(xDataRange, private$.scale)){
+        return(plotObject)
+      }
       # Add special tick lines for pretty log plots
-      suppressMessages(
+      suppressMessages({
         plotObject <- switch(private$.scale,
           "log" = plotObject + ggplot2::annotation_logticks(sides = "b", color = private$.font$color),
           "ln" = plotObject + ggplot2::annotation_logticks(base = exp(1), sides = "b", color = private$.font$color),
           plotObject
         )
-      )
+      })
       return(plotObject)
     }
   )
@@ -307,12 +355,13 @@ XAxisConfiguration <- R6::R6Class(
 #' @title YAxisConfiguration
 #' @description  R6 class defining the configuration of Y-axis
 #' @export
+#' @family PlotConfiguration classes
 YAxisConfiguration <- R6::R6Class(
   "YAxisConfiguration",
   inherit = AxisConfiguration,
   public = list(
-    #' @field position character poistion of the Y-axis
-    position = NULL, # TO DO: find a way to include position in y axis, then scale position = "left" or "right"
+    #' @field position character position of the Y-axis
+    position = "left",
 
     #' @description Update axis configuration on a `ggplot` object
     #' @param plotObject `ggplot` object
@@ -321,7 +370,12 @@ YAxisConfiguration <- R6::R6Class(
     updatePlot = function(plotObject, xlim = NULL) {
       validateIsOfType(plotObject, "ggplot")
       # Update font properties
-      plotObject <- plotObject + ggplot2::theme(axis.text.y = private$.font$createPlotFont())
+      plotObject <- plotObject + switch(
+        self$position,
+        "left" = ggplot2::theme(axis.text.y = private$.font$createPlotFont()),
+        "right" = ggplot2::theme(axis.text.y.right = private$.font$createPlotFont())
+      )
+        
       suppressMessages(
         plotObject <- plotObject + ggplot2::coord_cartesian(xlim = xlim, ylim = private$.limits)
       )
@@ -330,6 +384,7 @@ YAxisConfiguration <- R6::R6Class(
         suppressMessages(
           plotObject <- plotObject +
             ggplot2::scale_y_discrete(
+              position = self$position,
               breaks = private$.ticks,
               labels = private$.ticklabels,
               expand = self$ggplotExpansion()
@@ -342,22 +397,49 @@ YAxisConfiguration <- R6::R6Class(
       suppressMessages(
         plotObject <- plotObject +
           ggplot2::scale_y_continuous(
+            position = self$position,
             trans = self$ggplotScale(),
             breaks = self$prettyTicks(),
+            minor_breaks = self$prettyMinorTicks(),
             labels = self$prettyTickLabels(),
             expand = self$ggplotExpansion(),
             oob = .removeInfiniteValues
           )
       )
-      # Add special tick lines for pretty log plots
-      suppressMessages(
+      if(!isIncluded(private$.scale, c(Scaling$log, Scaling$ln))){
+        return(plotObject)
+      }
+      # Checks that the final plot limits include at least one pretty log tick
+      plotScaleData <- ggplot2::layer_scales(plotObject)
+      yDataRange <- switch(
+        private$.scale,
+        "log" = 10^plotScaleData$y$range$range,
+        "ln" = exp(plotScaleData$y$range$range)
+      )
+      if(!isEmpty(private$.limits)){
+        yDataRange <- private$.limits
+      }
+      
+      if(!.isLogTicksIncludedInLimits(yDataRange, private$.scale)){
+        return(plotObject)
+      }
+      suppressMessages({
         plotObject <- switch(private$.scale,
-          "log" = plotObject + ggplot2::annotation_logticks(sides = "l", color = private$.font$color),
-          "ln" = plotObject + ggplot2::annotation_logticks(base = exp(1), sides = "l", color = private$.font$color),
+          "log" = plotObject + ggplot2::annotation_logticks(
+            sides = switch(self$position, "left" = "l", "right" = "r"),
+            color = private$.font$color
+            ),
+          "ln" = plotObject + ggplot2::annotation_logticks(
+            base = exp(1), 
+            sides = switch(self$position, "left" = "l", "right" = "r"),
+            color = private$.font$color
+            ),
           plotObject
         )
-      )
+      })
       return(plotObject)
     }
   )
 )
+
+

@@ -8,17 +8,31 @@ R6 class defining the configuration of a \code{ggplot} object for tornado plots
 }
 \seealso{
 Other PlotConfiguration classes: 
+\code{\link{AxisConfiguration}},
+\code{\link{BackgroundConfiguration}},
+\code{\link{BackgroundElement}},
 \code{\link{BoxWhiskerPlotConfiguration}},
+\code{\link{CumulativeTimeProfilePlotConfiguration}},
 \code{\link{DDIRatioPlotConfiguration}},
+\code{\link{ExportConfiguration}},
 \code{\link{HistogramPlotConfiguration}},
+\code{\link{LabelConfiguration}},
+\code{\link{LegendConfiguration}},
+\code{\link{LineElement}},
 \code{\link{ObsVsPredPlotConfiguration}},
 \code{\link{PKRatioPlotConfiguration}},
 \code{\link{PlotConfiguration}},
-\code{\link{TimeProfilePlotConfiguration}}
+\code{\link{PlotGridConfiguration}},
+\code{\link{QQPlotConfiguration}},
+\code{\link{ResVsPredPlotConfiguration}},
+\code{\link{ResVsTimePlotConfiguration}},
+\code{\link{TimeProfilePlotConfiguration}},
+\code{\link{XAxisConfiguration}},
+\code{\link{YAxisConfiguration}}
 }
 \concept{PlotConfiguration classes}
 \section{Super class}{
-\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{TornadoPlotConfiguration}
+\code{tlf::PlotConfiguration} -> \code{TornadoPlotConfiguration}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -40,12 +54,6 @@ Other PlotConfiguration classes:
 \item \href{#method-TornadoPlotConfiguration-clone}{\code{TornadoPlotConfiguration$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TornadoPlotConfiguration-new"></a>}}
 \if{latex}{\out{\hypertarget{method-TornadoPlotConfiguration-new}{}}}

@@ -75,13 +75,13 @@ setLegendTitle <- function(plotObject,
                            title = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsOfType(title, c("character", "Label"), nullAllowed = TRUE)
-  
+
   # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
   newPlotObject <- plotObject
   newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
   legend <- newPlotObject$plotConfiguration$legend
-  if(isOfType(title, "character")){
+  if (isOfType(title, "character")) {
     title <- asLabel(title, font = legend$title$font)
   }
   legend$title <- title %||% legend$title
@@ -376,6 +376,7 @@ setCaptionFill <- function(plotObject, fill, name = NULL) {
 #' @export
 #' @description
 #' List of all available legend types
+#' @family enum helpers
 LegendTypes <- enum(c(
   "color",
   "shape",

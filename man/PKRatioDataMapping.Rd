@@ -9,12 +9,14 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and pkRatio \code{l
 \seealso{
 Other DataMapping classes: 
 \code{\link{BoxWhiskerDataMapping}},
+\code{\link{CumulativeTimeProfileDataMapping}},
 \code{\link{DDIRatioDataMapping}},
 \code{\link{GroupMapping}},
 \code{\link{Grouping}},
 \code{\link{HistogramDataMapping}},
 \code{\link{ObsVsPredDataMapping}},
 \code{\link{ObservedDataMapping}},
+\code{\link{QQDataMapping}},
 \code{\link{RangeDataMapping}},
 \code{\link{ResVsPredDataMapping}},
 \code{\link{ResVsTimeDataMapping}},
@@ -25,14 +27,16 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{PKRatioDataMapping}
+\code{tlf::XYDataMapping} -> \code{tlf::XYGDataMapping} -> \code{PKRatioDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{lines}}{list of ratio limits to plot as horizontal lines}
 
-\item{\code{error}}{mapping error bars around scatter points}
+\item{\code{ymin}}{mapping of upper value of error bars around scatter points}
+
+\item{\code{ymax}}{mapping of lower value of error bars around scatter points}
 }
 \if{html}{\out{</div>}}
 }
@@ -44,12 +48,6 @@ Other DataMapping classes:
 \item \href{#method-PKRatioDataMapping-clone}{\code{PKRatioDataMapping$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-PKRatioDataMapping-new"></a>}}
 \if{latex}{\out{\hypertarget{method-PKRatioDataMapping-new}{}}}
@@ -57,9 +55,11 @@ Other DataMapping classes:
 Create a new \code{PKRatioDataMapping} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{PKRatioDataMapping$new(
+  x = NULL,
+  y = NULL,
+  ymin = NULL,
+  ymax = NULL,
   lines = DefaultDataMappingValues$pkRatio,
-  uncertainty = NULL,
-  error = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -67,12 +67,15 @@ Create a new \code{PKRatioDataMapping} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{x}}{Name of x variable to map}
+
+\item{\code{y}}{Name of y variable to map}
+
+\item{\code{ymin}}{mapping of upper value of error bars around scatter points}
+
+\item{\code{ymax}}{mapping of lower value of error bars around scatter points}
+
 \item{\code{lines}}{List of ratio limits to display as horizontal lines}
-
-\item{\code{uncertainty}}{mapping error bars around scatter points.
-Deprecated parameter replaced by \code{error}.}
-
-\item{\code{error}}{mapping error bars around scatter points}
 
 \item{\code{...}}{parameters inherited from \code{XYGDataMapping}}
 }

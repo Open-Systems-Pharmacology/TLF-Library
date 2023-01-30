@@ -6,6 +6,31 @@
 \description{
 R6 class defining the configuration of background
 }
+\seealso{
+Other PlotConfiguration classes: 
+\code{\link{AxisConfiguration}},
+\code{\link{BackgroundElement}},
+\code{\link{BoxWhiskerPlotConfiguration}},
+\code{\link{CumulativeTimeProfilePlotConfiguration}},
+\code{\link{DDIRatioPlotConfiguration}},
+\code{\link{ExportConfiguration}},
+\code{\link{HistogramPlotConfiguration}},
+\code{\link{LabelConfiguration}},
+\code{\link{LegendConfiguration}},
+\code{\link{LineElement}},
+\code{\link{ObsVsPredPlotConfiguration}},
+\code{\link{PKRatioPlotConfiguration}},
+\code{\link{PlotConfiguration}},
+\code{\link{PlotGridConfiguration}},
+\code{\link{QQPlotConfiguration}},
+\code{\link{ResVsPredPlotConfiguration}},
+\code{\link{ResVsTimePlotConfiguration}},
+\code{\link{TimeProfilePlotConfiguration}},
+\code{\link{TornadoPlotConfiguration}},
+\code{\link{XAxisConfiguration}},
+\code{\link{YAxisConfiguration}}
+}
+\concept{PlotConfiguration classes}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
@@ -19,9 +44,13 @@ R6 class defining the configuration of background
 
 \item{\code{yAxis}}{\code{LineElement} object}
 
+\item{\code{y2Axis}}{\code{LineElement} object}
+
 \item{\code{xGrid}}{\code{LineElement} object}
 
 \item{\code{yGrid}}{\code{LineElement} object}
+
+\item{\code{y2Grid}}{\code{LineElement} object}
 }
 \if{html}{\out{</div>}}
 }
@@ -45,8 +74,10 @@ Create a new \code{BackgroundConfiguration} object
   panel = NULL,
   xAxis = NULL,
   yAxis = NULL,
+  y2Axis = NULL,
   xGrid = NULL,
-  yGrid = NULL
+  yGrid = NULL,
+  y2Grid = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -63,9 +94,13 @@ Create a new \code{BackgroundConfiguration} object
 
 \item{\code{yAxis}}{\code{LineElement} object defining properties of y-axis}
 
+\item{\code{y2Axis}}{\code{LineElement} object defining properties of right y-axis}
+
 \item{\code{xGrid}}{\code{LineElement} object defining properties of x-grid}
 
 \item{\code{yGrid}}{\code{LineElement} object defining properties of y-grid}
+
+\item{\code{y2Grid}}{\code{LineElement} object defining properties of right y-grid}
 }
 \if{html}{\out{</div>}}
 }

@@ -6,8 +6,33 @@
 \description{
 R6 class defining the properties of background line elements
 }
+\seealso{
+Other PlotConfiguration classes: 
+\code{\link{AxisConfiguration}},
+\code{\link{BackgroundConfiguration}},
+\code{\link{BackgroundElement}},
+\code{\link{BoxWhiskerPlotConfiguration}},
+\code{\link{CumulativeTimeProfilePlotConfiguration}},
+\code{\link{DDIRatioPlotConfiguration}},
+\code{\link{ExportConfiguration}},
+\code{\link{HistogramPlotConfiguration}},
+\code{\link{LabelConfiguration}},
+\code{\link{LegendConfiguration}},
+\code{\link{ObsVsPredPlotConfiguration}},
+\code{\link{PKRatioPlotConfiguration}},
+\code{\link{PlotConfiguration}},
+\code{\link{PlotGridConfiguration}},
+\code{\link{QQPlotConfiguration}},
+\code{\link{ResVsPredPlotConfiguration}},
+\code{\link{ResVsTimePlotConfiguration}},
+\code{\link{TimeProfilePlotConfiguration}},
+\code{\link{TornadoPlotConfiguration}},
+\code{\link{XAxisConfiguration}},
+\code{\link{YAxisConfiguration}}
+}
+\concept{PlotConfiguration classes}
 \section{Super class}{
-\code{\link[tlf:BackgroundElement]{tlf::BackgroundElement}} -> \code{LineElement}
+\code{tlf::BackgroundElement} -> \code{LineElement}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -19,7 +44,7 @@ R6 class defining the properties of background line elements
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="BackgroundElement" data-id="initialize"><a href='../../tlf/html/BackgroundElement.html#method-BackgroundElement-initialize'><code>tlf::BackgroundElement$initialize()</code></a></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="BackgroundElement" data-id="initialize"><a href='../../tlf/html/BackgroundElement.html#method-BackgroundElement-initialize'><code>tlf::BackgroundElement$initialize()</code></a></span></li>
 </ul>
 </details>
 }}

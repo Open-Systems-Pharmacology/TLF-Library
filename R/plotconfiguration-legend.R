@@ -1,6 +1,7 @@
 #' @title LegendConfiguration
 #' @description R6 class defining the legend configuration of a `ggplot` object
 #' @export
+#' @family PlotConfiguration classes
 LegendConfiguration <- R6::R6Class(
   "LegendConfiguration",
   public = list(
@@ -27,13 +28,13 @@ LegendConfiguration <- R6::R6Class(
       private$.background <- background %||% currentTheme$background$legend
 
       # Title properties
-      private$.title <- asLabel(
-        text = title %||% currentTheme$background$legendTitle,
-        font = currentTheme$fonts$legendTitle
+      if (!isOfType(title, "Label")) {
+        title <- asLabel(
+          text = title %||% currentTheme$background$legendTitle,
+          font = currentTheme$fonts$legendTitle
         )
-      if (isOfType(title, "Label")) {
-        private$.title <- title
       }
+      private$.title <- title
 
       private$.caption <- caption %||% data.frame()
     },
@@ -54,13 +55,13 @@ LegendConfiguration <- R6::R6Class(
       # Update legend title for all aesthetic properties to prevent unwanted split of legends
       updateLegendTitleExpression <- parse(text = paste0(
         "plotObject <- plotObject + ggplot2::guides(",
-        names(AestheticProperties), " = guide_legend(", 
+        names(AestheticProperties), " = guide_legend(",
         "title = private$.title$text,",
         "title.theme = private$.title$createPlotFont())",
         ")"
       ))
       eval(updateLegendTitleExpression)
-      
+
       # Update legend position and alignment
       legendPosition <- .createPlotLegendPosition(private$.position)
 
@@ -79,7 +80,7 @@ LegendConfiguration <- R6::R6Class(
       if (missing(value)) {
         return(private$.caption)
       }
-      validateIsOfType(value, "data.frame")
+      validateIsOfType(value, c("data.frame", "list"))
       private$.caption <- value
       return(invisible())
     },

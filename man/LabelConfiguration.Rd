@@ -6,6 +6,31 @@
 \description{
 R6 class defining the configuration of the labels of a \code{ggplot} object
 }
+\seealso{
+Other PlotConfiguration classes: 
+\code{\link{AxisConfiguration}},
+\code{\link{BackgroundConfiguration}},
+\code{\link{BackgroundElement}},
+\code{\link{BoxWhiskerPlotConfiguration}},
+\code{\link{CumulativeTimeProfilePlotConfiguration}},
+\code{\link{DDIRatioPlotConfiguration}},
+\code{\link{ExportConfiguration}},
+\code{\link{HistogramPlotConfiguration}},
+\code{\link{LegendConfiguration}},
+\code{\link{LineElement}},
+\code{\link{ObsVsPredPlotConfiguration}},
+\code{\link{PKRatioPlotConfiguration}},
+\code{\link{PlotConfiguration}},
+\code{\link{PlotGridConfiguration}},
+\code{\link{QQPlotConfiguration}},
+\code{\link{ResVsPredPlotConfiguration}},
+\code{\link{ResVsTimePlotConfiguration}},
+\code{\link{TimeProfilePlotConfiguration}},
+\code{\link{TornadoPlotConfiguration}},
+\code{\link{XAxisConfiguration}},
+\code{\link{YAxisConfiguration}}
+}
+\concept{PlotConfiguration classes}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
@@ -18,6 +43,8 @@ R6 class defining the configuration of the labels of a \code{ggplot} object
 \item{\code{ylabel}}{\code{Label} object defining the ylabel of the plot}
 
 \item{\code{caption}}{\code{Label} object defining the caption of the plot}
+
+\item{\code{y2label}}{\code{Label} object defining the y2label of the plot}
 }
 \if{html}{\out{</div>}}
 }

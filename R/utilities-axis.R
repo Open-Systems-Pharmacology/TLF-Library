@@ -5,6 +5,7 @@
 #' @param limits Optional numeric values of axis limits
 #' @param ticks Optional values or function for axis ticks
 #' @param ticklabels Optional values or function for axis ticklabels
+#' @param minorTicks Optional values or function for axis minor ticks
 #' @param font A `Font` object  defining font of ticklabels
 #' @param expand Logical defining if data is expanded until axis
 #' @return A `ggplot` object
@@ -28,6 +29,7 @@ setXAxis <- function(plotObject,
                      limits = NULL,
                      ticks = NULL,
                      ticklabels = NULL,
+                     minorTicks = NULL,
                      font = NULL,
                      expand = NULL) {
   validateIsOfType(plotObject, "ggplot")
@@ -43,7 +45,7 @@ setXAxis <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$xAxis
   xAxis <- newPlotObject$plotConfiguration$xAxis
-  eval(.parseVariableToObject("xAxis", c("limits", "scale", "ticks", "ticklabels", "font", "expand"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("xAxis", c("limits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
   newPlotObject <- xAxis$updatePlot(newPlotObject, ylim = newPlotObject$plotConfiguration$yAxis$limits)
   return(newPlotObject)
 }
@@ -72,6 +74,7 @@ setYAxis <- function(plotObject,
                      limits = NULL,
                      ticks = NULL,
                      ticklabels = NULL,
+                     minorTicks = NULL,
                      font = NULL,
                      expand = NULL) {
   validateIsOfType(plotObject, "ggplot")
@@ -87,8 +90,40 @@ setYAxis <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$yAxis
   yAxis <- newPlotObject$plotConfiguration$yAxis
-  eval(.parseVariableToObject("yAxis", c("limits", "scale", "ticks", "ticklabels", "font", "expand"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("yAxis", c("limits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
   newPlotObject <- yAxis$updatePlot(newPlotObject, xlim = newPlotObject$plotConfiguration$xAxis$limits)
+  return(newPlotObject)
+}
+
+#' @title setY2Axis
+#' @description Set right Y-axis properties of a `ggplot` object
+#' @inheritParams setXAxis
+#' @return A `ggplot` object
+#' @export
+setY2Axis <- function(plotObject,
+                     scale = NULL,
+                     limits = NULL,
+                     ticks = NULL,
+                     ticklabels = NULL,
+                     minorTicks = NULL,
+                     font = NULL,
+                     expand = NULL) {
+  validateIsOfType(plotObject, "ggplot")
+  validateIsIncluded(scale, Scaling, nullAllowed = TRUE)
+  validateIsNumeric(limits, nullAllowed = TRUE)
+  validateIsOfType(font, "Font", nullAllowed = TRUE)
+  validateIsLogical(expand, nullAllowed = TRUE)
+  
+  # Clone plotConfiguration into a new plot object
+  # Prevents update of R6 class being spread to plotObject
+  newPlotObject <- plotObject
+  newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
+  
+  # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$yAxis
+  y2Axis <- newPlotObject$plotConfiguration$y2Axis %||% YAxisConfiguration$new()
+  y2Axis$position <- "right"
+  eval(.parseVariableToObject("y2Axis", c("limits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
+  newPlotObject <- y2Axis$updatePlot(newPlotObject, xlim = newPlotObject$plotConfiguration$xAxis$limits)
   return(newPlotObject)
 }
 
@@ -216,13 +251,30 @@ getPiTickLabels <- function(ticks) {
   return(piLabels)
 }
 
+#' @title getPercentileTickLabels
+#' @description Get ticklabels expressions for percentiles of normal distribution scale plots
+#' @param ticks numeric values of the ticks
+#' @return Expressions to use in `ticklabels` input parameter of `setXAxis` and `setYAxis` functions
+#' @examples
+#' ticks <- rnorm(5)
+#' getPercentileTickLabels(ticks)
+#'
+#' # Get percentile of normal distribution
+#' ticks <- qnorm(seq(1, 9) / 10)
+#' getPercentileTickLabels(ticks)
+#'
+#' @export
+getPercentileTickLabels <- function(ticks) {
+  return(paste0(round(100 * stats::pnorm(ticks), 3), "%"))
+}
+
 #' @title .removeInfiniteValues
 #' @description Censor/remove any values outside of range
-#' Caution, removing infinite values can cause issues with ribbons 
+#' Caution, removing infinite values can cause issues with ribbons
 #' which can use such infinite values for filling a range
 #' @param x numeric vector of values to manipulate
 #' @param range numeric vector of length two giving desired output range
 #' @keywords internal
-.removeInfiniteValues <- function(x, range = c(0,1)){
+.removeInfiniteValues <- function(x, range = c(0, 1)) {
   scales::censor(x, range, only.finite = FALSE)
 }

@@ -7,7 +7,7 @@
 R6 class defining how plot configurations will use aesthetic maps
 }
 \section{Super class}{
-\code{\link[tlf:ThemeAestheticMaps]{tlf::ThemeAestheticMaps}} -> \code{ThemeAestheticSelections}
+\code{tlf::ThemeAestheticMaps} -> \code{ThemeAestheticSelections}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -17,12 +17,6 @@ R6 class defining how plot configurations will use aesthetic maps
 \item \href{#method-ThemeAestheticSelections-clone}{\code{ThemeAestheticSelections$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ThemeAestheticSelections-new"></a>}}
 \if{latex}{\out{\hypertarget{method-ThemeAestheticSelections-new}{}}}

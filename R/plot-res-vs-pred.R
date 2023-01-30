@@ -29,22 +29,44 @@ plotResVsPred <- function(data,
                           plotConfiguration = NULL,
                           smoother = NULL,
                           plotObject = NULL) {
-  eval(.parseCheckPlotInputs("ResVsPred"))
+  #----- Validation and formatting of input arguments -----
+  validateIsNotEmpty(data)
+  validateIsOfType(data, "data.frame")
+  dataMapping <- .setDataMapping(dataMapping, ResVsPredDataMapping, data)
   validateIsIncluded(smoother, c("loess", "lm"), nullAllowed = TRUE)
   dataMapping$smoother <- smoother %||% dataMapping$smoother
+
+  plotConfiguration <- .setPlotConfiguration(
+    plotConfiguration, ResVsPredPlotConfiguration,
+    data, metaData, dataMapping
+  )
+  plotObject <- .setPlotObject(plotObject, plotConfiguration)
+
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- .getAesStringMapping(dataMapping)
 
-  plotObject <- plotObject %||% initializePlot(plotConfiguration)
-
-  # Add horizontal lines with offset defined in lines of dataMapping
+  #----- Build layers of molecule plot -----
+  # Each new layer is added on top of previous
+  # Thus, scatter points are added as last layer to prevent them being hidden by lines or errorbars
+  # 1- Diagonal lines
   for (lineIndex in seq_along(dataMapping$lines)) {
-    eval(.parseAddLineLayer("horizontal", dataMapping$lines[[lineIndex]], lineIndex - 1))
+    plotObject <- .addLineLayer(
+      plotObject,
+      type = "horizontal",
+      value = dataMapping$lines[[lineIndex]],
+      # position corresponds to the number of line layers already added
+      position = lineIndex - 1
+    )
   }
-  if (isEmpty(lineIndex)) {
-    lineIndex <- 0
-  }
-  # Add Smoother if defined
+  lineIndex <- ifNotNull(lineIndex, lineIndex, 0)
+
+  # 2- Smoother line
+  aestheticValues <- .getAestheticValuesFromConfiguration(
+    n = 1,
+    position = lineIndex,
+    plotConfigurationProperty = plotObject$plotConfiguration$lines,
+    propertyNames = c("color", "linetype", "size", "alpha")
+  )
   if (isIncluded(dataMapping$smoother, "loess")) {
     plotObject <- plotObject +
       ggplot2::geom_smooth(
@@ -54,10 +76,10 @@ plotResVsPred <- function(data,
         formula = "y ~ x",
         na.rm = TRUE,
         mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y),
-        color = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex, aesthetic = "color"),
-        linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex, aesthetic = "linetype"),
-        alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, position = lineIndex, aesthetic = "alpha"),
-        size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
+        color = aestheticValues$color,
+        linetype = aestheticValues$linetype,
+        alpha = aestheticValues$alpha,
+        size = aestheticValues$size
       )
   }
   if (isIncluded(dataMapping$smoother, "lm")) {
@@ -69,25 +91,27 @@ plotResVsPred <- function(data,
         se = FALSE,
         formula = "y ~ x",
         na.rm = TRUE,
-        color = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$color, position = lineIndex, aesthetic = "color"),
-        linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$linetype, position = lineIndex, aesthetic = "linetype"),
-        alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, position = lineIndex, aesthetic = "alpha"),
-        size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$size, position = lineIndex, aesthetic = "size")
+        color = aestheticValues$color,
+        linetype = aestheticValues$linetype,
+        alpha = aestheticValues$alpha,
+        size = aestheticValues$size
       )
   }
+  # 2- Scatter points
+  plotObject <- .addScatterLayer(plotObject, data = mapData, mapLabels = mapLabels)
 
-  # If uncertainty is defined, add error bars
-  if (!isOfLength(dataMapping$uncertainty, 0)) {
-    eval(.parseAddUncertaintyLayer())
-  }
-  eval(.parseAddScatterLayer())
-  # Define shapes and colors based on plotConfiguration$points properties
-  eval(.parseUpdateAestheticProperty(AestheticProperties$color, "points"))
-  eval(.parseUpdateAestheticProperty(AestheticProperties$shape, "points"))
-  eval(.parseUpdateAxes())
+  #----- Update properties using ggplot2::scale functions -----
+  plotObject <- .updateAesProperties(
+    plotObject,
+    plotConfigurationProperty = "points",
+    propertyNames = c("color", "shape"),
+    data = mapData,
+    mapLabels = mapLabels
+  )
+  plotObject <- .updateSymmetricAxes(plotObject, mapData, dataMapping)
+  plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }
-
 
 #' @title plotResVsTime
 #' @description

@@ -4,6 +4,7 @@
 #' @field defaultXScale Default xAxis scale value when creating a `PlotConfiguration` object
 #' @field defaultYScale Default yAxis scale value when creating a `PlotConfiguration` object
 #' @field defaultExpand Default expand value when creating a `PlotConfiguration` object
+#' @field defaultSymmetricAxes Default option setting symmetric xAxis and/or yAxis limits when creating a `PlotConfiguration` object
 #' @family PlotConfiguration classes
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-configuration.html>
@@ -17,6 +18,7 @@ PlotConfiguration <- R6::R6Class(
     defaultXScale = "lin",
     defaultYScale = "lin",
     defaultExpand = FALSE,
+    defaultSymmetricAxes = FALSE,
 
     #' @description Create a new `PlotConfiguration` object
     #' @param title character or `Label` object defining plot title
@@ -97,7 +99,6 @@ PlotConfiguration <- R6::R6Class(
                           data = NULL,
                           metaData = NULL,
                           dataMapping = NULL) {
-
       # Label configuration
       # validation of the input is done within the creation of the object
       private$.labels <- LabelConfiguration$new(
@@ -273,88 +274,5 @@ PlotConfiguration <- R6::R6Class(
     .ribbons = NULL,
     .points = NULL,
     .errorbars = NULL
-  )
-)
-
-
-#' @title TimeProfilePlotConfiguration
-#' @description R6 class defining the configuration of a `ggplot` object for time profile plots
-#' @export
-#' @family PlotConfiguration classes
-TimeProfilePlotConfiguration <- R6::R6Class(
-  "TimeProfilePlotConfiguration",
-  inherit = PlotConfiguration
-)
-
-#' @title PKRatioPlotConfiguration
-#' @description R6 class defining the configuration of a `ggplot` object for PK ratio plots
-#' @field defaultYScale Default yAxis scale value when creating a `PKRatioPlotConfiguration` object
-#' @export
-#' @family PlotConfiguration classes
-PKRatioPlotConfiguration <- R6::R6Class(
-  "PKRatioPlotConfiguration",
-  inherit = PlotConfiguration,
-  public = list(
-    defaultYScale = "log"
-  )
-)
-
-#' @title DDIRatioPlotConfiguration
-#' @description R6 class defining the configuration of a `ggplot` object for DDI ratio plots
-#' @field defaultXScale Default xAxis scale value when creating a `DDIRatioPlotConfiguration` object
-#' @field defaultYScale Default yAxis scale value when creating a `DDIRatioPlotConfiguration` object
-#' @field defaultExpand Default expand value when creating a `DDIRatioPlotConfiguration` object
-#' @export
-#' @family PlotConfiguration classes
-DDIRatioPlotConfiguration <- R6::R6Class(
-  "DDIRatioPlotConfiguration",
-  inherit = PlotConfiguration,
-  public = list(
-    defaultXScale = "log",
-    defaultYScale = "log",
-    defaultExpand = TRUE
-  )
-)
-
-#' @title ObsVsPredPlotConfiguration
-#' @description R6 class defining the configuration of a `ggplot` object for Obs vs Pred plots
-#' @export
-#' @family PlotConfiguration classes
-ObsVsPredPlotConfiguration <- R6::R6Class(
-  "ObsVsPredPlotConfiguration",
-  inherit = PlotConfiguration
-)
-
-#' @title ResVsPredPlotConfiguration
-#' @description R6 class defining the configuration of a `ggplot` object for Res vs Pred/Time plots
-#' @export
-ResVsPredPlotConfiguration <- R6::R6Class(
-  "ResVsPredPlotConfiguration",
-  inherit = PlotConfiguration
-)
-
-#' @title ResVsTimePlotConfiguration
-#' @description R6 class defining the configuration of a `ggplot` object for Res vs Pred/Time plots
-#' @export
-ResVsTimePlotConfiguration <- R6::R6Class(
-  "ResVsTimePlotConfiguration",
-  inherit = ResVsPredPlotConfiguration
-)
-
-#' @title HistogramPlotConfiguration
-#' @description R6 class defining the configuration of a `ggplot` object for histograms
-#' @export
-#' @family PlotConfiguration classes
-HistogramPlotConfiguration <- R6::R6Class(
-  "HistogramPlotConfiguration",
-  inherit = PlotConfiguration,
-  public = list(
-    #' @description Create a new `HistogramPlotConfiguration` object
-    #' @param ylabel Histograms default display is "Count"
-    #' @param ... parameters inherited from `PlotConfiguration`
-    #' @return A new `HistogramPlotConfiguration` object
-    initialize = function(ylabel = "Count", ...) {
-      super$initialize(ylabel = ylabel, ...)
-    }
   )
 )

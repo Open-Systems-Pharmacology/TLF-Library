@@ -58,12 +58,17 @@ plotTornado(x = c(2, -1, 3), y = c("A", "B", "C"), sorted = FALSE)
 \seealso{
 Other molecule plots: 
 \code{\link{plotBoxWhisker}()},
+\code{\link{plotCumulativeTimeProfile}()},
 \code{\link{plotDDIRatio}()},
+\code{\link{plotGrid}()},
 \code{\link{plotHistogram}()},
 \code{\link{plotObsVsPred}()},
+\code{\link{plotObservedTimeProfile}()},
 \code{\link{plotPKRatio}()},
+\code{\link{plotQQ}()},
 \code{\link{plotResVsPred}()},
 \code{\link{plotResVsTime}()},
+\code{\link{plotSimulatedTimeProfile}()},
 \code{\link{plotTimeProfile}()}
 }
 \concept{molecule plots}

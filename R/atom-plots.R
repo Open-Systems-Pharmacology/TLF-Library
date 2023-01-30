@@ -184,7 +184,7 @@ addScatter <- function(data = NULL,
     newLabels = newLabels,
     aestheticSelections = plotConfiguration$points
   ))
-  eval(.parseUpdateAxes())
+  plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }
 
@@ -362,7 +362,7 @@ addLine <- function(data = NULL,
     newLabels = newLabels,
     aestheticSelections = plotConfiguration$lines
   ))
-  eval(.parseUpdateAxes())
+  plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }
 
@@ -495,7 +495,7 @@ addRibbon <- function(data = NULL,
     newLabels = newLabels,
     aestheticSelections = plotConfiguration$ribbons
   ))
-  eval(.parseUpdateAxes())
+  plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }
 
@@ -505,7 +505,9 @@ addRibbon <- function(data = NULL,
 #'
 #' @inheritParams addRibbon
 #' @inheritParams addScatter
-#' @param includeCap Logical defining if errorbars include caps at their ends.
+#' @param capSize Numeric extent of the error bars caps
+#' Caution the value corresponds to the ratio of the mean spacing between plotted error bars.
+#' For instance, an `extent` of `1` will fill the caps until the next error bar
 #' @return A `ggplot` object
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/atom-plots.html>
@@ -536,12 +538,12 @@ addRibbon <- function(data = NULL,
 #' addErrorbar(data = errorbarData, caption = "My errorbar plot")
 #'
 #' # Add a errorbar with specific properties
-#' addErrorbar(data = errorbarData, color = "blue", size = 0.5, includeCap = TRUE, caption = "My data")
+#' addErrorbar(data = errorbarData, color = "blue", size = 0.5, caption = "My data")
 #'
 #' # Add a errorbar with specific properties
 #' p <- addErrorbar(
 #'   data = errorbarData,
-#'   color = "blue", size = 0.5, includeCap = TRUE, caption = "My data"
+#'   color = "blue", size = 0.5, caption = "My data"
 #' )
 #' addScatter(
 #'   x = time, y = cos(time),
@@ -558,14 +560,12 @@ addErrorbar <- function(data = NULL,
                         color = NULL,
                         size = NULL,
                         linetype = NULL,
-                        includeCap = FALSE,
+                        capSize = NULL,
                         dataMapping = NULL,
                         plotConfiguration = NULL,
                         plotObject = NULL) {
   validateIsOfType(dataMapping, c("RangeDataMapping", "ObservedDataMapping"), nullAllowed = TRUE)
   validateIsOfType(plotConfiguration, PlotConfiguration, nullAllowed = TRUE)
-  validateIsLogical(includeCap)
-  # validateIsIncluded(barLinetype, Linetypes, nullAllowed = TRUE)
 
   # If data is not input, creates data and its mapping from x, ymin and ymax input
   if (isEmpty(data)) {
@@ -601,45 +601,58 @@ addErrorbar <- function(data = NULL,
   mapData$legendLabels <- caption %||% mapData$legendLabels
   legendLength <- length(unique(mapData$legendLabels))
 
-  # Option caps allows to add an horizontal bar at the edges of the error bars
-  if (includeCap) {
-    plotObject <- plotObject +
-      ggplot2::geom_errorbar(
-        data = mapData,
-        mapping = ggplot2::aes_string(
-          x = mapLabels$x,
-          ymin = mapLabels$ymin,
-          ymax = mapLabels$ymax,
-          group = "legendLabels"
-        ),
-        na.rm = TRUE,
-        show.legend = FALSE,
-        size = size %||% .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, aesthetic = "size"),
-        linetype = linetype %||% .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
-        alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),
-        color = color %||% .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$color, aesthetic = "color")
-      )
-  }
-  if (!includeCap) {
-    plotObject <- plotObject +
-      ggplot2::geom_linerange(
-        data = mapData,
-        mapping = ggplot2::aes_string(
-          x = mapLabels$x,
-          ymin = mapLabels$ymin,
-          ymax = mapLabels$ymax,
-          group = "legendLabels"
-        ),
-        na.rm = TRUE,
-        show.legend = FALSE,
-        size = size %||% .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, aesthetic = "size"),
-        linetype = linetype %||% .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
-        alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),
-        color = color %||% .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$color, aesthetic = "color")
-      )
-  }
+  eval(.parseVariableToObject("plotObject$plotConfiguration$errorbars", c("color", "size", "linetype"), keepIfNull = TRUE))
+
+  plotObject <- plotObject +
+    ggplot2::geom_linerange(
+      data = mapData,
+      mapping = aes_string(
+        x = mapLabels$x,
+        ymin = mapLabels$ymin,
+        ymax = mapLabels$ymax,
+        color = mapLabels$color,
+        group = mapLabels$color
+      ),
+      size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
+      linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
+      alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),
+      color = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$color, aesthetic = "color"),
+      na.rm = TRUE,
+      show.legend = FALSE
+    ) +
+    ggplot2::geom_point(
+      data = mapData,
+      mapping = aes_string(
+        x = mapLabels$x,
+        y = mapLabels$ymin,
+        color = mapLabels$color,
+        group = mapLabels$color
+      ),
+      size = capSize %||% tlfEnv$defaultErrorbarCapSize,
+      shape = "_",
+      alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),
+      color = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$color, aesthetic = "color"),
+      na.rm = TRUE,
+      show.legend = FALSE
+    ) +
+    ggplot2::geom_point(
+      data = mapData,
+      mapping = aes_string(
+        x = mapLabels$x,
+        y = mapLabels$ymax,
+        color = mapLabels$color,
+        group = mapLabels$color
+      ),
+      size = capSize %||% tlfEnv$defaultErrorbarCapSize,
+      shape = "_",
+      alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$alpha, aesthetic = "alpha"),
+      color = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$color, aesthetic = "color"),
+      na.rm = TRUE,
+      show.legend = FALSE
+    )
+
   # Try is used to prevent crashes in the final plot due to ggplot2 peculiarities regarding scale functions
-  eval(.parseUpdateAxes())
+  plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }
 

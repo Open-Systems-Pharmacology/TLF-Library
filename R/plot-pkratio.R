@@ -5,7 +5,7 @@
 #' @inheritParams addScatter
 #' @param foldDistance Numeric values of fold distance lines to display in log plots.
 #' This argument is internally translated into `lines` field of `dataMapping`.
-#' __Caution__: this argument is meant for log scaled plots and since fold distance is a ratio it is expected positive. 
+#' __Caution__: this argument is meant for log scaled plots and since fold distance is a ratio it is expected positive.
 #' In particular, line of identity corresponds to a `foldDistance` of `1`.
 #' @param dataMapping
 #' A `PKRatioDataMapping` object mapping `x`, `y` and aesthetic groups to their variable names of `data`.
@@ -37,31 +37,49 @@ plotPKRatio <- function(data,
                         plotConfiguration = NULL,
                         foldDistance = NULL,
                         plotObject = NULL) {
-  eval(.parseCheckPlotInputs("PKRatio"))
+  #----- Validation and formatting of input arguments -----
+  validateIsNotEmpty(data)
+  validateIsOfType(data, "data.frame")
+  dataMapping <- .setDataMapping(dataMapping, PKRatioDataMapping, data)
   validateIsNumeric(foldDistance, nullAllowed = TRUE)
-  mapData <- dataMapping$checkMapData(data)
-  mapLabels <- .getAesStringMapping(dataMapping)
-
-  plotObject <- plotObject %||% initializePlot(plotConfiguration)
-
-  # Include horizontal lines
   if (!isEmpty(foldDistance)) {
     dataMapping$lines <- getLinesFromFoldDistance(foldDistance)
   }
+  plotConfiguration <- .setPlotConfiguration(
+    plotConfiguration, PKRatioPlotConfiguration,
+    data, metaData, dataMapping
+  )
+  plotObject <- .setPlotObject(plotObject, plotConfiguration)
+
+  mapData <- dataMapping$checkMapData(data)
+  mapLabels <- .getAesStringMapping(dataMapping)
+
+  #----- Build layers of molecule plot -----
+  # Each new layer is added on top of previous
+  # Thus, scatter points are added as last layer to prevent them being hidden by lines or errorbars
+  # 1- Horizontal lines
   for (lineIndex in seq_along(dataMapping$lines)) {
-    # position correspond to the number of layer lines already added
-    eval(.parseAddLineLayer("horizontal", dataMapping$lines[[lineIndex]], lineIndex - 1))
+    plotObject <- .addLineLayer(
+      plotObject,
+      type = "horizontal",
+      value = dataMapping$lines[[lineIndex]],
+      # position corresponds to the number of line layers already added
+      position = lineIndex - 1
+    )
   }
+  # 2- Error bars
+  plotObject <- .addErrorbarLayer(plotObject, data = mapData, mapLabels = mapLabels)
+  # 3- Scatter points
+  plotObject <- .addScatterLayer(plotObject, data = mapData, mapLabels = mapLabels)
 
-  # If uncertainty is defined, add error bars
-  if (!isOfLength(dataMapping$uncertainty, 0)) {
-    eval(.parseAddUncertaintyLayer())
-  }
-
-  eval(.parseAddScatterLayer())
-  # Define shapes and colors based on plotConfiguration$points properties
-  eval(.parseUpdateAestheticProperty(AestheticProperties$color, "points"))
-  eval(.parseUpdateAestheticProperty(AestheticProperties$shape, "points"))
-  eval(.parseUpdateAxes())
+  #----- Update properties using ggplot2::scale functions -----
+  plotObject <- .updateAesProperties(
+    plotObject,
+    plotConfigurationProperty = "points",
+    propertyNames = c("color", "shape"),
+    data = mapData,
+    mapLabels = mapLabels
+  )
+  plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }

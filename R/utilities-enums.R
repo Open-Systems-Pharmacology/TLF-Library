@@ -1,3 +1,84 @@
+#' @title .getTitlesFromFamilyTag
+#' @description Get all title names from documented functions/R6 classes that have specific family tags.
+#' The function aims at created automated and synchronized enums
+#' @param familyTag Family tag used to document functions or R6 classes
+#' @return character array of titles
+#' @import ospsuite.utils
+#' @keywords internal
+.getTitlesFromFamilyTag <- function(familyTag) {
+  functionNames <- NULL
+  for (filePath in list.files("./R", full.names = TRUE)) {
+    fileContent <- readLines(filePath, warn = FALSE)
+    familyTagLines <- grep(pattern = paste0("#' @family ", familyTag), x = fileContent)
+    if (isEmpty(familyTagLines)) {
+      next
+    }
+    # Get closest title before tag
+    titleLines <- grep(pattern = "#' @title", x = fileContent)
+    functionNames <- c(
+      functionNames,
+      sapply(
+        familyTagLines,
+        # assumes that title tag is defined before family tag
+        FUN = function(familyTagLine) {
+          # Get line of closest title tag before family tag
+          titleLine <- titleLines[which.min(
+            familyTagLine - titleLines[titleLines < familyTagLine]
+          )]
+          functionName <- trimws(gsub(".*@title", "", fileContent[titleLine]))
+          return(functionName)
+        }
+      )
+    )
+  }
+  return(functionNames)
+}
+
+#' @title AestheticFields
+#' @import ospsuite.utils
+#' @export
+#' @description
+#' List of all available aesthetic fields that manage aesthetic properties
+#' @family enum helpers
+AestheticFields <- enum(c(
+  "lines",
+  "points",
+  "ribbons",
+  "errorbars"
+))
+
+#' @title AtomPlots
+#' @import ospsuite.utils
+#' @export
+#' @description
+#' List of all available atom plots
+#' @family enum helpers
+AtomPlots <- enum(c(.getTitlesFromFamilyTag("atom plots")))
+
+#' @title MoleculePlots
+#' @import ospsuite.utils
+#' @export
+#' @description
+#' List of all available molecule plots
+#' @family enum helpers
+MoleculePlots <- enum(c(.getTitlesFromFamilyTag("molecule plots")))
+
+#' @title PlotConfigurations
+#' @import ospsuite.utils
+#' @export
+#' @description
+#' List of all available molecule plots
+#' @family enum helpers
+PlotConfigurations <- enum(c(.getTitlesFromFamilyTag("PlotConfiguration classes")))
+
+#' @title DataMappings
+#' @import ospsuite.utils
+#' @export
+#' @description
+#' List of all available molecule plots
+#' @family enum helpers
+DataMappings <- enum(c(.getTitlesFromFamilyTag("DataMapping classes")))
+
 #' @title Alignments
 #' @import ospsuite.utils
 #' @export
@@ -58,8 +139,8 @@ VerticalJustification <- enum(
 #' @import ospsuite.utils
 #' @description
 #' List of all available horizontal justifications for plot annotation text.
-#' @family enum helpers
 #' @export
+#' @family enum helpers
 HorizontalJustification <- enum(
   c(
     "left" = 0,
@@ -72,8 +153,8 @@ HorizontalJustification <- enum(
 #' @import ospsuite.utils
 #' @description
 #' List of all available tag positions in a plot grid.
-#' @family enum helpers
 #' @export
+#' @family enum helpers
 TagPositions <- enum(
   c(
     "topLeft" = "topleft",
@@ -98,6 +179,7 @@ TagPositions <- enum(
 #' color palette from `{ggsci}` package.
 #'
 #' @export
+#' @family enum helpers
 ColorMaps <- list(
   default = c("#0078D7", "#D83B01", "#107C10", "#A80000", "#002050", "#B4009E"),
   grays = paste("gray", seq(0, 100, 10), sep = ""),
@@ -123,6 +205,7 @@ ColorMaps <- list(
 #' @description List of some `ggplot2` shapes
 #' @import ospsuite.utils
 #' @export
+#' @family enum helpers
 AestheticSelectionKeys <- enum(c(
   "next",
   "same",
@@ -155,8 +238,8 @@ tlfStatFunctions <- enum(c(
 #' @import ospsuite.utils
 #' @description
 #' List of all available legend positions
-#' @family enum helpers
 #' @export
+#' @family enum helpers
 LegendPositions <- enum(c(
   "none",
   "insideTop",
@@ -248,7 +331,7 @@ Shapes <- list(
   "musicKey" = "\u266a",
   "hollowFlag" = "\u263a",
   "arrowLeft" = "\u2190",
-  "arrowRight" = "\u2193",
+  "arrowRight" = "\u2192",
   "arrowUp" = "\u2191",
   "arrowDown" = "\u2193",
   # No shape displayed
@@ -268,7 +351,8 @@ Shapes <- list(
 #' @family enum helpers
 #'
 #' @examples
-#' # Continuous linear scale
+#' # Continuous linear/identity scale
+#' Scaling$identity
 #' Scaling$lin
 #'
 #' # Continuous log10 scale
@@ -294,6 +378,7 @@ Shapes <- list(
 #'
 #' @export
 Scaling <- enum(c(
+  "identity",
   "lin",
   "log",
   "ln",
@@ -327,4 +412,4 @@ ExportFormats <- enum(c("png", "pdf", "eps", "ps", "tex", "jpeg", "tiff", "bmp",
 #' @description
 #' List of all available tick label transformation names
 #' @family enum helpers
-TickLabelTransforms <- enum(c("none", "default", "identity", "log", "ln", "sqrt", "greek", "pi"))
+TickLabelTransforms <- enum(c("none", "default", "identity", "log", "ln", "sqrt", "greek", "pi", "percentiles"))

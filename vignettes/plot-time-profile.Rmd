@@ -428,7 +428,7 @@ complex time profiles comparing observed and simulated data can be plotted.
 
 ### 3.3.1. Single simulation and observed data set
 
-```{r combine simulated and observed}
+```{r combine simulated and observed, eval= getRversion() >= "4.0"}
 # Define Data Mappings
 simDataMapping <- TimeProfileDataMapping$new(
   x = "time",
@@ -536,12 +536,12 @@ Therefore, their color pattern may not match.
 To update the plot and have appropriate colors and labels in the legend, it is possible to get the legend properties and update them as illustrated in the example below that updates the positions of the legend entries:
 
 ```{r get legend properties, results='asis'}
-plotLegend <- getLegendCaption(simAndObsTimeProfile) 
-knitr::kable(plotLegend)
+plotLegend <- getLegendCaption(simAndObsTimeProfile)
+knitr::kable(as.data.frame(plotLegend$color))
 ```
 
 ```{r update legend properties}
-plotLegend <- plotLegend[c(1,3,2,4), ]
+plotLegend$color <- plotLegend$color[c(1, 3, 2, 4), ]
 updateTimeProfileLegend(simAndObsTimeProfile, plotLegend)
 ```
 
@@ -564,7 +564,6 @@ plotTimeProfile(
   dataMapping = simDataMapping,
   observedDataMapping = obsDataMapping
 )
-
 ```
 
 ### 3.3.4. Mutliple simulations and observed data sets with their confidence intervals

@@ -17,6 +17,8 @@ R6 class defining theme font properties
 
 \item{\code{ylabel}}{\code{Font} object for font properties of ylabel}
 
+\item{\code{y2label}}{\code{Font} object for font properties of y2label}
+
 \item{\code{caption}}{\code{Font} object for font properties of caption}
 
 \item{\code{watermark}}{\code{Font} object for font properties of watermark}
@@ -28,6 +30,8 @@ R6 class defining theme font properties
 \item{\code{xAxis}}{\code{Font} object for font properties of xAxis}
 
 \item{\code{yAxis}}{\code{Font} object for font properties of yAxis}
+
+\item{\code{y2Axis}}{\code{Font} object for font properties of y2Axis}
 }
 \if{html}{\out{</div>}}
 }
@@ -50,12 +54,14 @@ Create a new \code{ThemeFont} object
   subtitle = NULL,
   xlabel = NULL,
   ylabel = NULL,
+  y2label = NULL,
   caption = NULL,
   watermark = NULL,
   legendTitle = NULL,
   legend = NULL,
   xAxis = NULL,
   yAxis = NULL,
+  y2Axis = NULL,
   baseColor = "black",
   baseSize = 12,
   baseFace = "plain",
@@ -76,6 +82,8 @@ Create a new \code{ThemeFont} object
 
 \item{\code{ylabel}}{\code{Font} object or list for font properties of ylabel}
 
+\item{\code{y2label}}{\code{Font} object or list for font properties of y2label}
+
 \item{\code{caption}}{\code{Font} object or list for font properties of caption}
 
 \item{\code{watermark}}{\code{Font} object or list for font properties of watermark}
@@ -87,6 +95,8 @@ Create a new \code{ThemeFont} object
 \item{\code{xAxis}}{\code{Font} object or list for font properties of xAxis}
 
 \item{\code{yAxis}}{\code{Font} object or list for font properties of yAxis}
+
+\item{\code{y2Axis}}{\code{Font} object or list for font properties of y2Axis}
 
 \item{\code{baseColor}}{name of base color of undefined fonts. Default is "black".}
 

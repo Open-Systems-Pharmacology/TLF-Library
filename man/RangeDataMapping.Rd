@@ -9,6 +9,7 @@ R6 class for mapping \code{x}, \code{ymin} and \code{ymax} variable to \code{dat
 \seealso{
 Other DataMapping classes: 
 \code{\link{BoxWhiskerDataMapping}},
+\code{\link{CumulativeTimeProfileDataMapping}},
 \code{\link{DDIRatioDataMapping}},
 \code{\link{GroupMapping}},
 \code{\link{Grouping}},
@@ -16,6 +17,7 @@ Other DataMapping classes:
 \code{\link{ObsVsPredDataMapping}},
 \code{\link{ObservedDataMapping}},
 \code{\link{PKRatioDataMapping}},
+\code{\link{QQDataMapping}},
 \code{\link{ResVsPredDataMapping}},
 \code{\link{ResVsTimeDataMapping}},
 \code{\link{TimeProfileDataMapping}},
@@ -25,7 +27,7 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{RangeDataMapping}
+\code{tlf::XYDataMapping} -> \code{tlf::XYGDataMapping} -> \code{RangeDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -44,12 +46,6 @@ Other DataMapping classes:
 \item \href{#method-RangeDataMapping-clone}{\code{RangeDataMapping$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-RangeDataMapping-new"></a>}}
 \if{latex}{\out{\hypertarget{method-RangeDataMapping-new}{}}}

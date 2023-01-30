@@ -9,12 +9,14 @@ R6 class for mapping \code{x}, \code{y}, of observed data for a time profile plo
 \seealso{
 Other DataMapping classes: 
 \code{\link{BoxWhiskerDataMapping}},
+\code{\link{CumulativeTimeProfileDataMapping}},
 \code{\link{DDIRatioDataMapping}},
 \code{\link{GroupMapping}},
 \code{\link{Grouping}},
 \code{\link{HistogramDataMapping}},
 \code{\link{ObsVsPredDataMapping}},
 \code{\link{PKRatioDataMapping}},
+\code{\link{QQDataMapping}},
 \code{\link{RangeDataMapping}},
 \code{\link{ResVsPredDataMapping}},
 \code{\link{ResVsTimeDataMapping}},
@@ -25,7 +27,7 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{ObservedDataMapping}
+\code{tlf::XYDataMapping} -> \code{tlf::XYGDataMapping} -> \code{ObservedDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -37,6 +39,8 @@ Other DataMapping classes:
 \item{\code{ymin}}{mapping error bars around scatter points}
 
 \item{\code{ymax}}{mapping error bars around scatter points}
+
+\item{\code{y2Axis}}{Name of y2Axis variable to map}
 }
 \if{html}{\out{</div>}}
 }
@@ -45,15 +49,12 @@ Other DataMapping classes:
 \itemize{
 \item \href{#method-ObservedDataMapping-new}{\code{ObservedDataMapping$new()}}
 \item \href{#method-ObservedDataMapping-checkMapData}{\code{ObservedDataMapping$checkMapData()}}
+\item \href{#method-ObservedDataMapping-requireDualAxis}{\code{ObservedDataMapping$requireDualAxis()}}
+\item \href{#method-ObservedDataMapping-getLeftAxis}{\code{ObservedDataMapping$getLeftAxis()}}
+\item \href{#method-ObservedDataMapping-getRightAxis}{\code{ObservedDataMapping$getRightAxis()}}
 \item \href{#method-ObservedDataMapping-clone}{\code{ObservedDataMapping$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ObservedDataMapping-new"></a>}}
 \if{latex}{\out{\hypertarget{method-ObservedDataMapping-new}{}}}
@@ -63,14 +64,15 @@ Create a new \code{ObservedDataMapping} object
 \if{html}{\out{<div class="r">}}\preformatted{ObservedDataMapping$new(
   x,
   y,
-  uncertainty = NULL,
-  error = NULL,
   ymin = NULL,
   ymax = NULL,
-  mdv = NULL,
+  y2Axis = NULL,
+  group = NULL,
   color = NULL,
   shape = NULL,
-  group = NULL,
+  error = NULL,
+  uncertainty = NULL,
+  mdv = NULL,
   data = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -82,22 +84,24 @@ Create a new \code{ObservedDataMapping} object
 
 \item{\code{y}}{Name of y variable to map}
 
-\item{\code{uncertainty}}{mapping error bars around scatter points.
-Deprecated parameter replaced by \code{error}.}
-
-\item{\code{error}}{mapping error bars around scatter points}
-
 \item{\code{ymin}}{mapping lower end of error bars around scatter points}
 
 \item{\code{ymax}}{mapping upper end of error bars around scatter points}
 
-\item{\code{mdv}}{mapping missing dependent variable}
+\item{\code{y2Axis}}{Name of y2Axis variable to map}
+
+\item{\code{group}}{R6 class \code{Grouping} object or its input}
 
 \item{\code{color}}{R6 class \code{Grouping} object or its input}
 
 \item{\code{shape}}{R6 class \code{Grouping} object or its input}
 
-\item{\code{group}}{R6 class \code{Grouping} object or its input}
+\item{\code{error}}{mapping error bars around scatter points}
+
+\item{\code{uncertainty}}{mapping error bars around scatter points.
+Deprecated parameter replaced by \code{error}.}
+
+\item{\code{mdv}}{mapping missing dependent variable}
 
 \item{\code{data}}{data.frame to map used by \code{.smartMapping}}
 }
@@ -128,6 +132,66 @@ Check that \code{data} variables include map variables
 \subsection{Returns}{
 A data.frame with map and \code{defaultAes} variables.
 Dummy variable \code{defaultAes} is necessary to allow further modification of plots.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ObservedDataMapping-requireDualAxis"></a>}}
+\if{latex}{\out{\hypertarget{method-ObservedDataMapping-requireDualAxis}{}}}
+\subsection{Method \code{requireDualAxis()}}{
+Assess if \code{data} require a dual axis plot
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ObservedDataMapping$requireDualAxis(data)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data}}{data.frame to check}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A logical
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ObservedDataMapping-getLeftAxis"></a>}}
+\if{latex}{\out{\hypertarget{method-ObservedDataMapping-getLeftAxis}{}}}
+\subsection{Method \code{getLeftAxis()}}{
+Render NA values for all right axis data
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ObservedDataMapping$getLeftAxis(data)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data}}{A data.frame}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A data.frame to be plotted in left axis
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ObservedDataMapping-getRightAxis"></a>}}
+\if{latex}{\out{\hypertarget{method-ObservedDataMapping-getRightAxis}{}}}
+\subsection{Method \code{getRightAxis()}}{
+Render NA values for all left axis data
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ObservedDataMapping$getRightAxis(data)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data}}{A data.frame}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A data.frame to be plotted in right axis
 }
 }
 \if{html}{\out{<hr>}}

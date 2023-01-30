@@ -35,11 +35,7 @@ plotTornado <- function(data = NULL,
                         dataMapping = NULL,
                         plotConfiguration = NULL,
                         plotObject = NULL) {
-  validateIsOfType(data, "data.frame", nullAllowed = TRUE)
-  validateIsString(colorPalette, nullAllowed = TRUE)
-  validateIsLogical(sorted, nullAllowed = TRUE)
-  validateIsLogical(bar)
-
+  #----- Validation and formatting of input arguments -----
   if (is.null(data)) {
     validateIsNumeric(x)
     y <- y %||% rep("", length(x))
@@ -53,26 +49,30 @@ plotTornado <- function(data = NULL,
       data = data
     )
   }
+  validateIsNotEmpty(data)
+  validateIsOfType(data, "data.frame")
+  dataMapping <- .setDataMapping(dataMapping, TornadoDataMapping, data)
 
-  dataMapping <- dataMapping %||% TornadoDataMapping$new(data = data)
+  # Update dataMapping if inputs provided by user
+  validateIsLogical(sorted, nullAllowed = TRUE)
   dataMapping$sorted <- sorted %||% dataMapping$sorted
-  plotConfiguration <- plotConfiguration %||% TornadoPlotConfiguration$new(
-    bar = bar,
-    colorPalette = colorPalette,
-    data = data,
-    metaData = metaData,
-    dataMapping = dataMapping
+
+  plotConfiguration <- .setPlotConfiguration(
+    plotConfiguration, TornadoPlotConfiguration,
+    data, metaData, dataMapping
   )
+  # Update plotConfiguration if inputs provided by user
+  validateIsString(colorPalette, nullAllowed = TRUE)
+  validateIsLogical(bar)
+  plotConfiguration$colorPalette <- colorPalette %||% plotConfiguration$colorPalette
+  plotConfiguration$bar <- bar
 
-  validateIsOfType(dataMapping, "TornadoDataMapping")
-  validateIsOfType(plotConfiguration, "TornadoPlotConfiguration")
+  plotObject <- .setPlotObject(plotObject, plotConfiguration)
 
-  plotObject <- plotObject %||% initializePlot(plotConfiguration)
-
-  # Get transformed data from mapping and convert labels into characters usable by aes_string
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- .getAesStringMapping(dataMapping)
 
+  #----- Build layers of molecule plot -----
   # Option sorting the values, which put the wider spread at the top and smaller at the bottom
   # An additional options can be added to change the type of sort for later versions
   # (e.g. increasing/decreasing absolute values or actual values...)
@@ -83,6 +83,13 @@ plotTornado <- function(data = NULL,
   # If tornado is a bar plot, plot configuration option "bar" is TRUE.
   # Otherwise, the plot will use points instead
   if (plotConfiguration$bar) {
+    aestheticValues <- .getAestheticValuesFromConfiguration(
+      n = 1,
+      position = 0,
+      plotConfigurationProperty = plotObject$plotConfiguration$ribbons,
+      propertyNames = c("linetype", "size", "alpha")
+    )
+
     plotObject <- plotObject + ggplot2::geom_col(
       data = mapData,
       mapping = ggplot2::aes_string(
@@ -91,23 +98,30 @@ plotTornado <- function(data = NULL,
         fill = mapLabels$fill,
         color = mapLabels$color
       ),
-      alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$alpha, position = 0, aesthetic = "alpha"),
-      size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$size, position = 0, aesthetic = "size"),
-      linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$linetype, position = 0, aesthetic = "linetype"),
-      position = ggplot2::position_dodge(width = plotConfiguration$dodge)
+      alpha = aestheticValues$alpha,
+      size = aestheticValues$size,
+      linetype = aestheticValues$linetype,
+      position = ggplot2::position_dodge(width = plotConfiguration$dodge),
+      na.rm = TRUE
     )
 
-    # Define shapes and colors based on plotConfiguration$points properties
-    fillVariable <- gsub("`", "", mapLabels$fill)
-    colorVariable <- gsub("`", "", mapLabels$color)
-    fillLength <- length(unique(mapData[, fillVariable]))
-    colorLength <- length(unique(mapData[, colorVariable]))
-
-    plotObject <- plotObject +
-      ggplot2::scale_fill_manual(values = .getAestheticValues(n = fillLength, selectionKey = plotConfiguration$ribbons$fill, aesthetic = "fill")) +
-      ggplot2::scale_color_manual(values = .getAestheticValues(n = colorLength, selectionKey = plotConfiguration$ribbons$color, aesthetic = "color"))
+    plotObject <- .updateAesProperties(
+      plotObject,
+      plotConfigurationProperty = "ribbons",
+      propertyNames = c("fill", "color"),
+      data = mapData,
+      mapLabels = mapLabels
+    )
   }
+
+  # If tornado is a scatter plot, plot configuration option "bar" is FALSE.
   if (!plotConfiguration$bar) {
+    aestheticValues <- .getAestheticValuesFromConfiguration(
+      n = 1,
+      position = 0,
+      plotConfigurationProperty = plotObject$plotConfiguration$points,
+      propertyNames = c("size", "alpha")
+    )
     # For tornado with points, their shape will be taken from the theme properties
     plotObject <- plotObject + ggplot2::geom_point(
       data = mapData,
@@ -117,34 +131,34 @@ plotTornado <- function(data = NULL,
         color = mapLabels$color,
         shape = mapLabels$shape
       ),
-      size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$size, position = 0, aesthetic = "size"),
+      size = aestheticValues$size,
+      alpha = aestheticValues$alpha,
       position = ggplot2::position_dodge(width = plotConfiguration$dodge)
     )
 
-    # Define shapes and colors based on plotConfiguration$points properties
-    shapeVariable <- gsub("`", "", mapLabels$shape)
-    colorVariable <- gsub("`", "", mapLabels$color)
-    shapeLength <- length(unique(mapData[, shapeVariable]))
-    colorLength <- length(unique(mapData[, colorVariable]))
-
-    plotObject <- plotObject +
-      ggplot2::scale_shape_manual(values = .getAestheticValues(n = shapeLength, selectionKey = plotConfiguration$points$shape, aesthetic = "shape")) +
-      ggplot2::scale_color_manual(values = .getAestheticValues(n = colorLength, selectionKey = plotConfiguration$points$color, aesthetic = "color"))
+    plotObject <- .updateAesProperties(
+      plotObject,
+      plotConfigurationProperty = "points",
+      propertyNames = c("color", "shape"),
+      data = mapData,
+      mapLabels = mapLabels
+    )
   }
 
-  # Final plot includes a vertical line in 0
+  # Add vertical lines
+  for (lineIndex in seq_along(dataMapping$lines)) {
+    plotObject <- .addLineLayer(
+      plotObject,
+      type = "vertical",
+      value = dataMapping$lines[[lineIndex]],
+      # position corresponds to the number of line layers already added
+      position = lineIndex - 1
+    )
+  }
+
+  #----- Update properties using ggplot2::scale functions -----
   # And optional color palette otherwise use colors from theme
-  if (!isOfLength(dataMapping$lines, 0)) {
-    plotObject <- plotObject +
-      ggplot2::geom_vline(
-        xintercept = dataMapping$lines,
-        color = .getAestheticValues(n = length(dataMapping$lines), selectionKey = plotConfiguration$lines$color, position = 0, aesthetic = "color"),
-        size = .getAestheticValues(n = length(dataMapping$lines), selectionKey = plotConfiguration$lines$size, position = 0, aesthetic = "size"),
-        linetype = .getAestheticValues(n = length(dataMapping$lines), selectionKey = plotConfiguration$lines$linetype, position = 0, aesthetic = "linetype")
-      )
-  }
-
-  if (!isOfLength(plotConfiguration$colorPalette, 0)) {
+  if (!isEmpty(plotConfiguration$colorPalette)) {
     try(suppressMessages(
       plotObject <- plotObject +
         ggplot2::scale_fill_brewer(
@@ -153,7 +167,6 @@ plotTornado <- function(data = NULL,
         )
     ))
   }
-  try(suppressMessages(plotObject <- setXAxis(plotObject)))
-  try(suppressMessages(plotObject <- setYAxis(plotObject)))
+  plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }

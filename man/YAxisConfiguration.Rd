@@ -6,13 +6,38 @@
 \description{
 R6 class defining the configuration of Y-axis
 }
+\seealso{
+Other PlotConfiguration classes: 
+\code{\link{AxisConfiguration}},
+\code{\link{BackgroundConfiguration}},
+\code{\link{BackgroundElement}},
+\code{\link{BoxWhiskerPlotConfiguration}},
+\code{\link{CumulativeTimeProfilePlotConfiguration}},
+\code{\link{DDIRatioPlotConfiguration}},
+\code{\link{ExportConfiguration}},
+\code{\link{HistogramPlotConfiguration}},
+\code{\link{LabelConfiguration}},
+\code{\link{LegendConfiguration}},
+\code{\link{LineElement}},
+\code{\link{ObsVsPredPlotConfiguration}},
+\code{\link{PKRatioPlotConfiguration}},
+\code{\link{PlotConfiguration}},
+\code{\link{PlotGridConfiguration}},
+\code{\link{QQPlotConfiguration}},
+\code{\link{ResVsPredPlotConfiguration}},
+\code{\link{ResVsTimePlotConfiguration}},
+\code{\link{TimeProfilePlotConfiguration}},
+\code{\link{TornadoPlotConfiguration}},
+\code{\link{XAxisConfiguration}}
+}
+\concept{PlotConfiguration classes}
 \section{Super class}{
-\code{\link[tlf:AxisConfiguration]{tlf::AxisConfiguration}} -> \code{YAxisConfiguration}
+\code{tlf::AxisConfiguration} -> \code{YAxisConfiguration}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{position}}{character poistion of the Y-axis}
+\item{\code{position}}{character position of the Y-axis}
 }
 \if{html}{\out{</div>}}
 }
@@ -24,13 +49,14 @@ R6 class defining the configuration of Y-axis
 }
 }
 \if{html}{\out{
-<details open><summary>Inherited methods</summary>
+<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="ggplotExpansion"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-ggplotExpansion'><code>tlf::AxisConfiguration$ggplotExpansion()</code></a></li>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="ggplotScale"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-ggplotScale'><code>tlf::AxisConfiguration$ggplotScale()</code></a></li>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="initialize"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-initialize'><code>tlf::AxisConfiguration$initialize()</code></a></li>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="prettyTickLabels"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-prettyTickLabels'><code>tlf::AxisConfiguration$prettyTickLabels()</code></a></li>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="prettyTicks"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-prettyTicks'><code>tlf::AxisConfiguration$prettyTicks()</code></a></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="ggplotExpansion"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-ggplotExpansion'><code>tlf::AxisConfiguration$ggplotExpansion()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="ggplotScale"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-ggplotScale'><code>tlf::AxisConfiguration$ggplotScale()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="initialize"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-initialize'><code>tlf::AxisConfiguration$initialize()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="prettyMinorTicks"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-prettyMinorTicks'><code>tlf::AxisConfiguration$prettyMinorTicks()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="prettyTickLabels"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-prettyTickLabels'><code>tlf::AxisConfiguration$prettyTickLabels()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="AxisConfiguration" data-id="prettyTicks"><a href='../../tlf/html/AxisConfiguration.html#method-AxisConfiguration-prettyTicks'><code>tlf::AxisConfiguration$prettyTicks()</code></a></span></li>
 </ul>
 </details>
 }}

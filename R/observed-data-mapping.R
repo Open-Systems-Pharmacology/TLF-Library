@@ -14,38 +14,51 @@ ObservedDataMapping <- R6::R6Class(
     ymin = NULL,
     #' @field ymax mapping error bars around scatter points
     ymax = NULL,
+    #' @field y2Axis Name of y2Axis variable to map
+    y2Axis = NULL,
 
     #' @description Create a new `ObservedDataMapping` object
     #' @param x Name of x variable to map
     #' @param y Name of y variable to map
-    #' @param group R6 class `Grouping` object or its input
-    #' @param color R6 class `Grouping` object or its input
-    #' @param shape R6 class `Grouping` object or its input
-    #' @param data data.frame to map used by `.smartMapping`
-    #' @param uncertainty mapping error bars around scatter points.
-    #' Deprecated parameter replaced by `error`.
-    #' @param error mapping error bars around scatter points
     #' @param ymin mapping lower end of error bars around scatter points
     #' @param ymax mapping upper end of error bars around scatter points
+    #' @param y2Axis Name of y2Axis variable to map
+    #' @param color R6 class `Grouping` object or its input
+    #' @param shape R6 class `Grouping` object or its input
+    #' @param group R6 class `Grouping` object or its input
+    #' @param error mapping error bars around scatter points
+    #' @param uncertainty mapping error bars around scatter points.
+    #' Deprecated parameter replaced by `error`.
     #' @param mdv mapping missing dependent variable
+    #' @param data data.frame to map used by `.smartMapping`
     #' @return A new `ObservedDataMapping` object
     initialize = function(x,
                           y,
-                          uncertainty = NULL,
-                          error = NULL,
                           ymin = NULL,
                           ymax = NULL,
-                          mdv = NULL,
+                          y2Axis = NULL,
+                          group = NULL,
                           color = NULL,
                           shape = NULL,
-                          group = NULL,
+                          error = NULL,
+                          uncertainty = NULL,
+                          mdv = NULL,
                           data = NULL) {
       validateIsString(uncertainty, nullAllowed = TRUE)
       validateIsString(error, nullAllowed = TRUE)
       validateIsString(ymin, nullAllowed = TRUE)
       validateIsString(ymax, nullAllowed = TRUE)
       validateIsString(mdv, nullAllowed = TRUE)
-      super$initialize(x = x, y = y, color = color, shape = shape, group = group, data = data)
+      # .smartMapping is available in utilities-mapping.R
+      smartMap <- .smartMapping(data)
+      super$initialize(
+        x = x %||% smartMap$x,
+        y = y %||% smartMap$y,
+        color = color, 
+        shape = shape, 
+        group = group, 
+        data = data
+        )
 
       # If defined, ymin and ymax are used as is
       # If not, error/uncertainty are used and
@@ -54,6 +67,7 @@ ObservedDataMapping <- R6::R6Class(
       self$ymin <- ymin %||% ifNotNull(self$error, "ymin")
       self$ymax <- ymax %||% ifNotNull(self$error, "ymax")
       self$mdv <- mdv
+      self$y2Axis <- y2Axis
     },
 
     #' @description Check that `data` variables include map variables
@@ -63,8 +77,9 @@ ObservedDataMapping <- R6::R6Class(
     #' Dummy variable `defaultAes` is necessary to allow further modification of plots.
     checkMapData = function(data, metaData = NULL) {
       validateIsOfType(data, "data.frame")
-      validateIsIncluded(self$error, names(data), nullAllowed = TRUE)
-      validateIsIncluded(self$mdv, names(data), nullAllowed = TRUE)
+      .validateMapping(self$error, data, nullAllowed = TRUE)
+      .validateMapping(self$mdv, data, nullAllowed = TRUE)
+      .validateMapping(self$y2Axis, data, nullAllowed = TRUE)
 
       # Using super method, fetches x, y and groups
       mapData <- super$checkMapData(data, metaData)
@@ -84,12 +99,68 @@ ObservedDataMapping <- R6::R6Class(
       if (isIncluded(self$ymin, names(data))) {
         mapData[, self$ymin] <- data[, self$ymin]
       }
+      if (!isEmpty(self$y2Axis)) {
+        mapData[, self$y2Axis] <- as.logical(data[, self$y2Axis])
+      }
       # MDV is a Nonmem notation in which values with MDV==1 are removed
       if (!isEmpty(self$mdv)) {
         mapData[, self$mdv] <- as.logical(data[, self$mdv])
         mapData <- mapData[!mapData[, self$mdv], ]
       }
       return(mapData)
+    },
+    
+    #' @description Assess if `data` require a dual axis plot
+    #' @param data data.frame to check
+    #' @return A logical
+    requireDualAxis = function(data) {
+      .validateMapping(self$y2Axis, data, nullAllowed = TRUE)
+      if(isEmpty(self$y2Axis)){
+        return(FALSE)
+      }
+      return(any(as.logical(data[, self$y2Axis]), na.rm = TRUE))
+    },
+    
+    #' @description Render NA values for all right axis data
+    #' @param data A data.frame
+    #' @return A data.frame to be plotted in left axis
+    getLeftAxis = function(data) {
+      if(!self$requireDualAxis(data)){
+        return(data)
+      }
+      # Ensure NAs in that data don't mess up the selection
+      selectedRows <- as.logical(data[, self$y2Axis]) %in% TRUE
+      if (isIncluded(self$ymax, names(data))) {
+        data[selectedRows, self$ymax] <- NA
+      }
+      if (isIncluded(self$ymin, names(data))) {
+        data[selectedRows, self$ymin] <- NA
+      }
+      if (isIncluded(self$y, names(data))) {
+        data[selectedRows, self$y] <- NA
+      }
+      return(data)
+    },
+    
+    #' @description Render NA values for all left axis data
+    #' @param data A data.frame
+    #' @return A data.frame to be plotted in right axis
+    getRightAxis = function(data) {
+      if(!self$requireDualAxis(data)){
+        return(NULL)
+      }
+      # Ensure NAs in that data don't mess up the selection
+      selectedRows <- as.logical(data[, self$y2Axis]) %in% FALSE
+      if (isIncluded(self$ymax, names(data))) {
+        data[selectedRows, self$ymax] <- NA
+      }
+      if (isIncluded(self$ymin, names(data))) {
+        data[selectedRows, self$ymin] <- NA
+      }
+      if (isIncluded(self$y, names(data))) {
+        data[selectedRows, self$y] <- NA
+      }
+      return(data)
     }
   )
 )

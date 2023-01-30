@@ -1,6 +1,7 @@
 #' @title LabelConfiguration
 #' @description R6 class defining the configuration of the labels of a `ggplot` object
 #' @export
+#' @family PlotConfiguration classes
 LabelConfiguration <- R6::R6Class(
   "LabelConfiguration",
   public = list(
@@ -16,7 +17,9 @@ LabelConfiguration <- R6::R6Class(
                           xlabel = NULL,
                           ylabel = NULL,
                           caption = NULL) {
-      inputs <- c("title", "subtitle", "xlabel", "ylabel", "caption")
+      # y2label not available for all plots but time profile
+      y2label <- NULL
+      inputs <- c("title", "subtitle", "xlabel", "ylabel", "caption", "y2label")
       validateExpressions <- parse(text = paste0("validateIsOfType(", inputs, ', c("Label", "character"), nullAllowed =TRUE)'))
       eval(validateExpressions)
 
@@ -49,6 +52,7 @@ LabelConfiguration <- R6::R6Class(
         plot.subtitle = private$.subtitle$createPlotFont(),
         axis.title.x = private$.xlabel$createPlotFont(),
         axis.title.y = private$.ylabel$createPlotFont(),
+        axis.title.y.right = private$.y2label$createPlotFont(),
         plot.caption = private$.caption$createPlotFont()
       )
       return(plotObject)
@@ -114,6 +118,18 @@ LabelConfiguration <- R6::R6Class(
       }
       private$.caption <- asLabel(value, font = private$.caption$font)
       return(invisible())
+    },
+    #' @field y2label `Label` object defining the y2label of the plot
+    y2label = function(value) {
+      if (missing(value)) {
+        return(private$.y2label)
+      }
+      validateIsOfType(value, c("character", "Label"), nullAllowed = TRUE)
+      if (isOfType(value, "Label")) {
+        private$.y2label <- asLabel(value)
+      }
+      private$.y2label <- asLabel(value, font = private$.y2label$font)
+      return(invisible())
     }
   ),
   private = list(
@@ -121,6 +137,7 @@ LabelConfiguration <- R6::R6Class(
     .subtitle = NULL,
     .xlabel = NULL,
     .ylabel = NULL,
-    .caption = NULL
+    .caption = NULL,
+    .y2label = NULL
   )
 )

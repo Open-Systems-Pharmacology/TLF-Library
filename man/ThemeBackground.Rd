@@ -23,9 +23,13 @@ R6 class defining theme background properties
 
 \item{\code{yAxis}}{\code{BackgroundElement} object for y axis properties}
 
+\item{\code{y2Axis}}{\code{BackgroundElement} object for right y axis properties}
+
 \item{\code{xGrid}}{\code{BackgroundElement} object for x grid properties}
 
 \item{\code{yGrid}}{\code{BackgroundElement} object for y grid properties}
+
+\item{\code{y2Grid}}{\code{BackgroundElement} object for right y grid properties}
 
 \item{\code{legend}}{\code{BackgroundElement} object for legend area properties}
 }
@@ -53,8 +57,10 @@ Create a new \code{ThemeBackground} object
   panel = NULL,
   xAxis = NULL,
   yAxis = NULL,
+  y2Axis = NULL,
   xGrid = NULL,
   yGrid = NULL,
+  y2Grid = NULL,
   legend = NULL,
   baseFill = "white",
   baseColor = "black",
@@ -80,9 +86,13 @@ Create a new \code{ThemeBackground} object
 
 \item{\code{yAxis}}{\code{BackgroundElement} object or list for y axis properties}
 
+\item{\code{y2Axis}}{\code{BackgroundElement} object or list for right y axis properties}
+
 \item{\code{xGrid}}{\code{BackgroundElement} object or list for x grid properties}
 
 \item{\code{yGrid}}{\code{BackgroundElement} object or list for y grid properties}
+
+\item{\code{y2Grid}}{\code{BackgroundElement} object or list for right y grid properties}
 
 \item{\code{legend}}{\code{BackgroundElement} object or list for legend area properties}
 

@@ -19,7 +19,6 @@ getBoxWhiskerMeasure <- function(data,
                                  y = NULL,
                                  group = NULL,
                                  quantiles = c(0.05, 0.25, 0.5, 0.75, 0.95)) {
-
   # If no data mapping is input, use default
   variableNames <- names(data)
   y <- y %||% utils::tail(variableNames, 1)

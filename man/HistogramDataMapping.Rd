@@ -9,12 +9,14 @@ R6 class for mapping \code{x}, \code{bins}, \code{binwidth},\code{stack} and \co
 \seealso{
 Other DataMapping classes: 
 \code{\link{BoxWhiskerDataMapping}},
+\code{\link{CumulativeTimeProfileDataMapping}},
 \code{\link{DDIRatioDataMapping}},
 \code{\link{GroupMapping}},
 \code{\link{Grouping}},
 \code{\link{ObsVsPredDataMapping}},
 \code{\link{ObservedDataMapping}},
 \code{\link{PKRatioDataMapping}},
+\code{\link{QQDataMapping}},
 \code{\link{RangeDataMapping}},
 \code{\link{ResVsPredDataMapping}},
 \code{\link{ResVsTimeDataMapping}},
@@ -25,11 +27,13 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{HistogramDataMapping}
+\code{tlf::XYDataMapping} -> \code{tlf::XYGDataMapping} -> \code{HistogramDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
+\item{\code{frequency}}{logical defining if histogram displays a frequency in y axis}
+
 \item{\code{stack}}{logical defining if histogram bars should be stacked}
 
 \item{\code{bins}}{number of bins or binning values/methods passed on \code{ggplot2::geom_histogram}}
@@ -51,7 +55,7 @@ Only 2 distributions are currently available: \code{"normal"} and \code{"logNorm
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="XYGDataMapping" data-id="checkMapData"><a href='../../tlf/html/XYGDataMapping.html#method-XYGDataMapping-checkMapData'><code>tlf::XYGDataMapping$checkMapData()</code></a></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="XYGDataMapping" data-id="checkMapData"><a href='../../tlf/html/XYGDataMapping.html#method-XYGDataMapping-checkMapData'><code>tlf::XYGDataMapping$checkMapData()</code></a></span></li>
 </ul>
 </details>
 }}
@@ -62,6 +66,7 @@ Only 2 distributions are currently available: \code{"normal"} and \code{"logNorm
 Create a new \code{HistogramDataMapping} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{HistogramDataMapping$new(
+  frequency = FALSE,
   stack = FALSE,
   bins = NULL,
   binwidth = NULL,
@@ -73,6 +78,8 @@ Create a new \code{HistogramDataMapping} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{frequency}}{logical defining if histogram displays a frequency in y axis}
+
 \item{\code{stack}}{logical defining if histogram bars should be stacked}
 
 \item{\code{bins}}{argument passed on \code{ggplot2::geom_histogram}}

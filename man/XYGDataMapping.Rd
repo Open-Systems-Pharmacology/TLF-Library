@@ -9,6 +9,7 @@ R6 class for mapping \code{x}, \code{y} and \code{GroupMapping} variables to \co
 \seealso{
 Other DataMapping classes: 
 \code{\link{BoxWhiskerDataMapping}},
+\code{\link{CumulativeTimeProfileDataMapping}},
 \code{\link{DDIRatioDataMapping}},
 \code{\link{GroupMapping}},
 \code{\link{Grouping}},
@@ -16,6 +17,7 @@ Other DataMapping classes:
 \code{\link{ObsVsPredDataMapping}},
 \code{\link{ObservedDataMapping}},
 \code{\link{PKRatioDataMapping}},
+\code{\link{QQDataMapping}},
 \code{\link{RangeDataMapping}},
 \code{\link{ResVsPredDataMapping}},
 \code{\link{ResVsTimeDataMapping}},
@@ -25,7 +27,7 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super class}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{XYGDataMapping}
+\code{tlf::XYDataMapping} -> \code{XYGDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -42,12 +44,6 @@ Other DataMapping classes:
 \item \href{#method-XYGDataMapping-clone}{\code{XYGDataMapping$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-XYGDataMapping-new"></a>}}
 \if{latex}{\out{\hypertarget{method-XYGDataMapping-new}{}}}

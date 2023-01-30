@@ -16,20 +16,6 @@ R6 class defining theme of plot configuration objects
 \item{\code{addRibbon}}{theme properties for \code{PlotConfiguration} objects as used in function \code{addRibbon()}}
 
 \item{\code{addErrorbar}}{theme properties for \code{PlotConfiguration} objects as used in function \code{addErrorbar()}}
-
-\item{\code{plotPKRatio}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotPKRatio()}}
-
-\item{\code{plotDDIRatio}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotDDIRatio()}}
-
-\item{\code{plotTimeProfile}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotTimeProfile()}}
-
-\item{\code{plotObsVsPred}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotObsVsPred()}}
-
-\item{\code{plotBoxWhisker}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotBoxWhisker()}}
-
-\item{\code{plotTornado}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotTornado()}}
-
-\item{\code{plotHistogram}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotHistogram()}}
 }
 \if{html}{\out{</div>}}
 }
@@ -52,13 +38,7 @@ Create a new \code{ThemePlotConfigurations} object
   addLine = NULL,
   addRibbon = NULL,
   addErrorbar = NULL,
-  plotPKRatio = NULL,
-  plotDDIRatio = NULL,
-  plotTimeProfile = NULL,
-  plotObsVsPred = NULL,
-  plotBoxWhisker = NULL,
-  plotTornado = NULL,
-  plotHistogram = NULL
+  ...
 )}\if{html}{\out{</div>}}
 }
 
@@ -73,19 +53,7 @@ Create a new \code{ThemePlotConfigurations} object
 
 \item{\code{addErrorbar}}{theme properties for \code{PlotConfiguration} objects as used in function \code{addErrorbar()}}
 
-\item{\code{plotPKRatio}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotPKRatio()}}
-
-\item{\code{plotDDIRatio}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotDDIRatio()}}
-
-\item{\code{plotTimeProfile}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotTimeProfile()}}
-
-\item{\code{plotObsVsPred}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotObsVsPred()}}
-
-\item{\code{plotBoxWhisker}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotBoxWhisker()}}
-
-\item{\code{plotTornado}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotTornado()}}
-
-\item{\code{plotHistogram}}{theme properties for \code{PlotConfiguration} objects as used in function \code{plotHistogram()}}
+\item{\code{...}}{theme properties for \code{PlotConfiguration} objects as used in molecule plots}
 }
 \if{html}{\out{</div>}}
 }

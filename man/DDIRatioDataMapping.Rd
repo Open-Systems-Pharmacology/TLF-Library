@@ -9,12 +9,14 @@ R6 class for mapping \code{x}, \code{y}, \code{GroupMapping} and DDI ratio \code
 \seealso{
 Other DataMapping classes: 
 \code{\link{BoxWhiskerDataMapping}},
+\code{\link{CumulativeTimeProfileDataMapping}},
 \code{\link{GroupMapping}},
 \code{\link{Grouping}},
 \code{\link{HistogramDataMapping}},
 \code{\link{ObsVsPredDataMapping}},
 \code{\link{ObservedDataMapping}},
 \code{\link{PKRatioDataMapping}},
+\code{\link{QQDataMapping}},
 \code{\link{RangeDataMapping}},
 \code{\link{ResVsPredDataMapping}},
 \code{\link{ResVsTimeDataMapping}},
@@ -25,7 +27,7 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{\link[tlf:PKRatioDataMapping]{tlf::PKRatioDataMapping}} -> \code{DDIRatioDataMapping}
+\code{tlf::XYDataMapping} -> \code{tlf::XYGDataMapping} -> \code{tlf::PKRatioDataMapping} -> \code{DDIRatioDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -48,7 +50,7 @@ Other DataMapping classes:
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="PKRatioDataMapping" data-id="checkMapData"><a href='../../tlf/html/PKRatioDataMapping.html#method-PKRatioDataMapping-checkMapData'><code>tlf::PKRatioDataMapping$checkMapData()</code></a></li>
+<li><span class="pkg-link" data-pkg="tlf" data-topic="PKRatioDataMapping" data-id="checkMapData"><a href='../../tlf/html/PKRatioDataMapping.html#method-PKRatioDataMapping-checkMapData'><code>tlf::PKRatioDataMapping$checkMapData()</code></a></span></li>
 </ul>
 </details>
 }}

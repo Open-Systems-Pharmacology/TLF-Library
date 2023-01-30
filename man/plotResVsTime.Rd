@@ -52,11 +52,16 @@ plotResVsTime(
 \seealso{
 Other molecule plots: 
 \code{\link{plotBoxWhisker}()},
+\code{\link{plotCumulativeTimeProfile}()},
 \code{\link{plotDDIRatio}()},
+\code{\link{plotGrid}()},
 \code{\link{plotHistogram}()},
 \code{\link{plotObsVsPred}()},
+\code{\link{plotObservedTimeProfile}()},
 \code{\link{plotPKRatio}()},
+\code{\link{plotQQ}()},
 \code{\link{plotResVsPred}()},
+\code{\link{plotSimulatedTimeProfile}()},
 \code{\link{plotTimeProfile}()},
 \code{\link{plotTornado}()}
 }
