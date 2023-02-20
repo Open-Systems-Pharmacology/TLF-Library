@@ -101,9 +101,6 @@ TimeProfileDataMapping <- R6::R6Class(
     #' @param data A data.frame
     #' @return A data.frame to be plotted in right axis
     getRightAxis = function(data) {
-      if (!self$requireDualAxis(data)) {
-        return(NULL)
-      }
       # Ensure NAs in that data don't mess up the selection
       selectedRows <- as.logical(data[, self$y2Axis]) %in% FALSE
       if (isIncluded(self$ymax, names(data))) {
