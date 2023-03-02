@@ -339,8 +339,8 @@ Linetypes <- enum(c(
 #' 
 Shapes <- list(
   # Usual symbols
-  "circle" = "\u25cf",
-  "square" = "\u25a0",
+  "circle" = "\u2b24",
+  "square" = "\u2bc0",
   # Diamond does not seem to be printed
   "diamond" = "\u2bc1",
   "triangle" = "\u2bc5",
@@ -353,11 +353,11 @@ Shapes <- list(
   "hexagon" = "\u2b22",
   "octagon" = "\u2bc3",
   # Hollow versions
-  "hollowCircle" = "\u25cb",
-  "hollowSquare" = "\u25a1",
+  "hollowCircle" = "\u3007",
+  "hollowSquare" = "\u25fb",
   "hollowDiamond" = "\u2b26",
-  "hollowTriangle" = "\U0001f6c6",
-  "hollowTriangleDown" = "\u26db",
+  "hollowTriangle" = "\U0001f702",
+  "hollowTriangleDown" = "\U0001f704",
   "hollowTriangleLeft" = "\U0001f894",
   "hollowTriangleRight" = "\U0001f896",
   "hollowStar" = "\u2606",
