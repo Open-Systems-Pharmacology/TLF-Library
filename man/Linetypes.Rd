@@ -13,6 +13,25 @@ Linetypes
 \description{
 Enum of \code{ggplot2} linetypes
 }
+\examples{
+# Plot available linetypes in enum Linetypes
+addLine(
+ # Leverage smart mapping by providing 
+ # x, y and linetype as data.frame variable names
+data = data.frame(
+x = rep(1:2, each = length(Linetypes)),
+y = rep(length(Linetypes):1, 2),
+linetype = rep(factor(
+names(tlf::Linetypes), 
+levels = names(tlf::Linetypes)
+), 2)
+),
+linetype = unlist(Linetypes),
+size = 1,
+color = "black"
+)
+
+}
 \seealso{
 Other enum helpers: 
 \code{\link{AestheticFields}},

@@ -185,7 +185,7 @@ ColorMaps <- list(
   grays = paste("gray", seq(0, 100, 10), sep = ""),
   prism = c("#FF0000", "#FF7F00", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#8F00FF"),
   blot = c("blue", "magenta", "cyan", "green", "yellow", "red"),
-  temperature = c("#262A76", "#234990", "#2F8AC3", "#26B0D2", "#FFC1CB", "#EB559", "#AE3535", "8E1F20"),
+  temperature = c("#262A76", "#234990", "#2F8AC3", "#26B0D2", "#FFC1CB", "#EB5590", "#AE3535", "#8E1F20"),
   ospDefault = c(
     "#5050FFFF", "#CE3D32FF", "#749B58FF", "#F0E685FF",
     "#466983FF", "#BA6338FF", "#5DB1DDFF", "#802268FF", "#6BD76BFF",
@@ -279,6 +279,24 @@ AestheticProperties <- enum(c(
 #' @export
 #' @import ospsuite.utils
 #' @family enum helpers
+#' @examples 
+#' # Plot available linetypes in enum Linetypes
+#' addLine(
+#'  # Leverage smart mapping by providing 
+#'  # x, y and linetype as data.frame variable names
+#' data = data.frame(
+#' x = rep(1:2, each = length(Linetypes)),
+#' y = rep(length(Linetypes):1, 2),
+#' linetype = rep(factor(
+#' names(tlf::Linetypes), 
+#' levels = names(tlf::Linetypes)
+#' ), 2)
+#' ),
+#' linetype = unlist(Linetypes),
+#' size = 1,
+#' color = "black"
+#' )
+#' 
 Linetypes <- enum(c(
   "solid",
   "longdash",
@@ -290,29 +308,75 @@ Linetypes <- enum(c(
 ))
 
 #' @title Shapes
-#' @description List of some `ggplot2` shapes
+#' @description List of some `ggplot2` shapes.
+#' All the shapes of this enum correspond to one character value 
+#' due to compatibility issues when providing shape names 
+#' as described in the articles below.
+#' https://stackoverflow.com/questions/67859447/error-when-combining-unicode-shape-with-legal-ggplot2-shapes
+#' https://ggplot2.tidyverse.org/articles/ggplot2-specs.html#point
+#' 
+#' Depending on the packages used for displaying/exporting figures,
+#' some of the shapes may not appear.
 #' @export
 #' @import ospsuite.utils
 #' @family enum helpers
+#' @examples 
+#' # Plot some available shapes in enum Shapes
+#' addScatter(
+#'  # Leverage smart mapping by providing 
+#'  # x, y and shape as data.frame variable names
+#' data = data.frame(
+#' x = rep(1, 12),
+#' y = 12:1,
+#' shape = factor(
+#' names(Shapes)[1:12], 
+#' levels = names(Shapes)[1:12]
+#' )),
+#' shape = unlist(Shapes[1:12]),
+#' size = 3,
+#' color = "black"
+#' )
+#' 
 Shapes <- list(
-  # Regular shapes
-  "circle" = "circle",
-  "square" = "square",
-  "triangle" = "triangle",
-  "triangleDown" = "triangle down filled",
-  "cross" = "cross",
-  "plus" = "plus",
-  "asterisk" = "asterisk",
-  "hollowCircle" = "circle open",
-  "hollowSquare" = "square open",
-  "hollowDiamond" = "diamond open",
-  "hollowTriangle" = "triangle open",
-  "hollowTriangleDown" = "triangle down open",
-  "diamond" = "diamond",
-  "dot" = "bullet",
-  # Shapes translated from unicode characters
-  "pentagram" = "\u2605",
-  "hollowPentagram" = "\u2606",
+  # Usual symbols
+  "circle" = "\u25cf",
+  "square" = "\u25a0",
+  # Diamond does not seem to be printed
+  "diamond" = "\u2bc1",
+  "triangle" = "\u2bc5",
+  "triangleDown" = "\u2bc6",
+  "triangleLeft" = "\u2bc7",
+  "triangleRight" = "\u2bc8",
+  "star" = "\u2605",
+  "pentagon" = "\u2b1f",
+  "pentagonDown" = "\u2bc2",
+  "hexagon" = "\u2b22",
+  "octagon" = "\u2bc3",
+  # Hollow versions
+  "hollowCircle" = "\u25cb",
+  "hollowSquare" = "\u25a1",
+  "hollowDiamond" = "\u2b26",
+  "hollowTriangle" = "\U0001f6c6",
+  "hollowTriangleDown" = "\u26db",
+  "hollowTriangleLeft" = "\U0001f894",
+  "hollowTriangleRight" = "\U0001f896",
+  "hollowStar" = "\u2606",
+  "hollowPentagon" = "\u2b20",
+  "hollowHexagon" = "\u2b21",
+  # No unicode exists for "hollowOctagon"
+  # Glyphs / some were fond in utf-16 characters
+  "thinCross" = "\u2a2f",
+  "thinPlus" = "\U0001f7a2",
+  "cross" = "\U0001f7ad",
+  "plus" = "\U0001f7a6",
+  "asterisk" = "\u2055",
+  "target" = "\u2316",
+  "dot" = "\u2022",
+  "bullseye" = "\u233e",
+  "fisheye" = "\u25c9",
+  "squareFisheye" = "\u25a3",
+  "diamondFisheye" = "\u25c8",
+  # Cards
   "cardsDiamond" = "\u2666",
   "cardsHeart" = "\u2665",
   "cardsSpade" = "\u2660",
@@ -321,6 +385,7 @@ Shapes <- list(
   "cardsHollowHeart" = "\u2661",
   "cardsHollowSpade" = "\u2664",
   "cardsHollowClover" = "\u2667",
+  # Emojis
   "skull" = "\u2620",
   "hazard" = "\u2622",
   "male" = "\u2642",
@@ -329,7 +394,13 @@ Shapes <- list(
   "cloud" = "\u2601",
   "smiley" = "\u263a",
   "musicKey" = "\u266a",
-  "hollowFlag" = "\u263a",
+  "hollowFlag" = "\u2690",
+  "mouseFace" = "\U0001f42d",
+  "catFace" = "\U0001f431",
+  "carrot" = "\U0001f955",
+  "car" = "\U0001f693",
+  "pill" = "\U0001f48a",
+  # Arrows
   "arrowLeft" = "\u2190",
   "arrowRight" = "\u2192",
   "arrowUp" = "\u2191",

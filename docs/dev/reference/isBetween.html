@@ -14,7 +14,7 @@ Shortcut for x &amp;gt; left &amp;amp; x &amp;lt; right if strict=TRUE."><meta n
     
     <a class="navbar-brand me-2" href="../index.html">tlf</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.4.0</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.5.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,20 +99,16 @@ Default value is <code>FALSE</code>.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1e2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">[</span><span class="fu">isBetween</span><span class="op">(</span><span class="va">x</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.462230890  0.721838525 -0.828908797 -0.271249446 -0.009989389</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] -0.807208543  0.686958591 -0.443275803 -0.779322851  0.985327849</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] -0.864323795 -0.460939226 -0.655219590 -0.528268145 -0.049962639</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16]  0.904533685  0.132826968 -0.774901099 -0.514147177  0.542709705</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] -0.756024387  0.761894428 -0.062578742  0.789465514 -0.389486354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [26] -0.171457364  0.101331129 -0.698152844  0.149247579 -0.226713545</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [31] -0.902754092 -0.543245325  0.052568649 -0.390830374  0.612850592</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [36] -0.452484714 -0.179720019 -0.049477823 -0.873438877 -0.548594215</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [41] -0.154825780  0.466037872  0.192102108 -0.808115410 -0.934150305</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [46]  0.472349011  0.817268152 -0.694176922 -0.451433386  0.898430957</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [51] -0.997029187 -0.438122389 -0.747214078 -0.474629217  0.869426270</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [56]  0.749260083  0.173519115 -0.988696160 -0.658606549 -0.230215629</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [61]  0.095619316  0.147117584  0.183689649  0.879491900  0.406325837</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [66] -0.391656885 -0.078064908  0.835284334 -0.475650250</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.24159039 -0.76573486 -0.41304349 -0.82327809  0.39521678  0.49694210</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] -0.05679995  0.65729863 -0.51324389  0.49307561  0.18579807  0.60679426</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] -0.15112519  0.87623815 -0.49666197  0.44255714  0.13585262 -0.80349272</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19]  0.55544677  0.15005115  0.32814802 -0.02318493  0.29753159 -0.71150460</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25]  0.58266007 -0.58619445 -0.32893916 -0.61726769  0.89030482  0.48421744</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31]  0.38510094  0.74378898 -0.03139904 -0.37769666  0.36311686 -0.70536168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] -0.40086396  0.56481484  0.65841559 -0.53497161  0.18770209 -0.69425290</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [43]  0.42456636 -0.89494378  0.60914905 -0.25427356 -0.04399902 -0.70262504</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [49]  0.55999957 -0.07422911 -0.15663370  0.79891664 -0.68051956 -0.59932001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [55] -0.23435803 -0.02065942 -0.65949102  0.25793980 -0.71977556  0.85905389</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">isBetween</span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span>

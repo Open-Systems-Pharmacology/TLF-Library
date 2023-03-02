@@ -5,13 +5,39 @@
 \alias{Shapes}
 \title{Shapes}
 \format{
-An object of class \code{list} of length 38.
+An object of class \code{list} of length 60.
 }
 \usage{
 Shapes
 }
 \description{
-List of some \code{ggplot2} shapes
+List of some \code{ggplot2} shapes.
+All the shapes of this enum correspond to one character value
+due to compatibility issues when providing shape names
+as described in the articles below.
+https://stackoverflow.com/questions/67859447/error-when-combining-unicode-shape-with-legal-ggplot2-shapes
+https://ggplot2.tidyverse.org/articles/ggplot2-specs.html#point
+
+Depending on the packages used for displaying/exporting figures,
+some of the shapes may not appear.
+}
+\examples{
+# Plot some available shapes in enum Shapes
+addScatter(
+ # Leverage smart mapping by providing 
+ # x, y and shape as data.frame variable names
+data = data.frame(
+x = rep(1, 12),
+y = 12:1,
+shape = factor(
+names(Shapes)[1:12], 
+levels = names(Shapes)[1:12]
+)),
+shape = unlist(Shapes[1:12]),
+size = 3,
+color = "black"
+)
+
 }
 \seealso{
 Other enum helpers: 
