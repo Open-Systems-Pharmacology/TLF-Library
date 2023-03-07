@@ -226,8 +226,14 @@
     "diagonal" = ggplot2::geom_abline(
       slope = 1,
       intercept = value,
-      color = aestheticValues$color,
       linetype = aestheticValues$linetype,
+      color = aestheticValues$color,
+      alpha = aestheticValues$alpha,
+      size = aestheticValues$size
+    ),
+    "obsvspredDiagonal" = ggplot2::geom_abline(
+      aes_(slope = 1, intercept = value, linetype = as.character(position)),
+      color = aestheticValues$color,
       alpha = aestheticValues$alpha,
       size = aestheticValues$size
     ),

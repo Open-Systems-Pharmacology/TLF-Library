@@ -75,17 +75,42 @@ plotObsVsPred <- function(data,
   # Each new layer is added on top of previous
   # Thus, scatter points are added as last layer to prevent them being hidden by lines or errorbars
   # 1- Diagonal lines
-  for (lineIndex in seq_along(dataMapping$lines)) {
-    lineValue <- .getAblineValues(dataMapping$lines[[lineIndex]], plotConfiguration$yAxis$scale)
-    plotObject <- .addLineLayer(
-      plotObject,
-      type = "diagonal",
-      value = lineValue,
-      # position corresponds to the number of line layers already added
-      position = lineIndex - 1
-    )
+
+  lineIndex <- 0
+  if (!is.null(foldDistance)) {
+    # Add foldDistance legend only if user specified folddistance values
+    for (lineIndex in seq_along(dataMapping$lines)) {
+      lineValue <- .getAblineValues(dataMapping$lines[[lineIndex]], plotConfiguration$yAxis$scale)
+
+      plotObject <- .addLineLayer(
+        plotObject,
+        type = "obsvspredDiagonal",
+        value = lineValue,
+        # position corresponds to the number of line layers already added
+        position = lineIndex - 1
+      )
+    }
+
+    positions <- seq_along(dataMapping$lines) - 1
+
+    values <- setNames(unlist(Linetypes[seq_along(positions)]), positions)
+    breaks <- positions[foldDistance != 1]
+
+    # Do not plot the legend for abline
+    labels <- if (length(breaks) > 0) {
+      paste0(foldDistance[foldDistance != 1], "-fold")
+    } else {
+      NULL
+    }
+
+    plotObject <-
+      plotObject +
+      scale_linetype_manual(
+        breaks = breaks,
+        values = values,
+        labels = labels
+      )
   }
-  lineIndex <- ifNotNull(lineIndex, lineIndex, 0)
 
   # 2- Smoother line
   aestheticValues <- .getAestheticValuesFromConfiguration(
