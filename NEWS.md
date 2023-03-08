@@ -20,7 +20,7 @@
 
 * Minor ticks can be displayed
 
-* Add legend entries for fold distance lines in `plotObsVsPred()`(#359)
+* Legend entries for fold distance lines can be plotted in `plotObsVsPred()`(#359)
 
 # tlf 1.4.87
 

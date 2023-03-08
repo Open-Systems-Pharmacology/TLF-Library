@@ -91,12 +91,13 @@ plotObsVsPred <- function(data,
       )
     }
 
+    # Defines fold lines linetypes
     positions <- seq_along(dataMapping$lines) - 1
 
     values <- setNames(unlist(Linetypes[seq_along(positions)]), positions)
     breaks <- positions[foldDistance != 1]
 
-    # Do not plot the legend for abline
+    # Do not plot the legend for x=y line
     labels <- if (length(breaks) > 0) {
       paste0(foldDistance[foldDistance != 1], "-fold")
     } else {
@@ -110,7 +111,13 @@ plotObsVsPred <- function(data,
         values = values,
         labels = labels
       )
+
+    # Legend display
+    if (!plotConfiguration$foldLinesLegend) {
+      plotObject <- plotObject + guides(linetype = "none", shape = "none")
+    }
   }
+
 
   # 2- Smoother line
   aestheticValues <- .getAestheticValuesFromConfiguration(
@@ -154,6 +161,17 @@ plotObsVsPred <- function(data,
   # 3- Scatter points
   plotObject <- .addScatterLayer(plotObject, data = mapData, mapLabels = mapLabels)
 
+  # .addScatterLayer adds shapes legend on the lines so we need to override it
+  # while doing so, it reset the legend title so it is forced to plotConfiguration$legend$title$text
+  plotObject <-
+    plotObject +
+    guides(linetype = guide_legend(
+      title = plotConfiguration$legend$title$text,
+      override.aes = list(shape = NA)
+    ))
+
+
+
   #----- Update properties using ggplot2::scale functions -----
   plotObject <- .updateAesProperties(
     plotObject,
@@ -162,6 +180,7 @@ plotObsVsPred <- function(data,
     data = mapData,
     mapLabels = mapLabels
   )
+
   # Update axes limits if option symmetric and user did not define specific limits
   plotObject <- .updateSameAxes(plotObject, mapData, dataMapping)
   plotObject <- .updateAxes(plotObject)

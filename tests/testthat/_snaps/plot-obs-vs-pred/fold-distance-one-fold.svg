@@ -204,10 +204,9 @@
 <text x='335.09' y='564.36' style='font-size: 7.00px; fill: #333333; font-family: sans;' textLength='3.89px' lengthAdjust='spacingAndGlyphs'>0</text>
 <text x='531.13' y='569.35' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='11.12px' lengthAdjust='spacingAndGlyphs'>10</text>
 <text x='542.26' y='564.33' style='font-size: 7.00px; fill: #333333; font-family: sans;' textLength='3.89px' lengthAdjust='spacingAndGlyphs'>1</text>
-<rect x='638.70' y='19.18' width='58.73' height='33.72' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<rect x='644.18' y='30.14' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='644.18' y1='47.42' x2='661.46' y2='30.14' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<circle cx='652.82' cy='38.78' r='2.49' style='stroke-width: 0.71; fill: #000000;' />
-<text x='666.94' y='42.22' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='25.01px' lengthAdjust='spacingAndGlyphs'>2-fold</text>
+<rect x='47.96' y='19.18' width='58.73' height='33.72' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='53.44' y='30.14' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<line x1='55.17' y1='38.78' x2='68.99' y2='38.78' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<text x='76.20' y='42.22' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='25.01px' lengthAdjust='spacingAndGlyphs'>2-fold</text>
 </g>
 </svg>
