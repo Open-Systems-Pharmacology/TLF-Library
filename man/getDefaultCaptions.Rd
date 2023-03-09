@@ -4,7 +4,12 @@
 \alias{getDefaultCaptions}
 \title{getDefaultCaptions}
 \usage{
-getDefaultCaptions(data, metaData, variableList = colnames(data), sep = "-")
+getDefaultCaptions(
+  data,
+  metaData = NULL,
+  variableList = colnames(data),
+  sep = "-"
+)
 }
 \arguments{
 \item{data}{data.frame used for legend caption}

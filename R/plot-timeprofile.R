@@ -371,7 +371,11 @@ updateTimeProfileLegend <- function(plotObject, caption) {
         scaleFunction[[property]](
           breaks = caption[[property]]$names,
           labels = caption[[property]]$labels,
-          values = caption[[property]]$values
+          # Even if values and breaks have same length
+          # scale_<>_manual requires at least as many values as it counts factors
+          # Thus, add a default number of 50 blank values to prevent this potential crash
+          # Only values matching breaks are actually used
+          values = c(caption[[property]]$values, rep(blankValues[[property]], 50))
         )
     )
     # Get legend names that are not scaled but in final legend
@@ -407,7 +411,11 @@ updateTimeProfileLegend <- function(plotObject, caption) {
       ggplot2::scale_color_manual(
         breaks = caption$color$names,
         labels = caption$color$labels,
-        values = caption$color$values
+        # Even if values and breaks have same length
+        # scale_<>_manual requires at least as many values as it counts factors
+        # Thus, add a default number of 50 blank values to prevent this potential crash
+        # Only values matching breaks are actually used
+        values = c(caption$color$values, rep(NA, 50))
       ) +
       ggplot2::guides(
         fill = "none", shape = "none", linetype = "none",

@@ -97,44 +97,52 @@
 #'
 #' # Get captions separating variables witha space (character " ")
 #' getDefaultCaptions(data, metaData, sep = " ")
-getDefaultCaptions <- function(data, metaData, variableList = colnames(data), sep = "-") {
+getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(data), sep = "-") {
   # Check that the grouping is in the list of data variables
-  stopifnot(variableList %in% colnames(data))
+  validateIsIncluded(variableList, colnames(data))
 
-  groupingVariable <- .asLegendCaptionSubset(
-    data[, variableList[1]],
-    metaData[[variableList[1]]]
-  )
-
-  # Loop on the variableList except first one
-  # pasting as a single data.frame column the association of names in all selected variables
-  for (variable in utils::tail(variableList, -1)) {
-    groupingVariable <- paste(
-      groupingVariable,
+  captions <- NULL
+  for(variableName in variableList){
+    if(is.null(captions)){
+      captions <- .asLegendCaptionSubset(
+        data[, variableName],
+        metaData[[variableName]]$unit
+        )
+        next
+    }
+    captions <- paste(
+      captions, 
       .asLegendCaptionSubset(
-        data[, variable],
-        metaData[[variable]]
-      ),
-      sep = sep
+        data[, variableName],
+        metaData[[variableName]]$unit
+        ),
+        sep = sep
     )
+    }
+  
+  if (isEmpty(captions)) {
+    return(factor(""))
   }
-
-  if (length(groupingVariable) == 0) {
-    groupingVariable <- 1
-  }
-  groupingVariable <- as.factor(groupingVariable)
-  return(groupingVariable)
+  return(as.factor(captions))
 }
 
-
-.asLegendCaptionSubset <- function(data, metaData) {
-  captionSubset <- as.character(data)
-
-  # If numeric create a character as rounded numeric + unit from metadata
-  if ("numeric" %in% class(data)) {
-    captionSubset <- paste(as.character(round(data)), metaData$unit, sep = "")
+#' @title .asLegendCaptionSubset
+#' @param labels 
+#' @param unit A character added as unit to label
+#' @description
+#' Creates default legend captions subset
+#' @keywords internal
+.asLegendCaptionSubset <- function(labels, unit = NULL) {
+  # Keep ordering of labels as is if factor
+  captionLevels <- sort(unique(labels))
+  if(isOfType(labels, "factor")){
+    captionLevels <- levels(labels)
   }
-
+  captionSubset <- factor(
+    getLabelWithUnit(labels, unit = unit),
+    levels = getLabelWithUnit(captionLevels, unit = unit)
+  )
+  
   return(captionSubset)
 }
 
