@@ -111,11 +111,6 @@ plotObsVsPred <- function(data,
         values = values,
         labels = labels
       )
-
-    # Legend display
-    if (!plotConfiguration$foldLinesLegend) {
-      plotObject <- plotObject + guides(linetype = "none", shape = "none")
-    }
   }
 
 
@@ -164,15 +159,22 @@ plotObsVsPred <- function(data,
   # .addScatterLayer adds shapes legend on the lines so we need to override it
   # while doing so, it reset the legend title so it is forced to plotConfiguration$legend$title$text.
   # Drawing area is also extendend and linewidth is fixed to prevent confusion between lines when big
-  plotObject <-
-    plotObject +
-    guides(linetype = guide_legend(
-      title = plotConfiguration$legend$title$text,
-      override.aes = list(shape = NA,
-                          linewidth = 0.5),
-      keywidth = unit(2, "lines")
-    ))
 
+  # Legend display
+  if (!plotConfiguration$foldLinesLegend) {
+    plotObject <- plotObject + guides(linetype = "none")
+  } else {
+    plotObject <-
+      plotObject +
+      guides(linetype = guide_legend(
+        title = plotConfiguration$legend$title$text,
+        override.aes = list(
+          shape = NA,
+          linewidth = 0.5
+        ),
+        keywidth = unit(2, "lines")
+      ))
+  }
 
 
   #----- Update properties using ggplot2::scale functions -----
