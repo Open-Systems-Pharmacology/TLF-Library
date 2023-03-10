@@ -20,7 +20,7 @@ test_that("foldDistance are plotted correctly", {
   plotConfiguration <- ObsVsPredPlotConfiguration$new(
     foldLinesLegend = TRUE,
     xScale = Scaling$log, xLimits = c(0.05, 50),
-    yScale = Scaling$log, yLimits = c(0.05, 50),
+    yScale = Scaling$log, yLimits = c(0.05, 50)
   )
 
   vdiffr::expect_doppelganger(

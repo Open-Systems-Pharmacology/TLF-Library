@@ -162,12 +162,15 @@ plotObsVsPred <- function(data,
   plotObject <- .addScatterLayer(plotObject, data = mapData, mapLabels = mapLabels)
 
   # .addScatterLayer adds shapes legend on the lines so we need to override it
-  # while doing so, it reset the legend title so it is forced to plotConfiguration$legend$title$text
+  # while doing so, it reset the legend title so it is forced to plotConfiguration$legend$title$text.
+  # Drawing area is also extendend and linewidth is fixed to prevent confusion between lines when big
   plotObject <-
     plotObject +
     guides(linetype = guide_legend(
       title = plotConfiguration$legend$title$text,
-      override.aes = list(shape = NA)
+      override.aes = list(shape = NA,
+                          linewidth = 0.5),
+      keywidth = unit(2, "lines")
     ))
 
 
