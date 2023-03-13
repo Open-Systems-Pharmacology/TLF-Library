@@ -66,7 +66,7 @@ plotBoxWhisker <- function(data,
 .addBoxWhisker <- function(data, metaData, dataMapping, plotConfiguration, plotObject) {
   # Get the box plot quantiles from dataMapping
   mapData <- dataMapping$getBoxWhiskerLimits(data)
-  # Convert the mapping into characters usable by aes_string
+  # Convert the mapping into characters usable by aes
   mapLabels <- .getAesStringMapping(dataMapping)
 
   aestheticValues <- .getAestheticValuesFromConfiguration(
@@ -79,15 +79,15 @@ plotBoxWhisker <- function(data,
   plotObject <- plotObject +
     ggplot2::geom_boxplot(
       data = mapData,
-      mapping = ggplot2::aes_string(
-        x = mapLabels$x,
-        ymin = "ymin",
-        lower = "lower",
-        middle = "middle",
-        upper = "upper",
-        ymax = "ymax",
-        fill = mapLabels$fill,
-        color = mapLabels$color
+      mapping = ggplot2::aes(
+        x = .data[[mapLabels$x]],
+        ymin = .data$ymin,
+        lower = .data$lower,
+        middle = .data$middle,
+        upper = .data$upper,
+        ymax = .data$ymax,
+        fill = .data[[mapLabels$fill]],
+        color = .data[[mapLabels$color]]
       ),
       alpha = aestheticValues$alpha,
       size = aestheticValues$size,
@@ -115,7 +115,7 @@ plotBoxWhisker <- function(data,
 #' @keywords internal
 .addOutliers <- function(data, metaData, dataMapping, plotConfiguration, plotObject) {
   mapData <- dataMapping$getOutliers(data)
-  # Convert the mapping into characters usable by aes_string
+  # Convert the mapping into characters usable by aes
   mapLabels <- .getAesStringMapping(dataMapping)
 
   aestheticValues <- .getAestheticValuesFromConfiguration(
@@ -134,11 +134,11 @@ plotBoxWhisker <- function(data,
   plotObject <- plotObject +
     ggplot2::geom_point(
       data = mapData,
-      mapping = ggplot2::aes_string(
-        x = mapLabels$x,
-        y = "maxOutliers",
-        group = mapLabels$fill,
-        color = mapLabels$color
+      mapping = ggplot2::aes(
+        x = .data[[mapLabels$x]],
+        y = .data$maxOutliers,
+        group = .data[[mapLabels$fill]],
+        color = .data[[mapLabels$color]]
       ),
       size = aestheticValues$size,
       shape = aestheticValues$shape,
@@ -150,11 +150,11 @@ plotBoxWhisker <- function(data,
     ) +
     ggplot2::geom_point(
       data = mapData,
-      mapping = ggplot2::aes_string(
-        x = mapLabels$x,
-        y = "minOutliers",
-        group = mapLabels$fill,
-        color = mapLabels$color
+      mapping = ggplot2::aes(
+        x = .data[[mapLabels$x]],
+        y = .data$minOutliers,
+        group = .data[[mapLabels$fill]],
+        color = .data[[mapLabels$color]]
       ),
       size = aestheticValues$size,
       shape = aestheticValues$shape,

@@ -111,7 +111,7 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
         next
     }
     captions <- paste(
-      captions, 
+      captions,
       .asLegendCaptionSubset(
         data[, variableName],
         metaData[[variableName]]$unit
@@ -119,7 +119,7 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
         sep = sep
     )
     }
-  
+
   if (isEmpty(captions)) {
     return(factor(""))
   }
@@ -127,7 +127,7 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
 }
 
 #' @title .asLegendCaptionSubset
-#' @param labels 
+#' @param labels
 #' @param unit A character added as unit to label
 #' @description
 #' Creates default legend captions subset
@@ -142,17 +142,18 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
     getLabelWithUnit(labels, unit = unit),
     levels = getLabelWithUnit(captionLevels, unit = unit)
   )
-  
+
   return(captionSubset)
 }
 
 #' @title .getAesStringMapping
 #' @param dataMapping DataMapping class or subclass object
 #' @description
-#' Get the `dataMapping` elements and convert them into
+#' Previously: Get the `dataMapping` elements and convert them into
 #' character string usable by ggplot mapping function `aes_string`.
 #' The conversion fixes any issue of special characters by wrapping the string by ````
-#' if not already used.
+#' if not already used. Does not do this anymore because `aes()` and `.data` pronouns
+#' are used instead.
 #'
 #' `dataMapping` unmapped aesthetic elements (e.g. `color`) are associated to
 #' the dummy aesthetic variable `"defaultAes"` which allows further modification of the plot aesthetics.
@@ -178,17 +179,13 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
 
   for (geomName in geomMappings) {
     if (!is.null(dataMapping[[geomName]])) {
-      if (length(grep(pattern = "`", x = dataMapping[[geomName]])) == 0) {
-        .dataMappingLabels[[geomName]] <- paste0("`", dataMapping[[geomName]], "`")
-      }
+        .dataMappingLabels[[geomName]] <- dataMapping[[geomName]]
     }
   }
 
   for (groupName in groupMappings) {
     if (!is.null(dataMapping$groupMapping[[groupName]]$group)) {
-      if (length(grep(pattern = "`", x = dataMapping$groupMapping[[groupName]]$label)) == 0) {
-        .dataMappingLabels[[groupName]] <- paste0("`", dataMapping$groupMapping[[groupName]]$label, "`")
-      }
+        .dataMappingLabels[[groupName]] <- dataMapping$groupMapping[[groupName]]$label
     }
   }
   return(.dataMappingLabels)

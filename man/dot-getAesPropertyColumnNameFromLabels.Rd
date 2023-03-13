@@ -7,7 +7,7 @@
 .getAesPropertyColumnNameFromLabels(mapLabels, propertyNames)
 }
 \arguments{
-\item{mapLabels}{List of mapped label names passed to \code{ggplot2::aes_string}}
+\item{mapLabels}{List of mapped label names passed to \code{ggplot2::aes}}
 
 \item{propertyNames}{Names of aesthetic property (e.g. \code{"color"}, \code{"shape"}...)}
 }

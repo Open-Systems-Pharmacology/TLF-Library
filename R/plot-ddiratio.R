@@ -98,7 +98,7 @@ plotDDIRatio <- function(data,
   plotObject <- plotObject +
     ggplot2::geom_path(
       data = guestData,
-      mapping = ggplot2::aes_string(x = "x", y = "ymin"),
+      mapping = ggplot2::aes(x = .data$x, y = .data$ymin),
       na.rm = TRUE,
       color = aestheticValues$color,
       linetype = aestheticValues$linetype,
@@ -107,7 +107,7 @@ plotDDIRatio <- function(data,
     ) +
     ggplot2::geom_path(
       data = guestData,
-      mapping = ggplot2::aes_string(x = "x", y = "ymax"),
+      mapping = ggplot2::aes(x = .data$x, y = .data$ymax),
       na.rm = TRUE,
       color = aestheticValues$color,
       linetype = aestheticValues$linetype,

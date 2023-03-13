@@ -109,7 +109,7 @@ plotHistogram <- function(data = NULL,
   if (length(dataMapping$bins) > 1) {
     edges <- dataMapping$bins
   }
-  # Manage ggplot aes_string property depending on stack and frequency options
+  # Manage ggplot aes property depending on stack and frequency options
   # geom_histogram can use computed variables defined between two dots
   # see https://ggplot2.tidyverse.org/reference/geom_histogram.html for more info
   yAes <- "..count.."
@@ -136,10 +136,10 @@ plotHistogram <- function(data = NULL,
   plotObject <- plotObject +
     ggplot2::geom_histogram(
       data = mapData,
-      mapping = ggplot2::aes_string(
-        x = mapLabels$x,
+      mapping = ggplot2::aes(
+        x = .data[[mapLabels$x]],
         y = yAes,
-        fill = mapLabels$fill
+        fill = .data[[mapLabels$fill]]
       ),
       position = position,
       bins = dataMapping$bins,
@@ -166,11 +166,11 @@ plotHistogram <- function(data = NULL,
     plotObject <- plotObject +
       ggplot2::geom_line(
         data = fitData,
-        mapping = ggplot2::aes_string(
-          x = "x",
-          y = "y",
-          color = "legendLabels",
-          linetype = "legendLabels"
+        mapping = ggplot2::aes(
+          x = .data$x,
+          y = .data$y,
+          color = .data$legendLabels,
+          linetype = .data$legendLabels
         ),
         size = aestheticValues$size,
         alpha = aestheticValues$alpha

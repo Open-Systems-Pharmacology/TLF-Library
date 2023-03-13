@@ -151,12 +151,12 @@ plotTimeProfile <- function(data = NULL,
     plotObject <- plotObject +
       ggplot2::geom_ribbon(
         data = mapData,
-        mapping = ggplot2::aes_string(
-          x = mapLabels$x,
-          ymin = mapLabels$ymin,
-          ymax = mapLabels$ymax,
-          fill = mapLabels$fill,
-          group = mapLabels$linetype
+        mapping = ggplot2::aes(
+          x = .data[[mapLabels$x]],
+          ymin = .data[[mapLabels$ymin]],
+          ymax = .data[[mapLabels$ymax]],
+          fill = .data[[mapLabels$fill]],
+          group = .data[[mapLabels$linetype]]
         ),
         alpha = aestheticValues$alpha,
         na.rm = TRUE,
@@ -174,11 +174,11 @@ plotTimeProfile <- function(data = NULL,
     plotObject <- plotObject +
       ggplot2::geom_path(
         data = mapData,
-        mapping = ggplot2::aes_string(
-          x = mapLabels$x,
-          y = mapLabels$y,
-          color = mapLabels$color,
-          linetype = mapLabels$linetype
+        mapping = ggplot2::aes(
+          x =  .data[[mapLabels$x]],
+          y =  .data[[mapLabels$y]],
+          color =  .data[[mapLabels$color]],
+          linetype =  .data[[mapLabels$linetype]]
         ),
         size = aestheticValues$size,
         alpha = aestheticValues$alpha,

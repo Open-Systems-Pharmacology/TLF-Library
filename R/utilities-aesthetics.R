@@ -118,7 +118,7 @@
 
 #' @title .getAesPropertyColumnNameFromLabels
 #' @description Get the column names of the variables mapped to aesthetic properties
-#' @param mapLabels List of mapped label names passed to `ggplot2::aes_string`
+#' @param mapLabels List of mapped label names passed to `ggplot2::aes`
 #' @param propertyNames Names of aesthetic property (e.g. `"color"`, `"shape"`...)
 #' @return A list of variable names
 #' @keywords internal
@@ -177,7 +177,7 @@
 #' `"points"`, `"lines"`, `"ribbons"` or `"errorbars"`
 #' @param propertyNames Names of aesthetic property (e.g. `"color"`, `"shape"`...)
 #' @param data A data.frame with labels mapped to properties and obtained from a `DataMapping` object
-#' @param mapLabels List of mapped label names passed to `ggplot2::aes_string`
+#' @param mapLabels List of mapped label names passed to `ggplot2::aes`
 #' @return A `ggplot` object
 #' @keywords internal
 #' @import ggplot2

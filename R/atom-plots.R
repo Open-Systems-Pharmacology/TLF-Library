@@ -144,7 +144,7 @@ addScatter <- function(data = NULL,
     return(plotObject)
   }
 
-  # Get mapping and convert labels into characters usable by aes_string
+  # Get mapping and convert labels into characters usable by aes
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- .getAesStringMapping(dataMapping)
   # If no specific mapping, use default captions
@@ -156,21 +156,32 @@ addScatter <- function(data = NULL,
   plotObject <- plotObject +
     ggplot2::geom_point(
       data = mapData,
-      mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, shape = "legendLabels", color = "legendLabels", size = "legendLabels"),
+      mapping = ggplot2::aes(x =  .data[[mapLabels$x]],
+                             y = .data[[mapLabels$y]],
+                             shape = .data$legendLabels,
+                             color = .data$legendLabels,
+                             size = .data$legendLabels),
       alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$alpha, aesthetic = "alpha"),
       show.legend = TRUE,
       na.rm = TRUE
     ) +
     ggplot2::geom_path(
       data = mapData,
-      mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
+      mapping = ggplot2::aes(x = .data[[mapLabels$x]],
+                             y = .data[[mapLabels$y]],
+                             linetype = .data$legendLabels,
+                             color = .data$legendLabels,
+                             size = .data$legendLabels),
       alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$points$alpha, aesthetic = "alpha"),
       show.legend = TRUE,
       na.rm = TRUE
     ) +
     ggplot2::geom_ribbon(
       data = mapData,
-      mapping = ggplot2::aes_string(x = mapLabels$x, ymin = mapLabels$y, ymax = mapLabels$y, fill = "legendLabels"),
+      mapping = ggplot2::aes(x =.data[[mapLabels$x]],
+                             ymin = .data[[mapLabels$y]],
+                             ymax = .data[[mapLabels$y]],
+                             fill = .data$legendLabels),
       # alpha is 0 so that line can be seen in legend
       alpha = 0,
       show.legend = TRUE,
@@ -181,8 +192,8 @@ addScatter <- function(data = NULL,
   newLabels <- levels(factor(mapData$legendLabels))
   # Sample LegendType properties based Theme if not input
   try(plotObject <- .mergeLegend(plotObject,
-    newLabels = newLabels,
-    aestheticSelections = plotConfiguration$points
+                                 newLabels = newLabels,
+                                 aestheticSelections = plotConfiguration$points
   ))
   plotObject <- .updateAxes(plotObject)
   return(plotObject)
@@ -275,7 +286,7 @@ addLine <- function(data = NULL,
     return(plotObject)
   }
 
-  # Get mapping and convert labels into characters usable by aes_string
+  # Get mapping and convert labels into characters usable by aes
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- .getAesStringMapping(dataMapping)
   # If no specific mapping, use default captions
@@ -291,15 +302,18 @@ addLine <- function(data = NULL,
     plotObject <- plotObject +
       ggplot2::geom_hline(
         data = mapData,
-        mapping = ggplot2::aes_string(yintercept = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
+        mapping = ggplot2::aes(yintercept = .data[[mapLabels$y]],
+                               linetype = .data$legendLabels,
+                               color = .data$legendLabels,
+                               size = .data$legendLabels),
         alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, aesthetic = "alpha"),
         show.legend = TRUE
       ) +
       ggplot2::geom_blank(
         data = mapData,
-        mapping = ggplot2::aes_string(
-          shape = "legendLabels",
-          fill = "legendLabels"
+        mapping = ggplot2::aes(
+          shape = .data$legendLabels,
+          fill = .data$legendLabels
         ),
         # Use NA instead of TRUE to prevent having an unwanted point in the legend key
         show.legend = NA
@@ -311,15 +325,18 @@ addLine <- function(data = NULL,
     plotObject <- plotObject +
       ggplot2::geom_vline(
         data = mapData,
-        mapping = ggplot2::aes_string(xintercept = mapLabels$x, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
+        mapping = ggplot2::aes(xintercept = .data[[mapLabels$x]],
+                               linetype = .data$legendLabels,
+                               color = .data$legendLabels,
+                               size = .data$legendLabels),
         alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, aesthetic = "alpha"),
         show.legend = TRUE
       ) +
       ggplot2::geom_blank(
         data = mapData,
-        mapping = ggplot2::aes_string(
-          shape = "legendLabels",
-          fill = "legendLabels"
+        mapping = ggplot2::aes(
+          shape = .data$legendLabels,
+          fill = .data$legendLabels
         ),
         # Use NA instead of TRUE to prevent having an unwanted point in the legend key
         show.legend = NA
@@ -333,21 +350,32 @@ addLine <- function(data = NULL,
     plotObject <- plotObject +
       ggplot2::geom_point(
         data = mapData,
-        mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, shape = "legendLabels", color = "legendLabels", size = "legendLabels"),
+        mapping = ggplot2::aes(x = .data[[mapLabels$x]],
+                               y = .data[[mapLabels$y]],
+                               shape = .data$legendLabels,
+                               color = .data$legendLabels,
+                               size = .data$legendLabels),
         alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, aesthetic = "alpha"),
         show.legend = TRUE,
         na.rm = TRUE
       ) +
       ggplot2::geom_path(
         data = mapData,
-        mapping = ggplot2::aes_string(x = mapLabels$x, y = mapLabels$y, linetype = "legendLabels", color = "legendLabels", size = "legendLabels"),
+        mapping = ggplot2::aes(x = .data[[mapLabels$x]],
+                                      y = .data[[mapLabels$y]],
+                                      linetype = .data$legendLabels,
+                                      color = .data$legendLabels,
+                                      size = .data$legendLabels),
         alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$lines$alpha, aesthetic = "alpha"),
         show.legend = TRUE,
         na.rm = TRUE
       ) +
       ggplot2::geom_ribbon(
         data = mapData,
-        mapping = ggplot2::aes_string(x = mapLabels$x, ymin = mapLabels$y, ymax = mapLabels$y, fill = "legendLabels"),
+        mapping = ggplot2::aes(x = .data[[mapLabels$x]],
+                               ymin = .data[[mapLabels$y]],
+                               ymax = .data[[mapLabels$y]],
+                               fill = .data$legendLabels),
         # alpha is 0 so that line can be seen in legend
         alpha = 0,
         show.legend = TRUE,
@@ -359,8 +387,8 @@ addLine <- function(data = NULL,
   newLabels <- levels(factor(mapData$legendLabels))
   # Sample LegendType properties based Theme if not input
   try(plotObject <- .mergeLegend(plotObject,
-    newLabels = newLabels,
-    aestheticSelections = plotConfiguration$lines
+                                 newLabels = newLabels,
+                                 aestheticSelections = plotConfiguration$lines
   ))
   plotObject <- .updateAxes(plotObject)
   return(plotObject)
@@ -466,7 +494,7 @@ addRibbon <- function(data = NULL,
     return(plotObject)
   }
 
-  # Get mapping and convert labels into characters usable by aes_string
+  # Get mapping and convert labels into characters usable by aes
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- .getAesStringMapping(dataMapping)
   # If no specific mapping, use default captions
@@ -478,22 +506,25 @@ addRibbon <- function(data = NULL,
   plotObject <- plotObject +
     ggplot2::geom_ribbon(
       data = mapData,
-      mapping = ggplot2::aes_string(x = mapLabels$x, ymin = mapLabels$ymin, ymax = mapLabels$ymax, fill = "legendLabels"),
+      mapping = ggplot2::aes(x $x,
+                                    ymin = .data[[mapLabels$ymin]],
+                                    ymax = .data[[mapLabels$ymax]],
+                                    fill = .data$legendLabels),
       alpha = .getAestheticValues(n = 1, selectionKey = plotConfiguration$ribbons$alpha, position = 0, aesthetic = "alpha"),
       show.legend = TRUE,
       na.rm = TRUE
     ) +
     ggplot2::geom_blank(
       data = mapData,
-      mapping = aes_string(shape = "legendLabels", color = "legendLabels", size = "legendLabels", linetype = "legendLabels")
+      mapping = aes(shape = .data$legendLabels, color = .data$legendLabels, size = .data$legendLabels, linetype = .data$legendLabels)
     )
 
   # Prepare data for merging previous and current legend
   newLabels <- levels(factor(mapData$legendLabels))
   # Sample LegendType properties based Theme if not input
   try(plotObject <- .mergeLegend(plotObject,
-    newLabels = newLabels,
-    aestheticSelections = plotConfiguration$ribbons
+                                 newLabels = newLabels,
+                                 aestheticSelections = plotConfiguration$ribbons
   ))
   plotObject <- .updateAxes(plotObject)
   return(plotObject)
@@ -591,7 +622,7 @@ addErrorbar <- function(data = NULL,
     return(plotObject)
   }
 
-  # Get mapping and convert labels into characters usable by aes_string
+  # Get mapping and convert labels into characters usable by aes
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- .getAesStringMapping(dataMapping)
   # If no specific mapping, use default captions
@@ -606,12 +637,12 @@ addErrorbar <- function(data = NULL,
   plotObject <- plotObject +
     ggplot2::geom_linerange(
       data = mapData,
-      mapping = aes_string(
-        x = mapLabels$x,
-        ymin = mapLabels$ymin,
-        ymax = mapLabels$ymax,
-        color = mapLabels$color,
-        group = mapLabels$color
+      mapping = aes(
+        x = .data[[mapLabels$x]],
+        ymin = .data[[mapLabels$ymin]],
+        ymax = .data[[mapLabels$ymax]],
+        color = .data[[mapLabels$color]],
+        group = .data[[mapLabels$color]]
       ),
       size = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$size, position = 0, aesthetic = "size"),
       linetype = .getAestheticValues(n = 1, selectionKey = plotConfiguration$errorbars$linetype, aesthetic = "linetype"),
@@ -622,11 +653,11 @@ addErrorbar <- function(data = NULL,
     ) +
     ggplot2::geom_point(
       data = mapData,
-      mapping = aes_string(
-        x = mapLabels$x,
-        y = mapLabels$ymin,
-        color = mapLabels$color,
-        group = mapLabels$color
+      mapping = aes(
+        x = .data[[mapLabels$x]],
+        y = .data[[mapLabels$ymin]],
+        color = .data[[mapLabels$color]],
+        group = .data[[mapLabels$color]]
       ),
       size = capSize %||% tlfEnv$defaultErrorbarCapSize,
       shape = "_",
@@ -637,11 +668,11 @@ addErrorbar <- function(data = NULL,
     ) +
     ggplot2::geom_point(
       data = mapData,
-      mapping = aes_string(
-        x = mapLabels$x,
-        y = mapLabels$ymax,
-        color = mapLabels$color,
-        group = mapLabels$color
+      mapping = aes(
+        x = .data[[mapLabels$x]],
+        y = .data[[mapLabels$ymax]],
+        color = .data[[mapLabels$color]],
+        group = .data[[mapLabels$color]]
       ),
       size = capSize %||% tlfEnv$defaultErrorbarCapSize,
       shape = "_",

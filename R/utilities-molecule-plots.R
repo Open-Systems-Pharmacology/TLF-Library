@@ -2,7 +2,7 @@
 #' @description Add scatter points layer of a molecule plot
 #' @param plotObject A `ggplot` object
 #' @param data A data.frame with labels mapped to properties and obtained from a `DataMapping` object
-#' @param mapLabels List of mapped label names passed to `ggplot2::aes_string`
+#' @param mapLabels List of mapped label names passed to `ggplot2::aes`
 #' @return A `ggplot` object
 #' @keywords internal
 .addScatterLayer <- function(plotObject, data, mapLabels) {
@@ -16,11 +16,11 @@
   plotObject <- plotObject +
     ggplot2::geom_point(
       data = data,
-      mapping = ggplot2::aes_string(
-        x = mapLabels$x,
-        y = mapLabels$y,
-        color = mapLabels$color,
-        shape = mapLabels$shape
+      mapping = ggplot2::aes(
+        x = .data[[mapLabels$x]],
+        y = .data[[mapLabels$y]],
+        color = .data[[mapLabels$color]],
+        shape = .data[[mapLabels$shape]]
       ),
       size = aestheticValues$size,
       alpha = aestheticValues$alpha,
@@ -46,144 +46,144 @@
   )
 
   plotObject <- switch(direction,
-    "vertical" = plotObject +
-      ggplot2::geom_linerange(
-        data = data,
-        mapping = ggplot2::aes_string(
-          x = mapLabels$x,
-          # If lower value is negative and plot is log scaled,
-          # Upper bar will still be plotted
-          ymin = mapLabels$ymin,
-          ymax = mapLabels$y,
-          color = mapLabels$color,
-          group = mapLabels$shape
-        ),
-        size = aestheticValues$size,
-        linetype = aestheticValues$linetype,
-        alpha = aestheticValues$alpha,
-        na.rm = TRUE,
-        show.legend = FALSE
-      ) +
-      ggplot2::geom_linerange(
-        data = data,
-        mapping = ggplot2::aes_string(
-          x = mapLabels$x,
-          # If lower value is negative and plot is log scaled,
-          # Upper bar will still be plotted
-          ymin = mapLabels$y,
-          ymax = mapLabels$ymax,
-          color = mapLabels$color,
-          group = mapLabels$shape
-        ),
-        size = aestheticValues$size,
-        linetype = aestheticValues$linetype,
-        alpha = aestheticValues$alpha,
-        na.rm = TRUE,
-        show.legend = FALSE
-      ) +
-      # Add lower cap to error bar
-      # If lower value is negative and plot is log scaled,
-      # Upper bar cap will still be plotted
-      ggplot2::geom_point(
-        data = data,
-        mapping = aes_string(
-          x = mapLabels$x,
-          y = mapLabels$ymin,
-          color = mapLabels$color,
-          group = mapLabels$shape
-        ),
-        size = tlfEnv$defaultErrorbarCapSize,
-        shape = "_",
-        alpha = aestheticValues$alpha,
-        na.rm = TRUE,
-        show.legend = FALSE
-      ) +
-      # Add upper cap to error bar
-      # If lower value is negative and plot is log scaled,
-      # Upper bar cap will still be plotted
-      ggplot2::geom_point(
-        data = data,
-        mapping = aes_string(
-          x = mapLabels$x,
-          y = mapLabels$ymax,
-          color = mapLabels$color,
-          group = mapLabels$shape
-        ),
-        size = tlfEnv$defaultErrorbarCapSize,
-        shape = "_",
-        alpha = aestheticValues$alpha,
-        na.rm = TRUE,
-        show.legend = FALSE
-      ),
-    "horizontal" = plotObject +
-      ggplot2::geom_linerange(
-        data = data,
-        mapping = ggplot2::aes_string(
-          # If lower value is negative and plot is log scaled,
-          # Upper bar will still be plotted
-          xmin = mapLabels$xmin,
-          xmax = mapLabels$x,
-          y = mapLabels$y,
-          color = mapLabels$color,
-          group = mapLabels$shape
-        ),
-        size = aestheticValues$size,
-        linetype = aestheticValues$linetype,
-        alpha = aestheticValues$alpha,
-        na.rm = TRUE,
-        show.legend = FALSE
-      ) +
-      ggplot2::geom_linerange(
-        data = data,
-        mapping = ggplot2::aes_string(
-          # If lower value is negative and plot is log scaled,
-          # Upper bar will still be plotted
-          xmin = mapLabels$x,
-          xmax = mapLabels$xmax,
-          y = mapLabels$y,
-          color = mapLabels$color,
-          group = mapLabels$shape
-        ),
-        size = aestheticValues$size,
-        linetype = aestheticValues$linetype,
-        alpha = aestheticValues$alpha,
-        na.rm = TRUE,
-        show.legend = FALSE
-      ) +
-      # Add lower cap to error bar
-      # If lower value is negative and plot is log scaled,
-      # Upper bar cap will still be plotted
-      ggplot2::geom_point(
-        data = data,
-        mapping = aes_string(
-          x = mapLabels$xmin,
-          y = mapLabels$y,
-          color = mapLabels$color,
-          group = mapLabels$shape
-        ),
-        size = tlfEnv$defaultErrorbarCapSize,
-        shape = "|",
-        alpha = aestheticValues$alpha,
-        na.rm = TRUE,
-        show.legend = FALSE
-      ) +
-      # Add upper cap to error bar
-      # If lower value is negative and plot is log scaled,
-      # Upper bar cap will still be plotted
-      ggplot2::geom_point(
-        data = data,
-        mapping = aes_string(
-          x = mapLabels$xmax,
-          y = mapLabels$y,
-          color = mapLabels$color,
-          group = mapLabels$shape
-        ),
-        size = tlfEnv$defaultErrorbarCapSize,
-        shape = "|",
-        alpha = aestheticValues$alpha,
-        na.rm = TRUE,
-        show.legend = FALSE
-      )
+                       "vertical" = plotObject +
+                         ggplot2::geom_linerange(
+                           data = data,
+                           mapping = ggplot2::aes(
+                             x = .data[[mapLabels$x]],
+                             # If lower value is negative and plot is log scaled,
+                             # Upper bar will still be plotted
+                             ymin =  .data[[mapLabels$ymin]],
+                             ymax =  .data[[mapLabels$y]],
+                             color =  .data[[mapLabels$color]],
+                             group =  .data[[mapLabels$shape]]
+                           ),
+                           size = aestheticValues$size,
+                           linetype = aestheticValues$linetype,
+                           alpha = aestheticValues$alpha,
+                           na.rm = TRUE,
+                           show.legend = FALSE
+                         ) +
+                         ggplot2::geom_linerange(
+                           data = data,
+                           mapping = ggplot2::aes(
+                             x = .data[[mapLabels$x]],
+                             # If lower value is negative and plot is log scaled,
+                             # Upper bar will still be plotted
+                             ymin = .data[[mapLabels$y]],
+                             ymax = .data[[mapLabels$ymax]],
+                             color = .data[[mapLabels$color]],
+                             group = .data[[mapLabels$shape]]
+                           ),
+                           size = aestheticValues$size,
+                           linetype = aestheticValues$linetype,
+                           alpha = aestheticValues$alpha,
+                           na.rm = TRUE,
+                           show.legend = FALSE
+                         ) +
+                         # Add lower cap to error bar
+                         # If lower value is negative and plot is log scaled,
+                         # Upper bar cap will still be plotted
+                         ggplot2::geom_point(
+                           data = data,
+                           mapping = ggplot2::aes(
+                             x = .data[[mapLabels$x]],
+                             y = .data[[mapLabels$ymin]],
+                             color = .data[[mapLabels$color]],
+                             group = .data[[mapLabels$shape]]
+                           ),
+                           size = tlfEnv$defaultErrorbarCapSize,
+                           shape = "_",
+                           alpha = aestheticValues$alpha,
+                           na.rm = TRUE,
+                           show.legend = FALSE
+                         ) +
+                         # Add upper cap to error bar
+                         # If lower value is negative and plot is log scaled,
+                         # Upper bar cap will still be plotted
+                         ggplot2::geom_point(
+                           data = data,
+                           mapping = ggplot2::aes(
+                             x = .data[[mapLabels$x]],
+                             y = .data[[mapLabels$ymax]],
+                             color = .data[[mapLabels$color]],
+                             group = .data[[mapLabels$shape]]
+                           ),
+                           size = tlfEnv$defaultErrorbarCapSize,
+                           shape = "_",
+                           alpha = aestheticValues$alpha,
+                           na.rm = TRUE,
+                           show.legend = FALSE
+                         ),
+                       "horizontal" = plotObject +
+                         ggplot2::geom_linerange(
+                           data = data,
+                           mapping = ggplot2::aes(
+                             # If lower value is negative and plot is log scaled,
+                             # Upper bar will still be plotted
+                             xmin = .data[[mapLabels$xmin]],
+                             xmax = .data[[mapLabels$x]],
+                             y = .data[[mapLabels$y]],
+                             color = .data[[mapLabels$color]],
+                             group = .data[[mapLabels$shape]]
+                           ),
+                           size = aestheticValues$size,
+                           linetype = aestheticValues$linetype,
+                           alpha = aestheticValues$alpha,
+                           na.rm = TRUE,
+                           show.legend = FALSE
+                         ) +
+                         ggplot2::geom_linerange(
+                           data = data,
+                           mapping = ggplot2::aes(
+                             # If lower value is negative and plot is log scaled,
+                             # Upper bar will still be plotted
+                             xmin = .data[[mapLabels$x]],
+                             xmax = .data[[mapLabels$xmax]],
+                             y = .data[[mapLabels$y]],
+                             color = .data[[mapLabels$color]],
+                             group = .data[[mapLabels$shape]]
+                           ),
+                           size = aestheticValues$size,
+                           linetype = aestheticValues$linetype,
+                           alpha = aestheticValues$alpha,
+                           na.rm = TRUE,
+                           show.legend = FALSE
+                         ) +
+                         # Add lower cap to error bar
+                         # If lower value is negative and plot is log scaled,
+                         # Upper bar cap will still be plotted
+                         ggplot2::geom_point(
+                           data = data,
+                           mapping = ggplot2::aes(
+                             x = .data[[mapLabels$xmin]],
+                             y = .data[[mapLabels$y]],
+                             color = .data[[mapLabels$color]],
+                             group = .data[[mapLabels$shape]]
+                           ),
+                           size = tlfEnv$defaultErrorbarCapSize,
+                           shape = "|",
+                           alpha = aestheticValues$alpha,
+                           na.rm = TRUE,
+                           show.legend = FALSE
+                         ) +
+                         # Add upper cap to error bar
+                         # If lower value is negative and plot is log scaled,
+                         # Upper bar cap will still be plotted
+                         ggplot2::geom_point(
+                           data = data,
+                           mapping = ggplot2::aes(
+                             x = .data[[mapLabels$xmax]],
+                             y = .data[[mapLabels$y]],
+                             color = .data[[mapLabels$color]],
+                             group = .data[[mapLabels$shape]]
+                           ),
+                           size = tlfEnv$defaultErrorbarCapSize,
+                           shape = "|",
+                           alpha = aestheticValues$alpha,
+                           na.rm = TRUE,
+                           show.legend = FALSE
+                         )
   )
   return(plotObject)
 }
@@ -209,36 +209,36 @@
   )
 
   plotObject <- plotObject + switch(type,
-    "horizontal" = ggplot2::geom_hline(
-      yintercept = value,
-      color = aestheticValues$color,
-      linetype = aestheticValues$linetype,
-      alpha = aestheticValues$alpha,
-      size = aestheticValues$size
-    ),
-    "vertical" = ggplot2::geom_vline(
-      xintercept = value,
-      color = aestheticValues$color,
-      linetype = aestheticValues$linetype,
-      alpha = aestheticValues$alpha,
-      size = aestheticValues$size
-    ),
-    "diagonal" = ggplot2::geom_abline(
-      slope = 1,
-      intercept = value,
-      color = aestheticValues$color,
-      linetype = aestheticValues$linetype,
-      alpha = aestheticValues$alpha,
-      size = aestheticValues$size
-    ),
-    "ddiHorizontal" = ggplot2::geom_abline(
-      slope = 0,
-      intercept = value,
-      color = aestheticValues$color,
-      linetype = aestheticValues$linetype,
-      alpha = aestheticValues$alpha,
-      size = aestheticValues$size
-    )
+                                    "horizontal" = ggplot2::geom_hline(
+                                      yintercept = value,
+                                      color = aestheticValues$color,
+                                      linetype = aestheticValues$linetype,
+                                      alpha = aestheticValues$alpha,
+                                      size = aestheticValues$size
+                                    ),
+                                    "vertical" = ggplot2::geom_vline(
+                                      xintercept = value,
+                                      color = aestheticValues$color,
+                                      linetype = aestheticValues$linetype,
+                                      alpha = aestheticValues$alpha,
+                                      size = aestheticValues$size
+                                    ),
+                                    "diagonal" = ggplot2::geom_abline(
+                                      slope = 1,
+                                      intercept = value,
+                                      color = aestheticValues$color,
+                                      linetype = aestheticValues$linetype,
+                                      alpha = aestheticValues$alpha,
+                                      size = aestheticValues$size
+                                    ),
+                                    "ddiHorizontal" = ggplot2::geom_abline(
+                                      slope = 0,
+                                      intercept = value,
+                                      color = aestheticValues$color,
+                                      linetype = aestheticValues$linetype,
+                                      alpha = aestheticValues$alpha,
+                                      size = aestheticValues$size
+                                    )
   )
   return(plotObject)
 }
@@ -264,12 +264,12 @@ getDualAxisPlot <- function(leftPlotObject, rightPlotObject){
   leftScale <- ggplot2::layer_scales(leftPlotObject)
   rightScale <- ggplot2::layer_scales(rightPlotObject)
   mergeXRange <- range(leftScale$x$range$range, rightScale$x$range$range)
-  
+
   leftPlotObject <- setXAxis(leftPlotObject, limits = mergeXRange)
   rightPlotObject <- setXAxis(rightPlotObject, limits = mergeXRange)
-  
+
   # Transformed right plot to be compatible with left plot
-  rightPlotObject <- rightPlotObject + 
+  rightPlotObject <- rightPlotObject +
     ggplot2::theme(
       # Update right axis properties
       axis.text.y.right = rightPlotObject$plotConfiguration$y2Axis$font$createPlotFont(),
@@ -278,8 +278,8 @@ getDualAxisPlot <- function(leftPlotObject, rightPlotObject){
       panel.grid.major.y = rightPlotObject$plotConfiguration$background$y2Grid$createPlotElement(),
       panel.grid.minor.y = rightPlotObject$plotConfiguration$background$y2Grid$createPlotElement(
         size = as.numeric(rightPlotObject$plotConfiguration$background$y2Grid$size) / 2
-        ),
-      # Remove all other background properties 
+      ),
+      # Remove all other background properties
       plot.background = ggplot2::element_blank(),
       panel.background = ggplot2::element_blank(),
       axis.line.x = ggplot2::element_blank(),
@@ -288,23 +288,23 @@ getDualAxisPlot <- function(leftPlotObject, rightPlotObject){
       panel.grid.minor.x = ggplot2::element_blank()
     )
   rightPlotObject <- setPlotLabels(
-    rightPlotObject, 
+    rightPlotObject,
     ylabel = rightPlotObject$plotConfiguration$labels$y2label
-    )
+  )
   rightPlotObject <- setY2Axis(rightPlotObject)
   leftPlotObject <- setYAxis(leftPlotObject)
-  
+
   alignedPlots <- cowplot::align_plots(
-    leftPlotObject, 
-    rightPlotObject, 
-    align = "hv", 
+    leftPlotObject,
+    rightPlotObject,
+    align = "hv",
     axis = "tblr"
   )
-  
-  mergedPlotObject <- cowplot::ggdraw(alignedPlots[[1]]) + 
+
+  mergedPlotObject <- cowplot::ggdraw(alignedPlots[[1]]) +
     cowplot::draw_plot(alignedPlots[[2]])
   # In case of additional updates, clone plotConfiguration
   mergedPlotObject$plotConfiguration <- leftPlotObject$plotConfiguration$clone(deep = TRUE)
-  
+
   return(mergedPlotObject)
 }

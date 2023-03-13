@@ -74,11 +74,11 @@ plotCumulativeTimeProfile <- function(data = NULL,
 
   plotObject <- plotObject + ggplot2::geom_area(
     data = mapData,
-    mapping = ggplot2::aes_string(
-      x = mapLabels$x,
-      y = mapLabels$y,
-      fill = mapLabels$fill,
-      color = mapLabels$color
+    mapping = ggplot2::aes(
+      x = .data[[mapLabels$x]],
+      y = .data[[mapLabels$y]],
+      fill = .data[[mapLabels$fill]],
+      color = .data[[mapLabels$color]]
     ),
     alpha = aestheticValues$alpha,
     size = aestheticValues$size,
