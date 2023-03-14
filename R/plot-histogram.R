@@ -112,18 +112,30 @@ plotHistogram <- function(data = NULL,
   # Manage ggplot aes property depending on stack and frequency options
   # geom_histogram can use computed variables defined between two dots
   # see https://ggplot2.tidyverse.org/reference/geom_histogram.html for more info
-  yAes <- "..count.."
+  mapping <- ggplot2::aes(
+    x = .data[[mapLabels$x]],
+    y = after_stat(count),
+    fill = .data[[mapLabels$fill]]
+  )
 
   if (dataMapping$frequency) {
     # If histogram bars are not stacked, calculate frequency within each data groups
     # Since there is no direct computed variable
     # ncount variable is scaled by binwidth*dnorm(0) to get an area of ~1
-    yAes <- paste0("..ncount..*max(..width..)*", stats::dnorm(0))
+    mapping <- ggplot2::aes(
+      x = .data[[mapLabels$x]],
+      y = after_stat(ncount * max(width) * dnorm(0)),
+      fill = .data[[mapLabels$fill]]
+    )
     if (dataMapping$stack) {
       # If histogram bars are stacked,
       # Calculate overall frequency as count per bin / total
       # This results in same histogram shapes no matter the data groups
-      yAes <- "..count../sum(..count..)"
+      mapping <- ggplot2::aes(
+        x = .data[[mapLabels$x]],
+        y = after_stat(coun / sum(count)),
+        fill = .data[[mapLabels$fill]]
+      )
     }
   }
 
@@ -136,11 +148,7 @@ plotHistogram <- function(data = NULL,
   plotObject <- plotObject +
     ggplot2::geom_histogram(
       data = mapData,
-      mapping = ggplot2::aes(
-        x = .data[[mapLabels$x]],
-        y = yAes,
-        fill = .data[[mapLabels$fill]]
-      ),
+      mapping = mapping,
       position = position,
       bins = dataMapping$bins,
       binwidth = dataMapping$binwidth,
