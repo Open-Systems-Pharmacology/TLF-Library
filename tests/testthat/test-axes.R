@@ -16,7 +16,7 @@ test_that("isLogTicksIncludedInLimits checks work as expected", {
 
 
 test_that("A plot with log ticks do not crash when isLogTicksIncludedInLimits is false", {
-  testPlot <- addScatter(x=c(31,32),y=c(31,32))
+  testPlot <- addLine(x=c(31,32),y=c(31,32))
   expect_silent(print(setXAxis(testPlot, scale = Scaling$log)))
   expect_silent(print(setYAxis(testPlot, scale = Scaling$log)))
   expect_silent(print(setXAxis(testPlot, scale = Scaling$ln)))
