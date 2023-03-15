@@ -5,7 +5,7 @@
 \alias{Shapes}
 \title{Shapes}
 \format{
-An object of class \code{list} of length 60.
+An object of class \code{list} of length 40.
 }
 \usage{
 Shapes
@@ -22,20 +22,30 @@ Depending on the packages used for displaying/exporting figures,
 some of the shapes may not appear.
 }
 \examples{
-# Plot some available shapes in enum Shapes
+# Use ggplot2 to plot and label shapes
+shapesData <- data.frame(
+x = (seq_along(Shapes)-1) \%\% 6,
+y = floor((seq_along(Shapes)-1)/6),
+shape = factor(names(Shapes), levels = names(Shapes))
+)
+ggplot2::ggplot(data = shapesData, ggplot2::aes(x, y)) + 
+ggplot2::theme_void() +
+# Define size and color of shapes
+ggplot2::geom_point(ggplot2::aes(shape = shape), size = 8, color = "red") +
+# Add shape names from enum below the displayed shape
+ggplot2::geom_text(ggplot2::aes(label = shape), nudge_y = -0.3, size = 3) + 
+# Use scale to display the actual shape
+ggplot2::scale_shape_manual(values = as.character(unlist(Shapes))) +
+# Remove the legend as the shape name is labelled below the shape
+ggplot2::guides(shape="none")
+
+# Perform a scatter plot with blue pentagons as shape
 addScatter(
- # Leverage smart mapping by providing 
- # x, y and shape as data.frame variable names
-data = data.frame(
-x = rep(1, 12),
-y = 12:1,
-shape = factor(
-names(Shapes)[1:12], 
-levels = names(Shapes)[1:12]
-)),
-shape = unlist(Shapes[1:12]),
-size = 3,
-color = "black"
+x = 1:10,
+y = rlnorm(10),
+shape = Shapes$pentagon,
+color = "blue",
+size = 3
 )
 
 }

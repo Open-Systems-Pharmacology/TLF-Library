@@ -108,7 +108,7 @@ PlotAnnotationTextSize <- enum(
     "plotGridSubtitleSize" = 12,
     "plotGridCaptionSize" = 10,
     "plotGridTagSize" = 8,
-
+    
     # annotations for individual plots
     "plotTitleSize" = 12,
     "plotSubtitleSize" = 10,
@@ -185,19 +185,19 @@ ColorMaps <- list(
   grays = paste("gray", seq(0, 100, 10), sep = ""),
   prism = c("#FF0000", "#FF7F00", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#8F00FF"),
   blot = c("blue", "magenta", "cyan", "green", "yellow", "red"),
-  temperature = c("#262A76", "#234990", "#2F8AC3", "#26B0D2", "#FFC1CB", "#EB5590", "#AE3535", "#8E1F20"),
+  temperature = c("#262A76", "#234990", "#2F8AC3", "#26B0D2", "#FFC1CB", "#EB559", "#AE3535", "8E1F20"),
   ospDefault = c(
     "#5050FFFF", "#CE3D32FF", "#749B58FF", "#F0E685FF",
-    "#466983FF", "#BA6338FF", "#5DB1DDFF", "#802268FF", "#6BD76BFF",
-    "#D595A7FF", "#924822FF", "#837B8DFF", "#C75127FF", "#D58F5CFF",
-    "#7A65A5FF", "#E4AF69FF", "#3B1B53FF", "#CDDEB7FF", "#612A79FF",
-    "#AE1F63FF", "#E7C76FFF", "#5A655EFF", "#CC9900FF", "#99CC00FF",
-    "#A9A9A9FF", "#CC9900FF", "#99CC00FF", "#33CC00FF", "#00CC33FF",
-    "#00CC99FF", "#0099CCFF", "#0A47FFFF", "#4775FFFF", "#FFC20AFF",
-    "#FFD147FF", "#990033FF", "#991A00FF", "#996600FF", "#809900FF",
-    "#339900FF", "#00991AFF", "#009966FF", "#008099FF", "#003399FF",
-    "#1A0099FF", "#660099FF", "#990080FF", "#D60047FF", "#FF1463FF",
-    "#00D68FFF", "#14FFB1FF"
+               "#466983FF", "#BA6338FF", "#5DB1DDFF", "#802268FF", "#6BD76BFF",
+               "#D595A7FF", "#924822FF", "#837B8DFF", "#C75127FF", "#D58F5CFF",
+               "#7A65A5FF", "#E4AF69FF", "#3B1B53FF", "#CDDEB7FF", "#612A79FF",
+               "#AE1F63FF", "#E7C76FFF", "#5A655EFF", "#CC9900FF", "#99CC00FF",
+               "#A9A9A9FF", "#CC9900FF", "#99CC00FF", "#33CC00FF", "#00CC33FF",
+               "#00CC99FF", "#0099CCFF", "#0A47FFFF", "#4775FFFF", "#FFC20AFF",
+               "#FFD147FF", "#990033FF", "#991A00FF", "#996600FF", "#809900FF",
+               "#339900FF", "#00991AFF", "#009966FF", "#008099FF", "#003399FF",
+               "#1A0099FF", "#660099FF", "#990080FF", "#D60047FF", "#FF1463FF",
+               "#00D68FFF", "#14FFB1FF"
   )
 )
 
@@ -280,21 +280,31 @@ AestheticProperties <- enum(c(
 #' @import ospsuite.utils
 #' @family enum helpers
 #' @examples 
-#' # Plot available linetypes in enum Linetypes
+#' 
+#' # Use ggplot2 to plot and label Linetypes
+#' linesData <- data.frame(
+#' x = 0,
+#' y = seq_along(Linetypes),
+#' linetype = factor(names(Linetypes), levels = names(Linetypes))
+#' )
+#' 
+#' ggplot2::ggplot(data = linesData) + 
+#' ggplot2::theme_void() +
+#' ggplot2::geom_hline(ggplot2::aes(yintercept = y, linetype = linetype)) +
+#' # Add linetype names from enum below the displayed linetype
+#' ggplot2::geom_text(ggplot2::aes(x = x, y = y, label = linetype), nudge_y = -0.2, size = 4) + 
+#' # Use scale to display the actual linetype
+#' ggplot2::scale_linetype_manual(values = as.character(unlist(Linetypes))) +
+#' # Remove the legend as the linetype name is labelled below the linetype
+#' ggplot2::guides(linetype = "none")
+#' 
+#' # Perform a line plot with blue long dashes as linetype
 #' addLine(
-#'  # Leverage smart mapping by providing 
-#'  # x, y and linetype as data.frame variable names
-#' data = data.frame(
-#' x = rep(1:2, each = length(Linetypes)),
-#' y = rep(length(Linetypes):1, 2),
-#' linetype = rep(factor(
-#' names(tlf::Linetypes), 
-#' levels = names(tlf::Linetypes)
-#' ), 2)
-#' ),
-#' linetype = unlist(Linetypes),
-#' size = 1,
-#' color = "black"
+#' x = 1:10,
+#' y = rlnorm(10),
+#' linetype = Linetypes$longdash,
+#' color = "blue",
+#' size = 1
 #' )
 #' 
 Linetypes <- enum(c(
@@ -321,90 +331,76 @@ Linetypes <- enum(c(
 #' @import ospsuite.utils
 #' @family enum helpers
 #' @examples 
-#' # Plot some available shapes in enum Shapes
+#' # Use ggplot2 to plot and label shapes
+#' shapesData <- data.frame(
+#' x = (seq_along(Shapes)-1) %% 6,
+#' y = floor((seq_along(Shapes)-1)/6),
+#' shape = factor(names(Shapes), levels = names(Shapes))
+#' )
+#' ggplot2::ggplot(data = shapesData, ggplot2::aes(x, y)) + 
+#' ggplot2::theme_void() +
+#' # Define size and color of shapes
+#' ggplot2::geom_point(ggplot2::aes(shape = shape), size = 8, color = "red") +
+#' # Add shape names from enum below the displayed shape
+#' ggplot2::geom_text(ggplot2::aes(label = shape), nudge_y = -0.3, size = 3) + 
+#' # Use scale to display the actual shape
+#' ggplot2::scale_shape_manual(values = as.character(unlist(Shapes))) +
+#' # Remove the legend as the shape name is labelled below the shape
+#' ggplot2::guides(shape="none")
+#' 
+#' # Perform a scatter plot with blue pentagons as shape
 #' addScatter(
-#'  # Leverage smart mapping by providing 
-#'  # x, y and shape as data.frame variable names
-#' data = data.frame(
-#' x = rep(1, 12),
-#' y = 12:1,
-#' shape = factor(
-#' names(Shapes)[1:12], 
-#' levels = names(Shapes)[1:12]
-#' )),
-#' shape = unlist(Shapes[1:12]),
-#' size = 3,
-#' color = "black"
+#' x = 1:10,
+#' y = rlnorm(10),
+#' shape = Shapes$pentagon,
+#' color = "blue",
+#' size = 3
 #' )
 #' 
 Shapes <- list(
   # Usual symbols
   "circle" = "\u2b24",
-  "square" = "\u2bc0",
-  # Diamond does not seem to be printed
+  "circleOpen" = "\ud83d\udf85",
   "diamond" = "\u2bc1",
-  "triangle" = "\u2bc5",
-  "triangleDown" = "\u2bc6",
-  "triangleLeft" = "\u2bc7",
-  "triangleRight" = "\u2bc8",
-  "star" = "\u2605",
+  "diamondOpen" = "\ud83d\udf54",
+  "triangle" = "\u25b2",
+  "triangleOpen" = "\ud83d\udf02",
+  "square" =  "\u25a0",
+  "squareOpen" = "\u25a1",
+  "invertedTriangle" = "\u25bc",
+  "invertedTriangleOpen" = "\ud83d\udf04",
+  "cross" = "\ud83d\udfad",
+  "thinCross" = "\ud83d\udfa9",
+  "plus" = "\ud83d\udfa6",
+  "thinPlus" = "\ud83d\udfa2",
+  "asterisk" = "\ud83d\udfbc",
+  # Weird ggplot2 bug, 
+  # the symbol does not show up for a handful of size
+  "star" = "\ud83d\udfca",
+  "starOpen" = "\u2606",  
   "pentagon" = "\u2b1f",
-  "pentagonDown" = "\u2bc2",
+  "pentagonOpen" = "\u2b20",
   "hexagon" = "\u2b22",
-  "octagon" = "\u2bc3",
-  # Hollow versions
-  "hollowCircle" = "\u3007",
-  "hollowSquare" = "\u25fb",
-  "hollowDiamond" = "\u2b26",
-  "hollowTriangle" = "\U0001f702",
-  "hollowTriangleDown" = "\U0001f704",
-  "hollowTriangleLeft" = "\U0001f894",
-  "hollowTriangleRight" = "\U0001f896",
-  "hollowStar" = "\u2606",
-  "hollowPentagon" = "\u2b20",
-  "hollowHexagon" = "\u2b21",
-  # No unicode exists for "hollowOctagon"
-  # Glyphs / some were fond in utf-16 characters
-  "thinCross" = "\u2a2f",
-  "thinPlus" = "\U0001f7a2",
-  "cross" = "\U0001f7ad",
-  "plus" = "\U0001f7a6",
-  "asterisk" = "\u2055",
-  "target" = "\u2316",
-  "dot" = "\u2022",
-  "bullseye" = "\u233e",
-  "fisheye" = "\u25c9",
-  "squareFisheye" = "\u25a3",
-  "diamondFisheye" = "\u25c8",
-  # Cards
-  "cardsDiamond" = "\u2666",
-  "cardsHeart" = "\u2665",
-  "cardsSpade" = "\u2660",
-  "cardsClover" = "\u2663",
-  "cardsHollowDiamond" = "\u2662",
-  "cardsHollowHeart" = "\u2661",
-  "cardsHollowSpade" = "\u2664",
-  "cardsHollowClover" = "\u2667",
+  "hexagonOpen" = "\u2b21",
   # Emojis
-  "skull" = "\u2620",
-  "hazard" = "\u2622",
   "male" = "\u2642",
   "female" = "\u2640",
-  "sun" = "\u2600",
-  "cloud" = "\u2601",
-  "smiley" = "\u263a",
-  "musicKey" = "\u266a",
-  "hollowFlag" = "\u2690",
-  "mouseFace" = "\U0001f42d",
-  "catFace" = "\U0001f431",
-  "carrot" = "\U0001f955",
-  "car" = "\U0001f693",
-  "pill" = "\U0001f48a",
-  # Arrows
-  "arrowLeft" = "\u2190",
-  "arrowRight" = "\u2192",
-  "arrowUp" = "\u2191",
-  "arrowDown" = "\u2193",
+  "man" = "\ud83d\udeb9",
+  "woman" = "\ud83d\udeba",
+  "baby" = "\ud83d\udebc",
+  "mouse" = "\ud83d\udc01",
+  "cat" = "\ud83d\udc08",
+  "rat" = "\ud83d\udc00",
+  "rabbit" = "\ud83d\udc07",
+  "dog" = "\ud83d\udc15",
+  "pig" = "\ud83d\udc16",
+  "sheep" = "\ud83d\udc11",
+  "cow" = "\ud83d\udc04",
+  "monkey" = "\ud83d\udc12",
+  "human" = "\ud83e\uddcd",
+  "pill" = "\ud83d\udc8a",
+  "syringe" = "\ud83d\udc89",
+  "hazard" = "\u2622",
   # No shape displayed
   "blank" = " "
 )
