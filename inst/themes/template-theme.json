@@ -142,14 +142,27 @@
       "#B4009E"
     ],
     "shape": [
-      "square",
-      "dot",
       "circle",
+      "circleOpen",
       "diamond",
-      "star",
-      "plus",
+      "diamondOpen",
+      "triangle",
+      "triangleOpen",
+      "square",
+      "squareOpen",
+      "invertedTriangle",
+      "invertedTriangleOpen",
       "cross",
-      "triangle"
+      "thinCross",
+      "plus",
+      "thinPlus",
+      "asterisk",
+      "star",
+      "starOpen",
+      "pentagon",
+      "pentagonOpen",
+      "hexagon",
+      "hexagonOpen"
     ],
     "linetype": [
       "solid",
@@ -329,7 +342,7 @@
       "points": {
         "color": "#111111",
         "fill": "NA",
-        "shape": "dot",
+        "shape": "circle",
         "linetype": "blank",
         "size": 2,
         "alpha": 1
