@@ -141,14 +141,27 @@
       "#B4009E"
     ],
     "shape": [
-      "square",
-      "dot",
       "circle",
+      "circleOpen",
       "diamond",
-      "star",
-      "plus",
+      "diamondOpen",
+      "triangle",
+      "triangleOpen",
+      "square",
+      "squareOpen",
+      "invertedTriangle",
+      "invertedTriangleOpen",
       "cross",
-      "triangle"
+      "thinCross",
+      "plus",
+      "thinPlus",
+      "asterisk",
+      "star",
+      "starOpen",
+      "pentagon",
+      "pentagonOpen",
+      "hexagon",
+      "hexagonOpen"
     ],
     "linetype": [
       "solid",
@@ -175,7 +188,7 @@
     "addScatter": {
       "color": "next",
       "fill": "NA",
-      "shape": "dot",
+      "shape": "circle",
       "linetype": "blank",
       "size": 2,
       "alpha": 1
@@ -208,7 +221,7 @@
       "points": {
         "color": "reset",
         "fill": "NA",
-        "shape": "dot",
+        "shape": "circle",
         "linetype": "blank",
         "size": 2,
         "alpha": 1
@@ -234,7 +247,7 @@
       "points": {
         "color": "reset",
         "fill": "NA",
-        "shape": "dot",
+        "shape": "circle",
         "linetype": "blank",
         "size": 2,
         "alpha": 1
@@ -294,7 +307,7 @@
       "points": {
         "color": "reset",
         "fill": "NA",
-        "shape": "dot",
+        "shape": "circle",
         "linetype": "blank",
         "size": 2,
         "alpha": 1
@@ -320,7 +333,7 @@
       "points": {
         "color": "black",
         "fill": "NA",
-        "shape": "dot",
+        "shape": "circle",
         "linetype": "blank",
         "size": 1,
         "alpha": 1

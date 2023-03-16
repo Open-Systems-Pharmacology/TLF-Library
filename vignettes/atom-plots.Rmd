@@ -183,9 +183,9 @@ addScatter(
   x = cosData$time,
   y = cosData$cos,
   color = "firebrick",
-  shape = Shapes$cardsHeart,
+  shape = Shapes$triangleOpen,
   size = 3,
-  caption = "heart"
+  caption = "open triangle"
 )
 ```
 
@@ -197,9 +197,9 @@ scatterPlot <- addScatter(
   x = cosData$time,
   y = cosData$cos,
   color = "firebrick",
-  shape = Shapes$cardsHeart,
+  shape = Shapes$triangleOpen,
   size = 3,
-  caption = "heart",
+  caption = "open triangle",
   plotConfiguration = overwriteConfiguration
 )
 
@@ -209,9 +209,9 @@ addScatter(
   x = cosData$time,
   y = cosData$cos + 2,
   color = "black",
-  shape = Shapes$cardsSpade,
+  shape = Shapes$invertedTriangle,
   size = 3,
-  caption = "spade",
+  caption = "inverted triangle",
   plotObject = scatterPlot
 )
 ```
@@ -262,9 +262,9 @@ scatterPlot <- addScatter(
   x = cosData$time,
   y = cosData$cos,
   color = "firebrick",
-  shape = Shapes$cardsHeart,
+  shape = Shapes$diamond,
   size = 3,
-  caption = "heart",
+  caption = "diamond",
   plotConfiguration = overwriteConfiguration
 )
 
@@ -379,9 +379,9 @@ addScatter(
   x = cosData$time,
   y = cosData$cos,
   color = "firebrick",
-  shape = Shapes$cardsHeart,
+  shape = Shapes$diamond,
   size = 3,
-  caption = "heart",
+  caption = "diamond",
   plotObject = errorPlot
 )
 ```
