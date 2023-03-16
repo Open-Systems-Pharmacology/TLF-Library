@@ -226,10 +226,17 @@
     "diagonal" = ggplot2::geom_abline(
       slope = 1,
       intercept = value,
-      color = aestheticValues$color,
       linetype = aestheticValues$linetype,
+      color = aestheticValues$color,
       alpha = aestheticValues$alpha,
       size = aestheticValues$size
+    ),
+    "obsvspredDiagonal" = ggplot2::geom_abline(
+      aes_(slope = 1, intercept = value, linetype = as.character(position)),
+      color = aestheticValues$color,
+      alpha = aestheticValues$alpha,
+      size = aestheticValues$size,
+      key_glyph = plotObject$plotConfiguration$getKeyGlyph()
     ),
     "ddiHorizontal" = ggplot2::geom_abline(
       slope = 0,
@@ -249,13 +256,13 @@
 #' @param rightPlotObject A `ggplot` object with right y-axis
 #' @return A `ggplot` object with dual y-axis
 #' @export
-getDualAxisPlot <- function(leftPlotObject, rightPlotObject){
+getDualAxisPlot <- function(leftPlotObject, rightPlotObject) {
   stopifnot(requireNamespace("cowplot", quietly = TRUE))
   # Only one legend shall be kept to prevent text not aligned and on top of plot axes text
   # For most cases, right plot legend is kept as is while left plot legend is removed
   # If left side legend, left plot legend is kept as is while right plot legend is removed
   legendPosition <- getLegendPosition(leftPlotObject)
-  if(isIncluded(legendPosition, LegendPositions$outsideLeft)){
+  if (isIncluded(legendPosition, LegendPositions$outsideLeft)) {
     rightPlotObject <- setLegendPosition(rightPlotObject, position = LegendPositions$none)
   } else {
     leftPlotObject <- setLegendPosition(leftPlotObject, position = LegendPositions$none)
@@ -264,12 +271,12 @@ getDualAxisPlot <- function(leftPlotObject, rightPlotObject){
   leftScale <- ggplot2::layer_scales(leftPlotObject)
   rightScale <- ggplot2::layer_scales(rightPlotObject)
   mergeXRange <- range(leftScale$x$range$range, rightScale$x$range$range)
-  
+
   leftPlotObject <- setXAxis(leftPlotObject, limits = mergeXRange)
   rightPlotObject <- setXAxis(rightPlotObject, limits = mergeXRange)
-  
+
   # Transformed right plot to be compatible with left plot
-  rightPlotObject <- rightPlotObject + 
+  rightPlotObject <- rightPlotObject +
     ggplot2::theme(
       # Update right axis properties
       axis.text.y.right = rightPlotObject$plotConfiguration$y2Axis$font$createPlotFont(),
@@ -278,8 +285,8 @@ getDualAxisPlot <- function(leftPlotObject, rightPlotObject){
       panel.grid.major.y = rightPlotObject$plotConfiguration$background$y2Grid$createPlotElement(),
       panel.grid.minor.y = rightPlotObject$plotConfiguration$background$y2Grid$createPlotElement(
         size = as.numeric(rightPlotObject$plotConfiguration$background$y2Grid$size) / 2
-        ),
-      # Remove all other background properties 
+      ),
+      # Remove all other background properties
       plot.background = ggplot2::element_blank(),
       panel.background = ggplot2::element_blank(),
       axis.line.x = ggplot2::element_blank(),
@@ -288,23 +295,23 @@ getDualAxisPlot <- function(leftPlotObject, rightPlotObject){
       panel.grid.minor.x = ggplot2::element_blank()
     )
   rightPlotObject <- setPlotLabels(
-    rightPlotObject, 
+    rightPlotObject,
     ylabel = rightPlotObject$plotConfiguration$labels$y2label
-    )
+  )
   rightPlotObject <- setY2Axis(rightPlotObject)
   leftPlotObject <- setYAxis(leftPlotObject)
-  
+
   alignedPlots <- cowplot::align_plots(
-    leftPlotObject, 
-    rightPlotObject, 
-    align = "hv", 
+    leftPlotObject,
+    rightPlotObject,
+    align = "hv",
     axis = "tblr"
   )
-  
-  mergedPlotObject <- cowplot::ggdraw(alignedPlots[[1]]) + 
+
+  mergedPlotObject <- cowplot::ggdraw(alignedPlots[[1]]) +
     cowplot::draw_plot(alignedPlots[[2]])
   # In case of additional updates, clone plotConfiguration
   mergedPlotObject$plotConfiguration <- leftPlotObject$plotConfiguration$clone(deep = TRUE)
-  
+
   return(mergedPlotObject)
 }

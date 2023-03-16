@@ -37,7 +37,26 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
   "ObsVsPredPlotConfiguration",
   inherit = PlotConfiguration,
   public = list(
-    defaultSymmetricAxes = TRUE
+    defaultSymmetricAxes = TRUE,
+    foldLinesLegend = NULL,
+    foldLinesLegendDiagonal = NULL,
+
+    #' @description Create a new `ObsVsPredPlotConfiguration` object
+    #' @param colorPalette color palette property from `ggplot2`
+    #' @param ... parameters inherited from `PlotConfiguration`
+    #' @return A new `CumulativeTimeProfilePlotConfiguration` object
+    initialize = function(foldLinesLegend = FALSE, foldLinesLegendDiagonal = FALSE, legendPosition = "insideTopLeft", ...) {
+      super$initialize(legendPosition = legendPosition, ...)
+      self$foldLinesLegend <- foldLinesLegend
+      self$foldLinesLegendDiagonal <- foldLinesLegendDiagonal
+    },
+    getKeyGlyph = function() {
+      if (self$foldLinesLegendDiagonal) {
+        return("abline")
+      } else {
+        return("path")
+      }
+    }
   )
 )
 

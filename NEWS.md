@@ -15,9 +15,12 @@
 
 * New helpers for creating symmetric plots are available (#350)
 
+
 ## Minor improvements and bug fixes   
 
 * Minor ticks can be displayed
+
+* Legend entries for fold distance lines can be plotted in `plotObsVsPred()`(#359)
 
 # tlf 1.4.87
 
