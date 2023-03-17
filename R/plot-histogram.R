@@ -133,7 +133,7 @@ plotHistogram <- function(data = NULL,
       # This results in same histogram shapes no matter the data groups
       mapping <- ggplot2::aes(
         x = .data[[mapLabels$x]],
-        y = after_stat(coun / sum(count)),
+        y = after_stat(count / sum(count)),
         fill = .data[[mapLabels$fill]]
       )
     }
