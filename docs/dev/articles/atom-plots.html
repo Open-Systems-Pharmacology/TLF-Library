@@ -27,7 +27,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">tlf</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.4.0</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.5.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -327,9 +327,9 @@ points. Note that multiple captions can be provided if
 <span>  x <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">time</span>,</span>
 <span>  y <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">cos</span>,</span>
 <span>  color <span class="op">=</span> <span class="st">"firebrick"</span>,</span>
-<span>  shape <span class="op">=</span> <span class="va">Shapes</span><span class="op">$</span><span class="va">cardsHeart</span>,</span>
+<span>  shape <span class="op">=</span> <span class="va">Shapes</span><span class="op">$</span><span class="va">triangleOpen</span>,</span>
 <span>  size <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  caption <span class="op">=</span> <span class="st">"heart"</span></span>
+<span>  caption <span class="op">=</span> <span class="st">"open triangle"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="atom-plots_files/figure-html/addScatter%20xy%20with%20optional%20properties-1.png" width="100%" style="display: block; margin: auto;"></p>
 <p>If the input argument <code>plotObject</code> is used, then the
@@ -340,9 +340,9 @@ scatter layer is added on top of the input plot and will use the
 <span>  x <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">time</span>,</span>
 <span>  y <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">cos</span>,</span>
 <span>  color <span class="op">=</span> <span class="st">"firebrick"</span>,</span>
-<span>  shape <span class="op">=</span> <span class="va">Shapes</span><span class="op">$</span><span class="va">cardsHeart</span>,</span>
+<span>  shape <span class="op">=</span> <span class="va">Shapes</span><span class="op">$</span><span class="va">triangleOpen</span>,</span>
 <span>  size <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  caption <span class="op">=</span> <span class="st">"heart"</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">"open triangle"</span>,</span>
 <span>  plotConfiguration <span class="op">=</span> <span class="va">overwriteConfiguration</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -354,9 +354,9 @@ scatter layer is added on top of the input plot and will use the
 <span>  x <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">time</span>,</span>
 <span>  y <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">cos</span> <span class="op">+</span> <span class="fl">2</span>,</span>
 <span>  color <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span>  shape <span class="op">=</span> <span class="va">Shapes</span><span class="op">$</span><span class="va">cardsSpade</span>,</span>
+<span>  shape <span class="op">=</span> <span class="va">Shapes</span><span class="op">$</span><span class="va">invertedTriangle</span>,</span>
 <span>  size <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  caption <span class="op">=</span> <span class="st">"spade"</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">"inverted triangle"</span>,</span>
 <span>  plotObject <span class="op">=</span> <span class="va">scatterPlot</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="atom-plots_files/figure-html/addScatter%20with%20plotObject-2.png" width="100%" style="display: block; margin: auto;"></p>
@@ -404,9 +404,9 @@ also be combined:</p>
 <span>  x <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">time</span>,</span>
 <span>  y <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">cos</span>,</span>
 <span>  color <span class="op">=</span> <span class="st">"firebrick"</span>,</span>
-<span>  shape <span class="op">=</span> <span class="va">Shapes</span><span class="op">$</span><span class="va">cardsHeart</span>,</span>
+<span>  shape <span class="op">=</span> <span class="va">Shapes</span><span class="op">$</span><span class="va">diamond</span>,</span>
 <span>  size <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  caption <span class="op">=</span> <span class="st">"heart"</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">"diamond"</span>,</span>
 <span>  plotConfiguration <span class="op">=</span> <span class="va">overwriteConfiguration</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -530,9 +530,9 @@ their error bars.</p>
 <span>  x <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">time</span>,</span>
 <span>  y <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">cos</span>,</span>
 <span>  color <span class="op">=</span> <span class="st">"firebrick"</span>,</span>
-<span>  shape <span class="op">=</span> <span class="va">Shapes</span><span class="op">$</span><span class="va">cardsHeart</span>,</span>
+<span>  shape <span class="op">=</span> <span class="va">Shapes</span><span class="op">$</span><span class="va">diamond</span>,</span>
 <span>  size <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  caption <span class="op">=</span> <span class="st">"heart"</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">"diamond"</span>,</span>
 <span>  plotObject <span class="op">=</span> <span class="va">errorPlot</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="atom-plots_files/figure-html/addErrorbar%20and%20Scatter-2.png" width="100%" style="display: block; margin: auto;"></p>

@@ -12,7 +12,7 @@ the data and metaData of variableList variables from data."><meta name="robots" 
     
     <a class="navbar-brand me-2" href="../index.html">tlf</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.4.0</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.5.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,12 @@ the <code>data</code> and <code>metaData</code> of <code>variableList</code> var
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getDefaultCaptions</span><span class="op">(</span><span class="va">data</span>, <span class="va">metaData</span>, variableList <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getDefaultCaptions</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  metaData <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  variableList <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>,</span>
+<span>  sep <span class="op">=</span> <span class="st">"-"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -102,9 +107,9 @@ the <code>data</code> and <code>metaData</code> of <code>variableList</code> var
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Get captions using every variable of data</span></span></span>
 <span class="r-in"><span><span class="fu">getDefaultCaptions</span><span class="op">(</span><span class="va">data</span>, <span class="va">metaData</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] Caucasian-Male-50mg-Midazolam    Asian-Male-100mg-Midazolam      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3] Caucasian-Female-100mg-Midazolam Asian-Female-50mg-Midazolam     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Levels: Asian-Female-50mg-Midazolam ... Caucasian-Male-50mg-Midazolam</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] Caucasian-Male-50 [mg]-Midazolam    Asian-Male-100 [mg]-Midazolam      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] Caucasian-Female-100 [mg]-Midazolam Asian-Female-50 [mg]-Midazolam     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Levels: Asian-Female-50 [mg]-Midazolam ... Caucasian-Male-50 [mg]-Midazolam</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Get captions using specific variables of data</span></span></span>
 <span class="r-in"><span><span class="fu">getDefaultCaptions</span><span class="op">(</span><span class="va">data</span>, <span class="va">metaData</span>, variableList <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Gender"</span>, <span class="st">"Population"</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -113,9 +118,9 @@ the <code>data</code> and <code>metaData</code> of <code>variableList</code> var
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Get captions separating variables witha space (character " ")</span></span></span>
 <span class="r-in"><span><span class="fu">getDefaultCaptions</span><span class="op">(</span><span class="va">data</span>, <span class="va">metaData</span>, sep <span class="op">=</span> <span class="st">" "</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] Caucasian Male 50mg Midazolam    Asian Male 100mg Midazolam      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3] Caucasian Female 100mg Midazolam Asian Female 50mg Midazolam     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Levels: Asian Female 50mg Midazolam ... Caucasian Male 50mg Midazolam</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] Caucasian Male 50 [mg] Midazolam    Asian Male 100 [mg] Midazolam      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] Caucasian Female 100 [mg] Midazolam Asian Female 50 [mg] Midazolam     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Levels: Asian Female 50 [mg] Midazolam ... Caucasian Male 50 [mg] Midazolam</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

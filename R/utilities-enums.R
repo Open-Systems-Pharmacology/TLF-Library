@@ -108,7 +108,7 @@ PlotAnnotationTextSize <- enum(
     "plotGridSubtitleSize" = 12,
     "plotGridCaptionSize" = 10,
     "plotGridTagSize" = 8,
-
+    
     # annotations for individual plots
     "plotTitleSize" = 12,
     "plotSubtitleSize" = 10,
@@ -188,16 +188,16 @@ ColorMaps <- list(
   temperature = c("#262A76", "#234990", "#2F8AC3", "#26B0D2", "#FFC1CB", "#EB559", "#AE3535", "8E1F20"),
   ospDefault = c(
     "#5050FFFF", "#CE3D32FF", "#749B58FF", "#F0E685FF",
-    "#466983FF", "#BA6338FF", "#5DB1DDFF", "#802268FF", "#6BD76BFF",
-    "#D595A7FF", "#924822FF", "#837B8DFF", "#C75127FF", "#D58F5CFF",
-    "#7A65A5FF", "#E4AF69FF", "#3B1B53FF", "#CDDEB7FF", "#612A79FF",
-    "#AE1F63FF", "#E7C76FFF", "#5A655EFF", "#CC9900FF", "#99CC00FF",
-    "#A9A9A9FF", "#CC9900FF", "#99CC00FF", "#33CC00FF", "#00CC33FF",
-    "#00CC99FF", "#0099CCFF", "#0A47FFFF", "#4775FFFF", "#FFC20AFF",
-    "#FFD147FF", "#990033FF", "#991A00FF", "#996600FF", "#809900FF",
-    "#339900FF", "#00991AFF", "#009966FF", "#008099FF", "#003399FF",
-    "#1A0099FF", "#660099FF", "#990080FF", "#D60047FF", "#FF1463FF",
-    "#00D68FFF", "#14FFB1FF"
+               "#466983FF", "#BA6338FF", "#5DB1DDFF", "#802268FF", "#6BD76BFF",
+               "#D595A7FF", "#924822FF", "#837B8DFF", "#C75127FF", "#D58F5CFF",
+               "#7A65A5FF", "#E4AF69FF", "#3B1B53FF", "#CDDEB7FF", "#612A79FF",
+               "#AE1F63FF", "#E7C76FFF", "#5A655EFF", "#CC9900FF", "#99CC00FF",
+               "#A9A9A9FF", "#CC9900FF", "#99CC00FF", "#33CC00FF", "#00CC33FF",
+               "#00CC99FF", "#0099CCFF", "#0A47FFFF", "#4775FFFF", "#FFC20AFF",
+               "#FFD147FF", "#990033FF", "#991A00FF", "#996600FF", "#809900FF",
+               "#339900FF", "#00991AFF", "#009966FF", "#008099FF", "#003399FF",
+               "#1A0099FF", "#660099FF", "#990080FF", "#D60047FF", "#FF1463FF",
+               "#00D68FFF", "#14FFB1FF"
   )
 )
 
@@ -279,6 +279,34 @@ AestheticProperties <- enum(c(
 #' @export
 #' @import ospsuite.utils
 #' @family enum helpers
+#' @examples 
+#' 
+#' # Use ggplot2 to plot and label Linetypes
+#' linesData <- data.frame(
+#' x = 0,
+#' y = seq_along(Linetypes),
+#' linetype = factor(names(Linetypes), levels = names(Linetypes))
+#' )
+#' 
+#' ggplot2::ggplot(data = linesData) + 
+#' ggplot2::theme_void() +
+#' ggplot2::geom_hline(ggplot2::aes(yintercept = y, linetype = linetype)) +
+#' # Add linetype names from enum below the displayed linetype
+#' ggplot2::geom_text(ggplot2::aes(x = x, y = y, label = linetype), nudge_y = -0.2, size = 4) + 
+#' # Use scale to display the actual linetype
+#' ggplot2::scale_linetype_manual(values = as.character(unlist(Linetypes))) +
+#' # Remove the legend as the linetype name is labelled below the linetype
+#' ggplot2::guides(linetype = "none")
+#' 
+#' # Perform a line plot with blue long dashes as linetype
+#' addLine(
+#' x = 1:10,
+#' y = rlnorm(10),
+#' linetype = Linetypes$longdash,
+#' color = "blue",
+#' size = 1
+#' )
+#' 
 Linetypes <- enum(c(
   "solid",
   "longdash",
@@ -290,50 +318,89 @@ Linetypes <- enum(c(
 ))
 
 #' @title Shapes
-#' @description List of some `ggplot2` shapes
+#' @description List of some `ggplot2` shapes.
+#' All the shapes of this enum correspond to one character value 
+#' due to compatibility issues when providing shape names 
+#' as described in the articles below.
+#' https://stackoverflow.com/questions/67859447/error-when-combining-unicode-shape-with-legal-ggplot2-shapes
+#' https://ggplot2.tidyverse.org/articles/ggplot2-specs.html#point
+#' 
+#' Depending on the packages used for displaying/exporting figures,
+#' some of the shapes may not appear.
 #' @export
 #' @import ospsuite.utils
 #' @family enum helpers
+#' @examples 
+#' # Use ggplot2 to plot and label shapes
+#' shapesData <- data.frame(
+#' x = (seq_along(Shapes)-1) %% 6,
+#' y = floor((seq_along(Shapes)-1)/6),
+#' shape = factor(names(Shapes), levels = names(Shapes))
+#' )
+#' ggplot2::ggplot(data = shapesData, ggplot2::aes(x, y)) + 
+#' ggplot2::theme_void() +
+#' # Define size and color of shapes
+#' ggplot2::geom_point(ggplot2::aes(shape = shape), size = 8, color = "red") +
+#' # Add shape names from enum below the displayed shape
+#' ggplot2::geom_text(ggplot2::aes(label = shape), nudge_y = -0.3, size = 3) + 
+#' # Use scale to display the actual shape
+#' ggplot2::scale_shape_manual(values = as.character(unlist(Shapes))) +
+#' # Remove the legend as the shape name is labelled below the shape
+#' ggplot2::guides(shape="none")
+#' 
+#' # Perform a scatter plot with blue pentagons as shape
+#' addScatter(
+#' x = 1:10,
+#' y = rlnorm(10),
+#' shape = Shapes$pentagon,
+#' color = "blue",
+#' size = 3
+#' )
+#' 
 Shapes <- list(
-  # Regular shapes
-  "circle" = "circle",
-  "square" = "square",
-  "triangle" = "triangle",
-  "triangleDown" = "triangle down filled",
-  "cross" = "cross",
-  "plus" = "plus",
-  "asterisk" = "asterisk",
-  "hollowCircle" = "circle open",
-  "hollowSquare" = "square open",
-  "hollowDiamond" = "diamond open",
-  "hollowTriangle" = "triangle open",
-  "hollowTriangleDown" = "triangle down open",
-  "diamond" = "diamond",
-  "dot" = "bullet",
-  # Shapes translated from unicode characters
-  "pentagram" = "\u2605",
-  "hollowPentagram" = "\u2606",
-  "cardsDiamond" = "\u2666",
-  "cardsHeart" = "\u2665",
-  "cardsSpade" = "\u2660",
-  "cardsClover" = "\u2663",
-  "cardsHollowDiamond" = "\u2662",
-  "cardsHollowHeart" = "\u2661",
-  "cardsHollowSpade" = "\u2664",
-  "cardsHollowClover" = "\u2667",
-  "skull" = "\u2620",
-  "hazard" = "\u2622",
+  # Usual symbols
+  "circle" = "\u2b24",
+  "circleOpen" = "\ud83d\udf85",
+  "diamond" = "\u2bc1",
+  "diamondOpen" = "\ud83d\udf54",
+  "triangle" = "\u25b2",
+  "triangleOpen" = "\ud83d\udf02",
+  "square" =  "\u25a0",
+  "squareOpen" = "\u25a1",
+  "invertedTriangle" = "\u25bc",
+  "invertedTriangleOpen" = "\ud83d\udf04",
+  "cross" = "\ud83d\udfad",
+  "thinCross" = "\ud83d\udfa9",
+  "plus" = "\ud83d\udfa6",
+  "thinPlus" = "\ud83d\udfa2",
+  "asterisk" = "\ud83d\udfbc",
+  # Weird ggplot2 bug, 
+  # the symbol does not show up for a handful of size
+  "star" = "\ud83d\udfca",
+  "starOpen" = "\u2606",  
+  "pentagon" = "\u2b1f",
+  "pentagonOpen" = "\u2b20",
+  "hexagon" = "\u2b22",
+  "hexagonOpen" = "\u2b21",
+  # Emojis
   "male" = "\u2642",
   "female" = "\u2640",
-  "sun" = "\u2600",
-  "cloud" = "\u2601",
-  "smiley" = "\u263a",
-  "musicKey" = "\u266a",
-  "hollowFlag" = "\u263a",
-  "arrowLeft" = "\u2190",
-  "arrowRight" = "\u2192",
-  "arrowUp" = "\u2191",
-  "arrowDown" = "\u2193",
+  "man" = "\ud83d\udeb9",
+  "woman" = "\ud83d\udeba",
+  "baby" = "\ud83d\udebc",
+  "mouse" = "\ud83d\udc01",
+  "cat" = "\ud83d\udc08",
+  "rat" = "\ud83d\udc00",
+  "rabbit" = "\ud83d\udc07",
+  "dog" = "\ud83d\udc15",
+  "pig" = "\ud83d\udc16",
+  "sheep" = "\ud83d\udc11",
+  "cow" = "\ud83d\udc04",
+  "monkey" = "\ud83d\udc12",
+  "human" = "\ud83e\uddcd",
+  "pill" = "\ud83d\udc8a",
+  "syringe" = "\ud83d\udc89",
+  "hazard" = "\u2622",
   # No shape displayed
   "blank" = " "
 )

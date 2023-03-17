@@ -1,4 +1,3 @@
-
 .asPlotShape <- function(shapes) {
   ggplotShapes <- NULL
   for (shape in shapes) {

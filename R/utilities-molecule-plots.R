@@ -209,36 +209,43 @@
   )
 
   plotObject <- plotObject + switch(type,
-                                    "horizontal" = ggplot2::geom_hline(
-                                      yintercept = value,
-                                      color = aestheticValues$color,
-                                      linetype = aestheticValues$linetype,
-                                      alpha = aestheticValues$alpha,
-                                      size = aestheticValues$size
-                                    ),
-                                    "vertical" = ggplot2::geom_vline(
-                                      xintercept = value,
-                                      color = aestheticValues$color,
-                                      linetype = aestheticValues$linetype,
-                                      alpha = aestheticValues$alpha,
-                                      size = aestheticValues$size
-                                    ),
-                                    "diagonal" = ggplot2::geom_abline(
-                                      slope = 1,
-                                      intercept = value,
-                                      color = aestheticValues$color,
-                                      linetype = aestheticValues$linetype,
-                                      alpha = aestheticValues$alpha,
-                                      size = aestheticValues$size
-                                    ),
-                                    "ddiHorizontal" = ggplot2::geom_abline(
-                                      slope = 0,
-                                      intercept = value,
-                                      color = aestheticValues$color,
-                                      linetype = aestheticValues$linetype,
-                                      alpha = aestheticValues$alpha,
-                                      size = aestheticValues$size
-                                    )
+    "horizontal" = ggplot2::geom_hline(
+      yintercept = value,
+      color = aestheticValues$color,
+      linetype = aestheticValues$linetype,
+      alpha = aestheticValues$alpha,
+      size = aestheticValues$size
+    ),
+    "vertical" = ggplot2::geom_vline(
+      xintercept = value,
+      color = aestheticValues$color,
+      linetype = aestheticValues$linetype,
+      alpha = aestheticValues$alpha,
+      size = aestheticValues$size
+    ),
+    "diagonal" = ggplot2::geom_abline(
+      slope = 1,
+      intercept = value,
+      linetype = aestheticValues$linetype,
+      color = aestheticValues$color,
+      alpha = aestheticValues$alpha,
+      size = aestheticValues$size
+    ),
+    "obsvspredDiagonal" = ggplot2::geom_abline(
+      aes_(slope = 1, intercept = value, linetype = as.character(position)),
+      color = aestheticValues$color,
+      alpha = aestheticValues$alpha,
+      size = aestheticValues$size,
+      key_glyph = plotObject$plotConfiguration$getKeyGlyph()
+    ),
+    "ddiHorizontal" = ggplot2::geom_abline(
+      slope = 0,
+      intercept = value,
+      color = aestheticValues$color,
+      linetype = aestheticValues$linetype,
+      alpha = aestheticValues$alpha,
+      size = aestheticValues$size
+    )
   )
   return(plotObject)
 }
@@ -249,13 +256,13 @@
 #' @param rightPlotObject A `ggplot` object with right y-axis
 #' @return A `ggplot` object with dual y-axis
 #' @export
-getDualAxisPlot <- function(leftPlotObject, rightPlotObject){
+getDualAxisPlot <- function(leftPlotObject, rightPlotObject) {
   stopifnot(requireNamespace("cowplot", quietly = TRUE))
   # Only one legend shall be kept to prevent text not aligned and on top of plot axes text
   # For most cases, right plot legend is kept as is while left plot legend is removed
   # If left side legend, left plot legend is kept as is while right plot legend is removed
   legendPosition <- getLegendPosition(leftPlotObject)
-  if(isIncluded(legendPosition, LegendPositions$outsideLeft)){
+  if (isIncluded(legendPosition, LegendPositions$outsideLeft)) {
     rightPlotObject <- setLegendPosition(rightPlotObject, position = LegendPositions$none)
   } else {
     leftPlotObject <- setLegendPosition(leftPlotObject, position = LegendPositions$none)
