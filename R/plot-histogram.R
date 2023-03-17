@@ -42,6 +42,10 @@
 #' # Produce histogram of fitted normally distributed data
 #' plotHistogram(x = rlnorm(100), distribution = "normal")
 #'
+#'
+#' # Produce histogram of fitted normally distributed data
+#' plotHistogram(x = rlnorm(100), distribution = "normal", frequency = TRUE, stack = TRUE)
+#'
 plotHistogram <- function(data = NULL,
                           metaData = NULL,
                           x = NULL,
