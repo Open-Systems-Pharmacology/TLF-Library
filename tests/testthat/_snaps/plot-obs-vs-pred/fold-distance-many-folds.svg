@@ -122,11 +122,11 @@
 <text x='331.47' y='262.79' text-anchor='middle' style='font-size: 0.94px; fill: #0078D7; font-family: sans;' textLength='0.25px' lengthAdjust='spacingAndGlyphs'>|</text>
 <text x='393.84' y='233.54' text-anchor='middle' style='font-size: 0.94px; fill: #0078D7; font-family: sans;' textLength='0.25px' lengthAdjust='spacingAndGlyphs'>|</text>
 <text x='430.32' y='212.79' text-anchor='middle' style='font-size: 0.94px; fill: #0078D7; font-family: sans;' textLength='0.25px' lengthAdjust='spacingAndGlyphs'>|</text>
-<polygon points='328.99,198.95 333.96,198.95 333.96,193.97 328.99,193.97 ' style='stroke-width: 0.71; stroke: none; fill: #0078D7;' />
-<polygon points='391.35,431.10 396.33,431.10 396.33,426.12 391.35,426.12 ' style='stroke-width: 0.71; stroke: none; fill: #0078D7;' />
-<polygon points='328.99,265.03 333.96,265.03 333.96,260.06 328.99,260.06 ' style='stroke-width: 0.71; stroke: none; fill: #0078D7;' />
-<polygon points='391.35,235.79 396.33,235.79 396.33,230.81 391.35,230.81 ' style='stroke-width: 0.71; stroke: none; fill: #0078D7;' />
-<polygon points='427.83,215.04 432.81,215.04 432.81,210.06 427.83,210.06 ' style='stroke-width: 0.71; stroke: none; fill: #0078D7;' />
+<text x='331.47' y='198.74' text-anchor='middle' style='font-size: 6.64px; fill: #0078D7; font-family: sans;' textLength='4.98px' lengthAdjust='spacingAndGlyphs'>⬤</text>
+<text x='393.84' y='430.90' text-anchor='middle' style='font-size: 6.64px; fill: #0078D7; font-family: sans;' textLength='4.98px' lengthAdjust='spacingAndGlyphs'>⬤</text>
+<text x='331.47' y='264.83' text-anchor='middle' style='font-size: 6.64px; fill: #0078D7; font-family: sans;' textLength='4.98px' lengthAdjust='spacingAndGlyphs'>⬤</text>
+<text x='393.84' y='235.58' text-anchor='middle' style='font-size: 6.64px; fill: #0078D7; font-family: sans;' textLength='4.98px' lengthAdjust='spacingAndGlyphs'>⬤</text>
+<text x='430.32' y='214.84' text-anchor='middle' style='font-size: 6.64px; fill: #0078D7; font-family: sans;' textLength='4.98px' lengthAdjust='spacingAndGlyphs'>⬤</text>
 <line x1='41.87' y1='553.51' x2='41.87' y2='550.67' style='stroke-width: 1.07; stroke: #333333;' />
 <line x1='61.94' y1='553.51' x2='61.94' y2='547.84' style='stroke-width: 1.07; stroke: #333333;' />
 <line x1='78.35' y1='553.51' x2='78.35' y2='550.67' style='stroke-width: 1.07; stroke: #333333;' />
