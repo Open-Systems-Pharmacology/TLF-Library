@@ -16,6 +16,8 @@ ObservedDataMapping <- R6::R6Class(
     ymax = NULL,
     #' @field y2Axis Name of y2Axis variable to map
     y2Axis = NULL,
+    #' @field lloq mapping lloq lines
+    lloq = NULL,
 
     #' @description Create a new `ObservedDataMapping` object
     #' @param x Name of x variable to map
@@ -31,6 +33,7 @@ ObservedDataMapping <- R6::R6Class(
     #' Deprecated parameter replaced by `error`.
     #' @param mdv mapping missing dependent variable
     #' @param data data.frame to map used by `.smartMapping`
+    #' @param lloq mapping lloq lines
     #' @return A new `ObservedDataMapping` object
     initialize = function(x,
                           y,
@@ -43,20 +46,22 @@ ObservedDataMapping <- R6::R6Class(
                           error = NULL,
                           uncertainty = NULL,
                           mdv = NULL,
-                          data = NULL) {
+                          data = NULL,
+                          lloq = NULL) {
       validateIsString(uncertainty, nullAllowed = TRUE)
       validateIsString(error, nullAllowed = TRUE)
       validateIsString(ymin, nullAllowed = TRUE)
       validateIsString(ymax, nullAllowed = TRUE)
       validateIsString(mdv, nullAllowed = TRUE)
+      validateIsString(lloq, nullAllowed = TRUE)
       # .smartMapping is available in utilities-mapping.R
       smartMap <- .smartMapping(data)
       super$initialize(
         x = x %||% smartMap$x,
         y = y %||% smartMap$y,
-        color = color, 
-        shape = shape, 
-        group = group, 
+        color = color,
+        shape = shape,
+        group = group,
         data = data
         )
 
@@ -68,6 +73,7 @@ ObservedDataMapping <- R6::R6Class(
       self$ymax <- ymax %||% ifNotNull(self$error, "ymax")
       self$mdv <- mdv
       self$y2Axis <- y2Axis
+      self$lloq <- lloq
     },
 
     #' @description Check that `data` variables include map variables
@@ -80,6 +86,7 @@ ObservedDataMapping <- R6::R6Class(
       .validateMapping(self$error, data, nullAllowed = TRUE)
       .validateMapping(self$mdv, data, nullAllowed = TRUE)
       .validateMapping(self$y2Axis, data, nullAllowed = TRUE)
+      .validateMapping(self$lloq, data, nullAllowed = TRUE)
 
       # Using super method, fetches x, y and groups
       mapData <- super$checkMapData(data, metaData)
@@ -107,9 +114,13 @@ ObservedDataMapping <- R6::R6Class(
         mapData[, self$mdv] <- as.logical(data[, self$mdv])
         mapData <- mapData[!mapData[, self$mdv], ]
       }
+      # LLOQ alows to add lines on the plot and apply an alpha scale on the points
+      if (!isEmpty(self$lloq)) {
+        mapData[, self$lloq] <- data[, self$lloq]
+      }
       return(mapData)
     },
-    
+
     #' @description Assess if `data` require a dual axis plot
     #' @param data data.frame to check
     #' @return A logical
@@ -120,7 +131,7 @@ ObservedDataMapping <- R6::R6Class(
       }
       return(any(as.logical(data[, self$y2Axis]), na.rm = TRUE))
     },
-    
+
     #' @description Render NA values for all right axis data
     #' @param data A data.frame
     #' @return A data.frame to be plotted in left axis
@@ -141,7 +152,7 @@ ObservedDataMapping <- R6::R6Class(
       }
       return(data)
     },
-    
+
     #' @description Render NA values for all left axis data
     #' @param data A data.frame
     #' @return A data.frame to be plotted in right axis

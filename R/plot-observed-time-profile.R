@@ -78,7 +78,17 @@ plotObservedTimeProfile <- function(data,
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- .getAesStringMapping(dataMapping)
   #----- Build layers of molecule plot -----
-  # 1- Error bars if available
+  # 1- LLOQ lines if available
+  if (!isEmpty(dataMapping$lloq)) {
+
+    plotObject <- .addLLOQLayer(
+      plotObject,
+      data = mapData,
+      mapLabels = mapLabels
+    )
+  }
+
+  # 2- Error bars if available
   if (!any(isEmpty(dataMapping$ymin), isEmpty(dataMapping$ymax))) {
     plotObject <- .addErrorbarLayer(
       plotObject,
@@ -86,7 +96,7 @@ plotObservedTimeProfile <- function(data,
       mapLabels = mapLabels
     )
   }
-  # 2- Scatter points
+  # 3- Scatter points
   plotObject <- .addScatterLayer(
     plotObject,
     data = mapData,

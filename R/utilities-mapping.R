@@ -166,7 +166,7 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
 #' @keywords internal
 .getAesStringMapping <- function(dataMapping) {
   # Define list of mappings to check
-  geomMappings <- c("x", "y", "xmin", "xmax", "ymin", "ymax", "lower", "middle", "upper")
+  geomMappings <- c("x", "y", "xmin", "xmax", "ymin", "ymax", "lower", "middle", "upper", "lloq")
   groupMappings <- names(LegendTypes)
 
   # Initialize Labels
