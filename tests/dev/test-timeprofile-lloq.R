@@ -56,3 +56,45 @@ lloqRangeDataMapping <- TimeProfileDataMapping$new(
 lloqPlot <- plotTimeProfile(data = testData, metaData = testMetaData, dataMapping = lloqDataMapping)
 
 lloqRangePlot <- plotTimeProfile(data = testData, metaData = testMetaData, dataMapping = lloqRangeDataMapping)
+
+
+# -------------------------------------------------
+set.seed(42)
+
+obsData <- data.frame(x = rep(1:7, 2),
+                      y = c(10 *exp(-1:-7) + rnorm(7,0,.25),10 * exp(-1:-7) + rnorm(7,0,.25)),
+                      error = abs(rnorm(14, 0, 0.1)),
+                      group = c(rep("A", 7), rep("B", 7)),
+                      lloq = c(rep(0.15,7), rep(0.25, 7)))
+
+
+obsDataMapping <- ObservedDataMapping$new(
+  x = "x",
+  y = "y",
+  color = "group",
+  error = "error",
+  # lloq = "lloq"
+)
+
+simTime <- seq(1, 10, 0.1)
+simData <- data.frame(
+  x = simTime,
+  y = 10 * exp(-simTime)
+  # ymin = 8 * exp(-simTime),
+  # ymax = 12 * exp(-simTime)
+)
+
+simDataMapping <- TimeProfileDataMapping$new(
+  x = "x",
+  y = "y"
+  # ymin = "ymin",
+  # ymax = "ymax"
+)
+
+
+plotTimeProfile(
+  # data = simData, dataMapping = simDataMapping,
+  observedData = obsData, observedDataMapping = obsDataMapping
+)
+
+#_________________________________________________________________________________

@@ -111,7 +111,7 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
         next
     }
     captions <- paste(
-      captions, 
+      captions,
       .asLegendCaptionSubset(
         data[, variableName],
         metaData[[variableName]]$unit
@@ -119,7 +119,7 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
         sep = sep
     )
     }
-  
+
   if (isEmpty(captions)) {
     return(factor(""))
   }
@@ -127,7 +127,7 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
 }
 
 #' @title .asLegendCaptionSubset
-#' @param labels 
+#' @param labels
 #' @param unit A character added as unit to label
 #' @description
 #' Creates default legend captions subset
@@ -142,7 +142,7 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
     getLabelWithUnit(labels, unit = unit),
     levels = getLabelWithUnit(captionLevels, unit = unit)
   )
-  
+
   return(captionSubset)
 }
 
@@ -165,7 +165,7 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
 #' @keywords internal
 .getAesStringMapping <- function(dataMapping) {
   # Define list of mappings to check
-  geomMappings <- c("x", "y", "xmin", "xmax", "ymin", "ymax", "lower", "middle", "upper")
+  geomMappings <- c("x", "y", "xmin", "xmax", "ymin", "ymax", "lower", "middle", "upper", "lloq")
   groupMappings <- names(LegendTypes)
 
   # Initialize Labels

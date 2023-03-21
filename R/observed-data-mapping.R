@@ -33,6 +33,7 @@ ObservedDataMapping <- R6::R6Class(
     #' Deprecated parameter replaced by `error`.
     #' @param mdv mapping missing dependent variable
     #' @param data data.frame to map used by `.smartMapping`
+    #' @param lloq mapping lloq lines
     #' @return A new `ObservedDataMapping` object
     initialize = function(x,
                           y,
@@ -85,6 +86,7 @@ ObservedDataMapping <- R6::R6Class(
       .validateMapping(self$error, data, nullAllowed = TRUE)
       .validateMapping(self$mdv, data, nullAllowed = TRUE)
       .validateMapping(self$y2Axis, data, nullAllowed = TRUE)
+      .validateMapping(self$lloq, data, nullAllowed = TRUE)
 
       # Using super method, fetches x, y and groups
       mapData <- super$checkMapData(data, metaData)
@@ -114,7 +116,7 @@ ObservedDataMapping <- R6::R6Class(
       }
       # LLOQ alows to add lines on the plot and apply an alpha scale on the points
       if (!isEmpty(self$lloq)) {
-        mapData[, self$lloq] <- data[, self$y] < data[, self$lloq]
+        mapData[, self$lloq] <- data[, self$lloq]
       }
       return(mapData)
     },
