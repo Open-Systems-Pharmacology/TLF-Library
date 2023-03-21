@@ -28,7 +28,6 @@
         }
       ),
       size = aestheticValues$size,
-      alpha = aestheticValues$alpha,
       na.rm = TRUE,
       show.legend = TRUE
     ) +

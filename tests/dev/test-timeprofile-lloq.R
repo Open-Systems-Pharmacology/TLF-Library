@@ -71,9 +71,9 @@ obsData <- data.frame(x = rep(1:7, 2),
 obsDataMapping <- ObservedDataMapping$new(
   x = "x",
   y = "y",
-  color = "group",
-  error = "error",
-  # lloq = "lloq"
+  group = "group",
+  # error = "error",
+  lloq = "lloq"
 )
 
 simTime <- seq(1, 10, 0.1)
