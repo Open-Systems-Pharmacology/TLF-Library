@@ -34,7 +34,7 @@
     scale_alpha_manual(
       values = if (mapLabels$lloq != "legendLabels") {
         # ensure that no matter the alpha setting is, the computed level is between 0 and
-        c(pmax(0, pmin(1, aestheticValues$alpha - 0.618)), aestheticValues$alpha)
+        c(0.618*aestheticValues$alpha, aestheticValues$alpha)
       } else {
         aestheticValues$alpha
       },
