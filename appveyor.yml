@@ -18,6 +18,8 @@ environment:
   R_VERSION: "4.1.0"
   KEEP_VIGNETTES: true
   NOT_CRAN: true
+  PKGTYPE: "both"
+  DOWNLOAD_FILE_METHOD: "wininet"
   COVERALLS_TOKEN:
     secure: QItC20vr6rKHkiDVvsE+kHFL4GTS3bcsPw5KcWe+qipEIj1+ncKngsCoCNelNdtg
 
