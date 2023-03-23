@@ -360,15 +360,10 @@ Linetypes <- enum(c(
 Shapes <- list(
   # Usual symbols
   "circle" = "\u2b24",
-  "circleOpen" = "\ud83d\udf85",
   "diamond" = "\u2bc1",
-  "diamondOpen" = "\ud83d\udf54",
   "triangle" = "\u25b2",
-  "triangleOpen" = "\ud83d\udf02",
   "square" =  "\u25a0",
-  "squareOpen" = "\u25a1",
   "invertedTriangle" = "\u25bc",
-  "invertedTriangleOpen" = "\ud83d\udf04",
   "cross" = "\ud83d\udfad",
   "thinCross" = "\ud83d\udfa9",
   "plus" = "\ud83d\udfa6",
@@ -377,10 +372,16 @@ Shapes <- list(
   # Weird ggplot2 bug, 
   # the symbol does not show up for a handful of size
   "star" = "\ud83d\udfca",
-  "starOpen" = "\u2606",  
   "pentagon" = "\u2b1f",
-  "pentagonOpen" = "\u2b20",
   "hexagon" = "\u2b22",
+  # Open shapes
+  "circleOpen" = "\ud83d\udf85",
+  "diamondOpen" = "\ud83d\udf54",
+  "triangleOpen" = "\ud83d\udf02",
+  "squareOpen" = "\u25a1",
+  "invertedTriangleOpen" = "\ud83d\udf04",
+  "starOpen" = "\u2606",  
+  "pentagonOpen" = "\u2b20",
   "hexagonOpen" = "\u2b21",
   # Emojis
   "male" = "\u2642",
