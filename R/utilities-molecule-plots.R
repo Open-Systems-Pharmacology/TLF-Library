@@ -356,9 +356,9 @@ getDualAxisPlot <- function(leftPlotObject, rightPlotObject) {
   plotObject <- plotObject +
     ggplot2::geom_hline(
       data = data,
-      mapping = ggplot2::aes_string(
-        yintercept = mapLabels$lloq,
-        color = mapLabels$color
+      mapping = ggplot2::aes(
+        yintercept = .data[[mapLabels$lloq]],
+        color = .data[[mapLabels$color]]
       ),
       linetype = "dotted",
       size = aestheticValues$size,
