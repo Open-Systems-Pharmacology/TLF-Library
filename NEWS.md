@@ -1,3 +1,7 @@
+# tlf (development version)
+
+- Lower Limit Of Quantification (LLOQ) can be added on time-profile plots.
+
 # tlf 1.5.0
 
 ## New features
