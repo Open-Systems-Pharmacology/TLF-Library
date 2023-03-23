@@ -6,6 +6,7 @@ template:
 development:
   mode: devel
 
+
 reference:
 - title: "Atom Plots"
   desc: "Functions for creating base plots"
@@ -75,21 +76,30 @@ reference:
   contents:
   - starts_with("export")
 
-articles:
+navbar:
+  components:
+    articles:
+      text: Articles
+      menu:
+      - text: "Primary Plots"
+      - text: Atom Plots
+        href: atom-plots
+      - text: Box-Whisker Plots
+        href: box-whisker-vignette
+      - text: Histogram Plots
+        href: histogram
+      - text: PK Ratio Plots
+        href: pk-ratio-vignette
+      - text: Time Profile Plots
+        href: plot-time-profile
+      - text: ——–
+      - text: "Plot configuration"
+      - text: Introduction to PlotConfiguration objects
+        href: plot-configuration
+      - text: ——–
+      - text: "Shiny apps"
+      - text: Run Shiny App to Create Plots
+        href: plot-maker
+      - text: Run Shiny App to Create Themes
+        href: theme-maker
 
-  - title: Primary plots
-    contents:
-    - atom-plots
-    - box-whisker-vignette
-    - histogram
-    - pk-ratio-vignette
-    - plot-time-profile
-
-  - title: Plot configuration
-    contents:
-    - plot-configuration
-
-  - title: Shiny apps
-    contents:
-    - plot-maker
-    - theme-maker
