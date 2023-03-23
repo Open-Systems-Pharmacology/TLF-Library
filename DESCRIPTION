@@ -114,4 +114,4 @@ Collate:
     'utilities-molecule-plots.R'
     'utilities-theme.R'
     'utils.R'
-Remotes: Open-Systems-Pharmacology/OSPSuite.RUtils@*release
+Remotes: github::Open-Systems-Pharmacology/OSPSuite.RUtils
