@@ -344,7 +344,7 @@
         "fill": "NA",
         "shape": "circle",
         "linetype": "blank",
-        "size": 2,
+        "size": 3,
         "alpha": 1
       },
       "ribbons": {
