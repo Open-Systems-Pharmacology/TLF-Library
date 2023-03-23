@@ -32,7 +32,7 @@ Other PlotConfiguration classes:
 }
 \concept{PlotConfiguration classes}
 \section{Super class}{
-\code{tlf::PlotConfiguration} -> \code{TimeProfilePlotConfiguration}
+\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{TimeProfilePlotConfiguration}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

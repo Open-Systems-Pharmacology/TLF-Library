@@ -32,7 +32,7 @@ Other PlotConfiguration classes:
 }
 \concept{PlotConfiguration classes}
 \section{Super class}{
-\code{tlf::PlotConfiguration} -> \code{HistogramPlotConfiguration}
+\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{HistogramPlotConfiguration}
 }
 \section{Methods}{
 \subsection{Public methods}{
