@@ -18,31 +18,23 @@ The `{tlf}` package provides an object-oriented framework to create
 tables and figures, which are used by R packages in the Open Systems
 Pharmacology ecosystem:
 
--   [`{ospsuite}`](https://www.open-systems-pharmacology.org/OSPSuite-R/)
--   [`{ospsuite.reportingengine}`](https://www.open-systems-pharmacology.org/OSPSuite.ReportingEngine/)
+- [`{ospsuite}`](https://www.open-systems-pharmacology.org/OSPSuite-R/)
+- [`{ospsuite.reportingengine}`](https://www.open-systems-pharmacology.org/OSPSuite.ReportingEngine/)
 
 ## Installation
 
-You can install the development version of `{tlf}` from
-[GitHub](https://github.com/) with:
+You can install the latest release of `{tlf}` directly from Github with:
+``` r
+# install.packages("remotes")
+remotes::install_github("Open-Systems-Pharmacology/TLF-Library@*release")
+```
+
+You can install the development version of `{tlf}` from GitHub with:
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("Open-Systems-Pharmacology/TLF-Library")
 ```
-
-`{tlf}` requires following packages to be installed:
-
-From CRAN:
-
--   [ggplot2](https://cran.r-project.org/package=ggplot2/index.html)
--   [jsonlite](https://cran.r-project.org/package=jsonlite/index.html)
--   [patchwork](https://cran.r-project.org/package=patchwork/index.html)
--   [R6](https://cran.r-project.org/package=R6/index.html)
-
-Must be downloaded manually:
-
--   [ospsuite.utils](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/download/v1.3.17/ospsuite.utils_1.3.17.zip)
 
 ## Documentation
 
