@@ -123,7 +123,7 @@ plotTornado <- function(data = NULL,
       propertyNames = c("size", "alpha")
     )
     # For tornado with points, their shape will be taken from the theme properties
-    plotObject <- plotObject + ggplot2::geom_point(
+    plotObject <- plotObject + geom_tlf_point(
       data = mapData,
       mapping = ggplot2::aes_string(
         x = mapLabels$x,

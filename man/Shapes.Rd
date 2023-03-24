@@ -31,7 +31,7 @@ shape = factor(names(Shapes), levels = names(Shapes))
 ggplot2::ggplot(data = shapesData, ggplot2::aes(x, y)) + 
 ggplot2::theme_void() +
 # Define size and color of shapes
-ggplot2::geom_point(ggplot2::aes(shape = shape), size = 8, color = "red") +
+geom_tlf_point(ggplot2::aes(shape = shape), size = 8, color = "red") +
 # Add shape names from enum below the displayed shape
 ggplot2::geom_text(ggplot2::aes(label = shape), nudge_y = -0.3, size = 3) + 
 # Use scale to display the actual shape

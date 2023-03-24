@@ -99,17 +99,56 @@
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-ObsVsPredPlotConfiguration-clone"><code>ObsVsPredPlotConfiguration$clone()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="initialize"><a href="PlotConfiguration.html#method-initialize"><code>tlf::PlotConfiguration$initialize()</code></a></span></li>
-</ul></details></p><hr><a id="method-ObsVsPredPlotConfiguration-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
-<p>The objects of this class are cloneable with this method.</p><div class="section">
+<ul><li><p><a href="#method-ObsVsPredPlotConfiguration-new"><code>ObsVsPredPlotConfiguration$new()</code></a></p></li>
+<li><p><a href="#method-ObsVsPredPlotConfiguration-getKeyGlyph"><code>ObsVsPredPlotConfiguration$getKeyGlyph()</code></a></p></li>
+<li><p><a href="#method-ObsVsPredPlotConfiguration-clone"><code>ObsVsPredPlotConfiguration$clone()</code></a></p></li>
+</ul></div><p></p><hr><a id="method-ObsVsPredPlotConfiguration-new"></a><div class="section">
+<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+<p>Create a new <code>ObsVsPredPlotConfiguration</code> object</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ObsVsPredPlotConfiguration</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/ObsVsPredPlotConfiguration.html">ObsVsPredPlotConfiguration</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  foldLinesLegend <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  foldLinesLegendDiagonal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  legendPosition <span class="op">=</span> <span class="st">"insideTopLeft"</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>...</code></dt>
+<dd><p>parameters inherited from <code>PlotConfiguration</code></p></dd>
+
+
+<dt><code>colorPalette</code></dt>
+<dd><p>color palette property from <code>ggplot2</code></p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
+<p>A new <code>CumulativeTimeProfilePlotConfiguration</code> object</p>
+</div>
+
+</div><p></p><hr><a id="method-ObsVsPredPlotConfiguration-getKeyGlyph"></a><div class="section">
+<h3 id="method-getkeyglyph-">Method <code>getKeyGlyph()</code><a class="anchor" aria-label="anchor" href="#method-getkeyglyph-"></a></h3>
+
+<div class="section">
+<h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ObsVsPredPlotConfiguration</span><span class="op">$</span><span class="fu">getKeyGlyph</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+
+</div><p></p><hr><a id="method-ObsVsPredPlotConfiguration-clone"></a><div class="section">
+<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+<p>The objects of this class are cloneable with this method.</p><div class="section">
+<h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ObsVsPredPlotConfiguration</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 

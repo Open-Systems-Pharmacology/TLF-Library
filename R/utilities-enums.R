@@ -279,7 +279,7 @@ AestheticProperties <- enum(c(
 #' @export
 #' @import ospsuite.utils
 #' @family enum helpers
-#' @examples 
+#' @examples
 #' 
 #' # Use ggplot2 to plot and label Linetypes
 #' linesData <- data.frame(
@@ -340,7 +340,7 @@ Linetypes <- enum(c(
 #' ggplot2::ggplot(data = shapesData, ggplot2::aes(x, y)) + 
 #' ggplot2::theme_void() +
 #' # Define size and color of shapes
-#' ggplot2::geom_point(ggplot2::aes(shape = shape), size = 8, color = "red") +
+#' geom_tlf_point(ggplot2::aes(shape = shape), size = 8, color = "red") +
 #' # Add shape names from enum below the displayed shape
 #' ggplot2::geom_text(ggplot2::aes(label = shape), nudge_y = -0.3, size = 3) + 
 #' # Use scale to display the actual shape
@@ -359,28 +359,27 @@ Linetypes <- enum(c(
 #' 
 Shapes <- list(
   # Usual symbols
-  "circle" = "\u2b24",
-  "circleOpen" = "\ud83d\udf85",
-  "diamond" = "\u2bc1",
-  "diamondOpen" = "\ud83d\udf54",
+  "circle" = "\u25cf",
+  "diamond" = "\u25c6",
   "triangle" = "\u25b2",
-  "triangleOpen" = "\ud83d\udf02",
   "square" =  "\u25a0",
-  "squareOpen" = "\u25a1",
   "invertedTriangle" = "\u25bc",
-  "invertedTriangleOpen" = "\ud83d\udf04",
   "cross" = "\ud83d\udfad",
   "thinCross" = "\ud83d\udfa9",
   "plus" = "\ud83d\udfa6",
   "thinPlus" = "\ud83d\udfa2",
   "asterisk" = "\ud83d\udfbc",
-  # Weird ggplot2 bug, 
-  # the symbol does not show up for a handful of size
   "star" = "\ud83d\udfca",
-  "starOpen" = "\u2606",  
   "pentagon" = "\u2b1f",
-  "pentagonOpen" = "\u2b20",
   "hexagon" = "\u2b22",
+  # open shapes
+  "circleOpen" = "\ud83d\udf85",
+  "diamondOpen" = "\u25c7",
+  "triangleOpen" = "\u25b3", 
+  "squareOpen" = "\ud83d\udf90",
+  "invertedTriangleOpen" = "\u25bd",
+  "starOpen" = "\u2606",  
+  "pentagonOpen" = "\u2b20",
   "hexagonOpen" = "\u2b21",
   # Emojis
   "male" = "\u2642",
@@ -397,7 +396,7 @@ Shapes <- list(
   "sheep" = "\ud83d\udc11",
   "cow" = "\ud83d\udc04",
   "monkey" = "\ud83d\udc12",
-  "human" = "\ud83e\uddcd",
+  "human" = "\ud83d\udeb6",
   "pill" = "\ud83d\udc8a",
   "syringe" = "\ud83d\udc89",
   "hazard" = "\u2622",
