@@ -1,7 +1,7 @@
 Package: tlf
 Type: Package
 Title: TLF Library
-Version: 1.5.125.9000
+Version: 1.5.0
 Authors@R: 
     c(person(given = "Open-Systems-Pharmacology Community",
              role = "cph"),
@@ -114,4 +114,4 @@ Collate:
     'utilities-molecule-plots.R'
     'utilities-theme.R'
     'utils.R'
-Remotes: github::Open-Systems-Pharmacology/OSPSuite.RUtils
+Remotes: github::Open-Systems-Pharmacology/OSPSuite.RUtils@*release
