@@ -108,7 +108,7 @@ PlotAnnotationTextSize <- enum(
     "plotGridSubtitleSize" = 12,
     "plotGridCaptionSize" = 10,
     "plotGridTagSize" = 8,
-    
+
     # annotations for individual plots
     "plotTitleSize" = 12,
     "plotSubtitleSize" = 10,
@@ -188,16 +188,16 @@ ColorMaps <- list(
   temperature = c("#262A76", "#234990", "#2F8AC3", "#26B0D2", "#FFC1CB", "#EB559", "#AE3535", "8E1F20"),
   ospDefault = c(
     "#5050FFFF", "#CE3D32FF", "#749B58FF", "#F0E685FF",
-               "#466983FF", "#BA6338FF", "#5DB1DDFF", "#802268FF", "#6BD76BFF",
-               "#D595A7FF", "#924822FF", "#837B8DFF", "#C75127FF", "#D58F5CFF",
-               "#7A65A5FF", "#E4AF69FF", "#3B1B53FF", "#CDDEB7FF", "#612A79FF",
-               "#AE1F63FF", "#E7C76FFF", "#5A655EFF", "#CC9900FF", "#99CC00FF",
-               "#A9A9A9FF", "#CC9900FF", "#99CC00FF", "#33CC00FF", "#00CC33FF",
-               "#00CC99FF", "#0099CCFF", "#0A47FFFF", "#4775FFFF", "#FFC20AFF",
-               "#FFD147FF", "#990033FF", "#991A00FF", "#996600FF", "#809900FF",
-               "#339900FF", "#00991AFF", "#009966FF", "#008099FF", "#003399FF",
-               "#1A0099FF", "#660099FF", "#990080FF", "#D60047FF", "#FF1463FF",
-               "#00D68FFF", "#14FFB1FF"
+    "#466983FF", "#BA6338FF", "#5DB1DDFF", "#802268FF", "#6BD76BFF",
+    "#D595A7FF", "#924822FF", "#837B8DFF", "#C75127FF", "#D58F5CFF",
+    "#7A65A5FF", "#E4AF69FF", "#3B1B53FF", "#CDDEB7FF", "#612A79FF",
+    "#AE1F63FF", "#E7C76FFF", "#5A655EFF", "#CC9900FF", "#99CC00FF",
+    "#A9A9A9FF", "#CC9900FF", "#99CC00FF", "#33CC00FF", "#00CC33FF",
+    "#00CC99FF", "#0099CCFF", "#0A47FFFF", "#4775FFFF", "#FFC20AFF",
+    "#FFD147FF", "#990033FF", "#991A00FF", "#996600FF", "#809900FF",
+    "#339900FF", "#00991AFF", "#009966FF", "#008099FF", "#003399FF",
+    "#1A0099FF", "#660099FF", "#990080FF", "#D60047FF", "#FF1463FF",
+    "#00D68FFF", "#14FFB1FF"
   )
 )
 
@@ -280,33 +280,32 @@ AestheticProperties <- enum(c(
 #' @import ospsuite.utils
 #' @family enum helpers
 #' @examples
-#' 
 #' # Use ggplot2 to plot and label Linetypes
 #' linesData <- data.frame(
-#' x = 0,
-#' y = seq_along(Linetypes),
-#' linetype = factor(names(Linetypes), levels = names(Linetypes))
+#'   x = 0,
+#'   y = seq_along(Linetypes),
+#'   linetype = factor(names(Linetypes), levels = names(Linetypes))
 #' )
-#' 
-#' ggplot2::ggplot(data = linesData) + 
-#' ggplot2::theme_void() +
-#' ggplot2::geom_hline(ggplot2::aes(yintercept = y, linetype = linetype)) +
-#' # Add linetype names from enum below the displayed linetype
-#' ggplot2::geom_text(ggplot2::aes(x = x, y = y, label = linetype), nudge_y = -0.2, size = 4) + 
-#' # Use scale to display the actual linetype
-#' ggplot2::scale_linetype_manual(values = as.character(unlist(Linetypes))) +
-#' # Remove the legend as the linetype name is labelled below the linetype
-#' ggplot2::guides(linetype = "none")
-#' 
+#'
+#' ggplot2::ggplot(data = linesData) +
+#'   ggplot2::theme_void() +
+#'   ggplot2::geom_hline(ggplot2::aes(yintercept = y, linetype = linetype)) +
+#'   # Add linetype names from enum below the displayed linetype
+#'   ggplot2::geom_text(ggplot2::aes(x = x, y = y, label = linetype), nudge_y = -0.2, size = 4) +
+#'   # Use scale to display the actual linetype
+#'   ggplot2::scale_linetype_manual(values = as.character(unlist(Linetypes))) +
+#'   # Remove the legend as the linetype name is labelled below the linetype
+#'   ggplot2::guides(linetype = "none")
+#'
 #' # Perform a line plot with blue long dashes as linetype
 #' addLine(
-#' x = 1:10,
-#' y = rlnorm(10),
-#' linetype = Linetypes$longdash,
-#' color = "blue",
-#' size = 1
+#'   x = 1:10,
+#'   y = rlnorm(10),
+#'   linetype = Linetypes$longdash,
+#'   color = "blue",
+#'   size = 1
 #' )
-#' 
+#'
 Linetypes <- enum(c(
   "solid",
   "longdash",
@@ -326,12 +325,12 @@ Linetypes <- enum(c(
 #' @export
 #' @import ospsuite.utils
 #' @family enum helpers
-#' @examples 
+#' @examples
 #' # Use ggplot2 to plot and label shapes
 #' shapesData <- data.frame(
-#' x = (seq_along(Shapes)-1) %% 6,
-#' y = floor((seq_along(Shapes)-1)/6),
-#' shape = factor(names(Shapes), levels = names(Shapes))
+#'   x = (seq_along(Shapes) - 1) %% 6,
+#'   y = floor((seq_along(Shapes) - 1) / 6),
+#'   shape = factor(names(Shapes), levels = names(Shapes))
 #' )
 #' ggplot2::ggplot(data = shapesData, ggplot2::aes(x, y)) + 
 #' ggplot2::theme_void() +
@@ -346,13 +345,13 @@ Linetypes <- enum(c(
 #' 
 #' # Perform a scatter plot with blue pentagons as shape
 #' addScatter(
-#' x = 1:10,
-#' y = rlnorm(10),
-#' shape = Shapes$pentagon,
-#' color = "blue",
-#' size = 3
+#'   x = 1:10,
+#'   y = rlnorm(10),
+#'   shape = Shapes$pentagon,
+#'   color = "blue",
+#'   size = 3
 #' )
-#' 
+#'
 Shapes <- list(
   # Usual symbols
   "circle" = "\u25cf",
