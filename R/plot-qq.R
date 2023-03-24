@@ -82,7 +82,7 @@ plotQQ <- function(data = NULL,
   )
 
   plotObject <- plotObject +
-    geom_tlf_point(
+    geomTLFPoint(
       data = mapData,
       mapping = ggplot2::aes_string(
         x = DefaultDataMappingValues$qqPlot,

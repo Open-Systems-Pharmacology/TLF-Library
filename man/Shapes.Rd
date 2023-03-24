@@ -12,14 +12,9 @@ Shapes
 }
 \description{
 List of some \code{ggplot2} shapes.
-All the shapes of this enum correspond to one character value
-due to compatibility issues when providing shape names
-as described in the articles below.
-https://stackoverflow.com/questions/67859447/error-when-combining-unicode-shape-with-legal-ggplot2-shapes
-https://ggplot2.tidyverse.org/articles/ggplot2-specs.html#point
-
-Depending on the packages used for displaying/exporting figures,
-some of the shapes may not appear.
+The shapes from this enum/list are unicode characters
+corresponding to their appropriate shapes.
+Note that user-defined characters are also accepted by \code{geomTLFPoint()}
 }
 \examples{
 # Use ggplot2 to plot and label shapes
@@ -31,7 +26,7 @@ shape = factor(names(Shapes), levels = names(Shapes))
 ggplot2::ggplot(data = shapesData, ggplot2::aes(x, y)) + 
 ggplot2::theme_void() +
 # Define size and color of shapes
-geom_tlf_point(ggplot2::aes(shape = shape), size = 8, color = "red") +
+geomTLFPoint(ggplot2::aes(shape = shape), size = 8, color = "red") +
 # Add shape names from enum below the displayed shape
 ggplot2::geom_text(ggplot2::aes(label = shape), nudge_y = -0.3, size = 3) + 
 # Use scale to display the actual shape

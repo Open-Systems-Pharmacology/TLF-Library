@@ -4,7 +4,7 @@
 #' The Geom internally uses `textGrob` instead of `pointsGrob` so that fonts leverage for drawing shapes.
 #' The `grid` and `scales` packages are supposed to be required by `ggplot2`.
 #' So there should not be any issue as installing `ggplot2` should install those 2 packages.
-#' @export
+#' @keywords internal
 #'
 GeomTLFPoint <- ggplot2::ggproto(
   "GeomTLFPoint", 
@@ -46,7 +46,7 @@ GeomTLFPoint <- ggplot2::ggproto(
   }
 )
 
-#' @title geom_tlf_point
+#' @title geomTLFPoint
 #' @description 
 #' geom similar to `geom_point()` but that leverage fonts to draw its shapes
 #' @param mapping mapping from `ggplot2` package as provided by `aes()`
@@ -59,7 +59,7 @@ GeomTLFPoint <- ggplot2::ggproto(
 #' @param ... other arguments.
 #' @export
 #'
-geom_tlf_point <- function(mapping = NULL, data = NULL, stat = "identity",
+geomTLFPoint <- function(mapping = NULL, data = NULL, stat = "identity",
                               position = "identity", na.rm = FALSE, show.legend = NA,
                               inherit.aes = TRUE, ...) {
   
