@@ -280,7 +280,6 @@ AestheticProperties <- enum(c(
 #' @import ospsuite.utils
 #' @family enum helpers
 #' @examples
-#'
 #' # Use ggplot2 to plot and label Linetypes
 #' linesData <- data.frame(
 #'   x = 0,
@@ -319,14 +318,10 @@ Linetypes <- enum(c(
 
 #' @title Shapes
 #' @description List of some `ggplot2` shapes.
-#' All the shapes of this enum correspond to one character value
-#' due to compatibility issues when providing shape names
-#' as described in the articles below.
-#' https://stackoverflow.com/questions/67859447/error-when-combining-unicode-shape-with-legal-ggplot2-shapes
-#' https://ggplot2.tidyverse.org/articles/ggplot2-specs.html#point
-#'
-#' Depending on the packages used for displaying/exporting figures,
-#' some of the shapes may not appear.
+#' The shapes from this enum/list are unicode characters 
+#' corresponding to their appropriate shapes.
+#' Note that user-defined characters are also accepted by `geomTLFPoint()`
+#' 
 #' @export
 #' @import ospsuite.utils
 #' @family enum helpers
@@ -337,17 +332,17 @@ Linetypes <- enum(c(
 #'   y = floor((seq_along(Shapes) - 1) / 6),
 #'   shape = factor(names(Shapes), levels = names(Shapes))
 #' )
-#' ggplot2::ggplot(data = shapesData, ggplot2::aes(x, y)) +
-#'   ggplot2::theme_void() +
-#'   # Define size and color of shapes
-#'   ggplot2::geom_point(ggplot2::aes(shape = shape), size = 8, color = "red") +
-#'   # Add shape names from enum below the displayed shape
-#'   ggplot2::geom_text(ggplot2::aes(label = shape), nudge_y = -0.3, size = 3) +
-#'   # Use scale to display the actual shape
-#'   ggplot2::scale_shape_manual(values = as.character(unlist(Shapes))) +
-#'   # Remove the legend as the shape name is labelled below the shape
-#'   ggplot2::guides(shape = "none")
-#'
+#' ggplot2::ggplot(data = shapesData, ggplot2::aes(x, y)) + 
+#' ggplot2::theme_void() +
+#' # Define size and color of shapes
+#' geomTLFPoint(ggplot2::aes(shape = shape), size = 8, color = "red") +
+#' # Add shape names from enum below the displayed shape
+#' ggplot2::geom_text(ggplot2::aes(label = shape), nudge_y = -0.3, size = 3) + 
+#' # Use scale to display the actual shape
+#' ggplot2::scale_shape_manual(values = as.character(unlist(Shapes))) +
+#' # Remove the legend as the shape name is labelled below the shape
+#' ggplot2::guides(shape="none")
+#' 
 #' # Perform a scatter plot with blue pentagons as shape
 #' addScatter(
 #'   x = 1:10,
@@ -359,31 +354,28 @@ Linetypes <- enum(c(
 #'
 Shapes <- list(
   # Usual symbols
-  ## Plain symbols
-  "circle" = "\u2b24",
-  "diamond" = "\u2bc1",
+  "circle" = "\u25cf",
+  "diamond" = "\u25c6",
   "triangle" = "\u25b2",
-  "square" = "\u25a0",
+  "square" =  "\u25a0",
   "invertedTriangle" = "\u25bc",
   "cross" = "\ud83d\udfad",
-  "star" = "\u2605",
+  "thinCross" = "\ud83d\udfa9",
+  "plus" = "\ud83d\udfa6",
+  "thinPlus" = "\ud83d\udfa2",
+  "asterisk" = "\ud83d\udfbc",
+  "star" = "\ud83d\udfca",
   "pentagon" = "\u2b1f",
   "hexagon" = "\u2b22",
-  "plus" = "\ud83d\udfa6",
-  "asterisk" = "\ud83d\udfbc",
-  ## Open/alt symbols
+  # open shapes
   "circleOpen" = "\ud83d\udf85",
-  "diamondOpen" = "\ud83d\udf54",
-  "triangleOpen" = "\ud83d\udf02",
-  "squareOpen" = "\u25a1",
-  "invertedTriangleOpen" = "\ud83d\udf04",
-  "starOpen" = "\u2606",
+  "diamondOpen" = "\u25c7",
+  "triangleOpen" = "\u25b3", 
+  "squareOpen" = "\ud83d\udf90",
+  "invertedTriangleOpen" = "\u25bd",
+  "starOpen" = "\u2606",  
   "pentagonOpen" = "\u2b20",
   "hexagonOpen" = "\u2b21",
-  "thinCross" = "\ud83d\udfa9",
-  "thinPlus" = "\ud83d\udfa2",
-  # Weird ggplot2 bug,
-  # the symbol does not show up for a handful of size
   # Emojis
   "male" = "\u2642",
   "female" = "\u2640",
@@ -399,7 +391,7 @@ Shapes <- list(
   "sheep" = "\ud83d\udc11",
   "cow" = "\ud83d\udc04",
   "monkey" = "\ud83d\udc12",
-  "human" = "\ud83e\uddcd",
+  "human" = "\ud83d\udeb6",
   "pill" = "\ud83d\udc8a",
   "syringe" = "\ud83d\udc89",
   "hazard" = "\u2622",

@@ -132,7 +132,7 @@ plotBoxWhisker <- function(data,
   # besides, mapData includes NA instead of non-outlying data,
   # na.rm removes these points without sending warning
   plotObject <- plotObject +
-    ggplot2::geom_point(
+    geomTLFPoint(
       data = mapData,
       mapping = ggplot2::aes_string(
         x = mapLabels$x,
@@ -148,7 +148,7 @@ plotBoxWhisker <- function(data,
       na.rm = TRUE,
       position = position_dodge(width = 0.9)
     ) +
-    ggplot2::geom_point(
+    geomTLFPoint(
       data = mapData,
       mapping = ggplot2::aes_string(
         x = mapLabels$x,

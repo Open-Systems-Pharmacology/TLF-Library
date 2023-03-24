@@ -30,6 +30,7 @@ reference:
   - matches("setWatermark")
   - starts_with("update")
   - starts_with("get")
+  - matches("geomTLFPoint")
 - title: "PlotConfiguration Classes"
   desc: "Classes defining plot properties"
   contents:

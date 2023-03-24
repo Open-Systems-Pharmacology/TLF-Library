@@ -2,6 +2,8 @@ obsVsPredData <- data.frame(x = c(1, 2, 1, 2, 3), y = c(5, 0.2, 2, 3, 4))
 
 
 test_that("plotObservedVsSimulated works ", {
+  skip_if_not_installed("vdiffr")
+  skip_if(getRversion() < "4.1")
   vdiffr::expect_doppelganger(
     title = "basic",
     fig = plotObsVsPred(
@@ -16,7 +18,8 @@ test_that("plotObservedVsSimulated works ", {
 })
 
 test_that("foldDistance are plotted correctly", {
-
+  skip_if_not_installed("vdiffr")
+  skip_if(getRversion() < "4.1")
   plotConfiguration <- ObsVsPredPlotConfiguration$new(
     foldLinesLegend = TRUE,
     xScale = Scaling$log, xLimits = c(0.05, 50),
