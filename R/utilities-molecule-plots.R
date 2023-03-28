@@ -14,7 +14,7 @@
   )
 
   plotObject <- plotObject +
-    ggplot2::geom_point(
+    geomTLFPoint(
       data = data,
       mapping = ggplot2::aes(
         x = .data[[mapLabels$x]],
