@@ -238,6 +238,9 @@
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-removeInfiniteValues.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-selectFontFamily.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-setDataMapping.html</loc>
   </url>
   <url>
@@ -284,6 +287,12 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/FontFaces.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/GeomTLFPoint.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/geom_tlf_point.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/getBoxWhiskerMeasure.html</loc>
