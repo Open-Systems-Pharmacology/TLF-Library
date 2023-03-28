@@ -46,6 +46,9 @@ Suggests:
     rmarkdown,
     scales,
     shiny,
+    showtext,
+    sysfonts,
+    svglite,
     testthat (>= 3.0.3),
     vdiffr (>= 1.0.0)
 VignetteBuilder: knitr
@@ -108,9 +111,11 @@ Collate:
     'utilities-axis.R'
     'utilities-background.R'
     'utilities-export.R'
+    'utilities-ggplot.R'
     'utilities-label.R'
     'utilities-legend.R'
     'utilities-mapping.R'
     'utilities-molecule-plots.R'
     'utilities-theme.R'
     'utils.R'
+    'zzz.R'
