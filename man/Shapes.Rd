@@ -19,9 +19,9 @@ Note that user-defined characters are also accepted by \code{geomTLFPoint()}
 \examples{
 # Use ggplot2 to plot and label shapes
 shapesData <- data.frame(
-x = (seq_along(Shapes)-1) \%\% 6,
-y = floor((seq_along(Shapes)-1)/6),
-shape = factor(names(Shapes), levels = names(Shapes))
+  x = (seq_along(Shapes) - 1) \%\% 6,
+  y = floor((seq_along(Shapes) - 1) / 6),
+  shape = factor(names(Shapes), levels = names(Shapes))
 )
 ggplot2::ggplot(data = shapesData, ggplot2::aes(x, y)) + 
 ggplot2::theme_void() +
@@ -36,11 +36,11 @@ ggplot2::guides(shape="none")
 
 # Perform a scatter plot with blue pentagons as shape
 addScatter(
-x = 1:10,
-y = rlnorm(10),
-shape = Shapes$pentagon,
-color = "blue",
-size = 3
+  x = 1:10,
+  y = rlnorm(10),
+  shape = Shapes$pentagon,
+  color = "blue",
+  size = 3
 )
 
 }
