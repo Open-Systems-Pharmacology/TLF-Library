@@ -32,28 +32,61 @@ Other PlotConfiguration classes:
 }
 \concept{PlotConfiguration classes}
 \section{Super class}{
-\code{tlf::PlotConfiguration} -> \code{ObsVsPredPlotConfiguration}
+\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{ObsVsPredPlotConfiguration}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{defaultSymmetricAxes}}{Default option setting symmetric xAxis and/or yAxis limits when creating a \code{ObsVsPredPlotConfiguration} object}
+
+\item{\code{foldLinesLegend}}{Whether to draw fold lines in legend. default to FALSE.}
+
+\item{\code{foldLinesLegendDiagonal}}{Whether to draw diagonal lines in legend for fold lines. default to FALSE.}
+
+\item{\code{foldLineslegendType}}{translation of \code{foldLinesLegendDiagonal} in geom type.}
 }
 \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
+\item \href{#method-ObsVsPredPlotConfiguration-new}{\code{ObsVsPredPlotConfiguration$new()}}
 \item \href{#method-ObsVsPredPlotConfiguration-clone}{\code{ObsVsPredPlotConfiguration$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="initialize"><a href='../../tlf/html/PlotConfiguration.html#method-PlotConfiguration-initialize'><code>tlf::PlotConfiguration$initialize()</code></a></span></li>
-</ul>
-</details>
-}}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ObsVsPredPlotConfiguration-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ObsVsPredPlotConfiguration-new}{}}}
+\subsection{Method \code{new()}}{
+Create a new \code{ObsVsPredPlotConfiguration} object
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ObsVsPredPlotConfiguration$new(
+  foldLinesLegend = FALSE,
+  foldLinesLegendDiagonal = FALSE,
+  legendPosition = "insideTopLeft",
+  ...
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{foldLinesLegend}}{Whether to draw fold lines in legend. default to FALSE.}
+
+\item{\code{foldLinesLegendDiagonal}}{Whether to draw diagonal lines in legend for fold lines. default to FALSE.}
+
+\item{\code{legendPosition}}{Where to draw the legend. default to "insideTopLeft". Available values in \code{LegendPositions}}
+
+\item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
+
+\item{\code{colorPalette}}{color palette property from \code{ggplot2}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{CumulativeTimeProfilePlotConfiguration} object
+}
+}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ObsVsPredPlotConfiguration-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-ObsVsPredPlotConfiguration-clone}{}}}

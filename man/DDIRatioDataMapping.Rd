@@ -27,7 +27,7 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{tlf::XYDataMapping} -> \code{tlf::XYGDataMapping} -> \code{tlf::PKRatioDataMapping} -> \code{DDIRatioDataMapping}
+\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{\link[tlf:PKRatioDataMapping]{tlf::PKRatioDataMapping}} -> \code{DDIRatioDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
