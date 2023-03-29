@@ -154,7 +154,7 @@ addScatter <- function(data = NULL,
   mapData$legendLabels <- caption %||% mapData$legendLabels
 
   plotObject <- plotObject +
-    ggplot2::geom_point(
+    geomTLFPoint(
       data = mapData,
       mapping = ggplot2::aes(
         x = .data[[mapLabels$x]],
@@ -358,7 +358,7 @@ addLine <- function(data = NULL,
   # consequently values are connected by their order of appearance and not according to x values
   if (all(!isEmpty(dataMapping$x), !isEmpty(dataMapping$y))) {
     plotObject <- plotObject +
-      ggplot2::geom_point(
+      geomTLFPoint(
         data = mapData,
         mapping = ggplot2::aes(
           x = .data[[mapLabels$x]],
@@ -669,7 +669,7 @@ addErrorbar <- function(data = NULL,
       na.rm = TRUE,
       show.legend = FALSE
     ) +
-    ggplot2::geom_point(
+    geomTLFPoint(
       data = mapData,
       mapping = aes(
         x = .data[[mapLabels$x]],
@@ -684,7 +684,7 @@ addErrorbar <- function(data = NULL,
       na.rm = TRUE,
       show.legend = FALSE
     ) +
-    ggplot2::geom_point(
+    geomTLFPoint(
       data = mapData,
       mapping = aes(
         x = .data[[mapLabels$x]],
