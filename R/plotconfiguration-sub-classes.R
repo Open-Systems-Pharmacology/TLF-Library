@@ -31,6 +31,9 @@ DDIRatioPlotConfiguration <- R6::R6Class(
 #' @title ObsVsPredPlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object for Obs vs Pred plots
 #' @field defaultSymmetricAxes Default option setting symmetric xAxis and/or yAxis limits when creating a `ObsVsPredPlotConfiguration` object
+#' @field foldLinesLegend Whether to draw fold lines in legend. default to FALSE.
+#' @field foldLinesLegendDiagonal Whether to draw diagonal lines in legend for fold lines. default to FALSE.
+#' @field foldLineslegendType translation of `foldLinesLegendDiagonal` in geom type.
 #' @export
 #' @family PlotConfiguration classes
 ObsVsPredPlotConfiguration <- R6::R6Class(
@@ -40,21 +43,22 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
     defaultSymmetricAxes = TRUE,
     foldLinesLegend = NULL,
     foldLinesLegendDiagonal = NULL,
-
+    foldLineslegendType = NULL,
     #' @description Create a new `ObsVsPredPlotConfiguration` object
     #' @param colorPalette color palette property from `ggplot2`
+    #' @param foldLinesLegend Whether to draw fold lines in legend. default to FALSE.
+    #' @param foldLinesLegendDiagonal Whether to draw diagonal lines in legend for fold lines. default to FALSE.
+    #' @param legendPosition Where to draw the legend. default to "insideTopLeft". Available values in `LegendPositions`
     #' @param ... parameters inherited from `PlotConfiguration`
     #' @return A new `CumulativeTimeProfilePlotConfiguration` object
     initialize = function(foldLinesLegend = FALSE, foldLinesLegendDiagonal = FALSE, legendPosition = "insideTopLeft", ...) {
       super$initialize(legendPosition = legendPosition, ...)
       self$foldLinesLegend <- foldLinesLegend
       self$foldLinesLegendDiagonal <- foldLinesLegendDiagonal
-    },
-    getKeyGlyph = function() {
-      if (self$foldLinesLegendDiagonal) {
-        return("abline")
+      self$foldLineslegendType <- if (self$foldLinesLegendDiagonal) {
+        "abline"
       } else {
-        return("path")
+        "path"
       }
     }
   )

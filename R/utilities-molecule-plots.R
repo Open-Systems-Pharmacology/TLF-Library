@@ -258,7 +258,7 @@
       color = aestheticValues$color,
       alpha = aestheticValues$alpha,
       size = aestheticValues$size,
-      key_glyph = plotObject$plotConfiguration$getKeyGlyph()
+      key_glyph = plotObject$plotConfiguration$foldLineslegendType
     ),
     "ddiHorizontal" = ggplot2::geom_abline(
       slope = 0,

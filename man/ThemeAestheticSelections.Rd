@@ -7,7 +7,7 @@
 R6 class defining how plot configurations will use aesthetic maps
 }
 \section{Super class}{
-\code{tlf::ThemeAestheticMaps} -> \code{ThemeAestheticSelections}
+\code{\link[tlf:ThemeAestheticMaps]{tlf::ThemeAestheticMaps}} -> \code{ThemeAestheticSelections}
 }
 \section{Methods}{
 \subsection{Public methods}{
