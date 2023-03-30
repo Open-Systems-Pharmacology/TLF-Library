@@ -360,7 +360,7 @@ getDualAxisPlot <- function(leftPlotObject, rightPlotObject) {
         yintercept = .data[[mapLabels$lloq]],
         color = .data[[mapLabels$color]]
       ),
-      linetype = "dotted",
+      linetype = tlfEnv$defaultLLOQLinetype,
       size = aestheticValues$size,
       alpha = aestheticValues$alpha,
       na.rm = TRUE,

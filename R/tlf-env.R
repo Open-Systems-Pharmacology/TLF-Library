@@ -192,3 +192,16 @@ setDefaultErrorbarCapSize <- function(size) {
   tlfEnv$defaultErrorbarCapSize <- size
   return(invisible())
 }
+
+# LLOQ lines are of dotted type in the default settings
+tlfEnv$defaultLLOQLinetype <- "dotted"
+
+#' @title setDefaultLLOQLinetype
+#' @description Set default cap linetype for lloq lines
+#' @param linetype
+#' @export
+setDefaultLLOQLinetype <- function(linetype) {
+  validateEnumValue(linetype, enum = Linetypes, nullAllowed = FALSE)
+  tlfEnv$defaultLLOQLinetype <- linetype
+  return(invisible())
+}
