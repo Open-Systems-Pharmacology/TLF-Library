@@ -111,6 +111,7 @@ plotObsVsPred <- function(data,
         values = values,
         labels = labels
       )
+
   }
 
 
@@ -171,7 +172,7 @@ plotObsVsPred <- function(data,
       guides(linetype = guide_legend(
         title = plotConfiguration$legend$title$text,
         override.aes = list(
-          shape = NA,
+          shape = NULL,
           linewidth = 0.5
         ),
         keywidth = unit(2, "lines")

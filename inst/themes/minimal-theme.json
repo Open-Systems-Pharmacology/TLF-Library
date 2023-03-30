@@ -249,7 +249,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 2,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -275,7 +275,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 2,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -301,7 +301,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 2,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -335,7 +335,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 2,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -361,7 +361,7 @@
         "fill": "NA",
         "shape": "circle",
         "linetype": "blank",
-        "size": 2,
+        "size": 3,
         "alpha": 1
       },
       "ribbons": {
@@ -387,7 +387,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 2,
+        "size": 3,
         "alpha": 1
       },
       "ribbons": {

@@ -140,7 +140,16 @@ plotTimeProfile <- function(data = NULL,
 
   #----- Build layers of molecule plot -----
   #--- Simulated data ---
-  # 1- If available, add ribbons for population time profiles
+  # 1- if available, add LLOQ line
+  if (!isEmpty(mapObservedData$lloq)) {
+    plotObject <- .addLLOQLayer(
+      plotObject,
+      data = mapObservedData,
+      mapLabels = observedMapLabels
+    )
+  }
+
+  # 2- If available, add ribbons for population time profiles
   if (!any(isEmpty(dataMapping$ymin), isEmpty(dataMapping$ymax))) {
     aestheticValues <- .getAestheticValuesFromConfiguration(
       n = 1,
@@ -163,7 +172,7 @@ plotTimeProfile <- function(data = NULL,
         show.legend = TRUE
       )
   }
-  # 2- If available, add simulated time profile
+  # 3- If available, add simulated time profile
   if (!isEmpty(dataMapping$y)) {
     aestheticValues <- .getAestheticValuesFromConfiguration(
       n = 1,
@@ -186,7 +195,7 @@ plotTimeProfile <- function(data = NULL,
         show.legend = TRUE,
       )
   }
-  # 3- If available, add error bars
+  # 4- If available, add error bars
   if (!any(isEmpty(observedDataMapping$ymin), isEmpty(observedDataMapping$ymax))) {
     plotObject <- .addErrorbarLayer(
       plotObject,
@@ -194,7 +203,7 @@ plotTimeProfile <- function(data = NULL,
       mapLabels = observedMapLabels
     )
   }
-  # 4 - Add observed scatter points
+  # 5 - Add observed scatter points
   plotObject <- .addScatterLayer(
     plotObject,
     data = mapObservedData,
