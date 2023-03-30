@@ -11,7 +11,7 @@
 
 \item{data}{A data.frame with labels mapped to properties and obtained from a \code{DataMapping} object}
 
-\item{mapLabels}{List of mapped label names passed to \code{ggplot2::aes_string}}
+\item{mapLabels}{List of mapped label names passed to \code{ggplot2::aes}}
 }
 \value{
 A \code{ggplot} object

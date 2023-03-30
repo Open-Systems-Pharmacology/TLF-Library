@@ -13,10 +13,11 @@
 A list of mappings that can be used as is by \code{aes_string}.
 }
 \description{
-Get the \code{dataMapping} elements and convert them into
+Previously: Get the \code{dataMapping} elements and convert them into
 character string usable by ggplot mapping function \code{aes_string}.
 The conversion fixes any issue of special characters by wrapping the string by ````
-if not already used.
+if not already used. Does not do this anymore because \code{aes()} and `.data` pronouns
+are used instead.
 
 \code{dataMapping} unmapped aesthetic elements (e.g. \code{color}) are associated to
 the dummy aesthetic variable \code{"defaultAes"} which allows further modification of the plot aesthetics.

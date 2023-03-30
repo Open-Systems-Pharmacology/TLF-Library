@@ -140,7 +140,16 @@ plotTimeProfile <- function(data = NULL,
 
   #----- Build layers of molecule plot -----
   #--- Simulated data ---
-  # 1- If available, add ribbons for population time profiles
+  # 1- if available, add LLOQ line
+  if (!isEmpty(mapObservedData$lloq)) {
+    plotObject <- .addLLOQLayer(
+      plotObject,
+      data = mapObservedData,
+      mapLabels = observedMapLabels
+    )
+  }
+
+  # 2- If available, add ribbons for population time profiles
   if (!any(isEmpty(dataMapping$ymin), isEmpty(dataMapping$ymax))) {
     aestheticValues <- .getAestheticValuesFromConfiguration(
       n = 1,
@@ -151,19 +160,19 @@ plotTimeProfile <- function(data = NULL,
     plotObject <- plotObject +
       ggplot2::geom_ribbon(
         data = mapData,
-        mapping = ggplot2::aes_string(
-          x = mapLabels$x,
-          ymin = mapLabels$ymin,
-          ymax = mapLabels$ymax,
-          fill = mapLabels$fill,
-          group = mapLabels$linetype
+        mapping = ggplot2::aes(
+          x = .data[[mapLabels$x]],
+          ymin = .data[[mapLabels$ymin]],
+          ymax = .data[[mapLabels$ymax]],
+          fill = .data[[mapLabels$fill]],
+          group = .data[[mapLabels$linetype]]
         ),
         alpha = aestheticValues$alpha,
         na.rm = TRUE,
         show.legend = TRUE
       )
   }
-  # 2- If available, add simulated time profile
+  # 3- If available, add simulated time profile
   if (!isEmpty(dataMapping$y)) {
     aestheticValues <- .getAestheticValuesFromConfiguration(
       n = 1,
@@ -174,11 +183,11 @@ plotTimeProfile <- function(data = NULL,
     plotObject <- plotObject +
       ggplot2::geom_path(
         data = mapData,
-        mapping = ggplot2::aes_string(
-          x = mapLabels$x,
-          y = mapLabels$y,
-          color = mapLabels$color,
-          linetype = mapLabels$linetype
+        mapping = ggplot2::aes(
+          x =  .data[[mapLabels$x]],
+          y =  .data[[mapLabels$y]],
+          color =  .data[[mapLabels$color]],
+          linetype =  .data[[mapLabels$linetype]]
         ),
         size = aestheticValues$size,
         alpha = aestheticValues$alpha,
@@ -186,7 +195,7 @@ plotTimeProfile <- function(data = NULL,
         show.legend = TRUE,
       )
   }
-  # 3- If available, add error bars
+  # 4- If available, add error bars
   if (!any(isEmpty(observedDataMapping$ymin), isEmpty(observedDataMapping$ymax))) {
     plotObject <- .addErrorbarLayer(
       plotObject,
@@ -194,7 +203,7 @@ plotTimeProfile <- function(data = NULL,
       mapLabels = observedMapLabels
     )
   }
-  # 4 - Add observed scatter points
+  # 5 - Add observed scatter points
   plotObject <- .addScatterLayer(
     plotObject,
     data = mapObservedData,

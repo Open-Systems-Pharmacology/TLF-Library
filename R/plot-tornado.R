@@ -92,11 +92,11 @@ plotTornado <- function(data = NULL,
 
     plotObject <- plotObject + ggplot2::geom_col(
       data = mapData,
-      mapping = ggplot2::aes_string(
-        x = mapLabels$x,
-        y = mapLabels$y,
-        fill = mapLabels$fill,
-        color = mapLabels$color
+      mapping = ggplot2::aes(
+        x = .data[[mapLabels$x]],
+        y = .data[[mapLabels$y]],
+        fill = .data[[mapLabels$fill]],
+        color = .data[[mapLabels$color]]
       ),
       alpha = aestheticValues$alpha,
       size = aestheticValues$size,
@@ -125,11 +125,11 @@ plotTornado <- function(data = NULL,
     # For tornado with points, their shape will be taken from the theme properties
     plotObject <- plotObject + geomTLFPoint(
       data = mapData,
-      mapping = ggplot2::aes_string(
-        x = mapLabels$x,
-        y = mapLabels$y,
-        color = mapLabels$color,
-        shape = mapLabels$shape
+      mapping = ggplot2::aes(
+        x = .data[[mapLabels$x]],
+        y = .data[[mapLabels$y]],
+        color = .data[[mapLabels$color]],
+        shape = .data[[mapLabels$shape]]
       ),
       size = aestheticValues$size,
       alpha = aestheticValues$alpha,
