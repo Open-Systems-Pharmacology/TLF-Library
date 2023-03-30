@@ -81,6 +81,13 @@ ExportConfiguration <- R6::R6Class(
 
       # If unit is in pixels, convert dimensions to inches to keep compatibility with older versions of ggplot2
       self$convertPixels()
+      
+      # When exporting a plot using tlf
+      # Match point size dpi to file dpi
+      if(requireNamespace("showtext", quietly = TRUE)){
+        currentDPI <- showtext::showtext_opts()$dpi
+        showtext::showtext_opts(dpi = self$dpi)
+      }
 
       ggplot2::ggsave(
         path = self$path,
@@ -91,6 +98,10 @@ ExportConfiguration <- R6::R6Class(
         units = self$units,
         dpi = self$dpi
       )
+      # Then, revert to current dpi
+      if(requireNamespace("showtext", quietly = TRUE)){
+        showtext::showtext_opts(dpi = currentDPI)
+      }
       # Return the file name in case users needs it
       # Use invisible to prevent writing the file name in the console every time a plot is exported
       return(invisible(fileName))
