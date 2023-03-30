@@ -42,7 +42,7 @@
     },
     "watermark": {
       "color": "#707073",
-      "size": 40,
+      "size": 12,
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 30,
@@ -58,7 +58,7 @@
     },
     "legendTitle": {
       "color": "black",
-      "size": 14,
+      "size": 12,
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
@@ -198,7 +198,7 @@
       "fill": "NA",
       "shape": "circle",
       "linetype": "blank",
-      "size": 1,
+      "size": 3,
       "alpha": 1
     },
     "addLine": {
@@ -231,7 +231,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 1,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -257,7 +257,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 1,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -283,7 +283,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 1,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -317,7 +317,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 1,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -343,7 +343,7 @@
         "fill": "NA",
         "shape": "circle",
         "linetype": "blank",
-        "size": 1,
+        "size": 3,
         "alpha": 1
       },
       "ribbons": {
@@ -369,7 +369,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 1,
+        "size": 3,
         "alpha": 1
       },
       "ribbons": {
