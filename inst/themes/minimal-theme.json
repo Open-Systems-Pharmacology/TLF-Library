@@ -216,7 +216,7 @@
       "fill": "NA",
       "shape": "next",
       "linetype": "blank",
-      "size": "first",
+      "size": 3,
       "alpha": 1
     },
     "addLine": {

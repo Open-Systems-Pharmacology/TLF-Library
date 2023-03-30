@@ -42,7 +42,7 @@
     },
     "watermark": {
       "color": "#595959",
-      "size": 40,
+      "size": 12,
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 30,
@@ -275,7 +275,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 1,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -335,7 +335,7 @@
         "fill": "NA",
         "shape": "circle",
         "linetype": "blank",
-        "size": 1,
+        "size": 3,
         "alpha": 1
       },
       "ribbons": {
