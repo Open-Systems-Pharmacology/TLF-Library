@@ -620,7 +620,7 @@ addErrorbar <- function(data = NULL,
       na.rm = TRUE,
       show.legend = FALSE
     ) +
-    geomTLFPoint(
+    ggplot2::geom_point(
       data = mapData,
       mapping = aes_string(
         x = mapLabels$x,
@@ -635,7 +635,7 @@ addErrorbar <- function(data = NULL,
       na.rm = TRUE,
       show.legend = FALSE
     ) +
-    geomTLFPoint(
+    ggplot2::geom_point(
       data = mapData,
       mapping = aes_string(
         x = mapLabels$x,
