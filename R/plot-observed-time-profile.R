@@ -84,7 +84,8 @@ plotObservedTimeProfile <- function(data,
     plotObject <- .addLLOQLayer(
       plotObject,
       data = mapData,
-      mapLabels = mapLabels
+      mapLabels = mapLabels,
+      type = "horizontal"
     )
   }
 
