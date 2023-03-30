@@ -1,6 +1,6 @@
 # tlf (development version)
 
-- Lower Limit Of Quantification (LLOQ) can be added on time-profile plots.
+- Lower Limit Of Quantification (LLOQ) can be added on time-profile plots and obs-vs-pred plots.
 
 # tlf 1.5.0
 
