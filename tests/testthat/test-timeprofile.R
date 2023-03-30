@@ -22,6 +22,9 @@ simData <- data.frame(
 # Basic plot
 
 test_that("plotTimeProfile works ", {
+  skip_if_not_installed("vdiffr")
+  skip_if(getRversion() < "4.1")
+
   obsDataMapping <- ObservedDataMapping$new(
     x = "x",
     y = "y"
@@ -47,6 +50,8 @@ test_that("plotTimeProfile works ", {
 
 
 test_that("plotTimeProfile works with LLOQ ", {
+  skip_if_not_installed("vdiffr")
+  skip_if(getRversion() < "4.1")
   vdiffr::expect_doppelganger(
     title = "with observed data only",
     fig = plotTimeProfile(
