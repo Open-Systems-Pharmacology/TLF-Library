@@ -118,7 +118,7 @@ plotHistogram <- function(data = NULL,
   # see https://ggplot2.tidyverse.org/reference/geom_histogram.html for more info
   mapping <- ggplot2::aes(
     x = .data[[mapLabels$x]],
-    y = after_stat(count),
+    y =  ggplot2::after_stat(count),
     fill = .data[[mapLabels$fill]]
   )
 
@@ -128,7 +128,7 @@ plotHistogram <- function(data = NULL,
     # ncount variable is scaled by binwidth*dnorm(0) to get an area of ~1
     mapping <- ggplot2::aes(
       x = .data[[mapLabels$x]],
-      y = after_stat(ncount * max(width) * dnorm(0)),
+      y =  ggplot2::after_stat(ncount * max(width) * dnorm(0)),
       fill = .data[[mapLabels$fill]]
     )
     if (dataMapping$stack) {
@@ -137,7 +137,7 @@ plotHistogram <- function(data = NULL,
       # This results in same histogram shapes no matter the data groups
       mapping <- ggplot2::aes(
         x = .data[[mapLabels$x]],
-        y = after_stat(count / sum(count)),
+        y =  ggplot2::after_stat(count / sum(count)),
         fill = .data[[mapLabels$fill]]
       )
     }
