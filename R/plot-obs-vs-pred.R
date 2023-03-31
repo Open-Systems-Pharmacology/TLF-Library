@@ -74,8 +74,18 @@ plotObsVsPred <- function(data,
   #----- Build layers of molecule plot -----
   # Each new layer is added on top of previous
   # Thus, scatter points are added as last layer to prevent them being hidden by lines or errorbars
-  # 1- Diagonal lines
 
+  # 1- if available, add LLOQ lines
+  if (!isEmpty(mapData$lloq)) {
+    plotObject <- .addLLOQLayer(
+      plotObject,
+      data = mapData,
+      mapLabels = mapLabels,
+      direction = plotConfiguration$lloqDirection
+    )
+  }
+
+  # 2- Diagonal lines
   lineIndex <- 0
   if (!is.null(foldDistance)) {
     # Add foldDistance legend only if user specified folddistance values
@@ -115,7 +125,7 @@ plotObsVsPred <- function(data,
   }
 
 
-  # 2- Smoother line
+  # 3- Smoother line
   aestheticValues <- .getAestheticValuesFromConfiguration(
     n = 1,
     position = lineIndex,
@@ -154,9 +164,9 @@ plotObsVsPred <- function(data,
         size = aestheticValues$size
       )
   }
-  # 2- Error bars
+  # 4- Error bars
   plotObject <- .addErrorbarLayer(plotObject, data = mapData, mapLabels = mapLabels, direction = "horizontal")
-  # 3- Scatter points
+  # 5- Scatter points
   plotObject <- .addScatterLayer(plotObject, data = mapData, mapLabels = mapLabels)
 
   # .addScatterLayer adds shapes legend on the lines so we need to override it
