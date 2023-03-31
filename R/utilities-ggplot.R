@@ -25,7 +25,8 @@ GeomTLFPoint <- ggplot2::ggproto(
       x = coords$x, y = coords$y,
       default.units = "native",
       gp = grid::gpar(
-        col = coords$colour,
+        col = scales::alpha(coords$colour %||% "black", coords$alpha),
+        fill = scales::alpha(coords$fill %||% "black", coords$alpha),
         fontsize = coords$size * ggplot2::.pt,
         fontfamily = .selectFontFamily()
       )
