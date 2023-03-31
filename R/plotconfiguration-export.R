@@ -88,20 +88,25 @@ ExportConfiguration <- R6::R6Class(
         currentDPI <- showtext::showtext_opts()$dpi
         showtext::showtext_opts(dpi = self$dpi)
       }
-
-      ggplot2::ggsave(
-        path = self$path,
-        filename = fileName,
-        plot = plotObject,
-        width = self$width,
-        height = self$height,
-        units = self$units,
-        dpi = self$dpi
-      )
-      # Then, revert to current dpi
-      if(requireNamespace("showtext", quietly = TRUE)){
-        showtext::showtext_opts(dpi = currentDPI)
-      }
+      tryCatch({
+        ggplot2::ggsave(
+          path = self$path,
+          filename = fileName,
+          plot = plotObject,
+          width = self$width,
+          height = self$height,
+          units = self$units,
+          dpi = self$dpi
+        )},
+        error = function(e){
+          stop(e)
+        },
+        finally = {
+          # Then, revert to current dpi
+          if(requireNamespace("showtext", quietly = TRUE)){
+            showtext::showtext_opts(dpi = currentDPI)
+          }
+        })
       # Return the file name in case users needs it
       # Use invisible to prevent writing the file name in the console every time a plot is exported
       return(invisible(fileName))
