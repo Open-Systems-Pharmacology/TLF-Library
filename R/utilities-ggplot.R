@@ -9,22 +9,30 @@
 GeomTLFPoint <- ggplot2::ggproto(
   "GeomTLFPoint", 
   GeomPoint,
+  # This will correspond to the default property displayed in legend
+  # if property not used in data mapping
+  # this replaces displayed "19" by a colored square
+  default_aes = ggplot2::aes(
+    shape = "\u2588", colour = "black", size = 1.5, fill = NA,
+    alpha = NA, stroke = 0.5
+  ),
   draw_panel = function(data, panel_params, coord) {
     coords <- coord$transform(data, panel_params)
-    # Overwrite pointsGrob
+    # Replace grid::pointsGrob from geom_point accounting for font family
     grid::textGrob(
-      label = coords$shape,
+      # If shape is included in plot dictionary, use it
+      label = .asPlotShape(coords$shape),
       x = coords$x, y = coords$y,
       default.units = "native",
       gp = grid::gpar(
-        col = coords$colour,
+        col = scales::alpha(coords$colour %||% "black", coords$alpha),
+        fill = scales::alpha(coords$fill %||% "black", coords$alpha),
         fontsize = coords$size * ggplot2::.pt,
         fontfamily = .selectFontFamily()
       )
     )
   },
   draw_key = function(data, params, size) {
-    # If showtext is not installed, use default font
     if (is.null(data$shape)) {
       data$shape <- Shapes$blank
     }
@@ -32,9 +40,13 @@ GeomTLFPoint <- ggplot2::ggproto(
     stroke_size <- data$stroke %||% 0.5
     stroke_size[is.na(stroke_size)] <- 0
     
+    # Replace grid::pointsGrob from geom_point accounting for font family
     grid::textGrob(
-      label = data$shape,
+      # If shape is included in plot dictionary, use it in legend
+      # Prevents having "circle" instead of its shape displayed in the legend
+      label = .asPlotShape(data$shape),
       x = 0.5, y = 0.5,
+      # Code copied from ggplot2 except for font family
       gp = grid::gpar(
         col = scales::alpha(data$colour %||% "black", data$alpha),
         fill = scales::alpha(data$fill %||% "black", data$alpha),
@@ -62,7 +74,6 @@ GeomTLFPoint <- ggplot2::ggproto(
 geomTLFPoint <- function(mapping = NULL, data = NULL, stat = "identity",
                               position = "identity", na.rm = FALSE, show.legend = NA,
                               inherit.aes = TRUE, ...) {
-  
   ggplot2::layer(
     geom = GeomTLFPoint, mapping = mapping, data = data, stat = stat,
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
