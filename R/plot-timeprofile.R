@@ -146,7 +146,7 @@ plotTimeProfile <- function(data = NULL,
       plotObject,
       data = mapObservedData,
       mapLabels = observedMapLabels,
-      type = "horizontal"
+      direction = "horizontal"
     )
   }
 

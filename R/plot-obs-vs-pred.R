@@ -81,7 +81,7 @@ plotObsVsPred <- function(data,
       plotObject,
       data = mapData,
       mapLabels = mapLabels,
-      type = "both"
+      direction = plotConfiguration$lloqDirection
     )
   }
 

@@ -85,7 +85,7 @@ plotObservedTimeProfile <- function(data,
       plotObject,
       data = mapData,
       mapLabels = mapLabels,
-      type = "horizontal"
+      direction = "horizontal"
     )
   }
 

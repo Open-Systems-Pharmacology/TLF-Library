@@ -343,9 +343,10 @@ getDualAxisPlot <- function(leftPlotObject, rightPlotObject) {
 #' @param plotObject A `ggplot` object
 #' @param data A data.frame with labels mapped to properties and obtained from a `DataMapping` object
 #' @param mapLabels List of mapped label names passed to `ggplot2::aes_string`
+#' @param direction Whether to draw LLOQ lines for x (vertical), y (horizontal) or x and y (both).
 #' @return A `ggplot` object
 #' @keywords internal
-.addLLOQLayer <- function(plotObject, data, mapLabels, type) {
+.addLLOQLayer <- function(plotObject, data, mapLabels, direction) {
   aestheticValues <- .getAestheticValuesFromConfiguration(
     n = 1,
     position = 0,
@@ -354,7 +355,7 @@ getDualAxisPlot <- function(leftPlotObject, rightPlotObject) {
   )
 
 
-  plotObject <- switch(type,
+  plotObject <- switch(direction,
                        "horizontal" =  plotObject + ggplot2::geom_hline(
                          data = data,
                          mapping = ggplot2::aes(
@@ -382,10 +383,10 @@ getDualAxisPlot <- function(leftPlotObject, rightPlotObject) {
                        "both" = .addLLOQLayer(.addLLOQLayer(plotObject,
                                                             data,
                                                             mapLabels,
-                                                            type = "vertical"),
+                                                            direction = "vertical"),
                                               data, mapLabels,
-                                              type = "horizontal"),
-                       stop("type argument must be horizontal, vertical or both")
+                                              direction = "horizontal"),
+                       stop('direction argument must be "horizontal", "vertical" or "both"')
 
   )
   return(plotObject)

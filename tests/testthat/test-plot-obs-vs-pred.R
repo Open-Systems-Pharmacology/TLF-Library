@@ -95,15 +95,31 @@ test_that("plotObservedVsSimulated with LLOQ works ", {
   skip_if(getRversion() < "4.1")
 
   vdiffr::expect_doppelganger(
-    title = "lloq basic",
+    title = "lloq default",
+    fig = plotObsVsPred(
+      data = obsVsPredData,
+      dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y",
+                                             lloq = "lloq")
+    )
+  )
+
+  vdiffr::expect_doppelganger(
+    title = "lloq horizontal",
     fig = plotObsVsPred(
       data = obsVsPredData,
       dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y",
                                              lloq = "lloq"),
-      plotConfiguration = ObsVsPredPlotConfiguration$new(
-        xScale = Scaling$log, xLimits = c(0.05, 50),
-        yScale = Scaling$log, yLimits = c(0.05, 50),
-      )
+      plotConfiguration = ObsVsPredPlotConfiguration$new(lloqDirection = "horizontal")
+    )
+  )
+
+  vdiffr::expect_doppelganger(
+    title = "lloq both",
+    fig = plotObsVsPred(
+      data = obsVsPredData,
+      dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y",
+                                             lloq = "lloq"),
+      plotConfiguration = ObsVsPredPlotConfiguration$new(lloqDirection = "both")
     )
   )
 
@@ -116,13 +132,13 @@ test_that("plotObservedVsSimulated with LLOQ works ", {
   )
 
   vdiffr::expect_doppelganger(
-    title = "lloq groups",
+    title = "lloq with groups",
     fig = plotObsVsPred(
       data = obsVsPredDataGroup,
       dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y",
                                              lloq = "lloq",
                                              group = "group"),
-      plotConfiguration = ObsVsPredPlotConfiguration$new()
+      plotConfiguration = ObsVsPredPlotConfiguration$new(lloqDirection = "both")
     )
   )
 })
