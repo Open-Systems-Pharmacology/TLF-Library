@@ -198,7 +198,7 @@ tlfEnv$defaultLLOQLinetype <- "dotted"
 
 #' @title setDefaultLLOQLinetype
 #' @description Set default cap linetype for lloq lines
-#' @param linetype
+#' @param linetype default linetype for lloq lines
 #' @export
 setDefaultLLOQLinetype <- function(linetype) {
   validateEnumValue(linetype, enum = Linetypes, nullAllowed = FALSE)

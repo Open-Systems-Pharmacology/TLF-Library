@@ -1,5 +1,6 @@
 #' @title TimeProfilePlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object for time profile plots
+#' @field lloqDirection Whether to draw LLOQ lines for x (vertical), y (horizontal) or x and y (both).
 #' @export
 #' @family PlotConfiguration classes
 TimeProfilePlotConfiguration <- R6::R6Class(

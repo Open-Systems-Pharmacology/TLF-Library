@@ -39,6 +39,8 @@ Other PlotConfiguration classes:
 \describe{
 \item{\code{defaultSymmetricAxes}}{Default option setting symmetric xAxis and/or yAxis limits when creating a \code{ObsVsPredPlotConfiguration} object}
 
+\item{\code{lloqDirection}}{Whether to draw LLOQ lines for x (vertical), y (horizontal) or x and y (both).}
+
 \item{\code{foldLinesLegend}}{Whether to draw fold lines in legend. default to FALSE.}
 
 \item{\code{foldLinesLegendDiagonal}}{Whether to draw diagonal lines in legend for fold lines. default to FALSE.}
@@ -61,6 +63,7 @@ Other PlotConfiguration classes:
 Create a new \code{ObsVsPredPlotConfiguration} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ObsVsPredPlotConfiguration$new(
+  lloqDirection = "vertical",
   foldLinesLegend = FALSE,
   foldLinesLegendDiagonal = FALSE,
   legendPosition = "insideTopLeft",
@@ -71,6 +74,8 @@ Create a new \code{ObsVsPredPlotConfiguration} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{lloqDirection}}{Whether to draw LLOQ lines for x (vertical), y (horizontal) or x and y (both).}
+
 \item{\code{foldLinesLegend}}{Whether to draw fold lines in legend. default to FALSE.}
 
 \item{\code{foldLinesLegendDiagonal}}{Whether to draw diagonal lines in legend for fold lines. default to FALSE.}
@@ -78,8 +83,6 @@ Create a new \code{ObsVsPredPlotConfiguration} object
 \item{\code{legendPosition}}{Where to draw the legend. default to "insideTopLeft". Available values in \code{LegendPositions}}
 
 \item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
-
-\item{\code{colorPalette}}{color palette property from \code{ggplot2}}
 }
 \if{html}{\out{</div>}}
 }

@@ -30,6 +30,7 @@ DDIRatioPlotConfiguration <- R6::R6Class(
 
 #' @title ObsVsPredPlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object for Obs vs Pred plots
+#' @field defaultSymmetricAxes Default option setting symmetric xAxis and/or yAxis limits when creating a `ObsVsPredPlotConfiguration` object
 #' @field lloqDirection Whether to draw LLOQ lines for x (vertical), y (horizontal) or x and y (both).
 #' @field foldLinesLegend Whether to draw fold lines in legend. default to FALSE.
 #' @field foldLinesLegendDiagonal Whether to draw diagonal lines in legend for fold lines. default to FALSE.

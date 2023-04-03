@@ -41,6 +41,8 @@ Other DataMapping classes:
 \item{\code{ymax}}{mapping error bars around scatter points}
 
 \item{\code{y2Axis}}{Name of y2Axis variable to map}
+
+\item{\code{lloq}}{mapping lloq lines}
 }
 \if{html}{\out{</div>}}
 }
@@ -73,7 +75,8 @@ Create a new \code{ObservedDataMapping} object
   error = NULL,
   uncertainty = NULL,
   mdv = NULL,
-  data = NULL
+  data = NULL,
+  lloq = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -104,6 +107,8 @@ Deprecated parameter replaced by \code{error}.}
 \item{\code{mdv}}{mapping missing dependent variable}
 
 \item{\code{data}}{data.frame to map used by \code{.smartMapping}}
+
+\item{\code{lloq}}{mapping lloq lines}
 }
 \if{html}{\out{</div>}}
 }
