@@ -6,11 +6,13 @@ TimeProfilePlotConfiguration <- R6::R6Class(
   "TimeProfilePlotConfiguration",
   inherit = PlotConfiguration,
   public = list(
+    lloqDirection = NULL,
     #' @description Create a new `TimeProfilePlotConfiguration` object
     #' @param y2label character or `Label` object defining plot y2label
     #' @param y2Axis `YAxisConfiguration` object defining y-axis properties
     #' @param y2Scale name of y2-axis scale. Use enum `Scaling` to access predefined scales.
     #' @param y2Limits numeric vector of length 2 defining y-axis limits
+    #' @param lloqDirection Whether to draw LLOQ lines for x (vertical), y (horizontal) or x and y (both).
     #' @param data data.frame used by `.smartMapping`
     #' @param metaData list of information on `data`
     #' @param dataMapping R6 class or subclass `TimeProfileDataMapping`
@@ -23,16 +25,18 @@ TimeProfilePlotConfiguration <- R6::R6Class(
                           y2Axis = NULL,
                           y2Scale = NULL,
                           y2Limits = NULL,
+                          lloqDirection = "horizontal",
                           # Smart configuration using metaData
                           data = NULL,
                           metaData = NULL,
                           dataMapping = NULL) {
       super$initialize(
-        ..., 
+        ...,
         data = data,
         metaData = metaData,
-        dataMapping = dataMapping
+        dataMapping = dataMapping,
         )
+      self$lloqDirection <- lloqDirection
       # Update Y2 label
       private$.labels$y2label <- y2label %||% private$.labels$y2label
       if (!is.null(data)) {
@@ -44,7 +48,7 @@ TimeProfilePlotConfiguration <- R6::R6Class(
           dataMapping$y2Axis %||%
           private$.labels$y2label$text, font = private$.labels$y2label$font
       )
-      
+
       # Y2-Axis configuration, overwrite some properties only if they are defined
       validateIsOfType(y2Axis, "YAxisConfiguration", nullAllowed = TRUE)
       private$.y2Axis <- y2Axis %||% YAxisConfiguration$new(
@@ -55,6 +59,7 @@ TimeProfilePlotConfiguration <- R6::R6Class(
       private$.y2Axis$limits <- y2Limits %||% private$.y2Axis$limits
       private$.y2Axis$scale <- y2Scale %||% private$.y2Axis$scale
     }
+
   ),
   active = list(
     #' @field y2Axis `YAxisConfiguration` object defining properties of y2-axis
