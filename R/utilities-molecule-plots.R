@@ -54,6 +54,9 @@
 #' @return A `ggplot` object
 #' @keywords internal
 .addErrorbarLayer <- function(plotObject, data, mapLabels, direction = "vertical") {
+
+  validateEnumValue(direction, Directions)
+
   aestheticValues <- .getAestheticValuesFromConfiguration(
     n = 1,
     position = 0,

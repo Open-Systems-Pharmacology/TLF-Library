@@ -59,6 +59,7 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
                           legendPosition = "insideTopLeft",
                           ...) {
       super$initialize(legendPosition = legendPosition, ...)
+      validateEnumValue(lloqDirection, Directions)
       self$lloqDirection <- lloqDirection
       self$foldLinesLegend <- foldLinesLegend
       self$foldLinesLegendDiagonal <- foldLinesLegendDiagonal

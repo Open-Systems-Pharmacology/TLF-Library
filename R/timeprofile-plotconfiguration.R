@@ -37,6 +37,7 @@ TimeProfilePlotConfiguration <- R6::R6Class(
         metaData = metaData,
         dataMapping = dataMapping
         )
+      validateEnumValue(lloqDirection, Directions)
       self$lloqDirection <- lloqDirection
       # Update Y2 label
       private$.labels$y2label <- y2label %||% private$.labels$y2label
