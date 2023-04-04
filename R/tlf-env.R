@@ -198,10 +198,28 @@ tlfEnv$defaultLLOQLinetype <- "dotted"
 
 #' @title setDefaultLLOQLinetype
 #' @description Set default cap linetype for lloq lines
-#' @param linetype default linetype for lloq lines
+#' @param linetype linetype to set as default
 #' @export
 setDefaultLLOQLinetype <- function(linetype) {
   validateEnumValue(linetype, enum = Linetypes, nullAllowed = FALSE)
   tlfEnv$defaultLLOQLinetype <- linetype
   return(invisible())
 }
+
+# Points bellow LLOQ have a transparency level at .618 * base alpha level.
+# .618 (1/golden ratio) ensures that both levels are always visible and
+# distinguishable even if the user set a low value for default alpha.
+tlfEnv$DefaultAlphaRatio <- 0.618
+
+#' @title setDefaultAlphaRatio
+#' @description Set the default alpha (transparency) difference ratio between
+#' points above and bellow lloq
+#' @param alphaRatio alpha ratio to set as default. Must be between 0 and 1.
+#' @export
+setDefaultDefaultAlphaRatio <- function(alphaRatio) {
+  validateIsNumeric(alphaRatio)
+  stopifnot(alphaRatio > 0 & alphaRatio <= 1)
+  tlfEnv$DefaultAlphaRatio <- alphaRatio
+  return(invisible())
+}
+
