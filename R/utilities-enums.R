@@ -318,10 +318,10 @@ Linetypes <- enum(c(
 
 #' @title Shapes
 #' @description List of some `ggplot2` shapes.
-#' The shapes from this enum/list are unicode characters 
+#' The shapes from this enum/list are unicode characters
 #' corresponding to their appropriate shapes.
 #' Note that user-defined characters are also accepted by `geomTLFPoint()`
-#' 
+#'
 #' @export
 #' @import ospsuite.utils
 #' @family enum helpers
@@ -332,17 +332,17 @@ Linetypes <- enum(c(
 #'   y = floor((seq_along(Shapes) - 1) / 6),
 #'   shape = factor(names(Shapes), levels = names(Shapes))
 #' )
-#' ggplot2::ggplot(data = shapesData, ggplot2::aes(x, y)) + 
+#' ggplot2::ggplot(data = shapesData, ggplot2::aes(x, y)) +
 #' ggplot2::theme_void() +
 #' # Define size and color of shapes
 #' geomTLFPoint(ggplot2::aes(shape = shape), size = 8, color = "red") +
 #' # Add shape names from enum below the displayed shape
-#' ggplot2::geom_text(ggplot2::aes(label = shape), nudge_y = -0.3, size = 3) + 
+#' ggplot2::geom_text(ggplot2::aes(label = shape), nudge_y = -0.3, size = 3) +
 #' # Use scale to display the actual shape
 #' ggplot2::scale_shape_manual(values = as.character(unlist(Shapes))) +
 #' # Remove the legend as the shape name is labelled below the shape
 #' ggplot2::guides(shape="none")
-#' 
+#'
 #' # Perform a scatter plot with blue pentagons as shape
 #' addScatter(
 #'   x = 1:10,
@@ -370,10 +370,10 @@ Shapes <- list(
   # open shapes
   "circleOpen" = "\ud83d\udf85",
   "diamondOpen" = "\u25c7",
-  "triangleOpen" = "\u25b3", 
+  "triangleOpen" = "\u25b3",
   "squareOpen" = "\ud83d\udf90",
   "invertedTriangleOpen" = "\u25bd",
-  "starOpen" = "\u2606",  
+  "starOpen" = "\u2606",
   "pentagonOpen" = "\u2b20",
   "hexagonOpen" = "\u2b21",
   # Emojis
@@ -474,3 +474,10 @@ ExportFormats <- enum(c("png", "pdf", "eps", "ps", "tex", "jpeg", "tiff", "bmp",
 #' List of all available tick label transformation names
 #' @family enum helpers
 TickLabelTransforms <- enum(c("none", "default", "identity", "log", "ln", "sqrt", "greek", "pi", "percentiles"))
+
+#' @title Directions
+#' @description Enum of plotting directions for errorbars and lloq lines.
+#' @export
+#' @import ospsuite.utils
+#' @family enum helpers
+Directions <- enum(c("horizontal", "vertical", "both"))

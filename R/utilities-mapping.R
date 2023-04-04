@@ -127,7 +127,7 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
 }
 
 #' @title .asLegendCaptionSubset
-#' @param labels
+#' @param labels #TODO
 #' @param unit A character added as unit to label
 #' @description
 #' Creates default legend captions subset

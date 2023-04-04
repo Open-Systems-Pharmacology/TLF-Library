@@ -22,7 +22,11 @@
         color = .data[[mapLabels$color]],
         shape = .data[[mapLabels$shape]],
         alpha = if (mapLabels$lloq != "legendLabels") {
-          (.data[[mapLabels$y]] > .data[[mapLabels$lloq]])|(.data[[mapLabels$x]] > .data[[mapLabels$lloq]])
+          switch (plotObject$plotConfiguration$lloqDirection,
+            "horizontal" = (.data[[mapLabels$y]] < .data[[mapLabels$lloq]]),
+            "vertical" =  (.data[[mapLabels$x]] < .data[[mapLabels$lloq]]),
+            "both" = ((.data[[mapLabels$y]] < .data[[mapLabels$lloq]])|(.data[[mapLabels$x]] < .data[[mapLabels$lloq]]))
+          )
         } else {
           as.factor(aestheticValues$alpha)
         }
@@ -33,8 +37,7 @@
     ) +
     scale_alpha_manual(
       values = if (mapLabels$lloq != "legendLabels") {
-        # ensure that no matter the alpha setting is, the computed level is between 0 and
-        c(0.618*aestheticValues$alpha, aestheticValues$alpha)
+        c(aestheticValues$alpha, tlfEnv$DefaultAlphaRatio*aestheticValues$alpha)
       } else {
         aestheticValues$alpha
       },
@@ -51,6 +54,9 @@
 #' @return A `ggplot` object
 #' @keywords internal
 .addErrorbarLayer <- function(plotObject, data, mapLabels, direction = "vertical") {
+
+  validateEnumValue(direction, Directions)
+
   aestheticValues <- .getAestheticValuesFromConfiguration(
     n = 1,
     position = 0,

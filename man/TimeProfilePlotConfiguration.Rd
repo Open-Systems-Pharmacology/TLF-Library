@@ -34,6 +34,13 @@ Other PlotConfiguration classes:
 \section{Super class}{
 \code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{TimeProfilePlotConfiguration}
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{lloqDirection}}{Whether to draw LLOQ lines for x (vertical), y (horizontal) or x and y (both).}
+}
+\if{html}{\out{</div>}}
+}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
@@ -60,6 +67,7 @@ Create a new \code{TimeProfilePlotConfiguration} object
   y2Axis = NULL,
   y2Scale = NULL,
   y2Limits = NULL,
+  lloqDirection = "horizontal",
   data = NULL,
   metaData = NULL,
   dataMapping = NULL
@@ -78,6 +86,8 @@ Create a new \code{TimeProfilePlotConfiguration} object
 \item{\code{y2Scale}}{name of y2-axis scale. Use enum \code{Scaling} to access predefined scales.}
 
 \item{\code{y2Limits}}{numeric vector of length 2 defining y-axis limits}
+
+\item{\code{lloqDirection}}{Whether to draw LLOQ lines for x (vertical), y (horizontal) or x and y (both).}
 
 \item{\code{data}}{data.frame used by \code{.smartMapping}}
 

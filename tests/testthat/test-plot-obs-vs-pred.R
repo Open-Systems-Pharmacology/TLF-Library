@@ -113,6 +113,17 @@ test_that("plotObservedVsSimulated with LLOQ works ", {
     )
   )
 
+
+  vdiffr::expect_doppelganger(
+    title = "lloq vertical",
+    fig = plotObsVsPred(
+      data = obsVsPredData,
+      dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y",
+                                             lloq = "lloq"),
+      plotConfiguration = ObsVsPredPlotConfiguration$new(lloqDirection = "vertical")
+    )
+  )
+
   vdiffr::expect_doppelganger(
     title = "lloq both",
     fig = plotObsVsPred(

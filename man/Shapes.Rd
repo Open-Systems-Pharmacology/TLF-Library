@@ -23,12 +23,12 @@ shapesData <- data.frame(
   y = floor((seq_along(Shapes) - 1) / 6),
   shape = factor(names(Shapes), levels = names(Shapes))
 )
-ggplot2::ggplot(data = shapesData, ggplot2::aes(x, y)) + 
+ggplot2::ggplot(data = shapesData, ggplot2::aes(x, y)) +
 ggplot2::theme_void() +
 # Define size and color of shapes
 geomTLFPoint(ggplot2::aes(shape = shape), size = 8, color = "red") +
 # Add shape names from enum below the displayed shape
-ggplot2::geom_text(ggplot2::aes(label = shape), nudge_y = -0.3, size = 3) + 
+ggplot2::geom_text(ggplot2::aes(label = shape), nudge_y = -0.3, size = 3) +
 # Use scale to display the actual shape
 ggplot2::scale_shape_manual(values = as.character(unlist(Shapes))) +
 # Remove the legend as the shape name is labelled below the shape
@@ -54,6 +54,7 @@ Other enum helpers:
 \code{\link{ColorMaps}},
 \code{\link{DataMappings}},
 \code{\link{DefaultDataMappingValues}},
+\code{\link{Directions}},
 \code{\link{ExportFormats}},
 \code{\link{ExportUnits}},
 \code{\link{FontFaces}},

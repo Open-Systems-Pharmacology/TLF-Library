@@ -85,7 +85,7 @@ plotObservedTimeProfile <- function(data,
       plotObject,
       data = mapData,
       mapLabels = mapLabels,
-      direction = "horizontal"
+      direction = plotConfiguration$lloqDirection
     )
   }
 

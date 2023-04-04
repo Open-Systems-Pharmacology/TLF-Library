@@ -39,6 +39,8 @@ Other DataMapping classes:
 \item{\code{xmax}}{mapping of lower value of error bars around scatter points}
 
 \item{\code{smoother}}{regression function name}
+
+\item{\code{lloq}}{mapping lloq lines}
 }
 \if{html}{\out{</div>}}
 }
@@ -63,6 +65,7 @@ Create a new \code{ObsVsPredDataMapping} object
   xmax = NULL,
   lines = DefaultDataMappingValues$obsVsPred,
   smoother = NULL,
+  lloq = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -80,7 +83,9 @@ Create a new \code{ObsVsPredDataMapping} object
 
 \item{\code{lines}}{list of lines to plot}
 
-\item{\code{smoother}}{smoother function or parameter
+\item{\code{smoother}}{smoother function or parameter}
+
+\item{\code{lloq}}{mapping lloq lines
 To map a loess smoother to the plot, use \code{smoother}="loess"}
 
 \item{\code{...}}{parameters inherited from \code{XYGDataMapping}}

@@ -70,6 +70,10 @@ plotHistogram(x = rlnorm(100), bins = 21)
 # Produce histogram of fitted normally distributed data
 plotHistogram(x = rlnorm(100), distribution = "normal")
 
+
+# Produce histogram of fitted normally distributed data
+plotHistogram(x = rlnorm(100), distribution = "normal", frequency = TRUE, stack = TRUE)
+
 }
 \references{
 For examples, see:
