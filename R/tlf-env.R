@@ -216,7 +216,7 @@ tlfEnv$DefaultAlphaRatio <- 0.618
 #' points above and bellow lloq
 #' @param alphaRatio alpha ratio to set as default. Must be between 0 and 1.
 #' @export
-setDefaultDefaultAlphaRatio <- function(alphaRatio) {
+setDefaultAlphaRatio <- function(alphaRatio) {
   validateIsNumeric(alphaRatio)
   stopifnot(alphaRatio > 0 & alphaRatio <= 1)
   tlfEnv$DefaultAlphaRatio <- alphaRatio
