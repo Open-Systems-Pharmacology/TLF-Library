@@ -31,7 +31,7 @@ The following vignette aims at documenting and illustrating workflows for produc
 
 This vignette focuses boxplot examples. Detailed documentation on typical `tlf` workflow, use of `AgregationSummary`, `DataMapping`, `PlotConfiguration` and `Theme` can be found in `vignette("tlf-workflow")`.
 
-# 2. Definition of the boxplot fonctions and classes
+# 2. Definition of the boxplot functions and classes
 
 ## 2.1. The `plotBoxWhisker` function
 
