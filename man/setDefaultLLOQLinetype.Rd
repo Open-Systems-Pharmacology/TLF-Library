@@ -7,7 +7,7 @@
 setDefaultLLOQLinetype(linetype)
 }
 \arguments{
-\item{linetype}{default linetype for lloq lines}
+\item{linetype}{linetype to set as default}
 }
 \description{
 Set default cap linetype for lloq lines

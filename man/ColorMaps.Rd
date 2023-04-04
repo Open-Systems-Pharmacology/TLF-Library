@@ -25,6 +25,7 @@ Other enum helpers:
 \code{\link{AtomPlots}},
 \code{\link{DataMappings}},
 \code{\link{DefaultDataMappingValues}},
+\code{\link{Directions}},
 \code{\link{ExportFormats}},
 \code{\link{ExportUnits}},
 \code{\link{FontFaces}},
