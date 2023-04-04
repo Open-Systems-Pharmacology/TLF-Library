@@ -35,7 +35,7 @@ TimeProfilePlotConfiguration <- R6::R6Class(
         ...,
         data = data,
         metaData = metaData,
-        dataMapping = dataMapping,
+        dataMapping = dataMapping
         )
       self$lloqDirection <- lloqDirection
       # Update Y2 label
