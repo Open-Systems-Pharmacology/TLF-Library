@@ -7,6 +7,8 @@
 .asLegendCaptionSubset(labels, unit = NULL)
 }
 \arguments{
+\item{labels}{#TODO}
+
 \item{unit}{A character added as unit to label}
 }
 \description{

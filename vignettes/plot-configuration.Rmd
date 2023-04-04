@@ -60,7 +60,7 @@ myConfiguration <- PlotConfiguration$new(
 myConfiguration
 ```
 
-When a `ggplot` object is initialized using the `tlf` method **`initializePlot`**, a *plotConfiguration* field is added to the plot object. This field corresponds to a **PlotConfiguration** object and defining the properties of the initialied plot.
+When a `ggplot` object is initialized using the `tlf` method **`initializePlot`**, a *plotConfiguration* field is added to the plot object. This field corresponds to a **PlotConfiguration** object and defining the properties of the initialized plot.
 
 **PlotConfiguration** objects can also be directly passed to the method *initializePlot* as shown below:
 
@@ -510,13 +510,13 @@ A shiny app has been created to tune `Theme` objects live and save them as json 
 With this app, it becomes quite easy to create one's own theme with a few clicks.
 To call for the shiny app, users only needed to run the function `runThemeMaker()`.
 
-Additionally, a few predifined themes are available :
+Additionally, a few predefined themes are available :
 
 ```{r list of json themes}
 list.files(system.file("themes", package = "tlf"))
 ```
 
-These predifined themes can be directly loaded and used through functions named `use<ThemeName>Theme()`.
+These predefined themes can be directly loaded and used through functions named `use<ThemeName>Theme()`.
 For instance, the function `useMatlabTheme()` will set default plot configurations for creating plots looking like Matlab figures.
 
 # 7. Exporting/Saving a plot

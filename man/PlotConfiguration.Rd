@@ -38,7 +38,7 @@ Other PlotConfiguration classes:
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{export}}{R6 class \code{ExportConfiguration} defining properties for saving/exporting plota}
+\item{\code{export}}{R6 class \code{ExportConfiguration} defining properties for saving/exporting plot}
 
 \item{\code{defaultXScale}}{Default xAxis scale value when creating a \code{PlotConfiguration} object}
 
@@ -176,7 +176,7 @@ Use Enum \code{LegendPositions} to get a list of available to legend positions.}
 
 \item{\code{errorbars}}{\code{ThemeAestheticSelections} object or list defining how errorbars are plotted}
 
-\item{\code{export}}{R6 class \code{ExportConfiguration} defining properties for saving/exporting plota}
+\item{\code{export}}{R6 class \code{ExportConfiguration} defining properties for saving/exporting plot}
 
 \item{\code{name}}{character defining the name of the file to be saved (without extension)}
 
