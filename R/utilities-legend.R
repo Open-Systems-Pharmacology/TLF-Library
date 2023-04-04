@@ -244,7 +244,7 @@ setCaptionVisibility <- function(plotObject, visibility, name = NULL) {
 
 #' @title setCaptionOrder
 #' @param plotObject `ggplot` graphical object
-#' @param order numeric order of the legend ccaption labels
+#' @param order numeric order of the legend caption labels
 #' @param name reference names in caption$name identifying the legend caption lines
 #' @return A `ggplot` graphical object
 #' @description

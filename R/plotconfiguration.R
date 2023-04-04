@@ -1,6 +1,6 @@
 #' @title PlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object
-#' @field export R6 class `ExportConfiguration` defining properties for saving/exporting plota
+#' @field export R6 class `ExportConfiguration` defining properties for saving/exporting plot
 #' @field defaultXScale Default xAxis scale value when creating a `PlotConfiguration` object
 #' @field defaultYScale Default yAxis scale value when creating a `PlotConfiguration` object
 #' @field defaultExpand Default expand value when creating a `PlotConfiguration` object
@@ -42,7 +42,7 @@ PlotConfiguration <- R6::R6Class(
     #' @param xGrid `LineElement` object defining properties of x-grid background
     #' @param yGrid `LineElement` object defining properties of y-grid background
     #' @param watermark character or `Label` object defining watermark
-    #' @param export R6 class `ExportConfiguration` defining properties for saving/exporting plota
+    #' @param export R6 class `ExportConfiguration` defining properties for saving/exporting plot
     #' @param name character defining the name of the file to be saved (without extension)
     #' @param format character defining the format of the file to be saved.
     #' @param width numeric values defining the width in `units` of the plot dimensions after saving

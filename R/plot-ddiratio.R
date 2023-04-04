@@ -170,7 +170,7 @@ getGuestValuesFromDataMapping <- function(data,
 #' @param x Numeric values input of Guest function
 #' @param delta Numeric value parameter of Guest function
 #' @param residualsVsObserved Logical value defining
-#' if limits are claculated as residuals vs observed, instead of predicted vs observed.
+#' if limits are calculated as residuals vs observed, instead of predicted vs observed.
 #' @return A data.frame with `x`, `ymin` and `ymax` defining Guest et al. limits
 #' @references
 #' <https://dmd.aspetjournals.org/content/39/2/170>
