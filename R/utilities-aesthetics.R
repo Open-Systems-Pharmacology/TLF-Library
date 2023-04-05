@@ -58,7 +58,7 @@
 #' @return Vector of aesthetics
 #' @keywords internal
 .getNextAestheticValues <- function(n, position = 0, map) {
-  # Get the map indices of aesthtic values to be output
+  # Get the map indices of aesthetic values to be output
   aesPositions <- seq(position + 1, position + n)
   if (n <= 0) {
     return(NULL)
@@ -87,7 +87,7 @@
     return(NULL)
   }
 
-  # Get the map indices of aesthtic values to be output
+  # Get the map indices of aesthetic values to be output
   aesPositions <- rep(aesPosition, n)
   return(map[aesPositions])
 }

@@ -306,14 +306,14 @@ knitr::kable(binnedGroupingsDataFrame)
 An additional `R6` class called `GroupMapping` maps `Grouping` objects to aesthetic parameters such as `color` or `linetype`.  To distinguish between "Compound" and "Dose" groups by color and to use the captions and legend title specified in `grouping2`, the following groupings object `groups1` is constructed:
 
 ```{r group-mapping-class, results='asis'}
-# Map groups to aesthtic properties
+# Map groups to aesthetic properties
 groups1 <- GroupMapping$new(color = grouping2)
 ```
 
 A `GroupMapping` object `groups2` can also be constructed more quickly by directly associating an aesthetic, such as `color`, to a vector of dataframe column names:
 
 ```{r, results='asis'}
-# Map groups to aesthtic properties
+# Map groups to aesthetic properties
 groups2 <- GroupMapping$new(color = c("Compound", "Dose"))
 ```
 

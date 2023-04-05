@@ -17,7 +17,7 @@
 
 #' @title .createPlotTicks
 #' @description Translate ticks and ticklabels into a value directly usable by `ggplot2`
-#' to give more flexibilty in the next functions
+#' to give more flexibility in the next functions
 #' @param ticks character, numeric or function defining the ticks
 #' @return name of the `ggplot2` scale
 #' @keywords internal
@@ -40,7 +40,7 @@
 
 #' @title .createPlotTickLabels
 #' @description Translate ticks and ticklabels into a value directly usable by `ggplot2`
-#' to give more flexibilty in the next functions
+#' to give more flexibility in the next functions
 #' @param ticklabels character, numeric or function defining the ticks
 #' @return name of the `ggplot2` scale
 #' @keywords internal
@@ -335,7 +335,7 @@ XAxisConfiguration <- R6::R6Class(
       if(!isEmpty(private$.limits)){
         xDataRange <- private$.limits
       }
-      
+
       if(!.isLogTicksIncludedInLimits(xDataRange, private$.scale)){
         return(plotObject)
       }
@@ -375,7 +375,7 @@ YAxisConfiguration <- R6::R6Class(
         "left" = ggplot2::theme(axis.text.y = private$.font$createPlotFont()),
         "right" = ggplot2::theme(axis.text.y.right = private$.font$createPlotFont())
       )
-        
+
       suppressMessages(
         plotObject <- plotObject + ggplot2::coord_cartesian(xlim = xlim, ylim = private$.limits)
       )
@@ -419,7 +419,7 @@ YAxisConfiguration <- R6::R6Class(
       if(!isEmpty(private$.limits)){
         yDataRange <- private$.limits
       }
-      
+
       if(!.isLogTicksIncludedInLimits(yDataRange, private$.scale)){
         return(plotObject)
       }
@@ -430,7 +430,7 @@ YAxisConfiguration <- R6::R6Class(
             color = private$.font$color
             ),
           "ln" = plotObject + ggplot2::annotation_logticks(
-            base = exp(1), 
+            base = exp(1),
             sides = switch(self$position, "left" = "l", "right" = "r"),
             color = private$.font$color
             ),

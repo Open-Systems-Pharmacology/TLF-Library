@@ -52,7 +52,7 @@ Besides, the usual `tlf` input arguments commonly used by the plot functions (`d
 
 - `x`: Numeric values used in the histogram instead of `data` and `dataMapping`.
 - `bins`: Number of bins
-- `binwidth`: Width of each bin, overwrting the number of bins.
+- `binwidth`: Width of each bin, overwriting the number of bins.
 - `stack`: Logical defining if histogram bars are stacked
 - `distribution`: Name of a distribution to fit to the data. 
 Currently, only normal and log-normal distributions are available.

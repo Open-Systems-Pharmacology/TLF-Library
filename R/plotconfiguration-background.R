@@ -7,7 +7,7 @@ BackgroundConfiguration <- R6::R6Class(
   public = list(
     #' @description Create a new `BackgroundConfiguration` object
     #' @param watermark `Label` object defining properties of watermark
-    #' @param plot `BackgroundElement` object defining oustide plot background properties
+    #' @param plot `BackgroundElement` object defining outside plot background properties
     #' @param panel `BackgroundElement` object defining panel (inside of plot) background properties
     #' @param xAxis `LineElement` object defining properties of x-axis
     #' @param yAxis `LineElement` object defining properties of y-axis

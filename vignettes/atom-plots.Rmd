@@ -239,7 +239,7 @@ addLine(
 )
 ```
 
-Since line plots can inlcude horizontal and vertical lines, `addLine` has the possibility of using *x* or *y* input for x/y-intercepts.
+Since line plots can include horizontal and vertical lines, `addLine` has the possibility of using *x* or *y* input for x/y-intercepts.
 
 ```{r addLine horizontal lines, eval=FALSE}
 addLine(
@@ -360,7 +360,7 @@ addErrorbar(
 ```
 
 Note that optional inputs for `addErrorbar` define the aesthetic of the bars only (and not how to link the bars).
-Thus, two layers are necessary when creating a plot that inlcuded both data and their error bars. 
+Thus, two layers are necessary when creating a plot that included both data and their error bars. 
 
 ```{r addErrorbar and Scatter}
 errorPlot <- addErrorbar(

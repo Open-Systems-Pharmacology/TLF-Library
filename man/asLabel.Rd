@@ -9,7 +9,7 @@ asLabel(text = "", font = NULL)
 \arguments{
 \item{text}{A character value}
 
-\item{font}{A \code{Font} object definin the font properties of the Label}
+\item{font}{A \code{Font} object defining the font properties of the Label}
 }
 \value{
 A \code{Label} object

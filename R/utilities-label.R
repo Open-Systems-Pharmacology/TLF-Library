@@ -49,7 +49,7 @@ setPlotLabels <- function(plotObject,
 
 #' @title asLabel
 #' @param text A character value
-#' @param font A `Font` object definin the font properties of the Label
+#' @param font A `Font` object defining the font properties of the Label
 #' @return A `Label` object
 #' @description
 #' Set a character string into a `Label` object associating font properties to input

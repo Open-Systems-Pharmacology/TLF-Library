@@ -32,7 +32,7 @@ Other DataMapping classes:
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{minRange}}{Mininmum range for guest and ratio lines}
+\item{\code{minRange}}{Minimum range for guest and ratio lines}
 
 \item{\code{deltaGuest}}{Value of \code{delta} in Guest et al. equation}
 
@@ -75,7 +75,7 @@ Create a new \code{DDIRatioDataMapping} object
 \item{\code{deltaGuest}}{Value of parameter \code{delta} in Guest et al. equation.
 Default value is 1.}
 
-\item{\code{minRange}}{Mininmum range for guest lines}
+\item{\code{minRange}}{Minimum range for guest lines}
 
 \item{\code{lines}}{List of ratio limits to display as diagonal/horizontal lines}
 

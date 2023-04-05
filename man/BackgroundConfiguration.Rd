@@ -86,7 +86,7 @@ Create a new \code{BackgroundConfiguration} object
 \describe{
 \item{\code{watermark}}{\code{Label} object defining properties of watermark}
 
-\item{\code{plot}}{\code{BackgroundElement} object defining oustide plot background properties}
+\item{\code{plot}}{\code{BackgroundElement} object defining outside plot background properties}
 
 \item{\code{panel}}{\code{BackgroundElement} object defining panel (inside of plot) background properties}
 
