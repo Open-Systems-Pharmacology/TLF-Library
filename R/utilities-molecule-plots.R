@@ -360,40 +360,43 @@ getDualAxisPlot <- function(leftPlotObject, rightPlotObject) {
     propertyNames = c("color", "linetype", "size", "alpha")
   )
 
+  validateEnumValue(direction, enum = Directions)
 
   plotObject <- switch(direction,
-                       "horizontal" =  plotObject + ggplot2::geom_hline(
-                         data = data,
-                         mapping = ggplot2::aes(
-                           yintercept = .data[[mapLabels$lloq]],
-                           color = .data[[mapLabels$color]]
-                         ),
-                         linetype = tlfEnv$defaultLLOQLinetype,
-                         size = aestheticValues$size,
-                         alpha = aestheticValues$alpha,
-                         na.rm = TRUE,
-                         show.legend = TRUE
-                       ),
-                       "vertical" = plotObject + ggplot2::geom_vline(
-                         data = data,
-                         mapping = ggplot2::aes(
-                           xintercept = .data[[mapLabels$lloq]],
-                           color = .data[[mapLabels$color]]
-                         ),
-                         linetype = tlfEnv$defaultLLOQLinetype,
-                         size = aestheticValues$size,
-                         alpha = aestheticValues$alpha,
-                         na.rm = TRUE,
-                         show.legend = TRUE
-                       ),
-                       "both" = .addLLOQLayer(.addLLOQLayer(plotObject,
-                                                            data,
-                                                            mapLabels,
-                                                            direction = "vertical"),
-                                              data, mapLabels,
-                                              direction = "horizontal"),
-                       stop('direction argument must be "horizontal", "vertical" or "both"')
-
+    "horizontal" = plotObject + ggplot2::geom_hline(
+      data = data,
+      mapping = ggplot2::aes(
+        yintercept = .data[[mapLabels$lloq]],
+        color = .data[[mapLabels$color]]
+      ),
+      linetype = tlfEnv$defaultLLOQLinetype,
+      size = aestheticValues$size,
+      alpha = aestheticValues$alpha,
+      na.rm = TRUE,
+      show.legend = FALSE
+    ),
+    "vertical" = plotObject + ggplot2::geom_vline(
+      data = data,
+      mapping = ggplot2::aes(
+        xintercept = .data[[mapLabels$lloq]],
+        color = .data[[mapLabels$color]]
+      ),
+      linetype = tlfEnv$defaultLLOQLinetype,
+      size = aestheticValues$size,
+      alpha = aestheticValues$alpha,
+      na.rm = TRUE,
+      show.legend = FALSE
+    ),
+    "both" = .addLLOQLayer(
+      .addLLOQLayer(plotObject,
+        data,
+        mapLabels,
+        direction = "vertical"
+      ),
+      data, mapLabels,
+      direction = "horizontal"
+    )
   )
+
   return(plotObject)
 }
