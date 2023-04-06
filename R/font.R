@@ -80,6 +80,13 @@ Font <- R6::R6Class(
 #' `NULL` otherwise
 #' @keywords internal
 .checkPlotFontFamily <- function(fontFamily) {
+  # If showtext is installed, use its default font or user-defined font
+  if(requireNamespace("showtext", quietly = TRUE)){
+    if (isIncluded(fontFamily, sysfonts::font_families())){
+      return(fontFamily)
+    }
+    return("NotoSans")
+  }
   if (isEmpty(.Platform$OS.type)) {
     return(NULL)
   }

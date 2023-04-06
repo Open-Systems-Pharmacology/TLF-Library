@@ -7,6 +7,11 @@
       family = "Symbola", 
       regular = system.file("extdata", "Symbola.ttf", package = "tlf")
     )
+    sysfonts::font_add(
+      family = "NotoSans", 
+      regular = system.file("extdata", "NotoSans-Regular.ttf", package = "tlf")
+    )
+    
     # Request usage of showtext with new font
     showtext::showtext_auto()
   }
