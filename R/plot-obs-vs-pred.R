@@ -56,6 +56,7 @@ plotObsVsPred <- function(data,
   validateIsOfType(data, "data.frame")
   dataMapping <- .setDataMapping(dataMapping, ObsVsPredDataMapping, data)
   validateIsNumeric(foldDistance, nullAllowed = TRUE)
+  # foldDistance only updates dataMapping$lines if defined
   if (!isEmpty(foldDistance)) {
     dataMapping$lines <- getLinesFromFoldDistance(foldDistance)
   }
@@ -87,7 +88,7 @@ plotObsVsPred <- function(data,
 
   # 2- Diagonal lines
   lineIndex <- 0
-  if (!is.null(foldDistance)) {
+  if (!isEmpty(dataMapping$lines)) {
     # Add foldDistance legend only if user specified folddistance values
     for (lineIndex in seq_along(dataMapping$lines)) {
       lineValue <- .getAblineValues(dataMapping$lines[[lineIndex]], plotConfiguration$yAxis$scale)

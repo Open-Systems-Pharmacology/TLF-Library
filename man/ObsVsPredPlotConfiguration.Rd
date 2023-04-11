@@ -71,7 +71,6 @@ Create a new \code{ObsVsPredPlotConfiguration} object
   lloqDirection = "vertical",
   foldLinesLegend = FALSE,
   foldLinesLegendDiagonal = FALSE,
-  legendPosition = "insideTopLeft",
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -84,8 +83,6 @@ Create a new \code{ObsVsPredPlotConfiguration} object
 \item{\code{foldLinesLegend}}{Whether to draw fold lines in legend. default to FALSE.}
 
 \item{\code{foldLinesLegendDiagonal}}{Whether to draw diagonal lines in legend for fold lines. default to FALSE.}
-
-\item{\code{legendPosition}}{Where to draw the legend. default to "insideTopLeft". Available values in \code{LegendPositions}}
 
 \item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
 }
