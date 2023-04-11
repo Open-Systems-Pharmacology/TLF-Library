@@ -62,7 +62,7 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
       self$lloqDirection <- lloqDirection
       self$foldLinesLegend <- foldLinesLegend
       self$foldLinesLegendDiagonal <- foldLinesLegendDiagonal
-      }
+    }
   ),
   active = list(
     foldLineslegendType = function(foldLinesLegendDiagonal = self$foldLinesLegendDiagonal) {
@@ -71,7 +71,8 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
       } else {
         return("path")
       }
-  })
+    }
+  )
 )
 
 #' @title ResVsPredPlotConfiguration
