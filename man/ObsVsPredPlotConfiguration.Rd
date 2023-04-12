@@ -44,7 +44,12 @@ Other PlotConfiguration classes:
 \item{\code{foldLinesLegend}}{Whether to draw fold lines in legend. default to FALSE.}
 
 \item{\code{foldLinesLegendDiagonal}}{Whether to draw diagonal lines in legend for fold lines. default to FALSE.}
-
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
 \item{\code{foldLineslegendType}}{translation of \code{foldLinesLegendDiagonal} in geom type.}
 }
 \if{html}{\out{</div>}}

@@ -45,7 +45,6 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
     lloqDirection = NULL,
     foldLinesLegend = NULL,
     foldLinesLegendDiagonal = NULL,
-    foldLineslegendType = NULL,
     #' @description Create a new `ObsVsPredPlotConfiguration` object
     #' @param lloqDirection Whether to draw LLOQ lines for x (vertical), y (horizontal) or x and y (both).
     #' @param foldLinesLegend Whether to draw fold lines in legend. default to FALSE.
@@ -63,10 +62,14 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
       self$lloqDirection <- lloqDirection
       self$foldLinesLegend <- foldLinesLegend
       self$foldLinesLegendDiagonal <- foldLinesLegendDiagonal
-      self$foldLineslegendType <- if (self$foldLinesLegendDiagonal) {
-        "abline"
+    }
+  ),
+  active = list(
+    foldLineslegendType = function(foldLinesLegendDiagonal = self$foldLinesLegendDiagonal) {
+      if (foldLinesLegendDiagonal) {
+        return("abline")
       } else {
-        "path"
+        return("path")
       }
     }
   )
