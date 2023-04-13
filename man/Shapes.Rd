@@ -52,6 +52,7 @@ Other enum helpers:
 \code{\link{Alignments}},
 \code{\link{AtomPlots}},
 \code{\link{ColorMaps}},
+\code{\link{ColorPalettes}},
 \code{\link{DataMappings}},
 \code{\link{DefaultDataMappingValues}},
 \code{\link{Directions}},

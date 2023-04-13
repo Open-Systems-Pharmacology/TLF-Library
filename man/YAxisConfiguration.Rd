@@ -32,7 +32,7 @@ Other PlotConfiguration classes:
 }
 \concept{PlotConfiguration classes}
 \section{Super class}{
-\code{\link[tlf:AxisConfiguration]{tlf::AxisConfiguration}} -> \code{YAxisConfiguration}
+\code{tlf::AxisConfiguration} -> \code{YAxisConfiguration}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

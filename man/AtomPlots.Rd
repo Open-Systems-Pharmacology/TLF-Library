@@ -20,6 +20,7 @@ Other enum helpers:
 \code{\link{AestheticSelectionKeys}},
 \code{\link{Alignments}},
 \code{\link{ColorMaps}},
+\code{\link{ColorPalettes}},
 \code{\link{DataMappings}},
 \code{\link{DefaultDataMappingValues}},
 \code{\link{Directions}},

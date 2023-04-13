@@ -159,13 +159,24 @@ plotTornado <- function(data = NULL,
   #----- Update properties using ggplot2::scale functions -----
   # And optional color palette otherwise use colors from theme
   if (!isEmpty(plotConfiguration$colorPalette)) {
-    try(suppressMessages(
-      plotObject <- plotObject +
-        ggplot2::scale_fill_brewer(
-          palette = plotConfiguration$colorPalette,
-          aesthetics = c("color", "fill")
-        )
-    ))
+    if(!isIncluded(plotConfiguration$colorPalette, .ViridisPalettes)){
+      try(suppressMessages(
+        plotObject <- plotObject +
+          ggplot2::scale_fill_brewer(
+            palette = plotConfiguration$colorPalette,
+            aesthetics = c("color", "fill")
+          )
+      ))
+    }
+    if(isIncluded(plotConfiguration$colorPalette, .ViridisPalettes)){
+      suppressMessages(
+        plotObject <- plotObject +
+          ggplot2::scale_fill_viridis_d(
+            option = plotConfiguration$colorPalette,
+            aesthetics = c("color", "fill")
+          )
+      )
+    }
   }
   plotObject <- .updateAxes(plotObject)
   return(plotObject)
