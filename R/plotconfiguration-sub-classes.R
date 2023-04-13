@@ -49,15 +49,13 @@ ObsVsPredPlotConfiguration <- R6::R6Class(
     #' @param lloqDirection Whether to draw LLOQ lines for x (vertical), y (horizontal) or x and y (both).
     #' @param foldLinesLegend Whether to draw fold lines in legend. default to FALSE.
     #' @param foldLinesLegendDiagonal Whether to draw diagonal lines in legend for fold lines. default to FALSE.
-    #' @param legendPosition Where to draw the legend. default to "insideTopLeft". Available values in `LegendPositions`
     #' @param ... parameters inherited from `PlotConfiguration`
     #' @return A new `CumulativeTimeProfilePlotConfiguration` object
     initialize = function(lloqDirection = "vertical",
                           foldLinesLegend = FALSE,
                           foldLinesLegendDiagonal = FALSE,
-                          legendPosition = "insideTopLeft",
                           ...) {
-      super$initialize(legendPosition = legendPosition, ...)
+      super$initialize(...)
       validateEnumValue(lloqDirection, Directions)
       self$lloqDirection <- lloqDirection
       self$foldLinesLegend <- foldLinesLegend
