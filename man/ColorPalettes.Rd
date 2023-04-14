@@ -12,6 +12,8 @@ ColorPalettes
 }
 \description{
 Enum of available color palettes
+First color palettes come from \href{https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html}{\code{viridis}}
+Remaining color palettes are from \href{https://r-graph-gallery.com/38-rcolorbrewers-palettes.html}{\code{RColorBrewer}}
 }
 \seealso{
 Other enum helpers: 

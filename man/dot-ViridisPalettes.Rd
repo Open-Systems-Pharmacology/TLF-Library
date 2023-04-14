@@ -11,6 +11,6 @@ An object of class \code{list} of length 7.
 .ViridisPalettes
 }
 \description{
-Enum of viridis colorPalette
+Enum of viridis color palettes
 }
 \keyword{internal}

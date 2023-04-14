@@ -10,5 +10,11 @@ messages <- list(
   },
   errorNrowData = function(plotName) {
     paste0("nrow(data)=0. ", plotName, " layer could not be added.")
+  },
+  unknownColorPalette = function(palette){
+    paste0(
+      "Unknown palette '", palette, "', using palette 'Set1' instead.\n",
+      "See enum 'ColorPalettes' to check available color palettes."
+      )
   }
 )
