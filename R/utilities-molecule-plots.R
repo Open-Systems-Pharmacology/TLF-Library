@@ -399,3 +399,53 @@ getDualAxisPlot <- function(leftPlotObject, rightPlotObject) {
 
   return(plotObject)
 }
+
+#' @title .applyColorPalette
+#' @description Apply a color palette to a ggplot object
+#' @param plotObject A `ggplot` object
+#' @param colorPalette A color palette name. 
+#' See enum `ColorPalettes` to get available color palettes.
+#' @return A `ggplot` object
+#' @keywords internal
+.applyColorPalette <- function(plotObject, colorPalette = NULL){
+  if(isEmpty(colorPalette)){
+    return(plotObject)
+  }
+  if (isIncluded(colorPalette, .ViridisPalettes)) {
+    suppressMessages(
+      plotObject <- plotObject +
+        ggplot2::scale_fill_viridis_d(
+          option = colorPalette,
+          aesthetics = c("color", "fill")
+        )
+    )
+    return(plotObject)
+  }
+  # For unknown color palettes, ggplot2 throw a warning and default to Greens color palette
+  # Use tryCatch to use a better default (Set1) and suggest a colorPalette from enum ColorPalette
+  tryCatch(
+    {
+      # Silence ggplot2 message from using 'scale_fill_brewer':
+      # 'Adding another scale for fill, which will replace the existing scale'
+      suppressMessages(
+        plotObject <- plotObject +
+          ggplot2::scale_fill_brewer(
+            palette = colorPalette,
+            aesthetics = c("color", "fill")
+          )
+      )
+    },
+    warning = function(w) {
+      warning(messages$unknownColorPalette(colorPalette), call. = FALSE)
+      plotObject$plotConfiguration$colorPalette <- ColorPalettes$Set1
+      suppressMessages(
+        plotObject <- plotObject +
+          ggplot2::scale_fill_brewer(
+            palette = ColorPalettes$Set1,
+            aesthetics = c("color", "fill")
+          )
+      )
+    }
+  )
+  return(plotObject)
+}

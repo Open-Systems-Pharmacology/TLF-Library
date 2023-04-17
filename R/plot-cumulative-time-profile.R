@@ -96,46 +96,10 @@ plotCumulativeTimeProfile <- function(data = NULL,
     data = mapData,
     mapLabels = mapLabels
   )
-
-  # And optional color palette otherwise use colors from theme
-  if (!isEmpty(plotConfiguration$colorPalette)) {
-    if (isIncluded(plotConfiguration$colorPalette, .ViridisPalettes)) {
-      suppressMessages(
-        plotObject <- plotObject +
-          ggplot2::scale_fill_viridis_d(
-            option = plotConfiguration$colorPalette,
-            aesthetics = c("color", "fill")
-          )
-      )
-    } else {
-      # For unknown color palettes, ggplot2 throw a warning and default to Greens color palette
-      # Use tryCatch to use a better default (Set1) and suggest a colorPalette from enum ColorPalette
-      tryCatch(
-        {
-          # Silence ggplot2 message from using 'scale_fill_brewer':
-          # 'Adding another scale for fill, which will replace the existing scale'
-          suppressMessages(
-            plotObject <- plotObject +
-              ggplot2::scale_fill_brewer(
-                palette = plotConfiguration$colorPalette,
-                aesthetics = c("color", "fill")
-              )
-          )
-        },
-        warning = function(w) {
-          warning(messages$unknownColorPalette(plotConfiguration$colorPalette), call. = FALSE)
-          plotConfiguration$colorPalette <- ColorPalettes$Set1
-          suppressMessages(
-            plotObject <- plotObject +
-              ggplot2::scale_fill_brewer(
-                palette = plotConfiguration$colorPalette,
-                aesthetics = c("color", "fill")
-              )
-          )
-        }
-      )
-    }
-  }
+  plotObject <- .applyColorPalette(
+    plotObject, 
+    colorPalette = plotConfiguration$colorPalette
+    )
   plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }
