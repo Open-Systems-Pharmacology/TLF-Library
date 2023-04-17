@@ -96,18 +96,10 @@ plotCumulativeTimeProfile <- function(data = NULL,
     data = mapData,
     mapLabels = mapLabels
   )
-
-  # And optional color palette otherwise use colors from theme
-  if (!isEmpty(plotConfiguration$colorPalette)) {
-    try(suppressMessages(
-      plotObject <- plotObject +
-        ggplot2::scale_fill_brewer(
-          palette = plotConfiguration$colorPalette,
-          aesthetics = c("color", "fill")
-        )
-    ))
-  }
-
+  plotObject <- .applyColorPalette(
+    plotObject, 
+    colorPalette = plotConfiguration$colorPalette
+    )
   plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }

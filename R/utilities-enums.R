@@ -481,3 +481,27 @@ TickLabelTransforms <- enum(c("none", "default", "identity", "log", "ln", "sqrt"
 #' @import ospsuite.utils
 #' @family enum helpers
 Directions <- enum(c("horizontal", "vertical", "both"))
+
+#' @title .ViridisPalettes
+#' @description Enum of viridis color palettes
+#' @import ospsuite.utils
+#' @keywords internal
+.ViridisPalettes <- enum(c("magma", "plasma", "inferno", "cividis", "mako", "rocket", "turbo"))
+
+#' @title ColorPalettes
+#' @description Enum of available color palettes
+#' First color palettes come from [`viridis`](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)
+#' Remaining color palettes are from [`RColorBrewer`](https://r-graph-gallery.com/38-rcolorbrewers-palettes.html)
+#' @export
+#' @import ospsuite.utils
+#' @family enum helpers
+ColorPalettes <- enum(c(
+  # Viridis color palettes
+  as.character(.ViridisPalettes),
+  # From row.names(RColorBrewer::brewer.pal.info)
+  "BrBG", "PiYG", "PRGn", "PuOr", "RdBu", "RdGy", "RdYlBu", "RdYlGn", 
+  "Spectral", "Accent", "Dark2", "Paired", "Pastel1", "Pastel2", 
+  "Set1", "Set2", "Set3", 
+  "Blues", "BuGn", "BuPu", "GnBu", "Greens", "Greys", "Oranges", "OrRd", "PuBu",
+  "PuBuGn", "PuRd", "Purples", "RdPu", "Reds", "YlGn", "YlGnBu", "YlOrBr", "YlOrRd"
+))

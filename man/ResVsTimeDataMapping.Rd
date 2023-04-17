@@ -27,7 +27,7 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{\link[tlf:ObsVsPredDataMapping]{tlf::ObsVsPredDataMapping}} -> \code{\link[tlf:ResVsPredDataMapping]{tlf::ResVsPredDataMapping}} -> \code{ResVsTimeDataMapping}
+\code{tlf::XYDataMapping} -> \code{tlf::XYGDataMapping} -> \code{tlf::ObsVsPredDataMapping} -> \code{tlf::ResVsPredDataMapping} -> \code{ResVsTimeDataMapping}
 }
 \section{Methods}{
 \subsection{Public methods}{

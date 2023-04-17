@@ -32,7 +32,7 @@ Other PlotConfiguration classes:
 }
 \concept{PlotConfiguration classes}
 \section{Super class}{
-\code{\link[tlf:BackgroundElement]{tlf::BackgroundElement}} -> \code{LineElement}
+\code{tlf::BackgroundElement} -> \code{LineElement}
 }
 \section{Methods}{
 \subsection{Public methods}{
