@@ -50,7 +50,9 @@ LegendConfiguration <- R6::R6Class(
           legend.background = private$.background$createPlotElement(),
           legend.text = private$.font$createPlotFont(),
           # symbol background same as legend background
-          legend.key = private$.background$createPlotElement(linetype = Linetypes$blank)
+          legend.key = private$.background$createPlotElement(linetype = Linetypes$blank),
+          # Ensure legend keys are wide enough to display dashed or dotted lines
+          legend.key.width = grid::unit(2, "lines")
         )
       # Update legend title for all aesthetic properties to prevent unwanted split of legends
       updateLegendTitleExpression <- parse(text = paste0(
