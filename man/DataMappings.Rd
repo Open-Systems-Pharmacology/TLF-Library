@@ -5,7 +5,7 @@
 \alias{DataMappings}
 \title{DataMappings}
 \format{
-An object of class \code{list} of length 17.
+An object of class \code{list} of length 18.
 }
 \usage{
 DataMappings

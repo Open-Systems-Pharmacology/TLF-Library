@@ -86,6 +86,7 @@ Collate:
     'plot-histogram.R'
     'plot-obs-vs-pred.R'
     'plot-observed-time-profile.R'
+    'plot-piechart.R'
     'plot-pkratio.R'
     'plot-qq.R'
     'plot-res-vs-pred.R'

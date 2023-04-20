@@ -105,3 +105,12 @@ XYGDataMapping <- R6::R6Class(
     }
   )
 )
+
+#' @title PieChartDataMapping
+#' @description  R6 class for mapping `x`, `y`, and `group` to `data`
+#' @export
+#' @family DataMapping classes
+PieChartDataMapping <- R6::R6Class(
+  "PieChartDataMapping",
+  inherit = XYGDataMapping
+)
