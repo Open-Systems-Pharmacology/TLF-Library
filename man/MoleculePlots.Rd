@@ -5,7 +5,7 @@
 \alias{MoleculePlots}
 \title{MoleculePlots}
 \format{
-An object of class \code{list} of length 14.
+An object of class \code{list} of length 15.
 }
 \usage{
 MoleculePlots

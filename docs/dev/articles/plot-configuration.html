@@ -8,10 +8,10 @@
 <meta name="description" content="tlf">
 <title>Introduction to PlotConfiguration objects • tlf</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to PlotConfiguration objects">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to PlotConfiguration objects">
 <meta property="og:description" content="tlf">
 <meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -199,7 +199,7 @@ next sections:</p>
 <code>tlf</code> method <strong><code>initializePlot</code></strong>, a
 <em>plotConfiguration</em> field is added to the plot object. This field
 corresponds to a <strong>PlotConfiguration</strong> object and defining
-the properties of the initialied plot.</p>
+the properties of the initialized plot.</p>
 <p><strong>PlotConfiguration</strong> objects can also be directly
 passed to the method <em>initializePlot</em> as shown below:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -855,12 +855,12 @@ define a theme as the current default, the function
 and save them as json files. With this app, it becomes quite easy to
 create one’s own theme with a few clicks. To call for the shiny app,
 users only needed to run the function <code><a href="../reference/runThemeMaker.html">runThemeMaker()</a></code>.</p>
-<p>Additionally, a few predifined themes are available :</p>
+<p>Additionally, a few predefined themes are available :</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"themes"</span>, package <span class="op">=</span> <span class="st">"tlf"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "dark-theme.json"     "excel-theme.json"    "hc-theme.json"      </span></span>
 <span><span class="co">#&gt; [4] "matlab-theme.json"   "minimal-theme.json"  "template-theme.json"</span></span></code></pre></div>
-<p>These predifined themes can be directly loaded and used through
+<p>These predefined themes can be directly loaded and used through
 functions named <code>use&lt;ThemeName&gt;Theme()</code>. For instance,
 the function <code><a href="../reference/useMatlabTheme.html">useMatlabTheme()</a></code> will set default plot
 configurations for creating plots looking like Matlab figures.</p>
@@ -996,7 +996,7 @@ you to re-create a PlotConfiguration object.</p>
 <span><span class="co">#&gt;  [90] "\n"                                                                  </span></span>
 <span><span class="co">#&gt;  [91] "# Define/Overwrite PlotConfiguration aesthetics selection properties"</span></span>
 <span><span class="co">#&gt;  [92] "plotConfiguration$points$color &lt;- \"next\""                          </span></span>
-<span><span class="co">#&gt;  [93] "plotConfiguration$points$size &lt;- \"first\""                          </span></span>
+<span><span class="co">#&gt;  [93] "plotConfiguration$points$size &lt;- 3"                                  </span></span>
 <span><span class="co">#&gt;  [94] "plotConfiguration$points$linetype &lt;- \"blank\""                      </span></span>
 <span><span class="co">#&gt;  [95] "plotConfiguration$points$shape &lt;- \"next\""                          </span></span>
 <span><span class="co">#&gt;  [96] "plotConfiguration$points$fill &lt;- \"NA\""                             </span></span>
@@ -1124,7 +1124,7 @@ you to re-create a PlotConfiguration object.</p>
 <span><span class="co">#&gt;  [90] "\n"                                                                  </span></span>
 <span><span class="co">#&gt;  [91] "# Define/Overwrite PlotConfiguration aesthetics selection properties"</span></span>
 <span><span class="co">#&gt;  [92] "tornado$points$color &lt;- \"reset\""                                   </span></span>
-<span><span class="co">#&gt;  [93] "tornado$points$size &lt;- 2"                                            </span></span>
+<span><span class="co">#&gt;  [93] "tornado$points$size &lt;- 3"                                            </span></span>
 <span><span class="co">#&gt;  [94] "tornado$points$linetype &lt;- \"blank\""                                </span></span>
 <span><span class="co">#&gt;  [95] "tornado$points$shape &lt;- \"reset\""                                   </span></span>
 <span><span class="co">#&gt;  [96] "tornado$points$fill &lt;- \"NA\""                                       </span></span>
@@ -1215,7 +1215,7 @@ into and expression to <code>eval</code> using
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

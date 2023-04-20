@@ -17,6 +17,7 @@ Other DataMapping classes:
 \code{\link{ObsVsPredDataMapping}},
 \code{\link{ObservedDataMapping}},
 \code{\link{PKRatioDataMapping}},
+\code{\link{PieChartDataMapping}},
 \code{\link{QQDataMapping}},
 \code{\link{ResVsPredDataMapping}},
 \code{\link{ResVsTimeDataMapping}},
@@ -27,7 +28,7 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{tlf::XYDataMapping} -> \code{tlf::XYGDataMapping} -> \code{RangeDataMapping}
+\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{RangeDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

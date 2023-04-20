@@ -20,6 +20,7 @@ Other PlotConfiguration classes:
 \code{\link{LegendConfiguration}},
 \code{\link{LineElement}},
 \code{\link{ObsVsPredPlotConfiguration}},
+\code{\link{PieChartPlotConfiguration}},
 \code{\link{PlotConfiguration}},
 \code{\link{PlotGridConfiguration}},
 \code{\link{QQPlotConfiguration}},
@@ -32,7 +33,7 @@ Other PlotConfiguration classes:
 }
 \concept{PlotConfiguration classes}
 \section{Super class}{
-\code{tlf::PlotConfiguration} -> \code{PKRatioPlotConfiguration}
+\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{PKRatioPlotConfiguration}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

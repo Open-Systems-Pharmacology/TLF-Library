@@ -128,6 +128,7 @@ Other PlotConfiguration classes:
 \code{\link{LineElement}},
 \code{\link{ObsVsPredPlotConfiguration}},
 \code{\link{PKRatioPlotConfiguration}},
+\code{\link{PieChartPlotConfiguration}},
 \code{\link{PlotConfiguration}},
 \code{\link{QQPlotConfiguration}},
 \code{\link{ResVsPredPlotConfiguration}},

@@ -103,6 +103,9 @@
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/ColorMaps.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/ColorPalettes.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/createWatermarkGrob.html</loc>
   </url>
   <url>
@@ -124,6 +127,9 @@
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/DefaultDataMappingValues.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/Directions.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-addBoxWhisker.html</loc>
   </url>
   <url>
@@ -133,10 +139,16 @@
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-addLineLayer.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-addLLOQLayer.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-addOutliers.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-addScatterLayer.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-applyColorPalette.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-asLegendCaptionSubset.html</loc>
@@ -266,6 +278,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-validateEitherOrNullInput.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-ViridisPalettes.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/ExportConfiguration.html</loc>
@@ -490,6 +505,12 @@
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/Percentile99-grapes.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/PieChartDataMapping.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/PieChartPlotConfiguration.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/PKRatioDataMapping.html</loc>
   </url>
   <url>
@@ -527,6 +548,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/plotObsVsPred.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/plotPieChart.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/plotPKRatio.html</loc>
@@ -625,6 +649,9 @@
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/setDefaultAggregationLabels.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/setDefaultAlphaRatio.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/setDefaultErrorbarCapSize.html</loc>
   </url>
   <url>
@@ -635,6 +662,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/setDefaultLegendTitle.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/setDefaultLLOQLinetype.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/setDefaultLogTicks.html</loc>

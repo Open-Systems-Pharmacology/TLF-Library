@@ -21,6 +21,7 @@ Other PlotConfiguration classes:
 \code{\link{LineElement}},
 \code{\link{ObsVsPredPlotConfiguration}},
 \code{\link{PKRatioPlotConfiguration}},
+\code{\link{PieChartPlotConfiguration}},
 \code{\link{PlotConfiguration}},
 \code{\link{PlotGridConfiguration}},
 \code{\link{QQPlotConfiguration}},
@@ -32,7 +33,7 @@ Other PlotConfiguration classes:
 }
 \concept{PlotConfiguration classes}
 \section{Super class}{
-\code{tlf::AxisConfiguration} -> \code{YAxisConfiguration}
+\code{\link[tlf:AxisConfiguration]{tlf::AxisConfiguration}} -> \code{YAxisConfiguration}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
