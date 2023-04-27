@@ -60,7 +60,7 @@ Other PlotConfiguration classes:
 \subsection{Method \code{updatePlot()}}{
 Update axis configuration on a \code{ggplot} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{XAxisConfiguration$updatePlot(plotObject, ylim = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{XAxisConfiguration$updatePlot(plotObject, yAxisLimits = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -68,7 +68,7 @@ Update axis configuration on a \code{ggplot} object
 \describe{
 \item{\code{plotObject}}{\code{ggplot} object}
 
-\item{\code{ylim}}{limits of \code{y} axis to prevent \code{coord_cartesian} to overwrite its properties}
+\item{\code{yAxisLimits}}{values of axisLimits for \code{y} axis to prevent \code{coord_cartesian} to overwrite its properties}
 }
 \if{html}{\out{</div>}}
 }

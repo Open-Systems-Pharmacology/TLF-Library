@@ -35,7 +35,10 @@ Other PlotConfiguration classes:
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{limits}}{numeric vector of length 2 defining limits of axis.
+\item{\code{valuesLimits}}{numeric vector of length 2 defining limits of axis.
+A value of \code{NULL} is allowed and lead to default \code{ggplot2} behaviour}
+
+\item{\code{axisLimits}}{numeric vector of length 2 defining limits of axis.
 A value of \code{NULL} is allowed and lead to default \code{ggplot2} behaviour}
 
 \item{\code{scale}}{name of axis scale from Enum \code{Scaling}
@@ -74,7 +77,8 @@ If \code{FALSE}, some space between data and axis is kept}
 Create a new \code{AxisConfiguration} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{AxisConfiguration$new(
-  limits = NULL,
+  valuesLimits = NULL,
+  axisLimits = NULL,
   scale = Scaling$lin,
   ticks = NULL,
   ticklabels = NULL,
@@ -87,7 +91,9 @@ Create a new \code{AxisConfiguration} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{limits}}{numeric vector of axis limits}
+\item{\code{valuesLimits}}{numeric vector of value limits (data outside these limits is removed)}
+
+\item{\code{axisLimits}}{numeric vector of axis limits (data outside these limits is kept but not plotted)}
 
 \item{\code{scale}}{character defining axis scale
 Use enum \code{Scaling} to access predefined scales.}

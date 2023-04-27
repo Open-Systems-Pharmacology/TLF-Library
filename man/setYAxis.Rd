@@ -7,7 +7,8 @@
 setYAxis(
   plotObject,
   scale = NULL,
-  limits = NULL,
+  valuesLimits = NULL,
+  axisLimits = NULL,
   ticks = NULL,
   ticklabels = NULL,
   minorTicks = NULL,
@@ -19,8 +20,6 @@ setYAxis(
 \item{plotObject}{A \code{ggplot} object to set X-axis properties}
 
 \item{scale}{Scale of axis. Use enum \code{Scaling} to access names of scales.}
-
-\item{limits}{Optional numeric values of axis limits}
 
 \item{ticks}{Optional values or function for axis ticks}
 

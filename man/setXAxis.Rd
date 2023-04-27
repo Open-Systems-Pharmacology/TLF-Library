@@ -7,7 +7,8 @@
 setXAxis(
   plotObject,
   scale = NULL,
-  limits = NULL,
+  valuesLimits = NULL,
+  axisLimits = NULL,
   ticks = NULL,
   ticklabels = NULL,
   minorTicks = NULL,
@@ -20,8 +21,6 @@ setXAxis(
 
 \item{scale}{Scale of axis. Use enum \code{Scaling} to access names of scales.}
 
-\item{limits}{Optional numeric values of axis limits}
-
 \item{ticks}{Optional values or function for axis ticks}
 
 \item{ticklabels}{Optional values or function for axis ticklabels}
@@ -31,6 +30,8 @@ setXAxis(
 \item{font}{A \code{Font} object  defining font of ticklabels}
 
 \item{expand}{Logical defining if data is expanded until axis}
+
+\item{limits}{Optional numeric values of axis limits}
 }
 \value{
 A \code{ggplot} object
