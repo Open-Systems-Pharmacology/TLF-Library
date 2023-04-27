@@ -12,7 +12,8 @@ TimeProfilePlotConfiguration <- R6::R6Class(
     #' @param y2label character or `Label` object defining plot y2label
     #' @param y2Axis `YAxisConfiguration` object defining y-axis properties
     #' @param y2Scale name of y2-axis scale. Use enum `Scaling` to access predefined scales.
-    #' @param y2Limits numeric vector of length 2 defining y-axis limits
+    #' @param y2AxisLimits numeric vector of length 2 defining y axis limits
+    #' @param y2ValuesLimits numeric vector of length 2 defining y values limits
     #' @param lloqDirection Whether to draw LLOQ lines for x (vertical), y (horizontal) or x and y (both).
     #' @param data data.frame used by `.smartMapping`
     #' @param metaData list of information on `data`
