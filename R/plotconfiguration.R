@@ -32,10 +32,12 @@ PlotConfiguration <- R6::R6Class(
     #' Use Enum `LegendPositions` to get a list of available to legend positions.
     #' @param xAxis `XAxisConfiguration` object defining x-axis properties
     #' @param xScale name of X-axis scale. Use enum `Scaling` to access predefined scales.
-    #' @param xLimits numeric vector of length 2 defining x-axis limits
+    #' @param xValuesLimits numeric vector of length 2 defining x values limits
+    #' @param xAxisLimits numeric vector of length 2 defining x-axis limits
     #' @param yAxis `YAxisConfiguration` object defining y-axis properties
     #' @param yScale name of y-axis scale. Use enum `Scaling` to access predefined scales.
-    #' @param yLimits numeric vector of length 2 defining y-axis limits
+    #' @param yValuesLimits numeric vector of length 2 defining x values limits
+    #' @param yAxisLimits numeric vector of length 2 defining x-axis limits
     #' @param background `BackgroundConfiguration` object defining background properties
     #' @param plotArea `BackgroundElement` object defining properties of plot area
     #' @param panelArea `BackgroundElement` object defining properties of panel area
@@ -70,11 +72,13 @@ PlotConfiguration <- R6::R6Class(
                           # X-Axis configuration
                           xAxis = NULL,
                           xScale = NULL,
-                          xLimits = NULL,
+                          xValuesLimits = NULL,
+                          xAxisLimits = NULL,
                           # Y-Axis configuration
                           yAxis = NULL,
                           yScale = NULL,
-                          yLimits = NULL,
+                          yValuesLimits = NULL,
+                          yAxisLimits = NULL,
                           # Background configuration
                           background = NULL,
                           plotArea = NULL,
@@ -137,7 +141,8 @@ PlotConfiguration <- R6::R6Class(
         scale = self$defaultXScale,
         expand = self$defaultExpand
       )
-      private$.xAxis$limits <- xLimits %||% private$.xAxis$limits
+      private$.xAxis$valuesLimits <- xValuesLimits %||% private$.xAxis$valuesLimits
+      private$.xAxis$axisLimits <- xAxisLimits %||% private$.xAxis$axisLimits
       private$.xAxis$scale <- xScale %||% private$.xAxis$scale
 
       # Y-Axis configuration, overwrite some properties only if they are defined
@@ -146,7 +151,8 @@ PlotConfiguration <- R6::R6Class(
         scale = self$defaultYScale,
         expand = self$defaultExpand
       )
-      private$.yAxis$limits <- yLimits %||% private$.yAxis$limits
+      private$.yAxis$valuesLimits <- yValuesLimits %||% private$.yAxis$limits
+      private$.yAxis$axisLimits <- yAxisLimits %||% private$.yAxis$axisLimits
       private$.yAxis$scale <- yScale %||% private$.yAxis$scale
 
       # Background configuration, overwrite some properties only if they are defined

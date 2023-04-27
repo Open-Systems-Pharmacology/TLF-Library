@@ -75,7 +75,8 @@ AxisConfiguration <- R6::R6Class(
   "AxisConfiguration",
   public = list(
     #' @description Create a new `AxisConfiguration` object
-    #' @param limits numeric vector of axis limits
+    #' @param valuesLimits numeric vector of value limits (data outside these limits is removed)
+    #' @param axisLimits numeric vector of axis limits (data outside these limits is kept but not plotted)
     #' @param scale character defining axis scale
     #' Use enum `Scaling` to access predefined scales.
     #' @param ticks numeric vector or function defining where to position axis ticks
@@ -86,17 +87,20 @@ AxisConfiguration <- R6::R6Class(
     #' If `TRUE`, data is expanded until axis
     #' If `FALSE`, some space between data and axis is kept
     #' @return A new `AxisConfiguration` object
-    initialize = function(limits = NULL,
+    initialize = function(valuesLimits = NULL,
+                          axisLimits = NULL,
                           scale = Scaling$lin,
                           ticks = NULL,
                           ticklabels = NULL,
                           minorTicks = NULL,
                           font = NULL,
                           expand = FALSE) {
-      validateIsNumeric(limits, nullAllowed = TRUE)
+      validateIsNumeric(valuesLimits, nullAllowed = TRUE)
+      validateIsNumeric(axisLimits, nullAllowed = TRUE)
       validateIsOfType(font, "Font", nullAllowed = TRUE)
       validateIsLogical(expand)
-      private$.limits <- limits
+      private$.valuesLimits <- valuesLimits
+      private$.axisLimits <- axisLimits
 
       scale <- scale %||% Scaling$lin
       private$.scale <- .createPlotScale(scale)
@@ -187,19 +191,34 @@ AxisConfiguration <- R6::R6Class(
     }
   ),
   active = list(
-    #' @field limits numeric vector of length 2 defining limits of axis.
+    #' @field valuesLimits numeric vector of length 2 defining limits of axis.
     #' A value of `NULL` is allowed and lead to default `ggplot2` behaviour
-    limits = function(value) {
+    valuesLimits = function(value) {
       if (missing(value)) {
-        return(private$.limits)
+        return(private$.valuesLimits)
       }
       validateIsNumeric(value, nullAllowed = TRUE)
       if (isOfLength(value, 0)) {
-        private$.limits <- NULL
+        private$.valuesLimits <- NULL
         return(invisible())
       }
       validateIsOfLength(value, 2)
-      private$.limits <- value
+      private$.valuesLimits <- value
+      return(invisible())
+    },
+    #' @field axisLimits numeric vector of length 2 defining limits of axis.
+    #' A value of `NULL` is allowed and lead to default `ggplot2` behaviour
+    axisLimits = function(value) {
+      if (missing(value)) {
+        return(private$.axisLimits)
+      }
+      validateIsNumeric(value, nullAllowed = TRUE)
+      if (isOfLength(value, 0)) {
+        private$.axisLimits <- NULL
+        return(invisible())
+      }
+      validateIsOfLength(value, 2)
+      private$.axisLimits <- value
       return(invisible())
     },
     #' @field scale name of axis scale from Enum `Scaling`
@@ -267,7 +286,8 @@ AxisConfiguration <- R6::R6Class(
     }
   ),
   private = list(
-    .limits = NULL,
+    .valuesLimits = NULL,
+    .axisLimits = NULL,
     .scale = NULL,
     .ticks = NULL,
     .ticklabels = NULL,
@@ -287,15 +307,15 @@ XAxisConfiguration <- R6::R6Class(
   public = list(
     #' @description Update axis configuration on a `ggplot` object
     #' @param plotObject `ggplot` object
-    #' @param ylim limits of `y` axis to prevent `coord_cartesian` to overwrite its properties
+    #' @param yAxisLimits values of axisLimits for `y` axis to prevent `coord_cartesian` to overwrite its properties
     #' @return A `ggplot` object with updated axis properties
-    updatePlot = function(plotObject, ylim = NULL) {
+    updatePlot = function(plotObject, yAxisLimits = NULL) {
       validateIsOfType(plotObject, "ggplot")
       # Update font properties
       plotObject <- plotObject + ggplot2::theme(axis.text.x = private$.font$createPlotFont())
       # Update limits using coor_cartesian to prevent ggplot to remove data and crash
       suppressMessages(
-        plotObject <- plotObject + ggplot2::coord_cartesian(xlim = private$.limits, ylim = ylim)
+        plotObject <- plotObject + ggplot2::coord_cartesian(xlim = private$.axisLimits, ylim = yAxisLimits)
       )
       # Update ticks and their labels for discrete scale
       if (isIncluded(private$.scale, Scaling$discrete)) {
@@ -314,6 +334,7 @@ XAxisConfiguration <- R6::R6Class(
       suppressMessages(
         plotObject <- plotObject +
           ggplot2::scale_x_continuous(
+            limits = private$.valuesLimits,
             trans = self$ggplotScale(),
             breaks = self$prettyTicks(),
             minor_breaks = self$prettyMinorTicks(),
@@ -332,8 +353,8 @@ XAxisConfiguration <- R6::R6Class(
         "log" = 10^plotScaleData$x$range$range,
         "ln" = exp(plotScaleData$x$range$range)
       )
-      if(!isEmpty(private$.limits)){
-        xDataRange <- private$.limits
+      if(!isEmpty(private$.valuesLimits)){
+        xDataRange <- private$.valuesLimits
       }
 
       if(!.isLogTicksIncludedInLimits(xDataRange, private$.scale)){
@@ -365,9 +386,9 @@ YAxisConfiguration <- R6::R6Class(
 
     #' @description Update axis configuration on a `ggplot` object
     #' @param plotObject `ggplot` object
-    #' @param xlim limits of `x` axis to prevent `coord_cartesian` to overwrite its properties
+    #' @param xAxisLimits limits of `x` axis to prevent `coord_cartesian` to overwrite its properties
     #' @return A `ggplot` object with updated axis properties
-    updatePlot = function(plotObject, xlim = NULL) {
+    updatePlot = function(plotObject, xAxisLimits = NULL) {
       validateIsOfType(plotObject, "ggplot")
       # Update font properties
       plotObject <- plotObject + switch(
@@ -377,7 +398,7 @@ YAxisConfiguration <- R6::R6Class(
       )
 
       suppressMessages(
-        plotObject <- plotObject + ggplot2::coord_cartesian(xlim = xlim, ylim = private$.limits)
+        plotObject <- plotObject + ggplot2::coord_cartesian(xlim = xAxisLimits, ylim = private$.axisLimits)
       )
       # Update ticks and their labels for discrete scale
       if (isIncluded(private$.scale, Scaling$discrete)) {
@@ -397,6 +418,7 @@ YAxisConfiguration <- R6::R6Class(
       suppressMessages(
         plotObject <- plotObject +
           ggplot2::scale_y_continuous(
+            limits = private$.valuesLimits,
             position = self$position,
             trans = self$ggplotScale(),
             breaks = self$prettyTicks(),
@@ -416,8 +438,8 @@ YAxisConfiguration <- R6::R6Class(
         "log" = 10^plotScaleData$y$range$range,
         "ln" = exp(plotScaleData$y$range$range)
       )
-      if(!isEmpty(private$.limits)){
-        yDataRange <- private$.limits
+      if(!isEmpty(private$.valuesLimits)){
+        yDataRange <- private$.valuesLimits
       }
 
       if(!.isLogTicksIncludedInLimits(yDataRange, private$.scale)){

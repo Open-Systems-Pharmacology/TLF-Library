@@ -25,7 +25,8 @@ TimeProfilePlotConfiguration <- R6::R6Class(
                           # Y2-Axis configuration
                           y2Axis = NULL,
                           y2Scale = NULL,
-                          y2Limits = NULL,
+                          y2ValuesLimits = NULL,
+                          y2AxisLimits = NULL,
                           lloqDirection = "horizontal",
                           # Smart configuration using metaData
                           data = NULL,
@@ -58,7 +59,8 @@ TimeProfilePlotConfiguration <- R6::R6Class(
         expand = self$defaultExpand
       )
       private$.y2Axis$position <- "right"
-      private$.y2Axis$limits <- y2Limits %||% private$.y2Axis$limits
+      private$.y2Axis$valuesLimits <- y2ValuesLimits %||% private$.y2Axis$valuesLimits
+      private$.y2Axis$axisLimits <- y2AxisLimits %||% private$.y2Axis$axisLimits
       private$.y2Axis$scale <- y2Scale %||% private$.y2Axis$scale
     }
 

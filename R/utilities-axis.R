@@ -26,7 +26,8 @@
 #' setXAxis(myPlot, font = Font$new(color = "blue", size = 14))
 setXAxis <- function(plotObject,
                      scale = NULL,
-                     limits = NULL,
+                     valuesLimits = NULL,
+                     axisLimits = NULL,
                      ticks = NULL,
                      ticklabels = NULL,
                      minorTicks = NULL,
@@ -34,7 +35,8 @@ setXAxis <- function(plotObject,
                      expand = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsIncluded(scale, Scaling, nullAllowed = TRUE)
-  validateIsNumeric(limits, nullAllowed = TRUE)
+  validateIsNumeric(valuesLimits, nullAllowed = TRUE)
+  validateIsNumeric(axisLimits, nullAllowed = TRUE)
   validateIsOfType(font, "Font", nullAllowed = TRUE)
   validateIsLogical(expand, nullAllowed = TRUE)
 
@@ -45,8 +47,9 @@ setXAxis <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$xAxis
   xAxis <- newPlotObject$plotConfiguration$xAxis
-  eval(.parseVariableToObject("xAxis", c("limits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
-  newPlotObject <- xAxis$updatePlot(newPlotObject, ylim = newPlotObject$plotConfiguration$yAxis$limits)
+  eval(.parseVariableToObject("xAxis", c("valuesLimits","axisLimits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
+  newPlotObject <- xAxis$updatePlot(newPlotObject,
+                                    yAxisLimits = newPlotObject$plotConfiguration$yAxis$axisLimits)
   return(newPlotObject)
 }
 
@@ -71,7 +74,8 @@ setXAxis <- function(plotObject,
 #' setYAxis(myPlot, font = Font$new(color = "blue", size = 14))
 setYAxis <- function(plotObject,
                      scale = NULL,
-                     limits = NULL,
+                     valuesLimits = NULL,
+                     axisLimits = NULL,
                      ticks = NULL,
                      ticklabels = NULL,
                      minorTicks = NULL,
@@ -79,7 +83,8 @@ setYAxis <- function(plotObject,
                      expand = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsIncluded(scale, Scaling, nullAllowed = TRUE)
-  validateIsNumeric(limits, nullAllowed = TRUE)
+  validateIsNumeric(valuesLimits, nullAllowed = TRUE)
+  validateIsNumeric(axisLimits, nullAllowed = TRUE)
   validateIsOfType(font, "Font", nullAllowed = TRUE)
   validateIsLogical(expand, nullAllowed = TRUE)
 
@@ -90,8 +95,9 @@ setYAxis <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$yAxis
   yAxis <- newPlotObject$plotConfiguration$yAxis
-  eval(.parseVariableToObject("yAxis", c("limits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
-  newPlotObject <- yAxis$updatePlot(newPlotObject, xlim = newPlotObject$plotConfiguration$xAxis$limits)
+  eval(.parseVariableToObject("yAxis", c("valuesLimits", "axisLimits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
+  newPlotObject <- yAxis$updatePlot(newPlotObject,
+                                    xAxisLimits = newPlotObject$plotConfiguration$xAxis$axisLimits)
   return(newPlotObject)
 }
 
@@ -113,17 +119,18 @@ setY2Axis <- function(plotObject,
   validateIsNumeric(limits, nullAllowed = TRUE)
   validateIsOfType(font, "Font", nullAllowed = TRUE)
   validateIsLogical(expand, nullAllowed = TRUE)
-  
+
   # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
   newPlotObject <- plotObject
   newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
-  
+
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$yAxis
   y2Axis <- newPlotObject$plotConfiguration$y2Axis %||% YAxisConfiguration$new()
   y2Axis$position <- "right"
-  eval(.parseVariableToObject("y2Axis", c("limits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
-  newPlotObject <- y2Axis$updatePlot(newPlotObject, xlim = newPlotObject$plotConfiguration$xAxis$limits)
+  eval(.parseVariableToObject("y2Axis", c("valuesLimits", "axisLimits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
+  newPlotObject <- y2Axis$updatePlot(newPlotObject,
+                                     xAxisLimits = newPlotObject$plotConfiguration$xAxis$axisLimits)
   return(newPlotObject)
 }
 

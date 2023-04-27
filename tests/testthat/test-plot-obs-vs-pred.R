@@ -15,8 +15,8 @@ test_that("plotObservedVsSimulated works ", {
       data = obsVsPredData,
       dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y"),
       plotConfiguration = ObsVsPredPlotConfiguration$new(
-        xScale = Scaling$log, xLimits = c(0.05, 50),
-        yScale = Scaling$log, yLimits = c(0.05, 50),
+        xScale = Scaling$log, xAxisLimits = c(0.05, 50),
+        yScale = Scaling$log, yAxisLimits = c(0.05, 50),
       )
     )
   )
@@ -27,8 +27,8 @@ test_that("foldDistance are plotted correctly", {
   skip_if(getRversion() < "4.1")
   plotConfiguration <- ObsVsPredPlotConfiguration$new(
     foldLinesLegend = TRUE,
-    xScale = Scaling$log, xLimits = c(0.05, 50),
-    yScale = Scaling$log, yLimits = c(0.05, 50)
+    xScale = Scaling$log, xAxisLimits = c(0.05, 50),
+    yScale = Scaling$log, yAxisLimits = c(0.05, 50)
   )
 
   vdiffr::expect_doppelganger(
@@ -81,8 +81,8 @@ test_that("foldDistance are plotted correctly", {
         foldLinesLegend = TRUE,
         foldLinesLegendDiagonal = TRUE,
         legendTitle =  "diagonal lines",
-        xScale = Scaling$log, xLimits = c(0.05, 50),
-        yScale = Scaling$log, yLimits = c(0.05, 50),
+        xScale = Scaling$log, xAxisLimits = c(0.05, 50),
+        yScale = Scaling$log, yAxisLimits = c(0.05, 50),
       ),
       foldDistance = c(1, 5, 10, 15, 20, 25)
     )
