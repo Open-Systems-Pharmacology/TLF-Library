@@ -20,7 +20,7 @@
 #' setXAxis(myPlot, ticks = c(1, 2, 3), ticklabels = parse(text = c("alpha", "beta", "gamma")))
 #'
 #' # Set x-axis limits
-#' setXAxis(myPlot, limits = c(1, 2.5))
+#' setXAxis(myPlot, axisLimits = c(1, 2.5))
 #'
 #' # Set x-axis fonts
 #' setXAxis(myPlot, font = Font$new(color = "blue", size = 14))
@@ -68,7 +68,7 @@ setXAxis <- function(plotObject,
 #' setYAxis(myPlot, ticks = c(10, 50, 100), ticklabels = parse(text = c("alpha", "beta", "gamma")))
 #'
 #' # Set y-axis limits
-#' setYAxis(myPlot, limits = c(10, 75))
+#' setYAxis(myPlot, axisLimits = c(10, 75))
 #'
 #' # Set y-axis fonts
 #' setYAxis(myPlot, font = Font$new(color = "blue", size = 14))
