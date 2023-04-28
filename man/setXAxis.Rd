@@ -49,7 +49,7 @@ setXAxis(myPlot, scale = Scaling$log)
 setXAxis(myPlot, ticks = c(1, 2, 3), ticklabels = parse(text = c("alpha", "beta", "gamma")))
 
 # Set x-axis limits
-setXAxis(myPlot, limits = c(1, 2.5))
+setXAxis(myPlot, axisLimits = c(1, 2.5))
 
 # Set x-axis fonts
 setXAxis(myPlot, font = Font$new(color = "blue", size = 14))

@@ -47,7 +47,7 @@ setYAxis(myPlot, scale = Scaling$log)
 setYAxis(myPlot, ticks = c(10, 50, 100), ticklabels = parse(text = c("alpha", "beta", "gamma")))
 
 # Set y-axis limits
-setYAxis(myPlot, limits = c(10, 75))
+setYAxis(myPlot, axisLimits = c(10, 75))
 
 # Set y-axis fonts
 setYAxis(myPlot, font = Font$new(color = "blue", size = 14))
