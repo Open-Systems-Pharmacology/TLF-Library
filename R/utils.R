@@ -6,4 +6,4 @@ tlfEnv$currentTheme <- Theme$new()
 useMinimalTheme()
 
 # Quiets concerns of R CMD check for ggplot2
-if(getRversion() >= "2.15.1")  utils::globalVariables(c("count","ncount","width"))
+if (getRversion() >= "2.15.1") utils::globalVariables(c("count", "ncount", "width"))
