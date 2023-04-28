@@ -26,7 +26,7 @@
 #'
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/histogram.html>
-#'
+#' @importFrom stats dnorm setNames
 #' @export
 #' @family molecule plots
 #' @examples
