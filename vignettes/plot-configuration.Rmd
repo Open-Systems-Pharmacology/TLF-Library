@@ -459,12 +459,12 @@ The methods *setXAxis* and *setYAxis* require the plot object, and the axis prop
 Using the previous example, *scatter1*: 
 
 ```{r set-x-axis, fig.width=7.5}
-setXAxis(scatter1, limits = c(0.5, 20), scale = Scaling$sqrt)
+setXAxis(scatter1, axisLimits = c(0.5, 20), scale = Scaling$sqrt)
 ```
 
 ```{r set-x-axis-ticks, fig.width=7.5}
 setXAxis(scatter1,
-  limits = c(0, 6 * pi),
+  axisLimits = c(0, 6 * pi),
   ticks = seq(0, 6 * pi, pi),
   ticklabels = TickLabelTransforms$pi,
   font = Font$new(color = "dodgerblue")
