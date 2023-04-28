@@ -101,24 +101,24 @@ setYAxis <- function(plotObject,
 #' @return A `ggplot` object
 #' @export
 setY2Axis <- function(plotObject,
-                     scale = NULL,
-                     limits = NULL,
-                     ticks = NULL,
-                     ticklabels = NULL,
-                     minorTicks = NULL,
-                     font = NULL,
-                     expand = NULL) {
+                      scale = NULL,
+                      limits = NULL,
+                      ticks = NULL,
+                      ticklabels = NULL,
+                      minorTicks = NULL,
+                      font = NULL,
+                      expand = NULL) {
   validateIsOfType(plotObject, "ggplot")
   validateIsIncluded(scale, Scaling, nullAllowed = TRUE)
   validateIsNumeric(limits, nullAllowed = TRUE)
   validateIsOfType(font, "Font", nullAllowed = TRUE)
   validateIsLogical(expand, nullAllowed = TRUE)
-  
+
   # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
   newPlotObject <- plotObject
   newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
-  
+
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$yAxis
   y2Axis <- newPlotObject$plotConfiguration$y2Axis %||% YAxisConfiguration$new()
   y2Axis$position <- "right"

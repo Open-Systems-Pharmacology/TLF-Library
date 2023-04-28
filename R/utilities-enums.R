@@ -333,15 +333,15 @@ Linetypes <- enum(c(
 #'   shape = factor(names(Shapes), levels = names(Shapes))
 #' )
 #' ggplot2::ggplot(data = shapesData, ggplot2::aes(x, y)) +
-#' ggplot2::theme_void() +
-#' # Define size and color of shapes
-#' geomTLFPoint(ggplot2::aes(shape = shape), size = 8, color = "red") +
-#' # Add shape names from enum below the displayed shape
-#' ggplot2::geom_text(ggplot2::aes(label = shape), nudge_y = -0.3, size = 3) +
-#' # Use scale to display the actual shape
-#' ggplot2::scale_shape_manual(values = as.character(unlist(Shapes))) +
-#' # Remove the legend as the shape name is labelled below the shape
-#' ggplot2::guides(shape="none")
+#'   ggplot2::theme_void() +
+#'   # Define size and color of shapes
+#'   geomTLFPoint(ggplot2::aes(shape = shape), size = 8, color = "red") +
+#'   # Add shape names from enum below the displayed shape
+#'   ggplot2::geom_text(ggplot2::aes(label = shape), nudge_y = -0.3, size = 3) +
+#'   # Use scale to display the actual shape
+#'   ggplot2::scale_shape_manual(values = as.character(unlist(Shapes))) +
+#'   # Remove the legend as the shape name is labelled below the shape
+#'   ggplot2::guides(shape = "none")
 #'
 #' # Perform a scatter plot with blue pentagons as shape
 #' addScatter(
@@ -357,7 +357,7 @@ Shapes <- list(
   "circle" = "\u25cf",
   "diamond" = "\u25c6",
   "triangle" = "\u25b2",
-  "square" =  "\u25a0",
+  "square" = "\u25a0",
   "invertedTriangle" = "\u25bc",
   "cross" = "\ud83d\udfad",
   "thinCross" = "\ud83d\udfa9",
@@ -499,9 +499,9 @@ ColorPalettes <- enum(c(
   # Viridis color palettes
   as.character(.ViridisPalettes),
   # From row.names(RColorBrewer::brewer.pal.info)
-  "BrBG", "PiYG", "PRGn", "PuOr", "RdBu", "RdGy", "RdYlBu", "RdYlGn", 
-  "Spectral", "Accent", "Dark2", "Paired", "Pastel1", "Pastel2", 
-  "Set1", "Set2", "Set3", 
+  "BrBG", "PiYG", "PRGn", "PuOr", "RdBu", "RdGy", "RdYlBu", "RdYlGn",
+  "Spectral", "Accent", "Dark2", "Paired", "Pastel1", "Pastel2",
+  "Set1", "Set2", "Set3",
   "Blues", "BuGn", "BuPu", "GnBu", "Greens", "Greys", "Oranges", "OrRd", "PuBu",
   "PuBuGn", "PuRd", "Purples", "RdPu", "Reds", "YlGn", "YlGnBu", "YlOrBr", "YlOrRd"
 ))

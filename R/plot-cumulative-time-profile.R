@@ -97,9 +97,9 @@ plotCumulativeTimeProfile <- function(data = NULL,
     mapLabels = mapLabels
   )
   plotObject <- .applyColorPalette(
-    plotObject, 
+    plotObject,
     colorPalette = plotConfiguration$colorPalette
-    )
+  )
   plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }

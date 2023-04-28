@@ -322,21 +322,20 @@ XAxisConfiguration <- R6::R6Class(
             oob = .removeInfiniteValues
           )
       )
-      if(!isIncluded(private$.scale, c(Scaling$log, Scaling$ln))){
+      if (!isIncluded(private$.scale, c(Scaling$log, Scaling$ln))) {
         return(plotObject)
       }
       # Checks that the final plot limits include at least one pretty log tick
       plotScaleData <- ggplot2::layer_scales(plotObject)
-      xDataRange <- switch(
-        private$.scale,
+      xDataRange <- switch(private$.scale,
         "log" = 10^plotScaleData$x$range$range,
         "ln" = exp(plotScaleData$x$range$range)
       )
-      if(!isEmpty(private$.limits)){
+      if (!isEmpty(private$.limits)) {
         xDataRange <- private$.limits
       }
 
-      if(!.isLogTicksIncludedInLimits(xDataRange, private$.scale)){
+      if (!.isLogTicksIncludedInLimits(xDataRange, private$.scale)) {
         return(plotObject)
       }
       # Add special tick lines for pretty log plots
@@ -370,8 +369,7 @@ YAxisConfiguration <- R6::R6Class(
     updatePlot = function(plotObject, xlim = NULL) {
       validateIsOfType(plotObject, "ggplot")
       # Update font properties
-      plotObject <- plotObject + switch(
-        self$position,
+      plotObject <- plotObject + switch(self$position,
         "left" = ggplot2::theme(axis.text.y = private$.font$createPlotFont()),
         "right" = ggplot2::theme(axis.text.y.right = private$.font$createPlotFont())
       )
@@ -406,34 +404,39 @@ YAxisConfiguration <- R6::R6Class(
             oob = .removeInfiniteValues
           )
       )
-      if(!isIncluded(private$.scale, c(Scaling$log, Scaling$ln))){
+      if (!isIncluded(private$.scale, c(Scaling$log, Scaling$ln))) {
         return(plotObject)
       }
       # Checks that the final plot limits include at least one pretty log tick
       plotScaleData <- ggplot2::layer_scales(plotObject)
-      yDataRange <- switch(
-        private$.scale,
+      yDataRange <- switch(private$.scale,
         "log" = 10^plotScaleData$y$range$range,
         "ln" = exp(plotScaleData$y$range$range)
       )
-      if(!isEmpty(private$.limits)){
+      if (!isEmpty(private$.limits)) {
         yDataRange <- private$.limits
       }
 
-      if(!.isLogTicksIncludedInLimits(yDataRange, private$.scale)){
+      if (!.isLogTicksIncludedInLimits(yDataRange, private$.scale)) {
         return(plotObject)
       }
       suppressMessages({
         plotObject <- switch(private$.scale,
           "log" = plotObject + ggplot2::annotation_logticks(
-            sides = switch(self$position, "left" = "l", "right" = "r"),
-            color = private$.font$color
+            sides = switch(self$position,
+              "left" = "l",
+              "right" = "r"
             ),
+            color = private$.font$color
+          ),
           "ln" = plotObject + ggplot2::annotation_logticks(
             base = exp(1),
-            sides = switch(self$position, "left" = "l", "right" = "r"),
-            color = private$.font$color
+            sides = switch(self$position,
+              "left" = "l",
+              "right" = "r"
             ),
+            color = private$.font$color
+          ),
           plotObject
         )
       })
@@ -441,5 +444,3 @@ YAxisConfiguration <- R6::R6Class(
     }
   )
 )
-
-
