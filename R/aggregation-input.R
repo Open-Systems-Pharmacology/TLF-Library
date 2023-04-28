@@ -1,5 +1,6 @@
 #' @title AggregationInput
 #' @description  R6 class to be used to construct inputs to the AggregationSummary class
+#' @import R6
 #' @export
 AggregationInput <- R6::R6Class(
   "AggregationInput",
