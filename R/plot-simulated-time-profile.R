@@ -77,10 +77,10 @@ plotSimulatedTimeProfile <- function(data = NULL,
 #' @return A `ggplot` object
 #' @keywords internal
 .plotSimulatedTimeProfileCore <- function(data = NULL,
-                                         metaData = NULL,
-                                         dataMapping = NULL,
-                                         plotConfiguration = NULL,
-                                         plotObject = NULL) {
+                                          metaData = NULL,
+                                          dataMapping = NULL,
+                                          plotConfiguration = NULL,
+                                          plotObject = NULL) {
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- .getAesStringMapping(dataMapping)
 

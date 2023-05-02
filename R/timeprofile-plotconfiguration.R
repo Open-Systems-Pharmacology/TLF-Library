@@ -36,7 +36,7 @@ TimeProfilePlotConfiguration <- R6::R6Class(
         data = data,
         metaData = metaData,
         dataMapping = dataMapping
-        )
+      )
       validateEnumValue(lloqDirection, Directions)
       self$lloqDirection <- lloqDirection
       # Update Y2 label
@@ -48,7 +48,8 @@ TimeProfilePlotConfiguration <- R6::R6Class(
         y2label %||%
           .dataMappingLabel(dataMapping$y2Axis, metaData) %||%
           dataMapping$y2Axis %||%
-          private$.labels$y2label$text, font = private$.labels$y2label$font
+          private$.labels$y2label$text,
+        font = private$.labels$y2label$font
       )
 
       # Y2-Axis configuration, overwrite some properties only if they are defined
@@ -61,7 +62,6 @@ TimeProfilePlotConfiguration <- R6::R6Class(
       private$.y2Axis$limits <- y2Limits %||% private$.y2Axis$limits
       private$.y2Axis$scale <- y2Scale %||% private$.y2Axis$scale
     }
-
   ),
   active = list(
     #' @field y2Axis `YAxisConfiguration` object defining properties of y2-axis

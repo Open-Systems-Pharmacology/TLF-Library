@@ -158,7 +158,7 @@ plotTornado <- function(data = NULL,
 
   #----- Update properties using ggplot2::scale functions -----
   plotObject <- .applyColorPalette(
-    plotObject, 
+    plotObject,
     colorPalette = plotConfiguration$colorPalette
   )
   plotObject <- .updateAxes(plotObject)

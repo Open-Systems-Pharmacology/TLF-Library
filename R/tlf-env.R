@@ -222,4 +222,3 @@ setDefaultAlphaRatio <- function(alphaRatio) {
   tlfEnv$DefaultAlphaRatio <- alphaRatio
   return(invisible())
 }
-

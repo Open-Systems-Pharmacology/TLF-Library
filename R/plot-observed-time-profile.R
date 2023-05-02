@@ -80,7 +80,6 @@ plotObservedTimeProfile <- function(data,
   #----- Build layers of molecule plot -----
   # 1- LLOQ lines if available
   if (!isEmpty(dataMapping$lloq)) {
-
     plotObject <- .addLLOQLayer(
       plotObject,
       data = mapData,

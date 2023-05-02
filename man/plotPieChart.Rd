@@ -44,42 +44,42 @@ Producing a Pie Chart
 # Data for the pie chart
 values <- runif(5)
 data <- data.frame(
-values = values, 
-text = paste0(round(100*values/sum(values)), "\%"),
-legend = letters[1:5]
+  values = values,
+  text = paste0(round(100 * values / sum(values)), "\%"),
+  legend = letters[1:5]
 )
 
-# Plot pie chart with its legend 
+# Plot pie chart with its legend
 plotPieChart(
-data = data,
-dataMapping = PieChartDataMapping$new(x = "values", fill = "legend")
+  data = data,
+  dataMapping = PieChartDataMapping$new(x = "values", fill = "legend")
 )
 
 # Plot pie chart with text within pie
 plotPieChart(
-data = data,
-dataMapping = PieChartDataMapping$new(x = "values", y = "text", fill = "legend")
+  data = data,
+  dataMapping = PieChartDataMapping$new(x = "values", y = "text", fill = "legend")
 )
 
 # Reverse direction of pie chart
 plotPieChart(
-data = data,
-dataMapping = PieChartDataMapping$new(x = "values", y = "text", fill = "legend"),
-clockwiseDirection = FALSE
+  data = data,
+  dataMapping = PieChartDataMapping$new(x = "values", y = "text", fill = "legend"),
+  clockwiseDirection = FALSE
 )
 
 # Start first slice of pie at 90 degrees
 plotPieChart(
-data = data,
-dataMapping = PieChartDataMapping$new(x = "values", y = "text", fill = "legend"),
-start = pi/2
+  data = data,
+  dataMapping = PieChartDataMapping$new(x = "values", y = "text", fill = "legend"),
+  start = pi / 2
 )
 
 # Leverages ggplot color palettes
 plotPieChart(
-data = data,
-dataMapping = PieChartDataMapping$new(x = "values", y = "text", fill = "legend"),
-colorPalette = ColorPalettes$Set1
+  data = data,
+  dataMapping = PieChartDataMapping$new(x = "values", y = "text", fill = "legend"),
+  colorPalette = ColorPalettes$Set1
 )
 
 }

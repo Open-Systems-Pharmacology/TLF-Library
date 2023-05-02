@@ -403,12 +403,12 @@ getDualAxisPlot <- function(leftPlotObject, rightPlotObject) {
 #' @title .applyColorPalette
 #' @description Apply a color palette to a ggplot object
 #' @param plotObject A `ggplot` object
-#' @param colorPalette A color palette name. 
+#' @param colorPalette A color palette name.
 #' See enum `ColorPalettes` to get available color palettes.
 #' @return A `ggplot` object
 #' @keywords internal
-.applyColorPalette <- function(plotObject, colorPalette = NULL){
-  if(isEmpty(colorPalette)){
+.applyColorPalette <- function(plotObject, colorPalette = NULL) {
+  if (isEmpty(colorPalette)) {
     return(plotObject)
   }
   if (isIncluded(colorPalette, .ViridisPalettes)) {

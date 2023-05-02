@@ -185,10 +185,10 @@ plotTimeProfile <- function(data = NULL,
       ggplot2::geom_path(
         data = mapData,
         mapping = ggplot2::aes(
-          x =  .data[[mapLabels$x]],
-          y =  .data[[mapLabels$y]],
-          color =  .data[[mapLabels$color]],
-          linetype =  .data[[mapLabels$linetype]]
+          x = .data[[mapLabels$x]],
+          y = .data[[mapLabels$y]],
+          color = .data[[mapLabels$color]],
+          linetype = .data[[mapLabels$linetype]]
         ),
         size = aestheticValues$size,
         alpha = aestheticValues$alpha,

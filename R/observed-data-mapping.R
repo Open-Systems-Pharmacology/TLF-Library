@@ -63,7 +63,7 @@ ObservedDataMapping <- R6::R6Class(
         shape = shape,
         group = group,
         data = data
-        )
+      )
 
       # If defined, ymin and ymax are used as is
       # If not, error/uncertainty are used and
@@ -126,7 +126,7 @@ ObservedDataMapping <- R6::R6Class(
     #' @return A logical
     requireDualAxis = function(data) {
       .validateMapping(self$y2Axis, data, nullAllowed = TRUE)
-      if(isEmpty(self$y2Axis)){
+      if (isEmpty(self$y2Axis)) {
         return(FALSE)
       }
       return(any(as.logical(data[, self$y2Axis]), na.rm = TRUE))
@@ -136,7 +136,7 @@ ObservedDataMapping <- R6::R6Class(
     #' @param data A data.frame
     #' @return A data.frame to be plotted in left axis
     getLeftAxis = function(data) {
-      if(!self$requireDualAxis(data)){
+      if (!self$requireDualAxis(data)) {
         return(data)
       }
       # Ensure NAs in that data don't mess up the selection
