@@ -100,10 +100,12 @@ Create a new \code{PlotConfiguration} object
   xScale = NULL,
   xValuesLimits = NULL,
   xAxisLimits = NULL,
+  xLimits = lifecycle::deprecated(),
   yAxis = NULL,
   yScale = NULL,
   yValuesLimits = NULL,
   yAxisLimits = NULL,
+  yLimits = lifecycle::deprecated(),
   background = NULL,
   plotArea = NULL,
   panelArea = NULL,
@@ -155,6 +157,8 @@ Use Enum \code{LegendPositions} to get a list of available to legend positions.}
 
 \item{\code{xAxisLimits}}{numeric vector of length 2 defining x-axis limits}
 
+\item{\code{xLimits}}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}. Replaced by xAxisLimits argument.}
+
 \item{\code{yAxis}}{\code{YAxisConfiguration} object defining y-axis properties}
 
 \item{\code{yScale}}{name of y-axis scale. Use enum \code{Scaling} to access predefined scales.}
@@ -162,6 +166,8 @@ Use Enum \code{LegendPositions} to get a list of available to legend positions.}
 \item{\code{yValuesLimits}}{numeric vector of length 2 defining x values limits}
 
 \item{\code{yAxisLimits}}{numeric vector of length 2 defining x-axis limits}
+
+\item{\code{yLimits}}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}. Replaced by yAxisLimits argument.}
 
 \item{\code{background}}{\code{BackgroundConfiguration} object defining background properties}
 

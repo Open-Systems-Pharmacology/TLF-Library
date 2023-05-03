@@ -33,7 +33,7 @@ Other PlotConfiguration classes:
 }
 \concept{PlotConfiguration classes}
 \section{Super class}{
-\code{tlf::PlotConfiguration} -> \code{TimeProfilePlotConfiguration}
+\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{TimeProfilePlotConfiguration}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -69,6 +69,7 @@ Create a new \code{TimeProfilePlotConfiguration} object
   y2Scale = NULL,
   y2ValuesLimits = NULL,
   y2AxisLimits = NULL,
+  y2Limits = lifecycle::deprecated(),
   lloqDirection = "horizontal",
   data = NULL,
   metaData = NULL,
@@ -90,6 +91,8 @@ Create a new \code{TimeProfilePlotConfiguration} object
 \item{\code{y2ValuesLimits}}{numeric vector of length 2 defining y values limits}
 
 \item{\code{y2AxisLimits}}{numeric vector of length 2 defining y axis limits}
+
+\item{\code{y2Limits}}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}. Replaced by y2AxisLimits argument.}
 
 \item{\code{lloqDirection}}{Whether to draw LLOQ lines for x (vertical), y (horizontal) or x and y (both).}
 

@@ -79,6 +79,7 @@ Create a new \code{AxisConfiguration} object
 \if{html}{\out{<div class="r">}}\preformatted{AxisConfiguration$new(
   valuesLimits = NULL,
   axisLimits = NULL,
+  limits = lifecycle::deprecated(),
   scale = Scaling$lin,
   ticks = NULL,
   ticklabels = NULL,
@@ -94,6 +95,8 @@ Create a new \code{AxisConfiguration} object
 \item{\code{valuesLimits}}{numeric vector of value limits (data outside these limits is removed)}
 
 \item{\code{axisLimits}}{numeric vector of axis limits (data outside these limits is kept but not plotted)}
+
+\item{\code{limits}}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}. Replaced by axisLimits argument.}
 
 \item{\code{scale}}{character defining axis scale
 Use enum \code{Scaling} to access predefined scales.}

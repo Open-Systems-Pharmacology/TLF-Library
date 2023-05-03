@@ -28,7 +28,7 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{tlf::XYDataMapping} -> \code{tlf::XYGDataMapping} -> \code{QQDataMapping}
+\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{QQDataMapping}
 }
 \section{Methods}{
 \subsection{Public methods}{
