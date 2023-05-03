@@ -102,23 +102,23 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
   validateIsIncluded(variableList, colnames(data))
 
   captions <- NULL
-  for(variableName in variableList){
-    if(is.null(captions)){
+  for (variableName in variableList) {
+    if (is.null(captions)) {
       captions <- .asLegendCaptionSubset(
         data[, variableName],
         metaData[[variableName]]$unit
-        )
-        next
+      )
+      next
     }
     captions <- paste(
       captions,
       .asLegendCaptionSubset(
         data[, variableName],
         metaData[[variableName]]$unit
-        ),
-        sep = sep
+      ),
+      sep = sep
     )
-    }
+  }
 
   if (isEmpty(captions)) {
     return(factor(""))
@@ -135,7 +135,7 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
 .asLegendCaptionSubset <- function(labels, unit = NULL) {
   # Keep ordering of labels as is if factor
   captionLevels <- sort(unique(labels))
-  if(isOfType(labels, "factor")){
+  if (isOfType(labels, "factor")) {
     captionLevels <- levels(labels)
   }
   captionSubset <- factor(
@@ -179,13 +179,13 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
 
   for (geomName in geomMappings) {
     if (!is.null(dataMapping[[geomName]])) {
-        .dataMappingLabels[[geomName]] <- dataMapping[[geomName]]
+      .dataMappingLabels[[geomName]] <- dataMapping[[geomName]]
     }
   }
 
   for (groupName in groupMappings) {
     if (!is.null(dataMapping$groupMapping[[groupName]]$group)) {
-        .dataMappingLabels[[groupName]] <- dataMapping$groupMapping[[groupName]]$label
+      .dataMappingLabels[[groupName]] <- dataMapping$groupMapping[[groupName]]$label
     }
   }
   return(.dataMappingLabels)

@@ -27,7 +27,7 @@ HistogramDataMapping <- R6::R6Class(
     #' Only 2 distributions are currently available: `"normal"` and `"logNormal"`
     #' @param ... parameters inherited from `XYGDataMapping`
     #' @return A new `HistogramDataMapping` object
-    initialize = function(frequency = FALSE, 
+    initialize = function(frequency = FALSE,
                           stack = FALSE,
                           bins = NULL,
                           binwidth = NULL,

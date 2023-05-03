@@ -240,7 +240,6 @@ plotHistogram(
 The `HistogramPlotConfiguration` objects can be used to tune the final plot aesthetics.
 
 ```{r example-2-distributions-plot-configuration}
-
 histoConfiguration <- HistogramPlotConfiguration$new(
   xlabel = "Ratios",
   ylabel = "Occurences"

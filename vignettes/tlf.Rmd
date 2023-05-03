@@ -71,13 +71,14 @@ plotNames <- c("PKRatio", "DDIRatio", "IndividualIdProfile", "ObsVsPred", "Histo
 classesNames <- c("DataMapping", "PlotConfiguration")
 functionNames <- c("plot")
 
-conventionTable <- data.frame(sapply(classesNames, function(x) {
-  paste0(plotNames, x)
-}),
-sapply(functionNames, function(x) {
-  paste0(x, plotNames)
-}),
-row.names = plotNames
+conventionTable <- data.frame(
+  sapply(classesNames, function(x) {
+    paste0(plotNames, x)
+  }),
+  sapply(functionNames, function(x) {
+    paste0(x, plotNames)
+  }),
+  row.names = plotNames
 )
 
 

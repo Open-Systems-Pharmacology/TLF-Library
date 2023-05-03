@@ -20,42 +20,42 @@
 #' # Data for the pie chart
 #' values <- runif(5)
 #' data <- data.frame(
-#' values = values, 
-#' text = paste0(round(100*values/sum(values)), "%"),
-#' legend = letters[1:5]
+#'   values = values,
+#'   text = paste0(round(100 * values / sum(values)), "%"),
+#'   legend = letters[1:5]
 #' )
-#' 
-#' # Plot pie chart with its legend 
+#'
+#' # Plot pie chart with its legend
 #' plotPieChart(
-#' data = data,
-#' dataMapping = PieChartDataMapping$new(x = "values", fill = "legend")
+#'   data = data,
+#'   dataMapping = PieChartDataMapping$new(x = "values", fill = "legend")
 #' )
-#' 
+#'
 #' # Plot pie chart with text within pie
 #' plotPieChart(
-#' data = data,
-#' dataMapping = PieChartDataMapping$new(x = "values", y = "text", fill = "legend")
+#'   data = data,
+#'   dataMapping = PieChartDataMapping$new(x = "values", y = "text", fill = "legend")
 #' )
-#' 
+#'
 #' # Reverse direction of pie chart
 #' plotPieChart(
-#' data = data,
-#' dataMapping = PieChartDataMapping$new(x = "values", y = "text", fill = "legend"),
-#' clockwiseDirection = FALSE
+#'   data = data,
+#'   dataMapping = PieChartDataMapping$new(x = "values", y = "text", fill = "legend"),
+#'   clockwiseDirection = FALSE
 #' )
-#' 
+#'
 #' # Start first slice of pie at 90 degrees
 #' plotPieChart(
-#' data = data,
-#' dataMapping = PieChartDataMapping$new(x = "values", y = "text", fill = "legend"),
-#' start = pi/2
+#'   data = data,
+#'   dataMapping = PieChartDataMapping$new(x = "values", y = "text", fill = "legend"),
+#'   start = pi / 2
 #' )
-#' 
+#'
 #' # Leverages ggplot color palettes
 #' plotPieChart(
-#' data = data,
-#' dataMapping = PieChartDataMapping$new(x = "values", y = "text", fill = "legend"),
-#' colorPalette = ColorPalettes$Set1
+#'   data = data,
+#'   dataMapping = PieChartDataMapping$new(x = "values", y = "text", fill = "legend"),
+#'   colorPalette = ColorPalettes$Set1
 #' )
 #'
 plotPieChart <- function(data = NULL,
@@ -78,7 +78,7 @@ plotPieChart <- function(data = NULL,
   validateIsString(colorPalette, nullAllowed = TRUE)
   validateIsNumeric(start, nullAllowed = TRUE)
   validateIsLogical(clockwiseDirection, nullAllowed = TRUE)
-  
+
   plotConfiguration$colorPalette <- colorPalette %||% plotConfiguration$colorPalette
   plotConfiguration$start <- start %||% plotConfiguration$start
   plotConfiguration$clockwiseDirection <- clockwiseDirection %||% plotConfiguration$clockwiseDirection
@@ -96,7 +96,7 @@ plotPieChart <- function(data = NULL,
     plotConfigurationProperty = plotObject$plotConfiguration$ribbons,
     propertyNames = c("color", "size", "alpha", "linetype")
   )
-  
+
   # 1- Pie Chart
   plotObject <- plotObject +
     ggplot2::geom_col(
@@ -109,7 +109,7 @@ plotPieChart <- function(data = NULL,
       color = aestheticValues$color,
       alpha = aestheticValues$alpha,
       position = ggplot2::position_fill(reverse = TRUE)
-    ) 
+    )
 
   #----- Update properties using ggplot2::scale functions -----
   plotObject <- .updateAesProperties(
@@ -120,21 +120,20 @@ plotPieChart <- function(data = NULL,
     mapLabels = mapLabels
   )
   plotObject <- .applyColorPalette(
-    plotObject, 
+    plotObject,
     colorPalette = plotConfiguration$colorPalette
   )
-  
+
   # 2- If defined include text in y within pie chart
-  if(!isEmpty(dataMapping$y)){
-    # Get properties of R6 font object 
+  if (!isEmpty(dataMapping$y)) {
+    # Get properties of R6 font object
     chartFont <- plotConfiguration$chartFont
-    textAlignment <- switch(
-      chartFont$align,
+    textAlignment <- switch(chartFont$align,
       "left" = 0.25,
       "center" = 0.5,
       "right" = 0.75
     )
-    
+
     plotObject <- plotObject + ggplot2::geom_text(
       data = mapData,
       mapping = ggplot2::aes(
@@ -145,11 +144,11 @@ plotPieChart <- function(data = NULL,
       position = ggplot2::position_fill(vjust = textAlignment, reverse = TRUE),
       color = chartFont$color,
       family = .checkPlotFontFamily(chartFont$fontFamily),
-      size = chartFont$size/ggplot2::.pt,
+      size = chartFont$size / ggplot2::.pt,
       angle = chartFont$angle
-      )
+    )
   }
-  
+
   # Remove background elements that do not belong to pie charts
   plotObject <- setGrid(plotObject, linetype = Linetypes$blank)
   plotObject <- plotObject +
@@ -160,12 +159,12 @@ plotPieChart <- function(data = NULL,
       axis.title.x = ggplot2::element_blank(),
       axis.title.y = ggplot2::element_blank(),
       axis.ticks = ggplot2::element_blank()
-      ) +
+    ) +
     ggplot2::coord_polar(
-      theta = "y", 
+      theta = "y",
       start = plotConfiguration$start,
       direction = ifelse(plotConfiguration$clockwiseDirection, 1, -1)
-      )
+    )
   # Remove watermark that can't be used along with coord polar
   plotObject$layers <- plotObject$layers[-1]
   return(plotObject)
