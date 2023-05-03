@@ -36,7 +36,6 @@ setXAxis <- function(plotObject,
                      minorTicks = NULL,
                      font = NULL,
                      expand = NULL) {
-
   if (lifecycle::is_present(limits)) {
     lifecycle::deprecate_warn("1.5.0", "setXAxis(limits)", "setXAxis(axisLimits)")
     axisLimits <- limits
@@ -56,9 +55,10 @@ setXAxis <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$xAxis
   xAxis <- newPlotObject$plotConfiguration$xAxis
-  eval(.parseVariableToObject("xAxis", c("valuesLimits","axisLimits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
+  eval(.parseVariableToObject("xAxis", c("valuesLimits", "axisLimits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
   newPlotObject <- xAxis$updatePlot(newPlotObject,
-                                    yAxisLimits = newPlotObject$plotConfiguration$yAxis$axisLimits)
+    yAxisLimits = newPlotObject$plotConfiguration$yAxis$axisLimits
+  )
   return(newPlotObject)
 }
 
@@ -91,7 +91,6 @@ setYAxis <- function(plotObject,
                      minorTicks = NULL,
                      font = NULL,
                      expand = NULL) {
-
   if (lifecycle::is_present(limits)) {
     lifecycle::deprecate_warn("1.5.0", "setYAxis(limits)", "setYAxis(axisLimits)")
     axisLimits <- limits
@@ -113,7 +112,8 @@ setYAxis <- function(plotObject,
   yAxis <- newPlotObject$plotConfiguration$yAxis
   eval(.parseVariableToObject("yAxis", c("valuesLimits", "axisLimits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
   newPlotObject <- yAxis$updatePlot(newPlotObject,
-                                    xAxisLimits = newPlotObject$plotConfiguration$xAxis$axisLimits)
+    xAxisLimits = newPlotObject$plotConfiguration$xAxis$axisLimits
+  )
   return(newPlotObject)
 }
 
@@ -132,7 +132,6 @@ setY2Axis <- function(plotObject,
                       minorTicks = NULL,
                       font = NULL,
                       expand = NULL) {
-
   if (lifecycle::is_present(limits)) {
     lifecycle::deprecate_warn("1.5.0", "setY2Axis(limits)", "setY2Axis(axisLimits)")
     axisLimits <- limits
@@ -155,7 +154,8 @@ setY2Axis <- function(plotObject,
   y2Axis$position <- "right"
   eval(.parseVariableToObject("y2Axis", c("valuesLimits", "axisLimits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
   newPlotObject <- y2Axis$updatePlot(newPlotObject,
-                                     xAxisLimits = newPlotObject$plotConfiguration$xAxis$axisLimits)
+    xAxisLimits = newPlotObject$plotConfiguration$xAxis$axisLimits
+  )
   return(newPlotObject)
 }
 

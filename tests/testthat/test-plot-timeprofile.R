@@ -51,9 +51,9 @@ test_that("plotTimeProfile works ", {
     fig = plotTimeProfile(
       data = simData,
       observedData = obsData,
-      dataMapping = TimeProfileDataMapping$new(x = "x", y = "y",  ymin = "ymin", ymax = "ymax"),
-      observedDataMapping = ObservedDataMapping$new(x = "x", y = "y", group = "group", shape = shape, color = shape,lloq = "lloq"),
-      plotConfiguration = TimeProfilePlotConfiguration$new(lloqDirection = "horizontal", xAxisLimits = c(0,10), xValuesLimits = c(1,5))
+      dataMapping = TimeProfileDataMapping$new(x = "x", y = "y", ymin = "ymin", ymax = "ymax"),
+      observedDataMapping = ObservedDataMapping$new(x = "x", y = "y", group = "group", shape = shape, color = shape, lloq = "lloq"),
+      plotConfiguration = TimeProfilePlotConfiguration$new(lloqDirection = "horizontal", xAxisLimits = c(0, 10), xValuesLimits = c(1, 5))
     )
   )
 })

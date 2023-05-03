@@ -35,7 +35,6 @@ TimeProfilePlotConfiguration <- R6::R6Class(
                           data = NULL,
                           metaData = NULL,
                           dataMapping = NULL) {
-
       if (lifecycle::is_present(y2Limits)) {
         lifecycle::deprecate_warn("1.5.0", "TimeProfilePlotConfiguration(y2Limits)", "TimeProfilePlotConfiguration(y2AxisLimits)")
         y2AxisLimits <- y2Limits

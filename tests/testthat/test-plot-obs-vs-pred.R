@@ -82,7 +82,7 @@ test_that("foldDistance are plotted correctly", {
       plotConfiguration = ObsVsPredPlotConfiguration$new(
         foldLinesLegend = TRUE,
         foldLinesLegendDiagonal = TRUE,
-        legendTitle =  "diagonal lines",
+        legendTitle = "diagonal lines",
         xScale = Scaling$log, xAxisLimits = c(0.05, 50),
         yScale = Scaling$log, yAxisLimits = c(0.05, 50),
       ),
