@@ -14,6 +14,7 @@ TimeProfilePlotConfiguration <- R6::R6Class(
     #' @param y2Scale name of y2-axis scale. Use enum `Scaling` to access predefined scales.
     #' @param y2AxisLimits numeric vector of length 2 defining y axis limits
     #' @param y2ValuesLimits numeric vector of length 2 defining y values limits
+    #' @param y2Limits `r lifecycle::badge("deprecated")`. Replaced by y2AxisLimits argument.
     #' @param lloqDirection Whether to draw LLOQ lines for x (vertical), y (horizontal) or x and y (both).
     #' @param data data.frame used by `.smartMapping`
     #' @param metaData list of information on `data`
@@ -28,11 +29,19 @@ TimeProfilePlotConfiguration <- R6::R6Class(
                           y2Scale = NULL,
                           y2ValuesLimits = NULL,
                           y2AxisLimits = NULL,
+                          y2Limits = lifecycle::deprecated(),
                           lloqDirection = "horizontal",
                           # Smart configuration using metaData
                           data = NULL,
                           metaData = NULL,
                           dataMapping = NULL) {
+
+      if (lifecycle::is_present(y2Limits)) {
+        lifecycle::deprecate_warn("1.5.0", "TimeProfilePlotConfiguration(y2Limits)", "TimeProfilePlotConfiguration(y2AxisLimits)")
+        y2AxisLimits <- y2Limits
+      }
+
+
       super$initialize(
         ...,
         data = data,

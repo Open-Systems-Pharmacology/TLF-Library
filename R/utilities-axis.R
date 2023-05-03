@@ -2,7 +2,9 @@
 #' @description Set X-axis properties of a `ggplot` object
 #' @param plotObject A `ggplot` object to set X-axis properties
 #' @param scale Scale of axis. Use enum `Scaling` to access names of scales.
-#' @param limits Optional numeric values of axis limits
+#' @param valuesLimits Optional numeric values of values limits
+#' @param axisLimits Optional numeric values of axis limits
+#' @param limits `r lifecycle::badge("deprecated")`. Replaced by axisLimits argument.
 #' @param ticks Optional values or function for axis ticks
 #' @param ticklabels Optional values or function for axis ticklabels
 #' @param minorTicks Optional values or function for axis minor ticks
@@ -28,11 +30,18 @@ setXAxis <- function(plotObject,
                      scale = NULL,
                      valuesLimits = NULL,
                      axisLimits = NULL,
+                     limits = lifecycle::deprecated(),
                      ticks = NULL,
                      ticklabels = NULL,
                      minorTicks = NULL,
                      font = NULL,
                      expand = NULL) {
+
+  if (lifecycle::is_present(limits)) {
+    lifecycle::deprecate_warn("1.5.0", "setXAxis(limits)", "setXAxis(axisLimits)")
+    axisLimits <- limits
+  }
+
   validateIsOfType(plotObject, "ggplot")
   validateIsIncluded(scale, Scaling, nullAllowed = TRUE)
   validateIsNumeric(valuesLimits, nullAllowed = TRUE)
@@ -76,11 +85,18 @@ setYAxis <- function(plotObject,
                      scale = NULL,
                      valuesLimits = NULL,
                      axisLimits = NULL,
+                     limits = lifecycle::deprecated(),
                      ticks = NULL,
                      ticklabels = NULL,
                      minorTicks = NULL,
                      font = NULL,
                      expand = NULL) {
+
+  if (lifecycle::is_present(limits)) {
+    lifecycle::deprecate_warn("1.5.0", "setYAxis(limits)", "setYAxis(axisLimits)")
+    axisLimits <- limits
+  }
+
   validateIsOfType(plotObject, "ggplot")
   validateIsIncluded(scale, Scaling, nullAllowed = TRUE)
   validateIsNumeric(valuesLimits, nullAllowed = TRUE)
@@ -107,16 +123,25 @@ setYAxis <- function(plotObject,
 #' @return A `ggplot` object
 #' @export
 setY2Axis <- function(plotObject,
-                     scale = NULL,
-                     limits = NULL,
-                     ticks = NULL,
-                     ticklabels = NULL,
-                     minorTicks = NULL,
-                     font = NULL,
-                     expand = NULL) {
+                      scale = NULL,
+                      valuesLimits = NULL,
+                      axisLimits = NULL,
+                      limits = lifecycle::deprecated(),
+                      ticks = NULL,
+                      ticklabels = NULL,
+                      minorTicks = NULL,
+                      font = NULL,
+                      expand = NULL) {
+
+  if (lifecycle::is_present(limits)) {
+    lifecycle::deprecate_warn("1.5.0", "setY2Axis(limits)", "setY2Axis(axisLimits)")
+    axisLimits <- limits
+  }
+
   validateIsOfType(plotObject, "ggplot")
   validateIsIncluded(scale, Scaling, nullAllowed = TRUE)
-  validateIsNumeric(limits, nullAllowed = TRUE)
+  validateIsNumeric(valuesLimits, nullAllowed = TRUE)
+  validateIsNumeric(axisLimits, nullAllowed = TRUE)
   validateIsOfType(font, "Font", nullAllowed = TRUE)
   validateIsLogical(expand, nullAllowed = TRUE)
 

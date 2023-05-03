@@ -34,10 +34,12 @@ PlotConfiguration <- R6::R6Class(
     #' @param xScale name of X-axis scale. Use enum `Scaling` to access predefined scales.
     #' @param xValuesLimits numeric vector of length 2 defining x values limits
     #' @param xAxisLimits numeric vector of length 2 defining x-axis limits
+    #' @param xLimits `r lifecycle::badge("deprecated")`. Replaced by xAxisLimits argument.
     #' @param yAxis `YAxisConfiguration` object defining y-axis properties
     #' @param yScale name of y-axis scale. Use enum `Scaling` to access predefined scales.
     #' @param yValuesLimits numeric vector of length 2 defining x values limits
     #' @param yAxisLimits numeric vector of length 2 defining x-axis limits
+    #' @param yLimits `r lifecycle::badge("deprecated")`. Replaced by yAxisLimits argument.
     #' @param background `BackgroundConfiguration` object defining background properties
     #' @param plotArea `BackgroundElement` object defining properties of plot area
     #' @param panelArea `BackgroundElement` object defining properties of panel area
@@ -74,11 +76,13 @@ PlotConfiguration <- R6::R6Class(
                           xScale = NULL,
                           xValuesLimits = NULL,
                           xAxisLimits = NULL,
+                          xLimits = lifecycle::deprecated(),
                           # Y-Axis configuration
                           yAxis = NULL,
                           yScale = NULL,
                           yValuesLimits = NULL,
                           yAxisLimits = NULL,
+                          yLimits = lifecycle::deprecated(),
                           # Background configuration
                           background = NULL,
                           plotArea = NULL,
@@ -103,6 +107,16 @@ PlotConfiguration <- R6::R6Class(
                           data = NULL,
                           metaData = NULL,
                           dataMapping = NULL) {
+      if (lifecycle::is_present(xLimits)) {
+        lifecycle::deprecate_warn("1.5.0", "PlotConfiguration(xLimits)", "PlotConfiguration(xAxisLimits)")
+        xAxisLimits <- yLimits
+      }
+
+      if (lifecycle::is_present(yLimits)) {
+        lifecycle::deprecate_warn("1.5.0", "PlotConfiguration(yLimits)", "PlotConfiguration(yAxisLimits)")
+        yAxisLimits <- yLimits
+      }
+
       # Label configuration
       # validation of the input is done within the creation of the object
       private$.labels <- LabelConfiguration$new(
