@@ -29,8 +29,8 @@ ObservedDataMapping <- R6::R6Class(
     #' @param shape R6 class `Grouping` object or its input
     #' @param group R6 class `Grouping` object or its input
     #' @param error mapping error bars around scatter points
-    #' @param uncertainty mapping error bars around scatter points.
-    #' Deprecated parameter replaced by `error`.
+    #' @param uncertainty `r lifecycle::badge("deprecated")` uncertainty were
+    #' replaced by `error` argument. Mapping error bars around scatter points.
     #' @param mdv mapping missing dependent variable
     #' @param data data.frame to map used by `.smartMapping`
     #' @param lloq mapping lloq lines
@@ -44,11 +44,19 @@ ObservedDataMapping <- R6::R6Class(
                           color = NULL,
                           shape = NULL,
                           error = NULL,
-                          uncertainty = NULL,
+                          uncertainty = lifecycle::deprecated(),
                           mdv = NULL,
                           data = NULL,
                           lloq = NULL) {
-      validateIsString(uncertainty, nullAllowed = TRUE)
+      if (lifecycle::is_present(uncertainty)) {
+        lifecycle::deprecate_warn(
+          when = "1.5.0",
+          what = "ObservedDataMapping(uncertainty)",
+          with = "ObservedDataMapping(error)"
+        )
+        error <- uncertainty
+      }
+
       validateIsString(error, nullAllowed = TRUE)
       validateIsString(ymin, nullAllowed = TRUE)
       validateIsString(ymax, nullAllowed = TRUE)
@@ -63,7 +71,7 @@ ObservedDataMapping <- R6::R6Class(
         shape = shape,
         group = group,
         data = data
-        )
+      )
 
       # If defined, ymin and ymax are used as is
       # If not, error/uncertainty are used and
@@ -126,7 +134,7 @@ ObservedDataMapping <- R6::R6Class(
     #' @return A logical
     requireDualAxis = function(data) {
       .validateMapping(self$y2Axis, data, nullAllowed = TRUE)
-      if(isEmpty(self$y2Axis)){
+      if (isEmpty(self$y2Axis)) {
         return(FALSE)
       }
       return(any(as.logical(data[, self$y2Axis]), na.rm = TRUE))
@@ -136,7 +144,7 @@ ObservedDataMapping <- R6::R6Class(
     #' @param data A data.frame
     #' @return A data.frame to be plotted in left axis
     getLeftAxis = function(data) {
-      if(!self$requireDualAxis(data)){
+      if (!self$requireDualAxis(data)) {
         return(data)
       }
       # Ensure NAs in that data don't mess up the selection
