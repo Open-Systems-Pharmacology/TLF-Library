@@ -60,8 +60,8 @@ plotObsVsPred(
   data = obsVsPredData,
   dataMapping = ObsVsPredDataMapping$new(x = "x", y = "y"),
   plotConfiguration = ObsVsPredPlotConfiguration$new(
-    xScale = Scaling$log, xLimits = c(0.05, 50),
-    yScale = Scaling$log, yLimits = c(0.05, 50)
+    xScale = Scaling$log, xAxisLimits = c(0.05, 50),
+    yScale = Scaling$log, yAxisLimits = c(0.05, 50)
   ),
   foldDistance = c(1, 10)
 )

@@ -170,7 +170,7 @@ exportPlotConfigurationCode <- function(plotConfiguration, name = "plotConfigura
 
   axesCode <- "# Define/Overwrite PlotConfiguration axes properties"
   for (axisElement in c("xAxis", "yAxis")) {
-    for (property in c("font$color", "font$size", "font$fontFace", "font$angle", "limits", "scale", "ticklabels", "ticks")) {
+    for (property in c("font$color", "font$size", "font$fontFace", "font$angle", "valuesLimits", "axisLimits", "scale", "ticklabels", "ticks")) {
       axesText <- paste0("plotConfiguration$", axisElement, "$", property)
       updatedAxesText <- paste0(name, "$", axisElement, "$", property)
       axesValue <- eval(parse(text = axesText))

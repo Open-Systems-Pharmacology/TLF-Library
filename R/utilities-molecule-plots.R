@@ -299,8 +299,8 @@ getDualAxisPlot <- function(leftPlotObject, rightPlotObject) {
   rightScale <- ggplot2::layer_scales(rightPlotObject)
   mergeXRange <- range(leftScale$x$range$range, rightScale$x$range$range)
 
-  leftPlotObject <- setXAxis(leftPlotObject, limits = mergeXRange)
-  rightPlotObject <- setXAxis(rightPlotObject, limits = mergeXRange)
+  leftPlotObject <- setXAxis(leftPlotObject, axisLimits = mergeXRange)
+  rightPlotObject <- setXAxis(rightPlotObject, axisLimits = mergeXRange)
 
   # Transformed right plot to be compatible with left plot
   rightPlotObject <- rightPlotObject +

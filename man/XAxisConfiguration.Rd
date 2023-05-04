@@ -33,7 +33,7 @@ Other PlotConfiguration classes:
 }
 \concept{PlotConfiguration classes}
 \section{Super class}{
-\code{tlf::AxisConfiguration} -> \code{XAxisConfiguration}
+\code{\link[tlf:AxisConfiguration]{tlf::AxisConfiguration}} -> \code{XAxisConfiguration}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -60,7 +60,11 @@ Other PlotConfiguration classes:
 \subsection{Method \code{updatePlot()}}{
 Update axis configuration on a \code{ggplot} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{XAxisConfiguration$updatePlot(plotObject, ylim = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{XAxisConfiguration$updatePlot(
+  plotObject,
+  yAxisLimits = NULL,
+  ylim = lifecycle::deprecated()
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -68,7 +72,9 @@ Update axis configuration on a \code{ggplot} object
 \describe{
 \item{\code{plotObject}}{\code{ggplot} object}
 
-\item{\code{ylim}}{limits of \code{y} axis to prevent \code{coord_cartesian} to overwrite its properties}
+\item{\code{yAxisLimits}}{values of axisLimits for \code{y} axis to prevent \code{coord_cartesian} to overwrite its properties}
+
+\item{\code{ylim}}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}. Replaced by yAxisLimits argument.}
 }
 \if{html}{\out{</div>}}
 }

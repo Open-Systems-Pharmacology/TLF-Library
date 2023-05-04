@@ -112,14 +112,14 @@
 .updateSameAxes <- function(plotObject, data, dataMapping) {
   if (!all(
     plotObject$plotConfiguration$defaultSymmetricAxes,
-    isEmpty(plotObject$plotConfiguration$xAxis$limits),
-    isEmpty(plotObject$plotConfiguration$yAxis$limits)
+    isEmpty(plotObject$plotConfiguration$xAxis$axisLimits),
+    isEmpty(plotObject$plotConfiguration$yAxis$axisLimits)
   )) {
     return(plotObject)
   }
   limits <- .getSameLimitsFromMapping(data, dataMapping)
-  plotObject$plotConfiguration$xAxis$limits <- limits
-  plotObject$plotConfiguration$yAxis$limits <- limits
+  plotObject$plotConfiguration$xAxis$axisLimits <- limits
+  plotObject$plotConfiguration$yAxis$axisLimits <- limits
   return(plotObject)
 }
 
@@ -133,11 +133,11 @@
 .updateSymmetricAxes <- function(plotObject, data, dataMapping) {
   if (!all(
     plotObject$plotConfiguration$defaultSymmetricAxes,
-    isEmpty(plotObject$plotConfiguration$yAxis$limits)
+    isEmpty(plotObject$plotConfiguration$yAxis$axisLimits)
   )) {
     return(plotObject)
   }
   limits <- getSymmetricLimits(data[, dataMapping$y])
-  plotObject$plotConfiguration$yAxis$limits <- limits
+  plotObject$plotConfiguration$yAxis$axisLimits <- limits
   return(plotObject)
 }

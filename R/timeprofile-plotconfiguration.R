@@ -12,7 +12,9 @@ TimeProfilePlotConfiguration <- R6::R6Class(
     #' @param y2label character or `Label` object defining plot y2label
     #' @param y2Axis `YAxisConfiguration` object defining y-axis properties
     #' @param y2Scale name of y2-axis scale. Use enum `Scaling` to access predefined scales.
-    #' @param y2Limits numeric vector of length 2 defining y-axis limits
+    #' @param y2AxisLimits numeric vector of length 2 defining y axis limits
+    #' @param y2ValuesLimits numeric vector of length 2 defining y values limits
+    #' @param y2Limits `r lifecycle::badge("deprecated")`. Replaced by y2AxisLimits argument.
     #' @param lloqDirection Whether to draw LLOQ lines for x (vertical), y (horizontal) or x and y (both).
     #' @param data data.frame used by `.smartMapping`
     #' @param metaData list of information on `data`
@@ -25,12 +27,20 @@ TimeProfilePlotConfiguration <- R6::R6Class(
                           # Y2-Axis configuration
                           y2Axis = NULL,
                           y2Scale = NULL,
-                          y2Limits = NULL,
+                          y2ValuesLimits = NULL,
+                          y2AxisLimits = NULL,
+                          y2Limits = lifecycle::deprecated(),
                           lloqDirection = "horizontal",
                           # Smart configuration using metaData
                           data = NULL,
                           metaData = NULL,
                           dataMapping = NULL) {
+      if (lifecycle::is_present(y2Limits)) {
+        lifecycle::deprecate_warn("1.5.0", "TimeProfilePlotConfiguration(y2Limits)", "TimeProfilePlotConfiguration(y2AxisLimits)")
+        y2AxisLimits <- y2Limits
+      }
+
+
       super$initialize(
         ...,
         data = data,
@@ -59,7 +69,8 @@ TimeProfilePlotConfiguration <- R6::R6Class(
         expand = self$defaultExpand
       )
       private$.y2Axis$position <- "right"
-      private$.y2Axis$limits <- y2Limits %||% private$.y2Axis$limits
+      private$.y2Axis$valuesLimits <- y2ValuesLimits %||% private$.y2Axis$valuesLimits
+      private$.y2Axis$axisLimits <- y2AxisLimits %||% private$.y2Axis$axisLimits
       private$.y2Axis$scale <- y2Scale %||% private$.y2Axis$scale
     }
   ),

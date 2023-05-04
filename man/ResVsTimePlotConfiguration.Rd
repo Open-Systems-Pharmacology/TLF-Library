@@ -33,7 +33,7 @@ Other PlotConfiguration classes:
 }
 \concept{PlotConfiguration classes}
 \section{Super classes}{
-\code{tlf::PlotConfiguration} -> \code{tlf::ResVsPredPlotConfiguration} -> \code{ResVsTimePlotConfiguration}
+\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{\link[tlf:ResVsPredPlotConfiguration]{tlf::ResVsPredPlotConfiguration}} -> \code{ResVsTimePlotConfiguration}
 }
 \section{Methods}{
 \subsection{Public methods}{

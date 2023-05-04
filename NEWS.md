@@ -1,6 +1,10 @@
 # tlf (development version)
 
 - Lower Limit Of Quantification (LLOQ) can be added on time-profile plots and obs-vs-pred plots.
+- The `xLimits` and `yLimits` argument in `PlotConfiguration` are renamed `xAxisLimits` and `yAxisLimits`.
+  This will crop the axis limits but keep all the data to generate the plot (see `ggplot2::coord_cartesian`).
+- New `xValuesLimits` and `yValuesLimits` argument in `PlotConfiguration` to filter the **data** used to generate the plot. (see `ggplot2::scale_continuous_x`).
+  
 
 # tlf 1.5.0
 
