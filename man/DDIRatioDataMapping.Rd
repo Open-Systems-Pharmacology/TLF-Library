@@ -28,16 +28,16 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{\link[tlf:PKRatioDataMapping]{tlf::PKRatioDataMapping}} -> \code{DDIRatioDataMapping}
+\code{tlf::XYDataMapping} -> \code{tlf::XYGDataMapping} -> \code{tlf::PKRatioDataMapping} -> \code{DDIRatioDataMapping}
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{minRange}}{Minimum range for guest and ratio lines}
+\item{\code{deltaGuest}}{Value of \code{delta} in \href{https://dmd.aspetjournals.org/content/39/2/170}{Guest et al.} equation}
 
-\item{\code{deltaGuest}}{Value of \code{delta} in Guest et al. equation}
+\item{\code{minRange}}{Minimum range of x values for guest and ratio lines}
 
-\item{\code{residualsVsObserved}}{if true, returns a mapping for generating a residuals (predicted/observed) vs observed DDI ratio plot.  If false (default) returns a mapping for predicted vs observed DDI ratio plot.}
+\item{\code{residualsVsObserved}}{Logical defining if calculated DDI data are as residuals vs observed or predicted vs observed}
 }
 \if{html}{\out{</div>}}
 }
@@ -62,7 +62,7 @@ Other DataMapping classes:
 Create a new \code{DDIRatioDataMapping} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DDIRatioDataMapping$new(
-  deltaGuest = 1,
+  deltaGuest = NULL,
   minRange = c(0.01, 100),
   lines = DefaultDataMappingValues$ddiRatio,
   residualsVsObserved = FALSE,
@@ -73,14 +73,15 @@ Create a new \code{DDIRatioDataMapping} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{deltaGuest}}{Value of parameter \code{delta} in Guest et al. equation.
+\item{\code{deltaGuest}}{Value of \code{delta} in \href{https://dmd.aspetjournals.org/content/39/2/170}{Guest et al.} equation.
 Default value is 1.}
 
-\item{\code{minRange}}{Minimum range for guest lines}
+\item{\code{minRange}}{Minimum range of x values for guest and ratio lines
+Default is 0.01 - 100}
 
 \item{\code{lines}}{List of ratio limits to display as diagonal/horizontal lines}
 
-\item{\code{residualsVsObserved}}{if true, returns a mapping for generating a residuals (predicted/observed) vs observed DDI ratio plot.  If false (default) returns a mapping for predicted vs observed DDI ratio plot.}
+\item{\code{residualsVsObserved}}{Logical defining if calculated DDI data are as residuals vs observed or predicted vs observed}
 
 \item{\code{...}}{parameters inherited from \code{PKRatioDataMapping}}
 }
