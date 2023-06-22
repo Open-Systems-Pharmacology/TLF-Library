@@ -58,3 +58,34 @@
   )
   return(sum(isBetween(logTicks, minLimit, maxLimit)) > 0)
 }
+
+#' Validate if values are strictly positive
+#'
+#' @param values numeric values to be validated
+#' @param nullAllowed logical allowing `NULL` as input
+#' @keywords internal
+.validateIsStrictlyPositive <- function(values, nullAllowed = FALSE){
+  validateIsNumeric(values, nullAllowed = nullAllowed)
+  # all(NULL > 0) is true
+  # validateIsNumeric already took care of values = null but not allowed situation
+  if(all(values > 0)){
+    return(invisible())
+  }
+  stop(messages$errorValuesNotStrictlyPositive(values))
+}
+
+
+#' Check if values are within `left`-`right` range(s)
+#'
+#' @inheritParams isBetween
+#' @keywords internal
+.checkIsBetween <- function(x, left, right, strict = FALSE){
+  validateIsNumeric(x)
+  validateIsNumeric(left)
+  validateIsNumeric(right)
+  if(all(isBetween(x, left, right, strict))){
+    return(invisible())
+  }
+  warning(messages$warningValuesNotWitinRange(x, left, right, strict))
+  return(invisible())
+}

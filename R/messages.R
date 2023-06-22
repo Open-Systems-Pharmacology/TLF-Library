@@ -16,5 +16,21 @@ messages <- list(
       "Unknown palette '", palette, "', using palette 'Set1' instead.\n",
       "See enum 'ColorPalettes' to check available color palettes."
     )
+  },
+  errorValuesNotStrictlyPositive = function(values){
+    paste0(
+      "All values need to be STRICTLY positive but ", 
+      sum(values<=0), 
+      " values lower than or equal to zero were found."
+    )
+  },
+  warningValuesNotWitinRange = function(x, left, right, strict = FALSE){
+    paste0(
+      "Value(s) '", 
+      paste0(x[!isBetween(x, left, right, strict = FALSE)], collapse = "', '"),
+      "' were not ", 
+      ifelse(strict, "strictly ", ""),
+      "within [", paste0(range(left, right), collapse = ";"), "] range"
+    )
   }
 )
