@@ -172,9 +172,9 @@ getLogTickLabels <- function(ticks) {
   exponentValues <- floor(log10(ticks))
   # Values to print before 10^ using multiplication dot
   prefixValues <- ticks * 10^(-exponentValues)
-  prefixValues <- paste0(prefixValues, "%.%")
+  prefixValues <- paste0(prefixValues, "%*%")
   # For 1 the multiplication is redundant and removed
-  prefixValues[prefixValues == "1%.%"] <- ""
+  prefixValues[prefixValues == "1%*%"] <- ""
   return(parse(text = paste(prefixValues, "10^", exponentValues, sep = "")))
 }
 
@@ -190,9 +190,9 @@ getLnTickLabels <- function(ticks) {
   exponentValues <- floor(log(ticks))
   # Values to print before 10^ using multiplication dot
   prefixValues <- ticks * exp(-exponentValues)
-  prefixValues <- paste0(prefixValues, "%.%")
+  prefixValues <- paste0(prefixValues, "%*%")
   # For 1 the multiplication is redundant and removed
-  prefixValues[prefixValues == "1%.%"] <- ""
+  prefixValues[prefixValues == "1%*%"] <- ""
   return(parse(text = paste(prefixValues, "e^", exponentValues, sep = "")))
 }
 
