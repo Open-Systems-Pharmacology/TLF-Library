@@ -168,6 +168,18 @@ TagPositions <- enum(
   )
 )
 
+#' @title LabelOrientations
+#' @description
+#' List of all orientations available for `ggtext::element_textbox()`
+#' @export
+#' @family enum helpers
+LabelOrientations <- enum(
+  c("upright",
+    "left-rotated",
+    "right-rotated",
+    "inverted")
+)
+
 
 #' @title ColorMaps
 #'

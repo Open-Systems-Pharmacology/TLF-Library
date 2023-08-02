@@ -306,8 +306,8 @@ getDualAxisPlot <- function(leftPlotObject, rightPlotObject) {
   rightPlotObject <- rightPlotObject +
     ggplot2::theme(
       # Update right axis properties
-      axis.text.y.right = rightPlotObject$plotConfiguration$y2Axis$font$createPlotFont(),
-      axis.title.y.right = rightPlotObject$plotConfiguration$labels$y2label$createPlotFont(),
+      axis.text.y.right = rightPlotObject$plotConfiguration$y2Axis$font$createPlotTextFont(),
+      axis.title.y.right = rightPlotObject$plotConfiguration$labels$y2label$createPlotTextFont(),
       axis.line.y.right = rightPlotObject$plotConfiguration$background$y2Axis$createPlotElement(),
       panel.grid.major.y = rightPlotObject$plotConfiguration$background$y2Grid$createPlotElement(),
       panel.grid.minor.y = rightPlotObject$plotConfiguration$background$y2Grid$createPlotElement(

@@ -329,7 +329,7 @@ XAxisConfiguration <- R6::R6Class(
 
       validateIsOfType(plotObject, "ggplot")
       # Update font properties
-      plotObject <- plotObject + ggplot2::theme(axis.text.x = private$.font$createPlotFont())
+      plotObject <- plotObject + ggplot2::theme(axis.text.x = private$.font$createPlotTextFont())
       # Update limits using coor_cartesian to prevent ggplot to remove data and crash
       suppressMessages(
         plotObject <- plotObject + ggplot2::coord_cartesian(xlim = private$.axisLimits, ylim = yAxisLimits)
@@ -415,8 +415,8 @@ YAxisConfiguration <- R6::R6Class(
       validateIsOfType(plotObject, "ggplot")
       # Update font properties
       plotObject <- plotObject + switch(self$position,
-        "left" = ggplot2::theme(axis.text.y = private$.font$createPlotFont()),
-        "right" = ggplot2::theme(axis.text.y.right = private$.font$createPlotFont())
+        "left" = ggplot2::theme(axis.text.y = private$.font$createPlotTextFont()),
+        "right" = ggplot2::theme(axis.text.y.right = private$.font$createPlotTextFont())
       )
 
       suppressMessages(

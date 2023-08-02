@@ -48,7 +48,7 @@ LegendConfiguration <- R6::R6Class(
       plotObject <- plotObject +
         ggplot2::theme(
           legend.background = private$.background$createPlotElement(),
-          legend.text = private$.font$createPlotFont(),
+          legend.text = private$.font$createPlotTextFont(),
           # symbol background same as legend background
           legend.key = private$.background$createPlotElement(linetype = Linetypes$blank),
           # Ensure legend keys are wide enough to display dashed or dotted lines

@@ -34,7 +34,9 @@ Imports:
     R6,
     jsonlite,
     ospsuite.utils (>= 1.4.0),
-    patchwork
+    patchwork,
+    ggtext,
+    stringr
 Depends: 
     R (>= 3.6)
 Encoding: UTF-8

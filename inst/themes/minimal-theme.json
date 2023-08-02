@@ -5,7 +5,7 @@
       "size": 12,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0,
+      "orientation": "upright",
       "align": "center"
     },
     "subtitle": {
@@ -13,7 +13,7 @@
       "size": 10,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0,
+      "orientation": "upright",
       "align": "center"
     },
     "xlabel": {
@@ -21,7 +21,7 @@
       "size": 10,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0,
+      "orientation": "upright",
       "align": "center"
     },
     "ylabel": {
@@ -29,7 +29,7 @@
       "size": 10,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 90,
+      "orientation": "left-rotated",
       "align": "center"
     },
     "y2label": {
@@ -37,7 +37,7 @@
       "size": 10,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": -90,
+     "orientation": "right-rotated",
       "align": "center"
     },
     "caption": {
@@ -45,7 +45,7 @@
       "size": 8,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0,
+      "orientation": "upright",
       "align": "left"
     },
     "watermark": {
@@ -61,7 +61,7 @@
       "size": 10,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0,
+      "orientation": "upright",
       "align": "left"
     },
     "legendTitle": {
@@ -69,7 +69,7 @@
       "size": 14,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0,
+      "orientation": "upright",
       "align": "center"
     },
     "xAxis": {

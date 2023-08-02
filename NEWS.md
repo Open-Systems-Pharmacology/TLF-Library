@@ -4,6 +4,8 @@
 - The `xLimits` and `yLimits` argument in `PlotConfiguration` are renamed `xAxisLimits` and `yAxisLimits`.
   This will crop the axis limits but keep all the data to generate the plot (see `ggplot2::coord_cartesian`).
 - New `xValuesLimits` and `yValuesLimits` argument in `PlotConfiguration` to filter the **data** used to generate the plot. (see `ggplot2::scale_continuous_x`).
+- Groups names are now wraped on several lines if their number of characters is longer than 60.
+- Plots and plotGrids labels (titles, subtitles, caption and axis labels) are now automatically fitting plot's width and wraped on several lines if too long.
   
 
 # tlf 1.5.0

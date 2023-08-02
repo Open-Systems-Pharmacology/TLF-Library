@@ -11,7 +11,7 @@ Label <- R6::R6Class(
     #' @param color character defining the color of the label
     #' @param fontFamily character defining the font family of the label
     #' @param fontFace character defining the font face of the label as defined in helper enum `FontFaces`.
-    #' @param angle numeric defining the angle of the label
+    #' @param orientation string defining label orientation  as defined in helper enum `LabelOrientations`
     #' @param align character defining the alignment of the label as defined in helper enum `Alignments`.
     #' @return A new `Label` object
     initialize = function(text = "",
@@ -20,18 +20,19 @@ Label <- R6::R6Class(
                           size = NULL,
                           fontFace = NULL,
                           fontFamily = NULL,
-                          angle = NULL,
+                          orientation = NULL,
                           align = NULL) {
-      validateIsNumeric(c(as.numeric(angle), as.numeric(size)), nullAllowed = TRUE)
+      validateIsNumeric(as.numeric(size), nullAllowed = TRUE)
       validateIsString(c(color, fontFamily), nullAllowed = TRUE)
       validateIsOfType(font, "Font", nullAllowed = TRUE)
       validateIsIncluded(fontFace, FontFaces, nullAllowed = TRUE)
       validateIsIncluded(align, Alignments, nullAllowed = TRUE)
+      validateIsIncluded(orientation, LabelOrientations, nullAllowed = TRUE)
 
       self$text <- text
       self$font <- font %||% Font$new()
       # If font properties are explicitely written, they will overwrite the properties of input Font
-      eval(.parseVariableToObject("self$font", c("size", "color", "fontFace", "fontFamily", "angle", "align"), keepIfNull = TRUE))
+      eval(.parseVariableToObject("self$font", c("size", "color", "fontFace", "fontFamily", "orientation", "align"), keepIfNull = TRUE))
     },
 
     #' @description Create a `ggplot2::element_text` directly convertible by `ggplot2::theme`.
@@ -39,24 +40,24 @@ Label <- R6::R6Class(
     #' @param color character defining the color of the label
     #' @param fontFamily character defining the font family of the label
     #' @param fontFace character defining the font face of the label as defined in helper enum `FontFaces`.
-    #' @param angle numeric defining the angle of the label
+    #' @param orientation string defining label orientation as defined in helper enum `LabelOrientations`
     #' @param align character defining the alignment of the label as defined in helper enum `Alignments`.
     #' @return An `element_text` or `element_blank`object.
     createPlotFont = function(color = NULL,
                               size = NULL,
                               fontFace = NULL,
                               fontFamily = NULL,
-                              angle = NULL,
+                              orientation = NULL,
                               align = NULL) {
       if (isEmpty(self$text)) {
         return(ggplot2::element_blank())
       }
-      return(self$font$createPlotFont(
+      return(self$font$createPlotTextBoxFont(
         color = color,
         size = size,
         fontFace = fontFace,
         fontFamily = fontFamily,
-        angle = angle,
+        orientation = orientation,
         align = align
       ))
     }
@@ -78,9 +79,8 @@ Label <- R6::R6Class(
       }
       validateIsOfType(value, "Font", nullAllowed = TRUE)
       private$.font <- value %||% Font$new()
-      # Ensures that size and angle are numeric
+      # Ensures that size is numeric
       private$.font$size <- as.numeric(private$.font$size)
-      private$.font$angle <- as.numeric(private$.font$angle)
       return(invisible())
     }
   ),

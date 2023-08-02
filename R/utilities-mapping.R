@@ -133,6 +133,13 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
 #' Creates default legend captions subset
 #' @keywords internal
 .asLegendCaptionSubset <- function(labels, unit = NULL) {
+
+  # Cut long group names on several lines (can cut spaces or non word character)
+  labels <- paste(
+    stringr::str_wrap(labels,width = 60,
+                      whitespace_only = FALSE),
+    sep = "\n")
+
   # Keep ordering of labels as is if factor
   captionLevels <- sort(unique(labels))
   if (isOfType(labels, "factor")) {
@@ -377,9 +384,9 @@ getLinesFromFoldDistance <- function(foldDistance) {
   )
 
   aggregatedData <- cbind.data.frame(xData,
-    y = medianData$x,
-    ymin = lowPercData$x,
-    ymax = highPercData$x
+                                     y = medianData$x,
+                                     ymin = lowPercData$x,
+                                     ymax = highPercData$x
   )
 
   return(aggregatedData)
