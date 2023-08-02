@@ -39,10 +39,10 @@ test_that("Empty label is translated as element_blank from ggplot2", {
   )
 })
 
-test_that("Non-empty label is translated as element_text from ggplot2", {
+test_that("Non-empty label is translated as element_textbox from ggtext", {
   nonEmptyLabel <- Label$new(text = "text")
   expect_equal(
     class(nonEmptyLabel$createPlotFont())[1],
-    "element_text"
+    "element_textbox"
   )
 })

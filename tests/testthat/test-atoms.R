@@ -75,3 +75,19 @@ test_that("A PlotConfiguration input is correctlty used to create the plot when 
   expect_equivalent(ribbonPlot$plotConfiguration$yAxis, testPlotConfiguration$yAxis)
   expect_equivalent(errorbarPlot$plotConfiguration$yAxis, testPlotConfiguration$yAxis)
 })
+
+
+test_that("Long texts are properly handled",{
+
+  testPlotConfiguration <- PlotConfiguration$new(
+    title = paste("Title: This is a", paste(rep("very", 40), collapse = " "), "long title"),
+    subtitle = paste("Subtitle: This is a", paste(rep("very", 40), collapse = " "), "long subtitle"),
+    xlabel = paste("xlabel: This is a", paste(rep("very", 40), collapse = " "), "long x label"),
+    ylabel =  paste("ylabel: This is a", paste(rep("very", 40), collapse = " "), "long y label"),
+    caption =  paste("Caption: This is a", paste(rep("very", 40), collapse = " "), "long caption")
+  )
+  vdiffr::expect_doppelganger("very long labels",
+                              initializePlot(plotConfiguration = testPlotConfiguration))
+
+})
+

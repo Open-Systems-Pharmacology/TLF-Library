@@ -166,3 +166,30 @@ test_that("plotObservedVsSimulated with LLOQ works ", {
     )
   )
 })
+
+test_that("Long group names are correctly displayed", {
+
+  set.seed(42)
+
+  obsVsPredData <- data.frame(
+    x = sort(abs(rnorm(20, 2.5, 1))),
+    y = sort(abs(rnorm(20, 2.5, 1))),
+    group = c(rep("ThisIsAVeryLongPath|thisIsAVeryLongPath|thisIsAVeryLongPath|thisIsAVeryLongPath|thisIsAVeryLongPath|thisIsAVeryLongPath", 10),
+              rep("ThisIsAnotherVeryLongPath|thisIsAnotherVeryLongPath|thisIsAnotherVeryLongPath|thisIsAnotherVeryLongPath|thisIsAnotherVeryLongPath|thisIsAnotherVeryLongPath", 10))
+  )
+
+  vdiffr::expect_doppelganger("Very long group names",
+                              fig =
+                                plotObsVsPred(
+                                  data = obsVsPredData,
+                                  dataMapping = ObsVsPredDataMapping$new(
+                                    x = "x", y = "y",
+                                    group = "group"
+                                  )
+                                )
+  )
+
+})
+
+
+
