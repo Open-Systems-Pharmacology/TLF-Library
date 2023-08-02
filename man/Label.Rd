@@ -36,7 +36,7 @@ Create a new \code{Label} object.
   size = NULL,
   fontFace = NULL,
   fontFamily = NULL,
-  angle = NULL,
+  orientation = NULL,
   align = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -56,7 +56,7 @@ Create a new \code{Label} object.
 
 \item{\code{fontFamily}}{character defining the font family of the label}
 
-\item{\code{angle}}{numeric defining the angle of the label}
+\item{\code{orientation}}{string defining label orientation  as defined in helper enum \code{LabelOrientations}}
 
 \item{\code{align}}{character defining the alignment of the label as defined in helper enum \code{Alignments}.}
 }
@@ -77,7 +77,7 @@ Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::the
   size = NULL,
   fontFace = NULL,
   fontFamily = NULL,
-  angle = NULL,
+  orientation = NULL,
   align = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -93,7 +93,7 @@ Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::the
 
 \item{\code{fontFamily}}{character defining the font family of the label}
 
-\item{\code{angle}}{numeric defining the angle of the label}
+\item{\code{orientation}}{string defining label orientation as defined in helper enum \code{LabelOrientations}}
 
 \item{\code{align}}{character defining the alignment of the label as defined in helper enum \code{Alignments}.}
 }

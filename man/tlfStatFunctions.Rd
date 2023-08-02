@@ -30,6 +30,7 @@ Other enum helpers:
 \code{\link{ExportUnits}},
 \code{\link{FontFaces}},
 \code{\link{HorizontalJustification}},
+\code{\link{LabelOrientations}},
 \code{\link{LegendPositions}},
 \code{\link{LegendTypes}},
 \code{\link{Linetypes}},
