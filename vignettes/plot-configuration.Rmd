@@ -184,7 +184,7 @@ plotConfigurationLabel2 <- PlotConfiguration$new(
   title = Label$new(text = "Title", size = 12, color = "deepskyblue4"),
   subtitle = Label$new(text = "Subtitle", size = 11, color = "steelblue"),
   xlabel = Label$new(text = "x label", size = 10, color = "dodgerblue2"),
-  ylabel = Label$new(text = "y label", size = 10, color = "dodgerblue2", angle = 45),
+  ylabel = Label$new(text = "y label", color = "dodgerblue2", orientation = LabelOrientations$upright),
   caption = Label$new(text = "Caption", size = 8, color = "steelblue", align = Alignments$left)
 )
 
