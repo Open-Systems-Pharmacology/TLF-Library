@@ -96,9 +96,20 @@ test_that("Long texts are properly handled",{
     fig = initializePlot(plotConfiguration = PlotConfiguration$new(
       title = paste("Title: This is a", paste(rep("very", 40), collapse = " "), "long title"),
       subtitle = paste("Subtitle: This is a", paste(rep("very", 40), collapse = " "), "long subtitle"),
-      xlabel =Label$new(text = paste("ylabel: This is a", paste(rep("very", 40), collapse = " "), "long x label"),orientation = "left-rotated"),
-      ylabel =  Label$new(text = paste("ylabel: This is a", paste(rep("very", 40), collapse = " "), "long y label"),orientation = "upright"),
-      caption =  paste("Caption: This is a", paste(rep("very", 40), collapse = " "), "long caption"))
+      xlabel =Label$new(text = paste("ylabel: This is a", paste(rep("very", 40), collapse = " "), "long x label"), angle = 90),
+      ylabel =  Label$new(text = paste("ylabel: This is a", paste(rep("very", 40), collapse = " "), "long y label"), angle = 0),
+      caption =  paste("Caption: This is a", paste(rep("very", 40), collapse = " "), "long caption"),
+      watermark = Label$new(text = "watermark", angle = 45))
+    )
+  )
+
+  expect_warning(initializePlot(plotConfiguration = PlotConfiguration$new(
+      title = paste("Title: This is a", paste(rep("very", 40), collapse = " "), "long title"),
+      subtitle = paste("Subtitle: This is a", paste(rep("very", 40), collapse = " "), "long subtitle"),
+      xlabel =Label$new(text = paste("ylabel: This is a", paste(rep("very", 40), collapse = " "), "long x label"), angle = 75),
+      ylabel =  Label$new(text = paste("ylabel: This is a", paste(rep("very", 40), collapse = " "), "long y label"), angle = 30),
+      caption =  paste("Caption: This is a", paste(rep("very", 40), collapse = " "), "long caption"),
+      watermark = Label$new(text = "watermark", angle = 45))
     )
   )
 

@@ -168,7 +168,8 @@ test_that("plotObservedVsSimulated with LLOQ works ", {
 })
 
 test_that("Long group names are correctly displayed", {
-
+  skip_if_not_installed("vdiffr")
+  skip_if(getRversion() < "4.1")
   set.seed(42)
 
   obsVsPredData <- data.frame(

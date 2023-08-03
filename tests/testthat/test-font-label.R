@@ -34,15 +34,19 @@ test_that("Label gives error when initialized with wrong arguments", {
 test_that("Empty label is translated as element_blank from ggplot2", {
   emptyLabel <- Label$new(text = NULL)
   expect_equal(
-    class(emptyLabel$createPlotFont())[1],
+    class(emptyLabel$createPlotTextFont())[1],
     "element_blank"
   )
 })
 
-test_that("Non-empty label is translated as element_textbox from ggtext", {
+test_that("Non-empty label is translated as element_text and element_textbox", {
   nonEmptyLabel <- Label$new(text = "text")
   expect_equal(
-    class(nonEmptyLabel$createPlotFont())[1],
+    class(nonEmptyLabel$createPlotTextFont())[1],
+    "element_text"
+  )
+  expect_equal(
+    class(nonEmptyLabel$createPlotTextBoxFont())[1],
     "element_textbox"
   )
 })
