@@ -19,8 +19,6 @@ R6 class defining font properties
 
 \item{\code{angle}}{numeric defining the angle of font}
 
-\item{\code{orientation}}{character defining the orientation of the text as defined in the helper enum \code{LabelOrientations}.}
-
 \item{\code{maxwidth}}{\code{unit()} object defining the maximum width of text.}
 
 \item{\code{margin}}{\code{ggplot2::margin()} object defining the space around text.}
@@ -52,7 +50,6 @@ so \code{NULL} input is allowed will lead to default properties.
   fontFamily = NULL,
   fontFace = NULL,
   angle = NULL,
-  orientation = NULL,
   align = NULL,
   maxwidth = NULL,
   margin = NULL
@@ -71,8 +68,6 @@ so \code{NULL} input is allowed will lead to default properties.
 \item{\code{fontFace}}{character defining the font face as defined in helper enum \code{FontFaces}.}
 
 \item{\code{angle}}{numeric defining the angle of font.}
-
-\item{\code{orientation}}{character defining the orientation of the text as defined in the helper enum \code{LabelOrientations}.}
 
 \item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
 
@@ -114,7 +109,7 @@ Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::the
 
 \item{\code{fontFace}}{character defining the font face as defined in helper enum \code{FontFaces}.}
 
-\item{\code{angle}}{numeric defining the angle of font}
+\item{\code{angle}}{numeric defining the angle of font.}
 
 \item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
 
@@ -137,7 +132,7 @@ Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::the
   color = NULL,
   fontFamily = NULL,
   fontFace = NULL,
-  orientation = NULL,
+  angle = NULL,
   align = NULL,
   maxwidth = NULL,
   margin = NULL
@@ -155,7 +150,7 @@ Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::the
 
 \item{\code{fontFace}}{character defining the font face as defined in helper enum \code{FontFaces}.}
 
-\item{\code{orientation}}{character defining the orientation of the text as defined in the helper enum \code{LabelOrientations}.}
+\item{\code{angle}}{numeric defining the angle of font.}
 
 \item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
 
@@ -166,7 +161,7 @@ Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::the
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-An \code{element_text} object.
+An \code{ggtext::element_textbox} object.
 }
 }
 \if{html}{\out{<hr>}}

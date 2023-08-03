@@ -28,7 +28,6 @@ Other enum helpers:
 \code{\link{ExportFormats}},
 \code{\link{FontFaces}},
 \code{\link{HorizontalJustification}},
-\code{\link{LabelOrientations}},
 \code{\link{LegendPositions}},
 \code{\link{LegendTypes}},
 \code{\link{Linetypes}},
