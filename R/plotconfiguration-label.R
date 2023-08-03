@@ -20,15 +20,33 @@ LabelConfiguration <- R6::R6Class(
       # y2label not available for all plots but time profile
       y2label <- NULL
       inputs <- c("title", "subtitle", "xlabel", "ylabel", "caption", "y2label")
-      validateExpressions <- parse(text = paste0("validateIsOfType(", inputs, ', c("Label", "character"), nullAllowed =TRUE)'))
-      eval(validateExpressions)
+
+      labels <- list("title" = title,
+                     "subtitle" = subtitle,
+                     "xlabel" = xlabel,
+                     "ylabel" = ylabel,
+                     "caption" = caption)
+
+      # Check label type is either a character or `Label` object
+      lapply(labels, function(x){validateIsOfType(x, c("Label", "character"), nullAllowed = TRUE)})
+
+      # Check Chosen angle is available
+      for (label in labels) {
+        if (isOfType(label, "Label")) {
+          availableAngles <- c(0,90,180,270)
+          if (!(label$font$angle %in% availableAngles)) {
+            label$font$angle <- availableAngles[which(abs(label$font$angle - availableAngles) == min(abs(label$font$angle - availableAngles)))][1]
+            warning("Angles other than 0, 90, 189 and 270 are not available for title, subtitles, caption and axis titles. Replacing by closest available value: ", label$font$angle,".")
+          }
+        }
+      }
 
       if (isOfType(ylabel, "Label")) {
-        if (ylabel$font$orientation %in% c("upright", "inverted")) {
+        if (ylabel$font$angle %in% c(0, 180)) {
           ylabel$font$maxwidth <- unit(100, "pt")
           ylabel$font$margin <- ggplot2::margin(0,6,0,6)
         }
-        if (ylabel$font$orientation %in% c("left-rotated","right-rotated")) {
+        if (ylabel$font$angle %in% c(90, 270)) {
           ylabel$font$maxwidth <- NULL
           ylabel$font$margin <- ggplot2::margin(6,0,6,0)
 
@@ -36,11 +54,11 @@ LabelConfiguration <- R6::R6Class(
       }
 
       if (isOfType(xlabel, "Label")) {
-        if (xlabel$font$orientation %in% c("upright", "inverted")) {
+        if (xlabel$font$angle %in% c(0, 180)) {
           xlabel$font$maxwidth <- NULL
           xlabel$font$margin <- ggplot2::margin(6,0,6,0)
         }
-        if (xlabel$font$orientation %in% c("left-rotated","right-rotated")) {
+        if (xlabel$font$angle %in% c(90, 270)) {
           xlabel$font$maxwidth <- unit(100, "pt")
           xlabel$font$margin <- ggplot2::margin(0,6,0,6)
         }
@@ -61,6 +79,7 @@ LabelConfiguration <- R6::R6Class(
     #' @param plotObject a `ggplot` object
     #' @return A `ggplot` object
     updatePlot = function(plotObject) {
+
       validateIsOfType(plotObject, "ggplot")
       # Update titles and axes labels
       plotObject <- plotObject + ggplot2::labs(
@@ -70,13 +89,14 @@ LabelConfiguration <- R6::R6Class(
         y = private$.ylabel$text,
         caption = private$.caption$text
       )
-      plotObject <- plotObject + ggplot2::theme(
-        plot.title = private$.title$createPlotFont(),
-        plot.subtitle = private$.subtitle$createPlotFont(),
-        axis.title.x = private$.xlabel$createPlotFont(),
-        axis.title.y = private$.ylabel$createPlotFont(),
-        axis.title.y.right = private$.y2label$createPlotFont(),
-        plot.caption = private$.caption$createPlotFont()
+      plotObject <- plotObject +
+        ggplot2::theme(
+        plot.title = private$.title$createPlotTextBoxFont(),
+        plot.subtitle = private$.subtitle$createPlotTextBoxFont(),
+        axis.title.x = private$.xlabel$createPlotTextBoxFont(),
+        axis.title.y = private$.ylabel$createPlotTextBoxFont(),
+        axis.title.y.right = private$.y2label$createPlotTextBoxFont(),
+        plot.caption = private$.caption$createPlotTextBoxFont()
       )
       return(plotObject)
     }

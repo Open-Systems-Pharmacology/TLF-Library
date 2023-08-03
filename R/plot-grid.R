@@ -104,7 +104,7 @@ plotGrid <- function(plotGridConfiguration) {
           valign = plotGridConfiguration$titleVerticalJustification,
           hjust = plotGridConfiguration$captionHorizontalJustification,
           vjust = plotGridConfiguration$captionVerticalJustification,
-          orientation = plotGridConfiguration$titleOrientation,
+          orientation = .convertAngleToOrientation(plotGridConfiguration$titleAngle),
           margin = unit(c(5,5,5,5), "pt")
         ),
         plot.subtitle = ggtext::element_textbox_simple(
@@ -116,7 +116,7 @@ plotGrid <- function(plotGridConfiguration) {
           valign = plotGridConfiguration$subtitleVerticalJustification,
           hjust = plotGridConfiguration$captionHorizontalJustification,
           vjust = plotGridConfiguration$captionVerticalJustification,
-          orientation = plotGridConfiguration$subtitleOrientation,
+          orientation = .convertAngleToOrientation(plotGridConfiguration$subtitleAngle),
           margin = unit(c(5,5,5,5), "pt")
         ),
         plot.caption = ggtext::element_textbox_simple(
@@ -128,7 +128,7 @@ plotGrid <- function(plotGridConfiguration) {
           valign = plotGridConfiguration$captionVerticalJustification,
           hjust = plotGridConfiguration$captionHorizontalJustification,
           vjust = plotGridConfiguration$captionVerticalJustification,
-          orientation = plotGridConfiguration$captionOrientation,
+          orientation = .convertAngleToOrientation(plotGridConfiguration$captionAngle),
           margin = unit(c(5,5,5,5), "pt")
         )
       )
@@ -208,9 +208,9 @@ plotGrid <- function(plotGridConfiguration) {
 #' @field plotList A list containing `ggplot` objects.
 #' @field title,subtitle,caption Text strings to use for the various plot
 #' annotations, where plot refers to the grid of plots as a whole.
-#' @field titleColor,titleSize,titleFontFace,titleFontFamily,titleHorizontalJustification,titleVerticalJustification,titleOrientation Aesthetic properties for the plot title.
-#' @field subtitleColor,subtitleSize,subtitleFontFace,subtitleFontFamily,subtitleHorizontalJustification,subtitleVerticalJustification,subtitleOrientation Aesthetic properties for the plot subtitle.
-#' @field captionColor,captionSize,captionFontFace,captionFontFamily,captionHorizontalJustification,captionVerticalJustification,captionOrientation Aesthetic properties for the plot caption.
+#' @field titleColor,titleSize,titleFontFace,titleFontFamily,titleHorizontalJustification,titleVerticalJustification,titleAngle Aesthetic properties for the plot title.
+#' @field subtitleColor,subtitleSize,subtitleFontFace,subtitleFontFamily,subtitleHorizontalJustification,subtitleVerticalJustification,subtitleAngle Aesthetic properties for the plot subtitle.
+#' @field captionColor,captionSize,captionFontFace,captionFontFamily,captionHorizontalJustification,captionVerticalJustification,captionAngle Aesthetic properties for the plot caption.
 #' @field tagLevels A character vector defining the enumeration format to use
 #' at each level. Possible values are `'a'` for lowercase letters, `'A'` for
 #' uppercase letters, `'1'` for numbers, `'i'` for lowercase Roman numerals, and
@@ -304,7 +304,7 @@ PlotGridConfiguration <- R6::R6Class(
     titleFontFamily = "",
     titleHorizontalJustification = HorizontalJustification$left,
     titleVerticalJustification = VerticalJustification$bottom,
-    titleOrientation = "upright",
+    titleAngle = 0,
 
     # subtitle ------------------------------------
 
@@ -315,7 +315,7 @@ PlotGridConfiguration <- R6::R6Class(
     subtitleFontFamily = "",
     subtitleHorizontalJustification = HorizontalJustification$left,
     subtitleVerticalJustification = VerticalJustification$bottom,
-    subtitleOrientation = "upright",
+    subtitleAngle = 0,
 
     # caption ------------------------------------
 
@@ -326,7 +326,7 @@ PlotGridConfiguration <- R6::R6Class(
     captionFontFamily = "",
     captionHorizontalJustification = HorizontalJustification$right,
     captionVerticalJustification = VerticalJustification$bottom,
-    captionOrientation = "upright",
+    captionAngle = 0,
 
     # arrangement ------------------------------------
 

@@ -59,7 +59,7 @@ LegendConfiguration <- R6::R6Class(
         "plotObject <- plotObject + ggplot2::guides(",
         names(AestheticProperties), " = guide_legend(",
         "title = private$.title$text,",
-        "title.theme = private$.title$createPlotFont())",
+        "title.theme = private$.title$createPlotTextFont())",
         ")"
       ))
       eval(updateLegendTitleExpression)

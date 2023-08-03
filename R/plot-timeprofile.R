@@ -431,7 +431,7 @@ updateTimeProfileLegend <- function(plotObject, caption) {
         fill = "none", shape = "none", linetype = "none",
         color = ggplot2::guide_legend(
           title = plotObject$plotConfiguration$legend$title$text,
-          title.theme = plotObject$plotConfiguration$legend$title$createPlotFont(),
+          title.theme = plotObject$plotConfiguration$legend$title$createPlotTextFont(),
           override.aes = list(
             shape = caption$shape$values,
             fill = caption$fill$values,
