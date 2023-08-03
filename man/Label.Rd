@@ -70,7 +70,7 @@ A new \code{Label} object
 \if{html}{\out{<a id="method-Label-createPlotFont"></a>}}
 \if{latex}{\out{\hypertarget{method-Label-createPlotFont}{}}}
 \subsection{Method \code{createPlotFont()}}{
-Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::theme}.
+Create a \code{ggtext::element_textbox} directly convertible by \code{ggplot2::theme}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Label$createPlotFont(
   color = NULL,

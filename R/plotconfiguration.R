@@ -120,8 +120,11 @@ PlotConfiguration <- R6::R6Class(
       # Label configuration
       # validation of the input is done within the creation of the object
       private$.labels <- LabelConfiguration$new(
-        title = title, subtitle = subtitle,
-        xlabel = xlabel, ylabel = ylabel, caption = caption
+        title = title,
+        subtitle = subtitle,
+        xlabel = xlabel,
+        ylabel = ylabel,
+        caption = caption
       )
 
       # Smart configuration if xlabel and ylabel

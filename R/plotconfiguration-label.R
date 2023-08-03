@@ -23,6 +23,29 @@ LabelConfiguration <- R6::R6Class(
       validateExpressions <- parse(text = paste0("validateIsOfType(", inputs, ', c("Label", "character"), nullAllowed =TRUE)'))
       eval(validateExpressions)
 
+      if (isOfType(ylabel, "Label")) {
+        if (ylabel$font$orientation %in% c("upright", "inverted")) {
+          ylabel$font$maxwidth <- unit(100, "pt")
+          ylabel$font$margin <- ggplot2::margin(0,6,0,6)
+        }
+        if (ylabel$font$orientation %in% c("left-rotated","right-rotated")) {
+          ylabel$font$maxwidth <- NULL
+          ylabel$font$margin <- ggplot2::margin(6,0,6,0)
+
+        }
+      }
+
+      if (isOfType(xlabel, "Label")) {
+        if (xlabel$font$orientation %in% c("upright", "inverted")) {
+          xlabel$font$maxwidth <- NULL
+          xlabel$font$margin <- ggplot2::margin(6,0,6,0)
+        }
+        if (xlabel$font$orientation %in% c("left-rotated","right-rotated")) {
+          xlabel$font$maxwidth <- unit(100, "pt")
+          xlabel$font$margin <- ggplot2::margin(0,6,0,6)
+        }
+      }
+
       currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
       enforceLabelExpressions <- parse(text = paste0(
         "if(!isOfType(", inputs, ',"Label")){',

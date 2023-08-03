@@ -35,7 +35,7 @@ Label <- R6::R6Class(
       eval(.parseVariableToObject("self$font", c("size", "color", "fontFace", "fontFamily", "orientation", "align"), keepIfNull = TRUE))
     },
 
-    #' @description Create a `ggplot2::element_text` directly convertible by `ggplot2::theme`.
+    #' @description Create a `ggtext::element_textbox` directly convertible by `ggplot2::theme`.
     #' @param size numeric defining the size of the label
     #' @param color character defining the color of the label
     #' @param fontFamily character defining the font family of the label

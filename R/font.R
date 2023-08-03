@@ -6,6 +6,8 @@
 #' @field fontFace character defining the font face as defined in helper enum `FontFaces`.
 #' @field angle numeric defining the angle of font
 #' @field orientation character defining the orientation of the text as defined in the helper enum `LabelOrientations`.
+#' @field maxwidth `unit()` object defining the maximum width of text.
+#' @field margin `ggplot2::margin()` object defining the space around text.
 #' @field align character defining the alignment of font as defined in helper enum `Alignments`.
 #' @export
 Font <- R6::R6Class(
@@ -16,8 +18,10 @@ Font <- R6::R6Class(
     fontFamily = "",
     fontFace = "plain",
     angle = 0,
-    orientation = NULL,
+    orientation = "upright",
     align = "center",
+    maxwidth = NULL,
+    margin = ggplot2::margin(6,4,6,4, "pt"),
     #' @description Create a new `Font` object.
     #' Default font properties are defined directly in the object field,
     #' so `NULL` input is allowed will lead to default properties.
@@ -28,6 +32,8 @@ Font <- R6::R6Class(
     #' @param angle numeric defining the angle of font.
     #' @param orientation character defining the orientation of the text as defined in the helper enum `LabelOrientations`.
     #' @param align character defining the alignment of font as defined in helper enum `Alignments`.
+    #' @param maxwidth `unit()` object defining the maximum width of text.
+    #' @param margin `ggplot2::margin()` object defining the space around text.
     #' @return A new `Font` object
     initialize = function(color = NULL,
                           size = NULL,
@@ -35,7 +41,9 @@ Font <- R6::R6Class(
                           fontFace = NULL,
                           angle = NULL,
                           orientation = NULL,
-                          align = NULL) {
+                          align = NULL,
+                          maxwidth = NULL,
+                          margin = NULL) {
       validateIsString(c(color, fontFamily), nullAllowed = TRUE)
       validateIsNumeric(c(size, angle), nullAllowed = TRUE)
       validateIsIncluded(fontFace, FontFaces, nullAllowed = TRUE)
@@ -51,13 +59,15 @@ Font <- R6::R6Class(
     #' @param fontFace character defining the font face as defined in helper enum `FontFaces`.
     #' @param angle numeric defining the angle of font
     #' @param align character defining the alignment of font as defined in helper enum `Alignments`.
+    #' @param margin `ggplot2::margin()` object defining the space around text.
     #' @return An `element_text` object.
     createPlotTextFont = function(size = NULL,
-                              color = NULL,
-                              fontFamily = NULL,
-                              fontFace = NULL,
-                              angle = NULL,
-                              align = NULL) {
+                                  color = NULL,
+                                  fontFamily = NULL,
+                                  fontFace = NULL,
+                                  angle = NULL,
+                                  align = NULL,
+                                  margin = NULL) {
       ggplot2::element_text(
         colour = color %||% self$color,
         size = size %||% self$size,
@@ -67,11 +77,10 @@ Font <- R6::R6Class(
         angle = angle %||% self$angle,
         vjust = 0.5,
         hjust = switch(align %||% self$align,
-          "left" = 0,
-          "center" = 0.5,
-          "right" = 1
-        ),
-        margin = unit(unit(c(2,2,2,2), "pt"))
+                       "left" = 0,
+                       "center" = 0.5,
+                       "right" = 1),
+        margin = margin %||% self$margin
       )
     },
     #' @description Create a `ggplot2::element_text` directly convertible by `ggplot2::theme`.
@@ -81,13 +90,17 @@ Font <- R6::R6Class(
     #' @param fontFace character defining the font face as defined in helper enum `FontFaces`.
     #' @param orientation character defining the orientation of the text as defined in the helper enum `LabelOrientations`.
     #' @param align character defining the alignment of font as defined in helper enum `Alignments`.
+    #' @param maxwidth `unit()` object defining the maximum width of text.
+    #' @param margin `ggplot2::margin()` object defining the space around text.
     #' @return An `element_text` object.
     createPlotTextBoxFont = function(size = NULL,
-                                  color = NULL,
-                                  fontFamily = NULL,
-                                  fontFace = NULL,
-                                  orientation = NULL,
-                                  align = NULL) {
+                                     color = NULL,
+                                     fontFamily = NULL,
+                                     fontFace = NULL,
+                                     orientation = NULL,
+                                     align = NULL,
+                                     maxwidth = NULL,
+                                     margin = NULL) {
       ggtext::element_textbox_simple(
         colour = color %||% self$color,
         size = size %||% self$size,
@@ -97,10 +110,11 @@ Font <- R6::R6Class(
         orientation = size %||% self$orientation,
         valign = 0.5,
         halign = switch(align %||% self$align,
-                       "left" = 0,
-                       "center" = 0.5,
-                       "right" = 1),
-        margin = unit(c(10,5,10,5), "pt")
+                        "left" = 0,
+                        "center" = 0.5,
+                        "right" = 1),
+        maxwidth = maxwidth %||% self$maxwidth,
+        margin = margin %||% self$margin
       )
     }
   )

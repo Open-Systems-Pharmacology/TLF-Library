@@ -21,6 +21,10 @@ R6 class defining font properties
 
 \item{\code{orientation}}{character defining the orientation of the text as defined in the helper enum \code{LabelOrientations}.}
 
+\item{\code{maxwidth}}{\code{unit()} object defining the maximum width of text.}
+
+\item{\code{margin}}{\code{ggplot2::margin()} object defining the space around text.}
+
 \item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
 }
 \if{html}{\out{</div>}}
@@ -49,7 +53,9 @@ so \code{NULL} input is allowed will lead to default properties.
   fontFace = NULL,
   angle = NULL,
   orientation = NULL,
-  align = NULL
+  align = NULL,
+  maxwidth = NULL,
+  margin = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -69,6 +75,10 @@ so \code{NULL} input is allowed will lead to default properties.
 \item{\code{orientation}}{character defining the orientation of the text as defined in the helper enum \code{LabelOrientations}.}
 
 \item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
+
+\item{\code{maxwidth}}{\code{unit()} object defining the maximum width of text.}
+
+\item{\code{margin}}{\code{ggplot2::margin()} object defining the space around text.}
 }
 \if{html}{\out{</div>}}
 }
@@ -88,7 +98,8 @@ Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::the
   fontFamily = NULL,
   fontFace = NULL,
   angle = NULL,
-  align = NULL
+  align = NULL,
+  margin = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -106,6 +117,8 @@ Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::the
 \item{\code{angle}}{numeric defining the angle of font}
 
 \item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
+
+\item{\code{margin}}{\code{ggplot2::margin()} object defining the space around text.}
 }
 \if{html}{\out{</div>}}
 }
@@ -125,7 +138,9 @@ Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::the
   fontFamily = NULL,
   fontFace = NULL,
   orientation = NULL,
-  align = NULL
+  align = NULL,
+  maxwidth = NULL,
+  margin = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -143,6 +158,10 @@ Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::the
 \item{\code{orientation}}{character defining the orientation of the text as defined in the helper enum \code{LabelOrientations}.}
 
 \item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
+
+\item{\code{maxwidth}}{\code{unit()} object defining the maximum width of text.}
+
+\item{\code{margin}}{\code{ggplot2::margin()} object defining the space around text.}
 }
 \if{html}{\out{</div>}}
 }
