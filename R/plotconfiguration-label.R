@@ -63,7 +63,8 @@ LabelConfiguration <- R6::R6Class(
         }
 
         # Check Chosen angle is available
-        if (!(labels[[labelName]]$font$angle %in% c(0,90,180,270))) {
+        availableAngles <- c(0,90,180,270)
+        if (!(labels[[labelName]]$font$angle %in% availableAngles)) {
           labels[[labelName]]$font$angle <- availableAngles[which(abs(label$font$angle - availableAngles) == min(abs(label$font$angle - availableAngles)))][1]
           warning("Angles other than 0, 90, 189 and 270 are not available for title, subtitles, caption and axis titles. Replacing by closest available value: ", label$font$angle,".")
         }
