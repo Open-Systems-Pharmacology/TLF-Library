@@ -123,7 +123,7 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
   if (isEmpty(captions)) {
     return(factor(""))
   }
-  return(captions)
+  return(as.factor(captions))
 }
 
 #' @title .asLegendCaptionSubset
