@@ -82,7 +82,7 @@ XYGDataMapping <- R6::R6Class(
         }
         .validateMapping(groupVariables, data)
         # Enforce grouping variables to be factors
-        self$data[, grouping$label] <- as.factor(grouping$getCaptions(data, metaData))
+        self$data[, grouping$label] <- grouping$getCaptions(data, metaData)
 
         # Dummy variable for default aesthetics that will be used to define legend labels
         legendLabels <- self$data$legendLabels %||% grouping$getCaptions(data, metaData)
@@ -92,6 +92,7 @@ XYGDataMapping <- R6::R6Class(
           self$data$legendLabels <- legendLabels
           next
         }
+
         self$data$legendLabels <- as.factor(paste(as.character(self$data$legendLabels),
           as.character(grouping$getCaptions(data, metaData)),
           sep = "-"
