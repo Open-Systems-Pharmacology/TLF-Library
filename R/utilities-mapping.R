@@ -123,7 +123,8 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
   if (isEmpty(captions)) {
     return(factor(""))
   }
-  return(as.factor(captions))
+
+  return(captions)
 }
 
 #' @title .asLegendCaptionSubset
@@ -134,17 +135,29 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
 #' @keywords internal
 .asLegendCaptionSubset <- function(labels, unit = NULL) {
 
-  # Cut long group names on several lines (can cut spaces or non word character)
+  # Keep ordering of labels as is if factor
+  if (isOfType(labels, "factor")) {
+    captionLevels <- levels(labels)
+  } else {
+    captionLevels <- sort(unique(labels))
+  }
+
+  # If group name is longer than charactersWidth, then it will be wrapped on
+  # several lines of charactersWidth lenght and cut on non word character.
+  charactersWidth <- 60
+  ## Wrap names
   labels <- paste(
-    stringr::str_wrap(labels,width = 60,
+    stringr::str_wrap(labels,
+                      width = charactersWidth,
+                      whitespace_only = FALSE),
+    sep = "\n")
+  ## Wrap factor levels
+  captionLevels <- paste(
+    stringr::str_wrap(captionLevels,
+                      width = charactersWidth,
                       whitespace_only = FALSE),
     sep = "\n")
 
-  # Keep ordering of labels as is if factor
-  captionLevels <- sort(unique(labels))
-  if (isOfType(labels, "factor")) {
-    captionLevels <- levels(labels)
-  }
   captionSubset <- factor(
     getLabelWithUnit(labels, unit = unit),
     levels = getLabelWithUnit(captionLevels, unit = unit)
