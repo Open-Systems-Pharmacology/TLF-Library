@@ -25,54 +25,50 @@ LabelConfiguration <- R6::R6Class(
                      "subtitle" = subtitle,
                      "xlabel" = xlabel,
                      "ylabel" = ylabel,
-                     "caption" = caption)
+                     "caption" = caption,
+                     "y2label" = y2label)
 
       # Check label type is either a character or `Label` object
       lapply(labels, function(x){validateIsOfType(x, c("Label", "character"), nullAllowed = TRUE)})
 
-      # Check Chosen angle is available
-      for (label in labels) {
-        if (isOfType(label, "Label")) {
-          availableAngles <- c(0,90,180,270)
-          if (!(label$font$angle %in% availableAngles)) {
-            label$font$angle <- availableAngles[which(abs(label$font$angle - availableAngles) == min(abs(label$font$angle - availableAngles)))][1]
-            warning("Angles other than 0, 90, 189 and 270 are not available for title, subtitles, caption and axis titles. Replacing by closest available value: ", label$font$angle,".")
-          }
+      if (isOfType(labels$ylabel, "Label")) {
+        if (labels$ylabel$font$angle %in% c(0, 180)) {
+          labels$ylabel$font$maxwidth <- unit(100, "pt")
+          labels$ylabel$font$margin <- ggplot2::margin(0,6,0,6)
         }
-      }
-
-      if (isOfType(ylabel, "Label")) {
-        if (ylabel$font$angle %in% c(0, 180)) {
-          ylabel$font$maxwidth <- unit(100, "pt")
-          ylabel$font$margin <- ggplot2::margin(0,6,0,6)
-        }
-        if (ylabel$font$angle %in% c(90, 270)) {
-          ylabel$font$maxwidth <- NULL
-          ylabel$font$margin <- ggplot2::margin(6,0,6,0)
+        if (labels$ylabel$font$angle %in% c(90, 270)) {
+          labels$ylabel$font$maxwidth <- NULL
+          labels$ylabel$font$margin <- ggplot2::margin(6,0,6,0)
 
         }
       }
 
-      if (isOfType(xlabel, "Label")) {
-        if (xlabel$font$angle %in% c(0, 180)) {
-          xlabel$font$maxwidth <- NULL
-          xlabel$font$margin <- ggplot2::margin(6,0,6,0)
+      if (isOfType(labels$xlabel, "Label")) {
+        if (labels$xlabel$font$angle %in% c(0, 180)) {
+          labels$xlabel$font$maxwidth <- NULL
+          labels$xlabel$font$margin <- ggplot2::margin(6,0,6,0)
         }
-        if (xlabel$font$angle %in% c(90, 270)) {
-          xlabel$font$maxwidth <- unit(100, "pt")
-          xlabel$font$margin <- ggplot2::margin(0,6,0,6)
+        if (labels$xlabel$font$angle %in% c(90, 270)) {
+          labels$xlabel$font$maxwidth <- unit(100, "pt")
+          labels$xlabel$font$margin <- ggplot2::margin(0,6,0,6)
         }
       }
 
       currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
-      enforceLabelExpressions <- parse(text = paste0(
-        "if(!isOfType(", inputs, ',"Label")){',
-        inputs, "<- asLabel(text = ", inputs, ", font = currentTheme$fonts$", inputs, ")}"
-      ))
-      eval(enforceLabelExpressions)
 
-      associateExpressions <- parse(text = paste0("private$.", inputs, " <- asLabel(", inputs, ")"))
-      eval(associateExpressions)
+      for (labelName in names(labels)) {
+        label <- labels[[labelName]]
+        if(!isOfType(label, "Label")) {
+          labels[[labelName]] <- asLabel(text = label, font = currentTheme$fonts[[labelName]])
+        }
+
+        # Check Chosen angle is available
+        if (!(labels[[labelName]]$font$angle %in% c(0,90,180,270))) {
+          labels[[labelName]]$font$angle <- availableAngles[which(abs(label$font$angle - availableAngles) == min(abs(label$font$angle - availableAngles)))][1]
+          warning("Angles other than 0, 90, 189 and 270 are not available for title, subtitles, caption and axis titles. Replacing by closest available value: ", label$font$angle,".")
+        }
+        private[[paste0(".", labelName)]] <- asLabel(labels[[labelName]])
+      }
     },
 
     #' @description Update labels of a `ggplot` object and their properties
@@ -89,15 +85,16 @@ LabelConfiguration <- R6::R6Class(
         y = private$.ylabel$text,
         caption = private$.caption$text
       )
+
       plotObject <- plotObject +
         ggplot2::theme(
-        plot.title = private$.title$createPlotTextBoxFont(),
-        plot.subtitle = private$.subtitle$createPlotTextBoxFont(),
-        axis.title.x = private$.xlabel$createPlotTextBoxFont(),
-        axis.title.y = private$.ylabel$createPlotTextBoxFont(),
-        axis.title.y.right = private$.y2label$createPlotTextBoxFont(),
-        plot.caption = private$.caption$createPlotTextBoxFont()
-      )
+          plot.title = private$.title$createPlotTextBoxFont(),
+          plot.subtitle = private$.subtitle$createPlotTextBoxFont(),
+          axis.title.x = private$.xlabel$createPlotTextBoxFont(),
+          axis.title.y = private$.ylabel$createPlotTextBoxFont(),
+          axis.title.y.right = private$.y2label$createPlotTextBoxFont(),
+          plot.caption = private$.caption$createPlotTextBoxFont()
+        )
       return(plotObject)
     }
   ),
