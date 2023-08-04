@@ -71,7 +71,7 @@ A new \code{Label} object
 \if{html}{\out{<a id="method-Label-createPlotTextBoxFont"></a>}}
 \if{latex}{\out{\hypertarget{method-Label-createPlotTextBoxFont}{}}}
 \subsection{Method \code{createPlotTextBoxFont()}}{
-Create a \code{ggtext::element_textbox} directly convertible by \code{ggplot2::theme}.
+Create a \code{ggtext::element_textbox} directly convertible by \code{ggplot2::theme()}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Label$createPlotTextBoxFont(
   color = NULL,
@@ -108,7 +108,7 @@ An \code{element_text} or \code{element_blank}object.
 \if{html}{\out{<a id="method-Label-createPlotTextFont"></a>}}
 \if{latex}{\out{\hypertarget{method-Label-createPlotTextFont}{}}}
 \subsection{Method \code{createPlotTextFont()}}{
-Create a \code{ggtext::element_textbox} directly convertible by \code{ggplot2::theme}.
+Create a \code{ggplot2::element_text()} directly convertible by \code{ggplot2::theme()}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Label$createPlotTextFont(
   color = NULL,
