@@ -70,3 +70,37 @@ test_that("adding plots works with plots grid configuration", {
 
   expect_equal(names(myPlotGrid$plotList), c("", "p1", "p2", "p3"))
 })
+
+test_that("Plot Grid can have very long texts and contain plots with very long titles", {
+  set.seed(123)
+  ls_plots <- list(
+    # first plot
+    plotBoxWhisker(mtcars,
+                   dataMapping = BoxWhiskerDataMapping$new(x = "am", y = "wt"),
+                   outliers = FALSE,
+                   plotConfiguration = BoxWhiskerPlotConfiguration$new(title = paste("Title: This is a", paste(rep("very", 40), collapse = " "), "long title"))
+    ),
+    # second plot
+    plotBoxWhisker(ToothGrowth,
+                   dataMapping = BoxWhiskerDataMapping$new(x = "supp", y = "len"),
+                   plotConfiguration = BoxWhiskerPlotConfiguration$new(title = paste("Title: This is a", paste(rep("very", 40), collapse = " "), "long title"))
+    )
+  )
+
+  plotGridObj <- PlotGridConfiguration$new(ls_plots)
+
+  plotGridObj$tagLevels <- "A"
+  plotGridObj$tagPrefix <- "Plot ("
+  plotGridObj$tagSuffix <- ")"
+  plotGridObj$tagColor <- "blue"
+
+  plotGridObj$title <- paste("Title: This is a", paste(rep("very", 40), collapse = " "), "long title")
+  plotGridObj$subtitle <- paste("Subtitle: This is a", paste(rep("very", 40), collapse = " "), "long subtitle")
+  plotGridObj$caption <- paste("Caption: This is a", paste(rep("very", 40), collapse = " "), "long caption")
+  plotGridObj$titleHorizontalJustification <- HorizontalJustification$middle
+  plotGridObj$subtitleHorizontalJustification <- HorizontalJustification$left
+  plotGridObj$captionHorizontalJustification <- HorizontalJustification$right
+
+  vdiffr::expect_doppelganger("long labels in plotgrid",
+                              fig = plotGrid(plotGridObj))
+})

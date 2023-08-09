@@ -19,6 +19,8 @@ R6 class defining font properties
 
 \item{\code{angle}}{numeric defining the angle of font}
 
+\item{\code{maxWidth}}{numeric that will be converted to a ggplot2::unit object (in "pt" unit) defining the maximum width of text box.}
+
 \item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
 }
 \if{html}{\out{</div>}}
@@ -27,7 +29,8 @@ R6 class defining font properties
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Font-new}{\code{Font$new()}}
-\item \href{#method-Font-createPlotFont}{\code{Font$createPlotFont()}}
+\item \href{#method-Font-createPlotTextFont}{\code{Font$createPlotTextFont()}}
+\item \href{#method-Font-createPlotTextBoxFont}{\code{Font$createPlotTextBoxFont()}}
 \item \href{#method-Font-clone}{\code{Font$clone()}}
 }
 }
@@ -45,24 +48,27 @@ so \code{NULL} input is allowed will lead to default properties.
   fontFamily = NULL,
   fontFace = NULL,
   angle = NULL,
-  align = NULL
+  align = NULL,
+  maxWidth = NULL
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{color}}{character defining the color of font}
+\item{\code{color}}{character defining the color of font.}
 
-\item{\code{size}}{numeric defining the size of font}
+\item{\code{size}}{numeric defining the size of font.}
 
-\item{\code{fontFamily}}{character defining the family of font}
+\item{\code{fontFamily}}{character defining the family of font.}
 
 \item{\code{fontFace}}{character defining the font face as defined in helper enum \code{FontFaces}.}
 
-\item{\code{angle}}{numeric defining the angle of font}
+\item{\code{angle}}{numeric defining the angle of font.}
 
 \item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
+
+\item{\code{maxWidth}}{numeric that will be converted to a ggplot2::unit object (in "pt" unit) defining the maximum width of text box.}
 }
 \if{html}{\out{</div>}}
 }
@@ -71,12 +77,12 @@ A new \code{Font} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Font-createPlotFont"></a>}}
-\if{latex}{\out{\hypertarget{method-Font-createPlotFont}{}}}
-\subsection{Method \code{createPlotFont()}}{
+\if{html}{\out{<a id="method-Font-createPlotTextFont"></a>}}
+\if{latex}{\out{\hypertarget{method-Font-createPlotTextFont}{}}}
+\subsection{Method \code{createPlotTextFont()}}{
 Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::theme}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Font$createPlotFont(
+\if{html}{\out{<div class="r">}}\preformatted{Font$createPlotTextFont(
   size = NULL,
   color = NULL,
   fontFamily = NULL,
@@ -97,7 +103,7 @@ Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::the
 
 \item{\code{fontFace}}{character defining the font face as defined in helper enum \code{FontFaces}.}
 
-\item{\code{angle}}{numeric defining the angle of font}
+\item{\code{angle}}{numeric defining the angle of font.}
 
 \item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
 }
@@ -105,6 +111,46 @@ Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::the
 }
 \subsection{Returns}{
 An \code{element_text} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Font-createPlotTextBoxFont"></a>}}
+\if{latex}{\out{\hypertarget{method-Font-createPlotTextBoxFont}{}}}
+\subsection{Method \code{createPlotTextBoxFont()}}{
+Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::theme}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Font$createPlotTextBoxFont(
+  size = NULL,
+  color = NULL,
+  fontFamily = NULL,
+  fontFace = NULL,
+  angle = NULL,
+  align = NULL,
+  maxWidth = NULL
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{size}}{numeric defining the size of font}
+
+\item{\code{color}}{character defining the color of font}
+
+\item{\code{fontFamily}}{character defining the family of font}
+
+\item{\code{fontFace}}{character defining the font face as defined in helper enum \code{FontFaces}.}
+
+\item{\code{angle}}{numeric defining the angle of font.}
+
+\item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
+
+\item{\code{maxWidth}}{numeric that will be converted to a ggplot2::unit object (in "pt" unit) defining the maximum width of text box.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+An \code{ggtext::element_textbox} object.
 }
 }
 \if{html}{\out{<hr>}}

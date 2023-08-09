@@ -75,3 +75,5 @@ test_that("A PlotConfiguration input is correctlty used to create the plot when 
   expect_equivalent(ribbonPlot$plotConfiguration$yAxis, testPlotConfiguration$yAxis)
   expect_equivalent(errorbarPlot$plotConfiguration$yAxis, testPlotConfiguration$yAxis)
 })
+
+

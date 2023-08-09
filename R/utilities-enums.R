@@ -168,7 +168,6 @@ TagPositions <- enum(
   )
 )
 
-
 #' @title ColorMaps
 #'
 #' @description

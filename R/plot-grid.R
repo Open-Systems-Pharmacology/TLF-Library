@@ -95,32 +95,41 @@ plotGrid <- function(plotGridConfiguration) {
       tag_suffix = plotGridConfiguration$tagSuffix,
       tag_sep = plotGridConfiguration$tagSeparator,
       theme = ggplot2::theme(
-        plot.title = ggplot2::element_text(
+        plot.title = ggtext::element_textbox_simple(
           color = plotGridConfiguration$titleColor,
           size = plotGridConfiguration$titleSize,
           face = plotGridConfiguration$titleFontFace,
           family = plotGridConfiguration$titleFontFamily,
-          hjust = plotGridConfiguration$titleHorizontalJustification,
-          vjust = plotGridConfiguration$titleVerticalJustification,
-          angle = plotGridConfiguration$titleAngle
+          halign = plotGridConfiguration$titleHorizontalJustification,
+          valign = plotGridConfiguration$titleVerticalJustification,
+          hjust = plotGridConfiguration$captionHorizontalJustification,
+          vjust = plotGridConfiguration$captionVerticalJustification,
+          orientation = .convertAngleToOrientation(plotGridConfiguration$titleAngle),
+          margin = unit(c(5,5,5,5), "pt")
         ),
-        plot.subtitle = ggplot2::element_text(
+        plot.subtitle = ggtext::element_textbox_simple(
           color = plotGridConfiguration$subtitleColor,
           size = plotGridConfiguration$subtitleSize,
           face = plotGridConfiguration$subtitleFontFace,
           family = plotGridConfiguration$subtitleFontFamily,
-          hjust = plotGridConfiguration$subtitleHorizontalJustification,
-          vjust = plotGridConfiguration$subtitleVerticalJustification,
-          angle = plotGridConfiguration$subtitleAngle
+          halign = plotGridConfiguration$subtitleHorizontalJustification,
+          valign = plotGridConfiguration$subtitleVerticalJustification,
+          hjust = plotGridConfiguration$captionHorizontalJustification,
+          vjust = plotGridConfiguration$captionVerticalJustification,
+          orientation = .convertAngleToOrientation(plotGridConfiguration$subtitleAngle),
+          margin = unit(c(5,5,5,5), "pt")
         ),
-        plot.caption = ggplot2::element_text(
+        plot.caption = ggtext::element_textbox_simple(
           color = plotGridConfiguration$captionColor,
           size = plotGridConfiguration$captionSize,
           face = plotGridConfiguration$captionFontFace,
           family = plotGridConfiguration$captionFontFamily,
+          halign = plotGridConfiguration$captionHorizontalJustification,
+          valign = plotGridConfiguration$captionVerticalJustification,
           hjust = plotGridConfiguration$captionHorizontalJustification,
           vjust = plotGridConfiguration$captionVerticalJustification,
-          angle = plotGridConfiguration$captionAngle
+          orientation = .convertAngleToOrientation(plotGridConfiguration$captionAngle),
+          margin = unit(c(5,5,5,5), "pt")
         )
       )
     ) &

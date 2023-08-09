@@ -19,7 +19,8 @@ R6 class defining \code{text} and \code{font} of labels
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Label-new}{\code{Label$new()}}
-\item \href{#method-Label-createPlotFont}{\code{Label$createPlotFont()}}
+\item \href{#method-Label-createPlotTextBoxFont}{\code{Label$createPlotTextBoxFont()}}
+\item \href{#method-Label-createPlotTextFont}{\code{Label$createPlotTextFont()}}
 \item \href{#method-Label-clone}{\code{Label$clone()}}
 }
 }
@@ -37,7 +38,8 @@ Create a new \code{Label} object.
   fontFace = NULL,
   fontFamily = NULL,
   angle = NULL,
-  align = NULL
+  align = NULL,
+  maxWidth = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -56,9 +58,11 @@ Create a new \code{Label} object.
 
 \item{\code{fontFamily}}{character defining the font family of the label}
 
-\item{\code{angle}}{numeric defining the angle of the label}
+\item{\code{angle}}{numeric defining the angle of the label.}
 
 \item{\code{align}}{character defining the alignment of the label as defined in helper enum \code{Alignments}.}
+
+\item{\code{maxWidth}}{numeric that will be converted to a ggplot2::unit object (in "pt" unit) defining the maximum width of text box.}
 }
 \if{html}{\out{</div>}}
 }
@@ -67,12 +71,52 @@ A new \code{Label} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Label-createPlotFont"></a>}}
-\if{latex}{\out{\hypertarget{method-Label-createPlotFont}{}}}
-\subsection{Method \code{createPlotFont()}}{
-Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::theme}.
+\if{html}{\out{<a id="method-Label-createPlotTextBoxFont"></a>}}
+\if{latex}{\out{\hypertarget{method-Label-createPlotTextBoxFont}{}}}
+\subsection{Method \code{createPlotTextBoxFont()}}{
+Create a \code{ggtext::element_textbox} directly convertible by \code{ggplot2::theme()}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Label$createPlotFont(
+\if{html}{\out{<div class="r">}}\preformatted{Label$createPlotTextBoxFont(
+  color = NULL,
+  size = NULL,
+  fontFace = NULL,
+  fontFamily = NULL,
+  angle = NULL,
+  align = NULL,
+  maxWidth = NULL
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{color}}{character defining the color of the label}
+
+\item{\code{size}}{numeric defining the size of the label}
+
+\item{\code{fontFace}}{character defining the font face of the label as defined in helper enum \code{FontFaces}.}
+
+\item{\code{fontFamily}}{character defining the font family of the label}
+
+\item{\code{angle}}{numeric defining the angle of the label.}
+
+\item{\code{align}}{character defining the alignment of the label as defined in helper enum \code{Alignments}.}
+
+\item{\code{maxWidth}}{numeric that will be converted to a ggplot2::unit object (in "pt" unit) defining the maximum width of text box.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+An \code{element_text} or \code{element_blank}object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Label-createPlotTextFont"></a>}}
+\if{latex}{\out{\hypertarget{method-Label-createPlotTextFont}{}}}
+\subsection{Method \code{createPlotTextFont()}}{
+Create a \code{ggplot2::element_text()} directly convertible by \code{ggplot2::theme()}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Label$createPlotTextFont(
   color = NULL,
   size = NULL,
   fontFace = NULL,
@@ -93,7 +137,7 @@ Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::the
 
 \item{\code{fontFamily}}{character defining the font family of the label}
 
-\item{\code{angle}}{numeric defining the angle of the label}
+\item{\code{angle}}{numeric defining the angle of the label.}
 
 \item{\code{align}}{character defining the alignment of the label as defined in helper enum \code{Alignments}.}
 }

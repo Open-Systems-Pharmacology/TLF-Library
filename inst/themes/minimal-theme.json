@@ -6,7 +6,8 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
-      "align": "center"
+      "align": "center",
+      "maxWidth": null
     },
     "subtitle": {
       "color": "grey20",
@@ -14,7 +15,8 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
-      "align": "center"
+      "align": "center",
+      "maxWidth": null
     },
     "xlabel": {
       "color": "grey20",
@@ -22,7 +24,8 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
-      "align": "center"
+      "align": "center",
+      "maxWidth": null
     },
     "ylabel": {
       "color": "grey20",
@@ -30,15 +33,17 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 90,
-      "align": "center"
+      "align": "center",
+      "maxWidth": null
     },
     "y2label": {
       "color": "grey20",
       "size": 10,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": -90,
-      "align": "center"
+      "angle": 270,
+      "align": "center",
+      "maxWidth": null
     },
     "caption": {
       "color": "grey20",
@@ -46,7 +51,8 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
-      "align": "left"
+      "align": "left",
+      "maxWidth": null
     },
     "watermark": {
       "color": "grey20",
@@ -54,7 +60,8 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 30,
-      "align": "center"
+      "align": "center",
+      "maxWidth": null
     },
     "legend": {
       "color": "grey20",
@@ -62,7 +69,8 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
-      "align": "left"
+      "align": "left",
+      "maxWidth": null
     },
     "legendTitle": {
       "color": "black",
@@ -70,7 +78,8 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
-      "align": "center"
+      "align": "center",
+      "maxWidth": null
     },
     "xAxis": {
       "color": "grey20",
@@ -78,7 +87,8 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
-      "align": "center"
+      "align": "center",
+      "maxWidth": null
     },
     "yAxis": {
       "color": "grey20",
@@ -86,7 +96,8 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
-      "align": "right"
+      "align": "right",
+      "maxWidth": null
     },
     "y2Axis": {
       "color": "grey20",
@@ -94,7 +105,8 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
-      "align": "right"
+      "align": "right",
+      "maxWidth": null
     }
   },
   "background": {

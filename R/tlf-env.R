@@ -222,3 +222,17 @@ setDefaultAlphaRatio <- function(alphaRatio) {
   tlfEnv$DefaultAlphaRatio <- alphaRatio
   return(invisible())
 }
+
+# Maximum character width before wrap for axis ticks labels and legend
+tlfEnv$maxCharacterWidth <- 50
+
+#' @title setMaxCharacterWidth
+#' @description Set the  maximum number of characters per row for axis ticks labels and legend.
+#' Long strings will be wraped on spaces or non-word characters.
+#' @param maxCharacterWidth the maximum number of characters per row
+#' @export
+setMaxCharacterWidth <- function(maxCharacterWidth) {
+  validateIsNumeric(maxCharacterWidth)
+  tlfEnv$maxCharacterWidth <- maxCharacterWidth
+  return(invisible())
+}

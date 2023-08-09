@@ -88,9 +88,9 @@ asLabel <- function(text = "", font = NULL) {
 #' getLabelWithUnit("Label without unit")
 #'
 getLabelWithUnit <- function(label, unit = NULL) {
-  if (isTRUE(unit %in% "")) {
-    unit <- NULL
+  if (is.null(unit) ||is.na(unit) || unit == "") {
+    return(label)
+  } else {
+    return(paste0(label, " [", unit, "]"))
   }
-  ifNotNull(unit, label <- paste(label, " [", unit, "]", sep = ""))
-  return(label)
 }
