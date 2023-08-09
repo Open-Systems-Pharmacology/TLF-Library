@@ -50,6 +50,7 @@ ThemeFont <- R6::R6Class(
     #' @param baseFamily name of base family of undefined fonts. Default is "".
     #' @param baseAngle base angle of undefined fonts. Default is 0 degree.
     #' @param baseAlign base alignment of undefined fonts. Default is "center".
+    #' @param baseMaxWidth base maximum ggplot2 "pt" unit in which text is drawn.
     #' @return A new `ThemeFont` object
     initialize = function(title = NULL,
                           subtitle = NULL,
@@ -68,7 +69,8 @@ ThemeFont <- R6::R6Class(
                           baseFace = "plain",
                           baseFamily = "",
                           baseAngle = 0,
-                          baseAlign = "center") {
+                          baseAlign = "center",
+                          baseMaxWidth = NULL) {
       # Validate necessary input
       validateIsString(baseColor)
       validateIsString(baseFamily)
@@ -86,7 +88,8 @@ ThemeFont <- R6::R6Class(
         "fontFace = ", fieldNames, "$fontFace %||% baseFace,",
         "fontFamily = ", fieldNames, "$fontFamily %||% baseFamily,",
         "angle = ", fieldNames, "$angle %||% baseAngle,",
-        "align = ", fieldNames, "$align %||% baseAlign)"
+        "align = ", fieldNames, "$align %||% baseAlign,",
+        "maxWidth = ", fieldNames, "$maxWidth %||% baseMaxWidth)"
       ))
       eval(setFontExpression)
     },

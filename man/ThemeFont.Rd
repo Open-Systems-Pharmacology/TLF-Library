@@ -67,7 +67,8 @@ Create a new \code{ThemeFont} object
   baseFace = "plain",
   baseFamily = "",
   baseAngle = 0,
-  baseAlign = "center"
+  baseAlign = "center",
+  baseMaxWidth = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -109,6 +110,8 @@ Create a new \code{ThemeFont} object
 \item{\code{baseAngle}}{base angle of undefined fonts. Default is 0 degree.}
 
 \item{\code{baseAlign}}{base alignment of undefined fonts. Default is "center".}
+
+\item{\code{baseMaxWidth}}{base maximum ggplot2 "pt" unit in which text is drawn.}
 }
 \if{html}{\out{</div>}}
 }

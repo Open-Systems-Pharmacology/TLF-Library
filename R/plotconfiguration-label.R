@@ -33,24 +33,19 @@ LabelConfiguration <- R6::R6Class(
 
       if (isOfType(labels$ylabel, "Label")) {
         if (labels$ylabel$font$angle %in% c(0, 180)) {
-          labels$ylabel$font$maxwidth <- unit(100, "pt")
-          labels$ylabel$font$margin <- ggplot2::margin(0,6,0,6)
+          labels$ylabel$font$maxWidth <- unit(100, "pt")
         }
         if (labels$ylabel$font$angle %in% c(90, 270)) {
-          labels$ylabel$font$maxwidth <- NULL
-          labels$ylabel$font$margin <- ggplot2::margin(6,0,6,0)
-
+          labels$ylabel$font$maxWidth <- NULL
         }
       }
 
       if (isOfType(labels$xlabel, "Label")) {
         if (labels$xlabel$font$angle %in% c(0, 180)) {
-          labels$xlabel$font$maxwidth <- NULL
-          labels$xlabel$font$margin <- ggplot2::margin(6,0,6,0)
+          labels$xlabel$font$maxWidth <- NULL
         }
         if (labels$xlabel$font$angle %in% c(90, 270)) {
-          labels$xlabel$font$maxwidth <- unit(100, "pt")
-          labels$xlabel$font$margin <- ggplot2::margin(0,6,0,6)
+          labels$xlabel$font$maxWidth <- unit(100, "pt")
         }
       }
 

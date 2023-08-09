@@ -143,18 +143,17 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
   }
 
   # If group name is longer than charactersWidth, then it will be wrapped on
-  # several lines of charactersWidth lenght and cut on non word character.
-  charactersWidth <- 50
+  # several lines of tlfEnv$maxCharacterWidth length and cut on non-word character.
   ## Wrap names
   labels <- paste(
     stringr::str_wrap(labels,
-                      width = charactersWidth,
+                      width = tlfEnv$maxCharacterWidth,
                       whitespace_only = FALSE),
     sep = "\n")
   ## Wrap factor levels
   captionLevels <- paste(
     stringr::str_wrap(captionLevels,
-                      width = charactersWidth,
+                      width = tlfEnv$maxCharacterWidth,
                       whitespace_only = FALSE),
     sep = "\n")
 

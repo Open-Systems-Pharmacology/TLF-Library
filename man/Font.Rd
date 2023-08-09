@@ -19,9 +19,7 @@ R6 class defining font properties
 
 \item{\code{angle}}{numeric defining the angle of font}
 
-\item{\code{maxwidth}}{\code{unit()} object defining the maximum width of text.}
-
-\item{\code{margin}}{\code{ggplot2::margin()} object defining the space around text.}
+\item{\code{maxWidth}}{numeric that will be converted to a ggplot2::unit object (in "pt" unit) defining the maximum width of text box.}
 
 \item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
 }
@@ -51,8 +49,7 @@ so \code{NULL} input is allowed will lead to default properties.
   fontFace = NULL,
   angle = NULL,
   align = NULL,
-  maxwidth = NULL,
-  margin = NULL
+  maxWidth = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -71,9 +68,7 @@ so \code{NULL} input is allowed will lead to default properties.
 
 \item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
 
-\item{\code{maxwidth}}{\code{unit()} object defining the maximum width of text.}
-
-\item{\code{margin}}{\code{ggplot2::margin()} object defining the space around text.}
+\item{\code{maxWidth}}{numeric that will be converted to a ggplot2::unit object (in "pt" unit) defining the maximum width of text box.}
 }
 \if{html}{\out{</div>}}
 }
@@ -93,8 +88,7 @@ Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::the
   fontFamily = NULL,
   fontFace = NULL,
   angle = NULL,
-  align = NULL,
-  margin = NULL
+  align = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -112,8 +106,6 @@ Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::the
 \item{\code{angle}}{numeric defining the angle of font.}
 
 \item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
-
-\item{\code{margin}}{\code{ggplot2::margin()} object defining the space around text.}
 }
 \if{html}{\out{</div>}}
 }
@@ -134,8 +126,7 @@ Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::the
   fontFace = NULL,
   angle = NULL,
   align = NULL,
-  maxwidth = NULL,
-  margin = NULL
+  maxWidth = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -154,9 +145,7 @@ Create a \code{ggplot2::element_text} directly convertible by \code{ggplot2::the
 
 \item{\code{align}}{character defining the alignment of font as defined in helper enum \code{Alignments}.}
 
-\item{\code{maxwidth}}{\code{unit()} object defining the maximum width of text.}
-
-\item{\code{margin}}{\code{ggplot2::margin()} object defining the space around text.}
+\item{\code{maxWidth}}{numeric that will be converted to a ggplot2::unit object (in "pt" unit) defining the maximum width of text box.}
 }
 \if{html}{\out{</div>}}
 }

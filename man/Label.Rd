@@ -38,7 +38,8 @@ Create a new \code{Label} object.
   fontFace = NULL,
   fontFamily = NULL,
   angle = NULL,
-  align = NULL
+  align = NULL,
+  maxWidth = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -60,6 +61,8 @@ Create a new \code{Label} object.
 \item{\code{angle}}{numeric defining the angle of the label.}
 
 \item{\code{align}}{character defining the alignment of the label as defined in helper enum \code{Alignments}.}
+
+\item{\code{maxWidth}}{numeric that will be converted to a ggplot2::unit object (in "pt" unit) defining the maximum width of text box.}
 }
 \if{html}{\out{</div>}}
 }
@@ -79,7 +82,8 @@ Create a \code{ggtext::element_textbox} directly convertible by \code{ggplot2::t
   fontFace = NULL,
   fontFamily = NULL,
   angle = NULL,
-  align = NULL
+  align = NULL,
+  maxWidth = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -97,6 +101,8 @@ Create a \code{ggtext::element_textbox} directly convertible by \code{ggplot2::t
 \item{\code{angle}}{numeric defining the angle of the label.}
 
 \item{\code{align}}{character defining the alignment of the label as defined in helper enum \code{Alignments}.}
+
+\item{\code{maxWidth}}{numeric that will be converted to a ggplot2::unit object (in "pt" unit) defining the maximum width of text box.}
 }
 \if{html}{\out{</div>}}
 }
