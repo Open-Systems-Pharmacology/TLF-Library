@@ -54,16 +54,12 @@ LabelConfiguration <- R6::R6Class(
       for (labelName in names(labels)) {
         label <- labels[[labelName]]
         if(!isOfType(label, "Label")) {
-          labels[[labelName]] <- asLabel(text = label, font = currentTheme$fonts[[labelName]])
+          label <- asLabel(text = label, font = currentTheme$fonts[[labelName]])
         }
-
-        # Check Chosen angle is available
-        availableAngles <- c(0,90,180,270)
-        if (!(labels[[labelName]]$font$angle %in% availableAngles)) {
-          labels[[labelName]]$font$angle <- availableAngles[which(abs(label$font$angle - availableAngles) == min(abs(label$font$angle - availableAngles)))][1]
-          warning("Angles other than 0, 90, 189 and 270 are not available for title, subtitles, caption and axis titles. Replacing by closest available value: ", label$font$angle,".")
-        }
-        private[[paste0(".", labelName)]] <- asLabel(labels[[labelName]])
+        # Check chosen angle is available
+        # use modulo 360 to in case minus angles were provided
+        label$font$angle <- .checkIsInAvailableAngles(label$font$angle %% 360)
+        private[[paste0(".", labelName)]] <- asLabel(label)
       }
     },
 
