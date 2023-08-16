@@ -32,5 +32,11 @@ messages <- list(
       ifelse(strict, "strictly ", ""),
       "within [", paste0(range(left, right), collapse = ";"), "] range"
     )
+  },
+  warningAngleNotIncludedInAvailableAngles = function(oldAngle, newAngle){
+    paste0(
+      "Angles other than 0, 90, 180 and 270 are not available for title, subtitles, caption and axis titles. ",
+      "Replacing '", oldAngle, "' by closest available value: '", newAngle, "'."
+      )
   }
 )

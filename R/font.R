@@ -137,8 +137,9 @@ Font <- R6::R6Class(
 }
 
 .convertAngleToOrientation <- function(angle){
+  # use modulo 360 to in case minus angles were provided
   return(
-    switch(as.character(angle),
+    switch(as.character(angle %% 360),
            "0" = "upright",
            "90" = "left-rotated",
            "180" = "right-rotated",

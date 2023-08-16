@@ -89,3 +89,25 @@
   warning(messages$warningValuesNotWitinRange(x, left, right, strict))
   return(invisible())
 }
+
+
+#' Check if an input angle is within available angles
+#'
+#' @param angle an input angle provided by user
+#' @param availableAngles available angle for usage og `ggtext`
+#' @import ospsuite.utils
+#' @keywords internal
+.checkIsInAvailableAngles <- function(angle, availableAngles = c(0,90,180,270)){
+  validateIsNumeric(angle)
+  newAngle <- tryCatch({
+    validateIsIncluded(angle, availableAngles)
+    return(angle)
+    }, 
+    error = function(e){
+      angleDifferences <- abs(angle - availableAngles)
+      closestAngle <- head(availableAngles[which(angleDifferences == min(angleDifferences))], 1)
+      warning(messages$warningAngleNotIncludedInAvailableAngles(angle, closestAngle))
+    return(closestAngle)
+  })
+  return(newAngle)
+}
