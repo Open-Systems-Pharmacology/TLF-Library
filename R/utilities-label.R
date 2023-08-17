@@ -100,14 +100,13 @@ getLabelWithUnit <- function(label, unit = NULL) {
 #' ggtext does not allow certain characters that can be converted to html
 #  tags but that are not supported
 #'
-#'
 #' @param text a character string
 #'
 #' @return a sanitized character string
 #'
 #' @examples
-#' sanitizeLabel("`code`")
-sanitizeLabel <- function(text){
+#' .sanitizeLabel("`code`")
+.sanitizeLabel <- function(text){
   forbiddenCharacters <- c("`")
   if (isOfType(text, "character", nullAllowed = FALSE)) {
     text <- stringr::str_remove_all(text, paste(forbiddenCharacters, sep = "|"))
