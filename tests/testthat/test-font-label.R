@@ -90,17 +90,26 @@ test_that("Long texts are properly handled in labels",{
 
 })
 
+test_that("Tags that are not supported by ggtext are removed", {
+  expect_no_error(
+    initializePlot(
+      plotConfiguration = PlotConfiguration$new(
+        title = "this title should work even though it has `backticks`")
+    )
+  )
+})
+
 test_that("Markdown syntax is not supported because Label and Font overwrite its with the FontFace argument",{
   # This test should break when the issue is fixed.
   vdiffr::expect_doppelganger(
     "Plot with Markdown",
     fig = initializePlot(
-    plotConfiguration = PlotConfiguration$new(
-      title = "**This title should be bold**",
-      subtitle = "*This subtitle should be italic*",
-      caption = "This caption has style<br>
+      plotConfiguration = PlotConfiguration$new(
+        title = "**This title should be bold**",
+        subtitle = "*This subtitle should be italic*",
+        caption = "This caption has style<br>
 <span style = 'font-size:10pt;'>because it uses <span style = 'color:#0072B2;'><b>HTML</b></span> instead of
 <span style = 'color:#D55E00;'><i>Markdown syntax</i></span></span>")
-  )
+    )
   )
 })
