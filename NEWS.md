@@ -6,6 +6,7 @@
 - New `xValuesLimits` and `yValuesLimits` argument in `PlotConfiguration` to filter the **data** used to generate the plot. (see `ggplot2::scale_continuous_x`).
 - Groups names are now wraped on several lines if their number of characters is longer than 60.
 - Plots and plotGrids labels (titles, subtitles, caption and axis labels) are now automatically fitting plot's width and wraped on several lines if too long.
+- Plots labels texts are now sanitized from any unsupported characters.
   
 
 # tlf 1.5.0
