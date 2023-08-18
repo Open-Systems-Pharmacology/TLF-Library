@@ -30,7 +30,9 @@ Label <- R6::R6Class(
       validateIsIncluded(fontFace, FontFaces, nullAllowed = TRUE)
       validateIsIncluded(align, Alignments, nullAllowed = TRUE)
 
-      self$text <- text
+
+      self$text <- .sanitizeLabel(text)
+
       self$font <- font %||% Font$new()
       # If font properties are explicitely written, they will overwrite the properties of input Font
       eval(.parseVariableToObject("self$font", c("size", "color", "fontFace", "fontFamily", "angle", "align", "maxWidth"), keepIfNull = TRUE))
