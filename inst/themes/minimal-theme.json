@@ -7,8 +7,9 @@
       "fontFamily": "",
       "angle": 0,
       "align": "center",
-      "maxWidth": null
-    },
+      "maxWidth": null,
+      "margin": [2,2,10,2]
+      },
     "subtitle": {
       "color": "grey20",
       "size": 10,
@@ -16,8 +17,9 @@
       "fontFamily": "",
       "angle": 0,
       "align": "center",
-      "maxWidth": null
-    },
+      "maxWidth": null,
+      "margin": [2,2,10,2]
+      },
     "xlabel": {
       "color": "grey20",
       "size": 10,
@@ -25,8 +27,9 @@
       "fontFamily": "",
       "angle": 0,
       "align": "center",
-      "maxWidth": null
-    },
+      "maxWidth": null,
+      "margin": [10,2,2,2]
+      },
     "ylabel": {
       "color": "grey20",
       "size": 10,
@@ -34,7 +37,8 @@
       "fontFamily": "",
       "angle": 90,
       "align": "center",
-      "maxWidth": null
+      "maxWidth": null,
+      "margin": [2,2,10,2]
     },
     "y2label": {
       "color": "grey20",
@@ -43,7 +47,9 @@
       "fontFamily": "",
       "angle": 270,
       "align": "center",
-      "maxWidth": null
+      "maxWidth": null,
+      "margin": [2,2,2,10]
+
     },
     "caption": {
       "color": "grey20",
@@ -52,7 +58,9 @@
       "fontFamily": "",
       "angle": 0,
       "align": "left",
-      "maxWidth": null
+      "maxWidth": null,
+      "margin": [10,2,2,2]
+
     },
     "watermark": {
       "color": "grey20",
@@ -61,7 +69,8 @@
       "fontFamily": "",
       "angle": 30,
       "align": "center",
-      "maxWidth": null
+      "maxWidth": null,
+      "margin": [2,2,2,2]
     },
     "legend": {
       "color": "grey20",
@@ -70,7 +79,8 @@
       "fontFamily": "",
       "angle": 0,
       "align": "left",
-      "maxWidth": null
+      "maxWidth": null,
+      "margin": [2,2,2,2]
     },
     "legendTitle": {
       "color": "black",
@@ -79,7 +89,8 @@
       "fontFamily": "",
       "angle": 0,
       "align": "center",
-      "maxWidth": null
+      "maxWidth": null,
+      "margin": [2,2,2,2]
     },
     "xAxis": {
       "color": "grey20",
@@ -88,7 +99,8 @@
       "fontFamily": "",
       "angle": 0,
       "align": "center",
-      "maxWidth": null
+      "maxWidth": null,
+      "margin": [2,5,5,5]
     },
     "yAxis": {
       "color": "grey20",
@@ -97,7 +109,8 @@
       "fontFamily": "",
       "angle": 0,
       "align": "right",
-      "maxWidth": null
+      "maxWidth": null,
+      "margin": [2,2,2,2]
     },
     "y2Axis": {
       "color": "grey20",
@@ -106,7 +119,8 @@
       "fontFamily": "",
       "angle": 0,
       "align": "right",
-      "maxWidth": null
+      "maxWidth": null,
+      "margin": [2,2,2,2]
     }
   },
   "background": {

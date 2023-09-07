@@ -18,6 +18,7 @@ Font <- R6::R6Class(
     angle = 0,
     align = "center",
     maxWidth = NULL,
+    margin = NULL,
     #' @description Create a new `Font` object.
     #' Default font properties are defined directly in the object field,
     #' so `NULL` input is allowed will lead to default properties.
@@ -35,7 +36,8 @@ Font <- R6::R6Class(
                           fontFace = NULL,
                           angle = NULL,
                           align = NULL,
-                          maxWidth = NULL) {
+                          maxWidth = NULL,
+                          margin = NULL) {
       validateIsString(c(color, fontFamily), nullAllowed = TRUE)
       validateIsNumeric(c(size, angle), nullAllowed = TRUE)
       validateIsIncluded(fontFace, FontFaces, nullAllowed = TRUE)
@@ -56,7 +58,12 @@ Font <- R6::R6Class(
                                   fontFamily = NULL,
                                   fontFace = NULL,
                                   angle = NULL,
-                                  align = NULL) {
+                                  align = NULL,
+                                  margin = NULL) {
+
+      margin <- margin %||% self$margin
+      if(!is.null(margin)) {margin <- ggplot2::unit(margin, "pt")}
+
       ggplot2::element_text(
         colour = color %||% self$color,
         size = size %||% self$size,
@@ -68,7 +75,8 @@ Font <- R6::R6Class(
         hjust = switch(align %||% self$align,
                        "left" = 0,
                        "center" = 0.5,
-                       "right" = 1)
+                       "right" = 1),
+        margin = margin
       )
     },
     #' @description Create a `ggplot2::element_text` directly convertible by `ggplot2::theme`.
@@ -86,10 +94,13 @@ Font <- R6::R6Class(
                                      fontFace = NULL,
                                      angle = NULL,
                                      align = NULL,
-                                     maxWidth = NULL) {
+                                     maxWidth = NULL,
+                                     margin = NULL) {
 
       maxWidth <- maxWidth %||% self$maxWidth
       if(!is.null(maxWidth)) {maxWidth <- ggplot2::unit(maxWidth, "pt")}
+      margin <- margin %||% self$margin
+      if(!is.null(margin)) {margin <- ggplot2::unit(margin, "pt")}
 
       ggtext::element_textbox_simple(
         colour = color %||% self$color,
@@ -103,7 +114,8 @@ Font <- R6::R6Class(
                         "left" = 0,
                         "center" = 0.5,
                         "right" = 1),
-        maxwidth = maxWidth
+        maxwidth = maxWidth,
+        margin = margin
       )
     }
   )

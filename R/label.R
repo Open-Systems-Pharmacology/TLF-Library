@@ -23,7 +23,8 @@ Label <- R6::R6Class(
                           fontFamily = NULL,
                           angle = NULL,
                           align = NULL,
-                          maxWidth = NULL) {
+                          maxWidth = NULL,
+                          margin = NULL) {
       validateIsNumeric(as.numeric(size, angle), nullAllowed = TRUE)
       validateIsString(c(color, fontFamily), nullAllowed = TRUE)
       validateIsOfType(font, "Font", nullAllowed = TRUE)
@@ -35,7 +36,7 @@ Label <- R6::R6Class(
 
       self$font <- font %||% Font$new()
       # If font properties are explicitely written, they will overwrite the properties of input Font
-      eval(.parseVariableToObject("self$font", c("size", "color", "fontFace", "fontFamily", "angle", "align", "maxWidth"), keepIfNull = TRUE))
+      eval(.parseVariableToObject("self$font", c("size", "color", "fontFace", "fontFamily", "angle", "align", "maxWidth", "margin"), keepIfNull = TRUE))
     },
 
     #' @description Create a `ggtext::element_textbox` directly convertible by `ggplot2::theme()`.
@@ -53,7 +54,8 @@ Label <- R6::R6Class(
                                      fontFamily = NULL,
                                      angle = NULL,
                                      align = NULL,
-                                     maxWidth = NULL) {
+                                     maxWidth = NULL,
+                                     margin = NULL) {
       if (isEmpty(self$text)) {
         return(ggplot2::element_blank())
       }
@@ -65,7 +67,8 @@ Label <- R6::R6Class(
         fontFamily = fontFamily,
         angle = angle,
         align = align,
-        maxWidth = maxWidth
+        maxWidth = maxWidth,
+        margin = margin
       ))
     },
 
@@ -86,13 +89,15 @@ Label <- R6::R6Class(
       if (isEmpty(self$text)) {
         return(ggplot2::element_blank())
       }
+
       return(self$font$createPlotTextFont(
         color = color,
         size = size,
         fontFace = fontFace,
         fontFamily = fontFamily,
         angle = angle,
-        align = align
+        align = align,
+        margin = margin
       ))
     }
   ),
