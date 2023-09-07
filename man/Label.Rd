@@ -128,7 +128,8 @@ Create a \code{ggplot2::element_text()} directly convertible by \code{ggplot2::t
   fontFace = NULL,
   fontFamily = NULL,
   angle = NULL,
-  align = NULL
+  align = NULL,
+  margin = NULL
 )}\if{html}{\out{</div>}}
 }
 
