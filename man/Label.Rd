@@ -39,7 +39,8 @@ Create a new \code{Label} object.
   fontFamily = NULL,
   angle = NULL,
   align = NULL,
-  maxWidth = NULL
+  maxWidth = NULL,
+  margin = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -63,6 +64,8 @@ Create a new \code{Label} object.
 \item{\code{align}}{character defining the alignment of the label as defined in helper enum \code{Alignments}.}
 
 \item{\code{maxWidth}}{numeric that will be converted to a ggplot2::unit object (in "pt" unit) defining the maximum width of text box.}
+
+\item{\code{margin}}{a numeric vector of length 4 defining the size of the area (in pt) around the text in the followin order: top, right, bottom, left.}
 }
 \if{html}{\out{</div>}}
 }
@@ -83,7 +86,8 @@ Create a \code{ggtext::element_textbox} directly convertible by \code{ggplot2::t
   fontFamily = NULL,
   angle = NULL,
   align = NULL,
-  maxWidth = NULL
+  maxWidth = NULL,
+  margin = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -103,6 +107,8 @@ Create a \code{ggtext::element_textbox} directly convertible by \code{ggplot2::t
 \item{\code{align}}{character defining the alignment of the label as defined in helper enum \code{Alignments}.}
 
 \item{\code{maxWidth}}{numeric that will be converted to a ggplot2::unit object (in "pt" unit) defining the maximum width of text box.}
+
+\item{\code{margin}}{a numeric vector of length 4 defining the size of the area (in pt) around the text in the followin order: top, right, bottom, left.}
 }
 \if{html}{\out{</div>}}
 }
@@ -140,6 +146,8 @@ Create a \code{ggplot2::element_text()} directly convertible by \code{ggplot2::t
 \item{\code{angle}}{numeric defining the angle of the label.}
 
 \item{\code{align}}{character defining the alignment of the label as defined in helper enum \code{Alignments}.}
+
+\item{\code{margin}}{a numeric vector of length 4 defining the size of the area (in pt) around the text in the followin order: top, right, bottom, left.}
 }
 \if{html}{\out{</div>}}
 }

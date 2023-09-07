@@ -150,11 +150,11 @@ Other PlotConfiguration classes:
 \item{\code{title, subtitle, caption}}{Text strings to use for the various plot
 annotations, where plot refers to the grid of plots as a whole.}
 
-\item{\code{titleColor, titleSize, titleFontFace, titleFontFamily, titleHorizontalJustification, titleVerticalJustification, titleAngle}}{Aesthetic properties for the plot title.}
+\item{\code{titleColor, titleSize, titleFontFace, titleFontFamily, titleHorizontalJustification, titleVerticalJustification, titleAngle, titleMargin}}{Aesthetic properties for the plot title.}
 
-\item{\code{subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleHorizontalJustification, subtitleVerticalJustification, subtitleAngle}}{Aesthetic properties for the plot subtitle.}
+\item{\code{subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleHorizontalJustification, subtitleVerticalJustification, subtitleAngle, subtitleMargin}}{Aesthetic properties for the plot subtitle.}
 
-\item{\code{captionColor, captionSize, captionFontFace, captionFontFamily, captionHorizontalJustification, captionVerticalJustification, captionAngle}}{Aesthetic properties for the plot caption.}
+\item{\code{captionColor, captionSize, captionFontFace, captionFontFamily, captionHorizontalJustification, captionVerticalJustification, captionAngle, captionMargin}}{Aesthetic properties for the plot caption.}
 
 \item{\code{tagLevels}}{A character vector defining the enumeration format to use
 at each level. Possible values are \code{'a'} for lowercase letters, \code{'A'} for
@@ -209,11 +209,11 @@ further information on use.}
 \item{\code{title, subtitle, caption}}{Text strings to use for the various plot
 annotations, where plot refers to the grid of plots as a whole.}
 
-\item{\code{titleColor, titleSize, titleFontFace, titleFontFamily, titleHorizontalJustification, titleVerticalJustification, titleAngle}}{Aesthetic properties for the plot title.}
+\item{\code{titleColor, titleSize, titleFontFace, titleFontFamily, titleHorizontalJustification, titleVerticalJustification, titleAngle, titleMargin}}{Aesthetic properties for the plot title.}
 
-\item{\code{subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleHorizontalJustification, subtitleVerticalJustification, subtitleAngle}}{Aesthetic properties for the plot subtitle.}
+\item{\code{subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleHorizontalJustification, subtitleVerticalJustification, subtitleAngle, subtitleMargin}}{Aesthetic properties for the plot subtitle.}
 
-\item{\code{captionColor, captionSize, captionFontFace, captionFontFamily, captionHorizontalJustification, captionVerticalJustification, captionAngle}}{Aesthetic properties for the plot caption.}
+\item{\code{captionColor, captionSize, captionFontFace, captionFontFamily, captionHorizontalJustification, captionVerticalJustification, captionAngle, captionMargin}}{Aesthetic properties for the plot caption.}
 
 \item{\code{tagPrefix, tagSuffix}}{Strings that should appear before or after the
 tag.}

@@ -14,6 +14,7 @@ Label <- R6::R6Class(
     #' @param angle numeric defining the angle of the label.
     #' @param align character defining the alignment of the label as defined in helper enum `Alignments`.
     #' @param maxWidth numeric that will be converted to a ggplot2::unit object (in "pt" unit) defining the maximum width of text box.
+    #' @param margin a numeric vector of length 4 defining the size of the area (in pt) around the text in the followin order: top, right, bottom, left.
     #' @return A new `Label` object
     initialize = function(text = "",
                           font = NULL,
@@ -47,6 +48,7 @@ Label <- R6::R6Class(
     #' @param angle numeric defining the angle of the label.
     #' @param align character defining the alignment of the label as defined in helper enum `Alignments`.
     #' @param maxWidth numeric that will be converted to a ggplot2::unit object (in "pt" unit) defining the maximum width of text box.
+    #' @param margin a numeric vector of length 4 defining the size of the area (in pt) around the text in the followin order: top, right, bottom, left.
     #' @return An `element_text` or `element_blank`object.
     createPlotTextBoxFont = function(color = NULL,
                                      size = NULL,
@@ -79,6 +81,7 @@ Label <- R6::R6Class(
     #' @param fontFace character defining the font face of the label as defined in helper enum `FontFaces`.
     #' @param angle numeric defining the angle of the label.
     #' @param align character defining the alignment of the label as defined in helper enum `Alignments`.
+    #' @param margin a numeric vector of length 4 defining the size of the area (in pt) around the text in the followin order: top, right, bottom, left.
     #' @return An `element_text` or `element_blank`object.
     createPlotTextFont = function(color = NULL,
                                   size = NULL,
