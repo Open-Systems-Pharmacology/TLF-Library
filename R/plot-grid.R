@@ -105,7 +105,7 @@ plotGrid <- function(plotGridConfiguration) {
           hjust = plotGridConfiguration$captionHorizontalJustification,
           vjust = plotGridConfiguration$captionVerticalJustification,
           orientation = .convertAngleToOrientation(plotGridConfiguration$titleAngle),
-          margin = unit(c(5,5,5,5), "pt")
+          margin = plotGridConfiguration$titleMargin
         ),
         plot.subtitle = ggtext::element_textbox_simple(
           color = plotGridConfiguration$subtitleColor,
@@ -117,7 +117,7 @@ plotGrid <- function(plotGridConfiguration) {
           hjust = plotGridConfiguration$captionHorizontalJustification,
           vjust = plotGridConfiguration$captionVerticalJustification,
           orientation = .convertAngleToOrientation(plotGridConfiguration$subtitleAngle),
-          margin = unit(c(5,5,5,5), "pt")
+          margin = plotGridConfiguration$subtitleMargin
         ),
         plot.caption = ggtext::element_textbox_simple(
           color = plotGridConfiguration$captionColor,
@@ -129,7 +129,7 @@ plotGrid <- function(plotGridConfiguration) {
           hjust = plotGridConfiguration$captionHorizontalJustification,
           vjust = plotGridConfiguration$captionVerticalJustification,
           orientation = .convertAngleToOrientation(plotGridConfiguration$captionAngle),
-          margin = unit(c(5,5,5,5), "pt")
+          margin = plotGridConfiguration$captionMargin
         )
       )
     ) &
@@ -305,6 +305,7 @@ PlotGridConfiguration <- R6::R6Class(
     titleHorizontalJustification = HorizontalJustification$left,
     titleVerticalJustification = VerticalJustification$bottom,
     titleAngle = 0,
+    titleMargin = ggplot2::unit(c(2,2,10,2), "pt"),
 
     # subtitle ------------------------------------
 
@@ -316,6 +317,7 @@ PlotGridConfiguration <- R6::R6Class(
     subtitleHorizontalJustification = HorizontalJustification$left,
     subtitleVerticalJustification = VerticalJustification$bottom,
     subtitleAngle = 0,
+    subtitleMargin = ggplot2::unit(c(2,2,10,2), "pt"),
 
     # caption ------------------------------------
 
@@ -327,6 +329,8 @@ PlotGridConfiguration <- R6::R6Class(
     captionHorizontalJustification = HorizontalJustification$right,
     captionVerticalJustification = VerticalJustification$bottom,
     captionAngle = 0,
+    captionMargin = ggplot2::unit(c(10,2,2,2), "pt"),
+
 
     # arrangement ------------------------------------
 
