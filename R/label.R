@@ -88,7 +88,8 @@ Label <- R6::R6Class(
                                   fontFace = NULL,
                                   fontFamily = NULL,
                                   angle = NULL,
-                                  align = NULL) {
+                                  align = NULL,
+                                  margin = NULL) {
       if (isEmpty(self$text)) {
         return(ggplot2::element_blank())
       }
