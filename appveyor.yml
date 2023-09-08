@@ -15,7 +15,7 @@ environment:
   app_version: "1.5"
   USE_RTOOLS: true
   R_ARCH: x64
-  R_VERSION: "4.1.0"
+  R_VERSION: "4.3.1"
   KEEP_VIGNETTES: true
   NOT_CRAN: true
   COVERALLS_TOKEN:

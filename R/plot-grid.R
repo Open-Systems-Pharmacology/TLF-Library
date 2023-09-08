@@ -105,7 +105,7 @@ plotGrid <- function(plotGridConfiguration) {
           hjust = plotGridConfiguration$captionHorizontalJustification,
           vjust = plotGridConfiguration$captionVerticalJustification,
           orientation = .convertAngleToOrientation(plotGridConfiguration$titleAngle),
-          margin = unit(c(5,5,5,5), "pt")
+          margin = plotGridConfiguration$titleMargin
         ),
         plot.subtitle = ggtext::element_textbox_simple(
           color = plotGridConfiguration$subtitleColor,
@@ -117,7 +117,7 @@ plotGrid <- function(plotGridConfiguration) {
           hjust = plotGridConfiguration$captionHorizontalJustification,
           vjust = plotGridConfiguration$captionVerticalJustification,
           orientation = .convertAngleToOrientation(plotGridConfiguration$subtitleAngle),
-          margin = unit(c(5,5,5,5), "pt")
+          margin = plotGridConfiguration$subtitleMargin
         ),
         plot.caption = ggtext::element_textbox_simple(
           color = plotGridConfiguration$captionColor,
@@ -129,7 +129,7 @@ plotGrid <- function(plotGridConfiguration) {
           hjust = plotGridConfiguration$captionHorizontalJustification,
           vjust = plotGridConfiguration$captionVerticalJustification,
           orientation = .convertAngleToOrientation(plotGridConfiguration$captionAngle),
-          margin = unit(c(5,5,5,5), "pt")
+          margin = plotGridConfiguration$captionMargin
         )
       )
     ) &
@@ -208,9 +208,9 @@ plotGrid <- function(plotGridConfiguration) {
 #' @field plotList A list containing `ggplot` objects.
 #' @field title,subtitle,caption Text strings to use for the various plot
 #' annotations, where plot refers to the grid of plots as a whole.
-#' @field titleColor,titleSize,titleFontFace,titleFontFamily,titleHorizontalJustification,titleVerticalJustification,titleAngle Aesthetic properties for the plot title.
-#' @field subtitleColor,subtitleSize,subtitleFontFace,subtitleFontFamily,subtitleHorizontalJustification,subtitleVerticalJustification,subtitleAngle Aesthetic properties for the plot subtitle.
-#' @field captionColor,captionSize,captionFontFace,captionFontFamily,captionHorizontalJustification,captionVerticalJustification,captionAngle Aesthetic properties for the plot caption.
+#' @field titleColor,titleSize,titleFontFace,titleFontFamily,titleHorizontalJustification,titleVerticalJustification,titleAngle,titleMargin Aesthetic properties for the plot title.
+#' @field subtitleColor,subtitleSize,subtitleFontFace,subtitleFontFamily,subtitleHorizontalJustification,subtitleVerticalJustification,subtitleAngle,subtitleMargin Aesthetic properties for the plot subtitle.
+#' @field captionColor,captionSize,captionFontFace,captionFontFamily,captionHorizontalJustification,captionVerticalJustification,captionAngle,captionMargin Aesthetic properties for the plot caption.
 #' @field tagLevels A character vector defining the enumeration format to use
 #' at each level. Possible values are `'a'` for lowercase letters, `'A'` for
 #' uppercase letters, `'1'` for numbers, `'i'` for lowercase Roman numerals, and
@@ -305,6 +305,7 @@ PlotGridConfiguration <- R6::R6Class(
     titleHorizontalJustification = HorizontalJustification$left,
     titleVerticalJustification = VerticalJustification$bottom,
     titleAngle = 0,
+    titleMargin = ggplot2::unit(c(2, 2, 10, 2), "pt"),
 
     # subtitle ------------------------------------
 
@@ -316,6 +317,7 @@ PlotGridConfiguration <- R6::R6Class(
     subtitleHorizontalJustification = HorizontalJustification$left,
     subtitleVerticalJustification = VerticalJustification$bottom,
     subtitleAngle = 0,
+    subtitleMargin = ggplot2::unit(c(2, 2, 10, 2), "pt"),
 
     # caption ------------------------------------
 
@@ -327,6 +329,8 @@ PlotGridConfiguration <- R6::R6Class(
     captionHorizontalJustification = HorizontalJustification$right,
     captionVerticalJustification = VerticalJustification$bottom,
     captionAngle = 0,
+    captionMargin = ggplot2::unit(c(10, 2, 2, 2), "pt"),
+
 
     # arrangement ------------------------------------
 

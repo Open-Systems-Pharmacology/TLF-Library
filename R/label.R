@@ -14,6 +14,7 @@ Label <- R6::R6Class(
     #' @param angle numeric defining the angle of the label.
     #' @param align character defining the alignment of the label as defined in helper enum `Alignments`.
     #' @param maxWidth numeric that will be converted to a ggplot2::unit object (in "pt" unit) defining the maximum width of text box.
+    #' @param margin a numeric vector of length 4 defining the size of the area (in pt) around the text in the followin order: top, right, bottom, left.
     #' @return A new `Label` object
     initialize = function(text = "",
                           font = NULL,
@@ -23,7 +24,8 @@ Label <- R6::R6Class(
                           fontFamily = NULL,
                           angle = NULL,
                           align = NULL,
-                          maxWidth = NULL) {
+                          maxWidth = NULL,
+                          margin = NULL) {
       validateIsNumeric(as.numeric(size, angle), nullAllowed = TRUE)
       validateIsString(c(color, fontFamily), nullAllowed = TRUE)
       validateIsOfType(font, "Font", nullAllowed = TRUE)
@@ -35,7 +37,7 @@ Label <- R6::R6Class(
 
       self$font <- font %||% Font$new()
       # If font properties are explicitely written, they will overwrite the properties of input Font
-      eval(.parseVariableToObject("self$font", c("size", "color", "fontFace", "fontFamily", "angle", "align", "maxWidth"), keepIfNull = TRUE))
+      eval(.parseVariableToObject("self$font", c("size", "color", "fontFace", "fontFamily", "angle", "align", "maxWidth", "margin"), keepIfNull = TRUE))
     },
 
     #' @description Create a `ggtext::element_textbox` directly convertible by `ggplot2::theme()`.
@@ -46,6 +48,7 @@ Label <- R6::R6Class(
     #' @param angle numeric defining the angle of the label.
     #' @param align character defining the alignment of the label as defined in helper enum `Alignments`.
     #' @param maxWidth numeric that will be converted to a ggplot2::unit object (in "pt" unit) defining the maximum width of text box.
+    #' @param margin a numeric vector of length 4 defining the size of the area (in pt) around the text in the followin order: top, right, bottom, left.
     #' @return An `element_text` or `element_blank`object.
     createPlotTextBoxFont = function(color = NULL,
                                      size = NULL,
@@ -53,7 +56,8 @@ Label <- R6::R6Class(
                                      fontFamily = NULL,
                                      angle = NULL,
                                      align = NULL,
-                                     maxWidth = NULL) {
+                                     maxWidth = NULL,
+                                     margin = NULL) {
       if (isEmpty(self$text)) {
         return(ggplot2::element_blank())
       }
@@ -65,7 +69,8 @@ Label <- R6::R6Class(
         fontFamily = fontFamily,
         angle = angle,
         align = align,
-        maxWidth = maxWidth
+        maxWidth = maxWidth,
+        margin = margin
       ))
     },
 
@@ -76,23 +81,27 @@ Label <- R6::R6Class(
     #' @param fontFace character defining the font face of the label as defined in helper enum `FontFaces`.
     #' @param angle numeric defining the angle of the label.
     #' @param align character defining the alignment of the label as defined in helper enum `Alignments`.
+    #' @param margin a numeric vector of length 4 defining the size of the area (in pt) around the text in the followin order: top, right, bottom, left.
     #' @return An `element_text` or `element_blank`object.
     createPlotTextFont = function(color = NULL,
                                   size = NULL,
                                   fontFace = NULL,
                                   fontFamily = NULL,
                                   angle = NULL,
-                                  align = NULL) {
+                                  align = NULL,
+                                  margin = NULL) {
       if (isEmpty(self$text)) {
         return(ggplot2::element_blank())
       }
+
       return(self$font$createPlotTextFont(
         color = color,
         size = size,
         fontFace = fontFace,
         fontFamily = fontFamily,
         angle = angle,
-        align = align
+        align = align,
+        margin = margin
       ))
     }
   ),
