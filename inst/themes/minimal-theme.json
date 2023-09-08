@@ -8,7 +8,7 @@
       "angle": 0,
       "align": "center",
       "maxWidth": null,
-      "margin": [2,2,10,2]
+      "margin": [10,2,10,2]
       },
     "subtitle": {
       "color": "grey20",
