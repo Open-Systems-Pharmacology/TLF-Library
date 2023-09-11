@@ -8,7 +8,7 @@
       "angle": 0,
       "align": "center",
       "maxWidth": null,
-      "margin": [10,2,10,2]
+      "margin": [20,2,10,2]
       },
     "subtitle": {
       "color": "grey20",
@@ -18,7 +18,7 @@
       "angle": 0,
       "align": "center",
       "maxWidth": null,
-      "margin": [2,2,10,2]
+      "margin": [0,2,10,2]
       },
     "xlabel": {
       "color": "grey20",
@@ -28,7 +28,7 @@
       "angle": 0,
       "align": "center",
       "maxWidth": null,
-      "margin": [10,2,2,2]
+      "margin": [10,2,5,2]
       },
     "ylabel": {
       "color": "grey20",
@@ -38,7 +38,7 @@
       "angle": 90,
       "align": "center",
       "maxWidth": null,
-      "margin": [2,2,10,2]
+      "margin": [5,2,10,2]
     },
     "y2label": {
       "color": "grey20",
@@ -59,7 +59,7 @@
       "angle": 0,
       "align": "left",
       "maxWidth": null,
-      "margin": [10,2,2,2]
+      "margin": [2,2,5,2]
 
     },
     "watermark": {
@@ -70,7 +70,7 @@
       "angle": 30,
       "align": "center",
       "maxWidth": null,
-      "margin": [2,2,2,2]
+      "margin": [1,1,1,1]
     },
     "legend": {
       "color": "grey20",
@@ -80,7 +80,7 @@
       "angle": 0,
       "align": "left",
       "maxWidth": null,
-      "margin": [2,2,2,2]
+      "margin": [2,0,2,0]
     },
     "legendTitle": {
       "color": "black",
@@ -100,7 +100,7 @@
       "angle": 0,
       "align": "center",
       "maxWidth": null,
-      "margin": [2,5,5,5]
+      "margin": [2,2,2,2]
     },
     "yAxis": {
       "color": "grey20",
@@ -120,7 +120,7 @@
       "angle": 0,
       "align": "right",
       "maxWidth": null,
-      "margin": [2,2,2,2]
+      "margin": [5,2,5,2]
     }
   },
   "background": {
