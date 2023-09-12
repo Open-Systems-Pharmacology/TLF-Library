@@ -196,17 +196,21 @@ test_that("Long group names are correctly displayed", {
 test_that("Empty dataframe is still plotted",{
   obsVsPredData <-
     tibble::tibble(
-    x = numeric(),
-    y = numeric(),
-    group = character()
-  )
-
-  plotObsVsPred(
-    obsVsPredData,
-    dataMapping = ObsVsPredDataMapping$new(
-      x = "x", y = "y",
-      group = "group"
+      x = numeric(),
+      y = numeric(),
+      group = character()
     )
+
+  vdiffr::expect_doppelganger(
+    "Empty dataframe is still plotted",
+    fig =
+      plotObsVsPred(
+        obsVsPredData,
+        dataMapping = ObsVsPredDataMapping$new(
+          x = "x", y = "y",
+          group = "group"
+        )
+      )
   )
 
 })
