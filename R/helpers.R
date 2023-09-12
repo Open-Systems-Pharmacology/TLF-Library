@@ -35,7 +35,6 @@ getSymmetricLimits <- function(values) {
   validateIsNumeric(values, nullAllowed = TRUE)
 
   # Remove Inf and NA values
-  values <- values[values!=numeric()]
   values <- values[!is.na(values)]
   values <- values[!is.infinite(values)]
   if (isEmpty(values)) {
@@ -57,7 +56,6 @@ getSameLimits <- function(...) {
   values <- unlist(c(...))
   validateIsNumeric(values, nullAllowed = TRUE)
   # Remove Inf and NA values
-  values <- values[values!=numeric()]
   values <- values[!is.na(values)]
   values <- values[!is.infinite(values)]
   if (isEmpty(values)) {
