@@ -77,7 +77,7 @@ plotObsVsPred <- function(data,
   # Thus, scatter points are added as last layer to prevent them being hidden by lines or errorbars
 
   # 1- if available, add LLOQ lines
-  if (!isEmpty(mapData$lloq)) {
+  if ("lloq" %in% colnames(mapData) && !isEmpty(mapData$lloq)) {
     plotObject <- .addLLOQLayer(
       plotObject,
       data = mapData,

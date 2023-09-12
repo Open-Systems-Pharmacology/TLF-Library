@@ -85,17 +85,22 @@ XYGDataMapping <- R6::R6Class(
         self$data[, grouping$label] <- as.factor(grouping$getCaptions(data, metaData))
 
         # Dummy variable for default aesthetics that will be used to define legend labels
-        legendLabels <- self$data$legendLabels %||% grouping$getCaptions(data, metaData)
+        if ("legendLabels" %in% colnames(self$data)) {
+          legendLabels <- self$data$legendLabels %||% grouping$getCaptions(data, metaData)
+        } else {
+          legendLabels <- grouping$getCaptions(data, metaData)
+        }
 
         # Prevent duplication of legend if groupings are the same
         if (isTRUE(all.equal(legendLabels, grouping$getCaptions(data, metaData)))) {
           self$data$legendLabels <- legendLabels
           next
         }
-        self$data$legendLabels <- as.factor(paste(as.character(self$data$legendLabels),
-          as.character(grouping$getCaptions(data, metaData)),
-          sep = "-"
-        ))
+        self$data$legendLabels <- as.factor(
+          paste(as.character(self$data$legendLabels),
+                as.character(grouping$getCaptions(data, metaData)),
+                sep = "-"
+          ))
       }
 
       if (is.null(self$data$legendLabels)) {
