@@ -33,9 +33,11 @@ isBetween <- function(x, left, right, strict = FALSE) {
 #'
 getSymmetricLimits <- function(values) {
   validateIsNumeric(values, nullAllowed = TRUE)
+
   # Remove Inf and NA values
-  values <- values[!is.infinite(values)]
+  values <- values[values!=numeric()]
   values <- values[!is.na(values)]
+  values <- values[!is.infinite(values)]
   if (isEmpty(values)) {
     return(NULL)
   }
@@ -52,11 +54,12 @@ getSymmetricLimits <- function(values) {
 #' getSameLimits(seq(-3, 8), seq(-12, 4))
 #'
 getSameLimits <- function(...) {
-  values <- c(...)
+  values <- unlist(c(...))
   validateIsNumeric(values, nullAllowed = TRUE)
   # Remove Inf and NA values
-  values <- values[!is.infinite(values)]
+  values <- values[values!=numeric()]
   values <- values[!is.na(values)]
+  values <- values[!is.infinite(values)]
   if (isEmpty(values)) {
     return(NULL)
   }

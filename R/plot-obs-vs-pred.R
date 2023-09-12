@@ -52,7 +52,7 @@ plotObsVsPred <- function(data,
                           smoother = NULL,
                           plotObject = NULL) {
   #----- Validation and formatting of input arguments -----
-  validateIsNotEmpty(data)
+  # validateIsNotEmpty(data)
   validateIsOfType(data, "data.frame")
   dataMapping <- .setDataMapping(dataMapping, ObsVsPredDataMapping, data)
   validateIsNumeric(foldDistance, nullAllowed = TRUE)
