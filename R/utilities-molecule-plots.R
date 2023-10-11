@@ -284,7 +284,7 @@
 #' @return A `ggplot` object with dual y-axis
 #' @export
 getDualAxisPlot <- function(leftPlotObject, rightPlotObject) {
-  stopifnot(requireNamespace("cowplot", quietly = TRUE))
+  rlang::check_installed("cowplot", reason = "to use dual axis plots")
   # Only one legend shall be kept to prevent text not aligned and on top of plot axes text
   # For most cases, right plot legend is kept as is while left plot legend is removed
   # If left side legend, left plot legend is kept as is while right plot legend is removed
@@ -307,7 +307,7 @@ getDualAxisPlot <- function(leftPlotObject, rightPlotObject) {
     ggplot2::theme(
       # Update right axis properties
       axis.text.y.right = rightPlotObject$plotConfiguration$y2Axis$font$createPlotTextFont(),
-      axis.title.y.right = rightPlotObject$plotConfiguration$labels$y2label$createPlotTextFont(),
+      axis.title.y.right = rightPlotObject$plotConfiguration$labels$y2label$createPlotTextBoxFont(),
       axis.line.y.right = rightPlotObject$plotConfiguration$background$y2Axis$createPlotElement(),
       panel.grid.major.y = rightPlotObject$plotConfiguration$background$y2Grid$createPlotElement(),
       panel.grid.minor.y = rightPlotObject$plotConfiguration$background$y2Grid$createPlotElement(
