@@ -115,7 +115,7 @@ ObservedDataMapping <- R6::R6Class(
         mapData[, self$ymin] <- data[, self$ymin]
       }
       if (!isEmpty(self$y2Axis)) {
-        mapData[, self$y2Axis] <- as.logical(data[, self$y2Axis])
+        mapData[, self$y2Axis] <- data[, self$y2Axis]
       }
       # MDV is a Nonmem notation in which values with MDV==1 are removed
       if (!isEmpty(self$mdv)) {
