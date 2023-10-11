@@ -78,6 +78,10 @@ test_that("plotTimeProfile works with dual axis", {
         dataMapping = TimeProfileDataMapping$new(x = "x", y = "y", ymin = "ymin", ymax = "ymax"),
         observedDataMapping = ObservedDataMapping$new(
           x = "x", y = "y", y2Axis = "y2", group = "group", shape = shape, color = shape
+        ),
+        plotConfiguration = TimeProfilePlotConfiguration$new(
+          ylabel = "First Axis",
+          y2label = "Second Axis"
         )
       )
   )

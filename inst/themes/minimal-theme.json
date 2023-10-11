@@ -45,10 +45,10 @@
       "size": 10,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 270,
+      "angle": 180,
       "align": "center",
       "maxWidth": null,
-      "margin": [2,2,2,10]
+      "margin": [10,2,5,2]
 
     },
     "caption": {
