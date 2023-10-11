@@ -59,7 +59,7 @@ TimeProfileDataMapping <- R6::R6Class(
         mapData[, self$y] <- data[, self$y]
       }
       if (!isEmpty(self$y2Axis)) {
-        mapData[, self$y2Axis] <- data[, self$y2Axis]
+        mapData[, self$y2Axis] <- as.logical(data[, self$y2Axis])
       }
       self$data <- mapData
       return(mapData)
