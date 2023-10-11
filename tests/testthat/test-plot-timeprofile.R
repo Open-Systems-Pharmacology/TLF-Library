@@ -57,3 +57,28 @@ test_that("plotTimeProfile works ", {
     )
   )
 })
+
+test_that("plotTimeProfile works with dual axis", {
+  skip_if_not_installed("vdiffr")
+  skip_if(getRversion() < "4.1")
+
+  color <- fill <- "group"
+  linetype <- shape <- "name"
+
+  simData$y2 <- simData$y * 2
+
+  obsData$y2 <- obsData$y * 2
+
+  vdiffr::expect_doppelganger(
+    title = "double y axis",
+    fig =
+      plotTimeProfile(
+        data = simData,
+        observedData = obsData,
+        dataMapping = TimeProfileDataMapping$new(x = "x", y = "y", ymin = "ymin", ymax = "ymax"),
+        observedDataMapping = ObservedDataMapping$new(
+          x = "x", y = "y", y2Axis = "y2", group = "group", shape = shape, color = shape
+        )
+      )
+  )
+})
