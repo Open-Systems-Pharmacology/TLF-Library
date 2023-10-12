@@ -62,6 +62,23 @@ TimeProfilePlotConfiguration <- R6::R6Class(
         font = private$.labels$y2label$font
       )
 
+      # On right axis, ggtext mirror angles. This is a workaround to get the
+      # correct angle
+      private$.labels$y2label$font$angle <-
+        dplyr::case_match(private$.labels$y2label$font$angle %% 360,
+                          0 ~ 0,
+                          90 ~ 90,
+                          180 ~ 270,
+                          270 ~ 180)
+
+      # Set maximum text width depending on the text orientation
+      if (private$.labels$y2label$font$angle %in% c(0, 180)) {
+        private$.labels$y2label$font$maxWidth <- unit(100, "pt")
+      }
+      if (private$.labels$y2label$font$angle %in% c(90, 270)) {
+        private$.labels$y2label$font$maxWidth <- NULL
+      }
+
       # Y2-Axis configuration, overwrite some properties only if they are defined
       validateIsOfType(y2Axis, "YAxisConfiguration", nullAllowed = TRUE)
       private$.y2Axis <- y2Axis %||% YAxisConfiguration$new(
