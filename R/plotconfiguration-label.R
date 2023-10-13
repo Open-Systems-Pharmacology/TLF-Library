@@ -21,30 +21,34 @@ LabelConfiguration <- R6::R6Class(
       y2label <- NULL
       inputs <- c("title", "subtitle", "xlabel", "ylabel", "caption", "y2label")
 
-      labels <- list("title" = title,
-                     "subtitle" = subtitle,
-                     "xlabel" = xlabel,
-                     "ylabel" = ylabel,
-                     "caption" = caption,
-                     "y2label" = y2label)
+      labels <- list(
+        "title" = title,
+        "subtitle" = subtitle,
+        "xlabel" = xlabel,
+        "ylabel" = ylabel,
+        "caption" = caption,
+        "y2label" = y2label
+      )
 
       # Check label type is either a character or `Label` object
-      lapply(labels, function(x){validateIsOfType(x, c("Label", "character"), nullAllowed = TRUE)})
+      lapply(labels, function(x) {
+        validateIsOfType(x, c("Label", "character"), nullAllowed = TRUE)
+      })
 
       if (isOfType(labels$ylabel, "Label")) {
-        if (labels$ylabel$font$angle %in% c(0, 180)) {
+        if (labels$ylabel$font$angle %% 360 %in% c(0, 180)) {
           labels$ylabel$font$maxWidth <- unit(100, "pt")
         }
-        if (labels$ylabel$font$angle %in% c(90, 270)) {
+        if (labels$ylabel$font$angle %% 360 %in% c(90, 270)) {
           labels$ylabel$font$maxWidth <- NULL
         }
       }
 
       if (isOfType(labels$xlabel, "Label")) {
-        if (labels$xlabel$font$angle %in% c(0, 180)) {
+        if (labels$xlabel$font$angle %% 360 %in% c(0, 180)) {
           labels$xlabel$font$maxWidth <- NULL
         }
-        if (labels$xlabel$font$angle %in% c(90, 270)) {
+        if (labels$xlabel$font$angle %% 360 %in% c(90, 270)) {
           labels$xlabel$font$maxWidth <- unit(100, "pt")
         }
       }
@@ -53,7 +57,7 @@ LabelConfiguration <- R6::R6Class(
 
       for (labelName in names(labels)) {
         label <- labels[[labelName]]
-        if(!isOfType(label, "Label")) {
+        if (!isOfType(label, "Label")) {
           label <- asLabel(text = label, font = currentTheme$fonts[[labelName]])
         }
         # Check chosen angle is available
@@ -67,7 +71,6 @@ LabelConfiguration <- R6::R6Class(
     #' @param plotObject a `ggplot` object
     #' @return A `ggplot` object
     updatePlot = function(plotObject) {
-
       validateIsOfType(plotObject, "ggplot")
       # Update titles and axes labels
       plotObject <- plotObject + ggplot2::labs(
