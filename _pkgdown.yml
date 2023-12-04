@@ -72,6 +72,7 @@ reference:
   contents:
   - starts_with("setDefault")
   - starts_with("getDefault")
+  - starts_with("setMax")
 - title: "Exporting Plots"
   desc: "Functions for saving and exporting plots."
   contents:
