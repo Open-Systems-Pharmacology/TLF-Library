@@ -157,6 +157,12 @@
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-asThemeAestheticSelections.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-checkIsBetween.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-checkIsInAvailableAngles.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-checkPlotFontFamily.html</loc>
   </url>
   <url>
@@ -278,6 +284,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-validateEitherOrNullInput.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-validateIsStrictlyPositive.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/dot-ViridisPalettes.html</loc>
@@ -689,6 +698,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/setLegendTitle.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/setMaxCharacterWidth.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/setPlotExport.html</loc>
