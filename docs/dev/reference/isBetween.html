@@ -32,18 +32,18 @@ Shortcut for x &amp;gt; left &amp;amp; x &amp;lt; right if strict=TRUE."><meta n
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Primary Plots</h6>
-    <a class="dropdown-item" href="../atom-plots">Atom Plots</a>
-    <a class="dropdown-item" href="../box-whisker-vignette">Box-Whisker Plots</a>
-    <a class="dropdown-item" href="../histogram">Histogram Plots</a>
-    <a class="dropdown-item" href="../pk-ratio-vignette">PK Ratio Plots</a>
-    <a class="dropdown-item" href="../plot-time-profile">Time Profile Plots</a>
+    <a class="dropdown-item" href="../articles/atom-plots.html">Atom Plots</a>
+    <a class="dropdown-item" href="../articles/box-whisker-vignette.html">Box-Whisker Plots</a>
+    <a class="dropdown-item" href="../articles/histogram.html">Histogram Plots</a>
+    <a class="dropdown-item" href="../articles/pk-ratio-vignette.html">PK Ratio Plots</a>
+    <a class="dropdown-item" href="../articles/plot-time-profile.html">Time Profile Plots</a>
     <h6 class="dropdown-header" data-toc-skip>——–</h6>
     <h6 class="dropdown-header" data-toc-skip>Plot configuration</h6>
-    <a class="dropdown-item" href="../plot-configuration">Introduction to PlotConfiguration objects</a>
+    <a class="dropdown-item" href="../articles/plot-configuration.html">Introduction to PlotConfiguration objects</a>
     <h6 class="dropdown-header" data-toc-skip>——–</h6>
     <h6 class="dropdown-header" data-toc-skip>Shiny apps</h6>
-    <a class="dropdown-item" href="../plot-maker">Run Shiny App to Create Plots</a>
-    <a class="dropdown-item" href="../theme-maker">Run Shiny App to Create Themes</a>
+    <a class="dropdown-item" href="../articles/plot-maker.html">Run Shiny App to Create Plots</a>
+    <a class="dropdown-item" href="../articles/theme-maker.html">Run Shiny App to Create Themes</a>
   </div>
 </li>
 <li class="nav-item">
@@ -114,22 +114,22 @@ Default value is <code>FALSE</code>.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1e2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">[</span><span class="fu">isBetween</span><span class="op">(</span><span class="va">x</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.064324904 -0.647260180 -0.351311924  0.457896945 -0.645538798</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6]  0.828208494  0.658149701 -0.036770797  0.507555782  0.851613757</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11]  0.356212732 -0.611804528 -0.155701843  0.528185155  0.439815109</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16] -0.724084586  0.334618254 -0.313341072 -0.496668499  0.652325834</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] -0.078769172  0.125056328  0.860198033  0.217375383 -0.098318587</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [26]  0.606959430 -0.042984435 -0.575964577  0.072906160  0.849512591</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [31] -0.771948628 -0.963016337  0.212439125 -0.769049153 -0.402571695</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [36]  0.521110770  0.337238417  0.441845801 -0.640852515  0.003522375</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [41]  0.856663827  0.218641067 -0.758616001  0.604313530 -0.237881193</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [46] -0.763735180  0.802877604 -0.253583709  0.384238751 -0.007280062</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [51] -0.757323719 -0.151076399 -0.600396745 -0.141247018 -0.268289698</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [56] -0.944665889 -0.625047271  0.534022441  0.469758098  0.249946088</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [61]  0.878062273  0.516756237 -0.919478138  0.026488915  0.191016648</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [66]  0.695092755 -0.116733104 -0.029225505 -0.073454379 -0.023628545</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [71] -0.358767497  0.384148999 -0.493259735  0.379643167  0.681168275</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [76]  0.870362107 -0.030318691 -0.938796496  0.498213088  0.686889438</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -0.067495700  0.897908235 -0.927529749 -0.014507618  0.315450144</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] -0.289659966 -0.322367626 -0.231259160 -0.005019611  0.371335171</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11]  0.844782053 -0.409495793  0.813169031 -0.657654998 -0.141054865</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16]  0.029496544 -0.368694069  0.736579114 -0.740272716 -0.352807607</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21]  0.027045690 -0.261567198  0.756818777  0.433903994  0.408906168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [26] -0.227999488 -0.230565912  0.439205877  0.955446903  0.459929958</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31] -0.917985872  0.025458305 -0.624004770  0.067172251 -0.910111920</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [36]  0.799059913 -0.703898566  0.686888557  0.955727817 -0.084154465</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [41] -0.247360747 -0.244306079 -0.891165807  0.266296165 -0.149821130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [46] -0.071256113 -0.867526506 -0.572938929 -0.862096219 -0.112877580</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [51]  0.720307883  0.822572771  0.264676163 -0.451142609 -0.350301096</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [56]  0.352672044 -0.325064490  0.850688651 -0.859119433 -0.219871013</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [61]  0.412874703  0.165707510 -0.516694104 -0.242391477 -0.454692593</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [66] -0.759120758  0.520511096 -0.219216366 -0.187650191  0.173375418</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [71] -0.830440253 -0.730178223 -0.265265400  0.074569066 -0.040120748</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [76]  0.220235156</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">isBetween</span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span>

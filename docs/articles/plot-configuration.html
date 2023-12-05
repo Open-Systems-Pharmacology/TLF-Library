@@ -8,10 +8,10 @@
 <meta name="description" content="tlf">
 <title>Introduction to PlotConfiguration objects • tlf</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to PlotConfiguration objects">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to PlotConfiguration objects">
 <meta property="og:description" content="tlf">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">tlf</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.5.158</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,8 +41,23 @@
 <li class="nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li class="active nav-item">
-  <a class="nav-link" href="../articles/index.html">Articles</a>
+<li class="active nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <h6 class="dropdown-header" data-toc-skip>Primary Plots</h6>
+    <a class="dropdown-item" href="../articles/atom-plots.html">Atom Plots</a>
+    <a class="dropdown-item" href="../articles/box-whisker-vignette.html">Box-Whisker Plots</a>
+    <a class="dropdown-item" href="../articles/histogram.html">Histogram Plots</a>
+    <a class="dropdown-item" href="../articles/pk-ratio-vignette.html">PK Ratio Plots</a>
+    <a class="dropdown-item" href="../articles/plot-time-profile.html">Time Profile Plots</a>
+    <h6 class="dropdown-header" data-toc-skip>——–</h6>
+    <h6 class="dropdown-header" data-toc-skip>Plot configuration</h6>
+    <a class="dropdown-item" href="../articles/plot-configuration.html">Introduction to PlotConfiguration objects</a>
+    <h6 class="dropdown-header" data-toc-skip>——–</h6>
+    <h6 class="dropdown-header" data-toc-skip>Shiny apps</h6>
+    <a class="dropdown-item" href="../articles/plot-maker.html">Run Shiny App to Create Plots</a>
+    <a class="dropdown-item" href="../articles/theme-maker.html">Run Shiny App to Create Themes</a>
+  </div>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
@@ -183,7 +198,7 @@ next sections:</p>
 <code>tlf</code> method <strong><code>initializePlot</code></strong>, a
 <em>plotConfiguration</em> field is added to the plot object. This field
 corresponds to a <strong>PlotConfiguration</strong> object and defining
-the properties of the initialied plot.</p>
+the properties of the initialized plot.</p>
 <p><strong>PlotConfiguration</strong> objects can also be directly
 passed to the method <em>initializePlot</em> as shown below:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -430,7 +445,7 @@ using default label properties</p>
 <span>  title <span class="op">=</span> <span class="va"><a href="../reference/Label.html">Label</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>text <span class="op">=</span> <span class="st">"Title"</span>, size <span class="op">=</span> <span class="fl">12</span>, color <span class="op">=</span> <span class="st">"deepskyblue4"</span><span class="op">)</span>,</span>
 <span>  subtitle <span class="op">=</span> <span class="va"><a href="../reference/Label.html">Label</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>text <span class="op">=</span> <span class="st">"Subtitle"</span>, size <span class="op">=</span> <span class="fl">11</span>, color <span class="op">=</span> <span class="st">"steelblue"</span><span class="op">)</span>,</span>
 <span>  xlabel <span class="op">=</span> <span class="va"><a href="../reference/Label.html">Label</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>text <span class="op">=</span> <span class="st">"x label"</span>, size <span class="op">=</span> <span class="fl">10</span>, color <span class="op">=</span> <span class="st">"dodgerblue2"</span><span class="op">)</span>,</span>
-<span>  ylabel <span class="op">=</span> <span class="va"><a href="../reference/Label.html">Label</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>text <span class="op">=</span> <span class="st">"y label"</span>, size <span class="op">=</span> <span class="fl">10</span>, color <span class="op">=</span> <span class="st">"dodgerblue2"</span>, angle <span class="op">=</span> <span class="fl">45</span><span class="op">)</span>,</span>
+<span>  ylabel <span class="op">=</span> <span class="va"><a href="../reference/Label.html">Label</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>text <span class="op">=</span> <span class="st">"y label"</span>, color <span class="op">=</span> <span class="st">"dodgerblue2"</span>, angle <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
 <span>  caption <span class="op">=</span> <span class="va"><a href="../reference/Label.html">Label</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>text <span class="op">=</span> <span class="st">"Caption"</span>, size <span class="op">=</span> <span class="fl">8</span>, color <span class="op">=</span> <span class="st">"steelblue"</span>, align <span class="op">=</span> <span class="va">Alignments</span><span class="op">$</span><span class="va">left</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -777,11 +792,11 @@ axis properties can be passed on.</p>
 object, and the axis properties to update. Using the previous example,
 <em>scatter1</em>:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/setXAxis.html">setXAxis</a></span><span class="op">(</span><span class="va">scatter1</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">20</span><span class="op">)</span>, scale <span class="op">=</span> <span class="va">Scaling</span><span class="op">$</span><span class="va">sqrt</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/setXAxis.html">setXAxis</a></span><span class="op">(</span><span class="va">scatter1</span>, axisLimits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">20</span><span class="op">)</span>, scale <span class="op">=</span> <span class="va">Scaling</span><span class="op">$</span><span class="va">sqrt</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plot-configuration_files/figure-html/set-x-axis-1.png" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/setXAxis.html">setXAxis</a></span><span class="op">(</span><span class="va">scatter1</span>,</span>
-<span>  limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">6</span> <span class="op">*</span> <span class="va">pi</span><span class="op">)</span>,</span>
+<span>  axisLimits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">6</span> <span class="op">*</span> <span class="va">pi</span><span class="op">)</span>,</span>
 <span>  ticks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">6</span> <span class="op">*</span> <span class="va">pi</span>, <span class="va">pi</span><span class="op">)</span>,</span>
 <span>  ticklabels <span class="op">=</span> <span class="va">TickLabelTransforms</span><span class="op">$</span><span class="va">pi</span>,</span>
 <span>  font <span class="op">=</span> <span class="va"><a href="../reference/Font.html">Font</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></span>
@@ -839,12 +854,12 @@ define a theme as the current default, the function
 and save them as json files. With this app, it becomes quite easy to
 create one’s own theme with a few clicks. To call for the shiny app,
 users only needed to run the function <code><a href="../reference/runThemeMaker.html">runThemeMaker()</a></code>.</p>
-<p>Additionally, a few predifined themes are available :</p>
+<p>Additionally, a few predefined themes are available :</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"themes"</span>, package <span class="op">=</span> <span class="st">"tlf"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "dark-theme.json"     "excel-theme.json"    "hc-theme.json"      </span></span>
 <span><span class="co">#&gt; [4] "matlab-theme.json"   "minimal-theme.json"  "template-theme.json"</span></span></code></pre></div>
-<p>These predifined themes can be directly loaded and used through
+<p>These predefined themes can be directly loaded and used through
 functions named <code>use&lt;ThemeName&gt;Theme()</code>. For instance,
 the function <code><a href="../reference/useMatlabTheme.html">useMatlabTheme()</a></code> will set default plot
 configurations for creating plots looking like Matlab figures.</p>
@@ -949,69 +964,71 @@ you to re-create a PlotConfiguration object.</p>
 <span><span class="co">#&gt;  [59] "plotConfiguration$xAxis$font$size &lt;- 10"                             </span></span>
 <span><span class="co">#&gt;  [60] "plotConfiguration$xAxis$font$fontFace &lt;- \"plain\""                  </span></span>
 <span><span class="co">#&gt;  [61] "plotConfiguration$xAxis$font$angle &lt;- 0"                             </span></span>
-<span><span class="co">#&gt;  [62] "plotConfiguration$xAxis$limits &lt;- NULL"                              </span></span>
-<span><span class="co">#&gt;  [63] "plotConfiguration$xAxis$scale &lt;- \"identity\""                       </span></span>
-<span><span class="co">#&gt;  [64] "plotConfiguration$xAxis$ticklabels &lt;- NULL"                          </span></span>
-<span><span class="co">#&gt;  [65] "plotConfiguration$xAxis$ticks &lt;- NULL"                               </span></span>
-<span><span class="co">#&gt;  [66] "plotConfiguration$yAxis$font$color &lt;- \"grey20\""                    </span></span>
-<span><span class="co">#&gt;  [67] "plotConfiguration$yAxis$font$size &lt;- 10"                             </span></span>
-<span><span class="co">#&gt;  [68] "plotConfiguration$yAxis$font$fontFace &lt;- \"plain\""                  </span></span>
-<span><span class="co">#&gt;  [69] "plotConfiguration$yAxis$font$angle &lt;- 0"                             </span></span>
-<span><span class="co">#&gt;  [70] "plotConfiguration$yAxis$limits &lt;- NULL"                              </span></span>
-<span><span class="co">#&gt;  [71] "plotConfiguration$yAxis$scale &lt;- \"identity\""                       </span></span>
-<span><span class="co">#&gt;  [72] "plotConfiguration$yAxis$ticklabels &lt;- NULL"                          </span></span>
-<span><span class="co">#&gt;  [73] "plotConfiguration$yAxis$ticks &lt;- NULL"                               </span></span>
-<span><span class="co">#&gt;  [74] "\n"                                                                  </span></span>
-<span><span class="co">#&gt;  [75] "# Define/Overwrite PlotConfiguration legend properties"              </span></span>
-<span><span class="co">#&gt;  [76] "plotConfiguration$legend$position &lt;- \"insideTopRight\""             </span></span>
-<span><span class="co">#&gt;  [77] "plotConfiguration$legend$background$fill &lt;- \"white\""               </span></span>
-<span><span class="co">#&gt;  [78] "plotConfiguration$legend$background$color &lt;- \"white\""              </span></span>
-<span><span class="co">#&gt;  [79] "plotConfiguration$legend$background$size &lt;- \"0.5\""                 </span></span>
-<span><span class="co">#&gt;  [80] "plotConfiguration$legend$background$linetype &lt;- \"blank\""           </span></span>
-<span><span class="co">#&gt;  [81] "plotConfiguration$legend$title$text &lt;- NULL"                         </span></span>
-<span><span class="co">#&gt;  [82] "plotConfiguration$legend$title$font$color &lt;- \"black\""              </span></span>
-<span><span class="co">#&gt;  [83] "plotConfiguration$legend$title$font$size &lt;- 14"                      </span></span>
-<span><span class="co">#&gt;  [84] "plotConfiguration$legend$title$font$fontFace &lt;- \"plain\""           </span></span>
-<span><span class="co">#&gt;  [85] "plotConfiguration$legend$title$font$angle &lt;- 0"                      </span></span>
-<span><span class="co">#&gt;  [86] "plotConfiguration$legend$font$color &lt;- \"grey20\""                   </span></span>
-<span><span class="co">#&gt;  [87] "plotConfiguration$legend$font$size &lt;- 10"                            </span></span>
-<span><span class="co">#&gt;  [88] "plotConfiguration$legend$font$fontFace &lt;- \"plain\""                 </span></span>
-<span><span class="co">#&gt;  [89] "plotConfiguration$legend$font$angle &lt;- 0"                            </span></span>
-<span><span class="co">#&gt;  [90] "\n"                                                                  </span></span>
-<span><span class="co">#&gt;  [91] "# Define/Overwrite PlotConfiguration aesthetics selection properties"</span></span>
-<span><span class="co">#&gt;  [92] "plotConfiguration$points$color &lt;- \"next\""                          </span></span>
-<span><span class="co">#&gt;  [93] "plotConfiguration$points$size &lt;- \"first\""                          </span></span>
-<span><span class="co">#&gt;  [94] "plotConfiguration$points$linetype &lt;- \"blank\""                      </span></span>
-<span><span class="co">#&gt;  [95] "plotConfiguration$points$shape &lt;- \"next\""                          </span></span>
-<span><span class="co">#&gt;  [96] "plotConfiguration$points$fill &lt;- \"NA\""                             </span></span>
-<span><span class="co">#&gt;  [97] "plotConfiguration$points$alpha &lt;- 1"                                 </span></span>
-<span><span class="co">#&gt;  [98] "plotConfiguration$lines$color &lt;- \"next\""                           </span></span>
-<span><span class="co">#&gt;  [99] "plotConfiguration$lines$size &lt;- \"first\""                           </span></span>
-<span><span class="co">#&gt; [100] "plotConfiguration$lines$linetype &lt;- \"same\""                        </span></span>
-<span><span class="co">#&gt; [101] "plotConfiguration$lines$shape &lt;- \"blank\""                          </span></span>
-<span><span class="co">#&gt; [102] "plotConfiguration$lines$fill &lt;- \"NA\""                              </span></span>
-<span><span class="co">#&gt; [103] "plotConfiguration$lines$alpha &lt;- 1"                                  </span></span>
-<span><span class="co">#&gt; [104] "plotConfiguration$ribbons$color &lt;- \"next\""                         </span></span>
-<span><span class="co">#&gt; [105] "plotConfiguration$ribbons$size &lt;- \"first\""                         </span></span>
-<span><span class="co">#&gt; [106] "plotConfiguration$ribbons$linetype &lt;- \"same\""                      </span></span>
-<span><span class="co">#&gt; [107] "plotConfiguration$ribbons$shape &lt;- \"blank\""                        </span></span>
-<span><span class="co">#&gt; [108] "plotConfiguration$ribbons$fill &lt;- \"next\""                          </span></span>
-<span><span class="co">#&gt; [109] "plotConfiguration$ribbons$alpha &lt;- \"first\""                        </span></span>
-<span><span class="co">#&gt; [110] "plotConfiguration$errorbars$color &lt;- \"next\""                       </span></span>
-<span><span class="co">#&gt; [111] "plotConfiguration$errorbars$size &lt;- \"first\""                       </span></span>
-<span><span class="co">#&gt; [112] "plotConfiguration$errorbars$linetype &lt;- \"first\""                   </span></span>
-<span><span class="co">#&gt; [113] "plotConfiguration$errorbars$shape &lt;- \"blank\""                      </span></span>
-<span><span class="co">#&gt; [114] "plotConfiguration$errorbars$fill &lt;- \"NA\""                          </span></span>
-<span><span class="co">#&gt; [115] "plotConfiguration$errorbars$alpha &lt;- 1"                              </span></span>
-<span><span class="co">#&gt; [116] "\n"                                                                  </span></span>
-<span><span class="co">#&gt; [117] "# Define/Overwrite PlotConfiguration export properties"              </span></span>
-<span><span class="co">#&gt; [118] "plotConfiguration$export$name &lt;- \"figure\""                         </span></span>
-<span><span class="co">#&gt; [119] "plotConfiguration$export$format &lt;- \"png\""                          </span></span>
-<span><span class="co">#&gt; [120] "plotConfiguration$export$width &lt;- 16"                                </span></span>
-<span><span class="co">#&gt; [121] "plotConfiguration$export$height &lt;- 9"                                </span></span>
-<span><span class="co">#&gt; [122] "plotConfiguration$export$units &lt;- \"cm\""                            </span></span>
-<span><span class="co">#&gt; [123] "plotConfiguration$export$dpi &lt;- 300"                                 </span></span>
-<span><span class="co">#&gt; [124] "\n"</span></span>
+<span><span class="co">#&gt;  [62] "plotConfiguration$xAxis$valuesLimits &lt;- NULL"                        </span></span>
+<span><span class="co">#&gt;  [63] "plotConfiguration$xAxis$axisLimits &lt;- NULL"                          </span></span>
+<span><span class="co">#&gt;  [64] "plotConfiguration$xAxis$scale &lt;- \"identity\""                       </span></span>
+<span><span class="co">#&gt;  [65] "plotConfiguration$xAxis$ticklabels &lt;- NULL"                          </span></span>
+<span><span class="co">#&gt;  [66] "plotConfiguration$xAxis$ticks &lt;- NULL"                               </span></span>
+<span><span class="co">#&gt;  [67] "plotConfiguration$yAxis$font$color &lt;- \"grey20\""                    </span></span>
+<span><span class="co">#&gt;  [68] "plotConfiguration$yAxis$font$size &lt;- 10"                             </span></span>
+<span><span class="co">#&gt;  [69] "plotConfiguration$yAxis$font$fontFace &lt;- \"plain\""                  </span></span>
+<span><span class="co">#&gt;  [70] "plotConfiguration$yAxis$font$angle &lt;- 0"                             </span></span>
+<span><span class="co">#&gt;  [71] "plotConfiguration$yAxis$valuesLimits &lt;- NULL"                        </span></span>
+<span><span class="co">#&gt;  [72] "plotConfiguration$yAxis$axisLimits &lt;- NULL"                          </span></span>
+<span><span class="co">#&gt;  [73] "plotConfiguration$yAxis$scale &lt;- \"identity\""                       </span></span>
+<span><span class="co">#&gt;  [74] "plotConfiguration$yAxis$ticklabels &lt;- NULL"                          </span></span>
+<span><span class="co">#&gt;  [75] "plotConfiguration$yAxis$ticks &lt;- NULL"                               </span></span>
+<span><span class="co">#&gt;  [76] "\n"                                                                  </span></span>
+<span><span class="co">#&gt;  [77] "# Define/Overwrite PlotConfiguration legend properties"              </span></span>
+<span><span class="co">#&gt;  [78] "plotConfiguration$legend$position &lt;- \"insideTopRight\""             </span></span>
+<span><span class="co">#&gt;  [79] "plotConfiguration$legend$background$fill &lt;- \"white\""               </span></span>
+<span><span class="co">#&gt;  [80] "plotConfiguration$legend$background$color &lt;- \"white\""              </span></span>
+<span><span class="co">#&gt;  [81] "plotConfiguration$legend$background$size &lt;- \"0.5\""                 </span></span>
+<span><span class="co">#&gt;  [82] "plotConfiguration$legend$background$linetype &lt;- \"blank\""           </span></span>
+<span><span class="co">#&gt;  [83] "plotConfiguration$legend$title$text &lt;- NULL"                         </span></span>
+<span><span class="co">#&gt;  [84] "plotConfiguration$legend$title$font$color &lt;- \"black\""              </span></span>
+<span><span class="co">#&gt;  [85] "plotConfiguration$legend$title$font$size &lt;- 14"                      </span></span>
+<span><span class="co">#&gt;  [86] "plotConfiguration$legend$title$font$fontFace &lt;- \"plain\""           </span></span>
+<span><span class="co">#&gt;  [87] "plotConfiguration$legend$title$font$angle &lt;- 0"                      </span></span>
+<span><span class="co">#&gt;  [88] "plotConfiguration$legend$font$color &lt;- \"grey20\""                   </span></span>
+<span><span class="co">#&gt;  [89] "plotConfiguration$legend$font$size &lt;- 10"                            </span></span>
+<span><span class="co">#&gt;  [90] "plotConfiguration$legend$font$fontFace &lt;- \"plain\""                 </span></span>
+<span><span class="co">#&gt;  [91] "plotConfiguration$legend$font$angle &lt;- 0"                            </span></span>
+<span><span class="co">#&gt;  [92] "\n"                                                                  </span></span>
+<span><span class="co">#&gt;  [93] "# Define/Overwrite PlotConfiguration aesthetics selection properties"</span></span>
+<span><span class="co">#&gt;  [94] "plotConfiguration$points$color &lt;- \"next\""                          </span></span>
+<span><span class="co">#&gt;  [95] "plotConfiguration$points$size &lt;- 3"                                  </span></span>
+<span><span class="co">#&gt;  [96] "plotConfiguration$points$linetype &lt;- \"blank\""                      </span></span>
+<span><span class="co">#&gt;  [97] "plotConfiguration$points$shape &lt;- \"next\""                          </span></span>
+<span><span class="co">#&gt;  [98] "plotConfiguration$points$fill &lt;- \"NA\""                             </span></span>
+<span><span class="co">#&gt;  [99] "plotConfiguration$points$alpha &lt;- 1"                                 </span></span>
+<span><span class="co">#&gt; [100] "plotConfiguration$lines$color &lt;- \"next\""                           </span></span>
+<span><span class="co">#&gt; [101] "plotConfiguration$lines$size &lt;- \"first\""                           </span></span>
+<span><span class="co">#&gt; [102] "plotConfiguration$lines$linetype &lt;- \"same\""                        </span></span>
+<span><span class="co">#&gt; [103] "plotConfiguration$lines$shape &lt;- \"blank\""                          </span></span>
+<span><span class="co">#&gt; [104] "plotConfiguration$lines$fill &lt;- \"NA\""                              </span></span>
+<span><span class="co">#&gt; [105] "plotConfiguration$lines$alpha &lt;- 1"                                  </span></span>
+<span><span class="co">#&gt; [106] "plotConfiguration$ribbons$color &lt;- \"next\""                         </span></span>
+<span><span class="co">#&gt; [107] "plotConfiguration$ribbons$size &lt;- \"first\""                         </span></span>
+<span><span class="co">#&gt; [108] "plotConfiguration$ribbons$linetype &lt;- \"same\""                      </span></span>
+<span><span class="co">#&gt; [109] "plotConfiguration$ribbons$shape &lt;- \"blank\""                        </span></span>
+<span><span class="co">#&gt; [110] "plotConfiguration$ribbons$fill &lt;- \"next\""                          </span></span>
+<span><span class="co">#&gt; [111] "plotConfiguration$ribbons$alpha &lt;- \"first\""                        </span></span>
+<span><span class="co">#&gt; [112] "plotConfiguration$errorbars$color &lt;- \"next\""                       </span></span>
+<span><span class="co">#&gt; [113] "plotConfiguration$errorbars$size &lt;- \"first\""                       </span></span>
+<span><span class="co">#&gt; [114] "plotConfiguration$errorbars$linetype &lt;- \"first\""                   </span></span>
+<span><span class="co">#&gt; [115] "plotConfiguration$errorbars$shape &lt;- \"blank\""                      </span></span>
+<span><span class="co">#&gt; [116] "plotConfiguration$errorbars$fill &lt;- \"NA\""                          </span></span>
+<span><span class="co">#&gt; [117] "plotConfiguration$errorbars$alpha &lt;- 1"                              </span></span>
+<span><span class="co">#&gt; [118] "\n"                                                                  </span></span>
+<span><span class="co">#&gt; [119] "# Define/Overwrite PlotConfiguration export properties"              </span></span>
+<span><span class="co">#&gt; [120] "plotConfiguration$export$name &lt;- \"figure\""                         </span></span>
+<span><span class="co">#&gt; [121] "plotConfiguration$export$format &lt;- \"png\""                          </span></span>
+<span><span class="co">#&gt; [122] "plotConfiguration$export$width &lt;- 16"                                </span></span>
+<span><span class="co">#&gt; [123] "plotConfiguration$export$height &lt;- 9"                                </span></span>
+<span><span class="co">#&gt; [124] "plotConfiguration$export$units &lt;- \"cm\""                            </span></span>
+<span><span class="co">#&gt; [125] "plotConfiguration$export$dpi &lt;- 300"                                 </span></span>
+<span><span class="co">#&gt; [126] "\n"</span></span>
 <span></span>
 <span><span class="co"># Create, update and export a more advanced plot confiugration</span></span>
 <span><span class="va">plotConfigurationToExport2</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/TornadoPlotConfiguration.html">TornadoPlotConfiguration</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>bar <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -1077,73 +1094,75 @@ you to re-create a PlotConfiguration object.</p>
 <span><span class="co">#&gt;  [59] "tornado$xAxis$font$size &lt;- 10"                                       </span></span>
 <span><span class="co">#&gt;  [60] "tornado$xAxis$font$fontFace &lt;- \"plain\""                            </span></span>
 <span><span class="co">#&gt;  [61] "tornado$xAxis$font$angle &lt;- 0"                                       </span></span>
-<span><span class="co">#&gt;  [62] "tornado$xAxis$limits &lt;- NULL"                                        </span></span>
-<span><span class="co">#&gt;  [63] "tornado$xAxis$scale &lt;- \"identity\""                                 </span></span>
-<span><span class="co">#&gt;  [64] "tornado$xAxis$ticklabels &lt;- NULL"                                    </span></span>
-<span><span class="co">#&gt;  [65] "tornado$xAxis$ticks &lt;- NULL"                                         </span></span>
-<span><span class="co">#&gt;  [66] "tornado$yAxis$font$color &lt;- \"grey20\""                              </span></span>
-<span><span class="co">#&gt;  [67] "tornado$yAxis$font$size &lt;- 10"                                       </span></span>
-<span><span class="co">#&gt;  [68] "tornado$yAxis$font$fontFace &lt;- \"plain\""                            </span></span>
-<span><span class="co">#&gt;  [69] "tornado$yAxis$font$angle &lt;- 0"                                       </span></span>
-<span><span class="co">#&gt;  [70] "tornado$yAxis$limits &lt;- NULL"                                        </span></span>
-<span><span class="co">#&gt;  [71] "tornado$yAxis$scale &lt;- \"discrete\""                                 </span></span>
-<span><span class="co">#&gt;  [72] "tornado$yAxis$ticklabels &lt;- NULL"                                    </span></span>
-<span><span class="co">#&gt;  [73] "tornado$yAxis$ticks &lt;- NULL"                                         </span></span>
-<span><span class="co">#&gt;  [74] "\n"                                                                  </span></span>
-<span><span class="co">#&gt;  [75] "# Define/Overwrite PlotConfiguration legend properties"              </span></span>
-<span><span class="co">#&gt;  [76] "tornado$legend$position &lt;- \"insideTopRight\""                       </span></span>
-<span><span class="co">#&gt;  [77] "tornado$legend$background$fill &lt;- \"white\""                         </span></span>
-<span><span class="co">#&gt;  [78] "tornado$legend$background$color &lt;- \"white\""                        </span></span>
-<span><span class="co">#&gt;  [79] "tornado$legend$background$size &lt;- \"0.5\""                           </span></span>
-<span><span class="co">#&gt;  [80] "tornado$legend$background$linetype &lt;- \"blank\""                     </span></span>
-<span><span class="co">#&gt;  [81] "tornado$legend$title$text &lt;- NULL"                                   </span></span>
-<span><span class="co">#&gt;  [82] "tornado$legend$title$font$color &lt;- \"black\""                        </span></span>
-<span><span class="co">#&gt;  [83] "tornado$legend$title$font$size &lt;- 14"                                </span></span>
-<span><span class="co">#&gt;  [84] "tornado$legend$title$font$fontFace &lt;- \"plain\""                     </span></span>
-<span><span class="co">#&gt;  [85] "tornado$legend$title$font$angle &lt;- 0"                                </span></span>
-<span><span class="co">#&gt;  [86] "tornado$legend$font$color &lt;- \"grey20\""                             </span></span>
-<span><span class="co">#&gt;  [87] "tornado$legend$font$size &lt;- 10"                                      </span></span>
-<span><span class="co">#&gt;  [88] "tornado$legend$font$fontFace &lt;- \"plain\""                           </span></span>
-<span><span class="co">#&gt;  [89] "tornado$legend$font$angle &lt;- 0"                                      </span></span>
-<span><span class="co">#&gt;  [90] "\n"                                                                  </span></span>
-<span><span class="co">#&gt;  [91] "# Define/Overwrite PlotConfiguration aesthetics selection properties"</span></span>
-<span><span class="co">#&gt;  [92] "tornado$points$color &lt;- \"reset\""                                   </span></span>
-<span><span class="co">#&gt;  [93] "tornado$points$size &lt;- 2"                                            </span></span>
-<span><span class="co">#&gt;  [94] "tornado$points$linetype &lt;- \"blank\""                                </span></span>
-<span><span class="co">#&gt;  [95] "tornado$points$shape &lt;- \"reset\""                                   </span></span>
-<span><span class="co">#&gt;  [96] "tornado$points$fill &lt;- \"NA\""                                       </span></span>
-<span><span class="co">#&gt;  [97] "tornado$points$alpha &lt;- 1"                                           </span></span>
-<span><span class="co">#&gt;  [98] "tornado$lines$color &lt;- \"grey20\""                                   </span></span>
-<span><span class="co">#&gt;  [99] "tornado$lines$size &lt;- 0.5"                                           </span></span>
-<span><span class="co">#&gt; [100] "tornado$lines$linetype &lt;- \"longdash\""                              </span></span>
-<span><span class="co">#&gt; [101] "tornado$lines$shape &lt;- \"blank\""                                    </span></span>
-<span><span class="co">#&gt; [102] "tornado$lines$fill &lt;- \"NA\""                                        </span></span>
-<span><span class="co">#&gt; [103] "tornado$lines$alpha &lt;- 1"                                            </span></span>
-<span><span class="co">#&gt; [104] "tornado$ribbons$color &lt;- \"reset\""                                  </span></span>
-<span><span class="co">#&gt; [105] "tornado$ribbons$size &lt;- 0.5"                                         </span></span>
-<span><span class="co">#&gt; [106] "tornado$ribbons$linetype &lt;- \"solid\""                               </span></span>
-<span><span class="co">#&gt; [107] "tornado$ribbons$shape &lt;- \"blank\""                                  </span></span>
-<span><span class="co">#&gt; [108] "tornado$ribbons$fill &lt;- \"reset\""                                   </span></span>
-<span><span class="co">#&gt; [109] "tornado$ribbons$alpha &lt;- \"first\""                                  </span></span>
-<span><span class="co">#&gt; [110] "tornado$errorbars$color &lt;- \"reset\""                                </span></span>
-<span><span class="co">#&gt; [111] "tornado$errorbars$size &lt;- \"same\""                                  </span></span>
-<span><span class="co">#&gt; [112] "tornado$errorbars$linetype &lt;- \"first\""                             </span></span>
-<span><span class="co">#&gt; [113] "tornado$errorbars$shape &lt;- \"blank\""                                </span></span>
-<span><span class="co">#&gt; [114] "tornado$errorbars$fill &lt;- NA"                                        </span></span>
-<span><span class="co">#&gt; [115] "tornado$errorbars$alpha &lt;- 1"                                        </span></span>
-<span><span class="co">#&gt; [116] "\n"                                                                  </span></span>
-<span><span class="co">#&gt; [117] "# Define/Overwrite PlotConfiguration export properties"              </span></span>
-<span><span class="co">#&gt; [118] "tornado$export$name &lt;- \"figure\""                                   </span></span>
-<span><span class="co">#&gt; [119] "tornado$export$format &lt;- \"png\""                                    </span></span>
-<span><span class="co">#&gt; [120] "tornado$export$width &lt;- 16"                                          </span></span>
-<span><span class="co">#&gt; [121] "tornado$export$height &lt;- 9"                                          </span></span>
-<span><span class="co">#&gt; [122] "tornado$export$units &lt;- \"cm\""                                      </span></span>
-<span><span class="co">#&gt; [123] "tornado$export$dpi &lt;- 300"                                           </span></span>
-<span><span class="co">#&gt; [124] "\n"                                                                  </span></span>
-<span><span class="co">#&gt; [125] "# Define/Overwrite Pproperties specific to Tornado plots"            </span></span>
-<span><span class="co">#&gt; [126] "tornado$bar &lt;- FALSE"                                                </span></span>
-<span><span class="co">#&gt; [127] "tornado$dodge &lt;- 0.5"                                                </span></span>
-<span><span class="co">#&gt; [128] "tornado$colorPalette &lt;- NULL"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [62] "tornado$xAxis$valuesLimits &lt;- NULL"                                  </span></span>
+<span><span class="co">#&gt;  [63] "tornado$xAxis$axisLimits &lt;- NULL"                                    </span></span>
+<span><span class="co">#&gt;  [64] "tornado$xAxis$scale &lt;- \"identity\""                                 </span></span>
+<span><span class="co">#&gt;  [65] "tornado$xAxis$ticklabels &lt;- NULL"                                    </span></span>
+<span><span class="co">#&gt;  [66] "tornado$xAxis$ticks &lt;- NULL"                                         </span></span>
+<span><span class="co">#&gt;  [67] "tornado$yAxis$font$color &lt;- \"grey20\""                              </span></span>
+<span><span class="co">#&gt;  [68] "tornado$yAxis$font$size &lt;- 10"                                       </span></span>
+<span><span class="co">#&gt;  [69] "tornado$yAxis$font$fontFace &lt;- \"plain\""                            </span></span>
+<span><span class="co">#&gt;  [70] "tornado$yAxis$font$angle &lt;- 0"                                       </span></span>
+<span><span class="co">#&gt;  [71] "tornado$yAxis$valuesLimits &lt;- NULL"                                  </span></span>
+<span><span class="co">#&gt;  [72] "tornado$yAxis$axisLimits &lt;- NULL"                                    </span></span>
+<span><span class="co">#&gt;  [73] "tornado$yAxis$scale &lt;- \"discrete\""                                 </span></span>
+<span><span class="co">#&gt;  [74] "tornado$yAxis$ticklabels &lt;- NULL"                                    </span></span>
+<span><span class="co">#&gt;  [75] "tornado$yAxis$ticks &lt;- NULL"                                         </span></span>
+<span><span class="co">#&gt;  [76] "\n"                                                                  </span></span>
+<span><span class="co">#&gt;  [77] "# Define/Overwrite PlotConfiguration legend properties"              </span></span>
+<span><span class="co">#&gt;  [78] "tornado$legend$position &lt;- \"insideTopRight\""                       </span></span>
+<span><span class="co">#&gt;  [79] "tornado$legend$background$fill &lt;- \"white\""                         </span></span>
+<span><span class="co">#&gt;  [80] "tornado$legend$background$color &lt;- \"white\""                        </span></span>
+<span><span class="co">#&gt;  [81] "tornado$legend$background$size &lt;- \"0.5\""                           </span></span>
+<span><span class="co">#&gt;  [82] "tornado$legend$background$linetype &lt;- \"blank\""                     </span></span>
+<span><span class="co">#&gt;  [83] "tornado$legend$title$text &lt;- NULL"                                   </span></span>
+<span><span class="co">#&gt;  [84] "tornado$legend$title$font$color &lt;- \"black\""                        </span></span>
+<span><span class="co">#&gt;  [85] "tornado$legend$title$font$size &lt;- 14"                                </span></span>
+<span><span class="co">#&gt;  [86] "tornado$legend$title$font$fontFace &lt;- \"plain\""                     </span></span>
+<span><span class="co">#&gt;  [87] "tornado$legend$title$font$angle &lt;- 0"                                </span></span>
+<span><span class="co">#&gt;  [88] "tornado$legend$font$color &lt;- \"grey20\""                             </span></span>
+<span><span class="co">#&gt;  [89] "tornado$legend$font$size &lt;- 10"                                      </span></span>
+<span><span class="co">#&gt;  [90] "tornado$legend$font$fontFace &lt;- \"plain\""                           </span></span>
+<span><span class="co">#&gt;  [91] "tornado$legend$font$angle &lt;- 0"                                      </span></span>
+<span><span class="co">#&gt;  [92] "\n"                                                                  </span></span>
+<span><span class="co">#&gt;  [93] "# Define/Overwrite PlotConfiguration aesthetics selection properties"</span></span>
+<span><span class="co">#&gt;  [94] "tornado$points$color &lt;- \"reset\""                                   </span></span>
+<span><span class="co">#&gt;  [95] "tornado$points$size &lt;- 3"                                            </span></span>
+<span><span class="co">#&gt;  [96] "tornado$points$linetype &lt;- \"blank\""                                </span></span>
+<span><span class="co">#&gt;  [97] "tornado$points$shape &lt;- \"reset\""                                   </span></span>
+<span><span class="co">#&gt;  [98] "tornado$points$fill &lt;- \"NA\""                                       </span></span>
+<span><span class="co">#&gt;  [99] "tornado$points$alpha &lt;- 1"                                           </span></span>
+<span><span class="co">#&gt; [100] "tornado$lines$color &lt;- \"grey20\""                                   </span></span>
+<span><span class="co">#&gt; [101] "tornado$lines$size &lt;- 0.5"                                           </span></span>
+<span><span class="co">#&gt; [102] "tornado$lines$linetype &lt;- \"longdash\""                              </span></span>
+<span><span class="co">#&gt; [103] "tornado$lines$shape &lt;- \"blank\""                                    </span></span>
+<span><span class="co">#&gt; [104] "tornado$lines$fill &lt;- \"NA\""                                        </span></span>
+<span><span class="co">#&gt; [105] "tornado$lines$alpha &lt;- 1"                                            </span></span>
+<span><span class="co">#&gt; [106] "tornado$ribbons$color &lt;- \"reset\""                                  </span></span>
+<span><span class="co">#&gt; [107] "tornado$ribbons$size &lt;- 0.5"                                         </span></span>
+<span><span class="co">#&gt; [108] "tornado$ribbons$linetype &lt;- \"solid\""                               </span></span>
+<span><span class="co">#&gt; [109] "tornado$ribbons$shape &lt;- \"blank\""                                  </span></span>
+<span><span class="co">#&gt; [110] "tornado$ribbons$fill &lt;- \"reset\""                                   </span></span>
+<span><span class="co">#&gt; [111] "tornado$ribbons$alpha &lt;- \"first\""                                  </span></span>
+<span><span class="co">#&gt; [112] "tornado$errorbars$color &lt;- \"reset\""                                </span></span>
+<span><span class="co">#&gt; [113] "tornado$errorbars$size &lt;- \"same\""                                  </span></span>
+<span><span class="co">#&gt; [114] "tornado$errorbars$linetype &lt;- \"first\""                             </span></span>
+<span><span class="co">#&gt; [115] "tornado$errorbars$shape &lt;- \"blank\""                                </span></span>
+<span><span class="co">#&gt; [116] "tornado$errorbars$fill &lt;- NA"                                        </span></span>
+<span><span class="co">#&gt; [117] "tornado$errorbars$alpha &lt;- 1"                                        </span></span>
+<span><span class="co">#&gt; [118] "\n"                                                                  </span></span>
+<span><span class="co">#&gt; [119] "# Define/Overwrite PlotConfiguration export properties"              </span></span>
+<span><span class="co">#&gt; [120] "tornado$export$name &lt;- \"figure\""                                   </span></span>
+<span><span class="co">#&gt; [121] "tornado$export$format &lt;- \"png\""                                    </span></span>
+<span><span class="co">#&gt; [122] "tornado$export$width &lt;- 16"                                          </span></span>
+<span><span class="co">#&gt; [123] "tornado$export$height &lt;- 9"                                          </span></span>
+<span><span class="co">#&gt; [124] "tornado$export$units &lt;- \"cm\""                                      </span></span>
+<span><span class="co">#&gt; [125] "tornado$export$dpi &lt;- 300"                                           </span></span>
+<span><span class="co">#&gt; [126] "\n"                                                                  </span></span>
+<span><span class="co">#&gt; [127] "# Define/Overwrite Pproperties specific to Tornado plots"            </span></span>
+<span><span class="co">#&gt; [128] "tornado$bar &lt;- FALSE"                                                </span></span>
+<span><span class="co">#&gt; [129] "tornado$dodge &lt;- 0.5"                                                </span></span>
+<span><span class="co">#&gt; [130] "tornado$colorPalette &lt;- NULL"</span></span></code></pre></div>
 <p>Since <code>exportPlotConfigurationCode</code> returns character
 strings, they can either be saved as a .R script or copied/pasted to be
 used as is or within a function. It is also possible to turn the strings
@@ -1199,7 +1218,7 @@ into and expression to <code>eval</code> using
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer>

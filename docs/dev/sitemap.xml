@@ -316,10 +316,7 @@
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/FontFaces.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/GeomTLFPoint.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/geom_tlf_point.html</loc>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/geomTLFPoint.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/getBoxWhiskerMeasure.html</loc>
@@ -704,9 +701,6 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/setLegendTitle.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/setMaxCharacterWidth.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/setPlotExport.html</loc>

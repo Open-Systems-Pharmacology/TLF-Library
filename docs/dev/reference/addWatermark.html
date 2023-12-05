@@ -30,18 +30,18 @@ Then,  adds the grob to the ggplot object as a new layer using ggplot2::annotati
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Primary Plots</h6>
-    <a class="dropdown-item" href="../atom-plots">Atom Plots</a>
-    <a class="dropdown-item" href="../box-whisker-vignette">Box-Whisker Plots</a>
-    <a class="dropdown-item" href="../histogram">Histogram Plots</a>
-    <a class="dropdown-item" href="../pk-ratio-vignette">PK Ratio Plots</a>
-    <a class="dropdown-item" href="../plot-time-profile">Time Profile Plots</a>
+    <a class="dropdown-item" href="../articles/atom-plots.html">Atom Plots</a>
+    <a class="dropdown-item" href="../articles/box-whisker-vignette.html">Box-Whisker Plots</a>
+    <a class="dropdown-item" href="../articles/histogram.html">Histogram Plots</a>
+    <a class="dropdown-item" href="../articles/pk-ratio-vignette.html">PK Ratio Plots</a>
+    <a class="dropdown-item" href="../articles/plot-time-profile.html">Time Profile Plots</a>
     <h6 class="dropdown-header" data-toc-skip>——–</h6>
     <h6 class="dropdown-header" data-toc-skip>Plot configuration</h6>
-    <a class="dropdown-item" href="../plot-configuration">Introduction to PlotConfiguration objects</a>
+    <a class="dropdown-item" href="../articles/plot-configuration.html">Introduction to PlotConfiguration objects</a>
     <h6 class="dropdown-header" data-toc-skip>——–</h6>
     <h6 class="dropdown-header" data-toc-skip>Shiny apps</h6>
-    <a class="dropdown-item" href="../plot-maker">Run Shiny App to Create Plots</a>
-    <a class="dropdown-item" href="../theme-maker">Run Shiny App to Create Themes</a>
+    <a class="dropdown-item" href="../articles/plot-maker.html">Run Shiny App to Create Plots</a>
+    <a class="dropdown-item" href="../articles/theme-maker.html">Run Shiny App to Create Themes</a>
   </div>
 </li>
 <li class="nav-item">
@@ -70,7 +70,7 @@ Then,  adds the grob to the ggplot object as a new layer using ggplot2::annotati
 
     <div class="ref-description section level2">
     <p>Creates a <code>ggplot</code> grob based on the label text and its font properties.
-Then,  adds the grob to the <code>ggplot</code> object as a new layer using <code><a href="https://rdrr.io/pkg/ggplot2/man/annotation_custom.html" class="external-link">ggplot2::annotation_custom</a></code>.</p>
+Then,  adds the grob to the <code>ggplot</code> object as a new layer using <code><a href="https://ggplot2.tidyverse.org/reference/annotation_custom.html" class="external-link">ggplot2::annotation_custom</a></code>.</p>
     </div>
 
     <div class="section level2">
@@ -123,7 +123,7 @@ The closer to 1, the more opaque the watermark is.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Add a watermark to an empty plot</span></span></span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">addWatermark</span><span class="op">(</span><span class="va">p</span>, <span class="st">"watermark"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="addWatermark-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
