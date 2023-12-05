@@ -11,7 +11,7 @@ DDIRatioDataMapping <- R6::R6Class(
     #' Value of `delta` in [Guest et al.](https://dmd.aspetjournals.org/content/39/2/170) equation.
     #' Default value is 1.
     #' @param minRange Minimum range of x values for guest and ratio lines
-    #' Default is [0.01 - 100]
+    #' Default is \[0.01 - 100\]
     #' @param lines List of ratio limits to display as diagonal/horizontal lines
     #' @param residualsVsObserved Logical defining if calculated DDI data are as residuals vs observed or predicted vs observed
     #' @param ... parameters inherited from \code{PKRatioDataMapping}

@@ -36,7 +36,9 @@ Imports:
     ospsuite.utils (>= 1.4.0),
     patchwork,
     ggtext,
-    stringr
+    stringr,
+    rlang,
+    lifecycle
 Depends: 
     R (>= 3.6)
 Encoding: UTF-8

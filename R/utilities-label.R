@@ -105,8 +105,6 @@ getLabelWithUnit <- function(label, unit = NULL) {
 #'
 #' @return a sanitized character string
 #'
-#' @examples
-#' .sanitizeLabel("`code`")
 .sanitizeLabel <- function(text){
   forbiddenCharacters <- c("`")
   if (isOfType(text, "character", nullAllowed = FALSE)) {

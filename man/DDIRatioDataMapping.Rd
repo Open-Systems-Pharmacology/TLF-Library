@@ -77,7 +77,7 @@ Create a new \code{DDIRatioDataMapping} object
 Default value is 1.}
 
 \item{\code{minRange}}{Minimum range of x values for guest and ratio lines
-Default is \link{0.01 - 100}}
+Default is [0.01 - 100]}
 
 \item{\code{lines}}{List of ratio limits to display as diagonal/horizontal lines}
 
