@@ -84,23 +84,23 @@ navbar:
       menu:
       - text: "Primary Plots"
       - text: Atom Plots
-        href: atom-plots
+        href: articles/atom-plots.html
       - text: Box-Whisker Plots
-        href: box-whisker-vignette
+        href: articles/box-whisker-vignette.html
       - text: Histogram Plots
-        href: histogram
+        href: articles/histogram.html
       - text: PK Ratio Plots
-        href: pk-ratio-vignette
+        href: articles/pk-ratio-vignette.html
       - text: Time Profile Plots
-        href: plot-time-profile
+        href: articles/plot-time-profile.html
       - text: ——–
       - text: "Plot configuration"
       - text: Introduction to PlotConfiguration objects
-        href: plot-configuration
+        href: articles/plot-configuration.html
       - text: ——–
       - text: "Shiny apps"
       - text: Run Shiny App to Create Plots
-        href: plot-maker
+        href: articles/plot-maker.html
       - text: Run Shiny App to Create Themes
-        href: theme-maker
+        href: articles/theme-maker.html
 
