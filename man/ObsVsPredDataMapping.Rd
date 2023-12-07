@@ -16,6 +16,7 @@ Other DataMapping classes:
 \code{\link{HistogramDataMapping}},
 \code{\link{ObservedDataMapping}},
 \code{\link{PKRatioDataMapping}},
+\code{\link{PieChartDataMapping}},
 \code{\link{QQDataMapping}},
 \code{\link{RangeDataMapping}},
 \code{\link{ResVsPredDataMapping}},
@@ -27,7 +28,7 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{tlf::XYDataMapping} -> \code{tlf::XYGDataMapping} -> \code{ObsVsPredDataMapping}
+\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{ObsVsPredDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -39,6 +40,8 @@ Other DataMapping classes:
 \item{\code{xmax}}{mapping of lower value of error bars around scatter points}
 
 \item{\code{smoother}}{regression function name}
+
+\item{\code{lloq}}{mapping lloq lines}
 }
 \if{html}{\out{</div>}}
 }
@@ -63,6 +66,7 @@ Create a new \code{ObsVsPredDataMapping} object
   xmax = NULL,
   lines = DefaultDataMappingValues$obsVsPred,
   smoother = NULL,
+  lloq = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -80,7 +84,9 @@ Create a new \code{ObsVsPredDataMapping} object
 
 \item{\code{lines}}{list of lines to plot}
 
-\item{\code{smoother}}{smoother function or parameter
+\item{\code{smoother}}{smoother function or parameter}
+
+\item{\code{lloq}}{mapping lloq lines
 To map a loess smoother to the plot, use \code{smoother}="loess"}
 
 \item{\code{...}}{parameters inherited from \code{XYGDataMapping}}

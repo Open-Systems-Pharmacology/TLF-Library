@@ -49,7 +49,7 @@ setPlotLabels <- function(plotObject,
 
 #' @title asLabel
 #' @param text A character value
-#' @param font A `Font` object definin the font properties of the Label
+#' @param font A `Font` object defining the font properties of the Label
 #' @return A `Label` object
 #' @description
 #' Set a character string into a `Label` object associating font properties to input
@@ -88,9 +88,27 @@ asLabel <- function(text = "", font = NULL) {
 #' getLabelWithUnit("Label without unit")
 #'
 getLabelWithUnit <- function(label, unit = NULL) {
-  if (isTRUE(unit %in% "")) {
-    unit <- NULL
+  if (is.null(unit) ||is.na(unit) || unit == "") {
+    return(label)
+  } else {
+    return(paste0(label, " [", unit, "]"))
   }
-  ifNotNull(unit, label <- paste(label, " [", unit, "]", sep = ""))
-  return(label)
+}
+
+#' Sanitize Label Text
+#' @description
+#' ggtext does not allow certain characters that can be converted to html
+#' tags but that are not supported. This function removes this forbidden
+#' characters.
+#'
+#' @param text a character string
+#'
+#' @return a sanitized character string
+#'
+.sanitizeLabel <- function(text){
+  forbiddenCharacters <- c("`")
+  if (isOfType(text, "character", nullAllowed = FALSE)) {
+    text <- stringr::str_remove_all(text, paste(forbiddenCharacters, sep = "|"))
+  }
+  return(text)
 }

@@ -5,7 +5,7 @@
 \alias{MoleculePlots}
 \title{MoleculePlots}
 \format{
-An object of class \code{list} of length 14.
+An object of class \code{list} of length 15.
 }
 \usage{
 MoleculePlots
@@ -21,8 +21,10 @@ Other enum helpers:
 \code{\link{Alignments}},
 \code{\link{AtomPlots}},
 \code{\link{ColorMaps}},
+\code{\link{ColorPalettes}},
 \code{\link{DataMappings}},
 \code{\link{DefaultDataMappingValues}},
+\code{\link{Directions}},
 \code{\link{ExportFormats}},
 \code{\link{ExportUnits}},
 \code{\link{FontFaces}},

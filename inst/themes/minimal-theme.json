@@ -6,31 +6,39 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
-      "align": "center"
-    },
+      "align": "center",
+      "maxWidth": null,
+      "margin": [20,2,10,2]
+      },
     "subtitle": {
       "color": "grey20",
       "size": 10,
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
-      "align": "center"
-    },
+      "align": "center",
+      "maxWidth": null,
+      "margin": [0,2,10,2]
+      },
     "xlabel": {
       "color": "grey20",
       "size": 10,
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
-      "align": "center"
-    },
+      "align": "center",
+      "maxWidth": null,
+      "margin": [10,2,5,2]
+      },
     "ylabel": {
       "color": "grey20",
       "size": 10,
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 90,
-      "align": "center"
+      "align": "center",
+      "maxWidth": null,
+      "margin": [5,2,10,2]
     },
     "y2label": {
       "color": "grey20",
@@ -38,7 +46,10 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": -90,
-      "align": "center"
+      "align": "center",
+      "maxWidth": null,
+      "margin": [5,2,10,2]
+
     },
     "caption": {
       "color": "grey20",
@@ -46,7 +57,10 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
-      "align": "left"
+      "align": "left",
+      "maxWidth": null,
+      "margin": [2,2,5,2]
+
     },
     "watermark": {
       "color": "grey20",
@@ -54,7 +68,9 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 30,
-      "align": "center"
+      "align": "center",
+      "maxWidth": null,
+      "margin": [1,1,1,1]
     },
     "legend": {
       "color": "grey20",
@@ -62,7 +78,9 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
-      "align": "left"
+      "align": "left",
+      "maxWidth": null,
+      "margin": [2,0,2,0]
     },
     "legendTitle": {
       "color": "black",
@@ -70,7 +88,9 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
-      "align": "center"
+      "align": "center",
+      "maxWidth": null,
+      "margin": [2,2,2,2]
     },
     "xAxis": {
       "color": "grey20",
@@ -78,7 +98,9 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
-      "align": "center"
+      "align": "center",
+      "maxWidth": null,
+      "margin": [2,2,2,2]
     },
     "yAxis": {
       "color": "grey20",
@@ -86,7 +108,9 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
-      "align": "right"
+      "align": "right",
+      "maxWidth": null,
+      "margin": [2,2,2,2]
     },
     "y2Axis": {
       "color": "grey20",
@@ -94,7 +118,9 @@
       "fontFace": "plain",
       "fontFamily": "",
       "angle": 0,
-      "align": "right"
+      "align": "right",
+      "maxWidth": null,
+      "margin": [5,2,5,2]
     }
   },
   "background": {
@@ -167,14 +193,27 @@
       "#B4009E"
     ],
     "shape": [
-      "square",
-      "dot",
       "circle",
-      "diamond",
-      "star",
+      "square",
+      "triangle",
       "plus",
       "cross",
-      "triangle"
+      "diamond",
+      "invertedTriangle",
+      "star",
+      "pentagon",
+      "hexagon",
+      "asterisk",
+      "circleOpen",
+      "squareOpen",
+      "triangleOpen",
+      "thinPlus",
+      "thinCross",
+      "diamondOpen",
+      "invertedTriangleOpen",
+      "starOpen",
+      "pentagonOpen",
+      "hexagonOpen"
     ],
     "linetype": [
       "solid",
@@ -203,7 +242,7 @@
       "fill": "NA",
       "shape": "next",
       "linetype": "blank",
-      "size": "first",
+      "size": 3,
       "alpha": 1
     },
     "addLine": {
@@ -236,7 +275,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 2,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -262,7 +301,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 2,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -288,7 +327,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 2,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -322,7 +361,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 2,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -346,9 +385,9 @@
       "points": {
         "color": "grey20",
         "fill": "NA",
-        "shape": "dot",
+        "shape": "circle",
         "linetype": "blank",
-        "size": 2,
+        "size": 3,
         "alpha": 1
       },
       "ribbons": {
@@ -374,7 +413,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 2,
+        "size": 3,
         "alpha": 1
       },
       "ribbons": {

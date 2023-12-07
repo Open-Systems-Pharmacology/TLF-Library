@@ -1,4 +1,3 @@
-
 .asPlotShape <- function(shapes) {
   ggplotShapes <- NULL
   for (shape in shapes) {
@@ -59,7 +58,7 @@
 #' @return Vector of aesthetics
 #' @keywords internal
 .getNextAestheticValues <- function(n, position = 0, map) {
-  # Get the map indices of aesthtic values to be output
+  # Get the map indices of aesthetic values to be output
   aesPositions <- seq(position + 1, position + n)
   if (n <= 0) {
     return(NULL)
@@ -88,7 +87,7 @@
     return(NULL)
   }
 
-  # Get the map indices of aesthtic values to be output
+  # Get the map indices of aesthetic values to be output
   aesPositions <- rep(aesPosition, n)
   return(map[aesPositions])
 }
@@ -118,7 +117,7 @@
 
 #' @title .getAesPropertyColumnNameFromLabels
 #' @description Get the column names of the variables mapped to aesthetic properties
-#' @param mapLabels List of mapped label names passed to `ggplot2::aes_string`
+#' @param mapLabels List of mapped label names passed to `ggplot2::aes`
 #' @param propertyNames Names of aesthetic property (e.g. `"color"`, `"shape"`...)
 #' @return A list of variable names
 #' @keywords internal
@@ -177,7 +176,7 @@
 #' `"points"`, `"lines"`, `"ribbons"` or `"errorbars"`
 #' @param propertyNames Names of aesthetic property (e.g. `"color"`, `"shape"`...)
 #' @param data A data.frame with labels mapped to properties and obtained from a `DataMapping` object
-#' @param mapLabels List of mapped label names passed to `ggplot2::aes_string`
+#' @param mapLabels List of mapped label names passed to `ggplot2::aes`
 #' @return A `ggplot` object
 #' @keywords internal
 #' @import ggplot2

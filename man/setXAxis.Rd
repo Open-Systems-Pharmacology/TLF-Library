@@ -7,7 +7,9 @@
 setXAxis(
   plotObject,
   scale = NULL,
-  limits = NULL,
+  valuesLimits = NULL,
+  axisLimits = NULL,
+  limits = lifecycle::deprecated(),
   ticks = NULL,
   ticklabels = NULL,
   minorTicks = NULL,
@@ -20,7 +22,11 @@ setXAxis(
 
 \item{scale}{Scale of axis. Use enum \code{Scaling} to access names of scales.}
 
-\item{limits}{Optional numeric values of axis limits}
+\item{valuesLimits}{Optional numeric values of values limits}
+
+\item{axisLimits}{Optional numeric values of axis limits}
+
+\item{limits}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}. Replaced by axisLimits argument.}
 
 \item{ticks}{Optional values or function for axis ticks}
 
@@ -48,7 +54,7 @@ setXAxis(myPlot, scale = Scaling$log)
 setXAxis(myPlot, ticks = c(1, 2, 3), ticklabels = parse(text = c("alpha", "beta", "gamma")))
 
 # Set x-axis limits
-setXAxis(myPlot, limits = c(1, 2.5))
+setXAxis(myPlot, axisLimits = c(1, 2.5))
 
 # Set x-axis fonts
 setXAxis(myPlot, font = Font$new(color = "blue", size = 14))

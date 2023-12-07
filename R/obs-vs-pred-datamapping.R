@@ -14,6 +14,8 @@ ObsVsPredDataMapping <- R6::R6Class(
     xmax = NULL,
     #' @field smoother regression function name
     smoother = NULL,
+    #' @field lloq mapping lloq lines
+    lloq = NULL,
 
     #' @description Create a new `ObsVsPredDataMapping` object
     #' @param x Name of x variable to map
@@ -22,6 +24,7 @@ ObsVsPredDataMapping <- R6::R6Class(
     #' @param xmax mapping of lower value of error bars around scatter points
     #' @param lines list of lines to plot
     #' @param smoother smoother function or parameter
+    #' @param lloq mapping lloq lines
     #' To map a loess smoother to the plot, use `smoother`="loess"
     #' @param ... parameters inherited from `XYGDataMapping`
     #' @return A new `ObsVsPredDataMapping` object
@@ -31,16 +34,19 @@ ObsVsPredDataMapping <- R6::R6Class(
                           xmax = NULL,
                           lines = DefaultDataMappingValues$obsVsPred,
                           smoother = NULL,
+                          lloq = NULL,
                           ...) {
       validateIsIncluded(smoother, c("lm", "loess"), nullAllowed = TRUE)
       validateIsString(xmin, nullAllowed = TRUE)
       validateIsString(xmax, nullAllowed = TRUE)
+      validateIsString(lloq, nullAllowed = TRUE)
       super$initialize(x = x, y = y, ...)
       self$lines <- lines
       self$smoother <- smoother
       # If no xmin/xmax defined, map to x to get emtpy errorbars
       self$xmin <- xmin %||% self$x
       self$xmax <- xmax %||% self$x
+      self$lloq <- lloq
     },
 
     #' @description Check that `data` variables include map variables
@@ -52,9 +58,13 @@ ObsVsPredDataMapping <- R6::R6Class(
       validateIsOfType(data, "data.frame")
       .validateMapping(self$xmin, data, nullAllowed = TRUE)
       .validateMapping(self$xmax, data, nullAllowed = TRUE)
+      .validateMapping(self$lloq, data, nullAllowed = TRUE)
       mapData <- super$checkMapData(data, metaData)
       mapData[, self$xmin] <- data[, self$xmin]
       mapData[, self$xmax] <- data[, self$xmax]
+      if (!isEmpty(self$lloq)) {
+        mapData[, self$lloq] <- data[, self$lloq]
+      }
       self$data <- mapData
       return(mapData)
     }

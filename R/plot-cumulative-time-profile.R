@@ -74,11 +74,11 @@ plotCumulativeTimeProfile <- function(data = NULL,
 
   plotObject <- plotObject + ggplot2::geom_area(
     data = mapData,
-    mapping = ggplot2::aes_string(
-      x = mapLabels$x,
-      y = mapLabels$y,
-      fill = mapLabels$fill,
-      color = mapLabels$color
+    mapping = ggplot2::aes(
+      x = .data[[mapLabels$x]],
+      y = .data[[mapLabels$y]],
+      fill = .data[[mapLabels$fill]],
+      color = .data[[mapLabels$color]]
     ),
     alpha = aestheticValues$alpha,
     size = aestheticValues$size,
@@ -96,18 +96,10 @@ plotCumulativeTimeProfile <- function(data = NULL,
     data = mapData,
     mapLabels = mapLabels
   )
-
-  # And optional color palette otherwise use colors from theme
-  if (!isEmpty(plotConfiguration$colorPalette)) {
-    try(suppressMessages(
-      plotObject <- plotObject +
-        ggplot2::scale_fill_brewer(
-          palette = plotConfiguration$colorPalette,
-          aesthetics = c("color", "fill")
-        )
-    ))
-  }
-
+  plotObject <- .applyColorPalette(
+    plotObject,
+    colorPalette = plotConfiguration$colorPalette
+  )
   plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }

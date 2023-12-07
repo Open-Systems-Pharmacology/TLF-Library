@@ -15,7 +15,10 @@ knitr::opts_chunk$set(
   comment = "#>",
   dpi = 300,
   fig.align = "center",
-  out.width = "100%"
+  out.width = "100%",
+  fig.height = 6,
+  fig.width = 8,
+  fig.showtext = TRUE
 )
 ```
 
@@ -60,7 +63,7 @@ myConfiguration <- PlotConfiguration$new(
 myConfiguration
 ```
 
-When a `ggplot` object is initialized using the `tlf` method **`initializePlot`**, a *plotConfiguration* field is added to the plot object. This field corresponds to a **PlotConfiguration** object and defining the properties of the initialied plot.
+When a `ggplot` object is initialized using the `tlf` method **`initializePlot`**, a *plotConfiguration* field is added to the plot object. This field corresponds to a **PlotConfiguration** object and defining the properties of the initialized plot.
 
 **PlotConfiguration** objects can also be directly passed to the method *initializePlot* as shown below:
 
@@ -184,7 +187,7 @@ plotConfigurationLabel2 <- PlotConfiguration$new(
   title = Label$new(text = "Title", size = 12, color = "deepskyblue4"),
   subtitle = Label$new(text = "Subtitle", size = 11, color = "steelblue"),
   xlabel = Label$new(text = "x label", size = 10, color = "dodgerblue2"),
-  ylabel = Label$new(text = "y label", size = 10, color = "dodgerblue2", angle = 45),
+  ylabel = Label$new(text = "y label", color = "dodgerblue2", angle = 0),
   caption = Label$new(text = "Caption", size = 8, color = "steelblue", align = Alignments$left)
 )
 
@@ -459,12 +462,12 @@ The methods *setXAxis* and *setYAxis* require the plot object, and the axis prop
 Using the previous example, *scatter1*: 
 
 ```{r set-x-axis, fig.width=7.5}
-setXAxis(scatter1, limits = c(0.5, 20), scale = Scaling$sqrt)
+setXAxis(scatter1, axisLimits = c(0.5, 20), scale = Scaling$sqrt)
 ```
 
 ```{r set-x-axis-ticks, fig.width=7.5}
 setXAxis(scatter1,
-  limits = c(0, 6 * pi),
+  axisLimits = c(0, 6 * pi),
   ticks = seq(0, 6 * pi, pi),
   ticklabels = TickLabelTransforms$pi,
   font = Font$new(color = "dodgerblue")
@@ -510,13 +513,13 @@ A shiny app has been created to tune `Theme` objects live and save them as json 
 With this app, it becomes quite easy to create one's own theme with a few clicks.
 To call for the shiny app, users only needed to run the function `runThemeMaker()`.
 
-Additionally, a few predifined themes are available :
+Additionally, a few predefined themes are available :
 
 ```{r list of json themes}
 list.files(system.file("themes", package = "tlf"))
 ```
 
-These predifined themes can be directly loaded and used through functions named `use<ThemeName>Theme()`.
+These predefined themes can be directly loaded and used through functions named `use<ThemeName>Theme()`.
 For instance, the function `useMatlabTheme()` will set default plot configurations for creating plots looking like Matlab figures.
 
 # 7. Exporting/Saving a plot

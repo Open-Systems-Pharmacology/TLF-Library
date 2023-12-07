@@ -20,6 +20,7 @@ Other PlotConfiguration classes:
 \code{\link{LegendConfiguration}},
 \code{\link{LineElement}},
 \code{\link{PKRatioPlotConfiguration}},
+\code{\link{PieChartPlotConfiguration}},
 \code{\link{PlotConfiguration}},
 \code{\link{PlotGridConfiguration}},
 \code{\link{QQPlotConfiguration}},
@@ -32,28 +33,66 @@ Other PlotConfiguration classes:
 }
 \concept{PlotConfiguration classes}
 \section{Super class}{
-\code{tlf::PlotConfiguration} -> \code{ObsVsPredPlotConfiguration}
+\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{ObsVsPredPlotConfiguration}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{defaultSymmetricAxes}}{Default option setting symmetric xAxis and/or yAxis limits when creating a \code{ObsVsPredPlotConfiguration} object}
+
+\item{\code{lloqDirection}}{Whether to draw LLOQ lines for x (vertical), y (horizontal) or x and y (both).}
+
+\item{\code{foldLinesLegend}}{Whether to draw fold lines in legend. default to FALSE.}
+
+\item{\code{foldLinesLegendDiagonal}}{Whether to draw diagonal lines in legend for fold lines. default to FALSE.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{foldLineslegendType}}{translation of \code{foldLinesLegendDiagonal} in geom type.}
 }
 \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
+\item \href{#method-ObsVsPredPlotConfiguration-new}{\code{ObsVsPredPlotConfiguration$new()}}
 \item \href{#method-ObsVsPredPlotConfiguration-clone}{\code{ObsVsPredPlotConfiguration$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-<li><span class="pkg-link" data-pkg="tlf" data-topic="PlotConfiguration" data-id="initialize"><a href='../../tlf/html/PlotConfiguration.html#method-PlotConfiguration-initialize'><code>tlf::PlotConfiguration$initialize()</code></a></span></li>
-</ul>
-</details>
-}}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ObsVsPredPlotConfiguration-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ObsVsPredPlotConfiguration-new}{}}}
+\subsection{Method \code{new()}}{
+Create a new \code{ObsVsPredPlotConfiguration} object
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ObsVsPredPlotConfiguration$new(
+  lloqDirection = "vertical",
+  foldLinesLegend = FALSE,
+  foldLinesLegendDiagonal = FALSE,
+  ...
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{lloqDirection}}{Whether to draw LLOQ lines for x (vertical), y (horizontal) or x and y (both).}
+
+\item{\code{foldLinesLegend}}{Whether to draw fold lines in legend. default to FALSE.}
+
+\item{\code{foldLinesLegendDiagonal}}{Whether to draw diagonal lines in legend for fold lines. default to FALSE.}
+
+\item{\code{...}}{parameters inherited from \code{PlotConfiguration}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{CumulativeTimeProfilePlotConfiguration} object
+}
+}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ObsVsPredPlotConfiguration-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-ObsVsPredPlotConfiguration-clone}{}}}

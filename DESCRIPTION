@@ -34,11 +34,15 @@ Imports:
     R6,
     jsonlite,
     ospsuite.utils (>= 1.4.0),
-    patchwork
+    patchwork,
+    ggtext,
+    stringr,
+    rlang,
+    lifecycle
 Depends: 
     R (>= 3.6)
 Encoding: UTF-8
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Suggests:
     cowplot,
@@ -46,6 +50,9 @@ Suggests:
     rmarkdown,
     scales,
     shiny,
+    showtext,
+    sysfonts,
+    svglite,
     testthat (>= 3.0.3),
     vdiffr (>= 1.0.0)
 VignetteBuilder: knitr
@@ -83,6 +90,7 @@ Collate:
     'plot-histogram.R'
     'plot-obs-vs-pred.R'
     'plot-observed-time-profile.R'
+    'plot-piechart.R'
     'plot-pkratio.R'
     'plot-qq.R'
     'plot-res-vs-pred.R'
@@ -108,9 +116,11 @@ Collate:
     'utilities-axis.R'
     'utilities-background.R'
     'utilities-export.R'
+    'utilities-ggplot.R'
     'utilities-label.R'
     'utilities-legend.R'
     'utilities-mapping.R'
     'utilities-molecule-plots.R'
     'utilities-theme.R'
     'utils.R'
+    'zzz.R'

@@ -1,3 +1,16 @@
+# tlf (development version)
+
+- Lower Limit Of Quantification (LLOQ) can be added on time-profile plots and obs-vs-pred plots.
+- The `xLimits` and `yLimits` argument in `PlotConfiguration` are renamed `xAxisLimits` and `yAxisLimits`.
+  This will crop the axis limits but keep all the data to generate the plot (see `ggplot2::coord_cartesian`).
+- New `xValuesLimits` and `yValuesLimits` argument in `PlotConfiguration` to filter the **data** used to generate the plot. (see `ggplot2::scale_continuous_x`).
+- Groups names are now wraped on several lines if their number of characters is longer than 60.
+- Plots and plotGrids labels (titles, subtitles, caption and axis labels) are now automatically fitting plot's width and wraped on several lines if too long.
+- Plot labels texts are now sanitized from any unsupported characters.
+- Plot labels now have margin around them. This can be configured in  `Label`
+objects.
+  
+
 # tlf 1.5.0
 
 ## New features
@@ -15,9 +28,12 @@
 
 * New helpers for creating symmetric plots are available (#350)
 
+
 ## Minor improvements and bug fixes   
 
 * Minor ticks can be displayed
+
+* Legend entries for fold distance lines can be plotted in `plotObsVsPred()`(#359)
 
 # tlf 1.4.87
 
@@ -25,7 +41,7 @@
 
 * New helper functions and parameters to facilitate usage of plot functions (#301):
 
-  - Function `getLinesFromFoldDistance` tanslates fold distance values into `lines` argument for dataMapping objects.
+  - Function `getLinesFromFoldDistance` translates fold distance values into `lines` argument for dataMapping objects.
   - Functions `plotDDIRatio`, `plotPKRatio`, `plotObsVsPred`, `plotResVsPred` and `plotResVsTime` include optional parameters such as `foldDistance`, `deltaGuest` or `smoother`.
 
 * New helper enumerated lists: 

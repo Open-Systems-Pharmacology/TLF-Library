@@ -1,6 +1,6 @@
 #' @title PlotConfiguration
 #' @description R6 class defining the configuration of a `ggplot` object
-#' @field export R6 class `ExportConfiguration` defining properties for saving/exporting plota
+#' @field export R6 class `ExportConfiguration` defining properties for saving/exporting plot
 #' @field defaultXScale Default xAxis scale value when creating a `PlotConfiguration` object
 #' @field defaultYScale Default yAxis scale value when creating a `PlotConfiguration` object
 #' @field defaultExpand Default expand value when creating a `PlotConfiguration` object
@@ -32,17 +32,21 @@ PlotConfiguration <- R6::R6Class(
     #' Use Enum `LegendPositions` to get a list of available to legend positions.
     #' @param xAxis `XAxisConfiguration` object defining x-axis properties
     #' @param xScale name of X-axis scale. Use enum `Scaling` to access predefined scales.
-    #' @param xLimits numeric vector of length 2 defining x-axis limits
+    #' @param xValuesLimits numeric vector of length 2 defining x values limits
+    #' @param xAxisLimits numeric vector of length 2 defining x-axis limits
+    #' @param xLimits `r lifecycle::badge("deprecated")`. Replaced by xAxisLimits argument.
     #' @param yAxis `YAxisConfiguration` object defining y-axis properties
     #' @param yScale name of y-axis scale. Use enum `Scaling` to access predefined scales.
-    #' @param yLimits numeric vector of length 2 defining y-axis limits
+    #' @param yValuesLimits numeric vector of length 2 defining x values limits
+    #' @param yAxisLimits numeric vector of length 2 defining x-axis limits
+    #' @param yLimits `r lifecycle::badge("deprecated")`. Replaced by yAxisLimits argument.
     #' @param background `BackgroundConfiguration` object defining background properties
     #' @param plotArea `BackgroundElement` object defining properties of plot area
     #' @param panelArea `BackgroundElement` object defining properties of panel area
     #' @param xGrid `LineElement` object defining properties of x-grid background
     #' @param yGrid `LineElement` object defining properties of y-grid background
     #' @param watermark character or `Label` object defining watermark
-    #' @param export R6 class `ExportConfiguration` defining properties for saving/exporting plota
+    #' @param export R6 class `ExportConfiguration` defining properties for saving/exporting plot
     #' @param name character defining the name of the file to be saved (without extension)
     #' @param format character defining the format of the file to be saved.
     #' @param width numeric values defining the width in `units` of the plot dimensions after saving
@@ -70,11 +74,15 @@ PlotConfiguration <- R6::R6Class(
                           # X-Axis configuration
                           xAxis = NULL,
                           xScale = NULL,
-                          xLimits = NULL,
+                          xValuesLimits = NULL,
+                          xAxisLimits = NULL,
+                          xLimits = lifecycle::deprecated(),
                           # Y-Axis configuration
                           yAxis = NULL,
                           yScale = NULL,
-                          yLimits = NULL,
+                          yValuesLimits = NULL,
+                          yAxisLimits = NULL,
+                          yLimits = lifecycle::deprecated(),
                           # Background configuration
                           background = NULL,
                           plotArea = NULL,
@@ -99,11 +107,24 @@ PlotConfiguration <- R6::R6Class(
                           data = NULL,
                           metaData = NULL,
                           dataMapping = NULL) {
+      if (lifecycle::is_present(xLimits)) {
+        lifecycle::deprecate_warn("1.5.0", "PlotConfiguration(xLimits)", "PlotConfiguration(xAxisLimits)")
+        xAxisLimits <- yLimits
+      }
+
+      if (lifecycle::is_present(yLimits)) {
+        lifecycle::deprecate_warn("1.5.0", "PlotConfiguration(yLimits)", "PlotConfiguration(yAxisLimits)")
+        yAxisLimits <- yLimits
+      }
+
       # Label configuration
       # validation of the input is done within the creation of the object
       private$.labels <- LabelConfiguration$new(
-        title = title, subtitle = subtitle,
-        xlabel = xlabel, ylabel = ylabel, caption = caption
+        title = title,
+        subtitle = subtitle,
+        xlabel = xlabel,
+        ylabel = ylabel,
+        caption = caption
       )
 
       # Smart configuration if xlabel and ylabel
@@ -137,7 +158,8 @@ PlotConfiguration <- R6::R6Class(
         scale = self$defaultXScale,
         expand = self$defaultExpand
       )
-      private$.xAxis$limits <- xLimits %||% private$.xAxis$limits
+      private$.xAxis$valuesLimits <- xValuesLimits %||% private$.xAxis$valuesLimits
+      private$.xAxis$axisLimits <- xAxisLimits %||% private$.xAxis$axisLimits
       private$.xAxis$scale <- xScale %||% private$.xAxis$scale
 
       # Y-Axis configuration, overwrite some properties only if they are defined
@@ -146,7 +168,8 @@ PlotConfiguration <- R6::R6Class(
         scale = self$defaultYScale,
         expand = self$defaultExpand
       )
-      private$.yAxis$limits <- yLimits %||% private$.yAxis$limits
+      private$.yAxis$valuesLimits <- yValuesLimits %||% private$.yAxis$limits
+      private$.yAxis$axisLimits <- yAxisLimits %||% private$.yAxis$axisLimits
       private$.yAxis$scale <- yScale %||% private$.yAxis$scale
 
       # Background configuration, overwrite some properties only if they are defined

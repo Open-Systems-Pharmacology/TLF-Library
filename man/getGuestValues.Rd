@@ -12,7 +12,7 @@ getGuestValues(x, delta = 1, residualsVsObserved = FALSE)
 \item{delta}{Numeric value parameter of Guest function}
 
 \item{residualsVsObserved}{Logical value defining
-if limits are claculated as residuals vs observed, instead of predicted vs observed.}
+if limits are calculated as residuals vs observed, instead of predicted vs observed.}
 }
 \value{
 A data.frame with \code{x}, \code{ymin} and \code{ymax} defining Guest et al. limits

@@ -5,7 +5,7 @@
 \alias{DataMappings}
 \title{DataMappings}
 \format{
-An object of class \code{list} of length 17.
+An object of class \code{list} of length 18.
 }
 \usage{
 DataMappings
@@ -21,7 +21,9 @@ Other enum helpers:
 \code{\link{Alignments}},
 \code{\link{AtomPlots}},
 \code{\link{ColorMaps}},
+\code{\link{ColorPalettes}},
 \code{\link{DefaultDataMappingValues}},
+\code{\link{Directions}},
 \code{\link{ExportFormats}},
 \code{\link{ExportUnits}},
 \code{\link{FontFaces}},

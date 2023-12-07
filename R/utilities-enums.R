@@ -168,7 +168,6 @@ TagPositions <- enum(
   )
 )
 
-
 #' @title ColorMaps
 #'
 #' @description
@@ -279,6 +278,33 @@ AestheticProperties <- enum(c(
 #' @export
 #' @import ospsuite.utils
 #' @family enum helpers
+#' @examples
+#' # Use ggplot2 to plot and label Linetypes
+#' linesData <- data.frame(
+#'   x = 0,
+#'   y = seq_along(Linetypes),
+#'   linetype = factor(names(Linetypes), levels = names(Linetypes))
+#' )
+#'
+#' ggplot2::ggplot(data = linesData) +
+#'   ggplot2::theme_void() +
+#'   ggplot2::geom_hline(ggplot2::aes(yintercept = y, linetype = linetype)) +
+#'   # Add linetype names from enum below the displayed linetype
+#'   ggplot2::geom_text(ggplot2::aes(x = x, y = y, label = linetype), nudge_y = -0.2, size = 4) +
+#'   # Use scale to display the actual linetype
+#'   ggplot2::scale_linetype_manual(values = as.character(unlist(Linetypes))) +
+#'   # Remove the legend as the linetype name is labelled below the linetype
+#'   ggplot2::guides(linetype = "none")
+#'
+#' # Perform a line plot with blue long dashes as linetype
+#' addLine(
+#'   x = 1:10,
+#'   y = rlnorm(10),
+#'   linetype = Linetypes$longdash,
+#'   color = "blue",
+#'   size = 1
+#' )
+#'
 Linetypes <- enum(c(
   "solid",
   "longdash",
@@ -290,50 +316,84 @@ Linetypes <- enum(c(
 ))
 
 #' @title Shapes
-#' @description List of some `ggplot2` shapes
+#' @description List of some `ggplot2` shapes.
+#' The shapes from this enum/list are unicode characters
+#' corresponding to their appropriate shapes.
+#' Note that user-defined characters are also accepted by `geomTLFPoint()`
+#'
 #' @export
 #' @import ospsuite.utils
 #' @family enum helpers
+#' @examples
+#' # Use ggplot2 to plot and label shapes
+#' shapesData <- data.frame(
+#'   x = (seq_along(Shapes) - 1) %% 6,
+#'   y = floor((seq_along(Shapes) - 1) / 6),
+#'   shape = factor(names(Shapes), levels = names(Shapes))
+#' )
+#' ggplot2::ggplot(data = shapesData, ggplot2::aes(x, y)) +
+#'   ggplot2::theme_void() +
+#'   # Define size and color of shapes
+#'   geomTLFPoint(ggplot2::aes(shape = shape), size = 8, color = "red") +
+#'   # Add shape names from enum below the displayed shape
+#'   ggplot2::geom_text(ggplot2::aes(label = shape), nudge_y = -0.3, size = 3) +
+#'   # Use scale to display the actual shape
+#'   ggplot2::scale_shape_manual(values = as.character(unlist(Shapes))) +
+#'   # Remove the legend as the shape name is labelled below the shape
+#'   ggplot2::guides(shape = "none")
+#'
+#' # Perform a scatter plot with blue pentagons as shape
+#' addScatter(
+#'   x = 1:10,
+#'   y = rlnorm(10),
+#'   shape = Shapes$pentagon,
+#'   color = "blue",
+#'   size = 3
+#' )
+#'
 Shapes <- list(
-  # Regular shapes
-  "circle" = "circle",
-  "square" = "square",
-  "triangle" = "triangle",
-  "triangleDown" = "triangle down filled",
-  "cross" = "cross",
-  "plus" = "plus",
-  "asterisk" = "asterisk",
-  "hollowCircle" = "circle open",
-  "hollowSquare" = "square open",
-  "hollowDiamond" = "diamond open",
-  "hollowTriangle" = "triangle open",
-  "hollowTriangleDown" = "triangle down open",
-  "diamond" = "diamond",
-  "dot" = "bullet",
-  # Shapes translated from unicode characters
-  "pentagram" = "\u2605",
-  "hollowPentagram" = "\u2606",
-  "cardsDiamond" = "\u2666",
-  "cardsHeart" = "\u2665",
-  "cardsSpade" = "\u2660",
-  "cardsClover" = "\u2663",
-  "cardsHollowDiamond" = "\u2662",
-  "cardsHollowHeart" = "\u2661",
-  "cardsHollowSpade" = "\u2664",
-  "cardsHollowClover" = "\u2667",
-  "skull" = "\u2620",
-  "hazard" = "\u2622",
+  # Usual symbols
+  "circle" = "\u25cf",
+  "diamond" = "\u25c6",
+  "triangle" = "\u25b2",
+  "square" = "\u25a0",
+  "invertedTriangle" = "\u25bc",
+  "cross" = "\ud83d\udfad",
+  "thinCross" = "\ud83d\udfa9",
+  "plus" = "\ud83d\udfa6",
+  "thinPlus" = "\ud83d\udfa2",
+  "asterisk" = "\ud83d\udfbc",
+  "star" = "\ud83d\udfca",
+  "pentagon" = "\u2b1f",
+  "hexagon" = "\u2b22",
+  # open shapes
+  "circleOpen" = "\ud83d\udf85",
+  "diamondOpen" = "\u25c7",
+  "triangleOpen" = "\u25b3",
+  "squareOpen" = "\ud83d\udf90",
+  "invertedTriangleOpen" = "\u25bd",
+  "starOpen" = "\u2606",
+  "pentagonOpen" = "\u2b20",
+  "hexagonOpen" = "\u2b21",
+  # Emojis
   "male" = "\u2642",
   "female" = "\u2640",
-  "sun" = "\u2600",
-  "cloud" = "\u2601",
-  "smiley" = "\u263a",
-  "musicKey" = "\u266a",
-  "hollowFlag" = "\u263a",
-  "arrowLeft" = "\u2190",
-  "arrowRight" = "\u2192",
-  "arrowUp" = "\u2191",
-  "arrowDown" = "\u2193",
+  "man" = "\ud83d\udeb9",
+  "woman" = "\ud83d\udeba",
+  "baby" = "\ud83d\udebc",
+  "mouse" = "\ud83d\udc01",
+  "cat" = "\ud83d\udc08",
+  "rat" = "\ud83d\udc00",
+  "rabbit" = "\ud83d\udc07",
+  "dog" = "\ud83d\udc15",
+  "pig" = "\ud83d\udc16",
+  "sheep" = "\ud83d\udc11",
+  "cow" = "\ud83d\udc04",
+  "monkey" = "\ud83d\udc12",
+  "human" = "\ud83d\udeb6",
+  "pill" = "\ud83d\udc8a",
+  "syringe" = "\ud83d\udc89",
+  "hazard" = "\u2622",
   # No shape displayed
   "blank" = " "
 )
@@ -413,3 +473,34 @@ ExportFormats <- enum(c("png", "pdf", "eps", "ps", "tex", "jpeg", "tiff", "bmp",
 #' List of all available tick label transformation names
 #' @family enum helpers
 TickLabelTransforms <- enum(c("none", "default", "identity", "log", "ln", "sqrt", "greek", "pi", "percentiles"))
+
+#' @title Directions
+#' @description Enum of plotting directions for errorbars and lloq lines.
+#' @export
+#' @import ospsuite.utils
+#' @family enum helpers
+Directions <- enum(c("horizontal", "vertical", "both"))
+
+#' @title .ViridisPalettes
+#' @description Enum of viridis color palettes
+#' @import ospsuite.utils
+#' @keywords internal
+.ViridisPalettes <- enum(c("magma", "plasma", "inferno", "cividis", "mako", "rocket", "turbo"))
+
+#' @title ColorPalettes
+#' @description Enum of available color palettes
+#' First color palettes come from [`viridis`](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)
+#' Remaining color palettes are from [`RColorBrewer`](https://r-graph-gallery.com/38-rcolorbrewers-palettes.html)
+#' @export
+#' @import ospsuite.utils
+#' @family enum helpers
+ColorPalettes <- enum(c(
+  # Viridis color palettes
+  as.character(.ViridisPalettes),
+  # From row.names(RColorBrewer::brewer.pal.info)
+  "BrBG", "PiYG", "PRGn", "PuOr", "RdBu", "RdGy", "RdYlBu", "RdYlGn",
+  "Spectral", "Accent", "Dark2", "Paired", "Pastel1", "Pastel2",
+  "Set1", "Set2", "Set3",
+  "Blues", "BuGn", "BuPu", "GnBu", "Greens", "Greys", "Oranges", "OrRd", "PuBu",
+  "PuBuGn", "PuRd", "Purples", "RdPu", "Reds", "YlGn", "YlGnBu", "YlOrBr", "YlOrRd"
+))

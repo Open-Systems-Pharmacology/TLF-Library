@@ -16,8 +16,9 @@ knitr::opts_chunk$set(
   dpi = 300,
   fig.align = "center",
   out.width = "100%",
-  fig.height = 5,
-  fig.width = 7.5
+  fig.height = 6,
+  fig.width = 8,
+  fig.showtext = TRUE
 )
 ```
 
@@ -31,7 +32,7 @@ The following vignette aims at documenting and illustrating workflows for produc
 
 This vignette focuses boxplot examples. Detailed documentation on typical `tlf` workflow, use of `AgregationSummary`, `DataMapping`, `PlotConfiguration` and `Theme` can be found in `vignette("tlf-workflow")`.
 
-# 2. Definition of the boxplot fonctions and classes
+# 2. Definition of the boxplot functions and classes
 
 ## 2.1. The `plotBoxWhisker` function
 
@@ -217,7 +218,6 @@ In these cases, it is easy to overwrite the default functions by specifying eith
 In the following examples, the boxplot will use the mean for the middle line and mean +/- 1.96 standard deviation for the whiskers:
 
 ```{r aggregation-functions-1, fig.cap="Boxplot mapping Country as x, Sex as fill and assuming normal distribution"}
-
 normMap <- BoxWhiskerDataMapping$new(
   x = "Country",
   y = "Age",
@@ -238,7 +238,6 @@ normBoxplot
 In this example, the boxplot use also mean +/- standard deviation for the box edges
 
 ```{r aggregation-functions-2, fig.cap="Boxplot mapping Country as x, Sex as fill and assuming normal distribution"}
-
 normMap2 <- BoxWhiskerDataMapping$new(
   x = "Country",
   y = "Age",
@@ -269,7 +268,6 @@ However, these default can also be overridden.
 In the following example, outliers will be flagged when values are out of the 10th-90th percentiles, while whiskers will go until these same percentiles:
 
 ```{r outlier-function, fig.cap="Boxplot mapping Country as x, Sex as fill and assuming normal distribution"}
-
 outlierMap <- BoxWhiskerDataMapping$new(
   x = "Country",
   y = "Age",

@@ -102,57 +102,77 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
   validateIsIncluded(variableList, colnames(data))
 
   captions <- NULL
-  for(variableName in variableList){
-    if(is.null(captions)){
+  for (variableName in variableList) {
+    if (is.null(captions)) {
       captions <- .asLegendCaptionSubset(
         data[, variableName],
         metaData[[variableName]]$unit
-        )
-        next
+      )
+      next
     }
     captions <- paste(
-      captions, 
+      captions,
       .asLegendCaptionSubset(
         data[, variableName],
         metaData[[variableName]]$unit
-        ),
-        sep = sep
+      ),
+      sep = sep
     )
-    }
-  
+  }
+
   if (isEmpty(captions)) {
     return(factor(""))
   }
-  return(as.factor(captions))
+
+  return(captions)
 }
 
 #' @title .asLegendCaptionSubset
-#' @param labels 
+#' @param labels #TODO
 #' @param unit A character added as unit to label
 #' @description
 #' Creates default legend captions subset
 #' @keywords internal
 .asLegendCaptionSubset <- function(labels, unit = NULL) {
+
   # Keep ordering of labels as is if factor
-  captionLevels <- sort(unique(labels))
-  if(isOfType(labels, "factor")){
+  if (isOfType(labels, "factor")) {
     captionLevels <- levels(labels)
+  } else {
+    captionLevels <- sort(unique(labels))
   }
+
+  # If group name is longer than charactersWidth, then it will be wrapped on
+  # several lines of tlfEnv$maxCharacterWidth length and cut on non-word character.
+  ## Wrap names
+  labels <- paste(
+    stringr::str_wrap(labels,
+                      width = tlfEnv$maxCharacterWidth,
+                      whitespace_only = FALSE),
+    sep = "\n")
+  ## Wrap factor levels
+  captionLevels <- paste(
+    stringr::str_wrap(captionLevels,
+                      width = tlfEnv$maxCharacterWidth,
+                      whitespace_only = FALSE),
+    sep = "\n")
+
   captionSubset <- factor(
     getLabelWithUnit(labels, unit = unit),
     levels = getLabelWithUnit(captionLevels, unit = unit)
   )
-  
+
   return(captionSubset)
 }
 
 #' @title .getAesStringMapping
 #' @param dataMapping DataMapping class or subclass object
 #' @description
-#' Get the `dataMapping` elements and convert them into
+#' Previously: Get the `dataMapping` elements and convert them into
 #' character string usable by ggplot mapping function `aes_string`.
 #' The conversion fixes any issue of special characters by wrapping the string by ````
-#' if not already used.
+#' if not already used. Does not do this anymore because `aes()` and `.data` pronouns
+#' are used instead.
 #'
 #' `dataMapping` unmapped aesthetic elements (e.g. `color`) are associated to
 #' the dummy aesthetic variable `"defaultAes"` which allows further modification of the plot aesthetics.
@@ -165,7 +185,7 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
 #' @keywords internal
 .getAesStringMapping <- function(dataMapping) {
   # Define list of mappings to check
-  geomMappings <- c("x", "y", "xmin", "xmax", "ymin", "ymax", "lower", "middle", "upper")
+  geomMappings <- c("x", "y", "xmin", "xmax", "ymin", "ymax", "lower", "middle", "upper", "lloq")
   groupMappings <- names(LegendTypes)
 
   # Initialize Labels
@@ -178,17 +198,13 @@ getDefaultCaptions <- function(data, metaData = NULL, variableList = colnames(da
 
   for (geomName in geomMappings) {
     if (!is.null(dataMapping[[geomName]])) {
-      if (length(grep(pattern = "`", x = dataMapping[[geomName]])) == 0) {
-        .dataMappingLabels[[geomName]] <- paste0("`", dataMapping[[geomName]], "`")
-      }
+      .dataMappingLabels[[geomName]] <- dataMapping[[geomName]]
     }
   }
 
   for (groupName in groupMappings) {
     if (!is.null(dataMapping$groupMapping[[groupName]]$group)) {
-      if (length(grep(pattern = "`", x = dataMapping$groupMapping[[groupName]]$label)) == 0) {
-        .dataMappingLabels[[groupName]] <- paste0("`", dataMapping$groupMapping[[groupName]]$label, "`")
-      }
+      .dataMappingLabels[[groupName]] <- dataMapping$groupMapping[[groupName]]$label
     }
   }
   return(.dataMappingLabels)
@@ -380,9 +396,9 @@ getLinesFromFoldDistance <- function(foldDistance) {
   )
 
   aggregatedData <- cbind.data.frame(xData,
-    y = medianData$x,
-    ymin = lowPercData$x,
-    ymax = highPercData$x
+                                     y = medianData$x,
+                                     ymin = lowPercData$x,
+                                     ymax = highPercData$x
   )
 
   return(aggregatedData)

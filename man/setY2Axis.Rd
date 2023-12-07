@@ -7,7 +7,9 @@
 setY2Axis(
   plotObject,
   scale = NULL,
-  limits = NULL,
+  valuesLimits = NULL,
+  axisLimits = NULL,
+  limits = lifecycle::deprecated(),
   ticks = NULL,
   ticklabels = NULL,
   minorTicks = NULL,
@@ -20,7 +22,11 @@ setY2Axis(
 
 \item{scale}{Scale of axis. Use enum \code{Scaling} to access names of scales.}
 
-\item{limits}{Optional numeric values of axis limits}
+\item{valuesLimits}{Optional numeric values of values limits}
+
+\item{axisLimits}{Optional numeric values of axis limits}
+
+\item{limits}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}. Replaced by axisLimits argument.}
 
 \item{ticks}{Optional values or function for axis ticks}
 

@@ -15,7 +15,10 @@ knitr::opts_chunk$set(
   comment = "#>",
   dpi = 300,
   fig.align = "center",
-  out.width = "100%"
+  out.width = "100%",
+  fig.height = 6,
+  fig.width = 8,
+  fig.showtext = TRUE
 )
 ```
 
@@ -115,7 +118,7 @@ plotPKRatio(data = pkRatioData[, c("Age", "Ratio")])
 ## 2.4. Examples with `dataMapping`
 
 For PK ratio, the `dataMapping` class `PKRatioDataMapping` includes 4 fields: `x`, `y`, `groupMapping` and `lines`.
-`x` and `y` define which variables from the data will be plotted in X- and Y-axes, `groupMapping` is a class mapping which aesthtic property will split which variables, and `lines` defines horizontal lines performed in PK ratio plots.
+`x` and `y` define which variables from the data will be plotted in X- and Y-axes, `groupMapping` is a class mapping which aesthetic property will split which variables, and `lines` defines horizontal lines performed in PK ratio plots.
 
 ### 2.4.1 `groupMapping`
 
@@ -171,7 +174,7 @@ plotPKRatio(
 )
 ```
 
-The last examples uses another feature available in the `groupMapping` class. The class can be initilized using a `data.frame` where the last column of the data.frame will be used to split the data. In the following example, the data.frame is the following:
+The last examples uses another feature available in the `groupMapping` class. The class can be initialized using a `data.frame` where the last column of the data.frame will be used to split the data. In the following example, the data.frame is the following:
 
 ```{r, echo=FALSE, results='asis'}
 groupDataFrame <- data.frame(

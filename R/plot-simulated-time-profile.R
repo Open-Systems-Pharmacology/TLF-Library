@@ -39,9 +39,9 @@ plotSimulatedTimeProfile <- function(data = NULL,
     data, metaData, dataMapping
   )
   plotObject <- .setPlotObject(plotObject, plotConfiguration)
-  
+
   requireDualAxis <- dataMapping$requireDualAxis(data)
-  
+
   if (!requireDualAxis) {
     plotObject <- .plotSimulatedTimeProfileCore(
       data = data,
@@ -52,7 +52,7 @@ plotSimulatedTimeProfile <- function(data = NULL,
     )
     return(plotObject)
   }
-  
+
   leftPlotObject <- .plotSimulatedTimeProfileCore(
     data = dataMapping$getLeftAxis(data),
     metaData = metaData,
@@ -77,13 +77,13 @@ plotSimulatedTimeProfile <- function(data = NULL,
 #' @return A `ggplot` object
 #' @keywords internal
 .plotSimulatedTimeProfileCore <- function(data = NULL,
-                                         metaData = NULL,
-                                         dataMapping = NULL,
-                                         plotConfiguration = NULL,
-                                         plotObject = NULL) {
+                                          metaData = NULL,
+                                          dataMapping = NULL,
+                                          plotConfiguration = NULL,
+                                          plotObject = NULL) {
   mapData <- dataMapping$checkMapData(data)
   mapLabels <- .getAesStringMapping(dataMapping)
-  
+
   #----- Build layers of molecule plot -----
   # 1- Ribbons if available
   if (!any(isEmpty(dataMapping$ymin), isEmpty(dataMapping$ymax))) {
@@ -96,19 +96,19 @@ plotSimulatedTimeProfile <- function(data = NULL,
     plotObject <- plotObject +
       ggplot2::geom_ribbon(
         data = mapData,
-        mapping = ggplot2::aes_string(
-          x = mapLabels$x,
-          ymin = mapLabels$ymin,
-          ymax = mapLabels$ymax,
-          fill = mapLabels$fill,
-          group = mapLabels$linetype
+        mapping = ggplot2::aes(
+          x = .data[[mapLabels$x]],
+          ymin = .data[[mapLabels$ymin]],
+          ymax = .data[[mapLabels$ymax]],
+          fill = .data[[mapLabels$fill]],
+          group = .data[[mapLabels$linetype]]
         ),
         alpha = aestheticValues$alpha,
         na.rm = TRUE,
         show.legend = TRUE
       )
   }
-  
+
   # 2- Lines
   if (!isEmpty(dataMapping$y)) {
     aestheticValues <- .getAestheticValuesFromConfiguration(
@@ -120,11 +120,11 @@ plotSimulatedTimeProfile <- function(data = NULL,
     plotObject <- plotObject +
       ggplot2::geom_path(
         data = mapData,
-        mapping = ggplot2::aes_string(
-          x = mapLabels$x,
-          y = mapLabels$y,
-          color = mapLabels$color,
-          linetype = mapLabels$linetype
+        mapping = ggplot2::aes(
+          x = .data[[mapLabels$x]],
+          y = .data[[mapLabels$y]],
+          color = .data[[mapLabels$color]],
+          linetype = .data[[mapLabels$linetype]]
         ),
         size = aestheticValues$size,
         alpha = aestheticValues$alpha,
@@ -132,7 +132,7 @@ plotSimulatedTimeProfile <- function(data = NULL,
         show.legend = TRUE,
       )
   }
-  
+
   #----- Update properties using ggplot2::scale functions -----
   plotObject <- .updateAesProperties(
     plotObject,

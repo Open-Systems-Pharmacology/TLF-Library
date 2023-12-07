@@ -15,7 +15,10 @@ knitr::opts_chunk$set(
   comment = "#>",
   dpi = 300,
   fig.align = "center",
-  out.width = "100%"
+  out.width = "100%",
+  fig.height = 6,
+  fig.width = 8,
+  fig.showtext = TRUE
 )
 ```
 
@@ -183,9 +186,9 @@ addScatter(
   x = cosData$time,
   y = cosData$cos,
   color = "firebrick",
-  shape = Shapes$cardsHeart,
+  shape = Shapes$triangleOpen,
   size = 3,
-  caption = "heart"
+  caption = "open triangle"
 )
 ```
 
@@ -197,9 +200,9 @@ scatterPlot <- addScatter(
   x = cosData$time,
   y = cosData$cos,
   color = "firebrick",
-  shape = Shapes$cardsHeart,
+  shape = Shapes$triangleOpen,
   size = 3,
-  caption = "heart",
+  caption = "open triangle",
   plotConfiguration = overwriteConfiguration
 )
 
@@ -209,9 +212,9 @@ addScatter(
   x = cosData$time,
   y = cosData$cos + 2,
   color = "black",
-  shape = Shapes$cardsSpade,
+  shape = Shapes$invertedTriangle,
   size = 3,
-  caption = "spade",
+  caption = "inverted triangle",
   plotObject = scatterPlot
 )
 ```
@@ -239,7 +242,7 @@ addLine(
 )
 ```
 
-Since line plots can inlcude horizontal and vertical lines, `addLine` has the possibility of using *x* or *y* input for x/y-intercepts.
+Since line plots can include horizontal and vertical lines, `addLine` has the possibility of using *x* or *y* input for x/y-intercepts.
 
 ```{r addLine horizontal lines, eval=FALSE}
 addLine(
@@ -262,9 +265,9 @@ scatterPlot <- addScatter(
   x = cosData$time,
   y = cosData$cos,
   color = "firebrick",
-  shape = Shapes$cardsHeart,
+  shape = Shapes$diamond,
   size = 3,
-  caption = "heart",
+  caption = "diamond",
   plotConfiguration = overwriteConfiguration
 )
 
@@ -360,7 +363,7 @@ addErrorbar(
 ```
 
 Note that optional inputs for `addErrorbar` define the aesthetic of the bars only (and not how to link the bars).
-Thus, two layers are necessary when creating a plot that inlcuded both data and their error bars. 
+Thus, two layers are necessary when creating a plot that included both data and their error bars. 
 
 ```{r addErrorbar and Scatter}
 errorPlot <- addErrorbar(
@@ -379,9 +382,9 @@ addScatter(
   x = cosData$time,
   y = cosData$cos,
   color = "firebrick",
-  shape = Shapes$cardsHeart,
+  shape = Shapes$diamond,
   size = 3,
-  caption = "heart",
+  caption = "diamond",
   plotObject = errorPlot
 )
 ```

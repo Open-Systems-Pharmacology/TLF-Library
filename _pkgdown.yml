@@ -6,6 +6,7 @@ template:
 development:
   mode: devel
 
+
 reference:
 - title: "Atom Plots"
   desc: "Functions for creating base plots"
@@ -30,6 +31,7 @@ reference:
   - matches("setWatermark")
   - starts_with("update")
   - starts_with("get")
+  - matches("geomTLFPoint")
 - title: "PlotConfiguration Classes"
   desc: "Classes defining plot properties"
   contents:
@@ -75,21 +77,30 @@ reference:
   contents:
   - starts_with("export")
 
-articles:
+navbar:
+  components:
+    articles:
+      text: Articles
+      menu:
+      - text: "Primary Plots"
+      - text: Atom Plots
+        href: articles/atom-plots.html
+      - text: Box-Whisker Plots
+        href: articles/box-whisker-vignette.html
+      - text: Histogram Plots
+        href: articles/histogram.html
+      - text: PK Ratio Plots
+        href: articles/pk-ratio-vignette.html
+      - text: Time Profile Plots
+        href: articles/plot-time-profile.html
+      - text: ——–
+      - text: "Plot configuration"
+      - text: Introduction to PlotConfiguration objects
+        href: articles/plot-configuration.html
+      - text: ——–
+      - text: "Shiny apps"
+      - text: Run Shiny App to Create Plots
+        href: articles/plot-maker.html
+      - text: Run Shiny App to Create Themes
+        href: articles/theme-maker.html
 
-  - title: Primary plots
-    contents:
-    - atom-plots
-    - box-whisker-vignette
-    - histogram
-    - pk-ratio-vignette
-    - plot-time-profile
-
-  - title: Plot configuration
-    contents:
-    - plot-configuration
-
-  - title: Shiny apps
-    contents:
-    - plot-maker
-    - theme-maker

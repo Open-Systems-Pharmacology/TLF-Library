@@ -9,7 +9,7 @@ setCaptionOrder(plotObject, order, name = NULL)
 \arguments{
 \item{plotObject}{\code{ggplot} graphical object}
 
-\item{order}{numeric order of the legend ccaption labels}
+\item{order}{numeric order of the legend caption labels}
 
 \item{name}{reference names in caption$name identifying the legend caption lines}
 }

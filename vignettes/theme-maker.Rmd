@@ -18,7 +18,10 @@ knitr::opts_chunk$set(
   dpi = 300,
   fig.align = "center",
   out.width = "100%",
-  echo = FALSE
+  echo = FALSE,
+  fig.height = 6,
+  fig.width = 8,
+  fig.showtext = TRUE
 )
 ```
 
@@ -117,7 +120,7 @@ To update how lines are drawn in PK ratio plots, you can use a default linetype 
 - **same** will select the same value of the map every time a line is added
 - **first** will select the first value of the map every time a line is added
 - **reset** will select the next values of the map every time a line is added but resetting the count before the call of the plot function
-- **other** allows you to specify a user defined lineytpe(s) not related to the map
+- **other** allows you to specify a user defined linetype(s) not related to the map
 
 ```{r pk-ratio-selection-key}
 knitr::include_graphics("figures/theme-maker/pk-ratio-selection-key.png")

@@ -70,6 +70,10 @@ plotHistogram(x = rlnorm(100), bins = 21)
 # Produce histogram of fitted normally distributed data
 plotHistogram(x = rlnorm(100), distribution = "normal")
 
+
+# Produce histogram of fitted normally distributed data
+plotHistogram(x = rlnorm(100), distribution = "normal", frequency = TRUE, stack = TRUE)
+
 }
 \references{
 For examples, see:
@@ -84,6 +88,7 @@ Other molecule plots:
 \code{\link{plotObsVsPred}()},
 \code{\link{plotObservedTimeProfile}()},
 \code{\link{plotPKRatio}()},
+\code{\link{plotPieChart}()},
 \code{\link{plotQQ}()},
 \code{\link{plotResVsPred}()},
 \code{\link{plotResVsTime}()},

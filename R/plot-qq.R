@@ -64,8 +64,8 @@ plotQQ <- function(data = NULL,
   plotObject <- plotObject +
     ggplot2::geom_qq_line(
       data = mapData,
-      mapping = ggplot2::aes_string(
-        sample = mapLabels$y
+      mapping = ggplot2::aes(
+        sample = .data[[mapLabels$y]]
       ),
       size = aestheticValues$size,
       color = aestheticValues$color,
@@ -82,13 +82,13 @@ plotQQ <- function(data = NULL,
   )
 
   plotObject <- plotObject +
-    ggplot2::geom_point(
+    geomTLFPoint(
       data = mapData,
-      mapping = ggplot2::aes_string(
-        x = DefaultDataMappingValues$qqPlot,
-        y = mapLabels$y,
-        color = mapLabels$color,
-        shape = mapLabels$shape
+      mapping = ggplot2::aes(
+        x = .data[[DefaultDataMappingValues$qqPlot]],
+        y = .data[[mapLabels$y]],
+        color = .data[[mapLabels$color]],
+        shape = .data[[mapLabels$shape]]
       ),
       size = aestheticValues$size,
       alpha = aestheticValues$alpha,

@@ -11,7 +11,7 @@ pkRatioData$aesDefault <- ""
 plot1a <- ggplot() +
   geom_point(
     data = pkRatioData,
-    mapping = aes_string(x = "Age", y = "Ratio"),
+    mapping = aes(x = .data$Age, y = .data$Ratio),
     show.legend = FALSE
   ) +
   labs(title = "1A")
@@ -22,7 +22,7 @@ plot1b <- plot1a + scale_color_manual(values = "red") + labs(title = "1B")
 plot2a <- ggplot() +
   geom_point(
     data = pkRatioData,
-    mapping = aes_string(x = "Age", y = "Ratio"),
+    mapping = aes(x = .data$Age, y = .data$Ratio),
     color = "red",
     show.legend = FALSE
   ) +
@@ -34,10 +34,10 @@ plot2b <- plot2a + scale_color_manual(values = "blue") + labs(title = "2B")
 plot3a <- ggplot() +
   geom_point(
     data = pkRatioData,
-    mapping = aes_string(
-      x = "Age",
-      y = "Ratio",
-      color = "aesDefault"
+    mapping = aes(
+      x = .data$Age,
+      y = .data$Ratio,
+      color = .data$aesDefault
     ),
     show.legend = FALSE
   ) +

@@ -26,7 +26,7 @@
 #'
 #' @references For examples, see:
 #' <https://www.open-systems-pharmacology.org/TLF-Library/articles/histogram.html>
-#'
+#' @importFrom stats dnorm setNames
 #' @export
 #' @family molecule plots
 #' @examples
@@ -41,6 +41,10 @@
 #'
 #' # Produce histogram of fitted normally distributed data
 #' plotHistogram(x = rlnorm(100), distribution = "normal")
+#'
+#'
+#' # Produce histogram of fitted normally distributed data
+#' plotHistogram(x = rlnorm(100), distribution = "normal", frequency = TRUE, stack = TRUE)
 #'
 plotHistogram <- function(data = NULL,
                           metaData = NULL,
@@ -109,21 +113,33 @@ plotHistogram <- function(data = NULL,
   if (length(dataMapping$bins) > 1) {
     edges <- dataMapping$bins
   }
-  # Manage ggplot aes_string property depending on stack and frequency options
+  # Manage ggplot aes property depending on stack and frequency options
   # geom_histogram can use computed variables defined between two dots
   # see https://ggplot2.tidyverse.org/reference/geom_histogram.html for more info
-  yAes <- "..count.."
+  mapping <- ggplot2::aes(
+    x = .data[[mapLabels$x]],
+    y = ggplot2::after_stat(count),
+    fill = .data[[mapLabels$fill]]
+  )
 
   if (dataMapping$frequency) {
     # If histogram bars are not stacked, calculate frequency within each data groups
     # Since there is no direct computed variable
     # ncount variable is scaled by binwidth*dnorm(0) to get an area of ~1
-    yAes <- paste0("..ncount..*max(..width..)*", stats::dnorm(0))
+    mapping <- ggplot2::aes(
+      x = .data[[mapLabels$x]],
+      y = ggplot2::after_stat(ncount * max(width) * dnorm(0)),
+      fill = .data[[mapLabels$fill]]
+    )
     if (dataMapping$stack) {
       # If histogram bars are stacked,
       # Calculate overall frequency as count per bin / total
       # This results in same histogram shapes no matter the data groups
-      yAes <- "..count../sum(..count..)"
+      mapping <- ggplot2::aes(
+        x = .data[[mapLabels$x]],
+        y = ggplot2::after_stat(count / sum(count)),
+        fill = .data[[mapLabels$fill]]
+      )
     }
   }
 
@@ -136,11 +152,7 @@ plotHistogram <- function(data = NULL,
   plotObject <- plotObject +
     ggplot2::geom_histogram(
       data = mapData,
-      mapping = ggplot2::aes_string(
-        x = mapLabels$x,
-        y = yAes,
-        fill = mapLabels$fill
-      ),
+      mapping = mapping,
       position = position,
       bins = dataMapping$bins,
       binwidth = dataMapping$binwidth,
@@ -166,11 +178,11 @@ plotHistogram <- function(data = NULL,
     plotObject <- plotObject +
       ggplot2::geom_line(
         data = fitData,
-        mapping = ggplot2::aes_string(
-          x = "x",
-          y = "y",
-          color = "legendLabels",
-          linetype = "legendLabels"
+        mapping = ggplot2::aes(
+          x = .data$x,
+          y = .data$y,
+          color = .data$legendLabels,
+          linetype = .data$legendLabels
         ),
         size = aestheticValues$size,
         alpha = aestheticValues$alpha

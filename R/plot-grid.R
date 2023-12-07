@@ -95,32 +95,41 @@ plotGrid <- function(plotGridConfiguration) {
       tag_suffix = plotGridConfiguration$tagSuffix,
       tag_sep = plotGridConfiguration$tagSeparator,
       theme = ggplot2::theme(
-        plot.title = ggplot2::element_text(
+        plot.title = ggtext::element_textbox_simple(
           color = plotGridConfiguration$titleColor,
           size = plotGridConfiguration$titleSize,
           face = plotGridConfiguration$titleFontFace,
           family = plotGridConfiguration$titleFontFamily,
-          hjust = plotGridConfiguration$titleHorizontalJustification,
-          vjust = plotGridConfiguration$titleVerticalJustification,
-          angle = plotGridConfiguration$titleAngle
+          halign = plotGridConfiguration$titleHorizontalJustification,
+          valign = plotGridConfiguration$titleVerticalJustification,
+          hjust = plotGridConfiguration$captionHorizontalJustification,
+          vjust = plotGridConfiguration$captionVerticalJustification,
+          orientation = .convertAngleToOrientation(plotGridConfiguration$titleAngle),
+          margin = ggplot2::unit(plotGridConfiguration$titleMargin, "pt")
         ),
-        plot.subtitle = ggplot2::element_text(
+        plot.subtitle = ggtext::element_textbox_simple(
           color = plotGridConfiguration$subtitleColor,
           size = plotGridConfiguration$subtitleSize,
           face = plotGridConfiguration$subtitleFontFace,
           family = plotGridConfiguration$subtitleFontFamily,
-          hjust = plotGridConfiguration$subtitleHorizontalJustification,
-          vjust = plotGridConfiguration$subtitleVerticalJustification,
-          angle = plotGridConfiguration$subtitleAngle
+          halign = plotGridConfiguration$subtitleHorizontalJustification,
+          valign = plotGridConfiguration$subtitleVerticalJustification,
+          hjust = plotGridConfiguration$captionHorizontalJustification,
+          vjust = plotGridConfiguration$captionVerticalJustification,
+          orientation = .convertAngleToOrientation(plotGridConfiguration$subtitleAngle),
+          margin = ggplot2::unit(plotGridConfiguration$subtitleMargin, "pt")
         ),
-        plot.caption = ggplot2::element_text(
+        plot.caption = ggtext::element_textbox_simple(
           color = plotGridConfiguration$captionColor,
           size = plotGridConfiguration$captionSize,
           face = plotGridConfiguration$captionFontFace,
           family = plotGridConfiguration$captionFontFamily,
+          halign = plotGridConfiguration$captionHorizontalJustification,
+          valign = plotGridConfiguration$captionVerticalJustification,
           hjust = plotGridConfiguration$captionHorizontalJustification,
           vjust = plotGridConfiguration$captionVerticalJustification,
-          angle = plotGridConfiguration$captionAngle
+          orientation = .convertAngleToOrientation(plotGridConfiguration$captionAngle),
+          margin = ggplot2::unit(plotGridConfiguration$captionMargin, "pt")
         )
       )
     ) &
@@ -133,8 +142,7 @@ plotGrid <- function(plotGridConfiguration) {
         hjust = plotGridConfiguration$tagHorizontalJustification,
         vjust = plotGridConfiguration$tagVerticalJustification,
         angle = plotGridConfiguration$tagAngle,
-        lineheight = plotGridConfiguration$tagLineHeight,
-        margin = plotGridConfiguration$tagMargin
+        lineheight = plotGridConfiguration$tagLineHeight
       ),
       plot.tag.position = plotGridConfiguration$tagPosition
     )
@@ -199,9 +207,9 @@ plotGrid <- function(plotGridConfiguration) {
 #' @field plotList A list containing `ggplot` objects.
 #' @field title,subtitle,caption Text strings to use for the various plot
 #' annotations, where plot refers to the grid of plots as a whole.
-#' @field titleColor,titleSize,titleFontFace,titleFontFamily,titleHorizontalJustification,titleVerticalJustification,titleAngle Aesthetic properties for the plot title.
-#' @field subtitleColor,subtitleSize,subtitleFontFace,subtitleFontFamily,subtitleHorizontalJustification,subtitleVerticalJustification,subtitleAngle Aesthetic properties for the plot subtitle.
-#' @field captionColor,captionSize,captionFontFace,captionFontFamily,captionHorizontalJustification,captionVerticalJustification,captionAngle Aesthetic properties for the plot caption.
+#' @field titleColor,titleSize,titleFontFace,titleFontFamily,titleHorizontalJustification,titleVerticalJustification,titleAngle,titleMargin Aesthetic properties for the plot title.
+#' @field subtitleColor,subtitleSize,subtitleFontFace,subtitleFontFamily,subtitleHorizontalJustification,subtitleVerticalJustification,subtitleAngle,subtitleMargin Aesthetic properties for the plot subtitle.
+#' @field captionColor,captionSize,captionFontFace,captionFontFamily,captionHorizontalJustification,captionVerticalJustification,captionAngle,captionMargin Aesthetic properties for the plot caption.
 #' @field tagLevels A character vector defining the enumeration format to use
 #' at each level. Possible values are `'a'` for lowercase letters, `'A'` for
 #' uppercase letters, `'1'` for numbers, `'i'` for lowercase Roman numerals, and
@@ -296,6 +304,7 @@ PlotGridConfiguration <- R6::R6Class(
     titleHorizontalJustification = HorizontalJustification$left,
     titleVerticalJustification = VerticalJustification$bottom,
     titleAngle = 0,
+    titleMargin = c(20, 2, 10, 2),
 
     # subtitle ------------------------------------
 
@@ -307,6 +316,7 @@ PlotGridConfiguration <- R6::R6Class(
     subtitleHorizontalJustification = HorizontalJustification$left,
     subtitleVerticalJustification = VerticalJustification$bottom,
     subtitleAngle = 0,
+    subtitleMargin = c(0, 2, 10, 2),
 
     # caption ------------------------------------
 
@@ -318,6 +328,8 @@ PlotGridConfiguration <- R6::R6Class(
     captionHorizontalJustification = HorizontalJustification$right,
     captionVerticalJustification = VerticalJustification$bottom,
     captionAngle = 0,
+    captionMargin = c(2, 2, 5, 2),
+
 
     # arrangement ------------------------------------
 

@@ -16,6 +16,7 @@ Other DataMapping classes:
 \code{\link{HistogramDataMapping}},
 \code{\link{ObsVsPredDataMapping}},
 \code{\link{PKRatioDataMapping}},
+\code{\link{PieChartDataMapping}},
 \code{\link{QQDataMapping}},
 \code{\link{RangeDataMapping}},
 \code{\link{ResVsPredDataMapping}},
@@ -27,7 +28,7 @@ Other DataMapping classes:
 }
 \concept{DataMapping classes}
 \section{Super classes}{
-\code{tlf::XYDataMapping} -> \code{tlf::XYGDataMapping} -> \code{ObservedDataMapping}
+\code{\link[tlf:XYDataMapping]{tlf::XYDataMapping}} -> \code{\link[tlf:XYGDataMapping]{tlf::XYGDataMapping}} -> \code{ObservedDataMapping}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -41,6 +42,8 @@ Other DataMapping classes:
 \item{\code{ymax}}{mapping error bars around scatter points}
 
 \item{\code{y2Axis}}{Name of y2Axis variable to map}
+
+\item{\code{lloq}}{mapping lloq lines}
 }
 \if{html}{\out{</div>}}
 }
@@ -71,9 +74,10 @@ Create a new \code{ObservedDataMapping} object
   color = NULL,
   shape = NULL,
   error = NULL,
-  uncertainty = NULL,
+  uncertainty = lifecycle::deprecated(),
   mdv = NULL,
-  data = NULL
+  data = NULL,
+  lloq = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -98,12 +102,14 @@ Create a new \code{ObservedDataMapping} object
 
 \item{\code{error}}{mapping error bars around scatter points}
 
-\item{\code{uncertainty}}{mapping error bars around scatter points.
-Deprecated parameter replaced by \code{error}.}
+\item{\code{uncertainty}}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} uncertainty were
+replaced by \code{error} argument. Mapping error bars around scatter points.}
 
 \item{\code{mdv}}{mapping missing dependent variable}
 
 \item{\code{data}}{data.frame to map used by \code{.smartMapping}}
+
+\item{\code{lloq}}{mapping lloq lines}
 }
 \if{html}{\out{</div>}}
 }

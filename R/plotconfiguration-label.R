@@ -20,18 +20,51 @@ LabelConfiguration <- R6::R6Class(
       # y2label not available for all plots but time profile
       y2label <- NULL
       inputs <- c("title", "subtitle", "xlabel", "ylabel", "caption", "y2label")
-      validateExpressions <- parse(text = paste0("validateIsOfType(", inputs, ', c("Label", "character"), nullAllowed =TRUE)'))
-      eval(validateExpressions)
+
+      labels <- list(
+        "title" = title,
+        "subtitle" = subtitle,
+        "xlabel" = xlabel,
+        "ylabel" = ylabel,
+        "caption" = caption,
+        "y2label" = y2label
+      )
+
+      # Check label type is either a character or `Label` object
+      lapply(labels, function(x) {
+        validateIsOfType(x, c("Label", "character"), nullAllowed = TRUE)
+      })
+
+      if (isOfType(labels$ylabel, "Label")) {
+        if (labels$ylabel$font$angle %% 360 %in% c(0, 180)) {
+          labels$ylabel$font$maxWidth <- unit(100, "pt")
+        }
+        if (labels$ylabel$font$angle %% 360 %in% c(90, 270)) {
+          labels$ylabel$font$maxWidth <- NULL
+        }
+      }
+
+      if (isOfType(labels$xlabel, "Label")) {
+        if (labels$xlabel$font$angle %% 360 %in% c(0, 180)) {
+          labels$xlabel$font$maxWidth <- NULL
+        }
+        if (labels$xlabel$font$angle %% 360 %in% c(90, 270)) {
+          labels$xlabel$font$maxWidth <- unit(100, "pt")
+        }
+      }
 
       currentTheme <- tlfEnv$currentTheme$clone(deep = TRUE)
-      enforceLabelExpressions <- parse(text = paste0(
-        "if(!isOfType(", inputs, ',"Label")){',
-        inputs, "<- asLabel(text = ", inputs, ", font = currentTheme$fonts$", inputs, ")}"
-      ))
-      eval(enforceLabelExpressions)
 
-      associateExpressions <- parse(text = paste0("private$.", inputs, " <- asLabel(", inputs, ")"))
-      eval(associateExpressions)
+      for (labelName in names(labels)) {
+        label <- labels[[labelName]]
+        if (!isOfType(label, "Label")) {
+          label <- asLabel(text = label, font = currentTheme$fonts[[labelName]])
+        }
+        # Check chosen angle is available
+        # use modulo 360 to in case minus angles were provided
+        label$font$angle <- .checkIsInAvailableAngles(label$font$angle %% 360)
+        private[[paste0(".", labelName)]] <- asLabel(label)
+      }
     },
 
     #' @description Update labels of a `ggplot` object and their properties
@@ -47,14 +80,16 @@ LabelConfiguration <- R6::R6Class(
         y = private$.ylabel$text,
         caption = private$.caption$text
       )
-      plotObject <- plotObject + ggplot2::theme(
-        plot.title = private$.title$createPlotFont(),
-        plot.subtitle = private$.subtitle$createPlotFont(),
-        axis.title.x = private$.xlabel$createPlotFont(),
-        axis.title.y = private$.ylabel$createPlotFont(),
-        axis.title.y.right = private$.y2label$createPlotFont(),
-        plot.caption = private$.caption$createPlotFont()
-      )
+
+      plotObject <- plotObject +
+        ggplot2::theme(
+          plot.title = private$.title$createPlotTextBoxFont(),
+          plot.subtitle = private$.subtitle$createPlotTextBoxFont(),
+          axis.title.x = private$.xlabel$createPlotTextBoxFont(),
+          axis.title.y = private$.ylabel$createPlotTextBoxFont(),
+          axis.title.y.right = private$.y2label$createPlotTextBoxFont(),
+          plot.caption = private$.caption$createPlotTextBoxFont()
+        )
       return(plotObject)
     }
   ),

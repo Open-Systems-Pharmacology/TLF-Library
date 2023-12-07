@@ -15,7 +15,10 @@ knitr::opts_chunk$set(
   comment = "#>",
   dpi = 300,
   fig.align = "center",
-  out.width = "100%"
+  out.width = "100%",
+  fig.height = 6,
+  fig.width = 8,
+  fig.showtext = TRUE
 )
 ```
 
@@ -32,7 +35,7 @@ The following vignette aims at documenting and illustrating workflows for produc
 Time profile plots aims at comparing observed and simulated data along time.
 In such plots, observed data are usually plotted as scatter points with errorbars showing population range or confidence intervals; while simulated data are usually plotted using lines with shaded ribbons showing population range or confidence intervals.
 
-# 2. Definition of the time profile fonctions and classes
+# 2. Definition of the time profile functions and classes
 
 ## 2.1. `plotTimeProfile`
 
@@ -299,7 +302,7 @@ plotTimeProfile(
 ### 3.2.2. Single simulation with confidence interval
 
 For the first dataset, the uncertainty/error was defined as standard deviation using the variable `"sd"`.
-This variable will be innerly used by the `ObservedDataMapping` object to create corresponding `ymin` and `ymax` values for the error bars. 
+This variable will be used by the `ObservedDataMapping` object to create corresponding `ymin` and `ymax` values for the error bars. 
 
 **Tips**
 
@@ -395,7 +398,7 @@ plotTimeProfile(
 
 ### 3.2.4. Missing Dependent Variable (mdv)
 
-The following code flags all values higher than `10` as `mdv`, leadin to a plot without any observed data points higher than `10` (removing the first observation)
+The following code flags all values higher than `10` as `mdv`, leading to a plot without any observed data points higher than `10` (removing the first observation)
 
 
 ```{r examples mdv}
@@ -496,7 +499,7 @@ plotTimeProfile(
 )
 ```
 
-### 3.3.3. Mutliple simulations and observed data sets
+### 3.3.3. Multiple simulations and observed data sets
 
 Combining multiple simulations and/or observed data sets is rather simple.
 To differentiate between the simulations/data sets, a grouping variable corresponding to the legend caption needs to be defined as illustrated below.
@@ -566,7 +569,7 @@ plotTimeProfile(
 )
 ```
 
-### 3.3.4. Mutliple simulations and observed data sets with their confidence intervals
+### 3.3.4. Multiple simulations and observed data sets with their confidence intervals
 
 ```{r combine multiple simulated and observed with ci}
 # Define Data Mappings

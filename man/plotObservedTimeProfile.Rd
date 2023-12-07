@@ -46,6 +46,7 @@ Other molecule plots:
 \code{\link{plotHistogram}()},
 \code{\link{plotObsVsPred}()},
 \code{\link{plotPKRatio}()},
+\code{\link{plotPieChart}()},
 \code{\link{plotQQ}()},
 \code{\link{plotResVsPred}()},
 \code{\link{plotResVsTime}()},

@@ -5,61 +5,86 @@
       "size": 16,
       "fontFace": "bold",
       "fontFamily": "",
-      "angle": 0
+      "angle": 0,
+      "align": "center"
     },
     "subtitle": {
       "color": "black",
       "size": 12,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0
+      "angle": 0,
+      "align": "center"
     },
     "xlabel": {
       "color": "black",
       "size": 16,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0
+      "angle": 0,
+      "align": "center"
     },
     "ylabel": {
       "color": "black",
       "size": 16,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 90
+      "angle": 90,
+      "align": "center"
+    },
+    "caption": {
+      "color": "black",
+      "size": 10,
+      "fontFace": "plain",
+      "fontFamily": "",
+      "angle": 0,
+      "align": "left"
     },
     "watermark": {
       "color": "grey30",
       "size": 12,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 30
+      "angle": 30,
+      "align": "center"
     },
     "legend": {
       "color": "black",
       "size": 14,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0
+      "angle": 0,
+      "align": "left"
+    },
+    "legendTitle": {
+      "color": "black",
+      "size": 14,
+      "fontFace": "plain",
+      "fontFamily": "",
+      "angle": 0,
+      "align": "center"
     },
     "xAxis": {
       "color": "black",
       "size": 14,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0
+      "angle": 0,
+      "align": "center"
     },
     "yAxis": {
       "color": "black",
       "size": 14,
       "fontFace": "plain",
       "fontFamily": "",
-      "angle": 0
+      "angle": 0,
+      "align": "right"
     }
   },
   "background": {
     "watermark": "template",
     "legendPosition": "outsideRight",
+    "legendTitle": null,
     "plot": {
       "fill": "white",
       "color": "black",
@@ -117,14 +142,27 @@
       "#B4009E"
     ],
     "shape": [
-      "square",
-      "dot",
       "circle",
-      "diamond",
-      "star",
+      "square",
+      "triangle",
       "plus",
       "cross",
-      "triangle"
+      "diamond",
+      "invertedTriangle",
+      "star",
+      "pentagon",
+      "hexagon",
+      "asterisk",
+      "circleOpen",
+      "squareOpen",
+      "triangleOpen",
+      "thinPlus",
+      "thinCross",
+      "diamondOpen",
+      "invertedTriangleOpen",
+      "starOpen",
+      "pentagonOpen",
+      "hexagonOpen"
     ],
     "linetype": [
       "solid",
@@ -186,7 +224,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 4,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -216,7 +254,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 4,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -280,7 +318,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 4,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -304,9 +342,9 @@
       "points": {
         "color": "#111111",
         "fill": "NA",
-        "shape": "dot",
+        "shape": "circle",
         "linetype": "blank",
-        "size": 2,
+        "size": 3,
         "alpha": 1
       },
       "ribbons": {

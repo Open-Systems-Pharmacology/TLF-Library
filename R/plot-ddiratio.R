@@ -98,7 +98,7 @@ plotDDIRatio <- function(data,
   plotObject <- plotObject +
     ggplot2::geom_path(
       data = guestData,
-      mapping = ggplot2::aes_string(x = "x", y = "ymin"),
+      mapping = ggplot2::aes(x = .data$x, y = .data$ymin),
       na.rm = TRUE,
       color = aestheticValues$color,
       linetype = aestheticValues$linetype,
@@ -107,7 +107,7 @@ plotDDIRatio <- function(data,
     ) +
     ggplot2::geom_path(
       data = guestData,
-      mapping = ggplot2::aes_string(x = "x", y = "ymax"),
+      mapping = ggplot2::aes(x = .data$x, y = .data$ymax),
       na.rm = TRUE,
       color = aestheticValues$color,
       linetype = aestheticValues$linetype,
@@ -170,7 +170,7 @@ getGuestValuesFromDataMapping <- function(data,
 #' @param x Numeric values input of Guest function
 #' @param delta Numeric value parameter of Guest function
 #' @param residualsVsObserved Logical value defining
-#' if limits are claculated as residuals vs observed, instead of predicted vs observed.
+#' if limits are calculated as residuals vs observed, instead of predicted vs observed.
 #' @return A data.frame with `x`, `ymin` and `ymax` defining Guest et al. limits
 #' @references
 #' <https://dmd.aspetjournals.org/content/39/2/170>

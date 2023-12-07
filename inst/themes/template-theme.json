@@ -142,14 +142,27 @@
       "#B4009E"
     ],
     "shape": [
-      "square",
-      "dot",
       "circle",
-      "diamond",
-      "star",
+      "square",
+      "triangle",
       "plus",
       "cross",
-      "triangle"
+      "diamond",
+      "invertedTriangle",
+      "star",
+      "pentagon",
+      "hexagon",
+      "asterisk",
+      "circleOpen",
+      "squareOpen",
+      "triangleOpen",
+      "thinPlus",
+      "thinCross",
+      "diamondOpen",
+      "invertedTriangleOpen",
+      "starOpen",
+      "pentagonOpen",
+      "hexagonOpen"
     ],
     "linetype": [
       "solid",
@@ -211,7 +224,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 4,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -241,7 +254,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 4,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -305,7 +318,7 @@
         "fill": "NA",
         "shape": "reset",
         "linetype": "blank",
-        "size": 4,
+        "size": 3,
         "alpha": 1
       },
       "lines": {
@@ -329,9 +342,9 @@
       "points": {
         "color": "#111111",
         "fill": "NA",
-        "shape": "dot",
+        "shape": "circle",
         "linetype": "blank",
-        "size": 2,
+        "size": 3,
         "alpha": 1
       },
       "ribbons": {

@@ -2,7 +2,9 @@
 #' @description Set X-axis properties of a `ggplot` object
 #' @param plotObject A `ggplot` object to set X-axis properties
 #' @param scale Scale of axis. Use enum `Scaling` to access names of scales.
-#' @param limits Optional numeric values of axis limits
+#' @param valuesLimits Optional numeric values of values limits
+#' @param axisLimits Optional numeric values of axis limits
+#' @param limits `r lifecycle::badge("deprecated")`. Replaced by axisLimits argument.
 #' @param ticks Optional values or function for axis ticks
 #' @param ticklabels Optional values or function for axis ticklabels
 #' @param minorTicks Optional values or function for axis minor ticks
@@ -20,21 +22,29 @@
 #' setXAxis(myPlot, ticks = c(1, 2, 3), ticklabels = parse(text = c("alpha", "beta", "gamma")))
 #'
 #' # Set x-axis limits
-#' setXAxis(myPlot, limits = c(1, 2.5))
+#' setXAxis(myPlot, axisLimits = c(1, 2.5))
 #'
 #' # Set x-axis fonts
 #' setXAxis(myPlot, font = Font$new(color = "blue", size = 14))
 setXAxis <- function(plotObject,
                      scale = NULL,
-                     limits = NULL,
+                     valuesLimits = NULL,
+                     axisLimits = NULL,
+                     limits = lifecycle::deprecated(),
                      ticks = NULL,
                      ticklabels = NULL,
                      minorTicks = NULL,
                      font = NULL,
                      expand = NULL) {
+  if (lifecycle::is_present(limits)) {
+    lifecycle::deprecate_warn("1.5.0", "setXAxis(limits)", "setXAxis(axisLimits)")
+    axisLimits <- limits
+  }
+
   validateIsOfType(plotObject, "ggplot")
   validateIsIncluded(scale, Scaling, nullAllowed = TRUE)
-  validateIsNumeric(limits, nullAllowed = TRUE)
+  validateIsNumeric(valuesLimits, nullAllowed = TRUE)
+  validateIsNumeric(axisLimits, nullAllowed = TRUE)
   validateIsOfType(font, "Font", nullAllowed = TRUE)
   validateIsLogical(expand, nullAllowed = TRUE)
 
@@ -45,8 +55,10 @@ setXAxis <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$xAxis
   xAxis <- newPlotObject$plotConfiguration$xAxis
-  eval(.parseVariableToObject("xAxis", c("limits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
-  newPlotObject <- xAxis$updatePlot(newPlotObject, ylim = newPlotObject$plotConfiguration$yAxis$limits)
+  eval(.parseVariableToObject("xAxis", c("valuesLimits", "axisLimits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
+  newPlotObject <- xAxis$updatePlot(newPlotObject,
+    yAxisLimits = newPlotObject$plotConfiguration$yAxis$axisLimits
+  )
   return(newPlotObject)
 }
 
@@ -65,21 +77,29 @@ setXAxis <- function(plotObject,
 #' setYAxis(myPlot, ticks = c(10, 50, 100), ticklabels = parse(text = c("alpha", "beta", "gamma")))
 #'
 #' # Set y-axis limits
-#' setYAxis(myPlot, limits = c(10, 75))
+#' setYAxis(myPlot, axisLimits = c(10, 75))
 #'
 #' # Set y-axis fonts
 #' setYAxis(myPlot, font = Font$new(color = "blue", size = 14))
 setYAxis <- function(plotObject,
                      scale = NULL,
-                     limits = NULL,
+                     valuesLimits = NULL,
+                     axisLimits = NULL,
+                     limits = lifecycle::deprecated(),
                      ticks = NULL,
                      ticklabels = NULL,
                      minorTicks = NULL,
                      font = NULL,
                      expand = NULL) {
+  if (lifecycle::is_present(limits)) {
+    lifecycle::deprecate_warn("1.5.0", "setYAxis(limits)", "setYAxis(axisLimits)")
+    axisLimits <- limits
+  }
+
   validateIsOfType(plotObject, "ggplot")
   validateIsIncluded(scale, Scaling, nullAllowed = TRUE)
-  validateIsNumeric(limits, nullAllowed = TRUE)
+  validateIsNumeric(valuesLimits, nullAllowed = TRUE)
+  validateIsNumeric(axisLimits, nullAllowed = TRUE)
   validateIsOfType(font, "Font", nullAllowed = TRUE)
   validateIsLogical(expand, nullAllowed = TRUE)
 
@@ -90,8 +110,10 @@ setYAxis <- function(plotObject,
 
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$yAxis
   yAxis <- newPlotObject$plotConfiguration$yAxis
-  eval(.parseVariableToObject("yAxis", c("limits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
-  newPlotObject <- yAxis$updatePlot(newPlotObject, xlim = newPlotObject$plotConfiguration$xAxis$limits)
+  eval(.parseVariableToObject("yAxis", c("valuesLimits", "axisLimits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
+  newPlotObject <- yAxis$updatePlot(newPlotObject,
+    xAxisLimits = newPlotObject$plotConfiguration$xAxis$axisLimits
+  )
   return(newPlotObject)
 }
 
@@ -101,29 +123,39 @@ setYAxis <- function(plotObject,
 #' @return A `ggplot` object
 #' @export
 setY2Axis <- function(plotObject,
-                     scale = NULL,
-                     limits = NULL,
-                     ticks = NULL,
-                     ticklabels = NULL,
-                     minorTicks = NULL,
-                     font = NULL,
-                     expand = NULL) {
+                      scale = NULL,
+                      valuesLimits = NULL,
+                      axisLimits = NULL,
+                      limits = lifecycle::deprecated(),
+                      ticks = NULL,
+                      ticklabels = NULL,
+                      minorTicks = NULL,
+                      font = NULL,
+                      expand = NULL) {
+  if (lifecycle::is_present(limits)) {
+    lifecycle::deprecate_warn("1.5.0", "setY2Axis(limits)", "setY2Axis(axisLimits)")
+    axisLimits <- limits
+  }
+
   validateIsOfType(plotObject, "ggplot")
   validateIsIncluded(scale, Scaling, nullAllowed = TRUE)
-  validateIsNumeric(limits, nullAllowed = TRUE)
+  validateIsNumeric(valuesLimits, nullAllowed = TRUE)
+  validateIsNumeric(axisLimits, nullAllowed = TRUE)
   validateIsOfType(font, "Font", nullAllowed = TRUE)
   validateIsLogical(expand, nullAllowed = TRUE)
-  
+
   # Clone plotConfiguration into a new plot object
   # Prevents update of R6 class being spread to plotObject
   newPlotObject <- plotObject
   newPlotObject$plotConfiguration <- plotObject$plotConfiguration$clone(deep = TRUE)
-  
+
   # R6 class not cloned will spread modifications into newPlotObject$plotConfiguration$yAxis
   y2Axis <- newPlotObject$plotConfiguration$y2Axis %||% YAxisConfiguration$new()
   y2Axis$position <- "right"
-  eval(.parseVariableToObject("y2Axis", c("limits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
-  newPlotObject <- y2Axis$updatePlot(newPlotObject, xlim = newPlotObject$plotConfiguration$xAxis$limits)
+  eval(.parseVariableToObject("y2Axis", c("valuesLimits", "axisLimits", "scale", "ticks", "ticklabels", "minorTicks", "font", "expand"), keepIfNull = TRUE))
+  newPlotObject <- y2Axis$updatePlot(newPlotObject,
+    xAxisLimits = newPlotObject$plotConfiguration$xAxis$axisLimits
+  )
   return(newPlotObject)
 }
 
@@ -140,9 +172,9 @@ getLogTickLabels <- function(ticks) {
   exponentValues <- floor(log10(ticks))
   # Values to print before 10^ using multiplication dot
   prefixValues <- ticks * 10^(-exponentValues)
-  prefixValues <- paste0(prefixValues, "%.%")
+  prefixValues <- paste0(prefixValues, "%*%")
   # For 1 the multiplication is redundant and removed
-  prefixValues[prefixValues == "1%.%"] <- ""
+  prefixValues[prefixValues == "1%*%"] <- ""
   return(parse(text = paste(prefixValues, "10^", exponentValues, sep = "")))
 }
 
@@ -158,9 +190,9 @@ getLnTickLabels <- function(ticks) {
   exponentValues <- floor(log(ticks))
   # Values to print before 10^ using multiplication dot
   prefixValues <- ticks * exp(-exponentValues)
-  prefixValues <- paste0(prefixValues, "%.%")
+  prefixValues <- paste0(prefixValues, "%*%")
   # For 1 the multiplication is redundant and removed
-  prefixValues[prefixValues == "1%.%"] <- ""
+  prefixValues[prefixValues == "1%*%"] <- ""
   return(parse(text = paste(prefixValues, "e^", exponentValues, sep = "")))
 }
 

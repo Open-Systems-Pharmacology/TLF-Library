@@ -92,11 +92,11 @@ plotTornado <- function(data = NULL,
 
     plotObject <- plotObject + ggplot2::geom_col(
       data = mapData,
-      mapping = ggplot2::aes_string(
-        x = mapLabels$x,
-        y = mapLabels$y,
-        fill = mapLabels$fill,
-        color = mapLabels$color
+      mapping = ggplot2::aes(
+        x = .data[[mapLabels$x]],
+        y = .data[[mapLabels$y]],
+        fill = .data[[mapLabels$fill]],
+        color = .data[[mapLabels$color]]
       ),
       alpha = aestheticValues$alpha,
       size = aestheticValues$size,
@@ -123,13 +123,13 @@ plotTornado <- function(data = NULL,
       propertyNames = c("size", "alpha")
     )
     # For tornado with points, their shape will be taken from the theme properties
-    plotObject <- plotObject + ggplot2::geom_point(
+    plotObject <- plotObject + geomTLFPoint(
       data = mapData,
-      mapping = ggplot2::aes_string(
-        x = mapLabels$x,
-        y = mapLabels$y,
-        color = mapLabels$color,
-        shape = mapLabels$shape
+      mapping = ggplot2::aes(
+        x = .data[[mapLabels$x]],
+        y = .data[[mapLabels$y]],
+        color = .data[[mapLabels$color]],
+        shape = .data[[mapLabels$shape]]
       ),
       size = aestheticValues$size,
       alpha = aestheticValues$alpha,
@@ -157,16 +157,10 @@ plotTornado <- function(data = NULL,
   }
 
   #----- Update properties using ggplot2::scale functions -----
-  # And optional color palette otherwise use colors from theme
-  if (!isEmpty(plotConfiguration$colorPalette)) {
-    try(suppressMessages(
-      plotObject <- plotObject +
-        ggplot2::scale_fill_brewer(
-          palette = plotConfiguration$colorPalette,
-          aesthetics = c("color", "fill")
-        )
-    ))
-  }
+  plotObject <- .applyColorPalette(
+    plotObject,
+    colorPalette = plotConfiguration$colorPalette
+  )
   plotObject <- .updateAxes(plotObject)
   return(plotObject)
 }

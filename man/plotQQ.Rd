@@ -57,6 +57,7 @@ Other molecule plots:
 \code{\link{plotObsVsPred}()},
 \code{\link{plotObservedTimeProfile}()},
 \code{\link{plotPKRatio}()},
+\code{\link{plotPieChart}()},
 \code{\link{plotResVsPred}()},
 \code{\link{plotResVsTime}()},
 \code{\link{plotSimulatedTimeProfile}()},
