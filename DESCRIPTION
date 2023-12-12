@@ -124,3 +124,4 @@ Collate:
     'utilities-theme.R'
     'utils.R'
     'zzz.R'
+Config/testthat/edition: 3
