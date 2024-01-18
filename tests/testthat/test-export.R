@@ -90,3 +90,31 @@ test_that("Exporting plot configuration code leads to new plot configration with
   expect_equal(class(plotConfigurationToExport), class(exportedPlotConfiguration))
   expect_equal(plotConfigurationToExport, exportedPlotConfiguration)
 })
+
+
+test_that("Plot exports are correctly rendered", {
+
+  skip_on_ci() # skiped on CI because png() device cannot be initialized
+
+  plot <- addScatter(
+    x = c(1, 2, 3), y = c(1, 2, 3),
+    plotConfiguration = PlotConfiguration$new(
+      title = "This is a title",
+      subtitle = "This is a subtitle",
+      xlabel = "This is the x label",
+      ylabel = "This is the y label",
+    )
+  )
+
+
+  exportConfiguration <- ExportConfiguration$new(
+    format = "png",
+    path = tempfile(),
+    name = "test-export-obs-vs-pred",
+    dpi = 300
+  )
+
+  exportConfiguration$savePlot(plot)
+
+  expect_snapshot_file(paste0(file.path(exportConfiguration$path, exportConfiguration$name), ".png"), "test-export-obs-vs-pred.png")
+})
