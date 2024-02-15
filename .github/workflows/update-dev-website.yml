@@ -1,6 +1,8 @@
 name: Update dev website
 on:
-  push
+  push: 
+    branches:
+      - develop    
 # The action needs permissions to update the branch
 permissions:
   contents: write
