@@ -22,7 +22,7 @@ jobs:
       - name: Install required packages
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown, local::.
+          extra-packages: github::Open-Systems-Pharmacology/OSPSuite.RUtils, any::pkgdown, local::.
           needs: website
       - name: Setup website to display only 2 digits
         run: |
