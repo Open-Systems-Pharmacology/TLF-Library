@@ -106,7 +106,12 @@
         data = data,
         mapping = ggplot2::aes(
           x = .data[[mapLabels$x]],
-          y = .data[[mapLabels$ymin]],
+          # When ymin==y, numeric NA prevents cap to be plotted
+          y = ifelse(
+            .data[[mapLabels$ymin]] == .data[[mapLabels$y]], 
+            as.numeric(NA), 
+            .data[[mapLabels$ymin]]
+            ),
           color = .data[[mapLabels$color]],
           group = .data[[mapLabels$shape]]
         ),
@@ -123,7 +128,12 @@
         data = data,
         mapping = ggplot2::aes(
           x = .data[[mapLabels$x]],
-          y = .data[[mapLabels$ymax]],
+          # When ymax==y, numeric NA prevents cap to be plotted
+          y = ifelse(
+            .data[[mapLabels$ymax]] == .data[[mapLabels$y]], 
+            as.numeric(NA), 
+            .data[[mapLabels$ymax]]
+          ),
           color = .data[[mapLabels$color]],
           group = .data[[mapLabels$shape]]
         ),
@@ -174,7 +184,12 @@
       ggplot2::geom_point(
         data = data,
         mapping = ggplot2::aes(
-          x = .data[[mapLabels$xmin]],
+          # When xmin==x, numeric NA prevents cap to be plotted
+          x = ifelse(
+            .data[[mapLabels$xmin]] == .data[[mapLabels$x]], 
+            as.numeric(NA), 
+            .data[[mapLabels$xmin]]
+          ),
           y = .data[[mapLabels$y]],
           color = .data[[mapLabels$color]],
           group = .data[[mapLabels$shape]]
@@ -191,7 +206,12 @@
       ggplot2::geom_point(
         data = data,
         mapping = ggplot2::aes(
-          x = .data[[mapLabels$xmax]],
+          # When xmax==x, numeric NA prevents cap to be plotted
+          x = ifelse(
+            .data[[mapLabels$xmax]] == .data[[mapLabels$x]], 
+            as.numeric(NA), 
+            .data[[mapLabels$xmax]]
+          ),
           y = .data[[mapLabels$y]],
           color = .data[[mapLabels$color]],
           group = .data[[mapLabels$shape]]
