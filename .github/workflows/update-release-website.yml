@@ -1,13 +1,9 @@
 name: Update release website
-# The action is triggered only when a PR is merged
-# Caution, a closed PR does not necessarily mean that it was merged
-# A second assessment is required in the jobs
+# The action is triggered only when update is push on main branch
 on:
-  pull_request:
+  push: 
     branches:
       - main
-    types:
-      - closed
 
 # The action needs permissions to update the branch
 permissions:
