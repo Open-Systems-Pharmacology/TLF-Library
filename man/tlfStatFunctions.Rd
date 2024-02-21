@@ -40,7 +40,8 @@ Other enum helpers:
 \code{\link{Shapes}},
 \code{\link{TagPositions}},
 \code{\link{TickLabelTransforms}},
-\code{\link{VerticalJustification}}
+\code{\link{VerticalJustification}},
+\code{\link{tlfSettingNames}}
 }
 \concept{enum helpers}
 \keyword{datasets}

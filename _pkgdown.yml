@@ -72,6 +72,8 @@ reference:
   contents:
   - starts_with("setDefault")
   - starts_with("getDefault")
+  - matches("resetTLFSettingsToDefault")
+  - ends_with("TLFSettings")
 - title: "Exporting Plots"
   desc: "Functions for saving and exporting plots."
   contents:
