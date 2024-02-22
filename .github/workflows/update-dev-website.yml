@@ -1,0 +1,16 @@
+name: Update dev website
+on:
+  push: 
+    branches:
+      - develop    
+
+# The action needs permissions to update the branch
+permissions:
+  contents: write
+          
+jobs:
+  update_dev_website:
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/CreateGitHubPagesForR.yml@main
+    with:
+      pkgdown_mode: 'devel'
+      extra_r_packages: 'github::Open-Systems-Pharmacology/OSPSuite.RUtils'

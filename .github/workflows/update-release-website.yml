@@ -1,0 +1,17 @@
+name: Update release website
+# The action is triggered only when update is push on main branch
+on:
+  push: 
+    branches:
+      - main
+
+# The action needs permissions to update the branch
+permissions:
+  contents: write
+          
+jobs:
+  update_release_website:
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/CreateGitHubPagesForR.yml@main
+    with:
+      pkgdown_mode: 'release'
+      extra_r_packages: 'github::Open-Systems-Pharmacology/OSPSuite.RUtils'
