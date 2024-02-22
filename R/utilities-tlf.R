@@ -5,8 +5,6 @@
 #' @export
 setDefaultLegendPosition <- function(position) {
   validateIsIncluded(position, LegendPositions)
-  # TO DO: Line to be deprecated
-  tlfEnv$defaultLegendPosition <- position
   tlfEnv$currentTheme$background$legendPosition <- position
   return(invisible())
 }
@@ -173,19 +171,9 @@ setDefaultAlphaRatio <- function(alphaRatio) {
 #' @export
 setDefaultMaxCharacterWidth <- function(maxCharacterWidth) {
   validateIsNumeric(maxCharacterWidth)
-  tlfEnv$DefaultMaxCharacterWidth <- maxCharacterWidth
+  tlfEnv$maxCharacterWidth <- maxCharacterWidth
   return(invisible())
 }
-
-
-#' @title tlfSettingNames
-#' @description
-#' Names of the default/global settings stored in tlfEnv.
-#' Can be used with `getTLFSettings()`
-#' @import ospsuite.utils
-#' @export
-#' @family enum helpers
-tlfSettingNames <- enum(names(tlfEnv))
 
 #' @title getTLFSettings
 #' @description

@@ -5,7 +5,7 @@
 \alias{tlfEnv}
 \title{tlfEnv}
 \format{
-An object of class \code{environment} of length 15.
+An object of class \code{environment} of length 14.
 }
 \usage{
 tlfEnv
@@ -19,8 +19,6 @@ It is not exported and should not be directly manipulated by other packages.
 \describe{
 \item{\code{packageName}}{Name of the package.
 This will be used to retrieve information on the package at run time.}
-
-\item{\code{defaultLegendPosition}}{Default legend position for plots. Use \code{setDefaultLegendPosition()} to change this value.}
 
 \item{\code{defaultTagPosition}}{Default tag position of subplots.}
 
