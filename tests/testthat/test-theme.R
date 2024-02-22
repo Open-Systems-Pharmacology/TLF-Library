@@ -1,5 +1,5 @@
 test_that("PlotConfigurations from default Theme includes all available atom and molecule plots", {
-  plotConfigurations <- names(tlf:::tlfEnv$currentTheme$plotConfigurations)
+  plotConfigurations <- names(getTLFSettings("currentTheme")$Value$plotConfigurations)
   expect_true(all(as.character(MoleculePlots) %in% plotConfigurations))
   expect_true(all(as.character(setdiff(AtomPlots, "initializePlot")) %in% plotConfigurations))
 })
