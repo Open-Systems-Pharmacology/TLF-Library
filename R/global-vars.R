@@ -10,7 +10,8 @@ utils::globalVariables(
     "linetypeLength",
     "newPlotObject",
     "shape",
-    "size"
+    "size",
+    "newEnv"
   ),
   package = "tlf",
   add = FALSE
