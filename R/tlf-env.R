@@ -4,8 +4,6 @@
 #' It is not exported and should not be directly manipulated by other packages.
 #' @field packageName Name of the package.
 #' This will be used to retrieve information on the package at run time.
-#' @field defaultLegendPosition
-#' Default legend position for plots. Use `setDefaultLegendPosition()` to change this value.
 #' @field defaultTagPosition Default tag position of subplots.
 #' @field defaultHorizontalJustification Default horizontal justification for plot labels.
 #' @field defaultVerticalJustificationDefault horizontal vertical for plot labels.
@@ -38,7 +36,6 @@
 #' @keywords internal
 tlfEnv <- new.env(parent = emptyenv())
 tlfEnv$packageName <- "tlf"
-tlfEnv$defaultLegendPosition <- LegendPositions$outsideRight
 tlfEnv$defaultTagPosition <- TagPositions$topLeft
 tlfEnv$defaultHorizontalJustification <- HorizontalJustification$left
 tlfEnv$defaultVerticalJustification <- VerticalJustification$bottom
