@@ -7,7 +7,7 @@
 getTLFSettings(settingName)
 }
 \arguments{
-\item{settingName}{setting name as defined in enum \code{tlfSettingNames}}
+\item{settingName}{setting name as defined in enum \code{tlfSettingsNames}}
 }
 \description{
 Get Names of the default/global settings stored in tlfEnv.

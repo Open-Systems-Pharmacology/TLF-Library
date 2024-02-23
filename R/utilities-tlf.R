@@ -179,10 +179,10 @@ setDefaultMaxCharacterWidth <- function(maxCharacterWidth) {
 #' @description
 #' Get Names of the default/global settings stored in tlfEnv.
 #' Can be used with `getTLFSettings()`
-#' @param settingName setting name as defined in enum `tlfSettingNames`
+#' @param settingName setting name as defined in enum `tlfSettingsNames`
 #' @export
 getTLFSettings <- function(settingName) {
-  validateEnumValue(settingName, enum = tlfSettingNames, nullAllowed = FALSE)
+  validateEnumValue(settingName, enum = tlfSettingsNames, nullAllowed = FALSE)
   obj <- tlfEnv[[settingName]]
   
   return(list(

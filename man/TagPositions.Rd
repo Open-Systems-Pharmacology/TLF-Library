@@ -39,7 +39,7 @@ Other enum helpers:
 \code{\link{Shapes}},
 \code{\link{TickLabelTransforms}},
 \code{\link{VerticalJustification}},
-\code{\link{tlfSettingNames}},
+\code{\link{tlfSettingsNames}},
 \code{\link{tlfStatFunctions}}
 }
 \concept{enum helpers}
