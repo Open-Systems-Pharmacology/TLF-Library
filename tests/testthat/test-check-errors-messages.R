@@ -1,5 +1,3 @@
-context("check-errors-messages")
-
 A <- data.frame(
   col1 = c(1, 2, 3),
   col2 = c(4, 5, 6),
