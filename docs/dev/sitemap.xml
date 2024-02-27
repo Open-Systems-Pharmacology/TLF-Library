@@ -373,6 +373,9 @@
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/getSymmetricLimits.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/getTLFSettings.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/Grouping.html</loc>
   </url>
   <url>
@@ -419,6 +422,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/loadThemeFromJson.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/loadTLFSettings.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/mean-1.96sd.html</loc>
@@ -592,6 +598,9 @@
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/RangeDataMapping.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/resetTLFSettingsToDefault.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/ResVsPredDataMapping.html</loc>
   </url>
   <url>
@@ -611,6 +620,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/saveThemeToJson.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/saveTLFSettings.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/Scaling.html</loc>
@@ -767,6 +779,12 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/TimeProfilePlotConfiguration.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/tlfEnv.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/tlfSettingsNames.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/TLF-Library/dev/reference/tlfStatFunctions.html</loc>
