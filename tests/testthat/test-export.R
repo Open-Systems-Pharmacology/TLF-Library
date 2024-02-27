@@ -2,13 +2,12 @@ context("Export plots")
 
 test_that("Check that plot configuration uses default values when undefined", {
   testPlotConfiguration <- PlotConfiguration$new()
-
-  expect_equal(testPlotConfiguration$export$format, tlf:::tlfEnv$defaultExportParameters$format)
-  expect_equal(testPlotConfiguration$export$name, tlf:::tlfEnv$defaultExportParameters$name)
-  expect_equal(testPlotConfiguration$export$width, tlf:::tlfEnv$defaultExportParameters$width)
-  expect_equal(testPlotConfiguration$export$height, tlf:::tlfEnv$defaultExportParameters$height)
-  expect_equal(testPlotConfiguration$export$units, tlf:::tlfEnv$defaultExportParameters$units)
-  expect_equal(testPlotConfiguration$export$dpi, tlf:::tlfEnv$defaultExportParameters$dpi)
+  expect_equal(testPlotConfiguration$export$format, getTLFSettings("defaultExportParameters")$Value$format)
+  expect_equal(testPlotConfiguration$export$name, getTLFSettings("defaultExportParameters")$Value$name)
+  expect_equal(testPlotConfiguration$export$width, getTLFSettings("defaultExportParameters")$Value$width)
+  expect_equal(testPlotConfiguration$export$height, getTLFSettings("defaultExportParameters")$Value$height)
+  expect_equal(testPlotConfiguration$export$units, getTLFSettings("defaultExportParameters")$Value$units)
+  expect_equal(testPlotConfiguration$export$dpi, getTLFSettings("defaultExportParameters")$Value$dpi)
 })
 
 

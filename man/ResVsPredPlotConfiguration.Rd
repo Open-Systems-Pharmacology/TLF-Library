@@ -33,7 +33,7 @@ Other PlotConfiguration classes:
 }
 \concept{PlotConfiguration classes}
 \section{Super class}{
-\code{\link[tlf:PlotConfiguration]{tlf::PlotConfiguration}} -> \code{ResVsPredPlotConfiguration}
+\code{tlf::PlotConfiguration} -> \code{ResVsPredPlotConfiguration}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

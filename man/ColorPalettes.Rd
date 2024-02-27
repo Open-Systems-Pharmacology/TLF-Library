@@ -41,6 +41,7 @@ Other enum helpers:
 \code{\link{TagPositions}},
 \code{\link{TickLabelTransforms}},
 \code{\link{VerticalJustification}},
+\code{\link{tlfSettingsNames}},
 \code{\link{tlfStatFunctions}}
 }
 \concept{enum helpers}
