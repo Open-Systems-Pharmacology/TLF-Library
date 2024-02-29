@@ -1,5 +1,3 @@
-context("Export plots")
-
 test_that("Check that plot configuration uses default values when undefined", {
   testPlotConfiguration <- PlotConfiguration$new()
   expect_equal(testPlotConfiguration$export$format, getTLFSettings("defaultExportParameters")$Value$format)

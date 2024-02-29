@@ -1,5 +1,3 @@
-context("tlfStatFunctions: Predefined functions for aggregation methods")
-
 test_that("tlfStatFunctions is enum", {
   expect_is(tlfStatFunctions, "list")
 

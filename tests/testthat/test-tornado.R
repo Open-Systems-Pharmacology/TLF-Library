@@ -1,5 +1,3 @@
-context("Tornado plots")
-
 # Create a data.frames for the plot tests
 tornadoPopData <- data.frame(
   sensitivity = c(c(1, 2, 3, -1, -2, -3), c(1, 2, 3, -1, -2, -3) - 0.2),

@@ -1,5 +1,3 @@
-context("Default values for plot configuration expand and scales")
-
 # To prevent copy/paste, expressions are used in the sequel
 plotNames <- c("DDIRatio", "", "TimeProfile", "ObsVsPred", "ResVsPred", "Histogram", "PKRatio", "BoxWhisker", "Tornado")
 

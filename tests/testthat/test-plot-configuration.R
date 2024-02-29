@@ -1,5 +1,3 @@
-context("Plot Configuration")
-
 test_that("Background properties can be defined a priori", {
   plotArea <- BackgroundElement$new(color = "blue", linetype = "twodash", fill = "yellow")
   panelArea <- LineElement$new(color = "red", linetype = "dotdash", fill = "pink")

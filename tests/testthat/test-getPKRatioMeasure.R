@@ -1,5 +1,3 @@
-context("getPKRatioMeasure")
-
 data <- data.frame("Ratio" = c(seq(0.1, 5, 0.1), NA), "OtherRatio" = c(seq(0.2, 9.8, 0.2), NA, NA))
 testMapping <- PKRatioDataMapping$new(y = "OtherRatio")
 

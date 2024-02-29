@@ -1,5 +1,3 @@
-context("NA data are removed without warnings in scatter plots")
-
 # Test data that include a NA value
 testData <- data.frame(
   x = c(1, 2, 3),

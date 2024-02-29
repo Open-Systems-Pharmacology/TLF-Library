@@ -1,5 +1,3 @@
-context("PK Ratio Plot")
-
 # Load data of comprehensive examples
 load("pkRatioDataExample.RData")
 

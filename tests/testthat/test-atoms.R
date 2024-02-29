@@ -1,7 +1,5 @@
 Sys.setenv(LANG = "en")
 
-context("Atom Plots")
-
 test_that("Enum 'Atoms' includes all the atoms", {
   expect_setequal(
     as.character(AtomPlots),
