@@ -139,9 +139,6 @@ Other PlotConfiguration classes:
 \code{\link{YAxisConfiguration}}
 }
 \concept{PlotConfiguration classes}
-\section{Super class}{
-\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{PlotGridConfiguration}
-}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{

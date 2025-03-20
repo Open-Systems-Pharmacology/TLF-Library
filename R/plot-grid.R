@@ -420,34 +420,37 @@ PlotGridConfiguration <- R6::R6Class(
     print = function() {
       ospsuite.utils::ospPrintClass(self)
 
-      ospsuite.utils::ospPrintItems(list(
+      ospsuite.utils::ospPrintItems(
+        list(
           "Title" = self$title,
           "Subtitle" = self$subtitle,
           "Caption" = self$caption
         ),
         title = "Plot grid annotations",
         print_empty = TRUE
-        )
+      )
 
-      ospsuite.utils::ospPrintItems(list(
-        "Number of plots included" = length(self$plotList),
-       "Number of columns in the grid" = self$nColumns,
-      "Number of rows in the grid" = self$nRows,
-        "Arranged in row-major order" = self$byRow
+      ospsuite.utils::ospPrintItems(
+        list(
+          "Number of plots included" = length(self$plotList),
+          "Number of columns in the grid" = self$nColumns,
+          "Number of rows in the grid" = self$nRows,
+          "Arranged in row-major order" = self$byRow
         ),
         title = "Plot grid arrangement",
         print_empty = TRUE
       )
 
-      ospsuite.utils::ospPrintItems(list(
-        "Tag level format" = self$tagLevels,
-        "Tag level prefix" = self$tagPrefix,
-        "Tag level suffix" = self$tagSuffix,
-        "Tag level separator" = self$tagSeparator
-      ),
-      title = "Individual plot tags",
-      print_empty = TRUE
-    )
+      ospsuite.utils::ospPrintItems(
+        list(
+          "Tag level format" = self$tagLevels,
+          "Tag level prefix" = self$tagPrefix,
+          "Tag level suffix" = self$tagSuffix,
+          "Tag level separator" = self$tagSeparator
+        ),
+        title = "Individual plot tags",
+        print_empty = TRUE
+      )
     }
   )
 )
