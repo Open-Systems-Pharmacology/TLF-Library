@@ -1,3 +1,14 @@
+# tlf (development version)
+
+## Breaking changes
+
+- ´{tlf}` now requires `{ospsuite.utils}` version \>= 1.7.0.
+
+## Minor improvements and bug fixes
+
+- Improved print outputs for all classes
+- All classes do not interit from `ospsuite.utils::Printable` any more.
+
 # tlf 1.6.0
 
 - Lower Limit Of Quantification (LLOQ) can be added on time-profile plots and obs-vs-pred plots.
