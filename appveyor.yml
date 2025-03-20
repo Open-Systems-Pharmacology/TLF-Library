@@ -52,7 +52,7 @@ build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
   - Rscript -e "install.packages(c('covr', 'spelling', 'showtext', 'remotes'), repos = 'http://cran.us.r-project.org', type='win.binary')"
-  - Rscript -e "download.file('https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/download/v1.6.0/ospsuite.utils-v1.6.0-Windows-r_4.3.3.zip', destfile = 'ospsuite.utils.zip', mode='wb'); unzip('ospsuite.utils.zip');install.packages('ospsuite.utils_1.6.0.zip', repos = NULL, type = 'binary')"
+  - Rscript -e "download.file('https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/download/v1.7.0/ospsuite.utils-v1.7.0-Windows-r_4.4.3.zip', destfile = 'ospsuite.utils.zip', mode='wb'); unzip('ospsuite.utils.zip');install.packages('ospsuite.utils_1.7.0.zip', repos = NULL, type = 'binary')"
 
 
 
