@@ -33,7 +33,7 @@ Imports:
     ggplot2 (>= 3.3.0),
     R6,
     jsonlite,
-    ospsuite.utils (>= 1.7.0),
+    ospsuite.utils (>= 1.6.0),
     patchwork,
     ggtext,
     stringr (>= 1.5.0),

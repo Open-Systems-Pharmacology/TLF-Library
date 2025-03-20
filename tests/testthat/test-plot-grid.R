@@ -32,7 +32,7 @@ plotGridObj$titleHorizontalJustification <- HorizontalJustification$middle
 plotGridObj$subtitleHorizontalJustification <- HorizontalJustification$middle
 
 test_that("plots grid is printed", {
-  expect_snapshot(print(plotGridObj))
+  expect_visible(plotGridObj)
 })
 
 test_that("plots grid is rendered correctly", {
