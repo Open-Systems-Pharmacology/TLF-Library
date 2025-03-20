@@ -290,7 +290,6 @@ plotGrid <- function(plotGridConfiguration) {
 #' @family PlotConfiguration classes
 PlotGridConfiguration <- R6::R6Class(
   "PlotGridConfiguration",
-  inherit = ospsuite.utils::Printable,
   public = list(
     plotList = list(),
 
@@ -419,24 +418,36 @@ PlotGridConfiguration <- R6::R6Class(
     #' @description
     #' Print the object to the console.
     print = function() {
-      private$printClass()
+      ospsuite.utils::ospPrintClass(self)
 
-      private$printLine("Plot grid annotations", addTab = TRUE)
-      private$printLine("\tTitle", self$title, addTab = TRUE)
-      private$printLine("\tSubtitle", self$subtitle, addTab = TRUE)
-      private$printLine("\tCaption", self$caption, addTab = TRUE)
+      ospsuite.utils::ospPrintItems(list(
+          "Title" = self$title,
+          "Subtitle" = self$subtitle,
+          "Caption" = self$caption
+        ),
+        title = "Plot grid annotations",
+        print_empty = TRUE
+        )
 
-      private$printLine("Plot grid arrangement", addTab = TRUE)
-      private$printLine("\tNumber of plots included", length(self$plotList), addTab = TRUE)
-      private$printLine("\tNumber of columns in the grid", self$nColumns, addTab = TRUE)
-      private$printLine("\tNumber of rows in the grid", self$nRows, addTab = TRUE)
-      private$printLine("\tArranged in row-major order", self$byRow, addTab = TRUE)
+      ospsuite.utils::ospPrintItems(list(
+        "Number of plots included" = length(self$plotList),
+       "Number of columns in the grid" = self$nColumns,
+      "Number of rows in the grid" = self$nRows,
+        "Arranged in row-major order" = self$byRow
+        ),
+        title = "Plot grid arrangement",
+        print_empty = TRUE
+      )
 
-      private$printLine("Individual plot tags", addTab = TRUE)
-      private$printLine("\tTag level format", self$tagLevels, addTab = TRUE)
-      private$printLine("\tTag level prefix", self$tagPrefix, addTab = TRUE)
-      private$printLine("\tTag level suffix", self$tagSuffix, addTab = TRUE)
-      private$printLine("\tTag level separator", self$tagSeparator, addTab = TRUE)
+      ospsuite.utils::ospPrintItems(list(
+        "Tag level format" = self$tagLevels,
+        "Tag level prefix" = self$tagPrefix,
+        "Tag level suffix" = self$tagSuffix,
+        "Tag level separator" = self$tagSeparator
+      ),
+      title = "Individual plot tags",
+      print_empty = TRUE
+    )
     }
   )
 )
