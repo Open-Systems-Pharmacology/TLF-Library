@@ -105,13 +105,20 @@ test_that("Plot exports are correctly rendered", {
   tempFile <- tempfile(fileext = ".png")
 
   exportConfiguration <- ExportConfiguration$new(
-    format = "png",
-    path = tempFile,
+    format = "PNG",
+    path = ".",
     name = "test-export-obs-vs-pred",
     dpi = 300
   )
 
   exportConfiguration$savePlot(plot)
+
+  exportConfiguration <- ExportConfiguration$new(
+    format = "JPG",
+    path = ".",
+    name = "test-export-obs-vs-pred",
+    dpi = 300
+  )
 
   expect_snapshot_file(paste0(file.path(exportConfiguration$path, exportConfiguration$name), ".png"), "test-export-obs-vs-pred.png")
 })

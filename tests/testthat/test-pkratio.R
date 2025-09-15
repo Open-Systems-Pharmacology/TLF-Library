@@ -2,21 +2,26 @@
 load(testthat::test_path("pkRatioDataExample.RData"))
 
 test_that("plotPKRatio() function works properly", {
-  pkrp <- plotPKRatio(data = data.frame(
-    x = c(1, 2, 10, 20, 100),
-    y = c(1, 3, 4, 0.5, 0.2)
-  ))
+  pkrp <- plotPKRatio(
+    data = data.frame(
+      x = c(1, 2, 10, 20, 100),
+      y = c(1, 3, 4, 0.5, 0.2)
+    )
+  )
 
   expect_s3_class(pkrp, "ggplot")
 
   expect_error(plotPKRatio(), 'argument "data" is missing, with no default')
   expect_error(
     plotPKRatio(data = pkRatioData, dataMapping = list(x = "Age", y = "Ratio")),
-    "argument 'dataMapping' is of type 'list', but expected 'PKRatioDataMapping'!"
+    'argument "dataMapping" is of type <list>, but expected <PKRatioDataMapping>!'
   )
   expect_error(
-    plotPKRatio(data = pkRatioData, plotConfiguration = list(title = "PK Ratio Plot")),
-    "argument 'plotConfiguration' is of type 'list', but expected 'PKRatioPlotConfiguration'!"
+    plotPKRatio(
+      data = pkRatioData,
+      plotConfiguration = list(title = "PK Ratio Plot")
+    ),
+    'argument "plotConfiguration" is of type <list>, but expected <PKRatioPlotConfiguration>!'
   )
 })
 
@@ -30,11 +35,14 @@ test_that("PK Ratio default settings work", {
 
   expect_null(pkRatioMapping$x)
   expect_null(pkRatioMapping$y)
-  expect_equal(pkRatioMapping$lines, list(
-    pkRatio1 = 1,
-    pkRatio2 = c(1.5, 1 / 1.5),
-    pkRatio3 = c(2, 1 / 2)
-  ))
+  expect_equal(
+    pkRatioMapping$lines,
+    list(
+      pkRatio1 = 1,
+      pkRatio2 = c(1.5, 1 / 1.5),
+      pkRatio3 = c(2, 1 / 2)
+    )
+  )
 
   expect_s3_class(pkRatioConfig$labels$title, "Label")
   expect_s3_class(pkRatioConfig$labels$subtitle, "Label")

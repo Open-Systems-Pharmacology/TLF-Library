@@ -31,18 +31,16 @@ test_that("Label gives error when initialized with wrong arguments", {
 
 test_that("Empty label is translated as element_blank from ggplot2", {
   emptyLabel <- Label$new(text = NULL)
-  expect_equal(
-    class(emptyLabel$createPlotTextFont())[1],
-    "element_blank"
-  )
+  # Class name format depends on ggplot2 version
+  class_name <- class(emptyLabel$createPlotTextFont())[1]
+  expect_true(class_name %in% c("element_blank", "ggplot2::element_blank"))
 })
 
 test_that("Non-empty label is translated as element_text and element_textbox", {
   nonEmptyLabel <- Label$new(text = "text")
-  expect_equal(
-    class(nonEmptyLabel$createPlotTextFont())[1],
-    "element_text"
-  )
+  # Class name format depends on ggplot2 version
+  class_name <- class(nonEmptyLabel$createPlotTextFont())[1]
+  expect_true(class_name %in% c("element_text", "ggplot2::element_text"))
   expect_equal(
     class(nonEmptyLabel$createPlotTextBoxFont())[1],
     "element_textbox"
@@ -52,37 +50,115 @@ test_that("Non-empty label is translated as element_text and element_textbox", {
 test_that("Long texts are properly handled in labels", {
   vdiffr::expect_doppelganger(
     "very long labels",
-    fig = initializePlot(plotConfiguration = PlotConfiguration$new(
-      title = paste("Title: This is a", paste(rep("very", 40), collapse = " "), "long title"),
-      subtitle = paste("Subtitle: This is a", paste(rep("very", 40), collapse = " "), "long subtitle"),
-      xlabel = paste("xlabel: This is a", paste(rep("very", 40), collapse = " "), "long x label"),
-      ylabel = paste("ylabel: This is a", paste(rep("very", 40), collapse = " "), "long y label"),
-      caption = paste("Caption: This is a", paste(rep("very", 40), collapse = " "), "long caption")
-    ))
+    fig = initializePlot(
+      plotConfiguration = PlotConfiguration$new(
+        title = paste(
+          "Title: This is a",
+          paste(rep("very", 40), collapse = " "),
+          "long title"
+        ),
+        subtitle = paste(
+          "Subtitle: This is a",
+          paste(rep("very", 40), collapse = " "),
+          "long subtitle"
+        ),
+        xlabel = paste(
+          "xlabel: This is a",
+          paste(rep("very", 40), collapse = " "),
+          "long x label"
+        ),
+        ylabel = paste(
+          "ylabel: This is a",
+          paste(rep("very", 40), collapse = " "),
+          "long y label"
+        ),
+        caption = paste(
+          "Caption: This is a",
+          paste(rep("very", 40), collapse = " "),
+          "long caption"
+        )
+      )
+    )
   )
 
   vdiffr::expect_doppelganger(
     "very long flipped labels",
-    fig = initializePlot(plotConfiguration = PlotConfiguration$new(
-      title = paste("Title: This is a", paste(rep("very", 40), collapse = " "), "long title"),
-      subtitle = paste("Subtitle: This is a", paste(rep("very", 40), collapse = " "), "long subtitle"),
-      xlabel = Label$new(text = paste("ylabel: This is a", paste(rep("very", 40), collapse = " "), "long x label"), angle = 90),
-      ylabel = Label$new(text = paste("ylabel: This is a", paste(rep("very", 40), collapse = " "), "long y label"), angle = 0),
-      caption = paste("Caption: This is a", paste(rep("very", 40), collapse = " "), "long caption"),
-      watermark = Label$new(text = "watermark", angle = 45)
-    ))
+    fig = initializePlot(
+      plotConfiguration = PlotConfiguration$new(
+        title = paste(
+          "Title: This is a",
+          paste(rep("very", 40), collapse = " "),
+          "long title"
+        ),
+        subtitle = paste(
+          "Subtitle: This is a",
+          paste(rep("very", 40), collapse = " "),
+          "long subtitle"
+        ),
+        xlabel = Label$new(
+          text = paste(
+            "ylabel: This is a",
+            paste(rep("very", 40), collapse = " "),
+            "long x label"
+          ),
+          angle = 90
+        ),
+        ylabel = Label$new(
+          text = paste(
+            "ylabel: This is a",
+            paste(rep("very", 40), collapse = " "),
+            "long y label"
+          ),
+          angle = 0
+        ),
+        caption = paste(
+          "Caption: This is a",
+          paste(rep("very", 40), collapse = " "),
+          "long caption"
+        ),
+        watermark = Label$new(text = "watermark", angle = 45)
+      )
+    )
   )
 
   expect_warning(
     expect_warning(
-      initializePlot(plotConfiguration = PlotConfiguration$new(
-        title = paste("Title: This is a", paste(rep("very", 40), collapse = " "), "long title"),
-        subtitle = paste("Subtitle: This is a", paste(rep("very", 40), collapse = " "), "long subtitle"),
-        xlabel = Label$new(text = paste("ylabel: This is a", paste(rep("very", 40), collapse = " "), "long x label"), angle = 75),
-        ylabel = Label$new(text = paste("ylabel: This is a", paste(rep("very", 40), collapse = " "), "long y label"), angle = 30),
-        caption = paste("Caption: This is a", paste(rep("very", 40), collapse = " "), "long caption"),
-        watermark = Label$new(text = "watermark", angle = 45)
-      ))
+      initializePlot(
+        plotConfiguration = PlotConfiguration$new(
+          title = paste(
+            "Title: This is a",
+            paste(rep("very", 40), collapse = " "),
+            "long title"
+          ),
+          subtitle = paste(
+            "Subtitle: This is a",
+            paste(rep("very", 40), collapse = " "),
+            "long subtitle"
+          ),
+          xlabel = Label$new(
+            text = paste(
+              "ylabel: This is a",
+              paste(rep("very", 40), collapse = " "),
+              "long x label"
+            ),
+            angle = 75
+          ),
+          ylabel = Label$new(
+            text = paste(
+              "ylabel: This is a",
+              paste(rep("very", 40), collapse = " "),
+              "long y label"
+            ),
+            angle = 30
+          ),
+          caption = paste(
+            "Caption: This is a",
+            paste(rep("very", 40), collapse = " "),
+            "long caption"
+          ),
+          watermark = Label$new(text = "watermark", angle = 45)
+        )
+      )
     )
   )
 })
