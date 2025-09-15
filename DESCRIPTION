@@ -41,6 +41,8 @@ Imports:
     lifecycle
 Depends: 
     R (>= 4.1)
+Remotes:
+    ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
