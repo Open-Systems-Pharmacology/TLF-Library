@@ -1,0 +1,28 @@
+name: Main-Workflow
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions: write-all
+
+jobs:
+  R-CMD-Check:
+    if: ${{ !cancelled() }}
+    needs: [update-core-files]
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
+
+  test-coverage:
+    if: ${{ !cancelled() }}
+    needs: [update-core-files]
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@main
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+
+  pkgdown:
+    if: ${{ !cancelled() }}
+    needs: [update-core-files]
+    uses:  Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@main
