@@ -33,7 +33,7 @@ Other PlotConfiguration classes:
 }
 \concept{PlotConfiguration classes}
 \section{Super class}{
-\code{\link[tlf:AxisConfiguration]{tlf::AxisConfiguration}} -> \code{XAxisConfiguration}
+\code{tlf::AxisConfiguration} -> \code{XAxisConfiguration}
 }
 \section{Methods}{
 \subsection{Public methods}{
