@@ -38,10 +38,10 @@ test_that("Checks method of type 'validate' work properly", {
   expect_null(validateIsOfType(A, "data.frame"))
   expect_null(validateIsIncluded("col3", names(A)))
 
-  errorMessageIsSameLength <- "Arguments 'A, B' must have the same length, but they don't!"
-  errorMessageIsOfLength <- "Object should be of length '5', but is of length '3' instead."
-  errorMessageIsOfType <- "argument 'A' is of type 'data.frame', but expected 'character'!"
-  errorMessageIsIncluded <- "Values 'col4' are not in included in parent values: 'col1, col2, col3'."
+  errorMessageIsSameLength <- "Arguments \"A, B\" must have the same length, but they don't!"
+  errorMessageIsOfLength <- "Object should be of length 5, but is of length 3 instead."
+  errorMessageIsOfType <- 'argument "A" is of type <data.frame>, but expected <character>!'
+  errorMessageIsIncluded <- '1 value \\("col4"\\) is not included in parent values: col1, col2, and col3\\.'
 
   # Error when checks fail
   expect_error(validateIsSameLength(A, B), errorMessageIsSameLength)

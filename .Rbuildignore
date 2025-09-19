@@ -32,3 +32,4 @@ tests\^spelling
 ^\.lintr$
 ^WIP/.
 ^old/.
+^.github/.

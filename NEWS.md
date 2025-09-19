@@ -1,3 +1,7 @@
+# tlf 1.6.1
+
+- Hot fixes following ggplot2 v4.0.0 breaking changes.
+
 # tlf 1.6.0
 
 - Lower Limit Of Quantification (LLOQ) can be added on time-profile plots and obs-vs-pred plots.

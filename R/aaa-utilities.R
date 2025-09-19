@@ -85,7 +85,10 @@
                            plotConfiguration = NULL) {
   plotObject <- plotObject %||% initializePlot(plotConfiguration)
   validateIsOfType(plotObject, "ggplot")
-  validateIsIncluded("plotConfiguration", names(plotObject))
+  # Check if plotConfiguration attribute exists (ggplot2 4.0.0 compatibility)
+  if (is.null(plotObject$plotConfiguration)) {
+    stop("plotConfiguration attribute is missing from the plot object")
+  }
   return(plotObject)
 }
 

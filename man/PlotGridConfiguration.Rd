@@ -197,7 +197,7 @@ while also collecting guides you must apply that change to the overall
 patchwork.}
 
 \item{\code{design}}{Specification of the location of areas in the layout. Can
-either be specified as a text string or by concatenating calls to \code{\link[=area]{area()}}
+either be specified as a text string or by concatenating calls to \code{\link[patchwork:area]{patchwork::area()}}
 together. See the examples in \link[patchwork:wrap_plots]{wrap_plots()} for
 further information on use.}
 }

@@ -45,6 +45,7 @@ test_that("plotObservedVsSimulated works with data point with and without error 
   skip_if_not_installed("vdiffr")
   skip_if(getRversion() < "4.1")
 
+  set.seed(42)
   x <- sort(abs(rnorm(20, 2.5, 1)))
 
   obsVsPredData <- data.frame(

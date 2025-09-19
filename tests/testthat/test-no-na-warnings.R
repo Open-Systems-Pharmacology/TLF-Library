@@ -8,12 +8,27 @@ testData <- data.frame(
 plotNames <- c("TimeProfile", "ObsVsPred", "ResVsPred", "PKRatio", "DDIRatio")
 
 # Expression is "<plotname>DataMapping <- <PlotName>DataMapping$new()"
-createDataMapping <- parse(text = paste0(tolower(plotNames), "DataMapping <- ", plotNames, "DataMapping$new(x='x',y='y')"))
+createDataMapping <- parse(
+  text = paste0(
+    tolower(plotNames),
+    "DataMapping <- ",
+    plotNames,
+    "DataMapping$new(x='x',y='y')"
+  )
+)
 eval(createDataMapping)
 
 # createPlot expression is "plot<PlotName>(data=testData, dataMapping=<plotname>DataMapping)"
-createPlot <- paste0("plot", plotNames, "(data=testData, dataMapping = ", tolower(plotNames), "DataMapping)")
-ggplotExpression <- parse(text = paste0("expect_s3_class(", createPlot, ', "ggplot")'))
+createPlot <- paste0(
+  "plot",
+  plotNames,
+  "(data=testData, dataMapping = ",
+  tolower(plotNames),
+  "DataMapping)"
+)
+ggplotExpression <- parse(
+  text = paste0("expect_s3_class(", createPlot, ', "ggplot")')
+)
 warningExpression <- parse(text = paste0("expect_silent(", createPlot, ")"))
 
 

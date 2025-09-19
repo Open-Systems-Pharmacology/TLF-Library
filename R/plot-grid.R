@@ -104,8 +104,16 @@ plotGrid <- function(plotGridConfiguration) {
           valign = plotGridConfiguration$titleVerticalJustification,
           hjust = plotGridConfiguration$captionHorizontalJustification,
           vjust = plotGridConfiguration$captionVerticalJustification,
-          orientation = .convertAngleToOrientation(plotGridConfiguration$titleAngle),
-          margin = ggplot2::unit(plotGridConfiguration$titleMargin, "pt")
+          orientation = .convertAngleToOrientation(
+            plotGridConfiguration$titleAngle
+          ),
+          margin = ggplot2::margin(
+            t = plotGridConfiguration$titleMargin[1],
+            r = plotGridConfiguration$titleMargin[2],
+            b = plotGridConfiguration$titleMargin[3],
+            l = plotGridConfiguration$titleMargin[4],
+            unit = "pt"
+          )
         ),
         plot.subtitle = ggtext::element_textbox_simple(
           color = plotGridConfiguration$subtitleColor,
@@ -116,8 +124,16 @@ plotGrid <- function(plotGridConfiguration) {
           valign = plotGridConfiguration$subtitleVerticalJustification,
           hjust = plotGridConfiguration$captionHorizontalJustification,
           vjust = plotGridConfiguration$captionVerticalJustification,
-          orientation = .convertAngleToOrientation(plotGridConfiguration$subtitleAngle),
-          margin = ggplot2::unit(plotGridConfiguration$subtitleMargin, "pt")
+          orientation = .convertAngleToOrientation(
+            plotGridConfiguration$subtitleAngle
+          ),
+          margin = ggplot2::margin(
+            t = plotGridConfiguration$subtitleMargin[1],
+            r = plotGridConfiguration$subtitleMargin[2],
+            b = plotGridConfiguration$subtitleMargin[3],
+            l = plotGridConfiguration$subtitleMargin[4],
+            unit = "pt"
+          )
         ),
         plot.caption = ggtext::element_textbox_simple(
           color = plotGridConfiguration$captionColor,
@@ -128,8 +144,16 @@ plotGrid <- function(plotGridConfiguration) {
           valign = plotGridConfiguration$captionVerticalJustification,
           hjust = plotGridConfiguration$captionHorizontalJustification,
           vjust = plotGridConfiguration$captionVerticalJustification,
-          orientation = .convertAngleToOrientation(plotGridConfiguration$captionAngle),
-          margin = ggplot2::unit(plotGridConfiguration$captionMargin, "pt")
+          orientation = .convertAngleToOrientation(
+            plotGridConfiguration$captionAngle
+          ),
+          margin = ggplot2::margin(
+            t = plotGridConfiguration$captionMargin[1],
+            r = plotGridConfiguration$captionMargin[2],
+            b = plotGridConfiguration$captionMargin[3],
+            l = plotGridConfiguration$captionMargin[4],
+            unit = "pt"
+          )
         )
       )
     ) &
@@ -330,7 +354,6 @@ PlotGridConfiguration <- R6::R6Class(
     captionAngle = 0,
     captionMargin = c(2, 2, 5, 2),
 
-
     # arrangement ------------------------------------
 
     nColumns = NULL,
@@ -427,16 +450,36 @@ PlotGridConfiguration <- R6::R6Class(
       private$printLine("\tCaption", self$caption, addTab = TRUE)
 
       private$printLine("Plot grid arrangement", addTab = TRUE)
-      private$printLine("\tNumber of plots included", length(self$plotList), addTab = TRUE)
-      private$printLine("\tNumber of columns in the grid", self$nColumns, addTab = TRUE)
-      private$printLine("\tNumber of rows in the grid", self$nRows, addTab = TRUE)
-      private$printLine("\tArranged in row-major order", self$byRow, addTab = TRUE)
+      private$printLine(
+        "\tNumber of plots included",
+        length(self$plotList),
+        addTab = TRUE
+      )
+      private$printLine(
+        "\tNumber of columns in the grid",
+        self$nColumns,
+        addTab = TRUE
+      )
+      private$printLine(
+        "\tNumber of rows in the grid",
+        self$nRows,
+        addTab = TRUE
+      )
+      private$printLine(
+        "\tArranged in row-major order",
+        self$byRow,
+        addTab = TRUE
+      )
 
       private$printLine("Individual plot tags", addTab = TRUE)
       private$printLine("\tTag level format", self$tagLevels, addTab = TRUE)
       private$printLine("\tTag level prefix", self$tagPrefix, addTab = TRUE)
       private$printLine("\tTag level suffix", self$tagSuffix, addTab = TRUE)
-      private$printLine("\tTag level separator", self$tagSeparator, addTab = TRUE)
+      private$printLine(
+        "\tTag level separator",
+        self$tagSeparator,
+        addTab = TRUE
+      )
     }
   )
 )
