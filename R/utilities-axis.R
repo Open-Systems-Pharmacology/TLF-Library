@@ -175,7 +175,7 @@ getLogTickLabels <- function(ticks) {
   prefixValues <- paste0(prefixValues, "%*%")
   # For 1 the multiplication is redundant and removed
   prefixValues[prefixValues == "1%*%"] <- ""
-  return(parse(text = paste(prefixValues, "10^", exponentValues, sep = "")))
+  return(scales:::parse_safe(text = paste(prefixValues, "10^", exponentValues, sep = "")))
 }
 
 #' @title getLnTickLabels
@@ -193,7 +193,7 @@ getLnTickLabels <- function(ticks) {
   prefixValues <- paste0(prefixValues, "%*%")
   # For 1 the multiplication is redundant and removed
   prefixValues[prefixValues == "1%*%"] <- ""
-  return(parse(text = paste(prefixValues, "e^", exponentValues, sep = "")))
+  return(scales:::parse_safe(text = paste(prefixValues, "e^", exponentValues, sep = "")))
 }
 
 
@@ -207,7 +207,7 @@ getLnTickLabels <- function(ticks) {
 #' @export
 getSqrtTickLabels <- function(ticks) {
   sqrtValues <- ticks^2
-  return(parse(text = paste("sqrt(", sqrtValues, ")", sep = "")))
+  return(scales:::parse_safe(text = paste("sqrt(", sqrtValues, ")", sep = "")))
 }
 
 #' @title getGreekTickLabels
