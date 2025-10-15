@@ -2,11 +2,8 @@
 
 <!-- badges: start -->
 
+[![Build](https://github.com/Open-Systems-Pharmacology/TLF-Library/actions/workflows/main-workflow.yaml/badge.svg)](https://github.com/Open-Systems-Pharmacology/TLF-Library/actions/workflows/main-workflow.yaml)
 <a
-href="https://ci.appveyor.com/project/open-systems-pharmacology-ci/TLF-Library/branch/develop"
-class="pkgdown-devel"><img
-src="https://ci.appveyor.com/api/projects/status/github/Open-Systems-Pharmacology/TLF-Library?branch=develop&amp;svg=true"
-alt="AppVeyor build status" /></a> <a
 href="https://app.codecov.io/gh/Open-Systems-Pharmacology/TLF-Library"
 class="pkgdown-devel"><img
 src="https://codecov.io/gh/Open-Systems-Pharmacology/TLF-Library/branch/develop/graph/badge.svg"
@@ -74,3 +71,4 @@ standards](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODING
 TLF Library is released under the [GPLv2 License](LICENSE).
 
 All trademarks within this document belong to their legitimate owners.
+
