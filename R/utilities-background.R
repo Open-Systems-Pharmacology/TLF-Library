@@ -270,7 +270,7 @@ addWatermark <- function(plotObject,
 
   watermark <- createWatermarkGrob(label = watermark, alpha = alpha)
 
-  plotObject <- plotObject + ggplot2::annotation_custom(grob = watermark, xmin = -Inf, ymin = -Inf, xmax = Inf, ymax = Inf)
+  plotObject <- plotObject + ggplot2::annotation_custom(grob = watermark, xmin = I(-Inf), ymin = I(-Inf), xmax = I(Inf), ymax = I(Inf))
 
   return(plotObject)
 }
@@ -345,7 +345,7 @@ setWatermark <- function(plotObject,
     watermark = watermarkConfiguration,
     alpha = alpha
   )
-  newPlotObject$layers[[1]] <- dummyPlot$layer[[1]]
+  newPlotObject$layers[[1]] <- dummyPlot$layers[[1]]
   return(newPlotObject)
 }
 
