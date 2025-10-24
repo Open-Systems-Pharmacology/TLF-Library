@@ -7,8 +7,22 @@ on:
 
 permissions: 
   contents: write
+  actions: read
+  attestations: read
+  checks: read
+  deployments: read
+  discussions: read
+  issues: read
   packages: read
-  
+  pages: read
+  pull-requests: read
+  repository-projects: read
+  statuses: read
+  security-events: read
+  # read does not seem to exist for id-token
+  id-token: write
+  models: read
+
 jobs:
   bump-dev-version: # only do that when actually merging in main/develop branch
     if: github.event_name != 'pull_request'
