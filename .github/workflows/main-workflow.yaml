@@ -2,19 +2,44 @@ name: Main-Workflow
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   pull_request:
-  workflow_dispatch:
 
-permissions: write-all
+permissions: 
+  contents: write
+  actions: read
+  attestations: read
+  checks: read
+  deployments: read
+  discussions: read
+  issues: read
+  packages: read
+  pages: read
+  pull-requests: read
+  repository-projects: read
+  statuses: read
+  security-events: read
+  # read does not seem to exist for id-token
+  id-token: write
+  models: read
 
 jobs:
+  bump-dev-version: # only do that when actually merging in main/develop branch
+    if: github.event_name != 'pull_request'
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/bump_dev_version_tag_branch.yaml@main
+    with:
+      app-id: ${{ vars.VERSION_BUMPER_APPID }}
+    secrets:
+      private-key: ${{ secrets.VERSION_BUMPER_SECRET }}
+
   R-CMD-Check:
+    needs: bump-dev-version
     if: ${{ !cancelled() }}
+    permissions: read-all
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
 
-  test-coverage:
+  pkgdown:
+    needs: bump-dev-version
     if: ${{ !cancelled() }}
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@main
-    secrets:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    uses:  Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@main
+
