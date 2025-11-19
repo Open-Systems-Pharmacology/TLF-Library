@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">tlf</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.6.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -259,7 +259,7 @@ using predefined fonts as defined by the current theme.</p>
 <code>plotPKRatio(data = pkRatioData[, c("Age", "Ratio")])</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotPKRatio.html">plotPKRatio</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pkRatioData</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Age"</span>, <span class="st">"Ratio"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<p><img src="pk-ratio-vignette_files/figure-html/minimal-example-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="pk-ratio-vignette_files/figure-html/minimal-example-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="examples-with-datamapping">2.4. Examples with <code>dataMapping</code><a class="anchor" aria-label="anchor" href="#examples-with-datamapping"></a>
@@ -310,7 +310,7 @@ colors to each “Gender”:</p>
 <span>  data <span class="op">=</span> <span class="va">pkRatioData</span>,</span>
 <span>  dataMapping <span class="op">=</span> <span class="va">dataMappingB</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="pk-ratio-vignette_files/figure-html/dataMappingB-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="pk-ratio-vignette_files/figure-html/dataMappingB-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>Multiple groupMappings can be performed for PK ratio: data can be
 regrouped by <code>color</code>, <code>shape</code> and/or
 <code>size</code>. The next example uses 2 groups in the groupMapping:
@@ -327,7 +327,7 @@ One group splits “Gender” by <code>color</code>, the other splits
 <span>  data <span class="op">=</span> <span class="va">pkRatioData</span>,</span>
 <span>  dataMapping <span class="op">=</span> <span class="va">dataMapping2groups</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="pk-ratio-vignette_files/figure-html/dataMapping2groups-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="pk-ratio-vignette_files/figure-html/dataMapping2groups-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>The last examples uses another feature available in the
 <code>groupMapping</code> class. The class can be initialized using a
 <code>data.frame</code> where the last column of the data.frame will be
@@ -428,7 +428,7 @@ following:</p>
 <span>  data <span class="op">=</span> <span class="va">pkRatioData</span><span class="op">[</span><span class="op">!</span><span class="op">(</span><span class="va">pkRatioData</span><span class="op">$</span><span class="va">Country</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"France"</span><span class="op">)</span>, <span class="op">]</span>,</span>
 <span>  dataMapping <span class="op">=</span> <span class="va">dataMappingDF</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="pk-ratio-vignette_files/figure-html/dataMappingDF-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="pk-ratio-vignette_files/figure-html/dataMappingDF-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level4">
 <h4 id="pk-values-defined-in-lines">2.4.2 PK values defined in <code>lines</code><a class="anchor" aria-label="anchor" href="#pk-values-defined-in-lines"></a>
@@ -463,7 +463,7 @@ initializing the mapping or afterwards. For instance:</p>
 <span>  data <span class="op">=</span> <span class="va">pkRatioData</span>,</span>
 <span>  dataMapping <span class="op">=</span> <span class="va">linesMapping</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="pk-ratio-vignette_files/figure-html/linesMapping-plot-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="pk-ratio-vignette_files/figure-html/linesMapping-plot-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level3">
@@ -537,7 +537,7 @@ field.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">tlf</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.6.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,7 +112,7 @@ below.</p>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/initializePlot.html">initializePlot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/initializePlot%20minimal%20example-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/initializePlot%20minimal%20example-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <ul>
 <li>Initialize an empty plot with labels defined by
 <code>plotConfiguration</code> input</li>
@@ -126,7 +126,7 @@ below.</p>
 <span><span class="op">)</span></span>
 <span><span class="co"># Use the obect to define the plot properties</span></span>
 <span><span class="fu"><a href="../reference/initializePlot.html">initializePlot</a></span><span class="op">(</span>plotConfiguration <span class="op">=</span> <span class="va">myConfiguration</span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/initializePlot%20with%20plot%20configuration-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/initializePlot%20with%20plot%20configuration-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <ul>
 <li>Initialize an empty plot whose <code>plotConfiguration</code> input
 uses <code>data</code>, <code>metaData</code> and
@@ -224,7 +224,7 @@ replace those default</li>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/initializePlot.html">initializePlot</a></span><span class="op">(</span>plotConfiguration <span class="op">=</span> <span class="va">metaDataConfiguration</span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/initializePlot%20with%20smart%20plot%20configuration%20on%20metaData-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/initializePlot%20with%20smart%20plot%20configuration%20on%20metaData-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Define default Configuration with metaData</span></span>
 <span><span class="va">dataConfiguration</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlotConfiguration.html">PlotConfiguration</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
@@ -234,7 +234,7 @@ replace those default</li>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/initializePlot.html">initializePlot</a></span><span class="op">(</span>plotConfiguration <span class="op">=</span> <span class="va">dataConfiguration</span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/initializePlot%20with%20smart%20plot%20configuration%20on%20data-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/initializePlot%20with%20smart%20plot%20configuration%20on%20data-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Define default Configuration with metaData</span></span>
 <span><span class="va">overwriteConfiguration</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PlotConfiguration.html">PlotConfiguration</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
@@ -246,7 +246,7 @@ replace those default</li>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/initializePlot.html">initializePlot</a></span><span class="op">(</span>plotConfiguration <span class="op">=</span> <span class="va">overwriteConfiguration</span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/initializePlot%20with%20smart%20plot%20configuration%20overwritten-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/initializePlot%20with%20smart%20plot%20configuration%20overwritten-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="addscatter">
@@ -262,7 +262,7 @@ what to plot.</p>
 <span>  metaData <span class="op">=</span> <span class="va">cosMetaData</span>,</span>
 <span>  dataMapping <span class="op">=</span> <span class="va">cosMapping</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/addScatter%20data-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/addScatter%20data-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>The argument <code>plotConfiguration</code> also works the same way
 as in <code>initializePlot</code>:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -272,7 +272,7 @@ as in <code>initializePlot</code>:</p>
 <span>  dataMapping <span class="op">=</span> <span class="va">cosMapping</span>,</span>
 <span>  plotConfiguration <span class="op">=</span> <span class="va">overwriteConfiguration</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/addScatter%20with%20smart%20plot%20configuration%20overwritten-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/addScatter%20with%20smart%20plot%20configuration%20overwritten-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>The function <code>addScatter</code> also supports <code>x</code> and
 <code>y</code> inputs instead of <code>data</code> and its
 <code>dataMapping</code>. In this case, the function will internally
@@ -283,7 +283,7 @@ names along with its data mapping.</p>
 <span>  x <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">time</span>,</span>
 <span>  y <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">cos</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/addScatter%20xy-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/addScatter%20xy-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>It is also possible to prove a <code>plotConfiguration</code> to
 define the properties especially the labels of the plot created by this
 process.</p>
@@ -293,7 +293,7 @@ process.</p>
 <span>  y <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">cos</span>,</span>
 <span>  plotConfiguration <span class="op">=</span> <span class="va">overwriteConfiguration</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/addScatter%20xy%20with%20plot%20configuration%20overwritten-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/addScatter%20xy%20with%20plot%20configuration%20overwritten-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>Additionally, optional arguments can be used that will overwrite the
 default and specific properties of the
 <code>plotConfiguration</code>.</p>
@@ -328,7 +328,7 @@ points. Note that multiple captions can be provided if
 <span>  size <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  caption <span class="op">=</span> <span class="st">"open triangle"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/addScatter%20xy%20with%20optional%20properties-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/addScatter%20xy%20with%20optional%20properties-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>If the input argument <code>plotObject</code> is used, then the
 scatter layer is added on top of the input plot and will use the
 <code>plotConfiguration</code> of <code>plotObject</code>.</p>
@@ -344,7 +344,7 @@ scatter layer is added on top of the input plot and will use the
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">scatterPlot</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/addScatter%20with%20plotObject-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/addScatter%20with%20plotObject-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="../reference/addScatter.html">addScatter</a></span><span class="op">(</span></span>
@@ -356,7 +356,7 @@ scatter layer is added on top of the input plot and will use the
 <span>  caption <span class="op">=</span> <span class="st">"inverted triangle"</span>,</span>
 <span>  plotObject <span class="op">=</span> <span class="va">scatterPlot</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/addScatter%20with%20plotObject-2.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/addScatter%20with%20plotObject-2.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="addline">
@@ -370,7 +370,7 @@ arguments as <code>addScatter</code> can be used by
 <span>  x <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">time</span>,</span>
 <span>  y <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">cos</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/addLine%20xy-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/addLine%20xy-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/addLine.html">addLine</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">time</span>,</span>
@@ -380,7 +380,7 @@ arguments as <code>addScatter</code> can be used by
 <span>  size <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  caption <span class="op">=</span> <span class="st">"line with\nlong dashes"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/addLine%20xy%20with%20optional%20properties-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/addLine%20xy%20with%20optional%20properties-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>Since line plots can include horizontal and vertical lines,
 <code>addLine</code> has the possibility of using <em>x</em> or
 <em>y</em> input for x/y-intercepts.</p>
@@ -446,7 +446,7 @@ that require <em>XYGDataMapping</em>.</p>
 <span>  metaData <span class="op">=</span> <span class="va">cosMetaData</span>,</span>
 <span>  dataMapping <span class="op">=</span> <span class="va">sinCosMapping</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/addRibbon%20data-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/addRibbon%20data-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>The function <code>addRibbon</code> also supports <code>x</code>,
 <code>ymin</code> and <code>ymax</code> inputs instead of
 <code>data</code> and its <code>dataMapping</code>.</p>
@@ -456,7 +456,7 @@ that require <em>XYGDataMapping</em>.</p>
 <span>  ymin <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">sin</span>,</span>
 <span>  ymax <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">cos</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/addRibbon%20xy-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/addRibbon%20xy-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>For ribbons, optional inputs include <code>fill</code> and
 <code>alpha</code> defining the color and transparency of the ribbon,
 respectively.</p>
@@ -469,7 +469,7 @@ respectively.</p>
 <span>  alpha <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  caption <span class="op">=</span> <span class="st">"ribbon plot"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/addRibbon%20optional%20inputs-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/addRibbon%20optional%20inputs-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>Note that transparency input, <code>alpha</code>, is a value between
 0 and 1. The closer to 0, the more transparent the <code>fill</code>
 color is. The closer to 1, the more visible the <code>fill</code> color
@@ -488,7 +488,7 @@ inputs.</p>
 <span>  ymin <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">sin</span>,</span>
 <span>  ymax <span class="op">=</span> <span class="va">cosData</span><span class="op">$</span><span class="va">cos</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/addErrorbar%20xy-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/addErrorbar%20xy-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>Among its optional inputs, <code>addErrorbar</code> proposes
 <code>capSize</code> a numeric that defines the size of the extremities
 of the error bars (caps).</p>
@@ -503,7 +503,7 @@ of the error bars (caps).</p>
 <span>  size <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  caption <span class="op">=</span> <span class="st">"error bar plot"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/addErrorbar%20optional%20inputs-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/addErrorbar%20optional%20inputs-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>Note that optional inputs for <code>addErrorbar</code> define the
 aesthetic of the bars only (and not how to link the bars). Thus, two
 layers are necessary when creating a plot that included both data and
@@ -520,7 +520,7 @@ their error bars.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">errorPlot</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/addErrorbar%20and%20Scatter-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/addErrorbar%20and%20Scatter-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="../reference/addScatter.html">addScatter</a></span><span class="op">(</span></span>
@@ -532,7 +532,7 @@ their error bars.</p>
 <span>  caption <span class="op">=</span> <span class="st">"diamond"</span>,</span>
 <span>  plotObject <span class="op">=</span> <span class="va">errorPlot</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="atom-plots_files/figure-html/addErrorbar%20and%20Scatter-2.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="atom-plots_files/figure-html/addErrorbar%20and%20Scatter-2.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
@@ -545,7 +545,7 @@ their error bars.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">tlf</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.6.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,7 +92,7 @@
 <p>Use the function <code><a href="../reference/runPlotMaker.html">runPlotMaker()</a></code> to start the User
 Interface. The function will load <code>shiny</code> required for the
 UI.</p>
-<p><img src="figures/plot-maker/start-plot-maker.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/plot-maker/start-plot-maker.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="how-to-import-data">3. How to import data<a class="anchor" aria-label="anchor" href="#how-to-import-data"></a>
@@ -106,7 +106,7 @@ below, a variable named <em>myDataset</em> was created in the global
 environment and is listed in the field <strong>Variables available in
 environment</strong>. Note that such variables are required as
 data.frame if you want to create a plot.</p>
-<p><img src="figures/plot-maker/import-env-data.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/plot-maker/import-env-data.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>Data can also be imported from a file if the field
 <strong>Location</strong> uses <em>file</em>. This will change the field
 <strong>Variables available in environment</strong> into <strong>Select
@@ -117,7 +117,7 @@ lines of your file and/or choose a specific column separator as
 illustrated in the figure below. In the figure below, a variable named
 <em>myDataset</em> was created in the global environment and is listed
 in the field <strong>Variables available in environment</strong>.</p>
-<p><img src="figures/plot-maker/import-file-data.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/plot-maker/import-file-data.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>When data are imported as illustrated below on the dataset
 “test-data.csv”, the first rows of the dataset are shown on the bottom
 left side of the UI.</p>
@@ -128,7 +128,7 @@ male adults are selected in the example below, the field <strong>Data
 Selection</strong> should include
 <em>data<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>g</mi><mi>e</mi><mi>B</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">AgeBin %in% "Adults" &amp; data</annotation></semantics></math>Sex
 %in% “Male”</em>.</p>
-<p><img src="figures/plot-maker/imported-data.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/plot-maker/imported-data.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="how-to-plot-the-imported-data">4. How to plot the imported data<a class="anchor" aria-label="anchor" href="#how-to-plot-the-imported-data"></a>
@@ -142,7 +142,7 @@ Ratio plot using the UI.</p>
 <p>The first steps to plot the data is to select which plot and
 variables are plotted. This is the role of the <strong>Data
 Mapping</strong> navigation bar (figure below).</p>
-<p><img src="figures/plot-maker/data-mapping.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/plot-maker/data-mapping.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>In the navigation bar <strong>Data Mapping</strong>, users can select
 from the variable names available in the dataset which should be plotted
 in <em>x</em>, <em>y</em> or used to split the data by <em>color</em>,
@@ -151,17 +151,17 @@ below. Some mappings are not used by all the plots and won’t be
 available if the corresponding plot is currently selected. Note that if
 no mapping is wanted for a variable, the corresponding field can be set
 as <strong>none</strong>.</p>
-<p><img src="figures/plot-maker/data-mapping-x.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/plot-maker/data-mapping-x.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>In parallel the field <strong>Select a plot</strong> allows users to
 choose the advanced plot they want to perform (figure below). In the
 list of available plots, the names were chosen as the names of the
 <code>tlf</code> functions used to perform the same plots.</p>
-<p><img src="figures/plot-maker/plot-selection.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/plot-maker/plot-selection.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>The corresponding plot is shown below. An additional table is added
 below the PK Ratio plot and shows the measure of number of points within
 1.5- and 2-fold errors. Other plots, such as box-whisker plots, may show
 similar additional results below the plots.</p>
-<p><img src="figures/plot-maker/pk-ratio-plot.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/plot-maker/pk-ratio-plot.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="update-plot-properties">4.2. Update plot properties<a class="anchor" aria-label="anchor" href="#update-plot-properties"></a>
@@ -177,13 +177,13 @@ ticks and legend are available in the properties <strong>Axes</strong>
 and <strong>Legend</strong>. The example below highlights the updates of
 the properties of the watermark which indicates “watermark” instead of
 “template” written bigger in “goldenrod” color.</p>
-<p><img src="figures/plot-maker/plot-labels.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/plot-maker/plot-labels.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>The <strong>Background</strong> navigation bar includes the
 properties of the fill, colors, sizes and linetypes for each background
 elements. The example below highlights the updates of the properties of
 the plot area (area around the panel) which was filled with “aliceblue”
 color and uses a “solid” and “black” border.</p>
-<p><img src="figures/plot-maker/plot-background.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/plot-maker/plot-background.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>The <strong>Axes</strong> navigation bar includes the properties of
 the axes lines (colors, sizes and linetypes), the font properties of
 their ticks as well as their scales and limits. The example below
@@ -191,12 +191,12 @@ highlights the updates of Y-axis scale in which new limits were defined
 as <code>ymin=0.1</code> and <code>ymax=10</code>. Note that limits are
 taken into account only if both <code>ymin</code> and <code>ymax</code>
 values are used.</p>
-<p><img src="figures/plot-maker/plot-axes.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/plot-maker/plot-axes.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>The <strong>Legend</strong> navigation bar includes the properties of
 the position of the legend (figure below). Fonts and background are not
 yet accounted for in the current version of
 <code><a href="../reference/runPlotMaker.html">runPlotMaker()</a></code>.</p>
-<p><img src="figures/plot-maker/plot-legend.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/plot-maker/plot-legend.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 <p>The <strong>Aesthetics</strong> navigation bar defines how
 <strong>points</strong>, <strong>lines</strong>,
 <strong>ribbons</strong> and <strong>errorbars</strong> are plotted. As
@@ -210,7 +210,7 @@ example below highlights the updates of how lines are plotted in this PK
 Ratio plot. Lines are now all in “#000000” (black) color using the
 concept of theme for their linetype (theme map for linetype is solid,
 then longdash, then dotted line…).</p>
-<p><img src="figures/plot-maker/plot-aesthetics.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/plot-maker/plot-aesthetics.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
@@ -229,7 +229,7 @@ properties updated in section 4.2. - is available as a
 object with the same properties is available in the navigation bar
 <strong>Export</strong>. Users can either copy/paste or save such R
 code.</p>
-<p><img src="figures/plot-maker/plot-export.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/plot-maker/plot-export.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="plot-specific-properties">6. Plot-specific properties<a class="anchor" aria-label="anchor" href="#plot-specific-properties"></a>
@@ -244,7 +244,7 @@ available below the plot (figure below). The regression <em>lm</em>
 stands for <em>linear model</em> and will add a linear regression to the
 plot; while <em>loess</em> will perform and add a loess regression to
 the plot.</p>
-<p><img src="figures/plot-maker/plot-regression.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/plot-maker/plot-regression.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="tornado-plot">6.1. Tornado plot<a class="anchor" aria-label="anchor" href="#tornado-plot"></a>
@@ -259,7 +259,7 @@ tornado plot with horizontal bars to dots instead.</li>
 if the values should be sorted by the absolute value of <em>x</em> or
 used as is.</li>
 </ul>
-<p><img src="figures/plot-maker/plot-tornado.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures/plot-maker/plot-tornado.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -273,7 +273,7 @@ used as is.</li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
