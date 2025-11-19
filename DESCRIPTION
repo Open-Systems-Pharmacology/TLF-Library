@@ -1,7 +1,7 @@
 Package: tlf
 Type: Package
 Title: TLF Library
-Version: 1.6.2.9000
+Version: 1.6.2.9001
 Authors@R: 
     c(person(given = "Open-Systems-Pharmacology Community",
              role = "cph"),
@@ -41,8 +41,8 @@ Imports:
     lifecycle
 Depends: 
     R (>= 4.1)
-Remotes: 
-    ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils@*release
+Remotes:  
+    ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils
 Encoding: UTF-8
 RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
