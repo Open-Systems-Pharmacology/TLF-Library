@@ -1,7 +1,7 @@
 Package: tlf
 Type: Package
 Title: TLF Library
-Version: 1.6.1
+Version: 1.6.2
 Authors@R: 
     c(person(given = "Open-Systems-Pharmacology Community",
              role = "cph"),
