@@ -1,3 +1,8 @@
+# tlf 1.6.2
+
+- Watermark position is now independent from scales. (#537)
+- The use of log ticks is safer. (#533)
+
 # tlf 1.6.1
 
 - Hot fixes following ggplot2 v4.0.0 breaking changes.
