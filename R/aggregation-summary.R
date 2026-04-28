@@ -100,7 +100,7 @@ AggregationSummary <- R6::R6Class(
 
       yValuesCol <- self$data[self$yColumnNames] # Extract column of values from dataframe
 
-      aggSummaries <- aggregate(yValuesCol, xGroupingCols, function(x) {
+      aggSummaries <- stats::aggregate(yValuesCol, xGroupingCols, function(x) {
         res <- self$applyAggregationFunctions(x)
         return(res)
       })
