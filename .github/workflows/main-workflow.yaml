@@ -23,6 +23,8 @@ jobs:
     if: ${{ !cancelled() }}
     permissions: read-all
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
+    with:
+      extra-repositories: https://open-systems-pharmacology.r-universe.dev
 
   pkgdown:
     needs: bump-dev-version
