@@ -12,6 +12,9 @@ permissions:
 jobs:
   bump-dev-version: # only do that when actually merging in main/develop branch
     if: github.event_name != 'pull_request'
+    permissions:
+      contents: write # pushes the bumped version and its tag
+      actions: read # the workflow inspects its own runs
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/bump_dev_version_tag_branch.yaml@main
     with:
       app-id: ${{ vars.VERSION_BUMPER_APPID }}
@@ -29,5 +32,8 @@ jobs:
   pkgdown:
     needs: bump-dev-version
     if: ${{ !cancelled() }}
+    permissions:
+      contents: write # required by the pkgdown reusable workflow (no deploy on PRs)
+      pull-requests: read # the workflow's check-changes job reads PR file changes
     uses:  Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@main
 
