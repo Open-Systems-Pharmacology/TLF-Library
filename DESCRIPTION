@@ -41,6 +41,7 @@ Imports:
     lifecycle
 Depends: 
     R (>= 4.1)
+Additional_repositories: https://open-systems-pharmacology.r-universe.dev
 Remotes:  
     ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils
 Encoding: UTF-8
