@@ -40,24 +40,6 @@ To install the development version from GitHub instead, use
 pak::pak("Open-Systems-Pharmacology/TLF-Library")
 ```
 
-`{tlf}` requires the following packages, which the commands above install for
-you:
-
-From CRAN:
-
--   [ggplot2](https://cran.r-project.org/package=ggplot2/index.html)
--   [jsonlite](https://cran.r-project.org/package=jsonlite/index.html)
--   [patchwork](https://cran.r-project.org/package=patchwork/index.html)
--   [R6](https://cran.r-project.org/package=R6/index.html)
--   [ggtext](https://cran.r-project.org/package=ggtext/index.html)
--   [stringr](https://cran.r-project.org/package=stringr/index.html)
--   [rlang](https://cran.r-project.org/package=rlang/index.html)
--   [lifecycle](https://cran.r-project.org/package=lifecycle/index.html)
-
-From the OSP R-universe:
-
--   [ospsuite.utils](https://open-systems-pharmacology.r-universe.dev/ospsuite.utils)
-
 ## Documentation
 
 A detailed account of existing functions and articles on how to use them
