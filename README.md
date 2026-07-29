@@ -20,30 +20,25 @@ Pharmacology ecosystem:
 
 ## Installation
 
-You can install the development version of `{tlf}` from
-[GitHub](https://github.com/) with:
+`{tlf}` and its Open Systems Pharmacology dependencies are published on the
+[OSP R-universe](https://open-systems-pharmacology.r-universe.dev). Installing
+the released version needs nothing but base R, and resolves
+`{ospsuite.utils}` for you:
 
 ``` r
-# install.packages("remotes")
-remotes::install_github("Open-Systems-Pharmacology/TLF-Library")
+install.packages(
+  "tlf",
+  repos = c(OSP = "https://open-systems-pharmacology.r-universe.dev", getOption("repos"))
+)
 ```
 
-`{tlf}` requires following packages to be installed:
+To install the development version from GitHub instead, use
+[pak](https://pak.r-lib.org):
 
-From CRAN:
-
--   [ggplot2](https://cran.r-project.org/package=ggplot2/index.html)
--   [jsonlite](https://cran.r-project.org/package=jsonlite/index.html)
--   [patchwork](https://cran.r-project.org/package=patchwork/index.html)
--   [R6](https://cran.r-project.org/package=R6/index.html)
--   [ggtext](https://cran.r-project.org/package=ggtext/index.html)
--   [stringr](https://cran.r-project.org/package=stringr/index.html)
--   [rlang](https://cran.r-project.org/package=rlang/index.html)
--   [lifecycle](https://cran.r-project.org/package=lifecycle/index.html)
-
-Must be downloaded manually:
-
--   [ospsuite.utils](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/download/v1.3.17/ospsuite.utils_1.3.17.zip)
+``` r
+# install.packages("pak")
+pak::pak("Open-Systems-Pharmacology/TLF-Library")
+```
 
 ## Documentation
 

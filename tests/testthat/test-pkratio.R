@@ -76,5 +76,15 @@ test_that("PK Ratio typical test works", {
     dataMapping = pkRatioMap
   )
 
+  # ggplot2 stacks the color and shape legends in an order that is not stable
+  # between an installed package and `load_all()`, which makes the snapshot flip
+  # for reasons unrelated to the plot itself. Pin the order so the snapshot only
+  # tracks what the plot draws.
+  pkrp <- pkrp +
+    ggplot2::guides(
+      color = ggplot2::guide_legend(order = 1),
+      shape = ggplot2::guide_legend(order = 2)
+    )
+
   vdiffr::expect_doppelganger(title = "PKRatioPlot", fig = pkrp)
 })
