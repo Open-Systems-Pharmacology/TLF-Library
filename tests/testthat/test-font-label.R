@@ -185,6 +185,7 @@ test_that("Markdown syntax is not supported because Label and Font overwrite its
 <span style = 'font-size:10pt;'>because it uses <span style = 'color:#0072B2;'><b>HTML</b></span> instead of
 <span style = 'color:#D55E00;'><i>Markdown syntax</i></span></span>"
       )
-    )
+    ),
+    variant = snapshotVariant()
   )
 })

@@ -46,7 +46,8 @@ test_that("plots grid is rendered correctly", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "plotGrid works as expected",
-    fig = plotGrid(plotGridObj)
+    fig = plotGrid(plotGridObj),
+    variant = snapshotVariant()
   )
 })
 
@@ -102,6 +103,7 @@ test_that("Plot Grid can have very long texts and contain plots with very long t
   plotGridObj$captionHorizontalJustification <- HorizontalJustification$right
 
   vdiffr::expect_doppelganger("long labels in plotgrid",
-    fig = plotGrid(plotGridObj)
+    fig = plotGrid(plotGridObj),
+    variant = snapshotVariant()
   )
 })
