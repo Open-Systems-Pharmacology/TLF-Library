@@ -10,12 +10,8 @@ ecosystem:
 
 ## Installation
 
-[tlf](https://github.com/open-systems-pharmacology/tlf-library) and its
-Open Systems Pharmacology dependencies are published on the [OSP
-R-universe](https://open-systems-pharmacology.r-universe.dev).
-Installing the released version needs nothing but base R, and resolves
-[ospsuite.utils](https://github.com/open-systems-pharmacology/OSPSuite.RUtils)
-for you:
+Install the released version from the [OSP
+R-universe](https://open-systems-pharmacology.r-universe.dev):
 
 ``` r
 
@@ -31,6 +27,11 @@ To install the development version from GitHub instead, use
 ``` r
 
 # install.packages("pak")
+options(repos = c(
+  OSP = "https://open-systems-pharmacology.r-universe.dev",
+  getOption("repos")
+))
+
 pak::pak("Open-Systems-Pharmacology/TLF-Library")
 ```
 

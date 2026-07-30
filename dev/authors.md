@@ -20,13 +20,13 @@ Source:
 [`DESCRIPTION`](https://github.com/open-systems-pharmacology/tlf-library/blob/main/DESCRIPTION)
 
 Sevestre M, Chelle P, Hamadeh A (2026). *tlf: TLF Library*. R package
-version 1.6.2.9002,
+version 1.6.2.9003,
 <https://github.com/open-systems-pharmacology/tlf-library>.
 
     @Manual{,
       title = {tlf: TLF Library},
       author = {Michael Sevestre and Pierre Chelle and Abdullah Hamadeh},
       year = {2026},
-      note = {R package version 1.6.2.9002},
+      note = {R package version 1.6.2.9003},
       url = {https://github.com/open-systems-pharmacology/tlf-library},
     }
