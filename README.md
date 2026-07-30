@@ -33,10 +33,17 @@ install.packages(
 ```
 
 To install the development version from GitHub instead, use
-[pak](https://pak.r-lib.org):
+[pak](https://pak.r-lib.org). The universe still has to be on `repos` for this:
+the development sources declare their OSP dependencies without saying where
+to find them, and pak does not read `Additional_repositories`.
 
 ``` r
 # install.packages("pak")
+options(repos = c(
+  OSP = "https://open-systems-pharmacology.r-universe.dev",
+  getOption("repos")
+))
+
 pak::pak("Open-Systems-Pharmacology/TLF-Library")
 ```
 
