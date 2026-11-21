@@ -1,0 +1,20 @@
+name: Check against released dependencies
+
+# Nightly R-CMD-check against the latest *released* OSP dependencies: the
+# reusable workflow pins Remotes to @*release for this run only, and the OSP
+# packages not listed in `Remotes:` come from the OSP R-universe, which builds
+# the latest release of each package.
+
+on:
+  schedule:
+    - cron: '0 3 * * *' # Run at 3 AM UTC daily
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  check-released-deps:
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-released-deps.yaml@main
+    with:
+      extra-repositories: https://open-systems-pharmacology.r-universe.dev
+    secrets: inherit
